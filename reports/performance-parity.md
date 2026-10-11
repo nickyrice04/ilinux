@@ -111,8 +111,11 @@ table: [`vm-vs-macos-parity.md`](vm-vs-macos-parity.md). Raw data:
 | DRAM latency (256 MiB / 2 GiB chase) | **84% / 72%** | Two-stage translation with 4K guest pages |
 | Page-fault/zero-fill throughput | **35%** | Stage-2 faults |
 | Storage seq read 1 / 4 threads | **13% / 26%** | virtio-blk on sparse file, sync=full |
-| Storage seq write | **3%** (0.34 vs 11.2 GB/s) | Target of the VZ storage-mode matrix (job 005) |
+| Storage seq write | **3%** first write into a sparse image (0.34 GB/s); **28%** on allocated blocks (3.2 GB/s) | Job 005 (F-018) |
+| Storage seq read, best durable mode (virtio + fsync), 1 / 4 threads | **51% / 65%** (5.6 / 8.6 GB/s) | Cached mode (24–50 GB/s) is host RAM and not counted |
 | Storage 4K random read QD1 / QD32 | **57% / 30%** | |
+| llama.cpp CPU, 8B Q4_0, tg64 / pp512 (6–18 threads) | **92–100% / 104–117%** | VM: same llama.cpp commit, CPU-only ggml (SME), no BLAS. macOS: Homebrew build with Accelerate (F-017) |
+| llama.cpp CPU, 8B Q4_K_M, tg64 / pp512 | **111–124% / 207–223%** | macOS Accelerate path dequantizes k-quants to FP32. Build config dominates, not the OS |
 | GPU | **not available** (2D virtio-gpu only) | GPU-in-VM needs krunkit/Venus (approval) |
 
 ## Notes and limitations

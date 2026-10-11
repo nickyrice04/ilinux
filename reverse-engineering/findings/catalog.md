@@ -184,3 +184,23 @@ No entry is based on decompiled Apple code.
 | Inference | M5 P cores have a per-cycle limit on reads of the same physical register (rename or bypass). Apple clang 21 emits the same-register pattern for our C kernel; LLVM clang 23 doesn't. That explained an apparent "112% VM parity" for FMA. |
 | Confidence | **Confirmed** throughput; mechanism **Likely** |
 | Consequence | Cross-OS CPU comparisons must use compiler-independent kernels (`cpubench fma_asm`) or the same compiler version. This is now in the methodology. |
+
+## F-017 · AI / CPU · llama.cpp CPU inference: build configuration dominates the OS
+
+| Field | Value |
+|---|---|
+| Source | `BENCH`: macOS Homebrew llama.cpp b10280 / ggml 0.18.1 (`-dev none -nopo 1`; BLAS = Accelerate attached) vs Linux VM build of the same llama.cpp commit `61881b1f7` with its bundled ggml (CPU only, `armv8.6-a+dotprod+i8mm+sme`, no BLAS, LTO). Both run the same synthetic 8B GGUF files. |
+| Observation | Q4_0: tg64 92–100%, pp512 104–117% (VM vs macOS). **Q4_K_M: pp512 ≈ 2.1× faster in the VM**, tg64 +11–24%. |
+| Inference | macOS's Homebrew build sends large-batch k-quant matmuls through Accelerate BLAS (dequantize to FP32, then SGEMM), which is slower than ggml's native quantized kernels. Generation differences come from ggml version and compiler. The OS isn't the limiting factor for CPU LLM inference. |
+| Confidence | Measurements **Confirmed**; attribution **Likely** (builds not identical; a strict comparison needs a BLAS-free macOS build of the same commit, which needs `cmake`) |
+| Consequence | CPU-side LLM parity on Linux is achievable. On macOS, a BLAS-free build would speed up CPU-only k-quant prefill. That's irrelevant when using Metal. |
+
+## F-018 · Virtualization · VZ storage modes: what closes the virtio gap
+
+| Field | Value |
+|---|---|
+| Source | VM job 005 via `virtualization/scripts/run-storage-matrix.sh`: 16 GB data disk, 4 GiB file, ext4, blocks pre-allocated. Results in `benchmarks/results/vm-alarm-2026-10-11/storage-matrix/` |
+| Observation | virtio automatic/full: write 3.17 GB/s, read 3.08 GB/s (1 thread). **virtio automatic/fsync: read 5.6 GB/s (1 thread) and 8.6 GB/s (4 threads), random QD1 10.1 K IOPS.** virtio cached/none: read 24–50 GB/s, served from the host page cache (not crash-safe). NVMe automatic/full: write 0.86 GB/s, read 1.6 GB/s. NVMe cached/none: write 19.5 GB/s, also cached. |
+| Inference | The earlier 0.34 GB/s VM write was mostly **first-write allocation of the sparse image** on APFS, not virtio overhead. `fsync` sync mode is the best durable setting. VZ's NVMe emulation is slower than virtio-blk here. |
+| Confidence | **Confirmed** (measured); single run per configuration |
+| Recommendation | Root disk: virtio, `--disk-sync fsync`. Disposable scratch or build disks: `--disk-cache cached --disk-sync none`. Pre-allocate images used for storage benchmarks. Never report cached-mode numbers as storage parity. |

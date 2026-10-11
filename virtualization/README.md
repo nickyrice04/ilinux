@@ -38,6 +38,14 @@ in, so no initramfs is needed.
   latency (≈128 vs 108 ns at 256 MiB). STREAM medians are close to native.
   "Best" values are unreliable because of vCPU preemption.
 * **No GPU acceleration.** The framework exposes virtio-gpu 2D only.
+* **Storage modes (job 005, F-018).** Extra `--disk` images honour
+  `--disk-sync full|fsync|none`, `--disk-cache automatic|cached|uncached`
+  and `--nvme`.
+  * Durable best is virtio + `fsync`: ≈ 5.6 GB/s read single-threaded, 8.6
+    GB/s with 4 threads (native 11–13).
+  * `cached`/`none` serves from the host page cache. Fastest, but not
+    crash-safe, so use it for scratch disks only.
+  * Sparse images pay a one-time allocation cost on first write.
 
 ## GPU-in-VM options (not installed; each needs a host install, so new approval)
 
