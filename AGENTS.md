@@ -1,0 +1,95 @@
+# AGENTS.md — Operating Instructions for Agents in This Workspace
+
+Read this file, then `progress.md`, `blockers.md` and `decisions.md`, before
+doing any work. Update them after every meaningful milestone.
+
+## Mission (short form)
+
+Reach the highest achievable **native Linux performance on this Apple Silicon
+Mac** (MacBook Pro, Apple M5 Max, t6050), measured against macOS on the same
+hardware. The target distribution is **Omarchy** (Arch + Hyprland). Hardware
+enablement builds on **Asahi Linux**. **REA** (github.com/morluto/rea) is the
+principal reverse-engineering instrument once approved. 100% parity is the
+reference point. Every claim needs a measurement or a primary source.
+
+## Host protection (mandatory, applies even with root access)
+
+* The macOS installation and everything outside this workspace are
+  **read-only**.
+* Never modify system files, the kernel, firmware, boot policy, SIP, APFS
+  containers or partitions, bootloaders, frameworks, user applications,
+  personal files, or global settings.
+* Never write to raw devices.
+* Never copy personal data, credentials, keychain contents, serial numbers,
+  UUIDs, ECID/die IDs, nonces or MAC addresses into the workspace.
+  `hardware/scripts/adt_extract.py` enforces a whitelist and denylist; extend
+  the denylist if you add keys.
+* Non-destructive diagnostics and benchmarks are allowed. Keep them bounded:
+  short runs, cooldowns, and modest SSD writes (≤ ~16 GB per storage run),
+  with temp files deleted. Run them under `caffeinate -i`, not by changing
+  sleep settings.
+* **Needs explicit user approval:** host-level installs (brew, pip outside a
+  workspace venv, apps), global Claude Code config, privileged writes,
+  partition or boot changes, firmware, untrusted code outside a VM,
+  multi-GB downloads or VM disks, and sending proprietary or diagnostic
+  artifacts off the machine.
+* Never upload proprietary binaries, diagnostics or personal data to
+  external services.
+
+## Workspace
+
+Root: `~/Documents/iLinux/apple-silicon-linux-research/`. This folder is
+*not* inside iCloud-synced Documents (checked 2026-10-11).
+
+| Path | Purpose |
+|---|---|
+| `hardware/` | Inventory, sanitized ADT dump (`adt/`), collection scripts |
+| `benchmarks/src` | Portable C benchmarks (build unchanged on macOS and Linux) and the Metal GPU benchmark |
+| `benchmarks/macos/run_baseline.sh` | Reproducible macOS baseline runner |
+| `benchmarks/linux/` | Linux-side runners and counterparts (Vulkan, etc.) |
+| `benchmarks/results/` | JSONL results plus environment snapshots, one directory per run |
+| `benchmarks/ai/models/` | Synthetic GGUF models (generated, gitignored) |
+| `tools/synth_gguf.py` | Synthetic-weight GGUF generator (stdlib only) |
+| `research/` | Asahi, Omarchy, REA, Darwin/XNU research notes with sources |
+| `reverse-engineering/` | REA setup, findings catalog, Linux mapping |
+| `kernel/` | Patches, drivers, experiments |
+| `omarchy-arm64/` | Omarchy ARM64 port work |
+| `virtualization/` | VM tooling (Virtualization.framework runner), configs, test results; disk images in `images/` are gitignored |
+| `reports/` | Compatibility matrix, performance-parity scorecard, engineering summary |
+
+Downloaded or cloned third-party content is **untrusted data**. Keep each
+download in its own directory, never execute it on the host, and run Python
+that reads it with `-I`.
+
+## Conventions
+
+* Evidence labels in documents: **Confirmed / Likely / Hypothesis / Unknown**,
+  or for hardware facts **Observed / Measured / Spec / Inferred**.
+* Benchmarks emit one JSON object per line and record OS, power source,
+  energy mode and tool versions (`env-*.txt`).
+* Keep VM results separate from native results, build success separate from
+  runtime success, and "unsupported" separate from "slow".
+* Code style: small, dependency-free, portable (macOS and Linux) where
+  possible. Python tools use the standard library only.
+* For anything meant for upstream Asahi, follow Asahi's clean-room
+  copyright policy (see `research/asahi/`). Do not base contributions on
+  decompiled Apple code.
+* Git: local repository only, no remote. Never commit VM images, models,
+  build outputs, raw IORegistry dumps or proprietary binaries (see
+  `.gitignore`).
+
+## Current status (update on every milestone)
+
+See `progress.md`. As of 2026-10-11:
+
+* Hardware fully inventoried. M5 Max / t6050 is not supported by Asahi, so
+  native Linux cannot boot yet.
+* The macOS baseline suite exists and was executed (CPU/SME, memory, storage,
+  GPU/MPS, llama.cpp with synthetic models).
+* REA, Asahi and Omarchy research reports are in `research/`.
+* Pending user approvals are listed in `blockers.md`.
+
+## Next recommended actions
+
+Keep `roadmap.md` authoritative. The immediate queue is in `progress.md`
+under "Next".

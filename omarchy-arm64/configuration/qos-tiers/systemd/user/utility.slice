@@ -1,0 +1,7 @@
+[Unit]
+Description=User utility work (omarchy-qos "utility" tier)
+Documentation=man:systemd.special(7)
+Before=slices.target
+
+[Slice]
+CPUWeight=50

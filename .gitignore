@@ -1,0 +1,37 @@
+# Large / generated / sensitive artifacts never go into git
+benchmarks/bin/
+benchmarks/ai/models/
+*.gguf
+*.safetensors
+virtualization/images/
+*.img
+*.qcow2
+*.raw
+*.iso
+*.dmg
+*.ipsw
+*.tar.zst
+*.tar.xz
+*.tar.gz
+hardware/raw/
+reverse-engineering/permitted-artifacts/
+research/omarchy/upstream-omarchy/
+research/**/upstream-*/
+third_party/
+build/
+*.o
+*.dSYM/
+.DS_Store
+__pycache__/
+.venv/
+venv/
+
+# project-local tool installs
+tools/rea/node_modules/
+tools/rea/.npm-cache/
+tools/rea/.npm-logs/
+tools/.uv-cache/
+tools/venv/
+virtualization/bin/
+virtualization/jobs/*/out/
+kernel/experiments/t6050-dt/out/*.dtb

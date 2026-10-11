@@ -1,0 +1,12 @@
+[Unit]
+Description=Apply omarchy-qos CPU tiers to user slices
+After=basic.target
+PartOf=graphical-session.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/omarchy-qos apply
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,18 @@
+{"bench":"gpu","families":["apple7","apple8","apple9","metal3","apple10","metal4"],"max_buffer_GB":86.586540032000002,"max_threads_per_threadgroup":1024,"name":"Apple M5 Max","recommended_max_working_set_GB":115.448725504,"test":"info","unified_memory":true}
+{"bench":"gpu","best":14.826421741082292,"median":14.774357403215125,"test":"fma_f32","unit":"TFLOP\/s"}
+{"bench":"gpu","best":17.608188015245418,"median":17.547041039532782,"test":"fma_f16","unit":"TFLOP\/s"}
+{"bench":"gpu","best":537.65499871929694,"bytes_moved":2147483648,"median":535.01507395386091,"test":"copy_bw_shared","unit":"GB\/s"}
+{"bench":"gpu","best":547.99052126066226,"median":478.94811372026237,"test":"read_bw_shared","unit":"GB\/s"}
+{"bench":"gpu","best":537.64377875144578,"bytes_moved":2147483648,"median":534.28852425792616,"test":"copy_bw_private","unit":"GB\/s"}
+{"bench":"gpu","best":556.49912856190781,"median":461.79965106592033,"test":"read_bw_private","unit":"GB\/s"}
+{"bench":"gpu","best":14.861143502458416,"median":14.807838531119865,"n":2048,"test":"mps_gemm_f32","unit":"TFLOP\/s"}
+{"bench":"gpu","best":14.868956528681961,"median":14.812177356311089,"n":4096,"test":"mps_gemm_f32","unit":"TFLOP\/s"}
+{"bench":"gpu","best":14.449386646949767,"median":14.412866275109813,"n":8192,"test":"mps_gemm_f32","unit":"TFLOP\/s"}
+{"bench":"gpu","best":62.678803663991836,"median":62.458053491338518,"n":2048,"test":"mps_gemm_f16","unit":"TFLOP\/s"}
+{"bench":"gpu","best":64.215057717536169,"median":63.895684695203151,"n":4096,"test":"mps_gemm_f16","unit":"TFLOP\/s"}
+{"bench":"gpu","best":58.680718662106962,"median":58.391547905272063,"n":8192,"test":"mps_gemm_f16","unit":"TFLOP\/s"}
+{"bench":"gpu","best":49.598688088055368,"median":48.772008317054315,"n":4096,"test":"mpsgraph_matmul_f16","timing":"wall (includes submit + sync)","unit":"TFLOP\/s"}
+{"bench":"gpu","best":50.471545095077133,"median":48.326340470589216,"n":4096,"test":"mpsgraph_matmul_bf16","timing":"wall (includes submit + sync)","unit":"TFLOP\/s"}
+{"bench":"gpu","best":13.38256670969399,"median":13.312566447356323,"n":4096,"test":"mpsgraph_matmul_f32","timing":"wall (includes submit + sync)","unit":"TFLOP\/s"}
+{"bench":"gpu","median":149,"min":57.5,"p99":217.5,"test":"dispatch_roundtrip_latency","unit":"us"}
+{"bench":"gpu","blit_cost_ms_per_GiB_median":3.9616667199879885,"blit_shared_to_private_GBps_median":271.03285053803199,"buffer_GiB":1,"cpu_memset_shared_1thread_GBps":138.67256715996169,"note":"zero-copy (shared storage) avoids the blit entirely on unified memory","test":"unified_memory"}

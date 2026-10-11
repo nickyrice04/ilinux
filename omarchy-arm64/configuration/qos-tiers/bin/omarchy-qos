@@ -1,0 +1,146 @@
+#!/bin/bash
+# omarchy-qos - macOS-style QoS tiers for Linux desktops on heterogeneous CPUs.
+#
+# macOS (measured on M5 Max, see reverse-engineering/findings F-002) places
+# QoS "background" work on the efficiency-oriented cluster at a capped
+# performance level while interactive work gets the fastest cores.  Linux has
+# the mechanisms (EAS + schedutil, cgroup v2 cpu.uclamp.*, cpusets); this tool
+# maps them onto systemd's standard user slices used by uwsm/Hyprland:
+#
+#   tier          systemd --user slice   policy (defaults, see CONFIG below)
+#   interactive   session.slice          uclamp.min boost, high CPU weight
+#   default       app.slice              untouched
+#   utility       utility.slice          uclamp.max cap, lower weight
+#   background    background.slice       uclamp.max cap, low weight, efficient CPUs only
+#
+# Usage:
+#   omarchy-qos apply                 configure slices (run at session start)
+#   omarchy-qos run <tier> -- cmd...  run a command in a tier
+#   omarchy-qos status                show topology, kernel support, slice settings
+#
+# Requires cgroup v2 with the cpu (and, for CPU restriction, cpuset)
+# controller delegated to the user manager; uclamp needs CONFIG_UCLAMP_TASK_GROUP.
+set -euo pipefail
+
+CONFIG="${OMARCHY_QOS_CONFIG:-/etc/omarchy-qos.conf}"
+# Defaults (percent of max capacity for uclamp; systemd CPUWeight 1..10000).
+INTERACTIVE_UCLAMP_MIN=20
+INTERACTIVE_WEIGHT=400
+UTILITY_UCLAMP_MAX=70
+UTILITY_WEIGHT=50
+BACKGROUND_UCLAMP_MAX=30
+BACKGROUND_WEIGHT=20
+BACKGROUND_RESTRICT_CPUS=yes
+# shellcheck source=/dev/null
+[ -r "$CONFIG" ] && . "$CONFIG"
+
+CGROOT=/sys/fs/cgroup
+
+die() { echo "omarchy-qos: $*" >&2; exit 1; }
+warn() { echo "omarchy-qos: warning: $*" >&2; }
+
+# Prints "<cpu> <capacity>" for every online CPU (capacity 1024 if unknown).
+cpu_caps() {
+  local d n
+  for d in /sys/devices/system/cpu/cpu[0-9]*; do
+    n=${d##*/cpu}
+    [ "$(cat "$d/online" 2>/dev/null || echo 1)" = 1 ] || continue
+    echo "$n $(cat "$d/cpu_capacity" 2>/dev/null || echo 1024)"
+  done | sort -n
+}
+
+# Efficient CPU set = CPUs whose capacity is below the maximum.  Empty on
+# homogeneous systems (including most VMs).
+efficient_cpus() {
+  # Test hook: force a set on homogeneous machines (e.g. VMs).
+  if [ -n "${OMARCHY_QOS_EFFICIENT_CPUS:-}" ]; then echo "$OMARCHY_QOS_EFFICIENT_CPUS"; return; fi
+  local max
+  max=$(cpu_caps | awk '{ if ($2 > m) m = $2 } END { print m }')
+  cpu_caps | awk -v m="$max" '$2 < m { printf "%s%s", sep, $1; sep="," }'
+}
+
+slice_cgroup() {
+  local cg
+  cg=$(systemctl --user show -P ControlGroup "$1" 2>/dev/null || true)
+  [ -n "$cg" ] && echo "$CGROOT$cg"
+}
+
+set_uclamp() {  # slice min|max percent
+  local dir file
+  dir=$(slice_cgroup "$1") || true
+  file="$dir/cpu.uclamp.$2"
+  if [ -n "$dir" ] && [ -w "$file" ]; then
+    echo "$3" > "$file"
+  else
+    warn "cannot set $1 cpu.uclamp.$2 (missing ${file:-cgroup}; need CONFIG_UCLAMP_TASK_GROUP and a delegated cpu controller)"
+  fi
+}
+
+apply() {
+  command -v systemctl >/dev/null || die "systemd required"
+  [ -f "$CGROOT/cgroup.controllers" ] || die "cgroup v2 not mounted at $CGROOT"
+  # Weights first: setting CPUWeight makes systemd enable the cpu controller
+  # for the slice, which is what exposes cpu.uclamp.* files.
+  systemctl --user set-property --runtime session.slice CPUWeight="$INTERACTIVE_WEIGHT"
+  systemctl --user start utility.slice 2>/dev/null || true
+  systemctl --user set-property --runtime utility.slice CPUWeight="$UTILITY_WEIGHT"
+  systemctl --user set-property --runtime background.slice CPUWeight="$BACKGROUND_WEIGHT"
+
+  local eff
+  eff=$(efficient_cpus)
+  if [ "$BACKGROUND_RESTRICT_CPUS" = yes ] && [ -n "$eff" ]; then
+    systemctl --user set-property --runtime background.slice AllowedCPUs="$eff" ||
+      warn "AllowedCPUs failed (is cpuset delegated to user@.service?)"
+  fi
+  set_uclamp session.slice min "$INTERACTIVE_UCLAMP_MIN"
+  set_uclamp utility.slice max "$UTILITY_UCLAMP_MAX"
+  set_uclamp background.slice max "$BACKGROUND_UCLAMP_MAX"
+}
+
+tier_slice() {
+  case "$1" in
+    interactive|ui) echo session.slice ;;
+    default|app) echo app.slice ;;
+    utility) echo utility.slice ;;
+    background|bg) echo background.slice ;;
+    *) die "unknown tier '$1' (interactive|default|utility|background)" ;;
+  esac
+}
+
+run() {
+  local slice
+  slice=$(tier_slice "${1:-}")
+  shift
+  [ "${1:-}" = "--" ] && shift
+  [ $# -gt 0 ] || die "no command given"
+  exec systemd-run --user --scope --quiet --collect --slice="$slice" -- "$@"
+}
+
+status() {
+  echo "== topology (cpu capacity)"
+  cpu_caps | awk '{ printf "cpu%s=%s ", $1, $2 } END { print "" }'
+  local eff
+  eff=$(efficient_cpus)
+  echo "efficient set: ${eff:-<none: homogeneous>}"
+  echo "== kernel"
+  echo "EAS (sched_energy_aware): $(cat /proc/sys/kernel/sched_energy_aware 2>/dev/null || echo n/a)"
+  echo "cpufreq governor(cpu0): $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null || echo n/a)"
+  echo "user cgroup controllers: $(cat "$CGROOT$(systemctl --user show -P ControlGroup 2>/dev/null)/cgroup.controllers" 2>/dev/null || echo n/a)"
+  echo "== slices"
+  local s dir
+  for s in session.slice app.slice utility.slice background.slice; do
+    dir=$(slice_cgroup "$s" || true)
+    printf '%-17s weight=%-6s cpus=%-12s uclamp.min=%-7s uclamp.max=%s\n' "$s" \
+      "$(cat "$dir/cpu.weight" 2>/dev/null || echo -)" \
+      "$(cat "$dir/cpuset.cpus" 2>/dev/null || echo -)" \
+      "$(cat "$dir/cpu.uclamp.min" 2>/dev/null || echo -)" \
+      "$(cat "$dir/cpu.uclamp.max" 2>/dev/null || echo -)"
+  done
+}
+
+case "${1:-}" in
+  apply) apply ;;
+  run) shift; run "$@" ;;
+  status) status ;;
+  *) echo "usage: omarchy-qos apply | run <tier> -- cmd... | status" >&2; exit 2 ;;
+esac

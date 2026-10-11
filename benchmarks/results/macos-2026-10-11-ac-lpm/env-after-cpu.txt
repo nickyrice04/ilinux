@@ -1,0 +1,13 @@
+phase=after-cpu date=2026-10-11T22:23:51Z
+ProductName:		macOS ProductVersion:		26.6.2 BuildVersion:		25G83 
+model=Mac17,6 chip=Apple M5 Max mem=137438953472
+loadavg={ 14.34 12.72 7.91 }
+Now drawing from 'AC Power'
+ -InternalBattery-0 	100%; finishing charge; 0:00 remaining present: true
+Power:  AC Power:  Current Power Source: Yes  High Power Mode: No  Low Power Mode: Yes  Battery Power:  High Power Mode: No  Low Power Mode: No 
+Note: No thermal warning level has been recorded
+Note: No performance warning level has been recorded
+Note: No CPU power status has been recorded
+ powermode            2
+Apple clang version 21.0.0 (clang-2100.3.34.2)
+swift-driver version: 1.168.6 Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)
