@@ -90,8 +90,8 @@ measured, still unsupported, and next.
 
 ### Next
 
-1. Finish the VM llama.cpp CPU comparison (job 003) and the VZ storage-mode
-   matrix (job 005, `virtualization/scripts/run-storage-matrix.sh`).
+1. ✅ (2026-10-11) VM llama.cpp CPU comparison (F-017) and VZ storage-mode
+   matrix (F-018). Follow-up: `fsync` default plus pre-allocation in `vzrun`.
 2. Build a guest kernel config with `CONFIG_UCLAMP_TASK_GROUP` (and possibly
    16K pages) to test omarchy-qos clamps and the VM memory overheads.
 3. Omarchy VM install: keyring, `omarchy-arm64-vm` integration package,

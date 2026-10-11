@@ -12,8 +12,15 @@
   With identical code and flags, CPU compute runs at 97–101% and the SME
   matrix unit at 97–100% (SME2 is passed through to guests). Memory
   bandwidth is 93–100%.
-* **The VM's costs are in exits.** Thread wakeups run at 7%, syscalls at 77%,
-  page faults at 35%, and virtio storage at 3–57% of native.
+* **The VM's costs are in exits.** Thread wakeups run at 7%, syscalls at 77%
+  and page faults at 35% of native.
+* **VM storage is tunable.** The best durable mode (virtio + fsync) reads at
+  51–65% of native. The initial 3% write figure was sparse-image first-write
+  allocation (F-018).
+* **llama.cpp CPU inference in the Linux VM matches or beats macOS's
+  Homebrew build.** Q4_0 generation runs at 92–100%. Q4_K_M prefill is
+  ≈ 2.1× faster, because macOS routes it through Accelerate (F-017).
+  CPU-side LLM parity is achievable on Linux.
 * **The VM has no GPU.** Virtualization.framework gives Linux 2D graphics
   only.
 * **macOS's advantages are now quantified:**
@@ -52,7 +59,8 @@
 
 ## Recommended next priorities
 
-1. VZ storage-mode matrix (job 005) to close the virtio storage gap.
+1. Make `fsync` the default root-disk mode in `vzrun`, plus a pre-allocation
+   option. Re-measure the VM storage parity.
 2. Guest kernel with uclamp and 16K pages, to test omarchy-qos clamps and
    reduce stage-2 overheads.
 3. Omarchy VM install with the `omarchy-arm64-vm` integration package.
