@@ -6,10 +6,10 @@
 // Linux (aarch64):
 //   cc -O3 -mcpu=native -pthread cpubench.c -o cpubench   (clang or gcc)
 //
-// Usage: cpubench <kernel> [-t threads] [-r reps] [-s seconds]
+// Usage: cpubench <kernel> [-t threads] [-r reps] [-s seconds] [-n pingpong_rounds]
 //                 [-q ui|ui2|default|utility|bg]   (macOS QoS placement)
 //                 [-c cpu,cpu,...]                 (Linux affinity)
-// kernels: freq fma intmix sort sgemm sme_f32 sme_bf16 sme_i8 pingpong syscall all
+// kernels: freq fma fma_asm intmix sort sgemm sme_f32 sme_bf16 sme_i8 pingpong syscall all
 //
 // Output: one JSON object per measurement on stdout.
 
@@ -76,6 +76,28 @@ static double k_fma(uint64_t iters) {
     S(15) S(16) S(17) S(18) S(19) S(20) S(21) S(22) S(23)
 #undef S
     return vaddvq_f32(s);
+}
+
+// Peak FP32 FMA in fixed inline assembly (compiler-independent): 24
+// accumulators, multiplicands rotated over 4x4 source registers.  On M5 P
+// cores, sourcing every FMLA from the same two registers costs ~11%
+// (findings F-016), which is why the C kernel above is compiler-sensitive.
+// FLOPs per iter = 192.
+static double k_fma_asm(uint64_t iters) {
+    __asm__ volatile(
+        "movi v30.4s, #0\n fmov v31.4s, #1.0\n fmov v29.4s, #0.5\n"
+        "mov v0.16b, v30.16b\n mov v1.16b, v30.16b\n mov v2.16b, v30.16b\n mov v3.16b, v30.16b\n"
+        "mov v4.16b, v30.16b\n mov v5.16b, v30.16b\n mov v6.16b, v30.16b\n mov v7.16b, v30.16b\n"
+        "mov v16.16b, v30.16b\n mov v17.16b, v30.16b\n mov v18.16b, v30.16b\n mov v19.16b, v30.16b\n"
+        "mov v20.16b, v30.16b\n mov v21.16b, v30.16b\n mov v22.16b, v30.16b\n mov v23.16b, v30.16b\n"
+        "mov v24.16b, v30.16b\n mov v25.16b, v30.16b\n mov v26.16b, v30.16b\n mov v27.16b, v30.16b\n"
+        "mov v28.16b, v30.16b\n mov v8.16b, v30.16b\n mov v9.16b, v30.16b\n mov v10.16b, v30.16b\n mov v11.16b, v31.16b\n mov v12.16b, v31.16b\n mov v13.16b, v31.16b\n mov v14.16b, v29.16b\n mov v15.16b, v29.16b\n"
+        "1:\n"
+        "fmla v0.4s, v31.4s, v29.4s\nfmla v1.4s, v11.4s, v29.4s\nfmla v2.4s, v12.4s, v29.4s\nfmla v3.4s, v13.4s, v29.4s\nfmla v4.4s, v31.4s, v14.4s\nfmla v5.4s, v11.4s, v14.4s\nfmla v6.4s, v12.4s, v14.4s\nfmla v7.4s, v13.4s, v14.4s\nfmla v16.4s, v31.4s, v15.4s\nfmla v17.4s, v11.4s, v15.4s\nfmla v18.4s, v12.4s, v15.4s\nfmla v19.4s, v13.4s, v15.4s\nfmla v20.4s, v31.4s, v30.4s\nfmla v21.4s, v11.4s, v30.4s\nfmla v22.4s, v12.4s, v30.4s\nfmla v23.4s, v13.4s, v30.4s\nfmla v24.4s, v31.4s, v29.4s\nfmla v25.4s, v11.4s, v29.4s\nfmla v26.4s, v12.4s, v29.4s\nfmla v27.4s, v13.4s, v29.4s\nfmla v28.4s, v31.4s, v14.4s\nfmla v8.4s, v11.4s, v14.4s\nfmla v9.4s, v12.4s, v14.4s\nfmla v10.4s, v13.4s, v14.4s\n"
+        "subs %0, %0, #1\n b.ne 1b\n"
+        : "+r"(iters) :: "v0","v1","v2","v3","v4","v5","v6","v7","v8","v9","v10","v16","v17","v18","v19","v20",
+          "v11","v12","v13","v14","v15","v21","v22","v23","v24","v25","v26","v27","v28","v29","v30","v31","cc");
+    return 0;
 }
 
 // Clock estimate: a chain of 32 *dependent* single-cycle adds per iteration,
@@ -239,6 +261,7 @@ struct kernel {
 static struct kernel KERNELS[] = {
     {"freq", k_freq, 32.0, "GHz(est)", 1u << 20},
     {"fma", k_fma, 192.0, "GFLOP/s", 1u << 20},
+    {"fma_asm", k_fma_asm, 192.0, "GFLOP/s", 1u << 20},
     {"intmix", k_intmix, 48.0, "Gop/s", 1u << 20},
     {"sort", k_sort, SORT_N, "Melem/s", 4},
     {"sgemm", k_sgemm, 2.0 * GN * GN * GN, "GFLOP/s", 4},
@@ -374,8 +397,8 @@ static void *pp_peer(void *x) {
     }
     return NULL;
 }
-static void run_pingpong(int reps, const char *qos) {
-    pp_rounds = 200000;
+static void run_pingpong(int reps, const char *qos, long rounds) {
+    pp_rounds = rounds;
     pp_qos = qos;
     double *v = calloc(reps, sizeof *v);
     for (int r = 0; r < reps; r++) {
@@ -396,8 +419,8 @@ static void run_pingpong(int reps, const char *qos) {
     }
     qsort(v, reps, sizeof *v, cmpd);
     printf("{\"bench\":\"cpu\",\"kernel\":\"pipe_pingpong_roundtrip\",\"qos\":\"%s\",\"reps\":%d,"
-           "\"unit\":\"us\",\"median\":%.3f,\"min\":%.3f,\"max\":%.3f}\n",
-           qos ? qos : "none", reps, v[reps / 2], v[0], v[reps - 1]);
+           "\"rounds\":%ld,\"unit\":\"us\",\"median\":%.3f,\"min\":%.3f,\"max\":%.3f}\n",
+           qos ? qos : "none", reps, rounds, v[reps / 2], v[0], v[reps - 1]);
     free(v);
 }
 
@@ -426,18 +449,20 @@ int main(int argc, char **argv) {
     }
     const char *which = argv[1], *qos = NULL;
     int threads = 1, reps = 5, pins[512], npins = 0;
+    long rounds = 200000;
     double secs = 1.0;
     for (int i = 2; i < argc; i++) {
         if (!strcmp(argv[i], "-t") && i + 1 < argc) threads = atoi(argv[++i]);
         else if (!strcmp(argv[i], "-r") && i + 1 < argc) reps = atoi(argv[++i]);
         else if (!strcmp(argv[i], "-s") && i + 1 < argc) secs = atof(argv[++i]);
         else if (!strcmp(argv[i], "-q") && i + 1 < argc) qos = argv[++i];
+        else if (!strcmp(argv[i], "-n") && i + 1 < argc) rounds = atol(argv[++i]);
         else if (!strcmp(argv[i], "-c") && i + 1 < argc) {
             char *s = argv[++i], *tok;
             while ((tok = strsep(&s, ",")) && npins < 512) pins[npins++] = atoi(tok);
         }
     }
-    if (!strcmp(which, "pingpong")) { run_pingpong(reps, qos); return 0; }
+    if (!strcmp(which, "pingpong")) { run_pingpong(reps, qos, rounds); return 0; }
     if (!strcmp(which, "syscall")) { run_syscall(reps); return 0; }
     int ran = 0, sme = have_sme();
 #if defined(__ARM_FEATURE_SME)

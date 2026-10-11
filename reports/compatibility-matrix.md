@@ -37,7 +37,7 @@ Status vocabulary:
 | 10 | SMC (power, battery, sensors) | `smc` IOP → `AppleSMC*` | `macsmc` (AS; RTKit) | **Partial** (depends on #9) | Medium | No battery or thermals |
 | 11 | GPU | `gpu,t6050` + `gfx-asc` + **`gfx1-asc`** → `AGXAcceleratorG17X` | AS `asahi` DRM: agx-t8103/t8112/t600x/t602x only (G13/G14) | **Missing** (G15+ unsupported) | Very high | No acceleration. Matrix units: macOS FP16 GEMM ≈ 64 TFLOP/s (BENCH) |
 | 12 | Display | `disp0,t605x`, DCP `iop,ascwrap-v6`, 4× `dispextN,t605x` → `IOMobileFramebufferShim` | AS `apple` DRM (DCP) t8112/t6020 | **Missing** | High | Only a firmware framebuffer, if any |
-| 13 | Neural Engine | `ane,t8132exclave` → `H11ANEIn` + **`ANEExclaveProxy`** | none upstream (see AR) | **Missing / possibly blocked** by exclave design | Very high or unknown | No ANE; AI falls back to GPU/CPU |
+| 13 | Neural Engine | `ane,t8132exclave` → kext `AppleH16ANEInterface` (H16 IP): `H11ANEIn` + **`ANEExclaveProxy`** | none upstream (see AR) | **Missing / possibly blocked** by exclave design | Very high or unknown | No ANE; AI falls back to GPU/CPU |
 | 14 | USB / Type-C | `usb-drd,t6050;usb-drd,t8142` → `AppleT8142USBXHCI`; `atc-phy,t6050;atc-phy,t6040` → `AppleT6050TypeCPhy` | dwc3 + `apple-atcphy` (t8103, t8122) | **Missing** (new PHY) | High | No USB |
 | 15 | Thunderbolt / USB4 | `apciec,t6050` ×3, `acio,v2` | AS experimental | **Missing** | Very high | No TB |
 | 16 | Internal PCIe (Wi-Fi/BT, SD) | `apcie,t6050` → `AppleT6050PCIe` | `pcie-apple` (t8103/t6000/t602x) | **Unknown** | Medium | No Wi-Fi/BT/SD |

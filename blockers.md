@@ -66,10 +66,14 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
 * Project venv `tools/venv`: mlx 0.32.3, mlx-lm 0.32.0, coremltools 9.0.
 
-### B-008 🟡 Power and energy measurement
+### B-008 🟢 Power and energy measurement (resolved 2026-10-11, macOS side)
 
-* `powermetrics` needs root. No per-cluster or ANE power data, so no
-  performance-per-watt yet. Needs the user to run a provided command.
+* `powermon` (`benchmarks/src/powermon.c`) reads IOReport "Energy Model"
+  and DVFS residency channels **without root**: CPU per core and cluster,
+  GPU, ANE, DRAM, memory fabric, display, ISP, AVE, PCIe. `powermetrics`
+  isn't needed.
+* Remaining: a Linux-side equivalent (PMGR/SMC energy counters) for native
+  parity of performance-per-watt.
 
 ### B-009 🟡 Energy mode during baseline
 

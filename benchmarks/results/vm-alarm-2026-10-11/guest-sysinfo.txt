@@ -1,0 +1,90 @@
+== uname
+Linux alarm-vz 7.1.6-1-aarch64-ARCH #1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026 aarch64 GNU/Linux
+== cpus
+18
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp flagm2 frint i8mm bf16 bti afp sme smei16i64 smef64f64 smei8i32 smef16f32 smeb16f32 smef32f32 ebf16 sme2 sme2p1 smei16i32 smebi32i32 smeb16b16 smef16f16
+== cpuinfo per-cpu implementer/part (unique lines)
+     18 CPU architecture: 8
+     18 CPU implementer	: 0x61
+     18 CPU part	: 0x000
+     18 CPU revision	: 0
+     18 CPU variant	: 0x0
+== MIDR_EL1 per cpu (sysfs)
+     18 cpu0 0x00000000610f0000
+== hwcap2 SME bits
+AT_HWCAP:             0xefb3ffff
+AT_PAGESZ:            4096
+AT_HWCAP2:            0x7e13f926181
+AT_HWCAP3:            0x0
+== cpu capacity
+     18 1024
+== cpufreq
+ls: cannot access '/sys/devices/system/cpu/cpu0/cpufreq': No such file or directory
+== memory
+               total        used        free      shared  buff/cache   available
+Mem:              15           0          15           0           0          15
+Swap:              0           0           0
+4096
+== kernel config (uclamp/sme/eas/virtiofs)
+CONFIG_ARM64_4K_PAGES=y
+CONFIG_ARM64_MTE=y
+CONFIG_ARM64_SVE=y
+CONFIG_ARM64_SME=y
+CONFIG_ENERGY_MODEL=y
+CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y
+CONFIG_SCHED_MC=y
+CONFIG_VIRTIO_FS=m
+== sched_energy_aware
+== cgroup controllers
+cpuset cpu io memory hugetlb pids rdma
+== block devices
+NAME SIZE ROTA SCHED       LOG-SEC PHY-SEC
+vda   32G    1 mq-deadline     512     512
+== network
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp0s1           UP             192.168.64.2/24 metric 1024 fe80::44ef:2fff:fe96:613f/64 
+Global
+           Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+    resolv.conf mode: uplink
+  Current DNS Server: 9.9.9.9#dns.quad9.net
+Fallback DNS Servers: 9.9.9.9#dns.quad9.net 2620:fe::9#dns.quad9.net
+== dmesg (virt platform, gic, timer, errors)
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: Trusted OS migration not required
+[    0.000000] psci: SMC Calling Convention v1.1
+[    0.000000] CPU features: detected: GICv3 CPU interface
+[    0.000000] GICv3: 988 SPIs implemented
+[    0.000000] GICv3: 0 Extended SPIs implemented
+[    0.000000] Root IRQ handler: gic_handle_irq
+[    0.000000] GICv3: GICv3 features: 16 PPIs, RSS
+[    0.000000] GICv3: GICD_CTLR.DS=1, SCR_EL3.FIQ=0
+[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x0000000010010000
+[    0.000000] arch_timer: cp15 timer running at 24.00MHz (virt).
+[    0.012056] GICv3: CPU1: found redistributor 1 region 0:0x0000000010030000
+[    0.012360] GICv3: CPU2: found redistributor 2 region 0:0x0000000010050000
+[    0.012668] GICv3: CPU3: found redistributor 3 region 0:0x0000000010070000
+[    0.012948] GICv3: CPU4: found redistributor 4 region 0:0x0000000010090000
+[    0.013258] GICv3: CPU5: found redistributor 5 region 0:0x00000000100b0000
+[    0.013564] GICv3: CPU6: found redistributor 6 region 0:0x00000000100d0000
+[    0.013862] GICv3: CPU7: found redistributor 7 region 0:0x00000000100f0000
+[    0.014175] GICv3: CPU8: found redistributor 8 region 0:0x0000000010110000
+[    0.014505] GICv3: CPU9: found redistributor 9 region 0:0x0000000010130000
+[    0.014829] GICv3: CPU10: found redistributor a region 0:0x0000000010150000
+[    0.015127] GICv3: CPU11: found redistributor b region 0:0x0000000010170000
+[    0.015520] GICv3: CPU12: found redistributor c region 0:0x0000000010190000
+[    0.015820] GICv3: CPU13: found redistributor d region 0:0x00000000101b0000
+[    0.016125] GICv3: CPU14: found redistributor e region 0:0x00000000101d0000
+[    0.016430] GICv3: CPU15: found redistributor f region 0:0x00000000101f0000
+[    0.016782] GICv3: CPU16: found redistributor 10 region 0:0x0000000010210000
+[    0.017095] GICv3: CPU17: found redistributor 11 region 0:0x0000000010230000
+[    0.017195] CPU features: detected: SME2
+[    0.020425] SME: minimum available vector length 64 bytes per vector
+[    0.020425] SME: maximum available vector length 64 bytes per vector
+[    0.020426] SME: default vector length 64 bytes per vector
+[    0.213908] virtio_blk virtio2: [vda] 67108864 512-byte logical blocks (34.4 GB/32.0 GiB)
+[    0.220609] Btrfs loaded, zoned=yes, fsverity=no
+[    2.606470] faux_driver regulatory: Direct firmware load for regulatory.db failed with error -2
+[    2.606578] cfg80211: failed to load regulatory.db
+vzjob: start=2026-10-11T22:43:51Z end=2026-10-11T22:43:52Z exit=0

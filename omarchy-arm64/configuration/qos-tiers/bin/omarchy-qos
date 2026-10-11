@@ -79,10 +79,12 @@ set_uclamp() {  # slice min|max percent
 apply() {
   command -v systemctl >/dev/null || die "systemd required"
   [ -f "$CGROOT/cgroup.controllers" ] || die "cgroup v2 not mounted at $CGROOT"
-  # Weights first: setting CPUWeight makes systemd enable the cpu controller
-  # for the slice, which is what exposes cpu.uclamp.* files.
+  # Start the slices first: an inactive slice has no cgroup directory, so its
+  # cpu.uclamp.* files could not be written (found in VM test 004).  Then set
+  # weights: CPUWeight makes systemd enable the cpu controller for the slice,
+  # which is what exposes the cpu.uclamp.* files.
+  systemctl --user start session.slice app.slice utility.slice background.slice
   systemctl --user set-property --runtime session.slice CPUWeight="$INTERACTIVE_WEIGHT"
-  systemctl --user start utility.slice 2>/dev/null || true
   systemctl --user set-property --runtime utility.slice CPUWeight="$UTILITY_WEIGHT"
   systemctl --user set-property --runtime background.slice CPUWeight="$BACKGROUND_WEIGHT"
 

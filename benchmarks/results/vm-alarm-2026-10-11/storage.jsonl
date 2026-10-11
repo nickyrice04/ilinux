@@ -1,0 +1,8 @@
+{"bench":"storage","test":"seqwrite","threads":1,"block_KiB":8192,"file_MiB":8192,"seconds":25.616,"MB_per_s":335.3,"IOPS":40}
+{"bench":"storage","test":"seqread","threads":1,"block_KiB":8192,"file_MiB":8192,"seconds":5.925,"MB_per_s":1449.8,"IOPS":173}
+{"bench":"storage","test":"seqread","threads":4,"block_KiB":8192,"file_MiB":8192,"seconds":2.476,"MB_per_s":3469.5,"IOPS":414}
+{"bench":"storage","test":"randread","threads":1,"block_KiB":4,"file_MiB":8192,"seconds":8.000,"MB_per_s":39.2,"IOPS":9570,"lat_us_p50":102.8,"lat_us_p99":131.4,"lat_us_p999":141.5}
+{"bench":"storage","test":"randread","threads":8,"block_KiB":4,"file_MiB":8192,"seconds":8.001,"MB_per_s":199.4,"IOPS":48676,"lat_us_p50":160.4,"lat_us_p99":260.0,"lat_us_p999":311.7}
+{"bench":"storage","test":"randread","threads":32,"block_KiB":4,"file_MiB":8192,"seconds":8.002,"MB_per_s":322.5,"IOPS":78741,"lat_us_p50":402.1,"lat_us_p99":629.1,"lat_us_p999":738.8}
+{"bench":"storage","test":"randwrite","threads":1,"block_KiB":4,"file_MiB":8192,"seconds":5.010,"MB_per_s":30.5,"IOPS":7444,"lat_us_p50":136.3,"lat_us_p99":189.4,"lat_us_p999":248.5}
+{"bench":"storage","test":"randwrite","threads":8,"block_KiB":4,"file_MiB":8192,"seconds":5.008,"MB_per_s":237.8,"IOPS":58052,"lat_us_p50":131.1,"lat_us_p99":260.9,"lat_us_p999":326.9}

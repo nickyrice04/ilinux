@@ -10,6 +10,7 @@ MLComputePlan reports the device Core ML *plans* for each op, which is the
 evidence that a run used the ANE (results are never inferred from GPU runs).
 
 Usage: tools/venv/bin/python benchmarks/ai/coreml_ane_bench.py OUT_DIR
+       [--only ffn|conv] [--unit cpu_and_ne|cpu_and_gpu|cpu_only|all --seconds N]
 Output: OUT_DIR/coreml.jsonl and the generated .mlpackage files.
 """
 import json
@@ -91,17 +92,43 @@ def planned_devices(pkg_path, unit):
         return {"error": repr(e)[:200]}
 
 
+def sustained(pkg, inputs, flops, name, uname, seconds):
+    """Loop predictions for a fixed time (for energy measurement)."""
+    m = ct.models.MLModel(str(pkg), compute_units=UNITS[uname])
+    m.predict(inputs)
+    n, t0 = 0, time.perf_counter()
+    while time.perf_counter() - t0 < seconds:
+        m.predict(inputs)
+        n += 1
+    dt = time.perf_counter() - t0
+    print(json.dumps({"bench": "coreml-sustained", "model": name, "compute_units": uname,
+                      "inferences": n, "seconds": dt, "tflops": flops * n / dt / 1e12}), flush=True)
+
+
 def main():
-    out = Path(sys.argv[1])
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("out")
+    ap.add_argument("--only", choices=["ffn", "conv"])
+    ap.add_argument("--unit", choices=sorted(UNITS))
+    ap.add_argument("--seconds", type=float)
+    a = ap.parse_args()
+    out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     results = out / "coreml.jsonl"
     for name, builder in (("ffn", build_ffn), ("conv", build_conv)):
+        if a.only and name != a.only:
+            continue
         prog, inputs, flops = builder()
-        model = ct.convert(prog, convert_to="mlprogram",
-                           compute_precision=ct.precision.FLOAT16,
-                           minimum_deployment_target=ct.target.macOS15)
         pkg = out / f"{name}.mlpackage"
-        model.save(str(pkg))
+        if not pkg.exists():
+            model = ct.convert(prog, convert_to="mlprogram",
+                               compute_precision=ct.precision.FLOAT16,
+                               minimum_deployment_target=ct.target.macOS15)
+            model.save(str(pkg))
+        if a.seconds:
+            sustained(pkg, inputs, flops, name, a.unit or "cpu_and_ne", a.seconds)
+            continue
         for uname, unit in UNITS.items():
             m = ct.models.MLModel(str(pkg), compute_units=unit)
             t_load = time.time()

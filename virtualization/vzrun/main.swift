@@ -33,6 +33,9 @@ struct Options {
     var shares: [(path: String, tag: String, readOnly: Bool)] = []
     var nat = true
     var nested = false
+    var nvme = false
+    var diskCache = "automatic"     // automatic | cached | uncached
+    var diskSync = "full"           // full | fsync | none
     var width = 1920, height = 1200
 }
 
@@ -41,6 +44,7 @@ func usage() -> Never {
     usage: vzrun [--cpus N] [--mem GiB] [--disk raw.img]... [--iso file.iso]
                  (--efi [--efi-vars file] | --kernel Image [--initrd file] [--cmdline str])
                  [--share hostdir:tag[:ro]]... [--no-net] [--nested] [--gui [--size WxH]]
+                 [--nvme] [--disk-cache automatic|cached|uncached] [--disk-sync full|fsync|none]
 
     """.data(using: .utf8)!)
     exit(2)
@@ -64,6 +68,9 @@ func parse() -> Options {
         case "--gui": o.gui = true
         case "--no-net": o.nat = false
         case "--nested": o.nested = true
+        case "--nvme": o.nvme = true
+        case "--disk-cache": o.diskCache = next()
+        case "--disk-sync": o.diskSync = next()
         case "--size":
             let p = next().split(separator: "x").compactMap { Int($0) }
             if p.count == 2 { o.width = p[0]; o.height = p[1] }
@@ -113,11 +120,22 @@ func makeConfig(_ o: Options) throws -> VZVirtualMachineConfiguration {
     }
 
     var storage: [VZStorageDeviceConfiguration] = []
-    for d in o.disks {
+    let caching: VZDiskImageCachingMode = o.diskCache == "cached" ? .cached :
+        o.diskCache == "uncached" ? .uncached : .automatic
+    let sync: VZDiskImageSynchronizationMode = o.diskSync == "none" ? .none :
+        o.diskSync == "fsync" ? .fsync : .full
+    for (i, d) in o.disks.enumerated() {
+        // The first disk is the root disk and always uses safe settings; the
+        // cache/sync/NVMe experiment flags apply to additional (data) disks.
+        let isRoot = i == 0
         let att = try VZDiskImageStorageDeviceAttachment(url: fileURL(d), readOnly: false,
-                                                         cachingMode: .automatic,
-                                                         synchronizationMode: .full)
-        storage.append(VZVirtioBlockDeviceConfiguration(attachment: att))
+                                                         cachingMode: isRoot ? .automatic : caching,
+                                                         synchronizationMode: isRoot ? .full : sync)
+        if !isRoot && o.nvme {
+            storage.append(VZNVMExpressControllerDeviceConfiguration(attachment: att))
+        } else {
+            storage.append(VZVirtioBlockDeviceConfiguration(attachment: att))
+        }
     }
     if let iso = o.iso {
         let att = try VZDiskImageStorageDeviceAttachment(url: fileURL(iso), readOnly: true)

@@ -71,20 +71,21 @@ Observed. Notes:
 | Item | Value | Evidence |
 |---|---|---|
 | Cores | 40 | Observed (`system_profiler`) |
-| Driver class | `AGXAcceleratorG17X` (G17 generation, "X" variant); firmware via `AGXFirmwareKextG17RTBuddy` | Observed (IORegistry) |
+| Driver class | `AGXAcceleratorG17X` (kext `com.apple.AGXG17X`); firmware via `AGXFirmwareKextG17XRTBuddy`. macOS ships G13G/X (M1), G14G/X (M2), G15C/G/S (M3), G16G/X (M4) and G17G/P/X (M5/M5 Pro/M5 Max) kexts | Observed (IORegistry, /System/Library/Extensions) |
 | ADT nodes | `sgx` = `gpu,t6050`; two GPU coprocessors `gfx-asc` and **`gfx1-asc`** (both `iop,ascwrap-v6`); `mapper-gfx-asc` = `iommu-mapper,gfx` | Observed |
 | API | Metal 4; families apple7–apple10, metal3, metal4 | Observed (`gpubench info`) |
 | Working set | `recommendedMaxWorkingSetSize` 115.4 GB; max single buffer 86.6 GB | Observed |
-| Matrix hardware | FP16 GEMM throughput is about 4× the scalar FP16 FMA peak, consistent with the M5 "Neural Accelerators" in each GPU core | Measured + Inferred, see `benchmarks/` |
+| Matrix hardware | FP16 GEMM ≈ 64 TFLOP/s, about 3.6× the scalar FP16 FMA peak (17.6), consistent with the M5 "Neural Accelerators" in each GPU core. GPU power under GEMM ≈ 73 W | Measured + Inferred |
 
 ## Neural Engine
 
 | Item | Value | Evidence |
 |---|---|---|
 | ADT node | `ane0`, `compatible = ane,t8132exclave`, with its own DART `dart-ane0` | Observed |
-| Drivers | `H11ANEIn`, `AppleT6050ANEHAL`, `H1xANELoadBalancer`, **`ANEExclaveProxy`**, `ANEClientHints` | Observed |
+| Drivers | Kext `com.apple.driver.AppleH16ANEInterface` claims `ane,t8132exclave`. Classes: `H11ANEIn`, `AppleT6050ANEHAL`, `H1xANELoadBalancer`, **`ANEExclaveProxy`**, `ANEClientHints` | Observed (IORegistry + kext Info.plist personalities) |
 | Interpretation | On this macOS version the ANE is driven through an **exclave**, a secure isolated domain, with XNU holding a proxy. The block is labelled as t8132-generation (M4-family) ANE IP | Inferred |
 | Core count | Not exposed by any interface checked so far | Unknown |
+| Measured throughput | Core ML FP16 1×1-conv stack: **14.0 TFLOP/s**; FFN stack: 7.1 TFLOP/s; ANE rail ≈ 3.6 W. Every op was planned on the ANE (MLComputePlan) | Measured (`benchmarks/results/macos-2026-10-11-coreml`, `-power`) |
 
 ## Memory
 

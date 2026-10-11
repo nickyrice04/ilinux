@@ -1,8 +1,20 @@
 # omarchy-qos: macOS-style QoS tiers for Linux on heterogeneous Apple CPUs
 
-**Status:** implemented, syntax-checked on macOS. The functional test in a
-Linux VM is pending (see `tests/test-qos.sh`). Performance effects can be
-validated only on native heterogeneous hardware. **Not validated yet.**
+**Status (2026-10-11):** the **functional test passes 5/5 in an Arch Linux ARM
+VM** (`virtualization/jobs/004-omarchy`, real systemd user session via
+linger). Verified:
+
+* slice placement for background and utility;
+* the background efficient-CPU fence (`Cpus_allowed_list` = 0 under a
+  simulated set);
+* default tier unrestricted;
+* weights (session 400, utility 50, background 20);
+* cpuset delegation to `user@.service`.
+
+uclamp was **skipped** because the stock `linux-aarch64` 7.1.6 kernel lacks
+`CONFIG_UCLAMP_TASK_GROUP` (blocker B-011). The test found one bug, now fixed:
+an inactive slice has no cgroup, so `apply` now starts the slices first.
+Performance effects can be validated only on native heterogeneous hardware.
 
 ## Problem
 

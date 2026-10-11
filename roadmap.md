@@ -12,21 +12,21 @@ approval · ⬜ not started.
 | 0.1 | Exact hardware inventory plus sanitized device-tree capture | ✅ |
 | 0.2 | Workspace, continuity docs, git repo | ✅ |
 | 0.3 | Portable benchmark suite (CPU/SME, memory, storage) plus Metal GPU benchmark plus synthetic GGUF tool | ✅ |
-| 0.4 | macOS baseline run (AC; energy mode recorded) | 🔄 |
-| 0.5 | Research: Asahi status for t6050, REA analysis, Omarchy ARM64 analysis | 🔄 |
-| 0.6 | Compatibility matrix v1 (ADT block → mainline/Asahi driver → status) | 🔄 |
+| 0.4 | macOS baseline run (AC; energy mode recorded) | ✅ |
+| 0.5 | Research: Asahi status for t6050, REA analysis, Omarchy ARM64 analysis | ✅ |
+| 0.6 | Compatibility matrix v1 (ADT block → mainline/Asahi driver → status) | ✅ |
 
-## Phase 1 — Linux in isolated environments (needs approvals in `blockers.md`)
+## Phase 1 — Linux in isolated environments (approved 2026-10-11: vzrun VM, REA project-local, MLX venv)
 
 | # | Item | Why |
 |---|---|---|
-| 1.1 | `vzrun` (Virtualization.framework runner, workspace-only) built and booting an aarch64 Linux image | Layer 3 test bed without host installs |
+| 1.1 | ✅ `vzrun` built (ad-hoc signed) and booting a GPG-verified Arch Linux ARM image with scripted jobs | Layer 3 test bed without host installs |
 | 1.2 | Run the identical C benchmarks in the VM | Quantify VM overhead (CPU, memory, storage) vs macOS. Expected near-native CPU; VM results are never "native parity" |
-| 1.3 | Check whether SME is exposed to guests (`/proc/cpuinfo`, `hwcap2`) and run `cpubench sme_*` in the guest | Matrix-unit parity for CPU inference on Linux |
+| 1.3 | ✅ SME2 is exposed to VZ guests (SVL 512). In-guest `sme_*` throughput ≈ 98–99% of macOS | Matrix-unit parity for CPU inference on Linux |
 | 1.4 | Arch Linux ARM container or VM: resolve Omarchy package set on aarch64 (`pacman -Sp`) | Ground-truth package availability |
 | 1.5 | Omarchy-arm64 installer branch: arch guards, package substitutions, bootloader abstraction | Target userspace |
 | 1.6 | Hyprland in VM (virtio-gpu, software GL) smoke test | Desktop integration without GPU acceleration |
-| 1.7 | GPU-in-VM path evaluation (krunkit/libkrun Venus → MoltenVK → Metal) with llama.cpp Vulkan | Pragmatic Linux GPU compute on this machine today |
+| 1.7 | GPU-in-VM path evaluation: krunkit/libkrun Venus → MoltenVK → Metal (≈50–57% of Metal on M2 Max per published data), and llama.cpp GGML-VirtGPU API remoting (host ggml-metal, which could reach the M5 matrix units; untested on macOS 26). **Needs host installs, so new approval** | Pragmatic Linux GPU compute on this machine today |
 
 ## Phase 2 — Native enablement research for t6050 (no hardware writes)
 

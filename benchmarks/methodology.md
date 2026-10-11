@@ -18,7 +18,10 @@ subsystem. Every run is reproducible from this repository.
    version, model, load average, power source, energy mode (`pmset`
    `powermode` plus the `system_profiler` description), `pmset -g therm`,
    and compiler versions. No machine identifiers are captured.
-4. **Robust statistics.** Each test repeats (5–10 runs). We report median
+4. **Robust statistics.** *Parity tables use medians.* In VMs, preemption of
+   the timing thread's vCPU produced impossible STREAM "best" values
+   (e.g. 1163 GB/s against a ≈ 370 GB/s median), so best-of-N is unsafe there.
+   Original wording: Each test repeats (5–10 runs). We report median
    and min/max (CPU), or best/median/worst (STREAM convention: best). The
    first repetition is dropped where warm-up matters (GPU, STREAM).
 5. **Bounded, non-destructive load.** Each test lasts about 1 s per
@@ -36,7 +39,9 @@ subsystem. Every run is reproducible from this repository.
 
 | Kernel | What it stresses | Unit |
 |---|---|---|
-| `fma` | Peak FP32 NEON FMA: 24 independent 4-wide chains | GFLOP/s |
+| `fma` | FP32 NEON FMA, C intrinsics: 24 independent 4-wide chains. **Compiler-sensitive** (F-016) | GFLOP/s |
+| `fma_asm` | FP32 NEON FMA in fixed inline assembly with rotated source registers. Compiler-independent peak | GFLOP/s |
+| `freq` | Dependent 1-cycle ADD chain, so its rate is the core clock in GHz (estimate) | GHz |
 | `intmix` | Integer ALU: 8 independent mul/xorshift/rotate chains | Gop/s |
 | `sort` | Branchy integer: own quicksort of 256 K uint32 (L2-resident) | Melem/s |
 | `sgemm` | Cache-blocked 256³ SGEMM, compiler auto-vectorized | GFLOP/s |

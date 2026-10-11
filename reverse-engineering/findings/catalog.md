@@ -135,3 +135,52 @@ No entry is based on decompiled Apple code.
 | Source | `ADT` `esm` (`iop,exclave-sep-manager`), `aop-exclave-mailbox`, `isp-exclave-proxy`, `isp-exclave-s-proxy`, `audio-*-proxy` (`iisaudio,isolated-stream-proxy`), `exclaves-test` root node, `ane,t8132exclave` |
 | Inference | Camera ISP, microphone streams, ANE and parts of AOP are mediated by exclaves on macOS. Linux has no exclave runtime, so each block's accessibility from the normal world is an open enablement question. |
 | Confidence | Observation **Confirmed**; impact **Unknown** |
+
+## F-012 · Platform · Which Apple driver claims each ADT compatible
+
+| Field | Value |
+|---|---|
+| Source | `hardware/scripts/kext_personalities.py` joins kext `Info.plist` IOKitPersonalities (`IONameMatch`) with the sanitized ADT. Result: `hardware/adt/kext-personalities.tsv` (108 of 155 compatibles matched). Metadata only: on Apple Silicon, kext binaries are not on disk (only in the sealed boot kernel collection), so there's nothing to disassemble. |
+| Observation | `ane,t8132exclave` → `AppleH16ANEInterface` (H16-generation ANE). `sart,coastguard` → `AppleSART` / `IOCoastGuardSARTMapper`. `disp0,t605x` → `AppleMobileDispT605X-DCP`. `gpu,t6050` → `AGXG17X`. `iop,ascwrap-v6` → `AppleA7IOP-ASCWrap-v6`. `admac-evolution,t6050` → `AudioDMAController-T605x`. `error-handler,t6050` → `AppleT6050` (SoC error handler). |
+| Inference | It names the hardware IP generation for each block, which tells Linux which existing driver family is closest (e.g. ANE = H16 = M4-era IP). |
+| Confidence | **Confirmed** (direct metadata) |
+| REA note | REA 6.4.0 `inspect-plist` rejects binary-less kext bundles (`target_unavailable`). Plain `plistlib` was used instead. |
+
+## F-013 · Virtualization · What a Virtualization.framework Linux guest gets on M5 Max
+
+| Field | Value |
+|---|---|
+| Source | `BENCH` / VM jobs 001, 002, 002b (`benchmarks/results/vm-alarm-2026-10-11/`) |
+| Observation | **SME2 is exposed to the guest** (`CPU features: detected: SME2`, SVL 64 bytes), and in-guest SME throughput is 96–101% of macOS. **MIDR is masked** (`0x610f0000`, part 0x000). GICv3 (988 SPIs), PSCI 1.1, 24 MHz timer. Pipe ping-pong round trip **21–52 µs vs 3.7 µs** native. `getppid` 113 vs 85 ns. Page-fault/zero-fill throughput 10.5 vs 31.5 GB/s. Large-buffer latency 128 vs 108 ns (256 MiB). **Storage via virtio-blk on a sparse file: seq write 0.34 GB/s, seq read 1.45 GB/s (vs 11.2 / 11.0 native)**, QD32 random read 31% of native. |
+| Inference | The hypervisor passes the matrix unit through, so CPU-side AI on Linux in a VM keeps SME. Costs concentrate in exits: wakeups/IPIs, stage-2 faults, and virtual I/O. |
+| Confidence | **Confirmed** (measured) |
+| Linux mapping | Guest kernel tuning (idle polling, `haltpoll`), 16K/64K guest pages (fewer stage-2 faults), and VZ disk options (NVMe controller, caching/sync modes). The matrix is in job 005. |
+| Validation | `virtualization/scripts/run-storage-matrix.sh` (VZ storage configurations). Guest-kernel variants are planned. |
+
+## F-014 · Power · No-root energy and DVFS telemetry via IOReport
+
+| Field | Value |
+|---|---|
+| Source | `benchmarks/src/powermon.c` (read-only IOReport client, the same interface open-source monitors use) |
+| Observation | "Energy Model" channels without root: per-core energy (`MCPU0_0..5`, `MCPU1_0..5`, `PACC_0..5`); cluster totals (`MCPU0`, `MCPU1`, `PCPU`) plus `MCPM0/1`/`PCPM` and SRAM rails; `CPU Energy`; `GPU`/`GPU Energy`; **`ANE`**; `DRAM`; `AMCC`; `DCS`; `DISP`; `ISP`; `AVE`; `FAB`; PCIe/Thunderbolt ports. DVFS residency: 17 states per M core, 22 per P core, 16 for the GPU. |
+| Inference | Performance-per-watt and ANE-execution evidence are measurable on macOS without `powermetrics`/sudo. `PCPM`/`MCPMx` are likely the per-cluster SME ("CPM") rails (Hypothesis). |
+| Confidence | Channels **Confirmed**; rail semantics **Hypothesis** |
+| Linux mapping | No equivalent yet. On Linux the same PMGR/SMC energy counters would need a driver (hwmon/powercap). This is a research item for native enablement. |
+
+## F-015 · Omarchy · aarch64 package set resolves fully on ALARM + Omarchy repo
+
+| Field | Value |
+|---|---|
+| Source | VM job 004 (real `pacman -Sp` in a throwaway DB against live repos) |
+| Observation | Omarchy edge aarch64 templates resolve 161 default names plus extras to **842 packages, 0 unresolved**. ALARM alone leaves **33 unresolved** (Omarchy-built packages). |
+| Confidence | **Confirmed** |
+
+## F-016 · CPU microarchitecture · FMA throughput depends on source-register reuse
+
+| Field | Value |
+|---|---|
+| Source | `BENCH`: `benchmarks/src/fma_asm.c` vs `fma_asm_varied.c`, both fixed inline assembly with 24 independent FMLA chains and the same instruction count |
+| Observation | Every FMLA reading the same two source registers gives **125.4 GFLOP/s** (27.8 FLOP/cycle at 4.51 GHz). Multiplicands rotated over 4×4 registers give **141.1 GFLOP/s** (31.3 FLOP/cycle, about the 4-pipe peak). Identical results inside the Linux VM (124.3 vs 141), so this isn't OS-dependent. 18 cores: 1.89 TFLOP/s with the asm kernel. |
+| Inference | M5 P cores have a per-cycle limit on reads of the same physical register (rename or bypass). Apple clang 21 emits the same-register pattern for our C kernel; LLVM clang 23 doesn't. That explained an apparent "112% VM parity" for FMA. |
+| Confidence | **Confirmed** throughput; mechanism **Likely** |
+| Consequence | Cross-OS CPU comparisons must use compiler-independent kernels (`cpubench fma_asm`) or the same compiler version. This is now in the methodology. |

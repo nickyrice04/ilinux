@@ -22,7 +22,8 @@ measured against macOS on the same machine.
 | [`decisions.md`](decisions.md) | Decision log |
 | [`hardware/hardware-inventory.md`](hardware/hardware-inventory.md) | Exact hardware facts (observed, measured, spec) |
 | [`reports/compatibility-matrix.md`](reports/compatibility-matrix.md) | Every SoC block → Linux driver → status |
-| [`reports/performance-parity.md`](reports/performance-parity.md) | Scorecard (macOS baseline; Linux TBD) |
+| [`reports/performance-parity.md`](reports/performance-parity.md) | Scorecard: macOS baselines, AI and energy, Linux-VM track |
+| [`reports/vm-vs-macos-parity.md`](reports/vm-vs-macos-parity.md) | Full VM-vs-macOS table (identical code and flags) |
 | [`reverse-engineering/findings/catalog.md`](reverse-engineering/findings/catalog.md) | Research findings database |
 
 ## Reproduce the macOS baseline
