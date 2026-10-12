@@ -1,0 +1,628 @@
+From: iLinux workspace
+Subject: [PATCH] vrend: import Venus Metal-heap images on native CGL via an IOSurface mirror
+
+On a native-CGL host (no EGL/ANGLE) vrend_renderer_pipe_resource_set_type()
+could only import blobs through GL_EXT_memory_object_fd, which Apple's
+OpenGL lacks, so every Venus swapchain image a compositor imported failed
+with EINVAL and put the compositor's context in error (scrambled or blank
+desktop as soon as a Vulkan client presented).
+
+Apple's GL binds IOSurfaces, but only as GL_TEXTURE_RECTANGLE, while vrend
+samples GL_TEXTURE_2D.  So for VIRGL_RESOURCE_METAL_HEAP resources:
+ - allocate an ordinary GL texture for the resource,
+ - mirror the linear image in the heap into an IOSurface with a Metal blit
+   (or a small swizzling compute pass for RGBA-ordered formats, since CGL
+   rejects RGBA IOSurfaces), and
+ - copy the IOSurface's rectangle texture into the 2D texture with
+   glBlitFramebuffer before the resource is sampled, blitted or copied,
+   at most once per decoded command buffer (vrend_renderer_begin_cmd_batch).
+Both copies stay on the GPU.  Formats without a mirror mapping still import
+(contents undefined) instead of failing the importing context.
+VIRGL_IOSURFACE_MIRROR_STATS=1 logs the average mirror update time.
+
+--- a/meson.build
++++ b/meson.build
+@@ -219,7 +219,7 @@
+    conf_data.set('HAVE_LINUX_UDMABUF_H', 1)
+ endif
+ 
+-metal_dep = dependency('appleframeworks', modules : ['Metal', 'CoreFoundation'], required: false)
++metal_dep = dependency('appleframeworks', modules : ['Metal', 'Foundation', 'CoreFoundation', 'IOSurface', 'OpenGL'], required: false)
+ if metal_dep.found()
+    conf_data.set('ENABLE_METAL', 1)
+    add_languages('objc', required: true, native: false)
+--- a/src/vrend/vrend_decode.c
++++ b/src/vrend/vrend_decode.c
+@@ -2067,6 +2067,8 @@
+    int ret;
+ 
+ #define TRANSFER_HEADER_SIZE 4096
++
++   vrend_renderer_begin_cmd_batch();
+ 
+    bret = vrend_hw_switch_context(gdctx->grctx, true);
+    if (bret == false)
+--- a/src/vrend/vrend_metal.h
++++ b/src/vrend/vrend_metal.h
+@@ -36,4 +36,25 @@
+ 
+ void virgl_metal_release_texture(MTLTexture_id tex);
+ 
++/* Native-CGL import of Venus METAL_HEAP blobs.  Apple's OpenGL binds only
++ * IOSurfaces, and only as GL_TEXTURE_RECTANGLE, so the linear image in the
++ * heap is mirrored into an IOSurface by a Metal blit (or a swizzling compute
++ * pass for RGBA-ordered formats); vrend then copies the rectangle texture
++ * into the resource's GL_TEXTURE_2D before it is sampled. */
++struct virgl_metal_iosurface_mirror;
++
++struct virgl_metal_iosurface_mirror *
++virgl_metal_iosurface_mirror_create(MTLHeap_id heap,
++                                    const struct vrend_metal_texture_description *desc);
++
++/* Attaches the mirror's IOSurface to the texture bound to `target`
++ * (GL_TEXTURE_RECTANGLE) in the current CGL context. */
++bool virgl_metal_iosurface_mirror_bind_gl(struct virgl_metal_iosurface_mirror *mirror,
++                                          uint32_t target);
++
++/* Copies the heap contents into the IOSurface; returns once the GPU is done. */
++bool virgl_metal_iosurface_mirror_update(struct virgl_metal_iosurface_mirror *mirror);
++
++void virgl_metal_iosurface_mirror_destroy(struct virgl_metal_iosurface_mirror *mirror);
++
+ #endif
+--- a/src/vrend/vrend_metal.m
++++ b/src/vrend/vrend_metal.m
+@@ -10,6 +10,13 @@
+ #include "pipe/p_state.h"
+ #include "util/u_math.h"
+ #include <Metal/Metal.h>
++#include <IOSurface/IOSurface.h>
++#include <time.h>
++#define GL_SILENCE_DEPRECATION 1
++#include <OpenGL/OpenGL.h>
++#include <OpenGL/CGLIOSurface.h>
++#include <OpenGL/gl3.h>
++#include "virgl_util.h"
+ 
+ struct metal_format_conversion {
+    uint32_t virgl_format;
+@@ -200,3 +207,283 @@
+ 
+    [mtl_texture release];
+ }
++
++/* ---- IOSurface mirror of a Venus METAL_HEAP image (native CGL hosts) ---- */
++
++#define MIRROR_FOURCC(a, b, c, d) \
++   (((uint32_t)(a) << 24) | ((uint32_t)(b) << 16) | ((uint32_t)(c) << 8) | (uint32_t)(d))
++
++struct mirror_format {
++   uint32_t virgl_format;
++   MTLPixelFormat src;      /* layout of the linear image in the heap */
++   MTLPixelFormat dst;      /* IOSurface-backed texture */
++   uint32_t fourcc;         /* IOSurface pixel format CGL accepts */
++   uint32_t bpe;
++   GLenum gl_internal, gl_format, gl_type;
++};
++
++#define MIRROR_BGRA8(f, src) \
++   { f, src, MTLPixelFormatBGRA8Unorm, MIRROR_FOURCC('B', 'G', 'R', 'A'), 4, \
++     GL_RGBA8, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV }
++#define MIRROR_BGR10A2(f, src) \
++   { f, src, MTLPixelFormatBGR10A2Unorm, MIRROR_FOURCC('l', '1', '0', 'r'), 4, \
++     GL_RGB10_A2, GL_BGRA, GL_UNSIGNED_INT_2_10_10_10_REV }
++
++/* CGL rejects RGBA-ordered IOSurfaces, so RGBA images are swizzled into
++ * BGRA surfaces by a compute pass (src != dst); sRGB images are copied raw
++ * and the GL blit runs with GL_FRAMEBUFFER_SRGB off. */
++static const struct mirror_format mirror_formats[] = {
++   MIRROR_BGRA8(VIRGL_FORMAT_B8G8R8A8_UNORM, MTLPixelFormatBGRA8Unorm),
++   MIRROR_BGRA8(VIRGL_FORMAT_B8G8R8X8_UNORM, MTLPixelFormatBGRA8Unorm),
++   MIRROR_BGRA8(VIRGL_FORMAT_B8G8R8A8_SRGB, MTLPixelFormatBGRA8Unorm),
++   MIRROR_BGRA8(VIRGL_FORMAT_B8G8R8X8_SRGB, MTLPixelFormatBGRA8Unorm),
++   MIRROR_BGRA8(VIRGL_FORMAT_R8G8B8A8_UNORM, MTLPixelFormatRGBA8Unorm),
++   MIRROR_BGRA8(VIRGL_FORMAT_R8G8B8X8_UNORM, MTLPixelFormatRGBA8Unorm),
++   MIRROR_BGRA8(VIRGL_FORMAT_R8G8B8A8_SRGB, MTLPixelFormatRGBA8Unorm),
++   MIRROR_BGRA8(VIRGL_FORMAT_R8G8B8X8_SRGB, MTLPixelFormatRGBA8Unorm),
++   MIRROR_BGR10A2(VIRGL_FORMAT_B10G10R10A2_UNORM, MTLPixelFormatBGR10A2Unorm),
++   MIRROR_BGR10A2(VIRGL_FORMAT_B10G10R10X2_UNORM, MTLPixelFormatBGR10A2Unorm),
++   MIRROR_BGR10A2(VIRGL_FORMAT_R10G10B10A2_UNORM, MTLPixelFormatRGB10A2Unorm),
++   MIRROR_BGR10A2(VIRGL_FORMAT_R10G10B10X2_UNORM, MTLPixelFormatRGB10A2Unorm),
++   { VIRGL_FORMAT_R16G16B16A16_FLOAT, MTLPixelFormatRGBA16Float, MTLPixelFormatRGBA16Float,
++     MIRROR_FOURCC('R', 'G', 'h', 'A'), 8, GL_RGBA16F, GL_RGBA, GL_HALF_FLOAT },
++   { VIRGL_FORMAT_R16G16B16X16_FLOAT, MTLPixelFormatRGBA16Float, MTLPixelFormatRGBA16Float,
++     MIRROR_FOURCC('R', 'G', 'h', 'A'), 8, GL_RGBA16F, GL_RGBA, GL_HALF_FLOAT },
++   { VIRGL_FORMAT_R8_UNORM, MTLPixelFormatR8Unorm, MTLPixelFormatR8Unorm,
++     MIRROR_FOURCC('L', '0', '0', '8'), 1, GL_R8, GL_RED, GL_UNSIGNED_BYTE },
++   { VIRGL_FORMAT_R8G8_UNORM, MTLPixelFormatRG8Unorm, MTLPixelFormatRG8Unorm,
++     MIRROR_FOURCC('2', 'C', '0', '8'), 2, GL_RG8, GL_RG, GL_UNSIGNED_BYTE },
++};
++
++struct virgl_metal_iosurface_mirror {
++   const struct mirror_format *fmt;
++   id<MTLBuffer> src_buf;     /* aliases the Venus heap from offset 0 */
++   id<MTLTexture> src_tex;    /* linear view of src_buf, swizzle path only */
++   id<MTLTexture> dst_tex;    /* backed by surface */
++   IOSurfaceRef surface;
++   NSUInteger offset, stride, width, height;
++};
++
++static id<MTLDevice> mirror_device;
++static id<MTLCommandQueue> mirror_queue;
++static id<MTLComputePipelineState> mirror_swizzle;
++
++static struct {
++   bool enabled;
++   uint64_t count, ns;
++} mirror_stats;
++
++static bool mirror_init(id<MTLDevice> device, bool need_swizzle)
++{
++   if (mirror_device && mirror_device != device)
++      return false;
++
++   if (!mirror_queue) {
++      mirror_queue = [device newCommandQueue];
++      if (!mirror_queue)
++         return false;
++      mirror_device = [device retain];
++      mirror_stats.enabled = !!getenv("VIRGL_IOSURFACE_MIRROR_STATS");
++   }
++
++   if (need_swizzle && !mirror_swizzle) {
++      static NSString *const source =
++         @"#include <metal_stdlib>\n"
++          "using namespace metal;\n"
++          "kernel void mirror_copy(texture2d<float, access::read> src [[texture(0)]],\n"
++          "                        texture2d<float, access::write> dst [[texture(1)]],\n"
++          "                        uint2 gid [[thread_position_in_grid]])\n"
++          "{\n"
++          "   if (gid.x < dst.get_width() && gid.y < dst.get_height())\n"
++          "      dst.write(src.read(gid), gid);\n"
++          "}\n";
++      NSError *error = nil;
++      id<MTLLibrary> library = [device newLibraryWithSource:source options:nil error:&error];
++      id<MTLFunction> function = [library newFunctionWithName:@"mirror_copy"];
++      if (function)
++         mirror_swizzle = [device newComputePipelineStateWithFunction:function error:&error];
++      [function release];
++      [library release];
++      if (!mirror_swizzle) {
++         virgl_error("%s: swizzle pipeline: %s\n", __func__,
++                     error ? error.localizedDescription.UTF8String : "unknown error");
++         return false;
++      }
++   }
++
++   return true;
++}
++
++struct virgl_metal_iosurface_mirror *
++virgl_metal_iosurface_mirror_create(MTLHeap_id heap,
++                                    const struct vrend_metal_texture_description *desc)
++{
++   @autoreleasepool {
++      id<MTLHeap> mtl_heap = (id<MTLHeap>)heap;
++      const struct mirror_format *fmt = NULL;
++
++      for (uint32_t i = 0; i < ARRAY_SIZE(mirror_formats); i++) {
++         if (mirror_formats[i].virgl_format == desc->format)
++            fmt = &mirror_formats[i];
++      }
++      if (!fmt) {
++         virgl_error("%s: unsupported format %u\n", __func__, desc->format);
++         return NULL;
++      }
++
++      const NSUInteger len = (NSUInteger)desc->offset + (NSUInteger)desc->stride * desc->height;
++      if (!mtl_heap || mtl_heap.type != MTLHeapTypePlacement || !desc->width || !desc->height ||
++          desc->stride < desc->width * fmt->bpe || desc->offset % fmt->bpe ||
++          desc->stride % fmt->bpe || len > mtl_heap.size) {
++         virgl_error("%s: unusable heap/layout (%ux%u stride %u offset %u)\n", __func__,
++                     desc->width, desc->height, desc->stride, desc->offset);
++         return NULL;
++      }
++
++      id<MTLDevice> device = mtl_heap.device;
++      const bool swizzle = fmt->src != fmt->dst;
++      if (!mirror_init(device, swizzle))
++         return NULL;
++
++      struct virgl_metal_iosurface_mirror *m = calloc(1, sizeof(*m));
++      if (!m)
++         return NULL;
++      m->fmt = fmt;
++      m->offset = desc->offset;
++      m->stride = desc->stride;
++      m->width = desc->width;
++      m->height = desc->height;
++
++      m->src_buf = [mtl_heap newBufferWithLength:len options:mtl_heap.resourceOptions offset:0];
++      if (!m->src_buf)
++         goto fail;
++
++      NSDictionary *props = @{
++         (id)kIOSurfaceWidth: @(desc->width),
++         (id)kIOSurfaceHeight: @(desc->height),
++         (id)kIOSurfaceBytesPerElement: @(fmt->bpe),
++         (id)kIOSurfacePixelFormat: @(fmt->fourcc),
++      };
++      m->surface = IOSurfaceCreate((CFDictionaryRef)props);
++      if (!m->surface)
++         goto fail;
++
++      MTLTextureDescriptor *dst_desc =
++         [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:fmt->dst
++                                                            width:desc->width
++                                                           height:desc->height
++                                                        mipmapped:NO];
++      dst_desc.usage = MTLTextureUsageShaderRead | (swizzle ? MTLTextureUsageShaderWrite : 0);
++      dst_desc.storageMode = MTLStorageModeShared;
++      m->dst_tex = [device newTextureWithDescriptor:dst_desc iosurface:m->surface plane:0];
++      if (!m->dst_tex)
++         goto fail;
++
++      if (swizzle) {
++         const NSUInteger align = [device minimumLinearTextureAlignmentForPixelFormat:fmt->src];
++         if (desc->stride % align || desc->offset % align) {
++            virgl_error("%s: stride %u / offset %u not %lu-aligned for a linear view\n",
++                        __func__, desc->stride, desc->offset, (unsigned long)align);
++            goto fail;
++         }
++         MTLTextureDescriptor *src_desc =
++            [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:fmt->src
++                                                               width:desc->width
++                                                              height:desc->height
++                                                           mipmapped:NO];
++         src_desc.usage = MTLTextureUsageShaderRead;
++         src_desc.resourceOptions = mtl_heap.resourceOptions;
++         m->src_tex = [m->src_buf newTextureWithDescriptor:src_desc
++                                                    offset:desc->offset
++                                               bytesPerRow:desc->stride];
++         if (!m->src_tex)
++            goto fail;
++      }
++
++      return m;
++
++   fail:
++      virgl_error("%s: failed to set up the IOSurface mirror\n", __func__);
++      virgl_metal_iosurface_mirror_destroy(m);
++      return NULL;
++   }
++}
++
++bool virgl_metal_iosurface_mirror_bind_gl(struct virgl_metal_iosurface_mirror *m,
++                                          uint32_t target)
++{
++   CGLContextObj ctx = CGLGetCurrentContext();
++   if (!ctx)
++      return false;
++
++   CGLError err = CGLTexImageIOSurface2D(ctx, target, m->fmt->gl_internal,
++                                         (GLsizei)m->width, (GLsizei)m->height,
++                                         m->fmt->gl_format, m->fmt->gl_type, m->surface, 0);
++   if (err != kCGLNoError) {
++      virgl_error("%s: CGLTexImageIOSurface2D: %s\n", __func__, CGLErrorString(err));
++      return false;
++   }
++   return true;
++}
++
++bool virgl_metal_iosurface_mirror_update(struct virgl_metal_iosurface_mirror *m)
++{
++   @autoreleasepool {
++      struct timespec t0, t1;
++      if (mirror_stats.enabled)
++         clock_gettime(CLOCK_MONOTONIC, &t0);
++
++      id<MTLCommandBuffer> cmd = [mirror_queue commandBuffer];
++      if (m->src_tex) {
++         id<MTLComputeCommandEncoder> enc = [cmd computeCommandEncoder];
++         const NSUInteger w = mirror_swizzle.threadExecutionWidth;
++         const NSUInteger t = mirror_swizzle.maxTotalThreadsPerThreadgroup / w;
++         const NSUInteger h = t ? t : 1;
++         [enc setComputePipelineState:mirror_swizzle];
++         [enc setTexture:m->src_tex atIndex:0];
++         [enc setTexture:m->dst_tex atIndex:1];
++         [enc dispatchThreads:MTLSizeMake(m->width, m->height, 1)
++            threadsPerThreadgroup:MTLSizeMake(w, h, 1)];
++         [enc endEncoding];
++      } else {
++         id<MTLBlitCommandEncoder> blit = [cmd blitCommandEncoder];
++         [blit copyFromBuffer:m->src_buf
++                 sourceOffset:m->offset
++            sourceBytesPerRow:m->stride
++          sourceBytesPerImage:m->stride * m->height
++                   sourceSize:MTLSizeMake(m->width, m->height, 1)
++                    toTexture:m->dst_tex
++             destinationSlice:0
++             destinationLevel:0
++            destinationOrigin:MTLOriginMake(0, 0, 0)];
++         [blit endEncoding];
++      }
++      [cmd commit];
++      /* GL reads the IOSurface next; Metal and GL share no fences on macOS */
++      [cmd waitUntilCompleted];
++
++      if (mirror_stats.enabled) {
++         clock_gettime(CLOCK_MONOTONIC, &t1);
++         mirror_stats.ns += (uint64_t)(t1.tv_sec - t0.tv_sec) * 1000000000ull +
++                            (uint64_t)t1.tv_nsec - (uint64_t)t0.tv_nsec;
++         if (++mirror_stats.count % 600 == 0)
++            virgl_info("iosurface mirror: %llu updates, %.1f us average (%lux%lu)\n",
++                       (unsigned long long)mirror_stats.count,
++                       mirror_stats.ns / 1000.0 / mirror_stats.count,
++                       (unsigned long)m->width, (unsigned long)m->height);
++      }
++      return cmd.status == MTLCommandBufferStatusCompleted;
++   }
++}
++
++void virgl_metal_iosurface_mirror_destroy(struct virgl_metal_iosurface_mirror *m)
++{
++   if (!m)
++      return;
++   [m->src_tex release];
++   [m->dst_tex release];
++   [m->src_buf release];
++   if (m->surface)
++      CFRelease(m->surface);
++   free(m);
++}
+--- a/src/vrend/vrend_renderer.c
++++ b/src/vrend/vrend_renderer.c
+@@ -409,6 +409,12 @@
+ 
+    /* host-side video acceleration availability */
+    bool video_available;
++
++#ifdef ENABLE_METAL
++   /* see vrend_resource::metal_mirror */
++   uint32_t cmd_batch;
++   uint32_t metal_mirror_count;
++#endif
+ };
+ 
+ struct sysval_uniform_block {
+@@ -5325,7 +5331,84 @@
+       }
+ 
+       ctx->sub->vbo_dirty = false;
++   }
++}
++
++void vrend_renderer_begin_cmd_batch(void)
++{
++#ifdef ENABLE_METAL
++   vrend_state.cmd_batch++;
++#endif
++}
++
++/* Copy the latest Venus image (via its IOSurface mirror) into res->gl_id.
++ * Runs at most once per command batch per resource; restores the
++ * framebuffer, scissor and sRGB state it touches. */
++static void vrend_metal_mirror_refresh(UNUSED struct vrend_sub_context *sub_ctx,
++                                       UNUSED struct vrend_resource *res)
++{
++#ifdef ENABLE_METAL
++   if (!res->metal_mirror || res->metal_mirror_batch == vrend_state.cmd_batch)
++      return;
++   res->metal_mirror_batch = vrend_state.cmd_batch;
++
++   /* the previous GL copy must be done reading before Metal rewrites */
++   if (res->metal_mirror_sync) {
++      glClientWaitSync(res->metal_mirror_sync, GL_SYNC_FLUSH_COMMANDS_BIT, 1000000000ull);
++      glDeleteSync(res->metal_mirror_sync);
++      res->metal_mirror_sync = NULL;
++   }
++   if (!virgl_metal_iosurface_mirror_update(res->metal_mirror))
++      return;
++
++   const GLboolean scissor = glIsEnabled(GL_SCISSOR_TEST);
++   const GLboolean srgb = has_feature(feat_srgb_write_control) &&
++                          glIsEnabled(GL_FRAMEBUFFER_SRGB_EXT);
++   const GLint w = res->base.width0, h = res->base.height0;
++
++   if (scissor)
++      glDisable(GL_SCISSOR_TEST);
++   if (srgb)
++      glDisable(GL_FRAMEBUFFER_SRGB_EXT);
++
++   glBindFramebuffer(GL_READ_FRAMEBUFFER, sub_ctx->blit_fb_ids[0]);
++   glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
++                          GL_TEXTURE_RECTANGLE, res->metal_mirror_tex, 0);
++   glReadBuffer(GL_COLOR_ATTACHMENT0);
++   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, sub_ctx->blit_fb_ids[1]);
++   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
++                          res->target, res->gl_id, 0);
++   glDrawBuffer(GL_COLOR_ATTACHMENT0);
++
++   glBlitFramebuffer(0, 0, w, h, 0, 0, w, h, GL_COLOR_BUFFER_BIT, GL_NEAREST);
++
++   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, res->target, 0, 0);
++   glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_RECTANGLE, 0, 0);
++   res->metal_mirror_sync = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
++
++   glBindFramebuffer(GL_FRAMEBUFFER, sub_ctx->fb_id);
++   if (scissor)
++      glEnable(GL_SCISSOR_TEST);
++   if (srgb)
++      glEnable(GL_FRAMEBUFFER_SRGB_EXT);
++#endif
++}
++
++static void vrend_metal_mirror_refresh_views(UNUSED struct vrend_sub_context *sub_ctx)
++{
++#ifdef ENABLE_METAL
++   if (!vrend_state.metal_mirror_count)
++      return;
++
++   for (int type = 0; type < PIPE_SHADER_TYPES; type++) {
++      const struct vrend_shader_view *sv = &sub_ctx->views[type];
++      for (int i = 0; i < sv->max_num_views; i++) {
++         struct vrend_sampler_view *view = sv->views[i];
++         if (view && view->texture && view->texture->metal_mirror)
++            vrend_metal_mirror_refresh(sub_ctx, view->texture);
++      }
+    }
++#endif
+ }
+ 
+ static GLuint vrend_draw_bind_samplers_shader(struct vrend_sub_context *sub_ctx,
+@@ -6034,6 +6117,8 @@
+    if (ctx->ctx_switch_pending)
+       vrend_finish_context_switch(ctx);
+ 
++   vrend_metal_mirror_refresh_views(sub_ctx);
++
+    vrend_update_frontface_state(sub_ctx);
+    if (ctx->sub->stencil_state_dirty)
+       vrend_update_stencil_state(sub_ctx);
+@@ -6297,6 +6382,8 @@
+       return;
+ 
+     struct vrend_sub_context *sub_ctx = ctx->sub;
++
++   vrend_metal_mirror_refresh_views(sub_ctx);
+ 
+    if (sub_ctx->cs_shader_dirty) {
+       struct vrend_linked_shader_program *prog;
+@@ -9153,6 +9240,13 @@
+ #ifdef ENABLE_METAL
+    if (res->metal_texture)
+       virgl_metal_release_texture(res->metal_texture);
++   if (res->metal_mirror) {
++      if (res->metal_mirror_sync)
++         glDeleteSync(res->metal_mirror_sync);
++      glDeleteTextures(1, &res->metal_mirror_tex);
++      virgl_metal_iosurface_mirror_destroy(res->metal_mirror);
++      vrend_state.metal_mirror_count--;
++   }
+ #endif
+    free(res);
+ }
+@@ -11056,6 +11150,8 @@
+       return;
+    }
+ 
++   vrend_metal_mirror_refresh(ctx->sub, src_res);
++
+    if (!resource_dest_contains_box(src_res, dst_res, dst_level,
+                                    dstx, dsty, dstz, src_box)) {
+       vrend_report_context_error(ctx, VIRGL_ERROR_CTX_RESOURCE_OUT_OF_RANGE, dst_handle);
+@@ -11608,6 +11704,8 @@
+    if (ctx->in_error)
+       return;
+ 
++   vrend_metal_mirror_refresh(ctx->sub, src_res);
++
+    if (unlikely(info->src.format >= VIRGL_FORMAT_MAX ||
+                 tex_conv_table[info->src.format].format == VIRGL_FORMAT_NONE)) {
+       vrend_report_context_error(ctx, VIRGL_ERROR_CTX_ILLEGAL_FORMAT, info->src.format);
+@@ -13992,8 +14090,63 @@
+                          GL_DECODE_EXT);
+          tex->cur_srgb_decode = GL_DECODE_EXT;
+       }
++   }
++}
++
++#if defined(ENABLE_METAL) && !defined(HAVE_EPOXY_EGL_H)
++/* Native CGL cannot import Venus memory (no GL_EXT_memory_object_fd, and
++ * IOSurfaces bind only as rectangle textures): allocate an ordinary texture
++ * and keep it in sync with an IOSurface mirror of the heap. */
++static int vrend_resource_import_metal_mirror(struct vrend_resource *gr,
++                                              MTLHeap_id heap,
++                                              const struct vrend_renderer_resource_set_type_args *args)
++{
++   const struct vrend_metal_texture_description desc = {
++      .width = args->width,
++      .height = args->height,
++      .stride = args->plane_strides[0],
++      .offset = args->plane_offsets[0],
++      .bind = args->bind,
++      .usage = args->usage,
++      .format = args->format,
++   };
++
++   if (args->plane_count > 1)
++      virgl_warn("%s: ignoring plane_count = %d and using the first one\n",
++                 __func__, args->plane_count);
++
++   struct virgl_metal_iosurface_mirror *mirror = virgl_metal_iosurface_mirror_create(heap, &desc);
++
++   int ret = vrend_resource_alloc_texture(gr, args->format, NULL);
++   if (ret) {
++      virgl_metal_iosurface_mirror_destroy(mirror);
++      return ret;
+    }
++
++   /* An unmirrorable image costs one client its contents; failing the
++    * import would put the importing context (the compositor) in error. */
++   if (!mirror)
++      return 0;
++
++   GLuint tex;
++   glGenTextures(1, &tex);
++   glBindTexture(GL_TEXTURE_RECTANGLE, tex);
++   const bool bound = virgl_metal_iosurface_mirror_bind_gl(mirror, GL_TEXTURE_RECTANGLE);
++   glBindTexture(GL_TEXTURE_RECTANGLE, 0);
++   if (!bound) {
++      glDeleteTextures(1, &tex);
++      glDeleteTextures(1, &gr->gl_id);
++      virgl_metal_iosurface_mirror_destroy(mirror);
++      return EINVAL;
++   }
++
++   gr->metal_mirror = mirror;
++   gr->metal_mirror_tex = tex;
++   gr->metal_mirror_batch = vrend_state.cmd_batch - 1;
++   vrend_state.metal_mirror_count++;
++   return 0;
+ }
++#endif
+ 
+ int
+ vrend_renderer_pipe_resource_set_type(struct vrend_context *ctx,
+@@ -14047,6 +14200,15 @@
+       if (!gr)
+          return ENOMEM;
+ 
++#if defined(ENABLE_METAL) && !defined(HAVE_EPOXY_EGL_H)
++      if (res->fd_type == VIRGL_RESOURCE_METAL_HEAP) {
++         int ret = vrend_resource_import_metal_mirror(gr, res->metal_heap, args);
++         if (ret) {
++            FREE(gr);
++            return ret;
++         }
++      } else
++#endif
+ #ifdef HAVE_EPOXY_EGL_H
+       if (egl) {
+ #ifdef ENABLE_GBM
+--- a/src/vrend/vrend_renderer.h
++++ b/src/vrend/vrend_renderer.h
+@@ -112,6 +112,13 @@
+ #endif
+ #ifdef ENABLE_METAL
+    MTLTexture_id metal_texture;
++   /* Venus METAL_HEAP import on native CGL: gl_id is refreshed from this
++    * IOSurface mirror (bound to metal_mirror_tex) at most once per command
++    * batch, before the resource is sampled, blitted or copied */
++   struct virgl_metal_iosurface_mirror *metal_mirror;
++   GLuint metal_mirror_tex;
++   GLsync metal_mirror_sync;
++   uint32_t metal_mirror_batch;
+ #endif
+ 
+    uint64_t size;
+@@ -633,6 +640,9 @@
+                                     const struct vrend_renderer_resource_create_args *args);
+ 
+ struct pipe_resource *vrend_get_blob_pipe(struct vrend_context *ctx, uint64_t blob_id);
++
++/* called once per decoded command buffer */
++void vrend_renderer_begin_cmd_batch(void);
+ 
+ int
+ vrend_renderer_pipe_resource_set_type(struct vrend_context *ctx,

@@ -1,0 +1,10 @@
+# vkcube on Venus/Wayland in the Omarchy VM (QEMU HVF, virtio-gpu venus=on blob=on,
+# virglrenderer 0007 IOSurface mirror, QEMU 0010 host-page blob mapping), 2026-10-12.
+# Hyprland output 2592x1458@120 (Retina), vkcube window 1272x679 RGBA16F (R16G16B16X16_FLOAT).
+# Tool: benchmarks/vm/vkbench.sh FRAMES PRESENT_MODE (guest), Venus feedback on (default).
+present_mode=2 (FIFO)    frames=1200 wall=12.92s fps=92.9  cpu_user=1% cpu_sys=13%
+present_mode=1 (MAILBOX) frames=1200 wall=6.02s  fps=199.4
+# host: IOSurface mirror update (Metal blit + wait) 767-875 us average over 600-4800 updates
+#       at 1272x679x8 B (VIRGL_IOSURFACE_MIRROR_STATS=1)
+# before 0010: vkcube never presented (memcpy into a 4 KiB uniform buffer retried forever)
+# before 0007: compositor context error on import (EINVAL), desktop scrambled/blank

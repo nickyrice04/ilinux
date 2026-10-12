@@ -1,0 +1,95 @@
+From: iLinux workspace
+Subject: [PATCH] hvf, virtio-gpu-virgl: map Venus blobs in whole host pages
+
+HVF maps guest memory in host pages (16 KiB on Apple silicon) and
+hvf_set_phys_mem() leaves smaller sections unmapped.  A guest store to such
+a RAM section then lands in the HVF data-abort handler, which treats it as a
+dirty-logging fault and retries the instruction forever: vkcube spun at
+100% CPU inside memcpy into its 4 KiB uniform buffer, and Venus feedback
+slots (also sub-page allocations) were unreadable.
+
+virtio-gpu-virgl: on macOS, round a blob's RAM subregion up to the host page
+when the host mapping is page-aligned (shm, MoltenVK and Metal mappings are
+page-granular) and no other blob occupies the tail; a 16 KiB-page guest
+already reserves whole pages for it in the hostmem BAR.
+
+hvf: also refuse to map a RAM section whose host pointer is not page
+aligned; hv_vm_map() would fail and assert_hvf_ok() abort QEMU.
+
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -121,8 +121,14 @@
+     }
+ 
+     if (!QEMU_IS_ALIGNED(size, page_size) ||
+-        !QEMU_IS_ALIGNED(gpa, page_size)) {
+-        /* Not page aligned, so we can not map as RAM */
++        !QEMU_IS_ALIGNED(gpa, page_size) ||
++        (memory_region_is_ram(area) &&
++         !QEMU_IS_ALIGNED((uintptr_t)memory_region_get_ram_ptr(area) +
++                          section->offset_within_region, page_size))) {
++        /*
++         * Not page aligned, so we can not map as RAM (hv_vm_map would fail
++         * an assertion on a host pointer that is not page aligned).
++         */
+         add = false;
+     }
+ 
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -157,6 +157,44 @@
+ }
+ 
+ type_init(virtio_gpu_virgl_types)
++
++#ifdef CONFIG_DARWIN
++/*
++ * HVF maps guest memory in host pages (16 KiB on Apple silicon) and leaves
++ * smaller RAM sections unmapped; the HVF data-abort handler then retries a
++ * guest store to such a section forever.  Venus allocations below a host
++ * page (vkcube's 4 KiB uniform buffers, for one) hit exactly that.  The
++ * mappings virglrenderer returns here (shm, MoltenVK/Metal buffers) are
++ * page-aligned and page-granular, and a 16 KiB-page guest reserves whole
++ * pages in the BAR, so the blob can cover the rest of its last page as long
++ * as no other blob lives there.
++ */
++static uint64_t
++virtio_gpu_virgl_blob_map_size(VirtIOGPUBase *b, uint64_t offset,
++                               void *data, uint64_t size)
++{
++    uint64_t page = qemu_real_host_page_size();
++    uint64_t rounded = ROUND_UP(size, page);
++    MemoryRegion *sub;
++
++    if (rounded == size || !QEMU_IS_ALIGNED((uintptr_t)data, page) ||
++        !QEMU_IS_ALIGNED(offset, page) ||
++        offset + rounded > memory_region_size(&b->hostmem)) {
++        return size;
++    }
++
++    QTAILQ_FOREACH(sub, &b->hostmem.subregions, subregions_link) {
++        uint64_t start = sub->addr, end = sub->addr + memory_region_size(sub);
++
++        /* blobs sit at priority 1 above the priority-0 background */
++        if (sub->priority > 0 && start < offset + rounded &&
++            end > offset + size) {
++            return size;
++        }
++    }
++    return rounded;
++}
++#endif
+ 
+ static int
+ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+@@ -228,6 +266,10 @@
+     vmr->g = g;
+     vmr->mapping_state = VIRTIO_GPU_MR_MAPPED;
+ 
++#ifdef CONFIG_DARWIN
++    size = virtio_gpu_virgl_blob_map_size(b, offset, data, size);
++#endif
++
+     mr = &vmr->mr;
+     memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
+     memory_region_add_subregion_overlap(&b->hostmem, offset, mr, 1);

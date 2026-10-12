@@ -1,0 +1,19 @@
+#version 450
+// FMA throughput + correctness kernel for benchmarks/src/vkcompute.c.
+// Four independent chains per invocation; 8 flops per loop iteration.
+layout(local_size_x = 256) in;
+layout(std430, binding = 0) buffer Data { float v[]; };
+layout(push_constant) uniform PC { uint iters; float a; float b; } pc;
+
+void main()
+{
+    uint i = gl_GlobalInvocationID.x;
+    float x0 = v[i], x1 = x0 + 0.125, x2 = x0 + 0.25, x3 = x0 + 0.375;
+    for (uint k = 0u; k < pc.iters; k++) {
+        x0 = fma(x0, pc.a, pc.b);
+        x1 = fma(x1, pc.a, pc.b);
+        x2 = fma(x2, pc.a, pc.b);
+        x3 = fma(x3, pc.a, pc.b);
+    }
+    v[i] = x0 + x1 + x2 + x3;
+}

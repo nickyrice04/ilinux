@@ -1,0 +1,12 @@
+{"side":"macos-moltenvk","rep":1,"bench":"vkcompute-info","device":"Apple M5 Max","api":"1.1.357"}
+{"side":"macos-moltenvk","rep":1,"bench":"vkcompute","test":"correctness","max_abs_err":0,"ok":true}
+{"side":"macos-moltenvk","rep":1,"bench":"vkcompute","test":"fma_f32","iters":2048,"reps":10,"best_TFLOPS":11.385,"median_TFLOPS":11.243,"median_ms":6.112}
+{"side":"macos-moltenvk","rep":1,"bench":"vkcompute","test":"submit_wait_roundtrip","p50_us":206.0,"p90_us":254.0}
+{"side":"macos-moltenvk","rep":2,"bench":"vkcompute-info","device":"Apple M5 Max","api":"1.1.357"}
+{"side":"macos-moltenvk","rep":2,"bench":"vkcompute","test":"correctness","max_abs_err":0,"ok":true}
+{"side":"macos-moltenvk","rep":2,"bench":"vkcompute","test":"fma_f32","iters":2048,"reps":10,"best_TFLOPS":11.381,"median_TFLOPS":11.275,"median_ms":6.095}
+{"side":"macos-moltenvk","rep":2,"bench":"vkcompute","test":"submit_wait_roundtrip","p50_us":202.0,"p90_us":242.0}
+{"side":"macos-moltenvk","rep":3,"bench":"vkcompute-info","device":"Apple M5 Max","api":"1.1.357"}
+{"side":"macos-moltenvk","rep":3,"bench":"vkcompute","test":"correctness","max_abs_err":0,"ok":true}
+{"side":"macos-moltenvk","rep":3,"bench":"vkcompute","test":"fma_f32","iters":2048,"reps":10,"best_TFLOPS":11.364,"median_TFLOPS":11.227,"median_ms":6.121}
+{"side":"macos-moltenvk","rep":3,"bench":"vkcompute","test":"submit_wait_roundtrip","p50_us":204.0,"p90_us":251.0}

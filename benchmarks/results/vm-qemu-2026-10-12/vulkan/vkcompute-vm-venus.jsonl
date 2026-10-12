@@ -1,0 +1,12 @@
+{"side":"vm-venus","rep":1,"bench":"vkcompute-info","device":"Virtio-GPU Venus (Apple M5 Max)","api":"1.1.357"}
+{"side":"vm-venus","rep":1,"bench":"vkcompute","test":"correctness","max_abs_err":0,"ok":true}
+{"side":"vm-venus","rep":1,"bench":"vkcompute","test":"fma_f32","iters":2048,"reps":10,"best_TFLOPS":10.915,"median_TFLOPS":10.759,"median_ms":6.387}
+{"side":"vm-venus","rep":1,"bench":"vkcompute","test":"submit_wait_roundtrip","p50_us":375.1,"p90_us":416.9}
+{"side":"vm-venus","rep":2,"bench":"vkcompute-info","device":"Virtio-GPU Venus (Apple M5 Max)","api":"1.1.357"}
+{"side":"vm-venus","rep":2,"bench":"vkcompute","test":"correctness","max_abs_err":0,"ok":true}
+{"side":"vm-venus","rep":2,"bench":"vkcompute","test":"fma_f32","iters":2048,"reps":10,"best_TFLOPS":10.791,"median_TFLOPS":10.697,"median_ms":6.424}
+{"side":"vm-venus","rep":2,"bench":"vkcompute","test":"submit_wait_roundtrip","p50_us":339.2,"p90_us":398.6}
+{"side":"vm-venus","rep":3,"bench":"vkcompute-info","device":"Virtio-GPU Venus (Apple M5 Max)","api":"1.1.357"}
+{"side":"vm-venus","rep":3,"bench":"vkcompute","test":"correctness","max_abs_err":0,"ok":true}
+{"side":"vm-venus","rep":3,"bench":"vkcompute","test":"fma_f32","iters":2048,"reps":10,"best_TFLOPS":10.874,"median_TFLOPS":10.726,"median_ms":6.407}
+{"side":"vm-venus","rep":3,"bench":"vkcompute","test":"submit_wait_roundtrip","p50_us":317.8,"p90_us":387.8}
