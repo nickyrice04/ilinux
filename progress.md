@@ -63,11 +63,25 @@ measured, still unsupported, and next.
   final build (clean 3 s shutdowns after vkcube and vkcompute).
   `vm-restart.sh` in the session scratchpad samples QEMU if one recurs.
 
+### REA gap analysis (same day)
+
+* **Inventory:** a metadata-only REA inventory of 727 driver bundles and 887
+  launchd plists, joined with the ADT and the live IORegistry.
+  * Outputs: `hardware/macos/*.tsv` and
+    `reverse-engineering/macos-hardware-services.md`, a 23-row gap matrix
+    with priorities and VM bridges.
+  * Security components were excluded before recording.
+* **New findings:** F-040 (the CLPC/SOCTuner/PPM/PTD policy layer is the
+  efficiency gap) and F-041 (RTKit coprocessors throughout).
+
 ### Next
 
-1. **REA metadata gap analysis of the macOS hardware services**, in
-   clean-room scope: the block → macOS component → Linux status matrix.
-2. **Zero-copy Venus presentation**, then paced virtual vblank.
+1. **Host-side bridges the gap matrix points to:**
+   * VideoToolbox decode/encode remoting;
+   * a Core ML/ANE API for the guest;
+   * camera as a UVC device;
+   * paced vblank timestamps.
+2. **Zero-copy Venus presentation.**
 3. **Battery and Low Power Mode measurements under Vulkan load.**
 
 ---

@@ -10,8 +10,8 @@ and have everything work as well as macOS?*
 * `hardware/macos/gap-matrix.tsv` (23 rows)
 * `hardware/macos/block-map.tsv`: ADT → active macOS classes → driver
   bundles → daemons
-* `hardware/macos/kext-inventory.tsv`: 1,717 IOKit personalities from 685
-  bundles (1,821 rows; bundles without a personality get one row)
+* `hardware/macos/kext-inventory.tsv`: 1,713 IOKit personalities from 684
+  bundles (1,817 rows; bundles without a personality get one row)
 * `hardware/macos/iokit-launched-daemons.tsv`: 72 hardware-triggered launchd
   jobs
 
