@@ -1,0 +1,44 @@
+From: iLinux workspace
+Subject: [PATCH] venus: list VK_EXT_external_memory_metal in the extension info table
+
+The macOS patch set added an EXT_external_memory_metal field to
+struct vn_info_extension_table but no entry to the sorted
+_vn_info_extensions table.  The name lookup then failed, so the device
+proc table never resolved vkGetMemoryMetalHandleEXT and exporting a
+Venus blob (e.g. a swapchain image) called a NULL pointer; and every named
+field after it was one slot off from its table index.  Add the entry
+(extension 603, spec 1) in sorted order and size both arrays to 186.
+
+diff -ru a/src/venus/venus-protocol/vn_protocol_renderer_info.h b/src/venus/venus-protocol/vn_protocol_renderer_info.h
+--- a/src/venus/venus-protocol/vn_protocol_renderer_info.h	2026-10-12 12:04:49
++++ b/src/venus/venus-protocol/vn_protocol_renderer_info.h	2026-10-12 12:04:49
+@@ -12,7 +12,7 @@
+ 
+ struct vn_info_extension_table {
+    union {
+-      bool enabled[185];
++      bool enabled[186];
+       struct {
+          bool ARM_rasterization_order_attachment_access;
+          bool EXT_4444_formats;
+@@ -213,8 +213,8 @@
+ };
+ 
+ /* sorted by extension names for bsearch */
+-static const uint32_t _vn_info_extension_count = 185;
+-static const struct vn_info_extension _vn_info_extensions[185] = {
++static const uint32_t _vn_info_extension_count = 186;
++static const struct vn_info_extension _vn_info_extensions[186] = {
+    { "VK_ARM_rasterization_order_attachment_access", 343, 1 },
+    { "VK_EXT_4444_formats", 341, 1 },
+    { "VK_EXT_attachment_feedback_loop_dynamic_state", 525, 1 },
+@@ -241,6 +241,9 @@
+    { "VK_EXT_extended_dynamic_state3", 456, 2 },
+    { "VK_EXT_external_memory_acquire_unmodified", 454, 1 },
+    { "VK_EXT_external_memory_dma_buf", 126, 1 },
++   /* macOS: the struct above names EXT_external_memory_metal, so the sorted
++    * table needs it too or every later named field is off by one. */
++   { "VK_EXT_external_memory_metal", 603, 1 },
+    { "VK_EXT_filter_cubic", 171, 3 },
+    { "VK_EXT_fragment_shader_interlock", 252, 1 },
+    { "VK_EXT_global_priority", 175, 2 },
