@@ -1,0 +1,13 @@
+[Unit]
+Description=Share the clipboard with the Mac (qemu-vdagent)
+PartOf=graphical-session.target
+After=graphical-session.target
+ConditionPathExists=/dev/virtio-ports/com.redhat.spice.0
+
+[Service]
+ExecStart=/usr/local/bin/ilinux-clipboard-agent
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

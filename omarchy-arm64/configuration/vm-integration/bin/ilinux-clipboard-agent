@@ -1,0 +1,138 @@
+#!/usr/bin/python3 -I
+"""ilinux-clipboard-agent: share the clipboard between this Wayland session
+and the Mac, over QEMU's qemu-vdagent channel (virtio-serial port
+com.redhat.spice.0).  QEMU's Cocoa UI owns the macOS side of the pasteboard.
+
+It speaks the part of the SPICE vdagent protocol that QEMU implements: UTF-8
+text, transferred on demand.
+  Mac -> Linux: QEMU sends GRAB when the Mac pasteboard changes; we REQUEST
+                the text and hand it to wl-copy.
+  Linux -> Mac: `wl-paste --watch` reports a clipboard change; we send GRAB.
+                QEMU only REQUESTs the text when a Mac app actually pastes,
+                and we answer with `wl-paste`.
+Text we just took from the Mac is not announced back.  Payloads are capped
+at QEMU's 1 MiB vdagent buffer.  Needs wl-clipboard (wlr data-control) and
+read/write access to the port (udev uaccess rule).
+"""
+import hashlib
+import os
+import struct
+import subprocess
+import sys
+import threading
+
+PORT = "/dev/virtio-ports/com.redhat.spice.0"
+VD_AGENT_PROTOCOL = 1
+VDP_CLIENT_PORT = 1
+MSG_CLIPBOARD, MSG_ANNOUNCE_CAPS, MSG_GRAB, MSG_REQUEST, MSG_RELEASE = 4, 6, 7, 8, 9
+CAP_CLIPBOARD_BY_DEMAND, CAP_CLIPBOARD_SELECTION = 5, 6
+TYPE_UTF8_TEXT = 1
+SEL_CLIPBOARD = 0
+HEADER = struct.Struct("<IIQI")     # VDAgentMessage: protocol, type, opaque, size
+CHUNK = struct.Struct("<II")        # VDIChunkHeader: port, size
+CHUNK_PAYLOAD = 1024
+MAX_TEXT = (1 << 20) - 64
+
+
+def local_text():
+    try:
+        r = subprocess.run(["wl-paste", "--no-newline", "--type", "text/plain"],
+                           capture_output=True, timeout=5)
+    except (OSError, subprocess.TimeoutExpired):
+        return b""
+    return r.stdout[:MAX_TEXT] if r.returncode == 0 else b""
+
+
+class Agent:
+    def __init__(self, fd):
+        self.fd = fd
+        self.wlock = threading.Lock()
+        self.from_mac = None        # sha256 of the text last copied from the Mac
+
+    def send(self, mtype, payload=b""):
+        msg = HEADER.pack(VD_AGENT_PROTOCOL, mtype, 0, len(payload)) + payload
+        with self.wlock:
+            for off in range(0, len(msg), CHUNK_PAYLOAD):
+                part = msg[off:off + CHUNK_PAYLOAD]
+                out = CHUNK.pack(VDP_CLIENT_PORT, len(part)) + part
+                while out:
+                    out = out[os.write(self.fd, out):]
+
+    @staticmethod
+    def selection():
+        return struct.pack("<B3x", SEL_CLIPBOARD)
+
+    def announce(self):
+        caps = (1 << CAP_CLIPBOARD_BY_DEMAND) | (1 << CAP_CLIPBOARD_SELECTION)
+        self.send(MSG_ANNOUNCE_CAPS, struct.pack("<II", 1, caps))   # request host caps
+
+    def handle(self, mtype, data):
+        if mtype not in (MSG_CLIPBOARD, MSG_GRAB, MSG_REQUEST, MSG_RELEASE) or len(data) < 4:
+            return
+        if data[0] != SEL_CLIPBOARD:          # the Mac has no primary selection
+            return
+        data = data[4:]
+        if mtype == MSG_GRAB:
+            types = struct.unpack("<%dI" % (len(data) // 4), data[:len(data) // 4 * 4])
+            if TYPE_UTF8_TEXT in types:
+                self.send(MSG_REQUEST, self.selection() + struct.pack("<I", TYPE_UTF8_TEXT))
+        elif mtype == MSG_CLIPBOARD:
+            if len(data) < 4 or struct.unpack_from("<I", data)[0] != TYPE_UTF8_TEXT:
+                return
+            text = data[4:]
+            if text:
+                self.from_mac = hashlib.sha256(text).digest()
+                subprocess.run(["wl-copy", "--type", "text/plain"], input=text, timeout=5)
+        elif mtype == MSG_REQUEST:
+            ctype = struct.unpack_from("<I", data)[0] if len(data) >= 4 else 0
+            text = local_text() if ctype == TYPE_UTF8_TEXT else b""
+            self.send(MSG_CLIPBOARD, self.selection() + struct.pack("<I", TYPE_UTF8_TEXT) + text)
+
+    def receive(self):
+        """Reassemble VDAgentMessages from VDIChunk-framed reads."""
+        buf, msg = b"", b""
+        while True:
+            data = os.read(self.fd, 65536)
+            if not data:
+                raise EOFError("port closed")
+            buf += data
+            while len(buf) >= CHUNK.size:
+                _, size = CHUNK.unpack_from(buf)
+                if len(buf) < CHUNK.size + size:
+                    break
+                msg += buf[CHUNK.size:CHUNK.size + size]
+                buf = buf[CHUNK.size + size:]
+                while len(msg) >= HEADER.size:
+                    _, mtype, _, length = HEADER.unpack_from(msg)
+                    if length > (1 << 21):        # corrupt stream: resync
+                        msg = b""
+                        break
+                    if len(msg) < HEADER.size + length:
+                        break
+                    try:
+                        self.handle(mtype, msg[HEADER.size:HEADER.size + length])
+                    except (OSError, subprocess.SubprocessError, struct.error) as e:
+                        print(f"clipboard message {mtype} failed: {e}", file=sys.stderr)
+                    msg = msg[HEADER.size + length:]
+
+    def watch(self):
+        """Announce local clipboard changes to the Mac (content is fetched lazily)."""
+        p = subprocess.Popen(["wl-paste", "--type", "text/plain", "--watch", "echo"],
+                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        for _ in p.stdout:
+            text = local_text()
+            if text and hashlib.sha256(text).digest() != self.from_mac:
+                self.send(MSG_GRAB, self.selection() + struct.pack("<I", TYPE_UTF8_TEXT))
+        sys.exit("wl-paste --watch exited")
+
+
+def main():
+    fd = os.open(PORT, os.O_RDWR)
+    agent = Agent(fd)
+    agent.announce()
+    threading.Thread(target=agent.watch, daemon=True).start()
+    agent.receive()
+
+
+if __name__ == "__main__":
+    main()

@@ -28,7 +28,7 @@
 #                                         [--headless] [--console-socket] [--job DIR]
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-QEMU="$ROOT/virtualization/qemu/runtime/bin/qemu-system-aarch64"
+QEMU="${QEMU:-$ROOT/virtualization/qemu/runtime/bin/qemu-system-aarch64}"   # Omarchy.app passes its bundled copy
 IMG="$ROOT/virtualization/images/alarm"
 DISK="${DISK:-$IMG/root-btrfs.img}"
 KERNEL="${KERNEL:-$IMG/Image-7.1.6-vzrun2-16k}"
@@ -45,6 +45,10 @@ if [[ -f $RUNDIR/qemu.pid ]] && kill -0 "$(cat "$RUNDIR/qemu.pid")" 2>/dev/null;
 fi
 rm -f "$RUNDIR"/{console,monitor,battery,host}.sock
 fullscreen=off; fullgrab=off; headless=0
+# Clipboard sharing with macOS: QEMU's qemu-vdagent (Cocoa owns the Mac
+# pasteboard) <-> guest ilinux-clipboard-agent (wl-clipboard).  Text, on demand.
+clipboard=(-chardev qemu-vdagent,id=vdagent,name=vdagent,clipboard=on,mouse=off
+           -device virtserialport,bus=vser.0,nr=2,chardev=vdagent,name=com.redhat.spice.0)
 # Disk I/O off the main loop (which also runs all VirGL GPU work): a dedicated
 # iothread and multi-queue virtio-blk.  DISK_IOTHREAD=0 restores the old path.
 if [[ ${DISK_IOTHREAD:-1} == 1 ]]; then
@@ -62,13 +66,14 @@ while (($#)); do
   case "$1" in
     --fullscreen) fullscreen=on; shift ;;
     --full-grab) fullgrab=on; shift ;;
+    --no-clipboard) clipboard=(); shift ;;
     --hetero) smp="18,sockets=1,clusters=3,cores=6,threads=1"
               machine="virt,gic-version=3,bg-vcpus=6"; shift ;;
     --headless) headless=1; shift ;;
     --console-socket) CONSOLE="socket,id=hvc0,path=$RUNDIR/console.sock,server=on,wait=off"; shift ;;
     --job) job=(-fsdev "local,id=job,path=$2,security_model=none"
                 -device "virtio-9p-pci,fsdev=job,mount_tag=job"); shift 2 ;;
-    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
+    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--no-clipboard] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
   esac
 done
 if ((headless)); then
@@ -86,7 +91,7 @@ if [[ ! -x $AGENT || $AGENT_SRC -nt $AGENT ]]; then
 fi
 "$AGENT" --unix "$RUNDIR/host.sock" --parent $$ > "$RUNDIR/host-agent.log" 2>&1 &
 
-exec "$QEMU" -name Omarchy \
+exec "$QEMU" -name Omarchy -L "$ROOT/virtualization/qemu/runtime/share/qemu" \
   -machine "$machine" -accel hvf,kernel-irqchip=on -cpu host,pmu=off \
   -smp "$smp" -m "${MEM_MIB}M" \
   -kernel "$KERNEL" -append "${APPEND:-root=/dev/vda rootflags=subvol=@ rw rootwait console=hvc0 quiet loglevel=3}${TZNAME:+ ilinux.tz=$TZNAME}" \
@@ -102,6 +107,7 @@ exec "$QEMU" -name Omarchy \
   -chardev "$CONSOLE" -device virtconsole,bus=vser.0,nr=0,chardev=hvc0 \
   -chardev "socket,id=host,path=$RUNDIR/host.sock,server=on,wait=off" \
   -device virtserialport,bus=vser.0,nr=1,chardev=host,name=org.ilinux.host \
+  ${clipboard[@]+"${clipboard[@]}"} \
   ${job[@]+"${job[@]}"} \
   -monitor "unix:$RUNDIR/monitor.sock,server=on,wait=off" \
   -pidfile "$RUNDIR/qemu.pid" \

@@ -34,7 +34,7 @@ export PATH="$VENV:$PATH"                     # meson, ninja, pkg-config, python
 export MACOSX_DEPLOYMENT_TARGET=15.0
 HB=/opt/homebrew/opt
 export PKG_CONFIG_PATH=
-export PKG_CONFIG_LIBDIR="$RT/lib/pkgconfig:$HB/glib/lib/pkgconfig:$HB/pixman/lib/pkgconfig:$HB/pcre2/lib/pkgconfig:$HB/gettext/lib/pkgconfig:$HB/libffi/lib/pkgconfig:$HB/zstd/lib/pkgconfig"
+export PKG_CONFIG_LIBDIR="$RT/lib/pkgconfig:$RT/share/pkgconfig:$HB/glib/lib/pkgconfig:$HB/pixman/lib/pkgconfig:$HB/pcre2/lib/pkgconfig:$HB/gettext/lib/pkgconfig:$HB/libffi/lib/pkgconfig:$HB/zstd/lib/pkgconfig"
 
 log() { echo "[build-qemu-virgl] $*"; }
 fetch() {  # url sha256 outname
@@ -73,6 +73,11 @@ fetch "https://git.kernel.org/pub/scm/utils/dtc/dtc.git/snapshot/dtc-b6910bec116
 fetch "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-1.5.10.tar.xz" \
   072cda4b59dd098bba8c2363a6247299db1fa89411dc221c8b81b8ee8192e623 libepoxy.tar.xz
 
+# spice-protocol: headers only, for QEMU's qemu-vdagent chardev (clipboard
+# sharing with the Cocoa pasteboard).  Hash published by spice-space.org.
+fetch "https://www.spice-space.org/download/releases/spice-protocol-0.14.4.tar.xz" \
+  04ffba610d9fd441cfc47dfaa135d70096e60b1046d2119d8db2f8ea0d17d912 spice-protocol.tar.xz
+
 # Khronos EGL headers (macOS ships none).  Pinned by commit; headers only.
 EGL_COMMIT=db3425b8246136faccb5e2782b5694960bd6edf1
 mkdir -p "$RT/include/EGL" "$RT/include/KHR"
@@ -82,6 +87,13 @@ for h in EGL/egl.h EGL/eglext.h EGL/eglplatform.h KHR/khrplatform.h; do
 done
 
 if [[ ${ONLY:-all} != qemu ]]; then
+# ---- spice-protocol (headers + pkg-config file) ----
+unpack spice-protocol.tar.xz "$SRC/spice-protocol"
+log "install spice-protocol"
+meson setup "$SRC/spice-protocol/build" "$SRC/spice-protocol" --prefix="$RT" --libdir=lib \
+  > "$Q/build-spice-protocol.log" 2>&1
+ninja -C "$SRC/spice-protocol/build" install >> "$Q/build-spice-protocol.log" 2>&1
+
 # ---- libepoxy (upstream; CGL is its native macOS path) ----
 unpack libepoxy.tar.xz "$SRC/libepoxy"
 # Local patch: let epoxy build its EGL dispatch on macOS (upstream hard-codes it
@@ -192,7 +204,7 @@ rm -rf "$SRC/qemu/build"; mkdir -p "$SRC/qemu/build"
     --target-list=aarch64-softmmu --without-default-features --enable-system \
     --enable-hvf --disable-tcg --enable-cocoa --enable-opengl --enable-virglrenderer \
     --enable-pixman --enable-slirp --enable-fdt=internal --enable-coreaudio --audio-drv-list=coreaudio \
-    --enable-virtfs --enable-download --disable-debug-info --disable-werror \
+    --enable-virtfs --enable-spice-protocol --enable-download --disable-debug-info --disable-werror \
     --extra-cflags="-mmacosx-version-min=15.0 -I$RT/include" \
     --extra-ldflags="-mmacosx-version-min=15.0 -L$RT/lib -Wl,-rpath,$RT/lib" ) > "$Q/build-qemu.log" 2>&1
 log "build QEMU"

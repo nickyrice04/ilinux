@@ -5,6 +5,39 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-12 · Storage, clipboard, host agent, idle refresh
+
+### Implemented
+
+* **Host agent** (`tools/ilinux-host-agent`, launcher-managed) and guest
+  `ilinux-host-bridge`: Mac battery, a clock step right after host sleep
+  (tested: a 30 s lag was fixed within one cycle), and time zone. No polling
+  in the guest.
+* **Storage:**
+  * virtio-blk runs on a dedicated iothread with 4 queues, doubling
+    random-I/O scaling;
+  * QEMU patch 0005 makes `cache.direct` use F_NOCACHE on macOS (it was
+    O_DSYNC);
+  * `storbench syncwrite` added (F-033, D-023).
+* **Clipboard sharing with macOS:** QEMU built with spice-protocol
+  (`qemu-vdagent`), plus a stdlib-only guest vdagent clipboard agent for
+  Wayland (wl-clipboard) and a udev `uaccess` rule. Tested both directions
+  (D-022).
+* **QEMU patch 0006, adaptive display refresh:** a hidden window caused a
+  redraw-request storm (1 guest frame vs 1832 requests in 20 s).
+* **Housekeeping:** deleted the obsolete ext4 `root.img` (13 GB).
+
+### Measured
+
+* **Storage vs native:** warm 4K QD1 reads at 101%; 32 threads at 42% (was
+  20%); cold sequential reads with F_NOCACHE at 100%; write+fsync at 22%
+  (btrfs dependent-I/O chain).
+* **Microphone:** QEMU's CoreAudio backend has no capture
+  (`max_voices_in = 0`). A capture voice needs writing, ideally with an app
+  bundle so macOS attributes the microphone prompt to it.
+
+---
+
 ## 2026-10-12 · Efficiency pass: CPU heterogeneity, App Nap, GPU fences, power
 
 ### Discovered

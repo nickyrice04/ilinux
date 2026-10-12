@@ -1,0 +1,156 @@
+From: iLinux workspace
+Subject: [PATCH] cocoa: adaptive GL refresh; no redraw storm while hidden
+
+The GUI timer ticks at the host display rate (about 8 ms at 120 Hz) even
+while the guest shows a static desktop.  Worse, while the window is hidden
+Core Animation never draws the layer, so gl_dirty never cleared and every
+tick re-dispatched setNeedsDisplay to the main thread (~90/s, measured
+with COCOA_GL_TRACE: 1 guest frame vs 1832 redraw requests in 20 s).
+
+Request a draw once per dirty frame; after a second without new frames
+(or with the draw still pending) tick every 100 ms, which keeps the
+pasteboard check; any frame or scanout change restores the display rate.
+When the window becomes visible again, draw the latest frame.
+
+diff -ru a/ui/cocoa.m b/ui/cocoa.m
+--- a/ui/cocoa.m	2026-10-12 02:20:43
++++ b/ui/cocoa.m	2026-10-12 02:36:04
+@@ -135,6 +135,34 @@
+ @end
+ 
+ static bool gl_dirty;
++
++/*
++ * Adaptive refresh.  The GUI timer otherwise ticks at the host display rate
++ * (~8 ms at 120 Hz) even while the guest shows a static desktop, waking QEMU
++ * ~125 times a second.  After a second without new frames tick every
++ * COCOA_IDLE_REFRESH_MS (the Mac pasteboard is still checked); the next
++ * frame restores the display rate at once.
++ */
++#define COCOA_IDLE_REFRESH_MS 100
++static uint64_t cocoa_refresh_ms = GUI_REFRESH_INTERVAL_DEFAULT;
++static unsigned cocoa_idle_ticks;
++static bool cocoa_refresh_idle;
++/*
++ * A draw was requested from the layer and has not happened yet.  While the
++ * window is hidden Core Animation never draws, so without this every tick
++ * re-dispatched setNeedsDisplay to the main thread (~90/s, measured).
++ */
++static bool gl_render_requested;
++
++static void cocoa_gl_mark_dirty(void)
++{
++    gl_dirty = true;
++    cocoa_idle_ticks = 0;
++    if (cocoa_refresh_idle) {
++        cocoa_refresh_idle = false;
++        qemu_console_listener_set_refresh(&dcl, cocoa_refresh_ms);
++    }
++}
+ static uint32_t gl_scanout_id;
+ static DisplayGLTextureBorrower gl_scanout_borrow;
+ static QEMUGLContext gl_view_ctx;
+@@ -871,8 +899,10 @@
+         }
+ 
+         if (refreshRate) {
+-            qemu_console_listener_set_refresh(&dcl,
+-                                              MAX(1u, 1000000u / refreshRate));
++            cocoa_refresh_ms = MAX(1u, 1000000u / refreshRate);
++            if (!cocoa_refresh_idle) {
++                qemu_console_listener_set_refresh(&dcl, cocoa_refresh_ms);
++            }
+             info.refresh_rate = refreshRate;
+         }
+ 
+@@ -1842,6 +1872,15 @@
+     [cocoaView ungrabMouse];
+ }
+ 
++- (void)windowDidChangeOcclusionState:(NSNotification *)notification
++{
++    /* Frames that arrived while hidden were never drawn: draw the latest. */
++    if (display_opengl &&
++        ([[cocoaView window] occlusionState] & NSWindowOcclusionStateVisible)) {
++        [[cocoaView layer] setNeedsDisplay];
++    }
++}
++
+ - (void)windowDidResize:(NSNotification *)notification
+ {
+     [cocoaView updateScale];
+@@ -2656,7 +2695,7 @@
+ {
+     with_gl_view_ctx(^{
+         surface_gl_update_texture(dgc.gls, surface, x, y, w, h);
+-        gl_dirty = true;
++        cocoa_gl_mark_dirty();
+     });
+ }
+ 
+@@ -2669,7 +2708,7 @@
+     });
+ 
+     cocoa_switch(dcl, new_surface);
+-    gl_dirty = true;
++    cocoa_gl_mark_dirty();
+ }
+ 
+ static void cocoa_gl_render(void)
+@@ -2761,6 +2800,7 @@
+ 
+     /* Clear dirty flag after render completes to ensure clean handoff */
+     gl_dirty = false;
++    gl_render_requested = false;
+ }
+ 
+ static void cocoa_gl_refresh(DisplayChangeListener *dcl)
+@@ -2791,16 +2831,26 @@
+         }
+ #endif
+ 
+-        dispatch_async(dispatch_get_main_queue(), ^{
+-            [[cocoaView layer] setNeedsDisplay];
+-        });
++        if (!gl_render_requested) {
++            gl_render_requested = true;
++            cocoa_idle_ticks = 0;
++            dispatch_async(dispatch_get_main_queue(), ^{
++                [[cocoaView layer] setNeedsDisplay];
++            });
++            return;
++        }
+     }
++    if (!cocoa_refresh_idle &&
++        ++cocoa_idle_ticks * cocoa_refresh_ms >= 1000) {
++        cocoa_refresh_idle = true;
++        qemu_console_listener_set_refresh(dcl, COCOA_IDLE_REFRESH_MS);
++    }
+ }
+ 
+ static void cocoa_gl_scanout_disable(DisplayChangeListener *dcl)
+ {
+     gl_scanout_borrow = NULL;
+-    gl_dirty = true;
++    cocoa_gl_mark_dirty();
+ 
+     cocoa_gl_log("scanout disable");
+ }
+@@ -2813,7 +2863,7 @@
+ {
+     gl_scanout_id = backing_id;
+     gl_scanout_borrow = backing_borrow;
+-    gl_dirty = true;
++    cocoa_gl_mark_dirty();
+ 
+     cocoa_gl_log("scanout texture id=%u region=%ux%u+%u+%u",
+                  backing_id, w, h, x, y);
+@@ -2823,7 +2873,7 @@
+                                    uint32_t x, uint32_t y,
+                                    uint32_t w, uint32_t h)
+ {
+-    gl_dirty = true;
++    cocoa_gl_mark_dirty();
+ 
+     cocoa_gl_log("scanout flush region=%ux%u+%u+%u", w, h, x, y);
+ }

@@ -43,3 +43,4 @@ tools/bin/
 third_party/
 virtualization/run/
 tools/rpc-cache/
+virtualization/app/*.app/

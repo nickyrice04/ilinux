@@ -370,3 +370,13 @@ No entry is based on decompiled Apple code.
 | Inference | Keep writeback plus iothread as the default (small-I/O latency at parity once data is warm). Offer F_NOCACHE for streaming and memory efficiency. The remaining gap is per-I/O virtualization latency times btrfs's dependent I/O chain. Levers: an ext4 data subvolume for fsync-heavy databases, or lower notify latency. |
 | Confidence | **Confirmed** (measurements); the btrfs-chain attribution is **Likely** |
 | Linux mapping | launcher defaults; `patches/qemu/0005-file-posix-macos-f-nocache.patch` |
+
+## F-034 · VM display · A hidden QEMU window caused a redraw-request storm
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `COCOA_GL_TRACE=1`. Per-thread CPU via `ps -M`. QEMU CPU time over 60 s idle, `APP_NAP=off`, window hidden. |
+| Observation | The GUI timer ticks at the display rate (about 8 ms at 120 Hz). While the window is hidden, Core Animation never draws the layer, so `gl_dirty` never clears, and every tick re-dispatched `setNeedsDisplay` to the Cocoa main thread: 1832 requests vs 1 guest frame in 20 s. A first adaptive-refresh attempt didn't help for exactly that reason (2.35 s CPU/min vs 2.26 s). The final patch requests one draw per frame, ticks every 100 ms after a second of no frames, and redraws on unhide. QEMU idle CPU went to **1.24 s/min, 45% less**, with trace logging still on. |
+| Inference | A real saving in wakeups and CPU. The SoC power effect (estimated tens of mW) is below the resolution of non-interleaved 30 s IOReport runs (±0.1 W run-to-run). |
+| Confidence | CPU reduction **Confirmed**; power effect **Likely** (not resolved) |
+| Linux mapping | VM only (`patches/qemu/0006-cocoa-adaptive-refresh.patch`) |

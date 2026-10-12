@@ -45,6 +45,33 @@ ONLY=qemu virtualization/qemu/build-qemu-virgl.sh  # QEMU only, after patch edit
    * `patches/qemu/0004-virgl-macos-async-fences.patch` and
      `patches/virglrenderer/0001-macos-thread-sync.patch`: event-driven
      VirGL fences on macOS, replacing the 1 ms polling (D-021, F-030).
+   * `patches/qemu/0005-file-posix-macos-f-nocache.patch`: `cache.direct`
+     uses `F_NOCACHE` instead of O_DSYNC on macOS (F-033).
+   * `patches/qemu/0006-cocoa-adaptive-refresh.patch`: the display timer
+     drops to 100 ms after a second without frames, instead of waking QEMU
+     at 120 Hz forever.
+5. `spice-protocol` headers (SHA-256 published by spice-space.org) enable
+   QEMU's `qemu-vdagent` for clipboard sharing.
+
+## Omarchy.app (double-click launcher)
+
+```bash
+virtualization/app/build-omarchy-app.sh    # rerun after rebuilding QEMU
+```
+
+This builds `virtualization/app/Omarchy.app`, which stays in the workspace
+(drag it to the Dock if you like).
+
+* **What it is:** a small Mach-O stub, a launch script, and a signed copy of
+  QEMU (libraries and data stay in `runtime/`).
+* **Identity:** macOS shows "Omarchy" in the Dock and window list, and
+  attributes the microphone and Accessibility prompts to it.
+* **Default launch:** `--hetero --fullscreen --console-socket`. Put
+  `OPTIONS=(...)` in `virtualization/run/omarchy-app.conf` to change it,
+  e.g. `OPTIONS=(--hetero --console-socket)` for a window, or add
+  `--full-grab`.
+* **First launch:** the app is ad-hoc signed and built locally, so Gatekeeper
+  does not know it. Right-click → Open once.
 
 ## Run
 
@@ -58,6 +85,8 @@ virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [
 | `--fullscreen` | Omarchy gets its own macOS Space with the menu bar and Dock hidden. The guest runs at the panel's native safe area, 3456×2160 at scale 2 (1728×1080 logical). Switch Spaces with a 4-finger swipe |
 | `--full-grab` | While the window is focused, Cmd-Space, Cmd-Tab and other system chords go to Hyprland (Cmd = Super). macOS asks once to allow Accessibility for the QEMU binary. Each rebuild changes the ad-hoc signature and needs the grant again |
 | `--hetero` | 18 vCPUs as 3 clusters of 6, mirroring the M5 Max. The last cluster runs at host background QoS (M cores) and appears to Linux at capacity 220/1024. `omarchy-qos` puts `background.slice` there and keeps everything else off it |
+| `--no-clipboard` | Turns off clipboard sharing. By default text is shared both ways through `qemu-vdagent` and the guest `ilinux-clipboard-agent`, fetched only when someone pastes |
+| `DISK_CACHE=writeback\|none`, `DISK_IOTHREAD=1\|0` (env) | Disk path. The default is `writeback` on a dedicated iothread with 4 queues: warm small I/O at native latency. `none` bypasses the host page cache (`F_NOCACHE`): 4 GB/s writes, cold reads at 100%, no double caching (F-033) |
 | `APP_NAP=on\|off\|auto` (env) | macOS App Nap policy. Default `auto`: a hidden, idle VM naps, but a hidden VM doing foreground work runs at full speed |
 | `--console-socket` | Root shell on `virtualization/run/console.sock`; drive it with `tools/vmconsole.py` and `tools/vmpush.py` |
 | `--job DIR` | 9p share with tag `job`, for scripted runs |

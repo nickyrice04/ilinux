@@ -275,3 +275,54 @@ of a core over 1 s, released after 10 idle seconds).
 blended fill from 17% to 74% of native, readback from 23% to 61%, and ALU
 from 92% to 99.7% (F-030). It also removes about 1000 main-loop wakeups/s
 during animation.
+
+## D-022 · 2026-10-12 · Clipboard sharing through QEMU's vdagent, not a custom bridge
+
+**Decision:** Build QEMU with `spice-protocol` headers to get the
+`qemu-vdagent` chardev (`clipboard=on`, `mouse=off`). In the guest, a
+stdlib-only Python agent speaks the vdagent clipboard protocol and uses
+wl-clipboard. A udev `uaccess` rule limits the port to the desktop user.
+
+**Why:**
+
+* QEMU's Cocoa UI already owns the Mac pasteboard and transfers on demand:
+  nothing is read until a paste happens. That is better for privacy and
+  power than a polling bridge.
+* The stock `spice-vdagent` is X11-only, which is why the guest needs its
+  own agent.
+* Tested both directions: Mac → Linux via `pbcopy`/`wl-paste`, and Linux →
+  Mac via `wl-copy`/`pbpaste`. The Mac pasteboard was empty beforehand and
+  was cleared afterwards.
+
+## D-023 · 2026-10-12 · VM disk: writeback on a dedicated iothread by default
+
+**Decision:** virtio-blk runs on its own iothread with 4 queues and
+`cache=writeback`. `DISK_CACHE=none` (now F_NOCACHE) is available for
+streaming or memory-sensitive use.
+
+**Why:** These were the measured trade-offs (F-033):
+
+* The iothread doubles random-I/O scaling, and keeps disk work off the
+  main loop that also runs VirGL.
+* Writeback gives native QD1 latency once data is warm.
+* F_NOCACHE gives 4 GB/s writes and 100% cold sequential reads, but costs
+  3× QD1 random-read latency.
+
+## D-024 · 2026-10-12 · Adaptive display refresh, and an app bundle for the VM
+
+**Decision:**
+
+* Workspace patch 0006: one draw request per frame, a 100 ms tick after a
+  second without frames, and a redraw when the window is unhidden.
+* `virtualization/app/build-omarchy-app.sh` builds `Omarchy.app` in the
+  workspace. It contains its own signed copy of QEMU and launches with
+  options from `virtualization/run/omarchy-app.conf` (default
+  `--hetero --fullscreen`).
+
+**Why:**
+
+* Idle QEMU CPU drops 45% (F-034).
+* A bundle gives the VM a Dock identity, and macOS attributes privacy
+  prompts (microphone, Accessibility) to "Omarchy" instead of the terminal
+  or agent that started QEMU.
+* Nothing is installed outside the workspace.
