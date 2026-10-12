@@ -61,7 +61,7 @@ measured, still unsupported, and next.
   commands in flight, while the fixed bugs were present: the store-retry
   loop, and the compositor in context error. They have not reproduced on the
   final build (clean 3 s shutdowns after vkcube and vkcompute).
-  `vm-restart.sh` in the session scratchpad samples QEMU if one recurs.
+  `tools/vm-restart.sh` samples QEMU if one recurs.
 
 ### REA gap analysis (same day)
 
