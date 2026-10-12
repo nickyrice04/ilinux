@@ -66,6 +66,24 @@ ONLY=qemu virtualization/qemu/build-qemu-virgl.sh  # QEMU only, after patch edit
      * `patches/virglrenderer/0007-vrend-cgl-iosurface-mirror-for-venus-images.patch`:
        compositors import Venus swapchain images through an IOSurface
        mirror. `VIRGL_IOSURFACE_MIRROR_STATS=1` logs its cost.
+   * **Hardware video decode (VideoToolbox behind the guest's VA-API, D-029,
+     F-042–F-046):**
+     * `patches/virglrenderer/0008-vrend-videotoolbox-video-backend.patch`:
+       virglrenderer's video interface on VideoToolbox. H.264 (Constrained
+       Baseline, Main, High) decodes on the Mac's media engine, and the
+       decoded IOSurface's planes are copied into the guest's video surfaces
+       on the GPU. Diagnostics: `VIRGL_VIDEO_DEBUG=1` (per-frame timing),
+       `VIRGL_VIDEO_MD5=<file>` (per-frame MD5 of the decoded picture),
+       `VIRGL_VIDEO_SYNC=finish` (wait for the copies every frame).
+     * `patches/virglrenderer/0009-vrend-shader-tex-temporary-writemask.patch`:
+       fixes a shader-translation bug in the macOS patch set that broke
+       Mesa's video compositor shaders.
+     * `patches/qemu/0011-virtio-gpu-gl-video-property.patch`: the
+       `video=on|off` device property.
+   * `patches/virglrenderer/0010-vrend-macos-fence-wait-without-spinning.patch`:
+     Apple's `glClientWaitSync` busy-polls for its whole timeout, so the
+     fence thread now polls and sleeps instead of spinning while it waits:
+     about 0.3–0.4 W less in 4K60 playback, same glmark2 throughput (F-047).
 5. Vulkan stage: Khronos Vulkan-Headers and Vulkan-Loader (SDK 1.4.363.0,
    built) and the MoltenVK 1.4.2 release ICD (copied), all SHA-256 pinned.
 6. `spice-protocol` headers (SHA-256 published by spice-space.org) enable
@@ -94,7 +112,7 @@ This builds `virtualization/app/Omarchy.app`, which stays in the workspace
 ## Run
 
 ```bash
-virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [--no-venus] [--console-socket]
+virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [--no-venus] [--no-video] [--console-socket]
 ```
 
 | Option | Effect |
@@ -104,6 +122,7 @@ virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [
 | `--full-grab` | While the window is focused, Cmd-Space, Cmd-Tab and other system chords go to Hyprland (Cmd = Super). macOS asks once to allow Accessibility for the QEMU binary. Each rebuild changes the ad-hoc signature and needs the grant again |
 | `--hetero` | 18 vCPUs as 3 clusters of 6, mirroring the M5 Max. The last cluster runs at host background QoS (M cores) and appears to Linux at capacity 220/1024. `omarchy-qos` puts `background.slice` there and keeps everything else off it |
 | `--no-venus` | Turns off guest Vulkan. By default `virtio-gpu-gl` runs with `venus=on,blob=on,hostmem=4G` (`VENUS_HOSTMEM` env), so Vulkan apps run on the M5 Max GPU through Venus and MoltenVK, at 94–98% of native compute. Desktop GL is unaffected either way |
+| `--no-video` | Turns off hardware video decode. By default `virtio-gpu-gl` runs with `video=on`: the guest's VA-API driver (Mesa virgl, `vainfo` shows `VAProfileH264High`) decodes H.264 on the Mac's media engine through VideoToolbox. Apps use it the usual way: `mpv --hwdec=vaapi`, `ffmpeg -hwaccel vaapi`, GStreamer `va` |
 | `--no-clipboard` | Turns off clipboard sharing. By default text is shared both ways through `qemu-vdagent` and the guest `ilinux-clipboard-agent`, fetched only when someone pastes |
 | `DISK_CACHE=writeback\|none`, `DISK_IOTHREAD=1\|0` (env) | Disk path. The default is `writeback` on a dedicated iothread with 4 queues: warm small I/O at native latency. `none` bypasses the host page cache (`F_NOCACHE`): 4 GB/s writes, cold reads at 100%, no double caching (F-033) |
 | `APP_NAP=on\|off\|auto` (env) | macOS App Nap policy. Default `auto`: a hidden, idle VM naps, but a hidden VM doing foreground work runs at full speed |
@@ -158,6 +177,28 @@ locks the session on idle.
 * Omarchy's idle policy works: screensaver at 150 s, lock at 300 s, then
   DPMS off. With DPMS off the guest stops rendering.
 
+**Hardware video decode** (`benchmarks/vm/playback_power.py`, F-046):
+
+* `vainfo` lists `VAProfileH264High : VAEntrypointVLD` (plus Main and
+  Constrained Baseline).
+* A 1080p60 High-profile clip with B-frames decodes bit-exact against
+  FFmpeg's software decoder: 600/600 frames, 0 errors.
+* mpv `--hwdec=vaapi --vo=gpu --gpu-api=opengl` uses zero-copy EGL dmabuf
+  interop and plays 4K60 and 1080p60 in real time, fullscreen at 120 Hz,
+  with 0–2 dropped frames per 1,500.
+* Whole-SoC playback power, the same clips looped for 25 s (ABBA order, AC
+  power). The native reference is AVFoundation in a window of the same size,
+  with the VM off:
+
+  | Clip | VM, hardware decode | VM, software decode | macOS native |
+  |---|---|---|---|
+  | 4K60 H.264, 60 Mbps | 7.0 W | 17.3 W | 2.9 W |
+  | 1080p60 H.264, 20 Mbps | 4.3 W | 6.7 W | 2.4 W |
+
+  Idle is about 1.9 W either way.
+* Decode alone (FFmpeg paced, nothing displayed) is 3.0 W at 4K60. Most of
+  the remaining gap to macOS is presentation (F-046).
+
 ## Known gaps
 
 * **Microphone:** capture works through patch 0007. The first recording
@@ -173,3 +214,14 @@ locks the session on idle.
   session (D-028) until QEMU provides paced vblank timestamps.
 * **Debugging in the guest:** gdb can't attach (SME without SVE, F-039). Use
   `eu-stack` and `strace`.
+* **Video decode scope:** H.264 only so far. HEVC, VP9 and AV1 decode and all
+  encode are not offered yet.
+* **Video readback:** zero-copy consumers (mpv, compositors, browsers) see
+  decoded frames, but CPU readback of a decoded surface (`hwdownload`,
+  `vaGetImage`, mpv `--hwdec=vaapi-copy`) returns stale data. The guest's
+  Mesa virgl driver never marks decode targets dirty, so this needs a guest
+  Mesa fix (F-045).
+* **Planar surfaces:** FFmpeg-based players ask for 3-plane I420 surfaces,
+  so VideoToolbox's NV12 output goes through a CPU conversion first (about
+  0.6 ms per 4K frame on the QEMU main thread). A guest Mesa change that
+  offers only NV12 for decode would remove it (F-042).

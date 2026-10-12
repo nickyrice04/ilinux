@@ -1,0 +1,54 @@
+Subject: [PATCH] vrend: wait for GL fences without spinning on macOS
+
+Apple's glClientWaitSync busy-polls for its whole timeout (fence status and
+mach_absolute_time), so the sync thread spun while it waited: 17% of its
+samples during 4K60 video playback (about 0.3-0.4 W of SoC power), 3%
+under GPU-bound GL.  On macOS, poll with a zero timeout
+and sleep in between (50 us doubling to 1 ms); fences are already flushed
+at creation.  VIRGL_GL_FENCE_WAIT=block restores the blocking wait, for
+A/B measurements.
+---
+--- a/src/vrend/vrend_renderer.c
++++ b/src/vrend/vrend_renderer.c
+@@ -25,6 +25,7 @@
+ #include "config.h"
+ #endif
+ 
++#include <time.h>
+ #include <unistd.h>
+ #include <stdatomic.h>
+ #include <stdio.h>
+@@ -7574,6 +7575,33 @@
+ #endif
+ 
+    bool done = false;
++#ifdef __APPLE__
++   /* Apple's glClientWaitSync spins for the whole timeout (it polls the fence
++    * and mach_absolute_time), so a blocking wait kept a CPU core busy for as
++    * long as the GPU was.  Poll without a timeout and sleep in between,
++    * starting short so quick GPU work still retires promptly.  Fences are
++    * flushed when they are created (vrend_renderer_create_fence).
++    * VIRGL_GL_FENCE_WAIT=block restores the blocking wait, for comparisons. */
++   static int block_wait = -1;
++   if (block_wait < 0)
++      block_wait = getenv("VIRGL_GL_FENCE_WAIT") && !strcmp(getenv("VIRGL_GL_FENCE_WAIT"), "block");
++   if (!block_wait) {
++      unsigned sleep_us = 50;
++      do {
++         GLenum glret = glClientWaitSync(fence->glsyncobj, 0, 0);
++         if (glret == GL_WAIT_FAILED) {
++            virgl_warn("Wait sync failed: illegal fence object %p\n", (void*) fence->glsyncobj);
++         }
++         done = glret != GL_TIMEOUT_EXPIRED;
++         if (!done && can_block) {
++            const struct timespec ts = { 0, (long)sleep_us * 1000 };
++            nanosleep(&ts, NULL);
++            sleep_us = MIN2(sleep_us * 2, 1000);
++         }
++      } while (!done && can_block);
++      return done;
++   }
++#endif
+    int timeout = can_block ? 1000000000 : 0;
+    do {
+       GLenum glret = glClientWaitSync(fence->glsyncobj, 0, timeout);

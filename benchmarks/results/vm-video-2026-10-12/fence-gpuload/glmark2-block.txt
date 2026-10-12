@@ -1,0 +1,2 @@
+[terrain] duration=20: FPS: 528 FrameTime: 1.895 ms
+                                  glmark2 Score: 527 

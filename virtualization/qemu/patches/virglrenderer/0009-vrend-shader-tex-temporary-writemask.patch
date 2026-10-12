@@ -1,0 +1,52 @@
+Subject: [PATCH] vrend_shader: use the TEX temporary only when lowering swizzles
+
+The macOS patch set routes every TEX through a vec4 temporary, but emitted
+the destination writemask on the texture() call itself, so a .x write
+produced 'vec4 val = texture(...).x' and the shader failed to compile
+(Mesa's video compositor shaders hit this).  Use the temporary only when
+sampler_views_lower_swizzle_mask is set, apply the writemask on the final
+assignment, and keep the upstream form otherwise.
+---
+--- a/src/vrend/vrend_shader.c
++++ b/src/vrend/vrend_shader.c
+@@ -3573,13 +3573,17 @@
+                          srcs[0], src_swizzle, offset, bias,
+                          dinfo->dst_override_no_wm[0] ? "" : writemask);
+          }
+-      } else {
+-         /* Use temporary variable for shader swizzle lowering (A8_UNORM on Core Profile) */
+-         emit_buff(&ctx->glsl_strbufs, "{\n  vec4 val = texture%s(%s, %s%s%s%s)%s;\n",
+-                    tex_ext, srcs[sampler_index], srcs[0], src_swizzle,
+-                    offset, bias, dinfo->dst_override_no_wm[0] ? "" : writemask);
++      } else if (vrend_shader_sampler_views_mask_get(ctx->key->sampler_views_lower_swizzle_mask,
++                                                     sinfo->sreg_index)) {
++         /* Use temporary variable for shader swizzle lowering (A8_UNORM on Core Profile).
++          * Like the texelFetch path above: the full vec4 goes into val and the
++          * writemask is applied only on the final assignment (a writemask here
++          * made "vec4 val = texture(...).x", which no GLSL compiler accepts). */
++         emit_buff(&ctx->glsl_strbufs, "{\n  vec4 val = %s(texture%s(%s, %s%s%s%s));\n",
++                    get_string(dtypeprefix), tex_ext, srcs[sampler_index], srcs[0],
++                    src_swizzle, offset, bias);
+ 
+-         if (vrend_shader_sampler_views_mask_get(ctx->key->sampler_views_lower_swizzle_mask, sinfo->sreg_index)) {
++         {
+             int16_t packed_swizzles = ctx->key->tex_swizzle[sinfo->sreg_index];
+             emit_buff(&ctx->glsl_strbufs, "   val = vec4(");
+ 
+@@ -3611,9 +3615,14 @@
+             emit_buff(&ctx->glsl_strbufs, ");\n");
+          }
+ 
+-         emit_buff(&ctx->glsl_strbufs, "  %s = %s(%s(val)%s);\n}\n",
+-                   dst, get_string(dinfo->dstconv), get_string(dtypeprefix),
++         emit_buff(&ctx->glsl_strbufs, "  %s = %s(val%s);\n}\n",
++                   dst, get_string(dinfo->dstconv),
+                    dinfo->dst_override_no_wm[0] ? "" : writemask);
++      } else {
++         emit_buff(&ctx->glsl_strbufs, "%s = %s(%s(texture%s(%s, %s%s%s%s)%s));\n",
++                   dst, get_string(dinfo->dstconv), get_string(dtypeprefix),
++                   tex_ext, srcs[sampler_index], srcs[0], src_swizzle,
++                   offset, bias, dinfo->dst_override_no_wm[0] ? "" : writemask);
+       }
+    }
+ 

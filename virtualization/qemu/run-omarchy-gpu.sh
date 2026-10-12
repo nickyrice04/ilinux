@@ -53,6 +53,10 @@ fullscreen=off; fullgrab=off; headless=0
 # (virglrenderer 0007, QEMU 0010) and desktop GL is unchanged with it
 # (glbench within 1%); --no-venus turns it off.
 venus=1
+# Guest VA-API video decode (H.264) on the M5 Max media engine: virglrenderer's
+# video interface backed by VideoToolbox (virgl patch 0008, QEMU 0011).
+# --no-video turns it off.
+video=1
 gpu_extra=""
 # Clipboard sharing with macOS: QEMU's qemu-vdagent (Cocoa owns the Mac
 # pasteboard) <-> guest ilinux-clipboard-agent (wl-clipboard).  Text, on demand.
@@ -77,6 +81,7 @@ while (($#)); do
     --full-grab) fullgrab=on; shift ;;
     --venus) venus=1; shift ;;
     --no-venus) venus=0; shift ;;
+    --no-video) video=0; shift ;;
     --no-clipboard) clipboard=(); shift ;;
     --hetero) smp="18,sockets=1,clusters=3,cores=6,threads=1"
               machine="virt,gic-version=3,bg-vcpus=6"; shift ;;
@@ -84,7 +89,7 @@ while (($#)); do
     --console-socket) CONSOLE="socket,id=hvc0,path=$RUNDIR/console.sock,server=on,wait=off"; shift ;;
     --job) job=(-fsdev "local,id=job,path=$2,security_model=none"
                 -device "virtio-9p-pci,fsdev=job,mount_tag=job"); shift 2 ;;
-    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--no-venus] [--no-clipboard] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
+    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--no-venus] [--no-video] [--no-clipboard] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
   esac
 done
 if ((venus)); then
@@ -93,6 +98,7 @@ if ((venus)); then
   export VK_DRIVER_FILES="$ROOT/virtualization/qemu/runtime/share/vulkan/icd.d/MoltenVK_icd.json"
   export VK_ICD_FILENAMES="$VK_DRIVER_FILES"
 fi
+((video)) && gpu_extra+=",video=on"
 if ((headless)); then
   display=(-display none)
 else

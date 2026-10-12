@@ -1,0 +1,68 @@
+Subject: [PATCH] virtio-gpu-gl: "video" property to enable virglrenderer video
+
+Adds video=on|off (default off) to virtio-gpu-gl.  When on, QEMU passes
+VIRGL_RENDERER_USE_VIDEO so virglrenderer offers its video interface (on
+macOS: VideoToolbox decode behind the guest VA-API driver).  The pinned
+virglrenderer 1.3.0 header exposes the flag only under
+VIRGL_RENDERER_UNSTABLE_APIS, so it is defined locally if missing.
+
+---
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -101,6 +101,7 @@
+     VIRTIO_GPU_FLAG_VENUS_ENABLED,
+     VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
+     VIRTIO_GPU_FLAG_DRM_ENABLED,
++    VIRTIO_GPU_FLAG_VIDEO_ENABLED,
+ };
+ 
+ #define virtio_gpu_virgl_enabled(_cfg) \
+@@ -125,6 +126,8 @@
+     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
+ #define virtio_gpu_drm_enabled(_cfg) \
+     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_DRM_ENABLED))
++#define virtio_gpu_video_enabled(_cfg) \
++    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VIDEO_ENABLED))
+ 
+ struct virtio_gpu_base_conf {
+     uint32_t max_outputs;
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -170,6 +170,10 @@
+                     VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
+     DEFINE_PROP_BIT("drm_native_context", VirtIOGPU, parent_obj.conf.flags,
+                     VIRTIO_GPU_FLAG_DRM_ENABLED, false),
++    /* guest VA-API through virglrenderer's video interface (VideoToolbox
++     * on macOS hosts) */
++    DEFINE_PROP_BIT("video", VirtIOGPU, parent_obj.conf.flags,
++                    VIRTIO_GPU_FLAG_VIDEO_ENABLED, false),
+ };
+ 
+ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -196,6 +196,14 @@
+ }
+ #endif
+ 
++/*
++ * virglrenderer.h exposes this flag only with VIRGL_RENDERER_UNSTABLE_APIS;
++ * the value is the one in the pinned virglrenderer 1.3.0 header.
++ */
++#ifndef VIRGL_RENDERER_USE_VIDEO
++#define VIRGL_RENDERER_USE_VIDEO (1 << 11)
++#endif
++
+ static int
+ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+                                    struct virtio_gpu_virgl_resource *res,
+@@ -1589,6 +1597,9 @@
+          */
+ #endif
+     }
++    if (virtio_gpu_video_enabled(g->parent_obj.conf)) {
++        flags |= VIRGL_RENDERER_USE_VIDEO;
++    }
+     if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+         flags |= VIRGL_RENDERER_DRM;
+ 

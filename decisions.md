@@ -412,3 +412,44 @@ carry it.
 
 **Revisit:** when QEMU provides paced virtual vblank and presentation
 timestamps, re-measure with the timestamps on.
+
+## D-029 · 2026-10-12 · Guest video decode through VA-API on VideoToolbox, inside virglrenderer
+
+**Decision:**
+
+* The VM's hardware video path is virglrenderer's video interface (the
+  protocol Mesa's virgl VA-API driver already speaks), implemented on
+  VideoToolbox (virgl patch 0008).
+* Decoded pictures stay IOSurface-backed and reach the guest's video
+  surfaces by GPU copies. They are fenced, so the picture returns to
+  VideoToolbox's pool only after the GPU has read it.
+* QEMU exposes it as `virtio-gpu-gl,video=on` (patch 0011). The launcher
+  turns it on by default; `--no-video` opts out.
+* H.264 first. VP9, HEVC, AV1 and encode (VTCompressionSession behind VA-API
+  encode) come next on the same path.
+
+**Why:**
+
+* It needs no guest kernel or package changes. The stock Arch ARM Mesa
+  ships the virgl VA driver, so FFmpeg, mpv, GStreamer `va` and Chromium
+  can use it as they are.
+* Whole-SoC power for 4K60 playback is 7.0 W against 17.3 W with guest
+  software decode; macOS itself needs 2.9 W, and the rest of the gap is
+  presentation (F-046).
+* Output is bit-exact against FFmpeg's software decoder (F-043, F-044).
+* The alternatives:
+  * virtio-video: an abandoned spec;
+  * virtio-media: needs a new guest driver and a new QEMU device;
+  * software decode: the status quo, at twice the power.
+
+**Trade-offs:**
+
+* The virgl video protocol carries Mesa-internal enums, which changed in
+  Mesa 26. Guest Mesa upgrades can break the mapping (F-042).
+* Decode stays synchronous on QEMU's main thread: about 1–3 ms per frame
+  holding the global lock. The guest has no decode fence, so an
+  asynchronous host decode needs completion tracking in vrend first (F-045).
+* CPU readback of decoded surfaces needs a guest Mesa fix (F-045).
+* None of this carries over to native Linux. The native path is the M5
+  media engine (AVD) through a V4L2 stateless driver, which doesn't exist
+  for M4/M5 yet (gap matrix: P1).

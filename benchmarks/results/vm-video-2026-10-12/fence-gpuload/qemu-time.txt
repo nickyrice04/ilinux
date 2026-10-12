@@ -1,0 +1,2 @@
+block qemu_time   1:21.95 ->   1:40.13
+poll qemu_time   0:17.07 ->   0:34.27

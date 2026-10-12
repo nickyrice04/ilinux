@@ -50,6 +50,19 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
 * Apple's own **N1** wireless chip has no Linux driver (Asahi report).
 
+### B-014 🔴 Touch ID (out of scope by design)
+
+* The Touch ID sensor is paired to the Secure Enclave: fingerprint data
+  goes over an encrypted channel to the SEP, which does the matching. No OS,
+  macOS included, sees raw fingerprint data.
+* Linux has no SEP interface, and Asahi doesn't support Touch ID.
+* This project excludes SEP, keystore and biometric internals by policy
+  (`reverse-engineering/macos-hardware-services.md`, method and scope).
+* **Alternatives for Linux login and sudo:**
+  * a USB fingerprint reader supported by `libfprint`/`fprintd`;
+  * a FIDO2 security key through `pam_u2f`.
+  * Both work in the VM through USB passthrough, and natively once USB works.
+
 ## Testing infrastructure
 
 ### B-005 🟢 Isolated Linux environment (resolved 2026-10-11)

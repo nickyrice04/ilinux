@@ -5,6 +5,118 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-12 · Hardware video decode in the VM: VA-API on VideoToolbox
+
+### Discovered
+
+* **The virgl video protocol isn't version-stable** (F-042). Mesa 26 sends
+  shifted profile values (H.264 High = 11) and virgl format numbers. Its VA
+  frontend offers I420, so FFmpeg-based players ask for 3-plane surfaces.
+* **VA-API omits the PPS reference-index defaults** (F-043). They have to be
+  learned from slice headers, or VideoToolbox rejects B-frames.
+* **`kCVPixelBufferOpenGLCompatibilityKey` changes VideoToolbox's output.**
+  With IOSurface-only output, decode is bit-exact (F-044).
+* **Mesa's virgl decoder has no decode fence and never marks targets dirty**
+  (F-045). Zero-copy consumers work; CPU readback returns stale data.
+* **Apple's `glClientWaitSync` busy-polls** (F-047). virglrenderer's fence
+  thread spun while waiting:
+  * 17% of its samples during 4K60 playback, 3% under GPU-bound glmark2;
+  * polling with sleeps saves about 0.3–0.4 W in 4K60 playback (ABBA
+    A/B) at unchanged glmark2 throughput (528 fps).
+* **Decode is no longer the gap to macOS; presentation is** (F-046):
+  * VM hardware decode alone: +1.1 W over idle at 4K60;
+  * the rest of the VM's +5.1 W is frame copies through mpv, Hyprland,
+    QEMU's window and WindowServer.
+
+### Implemented
+
+* **virglrenderer 0008:** a VideoToolbox backend for virglrenderer's video
+  interface.
+  * H.264 Constrained Baseline, Main and High.
+  * IOSurface planes are blitted into the guest's surfaces on the GPU.
+  * Pictures are fenced back to VideoToolbox's pool.
+  * Planar targets go through a VTPixelTransferSession.
+* **virglrenderer 0009:** shader-translation fix (TEX temporary writemask).
+* **virglrenderer 0010:** GL fence waits poll and sleep on macOS.
+  `VIRGL_GL_FENCE_WAIT=block` restores the old wait for A/B runs.
+* **QEMU 0011:** `virtio-gpu-gl,video=on`.
+* **Launcher and build:** video is on by default (`--no-video` opts out,
+  D-029), and the build uses `-Dvideo=true`.
+* **Benchmarks:**
+  * `benchmarks/vm/playback_power.py` with the guest helpers in
+    `benchmarks/vm/guest/` (playback and decode-only cases, ABBA order);
+  * `benchmarks/macos/playback_power.py`, with `benchmarks/src/avplay.m`
+    as the native AVFoundation reference.
+* **Research:** `research/testing/stress-and-stability-methodology-2026-10.md`
+  (65 sources):
+  * reviewer methods (30-minute Cinebench loops, 3DMark 20-loop stability);
+  * M5 Max sustained results;
+  * proposed pass tiers T0–T3;
+  * a summary of the reference stress-test video (no transcript).
+* **VM integration:** `/etc/mpv/mpv.conf` (`hwdec=vaapi`, `gpu-api=opengl`),
+  so plain `mpv file` decodes on the media engine with mpv's default
+  `gpu-next` renderer.
+* **Blockers:** Touch ID recorded as out of scope (B-014), with
+  libfprint USB readers and FIDO2 keys as the Linux alternatives.
+* **Validation:**
+  * A from-scratch rebuild applies every patch (virgl 0001–0010, QEMU
+    0001–0011).
+  * The rebuilt source trees match the working trees file for file.
+  * The rebuilt runtime decodes the 600-frame test clip bit-exact.
+  * Omarchy.app was rebuilt.
+
+### Measured
+
+* **Function:**
+  * `vainfo` lists `VAProfileH264High`, Main and Constrained Baseline.
+  * A 1080p60 High-profile B-frame clip decodes bit-exact against FFmpeg:
+    600/600 frames, 0 errors.
+  * mpv plays 4K60 and 1080p60 in real time through zero-copy dmabuf
+    interop, dropping 0–2 frames per 1,500.
+* **Playback power** (SoC, AC, 25 s windows):
+
+  | Clip | Native macOS | VM, hardware | VM, software |
+  |---|---|---|---|
+  | 4K60 | 2.91 W | 7.04 W | 17.34 W |
+  | 1080p60 | 2.36 W | 4.33 W | 6.72 W |
+
+  Hardware decode saves 59% at 4K60. The VM uses 2.4× native's power for
+  4K60 playback.
+* **Flat-out throughput, 4K60 clip:**
+  * hardware 155 fps at about 1 vCPU, mostly guest kernel time waiting on
+    QEMU's lock;
+  * software 508 fps on 8.4 vCPUs.
+* **Main-thread profile, 4K60 hardware playback:**
+  * 20% blocked in VideoToolbox decode;
+  * 5% CPU in the NV12→I420 conversion;
+  * about 1% in GPU copies.
+
+### Still unsupported or open
+
+* **Decode coverage:** HEVC, VP9 and AV1 decode, and VA-API encode on
+  VTCompressionSession.
+* **CPU readback of decoded surfaces:** needs a guest Mesa fix (F-045).
+* **The I420 conversion:** a guest Mesa change offering only NV12 for
+  decode would remove it.
+* **Synchronous decode on QEMU's main thread:** making it asynchronous
+  needs completion tracking in vrend (F-045).
+* **Presentation costs about 4 W at 4K60:** the largest remaining video gap.
+
+### Next
+
+1. **Presentation path:**
+   * QEMU's Cocoa display presenting the guest scanout as an IOSurface
+     layer (zero-copy into WindowServer);
+   * check Hyprland direct scanout in the VM;
+   * rectangle sampling in vrend for zero-copy imports.
+2. **Guest Mesa patch:** dirty decode targets and NV12-only decode
+   surfaces.
+3. **HEVC and VP9 decode, then encode;** test Chromium's VA-API path.
+4. **Defaults:** make hardware decode the default in the VM's mpv and
+   browser configuration.
+
+---
+
 ## 2026-10-12 · Vulkan in the VM: Venus on MoltenVK, presenting at 120 Hz
 
 ### Discovered

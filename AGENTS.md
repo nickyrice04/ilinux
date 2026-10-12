@@ -94,6 +94,13 @@ See `progress.md`. As of 2026-10-12:
   * the Mac battery and time zone are bridged into the guest.
 * GPU compute for LLMs from Linux runs through ggml RPC over vsock: 81–89% of
   native Metal.
+* Guest Vulkan runs through Venus on MoltenVK at 94–98% of native compute
+  (D-027).
+* Guest video decode (H.264) runs on the Mac's media engine through
+  VA-API on VideoToolbox (D-029). It is bit-exact against FFmpeg.
+  * 4K60 playback: 7.0 W, against 17.3 W with software decode and 2.9 W
+    native.
+  * The remaining gap is presentation (F-046).
 * The macOS baseline suite and session-1 research are complete.
 
 ## Next recommended actions

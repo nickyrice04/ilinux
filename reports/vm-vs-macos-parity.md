@@ -201,3 +201,50 @@ Presentation in the VM uses vkcube at 1272×679 RGBA16F in Hyprland on the
 * APFS `fsync` vs `fdatasync` for in-place 4K writes: 22 vs 23 µs. So the
   host flush is cheap. The guest's btrfs fsync is a chain of dependent I/Os,
   each paying a virtio round trip of about 50 µs.
+
+### Video playback: hardware decode (VideoToolbox behind guest VA-API, D-029)
+
+The same two H.264 clips (synthetic content, High profile with B-frames)
+play on both sides:
+
+* 4K60: 3840×2160, level 5.2, 59.7 Mbps;
+* 1080p60: level 4.2, 19.7 Mbps.
+
+Each case is looped for a 6 s warm-up plus a 25 s measured window.
+
+* **macOS:** AVFoundation (`benchmarks/bin/avplay`) in a 1296×729 pt window,
+  the size of the VM window, with the VM shut down.
+* **VM:** mpv fullscreen in Hyprland (2592×1458 at 120 Hz),
+  `--vo=gpu --gpu-api=opengl`, with `--hwdec=vaapi` or `--hwdec=no`.
+
+Power is the SoC sum from IOReport on AC. Scripts:
+`benchmarks/macos/playback_power.py` and `benchmarks/vm/playback_power.py`.
+Data: `benchmarks/results/macos-video-2026-10-12/` and
+`benchmarks/results/vm-video-2026-10-12/fencepoll/`.
+
+| Case | macOS native (median of 4) | VM hardware decode (mean of 2) | VM software decode (mean of 2) | macOS ÷ VM hardware |
+|---|---|---|---|---|
+| Idle | 1.93 W | 1.86–2.98 W | — | — |
+| 4K60 playback | **2.91 W** | **7.04 W** | 17.34 W | 41% |
+| 1080p60 playback | **2.36 W** | **4.33 W** | 6.72 W | 55% |
+| 4K60 decode only, nothing displayed | — | 3.00 W | 11.48 W | — |
+| Dropped frames per 1,500 | 0 | 0–2 | 0–4 | — |
+
+**Where the VM's 4K60 power goes**, over a clean idle of about 1.9 W:
+
+| Component | VM | Note |
+|---|---|---|
+| Hardware decode, frames kept on the GPU (FFmpeg `-re`) | +1.1 W | about the whole of native's playback increment (+1.0 W) |
+| Presentation | +4.0 W | mpv scale/render, Hyprland, QEMU's window, WindowServer |
+
+So decode is no longer the gap; presentation is:
+
+* **Native:** AVFoundation draws almost nothing on the GPU (0.13 W) and
+  adds 0.1 W of DRAM.
+* **VM:** GPU 0.8 W and DRAM+memory controller 3.5 W, from frame copies:
+  * VideoToolbox's picture → guest planes;
+  * mpv's render → guest compositor;
+  * guest scanout → QEMU's window → WindowServer.
+
+**Guest software decode:** at 4K60 it costs 9.5 W of CPU power. Hardware
+decode cuts whole-SoC playback power by 59% at 4K60 and 36% at 1080p60.

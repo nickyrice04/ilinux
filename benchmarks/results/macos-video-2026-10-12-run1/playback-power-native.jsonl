@@ -1,0 +1,7 @@
+{"meta": {"power_source": "Now drawing from 'AC Power'", "window_s": 25.0, "warmup_s": 6.0, "started": "2026-10-12T16:06:36"}}
+{"case": "idle", "rep": 0, "clip": null, "cpu_W": 0.88, "gpu_W": 0.157, "ane_W": 0.0, "dram_W": 0.357, "memctl_W": 0.58, "fabric_W": 0.201, "display_W": 0.316, "media_W": 0.066, "soc_W": 2.557}
+{"case": "native-2160", "rep": 0, "clip": "r2160.mp4", "cpu_W": 1.662, "gpu_W": 0.142, "ane_W": 0.0, "dram_W": 0.503, "memctl_W": 1.093, "fabric_W": 0.446, "display_W": 0.423, "media_W": 0.063, "soc_W": 4.332, "dropped_frames": 0, "loops": 3}
+{"case": "native-1080", "rep": 0, "clip": "r1080.mp4", "cpu_W": 0.948, "gpu_W": 0.148, "ane_W": 0.0, "dram_W": 0.386, "memctl_W": 0.811, "fabric_W": 0.388, "display_W": 0.374, "media_W": 0.066, "soc_W": 3.121, "dropped_frames": 0, "loops": 3}
+{"case": "native-1080", "rep": 1, "clip": "r1080.mp4", "cpu_W": 0.483, "gpu_W": 0.135, "ane_W": 0.0, "dram_W": 0.327, "memctl_W": 0.647, "fabric_W": 0.356, "display_W": 0.374, "media_W": 0.067, "soc_W": 2.389, "dropped_frames": 0, "loops": 3}
+{"case": "native-2160", "rep": 1, "clip": "r2160.mp4", "cpu_W": 0.506, "gpu_W": 0.144, "ane_W": 0.0, "dram_W": 0.374, "memctl_W": 0.708, "fabric_W": 0.371, "display_W": 0.423, "media_W": 0.062, "soc_W": 2.588, "dropped_frames": 0, "loops": 3}
+{"case": "idle", "rep": 1, "clip": null, "cpu_W": 0.458, "gpu_W": 0.159, "ane_W": 0.0, "dram_W": 0.315, "memctl_W": 0.408, "fabric_W": 0.158, "display_W": 0.316, "media_W": 0.068, "soc_W": 1.882}

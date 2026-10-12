@@ -450,3 +450,63 @@ No entry is based on decompiled Apple code.
 | Inference | The base for any native M5 bring-up is Linux's `apple-rtkit` and mailbox layer, which must be checked against ASCWrap v6 / `rtbuddy-v2`. Then each block needs its own firmware-ABI work, and macOS 26 firmware already changed the DCP and NVMe ABIs. |
 | Confidence | **Confirmed** (metadata); ABI-change scope **Likely** |
 | Linux mapping | `apple-rtkit`, `apple-mailbox`; per-block drivers (gap matrix) |
+
+## F-042 · VM video · Mesa 26's virgl video requests use shifted profile values, and FFmpeg picks planar surfaces
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` host-side log of the guest's requests (`VIRGL_VIDEO_PROBE_PROFILES` advertises every value); `SRC` Mesa 26.2.4 `gallium/drivers/virgl/virgl_video.c`, `frontends/va/surface.c`, `virgl_screen.c`. |
+| Observation | The guest (Mesa 26.2.4) sends `pipe_video_profile` values from its own, newer enum: AVC Constrained Baseline 8, Main 9, High 11, High10 12, HEVC Main 15, VP9 profile 0 24, profile 2 25. virglrenderer 1.3.0's copy numbers them differently. Buffer formats arrive in virgl numbering (NV12 166, IYUV 165, YV12 163). The VA frontend lists NV12, YV12 and IYUV whenever the plane formats are sampleable (`vl_video_buffer_is_format_supported`), and the host's `PREFERED_FORMAT` cap is not consulted. FFmpeg then picks IYUV, an exact match for yuv420p. |
+| Inference | The virgl video protocol carries Gallium-internal enums, so it isn't stable across Mesa and virglrenderer versions. The host must accept the values guests actually send (the VideoToolbox backend maps 8/9/11 to H.264) and must support 3-plane targets. Steering FFmpeg to NV12 needs a guest Mesa change: offer only NV12/P010 for decode, as radeonsi does. |
+| Confidence | **Confirmed** |
+| Linux mapping | VM: virgl patch 0008; a later guest Mesa patch. Native: not applicable (AVD through V4L2) |
+
+## F-043 · VM video · Rebuilding an H.264 PPS from VA-API needs reference-index defaults that VA does not carry
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` host harness (`scratchpad vt/vtharness.m`, modes real/synth/learn) on a 1080p60 High-profile clip with B-frames; VideoToolbox status codes. |
+| Observation | VA-API's H.264 picture parameters omit the PPS `num_ref_idx_l0/l1_default_active_minus1`. A PPS rebuilt with guessed defaults made VideoToolbox reject every slice that relied on them: `-12909`, then the codec closed after 11 frames with 396 errors. Learning the defaults from the first P/B slice that does not override them, then swapping the format description (or prepending an in-band PPS when the session refuses the swap), decoded 600/600 frames with 0 errors. |
+| Inference | Any stateless→stateful bridge has to recover these fields from slice headers: VA→VideoToolbox here, and V4L2 stateless→stateful the same way. `max_num_ref_frames` must come from the descriptor's `num_ref_frames`. |
+| Confidence | **Confirmed** |
+| Linux mapping | VM: virgl patch 0008 (`slice_uses_default_refs`) |
+
+## F-044 · VM video · Requesting GL-compatible pixel buffers changes VideoToolbox's decoded samples
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` per-frame MD5 of the decoded picture (`VIRGL_VIDEO_MD5`, and the host harness) against FFmpeg's software `framemd5`. |
+| Observation | With `kCVPixelBufferOpenGLCompatibilityKey` in the destination attributes, decoded frames differed from FFmpeg's reference (first frame `aaead822…` vs `d660200e…`). With IOSurface-only attributes, 600/600 frames matched bit for bit. `VTPixelTransferSession` NV12→planar 4:2:0 is lossless. |
+| Inference | Ask VideoToolbox for IOSurface-backed output only and bind the IOSurface to GL directly (`CGLTexImageIOSurface2D`); the GL-compatibility attribute buys nothing here and costs exactness. Why VideoToolbox's output path changes is not known. |
+| Confidence | **Confirmed** (exactness); cause **Unknown** |
+| Linux mapping | VM: virgl patch 0008 |
+
+## F-045 · VM video · Mesa's virgl driver never marks decode targets dirty, and has no decode fence
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `hwdownload`, `vaGetImage` and `vaapi-copy` return an all-zero picture (MD5 `327aa874…`) while mpv's zero-copy path shows correct video; `SRC` Mesa 26.2.4 `virgl_video_end_frame`, `virgl_resource` transfer logic, `frontends/va/surface.c` `_vlVaSyncSurface`. |
+| Observation | Decode targets' plane resources are written only by the host, but the guest driver never clears their "clean" state, so a guest map reads its own stale copy without a host readback. The plane resources are staging-backed with a token 16 KiB guest backing, so a host-side refresh of the backing can't help. `virgl_video_end_frame` also sets no output fence: `vaSyncSurface` returns at once, and correctness depends on the host completing END_FRAME before later commands. |
+| Inference | Copy-back needs a small guest Mesa fix: mark the target's planes dirty in `end_frame`. The missing fence means the host decode must stay synchronous in command order; an asynchronous host decode would first need per-resource completion tracking in vrend. |
+| Confidence | **Confirmed** (symptom, source); fix **Likely** |
+| Linux mapping | VM: guest Mesa patch (planned) |
+
+## F-046 · VM video · With hardware decode, presentation is the remaining gap to macOS in video playback
+
+| Field | Value |
+|---|---|
+| Source | `BENCH` `benchmarks/vm/playback_power.py` (session `fencepoll`, 2 reps, ABBA) and `benchmarks/macos/playback_power.py` (4 reps, VM off), SoC energy from IOReport, on AC; `MEAS` `sample` of QEMU during playback. |
+| Observation | 4K60 H.264 playback: native AVFoundation 2.91 W; VM hardware decode 7.04 W; VM software decode 17.34 W. 1080p60: 2.36, 4.33 and 6.72 W. VM hardware decode alone (FFmpeg `-re`, frames kept on the GPU, nothing shown) is 3.00 W, about +1.1 W over idle: as much as native's whole playback increment (+1.0 W). The VM's other ~4 W is presentation. GPU is 0.8 W against 0.13 W native, and DRAM plus memory controller about 3.5 W against 1.1 W. On QEMU's main thread, VideoToolbox decode blocks 20% of the time, the I420 conversion is 5% CPU, and the GPU copies 1%. |
+| Inference | Video parity in the VM now depends on the presentation path. The candidates: (1) zero-copy guest scanout into WindowServer, via an IOSurface-backed layer in QEMU's Cocoa display; (2) guest direct scanout for fullscreen video; (3) zero-copy imports in vrend, via rectangle sampling. These would also cut the cost of every animated frame on the VM desktop. Natively, the equivalent path is AVD plus DCP overlay planes. |
+| Confidence | **Confirmed** (measurements); how the ~4 W splits across the chain's stages **Likely** |
+| Linux mapping | VM: QEMU Cocoa display, vrend. Native: an AVD V4L2 driver plus DCP planes |
+
+## F-047 · VM GPU · Apple's `glClientWaitSync` busy-polls for its whole timeout
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `sample` of QEMU during 4K60 hardware-decoded playback: the `vrend-sync` thread had 630 of 3,631 samples in `glClientWaitSync_Exec`, 390 of them in `mach_absolute_time`, the rest in `gleTestSync`/`testFence` and `cthread_yield`. |
+| Observation | Apple's GL (GLEngine over AppleMetalOpenGLRenderer) implements a blocking fence wait as a poll loop. virglrenderer's fence thread waited with a 1 s timeout, so it spun while each awaited GPU job ran. How much depends on the workload: 17% of the thread's samples during 4K60 playback, but only 3% under GPU-bound GL (glmark2 terrain, 528 fps), where it mostly had no fence pending. |
+| Inference | On macOS, wait on GL fences with a zero timeout and sleep between polls (virgl patch 0010: 50 µs doubling to 1 ms). Fences are flushed at creation, so the poll sees them complete. The same applies to any host GL code that blocks on fences. Measured A/B (`benchmarks/results/vm-video-2026-10-12/fence-ab/`, ABBA, fresh boot per session): 4K60 hardware playback 7.41 W blocking vs 7.00–7.12 W polling, QEMU 0.49 vs 0.41–0.44 cores. The first blocking session read 9.47 W on an elevated 2.82 W idle and is left out. Software playback is unchanged within noise. glmark2 terrain runs at 528 fps either way, so the sleeps cost no throughput there. |
+| Confidence | **Confirmed** (profile, A/B); saving is small: about 0.3–0.4 W in 4K60 playback |
+| Linux mapping | VM: virgl patch 0010 |

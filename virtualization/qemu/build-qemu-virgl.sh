@@ -13,6 +13,9 @@
 #     (epoxy probes EGL on every GL entry-point lookup once EGL is compiled in).
 #   * Venus (guest Vulkan) through MoltenVK and the Khronos loader, the
 #     render server running in-process as a thread (workspace patches)
+#   * hardware video decode: virglrenderer's video interface on VideoToolbox
+#     (-Dvideo=true; on darwin it needs neither libdrm, EGL nor libva), used
+#     by the guest's VA-API driver when QEMU runs virtio-gpu-gl with video=on
 #   * workspace patches (virtualization/qemu/patches/) on top of the
 #     try-omarchy series: stable Retina window size and product name, App Nap
 #     policy, heterogeneous vCPUs (host QoS + guest capacity), event-driven
@@ -195,7 +198,7 @@ log "build virglrenderer"
 CFLAGS="-I$RT/include" meson setup "$SRC/virglrenderer/build" "$SRC/virglrenderer" --prefix="$RT" \
   --libdir=lib --buildtype=debugoptimized -Db_ndebug=false --wrap-mode=nodownload \
   -Ddrm-renderers=[] -Dvenus=true -Drender-server-worker=thread \
-  -Dtests=false -Dvideo=false -Dtracing=none -Dplatforms=[] > "$Q/build-virgl.log" 2>&1
+  -Dtests=false -Dvideo=true -Dtracing=none -Dplatforms=[] > "$Q/build-virgl.log" 2>&1
 ninja -C "$SRC/virglrenderer/build" -j "$JOBS" install >> "$Q/build-virgl.log" 2>&1
 
 fi  # ONLY != qemu

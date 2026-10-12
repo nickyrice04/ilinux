@@ -15,6 +15,7 @@ below.
 | `etc/systemd/resolved.conf.d/30-ilinux-vm-dns.conf` | Quad9 with opportunistic DNS-over-TLS. The NAT DNS proxy doesn't answer resolved (D-015) |
 | `etc/NetworkManager/conf.d/90-ilinux-vm-dns.conf` | `dns=none`, so NetworkManager doesn't hand resolved the dead NAT DNS |
 | `etc/environment.d/60-ilinux-vm-vulkan.conf` | `MESA_VK_WSI_DEBUG=nowlts` for the session (Hyprland runs under `systemd --user`). Mesa aims Vulkan FIFO commits at commit-timing timestamps derived from presentation feedback, which has no real vblank behind it in the VM: vkcube ran at 93 fps on the 120 Hz output, 119.5 fps without them. VM only |
+| `etc/mpv/mpv.conf` | `hwdec=vaapi` and `gpu-api=opengl`, so plain `mpv file` decodes on the Mac's media engine through the VideoToolbox-backed VA-API driver (D-029). mpv's default `gpu-next` renderer gets VA-API frames through EGL dmabuf interop on OpenGL; on Vulkan (Venus) the interop fails and mpv decodes in software. Codecs the host doesn't offer fall back to software. VM only |
 | `etc/sddm.conf.d/20-ilinux-vm-autologin.conf` | Autologin into the `omarchy.desktop` session (D-016). Delete it to get the SDDM password prompt back |
 
 ## Push into a running VM
