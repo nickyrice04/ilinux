@@ -53,7 +53,22 @@ ONLY=qemu virtualization/qemu/build-qemu-virgl.sh  # QEMU only, after patch edit
    * `patches/qemu/0007-coreaudio-capture.patch`: microphone input. The
      CoreAudio backend had none, so this adds an AudioQueue on the default
      input device.
-5. `spice-protocol` headers (SHA-256 published by spice-space.org) enable
+   * **Guest Vulkan (Venus on MoltenVK, D-027, F-035–F-038):**
+     * `patches/qemu/0008-virgl-venus-in-process-macos.patch`: Venus is
+       served by an in-process render-server thread.
+     * `patches/qemu/0009-virgl-no-map-fixed-on-macos.patch`: blobs are RAM
+       subregions; HVF ignores `MAP_FIXED` remaps.
+     * `patches/qemu/0010-hvf-map-venus-blobs-in-host-pages.patch`:
+       sub-page blobs are mapped in whole 16 KiB host pages.
+     * `patches/virglrenderer/0002`–`0006`: the loader path, proxy init for
+       Venus, stream sockets with partial reads, and the
+       `VK_EXT_external_memory_metal` table entry.
+     * `patches/virglrenderer/0007-vrend-cgl-iosurface-mirror-for-venus-images.patch`:
+       compositors import Venus swapchain images through an IOSurface
+       mirror. `VIRGL_IOSURFACE_MIRROR_STATS=1` logs its cost.
+5. Vulkan stage: Khronos Vulkan-Headers and Vulkan-Loader (SDK 1.4.363.0,
+   built) and the MoltenVK 1.4.2 release ICD (copied), all SHA-256 pinned.
+6. `spice-protocol` headers (SHA-256 published by spice-space.org) enable
    QEMU's `qemu-vdagent` for clipboard sharing.
 
 ## Omarchy.app (double-click launcher)
@@ -79,7 +94,7 @@ This builds `virtualization/app/Omarchy.app`, which stays in the workspace
 ## Run
 
 ```bash
-virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [--console-socket]
+virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [--no-venus] [--console-socket]
 ```
 
 | Option | Effect |
@@ -88,6 +103,7 @@ virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [
 | `--fullscreen` | Omarchy gets its own macOS Space with the menu bar and Dock hidden. The guest runs at the panel's native safe area, 3456×2160 at scale 2 (1728×1080 logical). Switch Spaces with a 4-finger swipe |
 | `--full-grab` | While the window is focused, Cmd-Space, Cmd-Tab and other system chords go to Hyprland (Cmd = Super). macOS asks once to allow Accessibility for the QEMU binary. Each rebuild changes the ad-hoc signature and needs the grant again |
 | `--hetero` | 18 vCPUs as 3 clusters of 6, mirroring the M5 Max. The last cluster runs at host background QoS (M cores) and appears to Linux at capacity 220/1024. `omarchy-qos` puts `background.slice` there and keeps everything else off it |
+| `--no-venus` | Turns off guest Vulkan. By default `virtio-gpu-gl` runs with `venus=on,blob=on,hostmem=4G` (`VENUS_HOSTMEM` env), so Vulkan apps run on the M5 Max GPU through Venus and MoltenVK, at 94–98% of native compute. Desktop GL is unaffected either way |
 | `--no-clipboard` | Turns off clipboard sharing. By default text is shared both ways through `qemu-vdagent` and the guest `ilinux-clipboard-agent`, fetched only when someone pastes |
 | `DISK_CACHE=writeback\|none`, `DISK_IOTHREAD=1\|0` (env) | Disk path. The default is `writeback` on a dedicated iothread with 4 queues: warm small I/O at native latency. `none` bypasses the host page cache (`F_NOCACHE`): 4 GB/s writes, cold reads at 100%, no double caching (F-033) |
 | `APP_NAP=on\|off\|auto` (env) | macOS App Nap policy. Default `auto`: a hidden, idle VM naps, but a hidden VM doing foreground work runs at full speed |
@@ -150,5 +166,10 @@ locks the session on idle.
   open only while a guest app records.
 * **Screenshots:** QEMU `screendump` can't read GL scanouts. Use `grim`
   inside the guest instead.
-* **No Vulkan in the guest:** Venus is not built. This needs MoltenVK and is
-  a candidate next step.
+* **Vulkan presentation copies:** each presented frame costs two GPU copies
+  (Metal blit into an IOSurface, GL blit into the compositor's texture) and
+  about 0.12 ms of QEMU main-thread time. Zero-copy is future work (D-027).
+* **Vulkan FIFO pacing** depends on `MESA_VK_WSI_DEBUG=nowlts` in the guest
+  session (D-028) until QEMU provides paced vblank timestamps.
+* **Debugging in the guest:** gdb can't attach (SME without SVE, F-039). Use
+  `eu-stack` and `strace`.

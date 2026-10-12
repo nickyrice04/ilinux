@@ -138,6 +138,31 @@ Virtualization.framework VM. Raw data is in
 * For reference, the Metal compute peak (session 1) is 14.75 TFLOPS FP32.
   GL fragment shading reaches 84% of it, natively and in the VM alike.
 
+### GPU: Vulkan (Venus on MoltenVK, default since D-027)
+
+`vkcompute` uses identical SPIR-V on both sides: native MoltenVK 1.4.2 vs
+guest Mesa Venus. FMA throughput runs over a 4M-element buffer.
+
+| Test | macOS (MoltenVK) | VM (Venus) | Parity |
+|---|---|---|---|
+| FP32 FMA throughput (median) | 11.24 TFLOPS | 10.6–11.0 | **94–98%** |
+| Correctness vs CPU `fmaf` | exact | exact | identical |
+| Submit + wait round trip (p50) | 204 µs | 381–390 µs | 1.9× slower |
+
+Presentation in the VM uses vkcube at 1272×679 RGBA16F in Hyprland on the
+2592×1458@120 output:
+
+| Mode | VM result | Note |
+|---|---|---|
+| FIFO (vsync) | **119.5 fps** | 92.9 before D-028; no frames before QEMU 0010 |
+| Mailbox | ~3,000 fps | client-side Venus path is not the limit |
+| Per-frame host cost | 0.12 ms main thread + two GPU copies | IOSurface mirror (virgl 0007) |
+
+* GL with Venus/blob on vs off (glbench): alu 0.99×, fill 1.01×, draws 0.99×,
+  upload 1.17×, readback 1.06×.
+* Raw data: `benchmarks/results/vm-qemu-2026-10-12/vulkan/` and
+  `gpu/glbench-vm-virgl-venus-blob.jsonl`.
+
 ### CPU: heterogeneous vCPUs (`--hetero`), guest `cpubench intmix` (clang `-mcpu=apple-m4`) under host `powermon`
 
 | Placement | Threads | Guest Gop/s | Host CPU W | Gop/s per W |

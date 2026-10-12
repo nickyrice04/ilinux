@@ -5,6 +5,73 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-12 · Vulkan in the VM: Venus on MoltenVK, presenting at 120 Hz
+
+### Discovered
+
+* Venus bring-up on macOS needed six host-side fixes: proxy init,
+  stream sockets, partial reads, FIFO eventfd, no `MAP_FIXED` under HVF,
+  and the info-table entry (F-035).
+* HVF never mapped sub-page blobs, and its data-abort handler retried the
+  guest's store forever: vkcube spun in `memcpy` (F-036).
+* Apple's GL binds IOSurfaces only as rectangle textures, so vrend's
+  import (`GL_EXT_memory_object_fd`) failed. That put the compositor's
+  context in error: a scrambled or blank desktop (F-037).
+* Metal→GL IOSurface access is ordered once the Metal work is *scheduled*
+  (0/300 stale frames) but not after `commit` alone (F-037).
+* Vulkan FIFO lost about a quarter of its frames to Mesa's commit-timing
+  targets in the VM (F-038).
+* gdb can't attach in the guest (SME without SVE); `eu-stack` works (F-039).
+
+### Implemented
+
+* **virglrenderer 0007:** IOSurface mirror import for Venus images on native
+  CGL. A Metal blit, or a swizzle pass for RGBA, feeds a GL
+  rectangle→2D blit. It waits only until the copy is scheduled, and
+  unsupported formats degrade instead of breaking the compositor.
+* **QEMU 0010:** host-page rounding for blob subregions; HVF rejects
+  unaligned host pointers instead of aborting.
+* **VM session:** `MESA_VK_WSI_DEBUG=nowlts` via `environment.d` (D-028).
+* **Launcher:** Venus is on by default (`--no-venus` opts out, D-027).
+  Omarchy.app was rebuilt.
+* **Tools:**
+  * `benchmarks/vm/vkbench.sh`: vkcube fps and CPU;
+  * `benchmarks/src/vkcompute.{c,comp}`;
+  * guest `vkmark` and `glmark2` installed for later runs.
+* **Validation:** a full from-scratch rebuild applies every patch (virgl
+  0001–0007, QEMU 0001–0010) and boots.
+
+### Measured
+
+* **vkcube (1272×679 RGBA16F, 2592×1458@120 output):**
+  * FIFO 119.5 fps (was 92.9; before 0010 it never presented);
+  * mailbox about 3,000 fps;
+  * mirror 0.12 ms per update (0.87 ms with a completion wait).
+* **vkcompute:** 10.6–11.0 TFLOPS, 94–98% of native MoltenVK 11.24, bit-exact.
+  Submit+wait p50 381–390 µs vs 204 µs native.
+* **glbench with Venus/blob on vs off:** 0.99–1.17×, no regression.
+
+### Still unsupported or open
+
+* **Zero-copy presentation.** It needs IOSurface-backed Venus memory plus
+  rectangle sampling in vrend.
+* **Real vblank pacing from QEMU.** That is the root fix for F-038.
+* **Venus round trips are 1.9× native.** Feedback and ring-wakeup latency.
+* **Watch item.** Two guest shutdowns stalled for minutes, with 137 virtio-gpu
+  commands in flight, while the fixed bugs were present: the store-retry
+  loop, and the compositor in context error. They have not reproduced on the
+  final build (clean 3 s shutdowns after vkcube and vkcompute).
+  `vm-restart.sh` in the session scratchpad samples QEMU if one recurs.
+
+### Next
+
+1. **REA metadata gap analysis of the macOS hardware services**, in
+   clean-room scope: the block → macOS component → Linux status matrix.
+2. **Zero-copy Venus presentation**, then paced virtual vblank.
+3. **Battery and Low Power Mode measurements under Vulkan load.**
+
+---
+
 ## 2026-10-12 · Microphone, kernel package, Omarchy.app
 
 ### Implemented

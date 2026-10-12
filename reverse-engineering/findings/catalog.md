@@ -380,3 +380,53 @@ No entry is based on decompiled Apple code.
 | Inference | A real saving in wakeups and CPU. The SoC power effect (estimated tens of mW) is below the resolution of non-interleaved 30 s IOReport runs (±0.1 W run-to-run). |
 | Confidence | CPU reduction **Confirmed**; power effect **Likely** (not resolved) |
 | Linux mapping | VM only (`patches/qemu/0006-cocoa-adaptive-refresh.patch`) |
+
+## F-035 · VM GPU · Venus (guest Vulkan) on a macOS host needs six host-side fixes
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` guest `vulkaninfo`, QEMU logs, guest `strace`. `SRC` virglrenderer 1.3.0 proxy/render-server code, QEMU `hw/display/virtio-gpu-virgl.c`. |
+| Observation | In order of discovery: (1) the proxy initialised only with `VIRGL_RENDERER_RENDER_SERVER`, so Venus had no capset ("Unsupported wire format version 0"); QEMU now asks for Venus only, served by an in-process render-server thread. (2) macOS has no `AF_UNIX`/`SOCK_SEQPACKET`; the stream replacement needed partial-read handling, and the existing check had an operator-precedence bug. (3) The pipe-based eventfd emulation broke once the fd crossed `SCM_RIGHTS` (vulkaninfo hung in `drm_syncobj` waits); an anonymous FIFO opened `O_RDWR` survives it. (4) HVF keeps the pages `hv_vm_map()` saw, so a `MAP_FIXED` remap over the hostmem BAR was invisible to the guest ("stuck in ring seqno wait"). (5) `VK_EXT_external_memory_metal` was missing from the sorted Venus extension table, so `vkGetMemoryMetalHandleEXT` stayed NULL and QEMU crashed on the first blob export. (6) The loader is found via `VIRGL_VULKAN_LIBRARY`. Result: `Virtio-GPU Venus (Apple M5 Max)`, Vulkan 1.4.334; `vkcompute` FMA 10.76 TFLOPS vs 11.24 native MoltenVK (95.7%), bit-exact; submit+wait 318–375 µs vs 204 µs native. |
+| Inference | Every blocker was a host-platform assumption (Linux sockets, eventfd, mmap-over-mapped-RAM, a generated table), not a Venus design limit. Venus on MoltenVK gives the VM near-native Vulkan compute. |
+| Confidence | **Confirmed** |
+| Linux mapping | VM only: `patches/virglrenderer/0001`–`0006`, `patches/qemu/0008`–`0009`, launcher default (D-027) |
+
+## F-036 · VM GPU · HVF maps guest memory in 16 KiB host pages; a sub-page blob hangs the writer forever
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `eu-stack` on the guest vkcube (three samples, same `memcpy` PC), `strace` (no syscalls), `/proc` (100% user time), QEMU `info mtree -f` (a blob region of size 0x1000). `SRC` QEMU `hvf_set_phys_mem()` (skips sections not aligned to the host page) and the HVF data-abort handler (a write fault on a RAM region is "retried with page writes enabled"). |
+| Observation | Venus allocations below 16 KiB (vkcube's uniform buffers, feedback slots) became 4 KiB RAM subregions. HVF never mapped them, so each guest store trapped, and QEMU returned to the same instruction: vkcube spun at 100% CPU and never presented. The guest already uses 16 KiB pages, so the BAR reserves whole pages. Rounding the subregion up to the host page (QEMU 0010) took vkcube from 99% to 0.8% CPU, and it now renders. |
+| Inference | Applies to any HVF guest mapping sub-page host memory as RAM. Reads would instead hit `assert(isv)` for SIMD loads. 16 KiB guest pages, already the native Asahi page size, are what make the rounding safe. |
+| Confidence | **Confirmed** |
+| Linux mapping | `patches/qemu/0010-hvf-map-venus-blobs-in-host-pages.patch`; VM kernel stays on 16 KiB pages |
+
+## F-037 · VM GPU · Apple's GL binds IOSurfaces only as rectangle textures; Metal→GL IOSurface access is ordered by submission
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` host probes (scratch programs, CGL 4.1 core on "GL 4.1 Metal - 90.5"). |
+| Observation | (1) `CGLTexImageIOSurface2D` on `GL_TEXTURE_2D` returns `kCGLBadValue` (10008); `GL_TEXTURE_RECTANGLE` works. (2) Accepted IOSurface formats: `BGRA`/BGRA+`8_8_8_8_REV`, `l10r`/`2_10_10_10_REV`, `RGhA`/half, `L008`, `2C08`. `RGBA` is rejected. (3) A 6.9 MB heap→IOSurface blit is 140 µs of GPU time, but `waitUntilCompleted` returns after 0.89–0.96 ms, and spinning on an `MTLSharedEvent` is no faster (0.83 ms). `waitUntilScheduled` takes 0.19 ms. (4) GL work submitted after a *scheduled* Metal pass on the same IOSurface never read stale data (0/300 frames, Metal passes of 0.5–60 ms). After `commit` alone, 1 of 60 was stale. |
+| Inference | vrend imported Venus images through `GL_EXT_memory_object_fd`, which CGL lacks, so the compositor's context went into error. The workable path: a Metal blit (or swizzle pass) into an IOSurface, then a GL blit from the rectangle into the 2D texture, waiting only for scheduling. In the VM this costs 0.12 ms per update. Zero-copy would need IOSurface-backed Venus memory plus rectangle sampling in vrend. The cross-API ordering is observed behaviour, not documented API. |
+| Confidence | (1)–(3) **Confirmed**; (4) **Confirmed** on this machine and OS, **Likely** in general |
+| Linux mapping | `patches/virglrenderer/0007-vrend-cgl-iosurface-mirror-for-venus-images.patch` |
+
+## F-038 · VM GPU · Vulkan FIFO lost a quarter of frames to Mesa's commit-timing targets
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `benchmarks/vm/vkbench.sh`, `es2gears_wayland`, `WAYLAND_DEBUG=client` on vkcube. |
+| Observation | On the 2592×1458@120 output, vkcube FIFO ran at 92.9 fps, while GL FIFO (es2gears) held 119.98 fps and vkcube mailbox ran at about 2,700 fps. The client was not the limit. Mesa 26 drives Wayland FIFO with `wp_fifo_v1` barriers, a `wp_commit_timer_v1` timestamp on every commit, and `wp_presentation` feedback. With `MESA_VK_WSI_DEBUG=nowlts` (no timestamps), FIFO reached **119.5 fps**. |
+| Inference | The VM's presentation feedback has no real vblank behind it, so timestamps derived from it miss the compositor's latch about one time in four. Short term: `nowlts` in the VM session. Root fix: paced virtual vblank and presentation times from QEMU, which would also help GL frame pacing. |
+| Confidence | Measurements **Confirmed**; cause **Likely** |
+| Linux mapping | VM only: `omarchy-arm64/configuration/vm-integration/etc/environment.d/60-ilinux-vm-vulkan.conf` |
+
+## F-039 · Tooling · gdb cannot attach in the M5 guest (SME without SVE)
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` guest gdb 17: "Unable to fetch SVE/SSVE vector length: Invalid argument" on every attach. |
+| Observation | HVF exposes SME (streaming SVE) on the M5 but not SVE. gdb then asks for the SVE register set, which the kernel refuses. `eu-stack` (general registers only) and `strace` work. |
+| Inference | It's a gdb assumption about SME-only CPUs, and it will affect native Linux on M4/M5 too (Apple implements SME without SVE). Workarounds: `eu-stack`/`strace`, or a debug VM launched with SME hidden. Worth reporting to gdb. |
+| Confidence | **Confirmed** (symptom); gdb root cause **Likely** |
+| Linux mapping | Upstream gdb (report); our debugging uses `eu-stack` |

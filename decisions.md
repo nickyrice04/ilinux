@@ -365,3 +365,50 @@ never overwritten, if the guest falls behind.
   so every Omarchy update ended in an error.
 * No package depends on these. try-omarchy's VM image ships without limine
   too.
+
+## D-027 · 2026-10-12 · Guest Vulkan through Venus on MoltenVK, in-process, on by default
+
+**Decision:**
+
+* The VM's Vulkan driver is Mesa Venus. On the host it runs as
+  virglrenderer's Venus renderer, in a render-server thread inside QEMU, on
+  the Khronos loader and MoltenVK 1.4.2 (all pinned and built in the
+  workspace, D-020 approval).
+* Swapchain images reach the compositor through an IOSurface mirror (virgl
+  patch 0007). Sub-page blobs are mapped in whole 16 KiB host pages (QEMU
+  patch 0010).
+* The launcher enables `venus=on,blob=on,hostmem=4G` by default.
+  `--no-venus` opts out.
+
+**Why:**
+
+* Venus works with stock guest Mesa and no host install.
+  KosmicKrisp/krunkit would need host packages.
+* Compute runs at 94–98% of native MoltenVK (F-035). vkcube presents
+  correctly at the 120 Hz output rate with D-028.
+* Desktop GL is unchanged with Venus/blob on (glbench 0.99–1.17×).
+* The 4 GiB BAR reserves address space only; pages are committed per blob.
+
+**Trade-offs:**
+
+* Each Vulkan frame costs about 0.12 ms of main-thread time and two GPU
+  copies, a 140 µs blit at 1272×679 FP16. True zero-copy needs
+  IOSurface-backed Venus memory and rectangle sampling in vrend.
+* The Metal→GL ordering relies on observed driver behaviour (F-037).
+
+## D-028 · 2026-10-12 · `MESA_VK_WSI_DEBUG=nowlts` in the VM session
+
+**Decision:** The VM integration ships
+`/etc/environment.d/60-ilinux-vm-vulkan.conf`, which turns off Mesa's
+Wayland commit-timing timestamps for Vulkan FIFO. Native installs must not
+carry it.
+
+**Why:**
+
+* Without a real vblank behind the VM's presentation feedback, about one
+  FIFO commit in four waited an extra refresh: 92.9 vs 119.5 fps on the
+  120 Hz output (F-038).
+* GL already paced correctly.
+
+**Revisit:** when QEMU provides paced virtual vblank and presentation
+timestamps, re-measure with the timestamps on.
