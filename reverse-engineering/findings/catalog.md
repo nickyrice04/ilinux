@@ -491,15 +491,15 @@ No entry is based on decompiled Apple code.
 | Confidence | **Confirmed** (symptom, source); fix **Likely** |
 | Linux mapping | VM: guest Mesa patch (planned) |
 
-## F-046 · VM video · With hardware decode, presentation is the remaining gap to macOS in video playback
+## F-046 · VM video · Hardware decode costs about native's whole playback increment; the rest was mpv's scaling (corrected)
 
 | Field | Value |
 |---|---|
-| Source | `BENCH` `benchmarks/vm/playback_power.py` (session `fencepoll`, 2 reps, ABBA) and `benchmarks/macos/playback_power.py` (4 reps, VM off), SoC energy from IOReport, on AC; `MEAS` `sample` of QEMU during playback. |
-| Observation | 4K60 H.264 playback: native AVFoundation 2.91 W; VM hardware decode 7.04 W; VM software decode 17.34 W. 1080p60: 2.36, 4.33 and 6.72 W. VM hardware decode alone (FFmpeg `-re`, frames kept on the GPU, nothing shown) is 3.00 W, about +1.1 W over idle: as much as native's whole playback increment (+1.0 W). The VM's other ~4 W is presentation. GPU is 0.8 W against 0.13 W native, and DRAM plus memory controller about 3.5 W against 1.1 W. On QEMU's main thread, VideoToolbox decode blocks 20% of the time, the I420 conversion is 5% CPU, and the GPU copies 1%. |
-| Inference | Video parity in the VM now depends on the presentation path. The candidates: (1) zero-copy guest scanout into WindowServer, via an IOSurface-backed layer in QEMU's Cocoa display; (2) guest direct scanout for fullscreen video; (3) zero-copy imports in vrend, via rectangle sampling. These would also cut the cost of every animated frame on the VM desktop. Natively, the equivalent path is AVD plus DCP overlay planes. |
-| Confidence | **Confirmed** (measurements); how the ~4 W splits across the chain's stages **Likely** |
-| Linux mapping | VM: QEMU Cocoa display, vrend. Native: an AVD V4L2 driver plus DCP planes |
+| Source | `BENCH` `benchmarks/vm/playback_power.py` (sessions `fencepoll`, `mpv-render`, ABBA) and `benchmarks/macos/playback_power.py` (4 reps, VM off), SoC energy from IOReport, on AC; `MEAS` `sample` of QEMU during playback; window visibility from `benchmarks/bin/winvis` (F-049). |
+| Observation | 4K60 H.264: VM hardware decode alone (FFmpeg `-re`, frames kept on the GPU, nothing shown) is 3.0 W, about +1.1 W over idle, as much as native AVFoundation's whole playback increment (+1.0 W, 2.91 W total). VM playback in mpv: 7.0–7.3 W with mpv's default scaling, 3.9 W with `profile=fast` (F-048). On QEMU's main thread, VideoToolbox decode blocks 20% of the time, the I420 conversion is 5% CPU, and the GPU copies 1%. |
+| Inference | This entry first attributed the ~4 W between decode-only and mpv playback to presentation. That was wrong: it is mpv's own rendering (F-048). Host-side presentation (QEMU's draw and WindowServer's compositing) has not been measured yet. The VM window was not on screen during the VM runs, so it was never drawn, while the native player's window was (F-049). Until the VM runs are repeated with the window on screen, VM-vs-native playback ratios are not like for like. |
+| Confidence | **Confirmed** (measurements, the correction); host presentation cost **Unknown** |
+| Linux mapping | VM: mpv defaults (`omarchy-arm64/configuration/vm-integration/etc/mpv/mpv.conf`). Native: an AVD V4L2 driver plus DCP planes |
 
 ## F-047 · VM GPU · Apple's `glClientWaitSync` busy-polls for its whole timeout
 
@@ -510,3 +510,33 @@ No entry is based on decompiled Apple code.
 | Inference | On macOS, wait on GL fences with a zero timeout and sleep between polls (virgl patch 0010: 50 µs doubling to 1 ms). Fences are flushed at creation, so the poll sees them complete. The same applies to any host GL code that blocks on fences. Measured A/B (`benchmarks/results/vm-video-2026-10-12/fence-ab/`, ABBA, fresh boot per session): 4K60 hardware playback 7.41 W blocking vs 7.00–7.12 W polling, QEMU 0.49 vs 0.41–0.44 cores. The first blocking session read 9.47 W on an elevated 2.82 W idle and is left out. Software playback is unchanged within noise. glmark2 terrain runs at 528 fps either way, so the sleeps cost no throughput there. |
 | Confidence | **Confirmed** (profile, A/B); saving is small: about 0.3–0.4 W in 4K60 playback |
 | Linux mapping | VM: virgl patch 0010 |
+
+## F-048 · VM video · mpv's default scaling, not decode or the display chain, dominated VM playback power
+
+| Field | Value |
+|---|---|
+| Source | `BENCH` `benchmarks/vm/playback_power.py` session `mpv-render` (4K60 hardware decode, fullscreen 2592×1458, 2 reps ABBA); `benchmarks/linux/vfill.c`, a client that only clears the screen, for the display chain. |
+| Observation | SoC power for the same decoded 4K60 stream: mpv `vo=gpu` with default scaling 7.28 W; `gpu-next` default 5.92 W; `vo=gpu` with `profile=fast` 3.88 W; `gpu-next` fast 3.85 W; decode alone 3.03 W (session idle 2.76 W). The defaults cost +0.5 W of GPU and +1.9 W of DRAM and memory-controller power over fast. They downscale in linear light at source resolution, with a wide filter and dithering. A 60 fps fullscreen client that only clears the screen costs the whole guest chain about +0.8 W over idle (Hyprland compositing plus virtio-gpu flushes). Hyprland direct scanout gave no saving: every flip becomes a scanout switch in QEMU. mpv `--vo=dmabuf-wayland` doesn't work: the compositor can't import the VA-API surfaces through virgl, so mpv falls back to software decode and fails. |
+| Inference | For battery life in the VM, the player's scaling settings matter more than any copy in the display chain: `profile=fast` saves about 3.4 W at 4K60. The VM ships `profile=fast` and `vo=gpu` with VA-API (`vo=gpu` dropped fewer frames than `gpu-next` with the same profile). Quality-minded users can opt back into `profile=high-quality`. Keep Hyprland direct scanout off in the VM. |
+| Confidence | **Confirmed** (guest-side costs do not depend on the host window state) |
+| Linux mapping | VM integration `etc/mpv/mpv.conf`; natively the same mpv trade-off applies, on the native GPU |
+
+## F-049 · Methodology · macOS never draws a window that is not on screen, so its presentation goes unmeasured
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` QEMU `COCOA_GL_LATENCY=1` logged no draws at all during 32 s of 60–120 fps guest output; `benchmarks/bin/winvis` (CGWindowList, by PID): the VM had 0 on-screen windows, while the native player `avplay` had its 1296×729 window on screen. |
+| Observation | QEMU's display is a `CAOpenGLLayer`, and Core Animation calls its draw only while the window is on screen, which here means on the current Space. The VM window sat on another Space during the benchmark sessions, so QEMU drew nothing and WindowServer composited nothing. The `COCOA_GL_NOPRESENT` A/B therefore compared two non-presenting runs. Its "no difference" result says nothing about presentation cost. |
+| Inference | Any VM display or power benchmark must record whether the VM window is on screen. `playback_power.py` now refuses to run without it (`--allow-hidden` overrides and labels the data). Earlier VM display-path numbers are hidden-window numbers. Guest-side work is unaffected. |
+| Confidence | **Confirmed** |
+| Linux mapping | Methodology (benchmarks) |
+
+## F-050 · VM display · Intermittent vsync collapse to about 10 fps (open)
+
+| Field | Value |
+|---|---|
+| Source | `BENCH` `vfill -f 0` (unpaced, swap interval 1): 3 of 6 fresh-boot sessions ran at 7–14 fps for the client's whole life, and one lasted 200 s. Warm sessions and 6 targeted reproductions ran at 120 fps. |
+| Observation | During a collapse the guest is nearly idle (0.03–0.04 vCPUs) and Hyprland has the client mapped, fullscreen and visible. Ruled out by measurement: Omarchy's idle screensaver (no idle events in those boots' journals); toggling direct scanout (3 replays); the notification overlay layer (present in healthy runs too); CPU placement and cgroups; background CPU load; App Nap with the window hidden (60 s napped test at 120 fps). Mesa 26.2.4's EGL Wayland swap waits only on the compositor's frame callback (no fifo or commit-timing protocol), so the callbacks themselves arrived at about 10 Hz. |
+| Inference | Something in the first minutes of some boots slows Hyprland's frame callbacks for an already-running client. Next: Hyprland debug logs (frame scheduling, `misc:render_unfocused_fps`) and QEMU fence timing captured during a collapse. Benchmarks record `vfill` fps, so a collapsed case is visible in the data. |
+| Confidence | **Confirmed** (occurs); cause **Unknown** |
+| Linux mapping | VM display path |

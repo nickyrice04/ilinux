@@ -1,0 +1,125 @@
+Subject: [PATCH] cocoa: display-path measurement switches
+
+Two environment switches for measuring the Cocoa GL display path:
+
+* COCOA_GL_NOPRESENT=1 consumes guest frames without drawing them, with the
+  refresh timer kept at the display rate, so the host-side cost of
+  presenting can be measured against an otherwise identical run.
+* COCOA_GL_LATENCY=1 logs how long a guest frame waits between its flush
+  reaching QEMU and the layer draw that shows it (p50/p95/max per 240
+  draws).
+
+Both only take effect while the window is on screen: Core Animation does
+not draw a hidden window, so neither does QEMU.
+
+---
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -153,7 +153,75 @@
+  * re-dispatched setNeedsDisplay to the main thread (~90/s, measured).
+  */
+ static bool gl_render_requested;
++/*
++ * COCOA_GL_NOPRESENT=1 (measurement aid): consume guest frames without
++ * drawing them, so the cost of presenting (the GL draw into the layer and
++ * WindowServer's compositing) can be measured against an otherwise
++ * identical run.
++ */
++static int cocoa_gl_nopresent = -1;
+ 
++/*
++ * COCOA_GL_LATENCY=1 (measurement aid): log how long a guest frame waits
++ * between its flush reaching QEMU and the layer draw that shows it
++ * (p50/p95/max over 240 draws).  Both ends run with the BQL held.
++ */
++#define COCOA_GL_LAT_SAMPLES 240
++static int cocoa_gl_lat_enabled = -1;
++static uint64_t cocoa_gl_lat_pending_ns;
++static uint32_t cocoa_gl_lat_us[COCOA_GL_LAT_SAMPLES];
++static unsigned cocoa_gl_lat_n, cocoa_gl_lat_flushes;
++
++static bool cocoa_gl_lat_on(void)
++{
++    if (cocoa_gl_lat_enabled < 0) {
++        cocoa_gl_lat_enabled = getenv("COCOA_GL_LATENCY") != NULL;
++    }
++    return cocoa_gl_lat_enabled;
++}
++
++static int cocoa_gl_lat_cmp(const void *a, const void *b)
++{
++    uint32_t x = *(const uint32_t *)a, y = *(const uint32_t *)b;
++    return x < y ? -1 : x > y;
++}
++
++static void cocoa_gl_lat_flush(void)
++{
++    if (!cocoa_gl_lat_on()) {
++        return;
++    }
++    cocoa_gl_lat_flushes++;
++    if (!cocoa_gl_lat_pending_ns) {
++        cocoa_gl_lat_pending_ns = clock_gettime_nsec_np(CLOCK_UPTIME_RAW);
++    }
++}
++
++static void cocoa_gl_lat_draw(void)
++{
++    if (!cocoa_gl_lat_on() || !cocoa_gl_lat_pending_ns) {
++        return;
++    }
++    uint64_t now = clock_gettime_nsec_np(CLOCK_UPTIME_RAW);
++    cocoa_gl_lat_us[cocoa_gl_lat_n++] = (now - cocoa_gl_lat_pending_ns) / 1000;
++    cocoa_gl_lat_pending_ns = 0;
++    if (cocoa_gl_lat_n == COCOA_GL_LAT_SAMPLES) {
++        uint64_t sum = 0;
++        for (unsigned i = 0; i < COCOA_GL_LAT_SAMPLES; i++) {
++            sum += cocoa_gl_lat_us[i];
++        }
++        qsort(cocoa_gl_lat_us, COCOA_GL_LAT_SAMPLES, sizeof(uint32_t), cocoa_gl_lat_cmp);
++        fprintf(stderr, "cocoa-gl latency: flush->draw over %u draws (%u flushes): "
++                "mean %.2f p50 %.2f p95 %.2f max %.2f ms\n", COCOA_GL_LAT_SAMPLES,
++                cocoa_gl_lat_flushes, sum / 1000.0 / COCOA_GL_LAT_SAMPLES,
++                cocoa_gl_lat_us[COCOA_GL_LAT_SAMPLES / 2] / 1000.0,
++                cocoa_gl_lat_us[COCOA_GL_LAT_SAMPLES * 95 / 100] / 1000.0,
++                cocoa_gl_lat_us[COCOA_GL_LAT_SAMPLES - 1] / 1000.0);
++        cocoa_gl_lat_n = 0;
++        cocoa_gl_lat_flushes = 0;
++    }
++}
++
+ static void cocoa_gl_mark_dirty(void)
+ {
+     gl_dirty = true;
+@@ -2801,6 +2869,7 @@
+     /* Clear dirty flag after render completes to ensure clean handoff */
+     gl_dirty = false;
+     gl_render_requested = false;
++    cocoa_gl_lat_draw();
+ }
+ 
+ static void cocoa_gl_refresh(DisplayChangeListener *dcl)
+@@ -2808,6 +2877,15 @@
+     cocoa_refresh(dcl);
+ 
+     if (gl_dirty) {
++        if (cocoa_gl_nopresent < 0) {
++            cocoa_gl_nopresent = getenv("COCOA_GL_NOPRESENT") != NULL;
++        }
++        if (cocoa_gl_nopresent) {
++            /* keep the display-rate timer, as a presenting run would */
++            gl_dirty = false;
++            cocoa_idle_ticks = 0;
++            return;
++        }
+ 
+         if (cocoa_gl_trace_enabled()) {
+             cocoa_gl_log("refresh: triggering render dirty scanout=%d egl_surface=%d",
+@@ -2873,6 +2951,7 @@
+                                    uint32_t x, uint32_t y,
+                                    uint32_t w, uint32_t h)
+ {
++    cocoa_gl_lat_flush();
+     cocoa_gl_mark_dirty();
+ 
+     cocoa_gl_log("scanout flush region=%ux%u+%u+%u", w, h, x, y);

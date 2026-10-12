@@ -5,6 +5,72 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-12 · Display path: measured stage by stage; mpv defaults; methodology fix
+
+### Discovered
+
+* **mpv's default scaling was most of VM video power** (F-048).
+  * 4K60 hardware playback: 7.3 W with mpv's defaults (linear-light
+    downscaling, wide filters, dithering), 3.9 W with `profile=fast`.
+  * Decode alone is 3.0 W.
+  * The guest display chain itself is cheap: a fullscreen 60 fps client that
+    only clears costs about +0.8 W over idle.
+* **Hidden windows are never drawn** (F-049).
+  * During the VM runs the VM window was off screen, so QEMU and
+    WindowServer presented nothing. The native player's window was on screen.
+  * So the `COCOA_GL_NOPRESENT` A/B compared two non-presenting runs, and
+    VM-vs-native playback ratios aren't like for like yet.
+  * F-046 is corrected accordingly.
+* **Hyprland direct scanout brings no saving in the VM.** Every flip becomes a
+  scanout switch in QEMU, so it stays off.
+* **mpv `--vo=dmabuf-wayland` fails.** The compositor can't import VA-API
+  surfaces through virgl.
+* **Intermittent vsync collapse to about 10 fps** in 3 of 6 fresh boots
+  (F-050, open). Six causes were ruled out by measurement, including the
+  screensaver, the notification overlay, CPU placement and App Nap.
+
+### Implemented
+
+* **QEMU 0012:** display-path measurement switches. `COCOA_GL_NOPRESENT=1`
+  consumes guest frames without drawing them; `COCOA_GL_LATENCY=1` logs
+  flush-to-draw latency.
+* **Benchmark tools:**
+  * `benchmarks/linux/vfill.c`: a fullscreen Wayland EGL client at a fixed
+    fps, with full-frame damage and per-second frame counters.
+  * `benchmarks/src/winvis.m`: reports whether a process has windows on
+    screen, by PID, without reading titles.
+  * `benchmarks/src/occlude.m`: covers the VM window, for App Nap tests.
+* **`playback_power.py`:**
+  * new `vfill-*` and mpv render-path cases;
+  * a per-case `vm_window_on_screen` record;
+  * refuses to run with a hidden VM window unless `--allow-hidden` is given.
+* **macOS `playback_power.py`:** records whether the player window was on
+  screen.
+* **VM mpv defaults:** `vo=gpu` and `profile=fast`, alongside VA-API.
+
+### Measured
+
+* **Present vs no-present** (ABBA, 4 sessions): no difference. Invalid as a
+  presentation measurement (F-049).
+* **mpv render paths, 4K60 hardware decode:**
+  * defaults: 7.28 W with `vo=gpu`, 5.92 W with `gpu-next`;
+  * fast profile: 3.88 W with `vo=gpu`, 3.85 W with `gpu-next`;
+  * decode alone: 3.03 W.
+* **Unpaced FIFO steady state:** 120 fps; 205 s with no input showed no
+  throttling.
+
+### Next
+
+1. **Repeat the VM playback and present/no-present runs with the VM window
+   on screen.** This is the only way to measure QEMU's draw and
+   WindowServer's compositing.
+2. **Measure flush-to-draw latency** (`COCOA_GL_LATENCY=1`) with the window
+   on screen, then decide whether an IOSurface presenter is worth it. It
+   would draw on QEMU's thread, take the BQL off AppKit's main thread, and
+   skip the wait for the GUI tick.
+3. **F-050:** catch a collapse with Hyprland debug logs and QEMU fence
+   timing.
+
 ## 2026-10-12 · Hardware video decode in the VM: VA-API on VideoToolbox
 
 ### Discovered
@@ -23,10 +89,11 @@ measured, still unsupported, and next.
   * 17% of its samples during 4K60 playback, 3% under GPU-bound glmark2;
   * polling with sleeps saves about 0.3–0.4 W in 4K60 playback (ABBA
     A/B) at unchanged glmark2 throughput (528 fps).
-* **Decode is no longer the gap to macOS; presentation is** (F-046):
-  * VM hardware decode alone: +1.1 W over idle at 4K60;
-  * the rest of the VM's +5.1 W is frame copies through mpv, Hyprland,
-    QEMU's window and WindowServer.
+* **Decode is no longer the gap to macOS** (F-046):
+  * VM hardware decode alone: +1.1 W over idle at 4K60.
+  * *Corrected later the same day:* the rest of the VM's +5.1 W was mpv's
+    default scaling, not frame copies (F-048). Host presentation was not
+    measured, because the VM window was off screen (F-049).
 
 ### Implemented
 
@@ -100,7 +167,8 @@ measured, still unsupported, and next.
   decode would remove it.
 * **Synchronous decode on QEMU's main thread:** making it asynchronous
   needs completion tracking in vrend (F-045).
-* **Presentation costs about 4 W at 4K60:** the largest remaining video gap.
+* **~~Presentation costs about 4 W at 4K60~~:** corrected. It was mpv's
+  scaling (F-048). Host presentation is still unmeasured (F-049).
 
 ### Next
 

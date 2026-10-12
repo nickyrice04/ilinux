@@ -10,6 +10,7 @@ import argparse, json, os, subprocess, sys, time
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 POWERMON = os.path.join(ROOT, "benchmarks/bin/powermon")
 AVPLAY = os.path.join(ROOT, "benchmarks/bin/avplay")
+WINVIS = os.path.join(ROOT, "benchmarks/bin/winvis")
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 from power_summary import summarize  # noqa: E402
 
@@ -22,6 +23,13 @@ def run_case(name, clip, rep, a):
         player = subprocess.Popen([AVPLAY, os.path.join(a.clipdir, clip), str(a.warmup + a.window + 2)],
                                   stdout=subprocess.PIPE, text=True)
     time.sleep(a.warmup)
+    vis = None
+    if player:
+        try:
+            vis = json.loads(subprocess.run([WINVIS, str(player.pid)], capture_output=True,
+                                            text=True).stdout)["on_screen_windows"] > 0
+        except (ValueError, KeyError):
+            pass
     pm = subprocess.run([POWERMON, "-i", "250", "--", "sleep", str(a.window)],
                         capture_output=True, text=True).stdout
     av = {}
@@ -33,7 +41,8 @@ def run_case(name, clip, rep, a):
     line = next(l for l in pm.splitlines() if l.startswith('{"bench":"power"'))
     return {"case": name, "rep": rep, "clip": clip,
             **{k: v for k, v in summarize(line).items() if k != "seconds"},
-            **({"dropped_frames": av.get("dropped_frames"), "loops": av.get("loops")} if clip else {})}
+            **({"dropped_frames": av.get("dropped_frames"), "loops": av.get("loops"),
+                "window_on_screen": vis} if clip else {})}
 
 
 def main():

@@ -80,6 +80,10 @@ ONLY=qemu virtualization/qemu/build-qemu-virgl.sh  # QEMU only, after patch edit
        Mesa's video compositor shaders.
      * `patches/qemu/0011-virtio-gpu-gl-video-property.patch`: the
        `video=on|off` device property.
+   * `patches/qemu/0012-cocoa-display-path-measurement-switches.patch`:
+     `COCOA_GL_NOPRESENT=1` consumes guest frames without drawing them, and
+     `COCOA_GL_LATENCY=1` logs flush-to-draw latency. Both need the window on
+     screen, because macOS doesn't draw hidden windows (F-049).
    * `patches/virglrenderer/0010-vrend-macos-fence-wait-without-spinning.patch`:
      Apple's `glClientWaitSync` busy-polls for its whole timeout, so the
      fence thread now polls and sleeps instead of spinning while it waits:
@@ -192,12 +196,16 @@ locks the session on idle.
 
   | Clip | VM, hardware decode | VM, software decode | macOS native |
   |---|---|---|---|
-  | 4K60 H.264, 60 Mbps | 7.0 W | 17.3 W | 2.9 W |
-  | 1080p60 H.264, 20 Mbps | 4.3 W | 6.7 W | 2.4 W |
+  | 4K60 H.264, 60 Mbps | 7.0 W (mpv defaults), 3.9 W (`profile=fast`) | 17.3 W | 2.9 W |
+  | 1080p60 H.264, 20 Mbps | 4.3 W (mpv defaults) | 6.7 W | 2.4 W |
 
   Idle is about 1.9 W either way.
 * Decode alone (FFmpeg paced, nothing displayed) is 3.0 W at 4K60. Most of
-  the remaining gap to macOS is presentation (F-046).
+  the rest was mpv's default scaling, so the VM now ships `profile=fast`
+  (F-048).
+* The VM window was off screen in these runs, so QEMU's draw and
+  WindowServer's compositing are not included. The native window was on
+  screen (F-049).
 
 ## Known gaps
 

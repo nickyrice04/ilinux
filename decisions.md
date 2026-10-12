@@ -434,8 +434,10 @@ timestamps, re-measure with the timestamps on.
   ships the virgl VA driver, so FFmpeg, mpv, GStreamer `va` and Chromium
   can use it as they are.
 * Whole-SoC power for 4K60 playback is 7.0 W against 17.3 W with guest
-  software decode; macOS itself needs 2.9 W, and the rest of the gap is
-  presentation (F-046).
+  software decode, both with mpv's default scaling. With the fast profile
+  the VM now ships, it is 3.9 W against macOS's 2.9 W. The VM window was
+  off screen in those runs, so host presentation is still unmeasured
+  (F-046, F-048, F-049).
 * Output is bit-exact against FFmpeg's software decoder (F-043, F-044).
 * The alternatives:
   * virtio-video: an abandoned spec;

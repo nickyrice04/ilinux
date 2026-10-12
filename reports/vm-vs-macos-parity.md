@@ -222,29 +222,41 @@ Power is the SoC sum from IOReport on AC. Scripts:
 Data: `benchmarks/results/macos-video-2026-10-12/` and
 `benchmarks/results/vm-video-2026-10-12/fencepoll/`.
 
-| Case | macOS native (median of 4) | VM hardware decode (mean of 2) | VM software decode (mean of 2) | macOS ÷ VM hardware |
+**Caveat: these are not like for like yet (F-049).** The native player's
+window was on screen. The VM window was not, so macOS never drew it, and the
+VM rows leave out QEMU's draw and WindowServer's compositing. Everything
+inside the guest is included. The VM runs must be repeated with the window
+on screen.
+
+| Case | macOS native (median of 4, window on screen) | VM hardware decode, mpv defaults (mean of 2) | VM software decode (mean of 2) |
+|---|---|---|---|
+| Idle | 1.93 W | 1.86–2.98 W | — |
+| 4K60 playback | **2.91 W** | 7.04 W | 17.34 W |
+| 1080p60 playback | **2.36 W** | 4.33 W | 6.72 W |
+| 4K60 decode only, nothing displayed | — | 3.00 W | 11.48 W |
+| Dropped frames per 1,500 | 0 | 0–2 | 0–4 |
+
+**Where the VM's 4K60 power goes** (session `mpv-render`, hardware decode,
+same stream; this session's idle read 2.76 W):
+
+| mpv configuration | SoC W | GPU W | DRAM + memory controller W | Dropped / 1,500 |
 |---|---|---|---|---|
-| Idle | 1.93 W | 1.86–2.98 W | — | — |
-| 4K60 playback | **2.91 W** | **7.04 W** | 17.34 W | 41% |
-| 1080p60 playback | **2.36 W** | **4.33 W** | 6.72 W | 55% |
-| 4K60 decode only, nothing displayed | — | 3.00 W | 11.48 W | — |
-| Dropped frames per 1,500 | 0 | 0–2 | 0–4 | — |
+| Decode only (FFmpeg `-re`, nothing shown) | 3.03 | 0.23 | 1.32 | — |
+| `vo=gpu`, `profile=fast` (**VM default now**) | **3.88** | 0.32 | 1.55 | 1 |
+| `gpu-next`, `profile=fast` | 3.85 | 0.31 | 1.54 | 14 |
+| `gpu-next`, mpv defaults | 5.92 | 0.85 | 2.57 | 7 |
+| `vo=gpu`, mpv defaults | 7.28 | 0.80 | 3.40 | 0 |
 
-**Where the VM's 4K60 power goes**, over a clean idle of about 1.9 W:
-
-| Component | VM | Note |
-|---|---|---|
-| Hardware decode, frames kept on the GPU (FFmpeg `-re`) | +1.1 W | about the whole of native's playback increment (+1.0 W) |
-| Presentation | +4.0 W | mpv scale/render, Hyprland, QEMU's window, WindowServer |
-
-So decode is no longer the gap; presentation is:
-
-* **Native:** AVFoundation draws almost nothing on the GPU (0.13 W) and
-  adds 0.1 W of DRAM.
-* **VM:** GPU 0.8 W and DRAM+memory controller 3.5 W, from frame copies:
-  * VideoToolbox's picture → guest planes;
-  * mpv's render → guest compositor;
-  * guest scanout → QEMU's window → WindowServer.
+* **Decode isn't the gap.** Hardware decode with frames kept on the GPU costs
+  about +1.1 W over idle, close to native's whole playback increment (+1.0 W).
+* **mpv's default scaling is the big cost (F-048).** It downscales in linear
+  light at source resolution, with a wide filter and dithering. The fast
+  profile saves 3.4 W at 4K60.
+* **A fullscreen 60 fps client that only clears costs the whole guest chain
+  about +0.8 W** (Hyprland plus virtio-gpu), measured with `vfill`.
+* **Open:** the host side of presentation (QEMU's draw plus WindowServer)
+  waits for runs with the VM window on screen.
 
 **Guest software decode:** at 4K60 it costs 9.5 W of CPU power. Hardware
-decode cuts whole-SoC playback power by 59% at 4K60 and 36% at 1080p60.
+decode cuts whole-SoC playback power by 59% at 4K60 and 36% at 1080p60
+(both with mpv's default scaling).
