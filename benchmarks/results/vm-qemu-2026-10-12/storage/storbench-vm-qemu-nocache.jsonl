@@ -1,0 +1,9 @@
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"seqwrite","threads":1,"block_KiB":8192,"file_MiB":4096,"seconds":1.064,"MB_per_s":4037.4,"IOPS":481}
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"seqread","threads":1,"block_KiB":8192,"file_MiB":4096,"seconds":0.638,"MB_per_s":6732.1,"IOPS":803}
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"seqread","threads":4,"block_KiB":8192,"file_MiB":4096,"seconds":0.326,"MB_per_s":13183.9,"IOPS":1572}
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"randread","threads":1,"block_KiB":4,"file_MiB":4096,"seconds":8.000,"MB_per_s":23.1,"IOPS":5650,"lat_us_p50":176.3,"lat_us_p99":203.4,"lat_us_p999":268.8}
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"randread","threads":8,"block_KiB":4,"file_MiB":4096,"seconds":8.000,"MB_per_s":167.4,"IOPS":40860,"lat_us_p50":185.5,"lat_us_p99":287.7,"lat_us_p999":4787.9}
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"randread","threads":32,"block_KiB":4,"file_MiB":4096,"seconds":8.002,"MB_per_s":331.2,"IOPS":80860,"lat_us_p50":374.4,"lat_us_p99":804.8,"lat_us_p999":2844.3}
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"randwrite","threads":8,"block_KiB":4,"file_MiB":4096,"seconds":8.003,"MB_per_s":98.5,"IOPS":24046,"lat_us_p50":266.5,"lat_us_p99":1392.6,"lat_us_p999":1556.9}
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"syncwrite","threads":1,"block_KiB":4,"file_MiB":4096,"seconds":8.000,"MB_per_s":5.9,"IOPS":1452,"lat_us_p50":628.5,"lat_us_p99":1653.1,"lat_us_p999":1856.1}
+{"side":"vm-qemu-nocache-iothread","bench":"storage","test":"syncwrite","threads":4,"block_KiB":4,"file_MiB":4096,"seconds":8.001,"MB_per_s":3.2,"IOPS":783,"lat_us_p50":5940.4,"lat_us_p99":8065.2,"lat_us_p999":8138.4}

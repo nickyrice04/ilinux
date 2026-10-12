@@ -1,0 +1,82 @@
+From: iLinux workspace
+Subject: [PATCH] file-posix: cache.direct=on uses F_NOCACHE on macOS
+
+macOS has no O_DIRECT, so QEMU approximated it with O_DSYNC, making every
+guest write synchronous; cache=none was unusable and cache=writeback left
+guest flushes to fsync a large, dirty, double-cached image file.  Map
+cache.direct to fcntl(F_NOCACHE) after open (and on reopen): host page
+cache bypassed, no alignment requirement (F_NOCACHE routes unaligned I/O
+through the cache), guest flushes stay real fdatasync() calls.
+
+diff -ru a/block/file-posix.c b/block/file-posix.c
+--- a/block/file-posix.c	2026-10-12 02:08:27
++++ b/block/file-posix.c	2026-10-12 02:08:27
+@@ -118,10 +118,21 @@
+ #endif
+ #endif
+ 
+-/* Approximate O_DIRECT with O_DSYNC if O_DIRECT isn't available */
++/*
++ * Approximate O_DIRECT with O_DSYNC if O_DIRECT isn't available - except on
++ * macOS, where cache.direct maps to fcntl(F_NOCACHE) after open instead:
++ * O_DSYNC made every guest write synchronous, while F_NOCACHE just bypasses
++ * the host page cache (no double caching, cheap flushes) and needs no
++ * alignment (unaligned requests simply go through the cache).
++ */
+ #ifndef O_DIRECT
++#if defined(__APPLE__) && defined(F_NOCACHE)
++#define O_DIRECT 0
++#define RAW_DARWIN_NOCACHE 1
++#else
+ #define O_DIRECT O_DSYNC
+ #endif
++#endif
+ 
+ #define FTYPE_FILE   0
+ #define FTYPE_CD     1
+@@ -606,6 +617,15 @@
+ 
+ static const char *const mutable_opts[] = { "x-check-cache-dropped", NULL };
+ 
++#ifdef RAW_DARWIN_NOCACHE
++static void raw_darwin_set_nocache(int fd, int bdrv_flags)
++{
++    if (fd >= 0) {
++        fcntl(fd, F_NOCACHE, (bdrv_flags & BDRV_O_NOCACHE) ? 1 : 0);
++    }
++}
++#endif
++
+ static int raw_open_common(BlockDriverState *bs, QDict *options,
+                            int bdrv_flags, int open_flags,
+                            bool device, Error **errp)
+@@ -715,6 +735,9 @@
+         goto fail;
+     }
+     s->fd = fd;
++#ifdef RAW_DARWIN_NOCACHE
++    raw_darwin_set_nocache(fd, bdrv_flags);
++#endif
+ 
+     /* Check s->open_flags rather than bdrv_flags due to auto-read-only */
+     if (s->open_flags & O_RDWR) {
+@@ -1080,6 +1103,9 @@
+ 
+     if (*open_flags == s->open_flags) {
+         /* We're lucky, the existing fd is fine */
++#ifdef RAW_DARWIN_NOCACHE
++        raw_darwin_set_nocache(s->fd, flags);
++#endif
+         return s->fd;
+     }
+ 
+@@ -1116,6 +1142,9 @@
+         }
+     }
+ 
++#ifdef RAW_DARWIN_NOCACHE
++    raw_darwin_set_nocache(fd, flags);
++#endif
+     return fd;
+ }
+ 

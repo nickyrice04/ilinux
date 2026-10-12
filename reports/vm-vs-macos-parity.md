@@ -155,3 +155,24 @@ Virtualization.framework VM. Raw data is in
 | Host only (VM off) | 1.713 | — |
 | VM idle desktop, `app-nap=auto` | 1.799 | +0.09 W |
 | VM idle desktop, `app-nap=off` | 1.855 | +0.14 W |
+
+### Storage: `storbench`, guest btrfs nocow file on virtio-blk vs macOS APFS (`F_NOCACHE`), 4 GiB file
+
+| Test | macOS native | VM writeback, main loop (old) | VM writeback + iothread, 4 queues (default) | VM `DISK_CACHE=none` (F_NOCACHE patch) + iothread |
+|---|---|---|---|---|
+| Sequential write + flush (8 MiB blocks) | 11.2 GB/s | 2.75 | 2.05 | **4.04** |
+| Sequential read, 4 threads (cold for `none`) | 13.2 GB/s | 45.1 (host RAM) | — | **13.2 (100%)** |
+| 4K random read, 1 thread | 16.7K IOPS (p50 60 µs) | 14.1K | **16.9K (p50 59 µs)** | 5.7K (p50 176 µs) |
+| 4K random read, 8 threads | 135.6K | 42.4K | **73.2K** | 40.9K |
+| 4K random read, 32 threads | 266.8K | 54.7K | **112.8K** | 80.9K |
+| 4K random write, 8 threads | — | 25.3K | **47.8K** | 24.0K |
+| 4K write + fsync, 1 thread | 9.3K (p50 98 µs) | 2.1K | **2.3K (p50 439 µs)** | 1.5K |
+| 4K write + fsync, 4 threads, same file | 27.9K | 0.81K | 0.83K | 0.78K |
+
+* Writeback reads hit the host page cache once the data is warm, which is
+  why the random-read latency matches native.
+* `none` measures the real SSD path and avoids caching data twice (guest and
+  host).
+* APFS `fsync` vs `fdatasync` for in-place 4K writes: 22 vs 23 µs. So the
+  host flush is cheap. The guest's btrfs fsync is a chain of dependent I/Os,
+  each paying a virtio round trip of about 50 µs.

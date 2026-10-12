@@ -360,3 +360,13 @@ No entry is based on decompiled Apple code.
 | Inference | An idle guest isn't a battery problem. Busy-guest efficiency (F-029) and the rendering path (F-030) matter more. Panel and backlight power aren't in the IOReport SoC sum. |
 | Confidence | **Confirmed** for the SoC sum |
 | Linux mapping | VM launcher defaults |
+
+## F-033 · VM storage · QEMU on macOS: main-loop disk I/O, O_DSYNC for cache=none, btrfs fsync chains
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `storbench` in the guest (configurations as in `reports/vm-vs-macos-parity.md`). `SRC` QEMU `block/file-posix.c` (`#define O_DIRECT O_DSYNC` when O_DIRECT is missing) and `meson.build` (fdatasync probe requires `_POSIX_SYNCHRONIZED_IO`). Native `syncmode` test. |
+| Observation | (1) Without an iothread, virtio-blk ran in the main loop, which also runs VirGL. A dedicated iothread with 4 queues doubled random-I/O scaling: 8 threads 42→73K IOPS, 32 threads 55→113K. (2) On macOS, `cache=none` meant O_DSYNC on every write. With F_NOCACHE (workspace patch 0005) it gives 4.0 GB/s writes and 13.2 GB/s cold reads (100%), but 176 µs QD1 random reads. (3) QEMU flushes with fsync because the fdatasync probe fails on macOS, but APFS fsync and fdatasync cost the same here (about 22 µs). (4) Guest write+fsync runs at 22% of native, and 4 writers on one file collapse to about 0.8K IOPS (btrfs log and inode serialization amplified by about 50 µs virtio round trips). |
+| Inference | Keep writeback plus iothread as the default (small-I/O latency at parity once data is warm). Offer F_NOCACHE for streaming and memory efficiency. The remaining gap is per-I/O virtualization latency times btrfs's dependent I/O chain. Levers: an ext4 data subvolume for fsync-heavy databases, or lower notify latency. |
+| Confidence | **Confirmed** (measurements); the btrfs-chain attribution is **Likely** |
+| Linux mapping | launcher defaults; `patches/qemu/0005-file-posix-macos-f-nocache.patch` |

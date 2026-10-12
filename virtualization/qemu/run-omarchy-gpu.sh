@@ -45,6 +45,13 @@ if [[ -f $RUNDIR/qemu.pid ]] && kill -0 "$(cat "$RUNDIR/qemu.pid")" 2>/dev/null;
 fi
 rm -f "$RUNDIR"/{console,monitor,battery,host}.sock
 fullscreen=off; fullgrab=off; headless=0
+# Disk I/O off the main loop (which also runs all VirGL GPU work): a dedicated
+# iothread and multi-queue virtio-blk.  DISK_IOTHREAD=0 restores the old path.
+if [[ ${DISK_IOTHREAD:-1} == 1 ]]; then
+  disk=(-object iothread,id=iot0 -device virtio-blk-pci,drive=root,iothread=iot0,num-queues=4)
+else
+  disk=(-device virtio-blk-pci,drive=root)
+fi
 # App Nap: "auto" lets macOS nap a hidden, idle VM but not a busy one (workspace
 # patch qemu-cocoa-app-nap); APP_NAP=on|off overrides.
 appnap="${APP_NAP:-auto}"
@@ -83,8 +90,8 @@ exec "$QEMU" -name Omarchy \
   -machine "$machine" -accel hvf,kernel-irqchip=on -cpu host,pmu=off \
   -smp "$smp" -m "${MEM_MIB}M" \
   -kernel "$KERNEL" -append "${APPEND:-root=/dev/vda rootflags=subvol=@ rw rootwait console=hvc0 quiet loglevel=3}${TZNAME:+ ilinux.tz=$TZNAME}" \
-  -drive "if=none,id=root,file=$DISK,format=raw,cache=writeback,discard=unmap" \
-  -device virtio-blk-pci,drive=root \
+  -drive "if=none,id=root,file=$DISK,format=raw,cache=${DISK_CACHE:-writeback},aio=threads,discard=unmap" \
+  "${disk[@]}" \
   "${display[@]}" \
   -device virtio-keyboard-pci -device virtio-tablet-pci \
   -netdev user,id=net0 -device virtio-net-pci,netdev=net0 \
