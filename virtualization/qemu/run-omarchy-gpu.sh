@@ -10,6 +10,7 @@
 #   org.ilinux.host  <- tools/bin/ilinux-host-agent (battery, clock after the
 #                       Mac sleeps, time zone), started here and tied to QEMU
 # HMP monitor: virtualization/run/monitor.sock (e.g. "screendump shot.ppm").
+# QEMU_EXTRA="..." appends raw QEMU options (debugging, e.g. -trace ...).
 #
 # Display: the guest resolution follows the window's Retina backing pixels
 # (Hyprland scale 2).  --fullscreen gives Omarchy its own macOS Space at the
@@ -45,6 +46,10 @@ if [[ -f $RUNDIR/qemu.pid ]] && kill -0 "$(cat "$RUNDIR/qemu.pid")" 2>/dev/null;
 fi
 rm -f "$RUNDIR"/{console,monitor,battery,host}.sock
 fullscreen=off; fullgrab=off; headless=0
+# Guest Vulkan (Venus): virglrenderer's Venus renderer runs inside QEMU on
+# MoltenVK through the Khronos loader; blob resources map Metal heap memory
+# into a host-memory BAR.  --venus turns it on (VENUS_HOSTMEM sizes the BAR).
+gpu_extra=""
 # Clipboard sharing with macOS: QEMU's qemu-vdagent (Cocoa owns the Mac
 # pasteboard) <-> guest ilinux-clipboard-agent (wl-clipboard).  Text, on demand.
 clipboard=(-chardev qemu-vdagent,id=vdagent,name=vdagent,clipboard=on,mouse=off
@@ -66,6 +71,10 @@ while (($#)); do
   case "$1" in
     --fullscreen) fullscreen=on; shift ;;
     --full-grab) fullgrab=on; shift ;;
+    --venus) gpu_extra=",venus=on,blob=on,hostmem=${VENUS_HOSTMEM:-4G}"
+             export VIRGL_VULKAN_LIBRARY="$ROOT/virtualization/qemu/runtime/lib/libvulkan.1.dylib"
+             export VK_DRIVER_FILES="$ROOT/virtualization/qemu/runtime/share/vulkan/icd.d/MoltenVK_icd.json"
+             export VK_ICD_FILENAMES="$VK_DRIVER_FILES"; shift ;;
     --no-clipboard) clipboard=(); shift ;;
     --hetero) smp="18,sockets=1,clusters=3,cores=6,threads=1"
               machine="virt,gic-version=3,bg-vcpus=6"; shift ;;
@@ -73,13 +82,13 @@ while (($#)); do
     --console-socket) CONSOLE="socket,id=hvc0,path=$RUNDIR/console.sock,server=on,wait=off"; shift ;;
     --job) job=(-fsdev "local,id=job,path=$2,security_model=none"
                 -device "virtio-9p-pci,fsdev=job,mount_tag=job"); shift 2 ;;
-    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--no-clipboard] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
+    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--venus] [--no-clipboard] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
   esac
 done
 if ((headless)); then
   display=(-display none)
 else
-  display=(-device "virtio-gpu-gl-pci,max_outputs=1,xres=$XRES,yres=$YRES"
+  display=(-device "virtio-gpu-gl-pci,max_outputs=1,xres=$XRES,yres=$YRES$gpu_extra"
            -display "cocoa,gl=on,show-cursor=on,zoom-to-fit=on,full-screen=$fullscreen,immersive=$fullscreen,full-grab=$fullgrab,swap-opt-cmd=off,app-nap=$appnap")
 fi
 
@@ -111,4 +120,5 @@ exec "$QEMU" -name Omarchy -L "$ROOT/virtualization/qemu/runtime/share/qemu" \
   ${job[@]+"${job[@]}"} \
   -monitor "unix:$RUNDIR/monitor.sock,server=on,wait=off" \
   -pidfile "$RUNDIR/qemu.pid" \
+  ${QEMU_EXTRA:-} \
   -serial none

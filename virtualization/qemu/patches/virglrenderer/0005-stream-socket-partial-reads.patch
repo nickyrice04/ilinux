@@ -1,0 +1,55 @@
+From: iLinux workspace
+Subject: [PATCH] proxy, server: accept partial reads on stream sockets
+
+The truncation check parsed as (seqpacket && MSG_TRUNC) || short-read, so on
+the macOS stream sockets every message larger than one read (8 KiB default
+buffers) was rejected: "failed to receive message: truncated or incomplete".
+Only seqpacket reads must be complete; on a stream, treat a zero-byte read
+mid-message as the peer closing instead of spinning.
+
+diff -ru a/server/render_socket.c b/server/render_socket.c
+--- a/server/render_socket.c	2026-10-12 11:49:07
++++ b/server/render_socket.c	2026-10-12 11:49:07
+@@ -177,10 +177,17 @@
+          assert(_msg.msg_controllen == 0);
+       }
+ 
++      /* A stream (macOS) may return any part of a message: only a
++       * seqpacket read must be complete.  A zero read mid-message on a
++       * stream means the peer closed it. */
++      if (unlikely(!socket->is_seqpacket && s == 0 && want > 0)) {
++         render_log("failed to receive message: peer closed");
++         return false;
++      }
+       if (unlikely(_msg.msg_flags & MSG_CTRUNC ||
+                    (socket->is_seqpacket &&
+-                     (_msg.msg_flags & MSG_TRUNC) ||
+-                      _msg.msg_iov[0].iov_len != (size_t)s))) {
++                    ((_msg.msg_flags & MSG_TRUNC) ||
++                     _msg.msg_iov[0].iov_len != (size_t)s)))) {
+          render_log("failed to receive message: truncated or incomplete");
+ 
+          int fd_count;
+diff -ru a/src/proxy/proxy_socket.c b/src/proxy/proxy_socket.c
+--- a/src/proxy/proxy_socket.c	2026-10-12 11:49:07
++++ b/src/proxy/proxy_socket.c	2026-10-12 11:49:07
+@@ -186,10 +186,17 @@
+          assert(_msg.msg_controllen == 0);
+       }
+ 
++      /* A stream (macOS) may return any part of a message: only a
++       * seqpacket read must be complete.  A zero read mid-message on a
++       * stream means the peer closed it. */
++      if (unlikely(!socket->is_seqpacket && s == 0 && want > 0)) {
++         proxy_log("failed to receive message: peer closed");
++         return false;
++      }
+       if (unlikely(_msg.msg_flags & MSG_CTRUNC ||
+                    (socket->is_seqpacket &&
+-                     (_msg.msg_flags & MSG_TRUNC) ||
+-                      _msg.msg_iov[0].iov_len != (size_t)s))) {
++                    ((_msg.msg_flags & MSG_TRUNC) ||
++                     _msg.msg_iov[0].iov_len != (size_t)s)))) {
+          proxy_log("failed to receive message: truncated or incomplete");
+ 
+          int fd_count;

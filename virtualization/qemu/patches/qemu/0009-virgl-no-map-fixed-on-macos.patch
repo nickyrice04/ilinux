@@ -1,0 +1,30 @@
+From: iLinux workspace
+Subject: [PATCH] virtio-gpu-virgl: no map_fixed for blobs on macOS
+
+virgl_renderer_resource_map_fixed() mmap()s a blob over the hostmem region,
+which HVF already mapped into the guest.  hv_vm_map() keeps referencing the
+pages that backed the range when it was mapped, so the guest went on seeing
+the old anonymous pages: Venus wrote its command ring there and the host
+never saw it ("stuck in ring seqno wait").  Use the RAM-subregion path
+(memory_region_init_ram_ptr), which HVF maps with the blob's own pages.
+
+diff -ru a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+--- a/hw/display/virtio-gpu-virgl.c	2026-10-12 11:56:39
++++ b/hw/display/virtio-gpu-virgl.c	2026-10-12 11:56:39
+@@ -41,8 +41,15 @@
+      VIRGL_VERSION_MICRO >= (micro))
+ #endif
+ 
++/*
++ * Not on macOS: map_fixed mmap()s the blob over hostmem that HVF has already
++ * mapped into the guest, but hv_vm_map() captured the old backing pages, so
++ * the guest would keep using them (Venus ring writes never reached the host).
++ * Mapping each blob as its own RAM subregion makes HVF map the right pages.
++ */
+ #define VIRGL_HAS_MAP_FIXED \
+-    (VIRGL_CHECK_VERSION(1, 3, 0) && !IS_ENABLED(CONFIG_WIN32))
++    (VIRGL_CHECK_VERSION(1, 3, 0) && !IS_ENABLED(CONFIG_WIN32) && \
++     !IS_ENABLED(CONFIG_DARWIN))
+ 
+ struct virtio_gpu_virgl_resource {
+     struct virtio_gpu_simple_resource base;

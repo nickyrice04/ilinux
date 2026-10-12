@@ -11,6 +11,8 @@
 #     QEMU's virtio-gpu-virgl.c includes ui/egl-helpers.h unconditionally, and
 #     is patched so a missing libEGL means "no EGL context" instead of abort()
 #     (epoxy probes EGL on every GL entry-point lookup once EGL is compiled in).
+#   * Venus (guest Vulkan) through MoltenVK and the Khronos loader, the
+#     render server running in-process as a thread (workspace patches)
 #   * workspace patches (virtualization/qemu/patches/) on top of the
 #     try-omarchy series: stable Retina window size and product name, App Nap
 #     policy, heterogeneous vCPUs (host QoS + guest capacity), event-driven
@@ -78,6 +80,18 @@ fetch "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-1.5.10.tar.xz" \
 fetch "https://www.spice-space.org/download/releases/spice-protocol-0.14.4.tar.xz" \
   04ffba610d9fd441cfc47dfaa135d70096e60b1046d2119d8db2f8ea0d17d912 spice-protocol.tar.xz
 
+# Vulkan for Venus (guest Vulkan): Khronos headers + loader built from their
+# SDK tag, and MoltenVK (Vulkan on Metal) from its official release, pinned by
+# the asset digest GitHub publishes.  Tag tarballs: hashes recorded on first
+# download (GitHub publishes none for them).
+VK_SDK=vulkan-sdk-1.4.363.0
+fetch "https://codeload.github.com/KhronosGroup/Vulkan-Headers/tar.gz/refs/tags/$VK_SDK" \
+  4a078be12bef21cfebc09d878b77a63cff9d68f899254a0b00d0e37ef73e7f7e vulkan-headers.tar.gz
+fetch "https://codeload.github.com/KhronosGroup/Vulkan-Loader/tar.gz/refs/tags/$VK_SDK" \
+  941eff558fc74f248745fb7df367640cf89a8457f216dae498a74ae14b6ba6f7 vulkan-loader.tar.gz
+fetch "https://github.com/KhronosGroup/MoltenVK/releases/download/v1.4.2/MoltenVK-macos.tar" \
+  f95765a6229cb7b915990a2890ce12ebe36a730b021545d3d52ae69ce4c4024e moltenvk-macos.tar
+
 # Khronos EGL headers (macOS ships none).  Pinned by commit; headers only.
 EGL_COMMIT=db3425b8246136faccb5e2782b5694960bd6edf1
 mkdir -p "$RT/include/EGL" "$RT/include/KHR"
@@ -132,6 +146,27 @@ meson setup "$SRC/libslirp/build" "$SRC/libslirp" --prefix="$RT" --libdir=lib --
   --wrap-mode=nodownload > "$Q/build-slirp.log" 2>&1
 ninja -C "$SRC/libslirp/build" -j "$JOBS" install >> "$Q/build-slirp.log" 2>&1
 
+# ---- Vulkan: headers, loader, MoltenVK ICD (for Venus) ----
+unpack vulkan-headers.tar.gz "$SRC/vulkan-headers"
+log "install Vulkan-Headers"
+cmake -S "$SRC/vulkan-headers" -B "$SRC/vulkan-headers/build" -G Ninja \
+  -DCMAKE_INSTALL_PREFIX="$RT" > "$Q/build-vulkan.log" 2>&1
+cmake --install "$SRC/vulkan-headers/build" >> "$Q/build-vulkan.log" 2>&1
+unpack vulkan-loader.tar.gz "$SRC/vulkan-loader"
+log "build Vulkan-Loader"
+cmake -S "$SRC/vulkan-loader" -B "$SRC/vulkan-loader/build" -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX="$RT" -DCMAKE_PREFIX_PATH="$RT" -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
+  -DCMAKE_INSTALL_NAME_DIR="$RT/lib" -DBUILD_TESTS=OFF \
+  >> "$Q/build-vulkan.log" 2>&1
+cmake --build "$SRC/vulkan-loader/build" -j "$JOBS" >> "$Q/build-vulkan.log" 2>&1
+cmake --install "$SRC/vulkan-loader/build" >> "$Q/build-vulkan.log" 2>&1
+log "install MoltenVK ICD"
+rm -rf "$SRC/moltenvk"; mkdir -p "$SRC/moltenvk" "$RT/share/vulkan/icd.d"
+tar -xf "$DL/moltenvk-macos.tar" -C "$SRC/moltenvk"
+cp "$SRC/moltenvk/MoltenVK/MoltenVK/dynamic/dylib/macOS/libMoltenVK.dylib" \
+   "$SRC/moltenvk/MoltenVK/MoltenVK/dynamic/dylib/macOS/MoltenVK_icd.json" \
+   "$SRC/moltenvk/MoltenVK/LICENSE" "$RT/share/vulkan/icd.d/"
+
 # ---- virglrenderer 1.3.0 + macOS patch set + native-OpenGL patch ----
 unpack virglrenderer.tar.gz "$SRC/virglrenderer"
 unpack virgl-tap.tar.gz "$SRC/virgl-tap"
@@ -159,7 +194,8 @@ done
 log "build virglrenderer"
 CFLAGS="-I$RT/include" meson setup "$SRC/virglrenderer/build" "$SRC/virglrenderer" --prefix="$RT" \
   --libdir=lib --buildtype=debugoptimized -Db_ndebug=false --wrap-mode=nodownload \
-  -Ddrm-renderers=[] -Dvenus=false -Dtests=false -Dvideo=false -Dtracing=none -Dplatforms=[] > "$Q/build-virgl.log" 2>&1
+  -Ddrm-renderers=[] -Dvenus=true -Drender-server-worker=thread \
+  -Dtests=false -Dvideo=false -Dtracing=none -Dplatforms=[] > "$Q/build-virgl.log" 2>&1
 ninja -C "$SRC/virglrenderer/build" -j "$JOBS" install >> "$Q/build-virgl.log" 2>&1
 
 fi  # ONLY != qemu

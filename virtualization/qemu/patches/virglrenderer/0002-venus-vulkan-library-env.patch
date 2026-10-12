@@ -1,0 +1,36 @@
+From: iLinux workspace
+Subject: [PATCH] venus: VIRGL_VULKAN_LIBRARY selects the Vulkan loader
+
+On macOS, dlopen() of a bare "libvulkan.1.dylib" only searches the default
+locations, not the private library directory of the application embedding
+virglrenderer.  Try an explicit path from VIRGL_VULKAN_LIBRARY first.
+
+diff -ru a/src/venus/vkr_library.c b/src/venus/vkr_library.c
+--- a/src/venus/vkr_library.c	2026-10-12 11:33:30
++++ b/src/venus/vkr_library.c	2026-10-12 11:33:30
+@@ -7,6 +7,7 @@
+ #include "vkr_library.h"
+ 
+ #include <dlfcn.h>
++#include <stdlib.h>
+ 
+ void
+ vkr_library_preload_icd(void)
+@@ -49,7 +50,16 @@
+    if (lib->handle)
+       return true;
+ 
+-   lib->handle = dlopen(LIBVULKAN1, RTLD_NOW | RTLD_LOCAL);
++   /* An explicit loader path: on macOS dlopen() of a bare name does not
++    * search the host application's private library directory. */
++   const char *path = getenv("VIRGL_VULKAN_LIBRARY");
++   if (path && *path) {
++      lib->handle = dlopen(path, RTLD_NOW | RTLD_LOCAL);
++      if (lib->handle == NULL)
++         vkr_log("failed to open %s: %s", path, dlerror());
++   }
++   if (lib->handle == NULL)
++      lib->handle = dlopen(LIBVULKAN1, RTLD_NOW | RTLD_LOCAL);
+    if (lib->handle == NULL)
+       lib->handle = dlopen(LIBVULKAN, RTLD_NOW | RTLD_LOCAL);
+    if (lib->handle == NULL) {

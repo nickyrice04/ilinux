@@ -1,0 +1,30 @@
+From: iLinux workspace
+Subject: [PATCH] virtio-gpu-virgl: run Venus in-process on macOS
+
+Venus on macOS keeps device memory in Metal heaps (VK_EXT_external_memory_metal)
+and QEMU maps it into the guest by host pointer.  There is no dma-buf to hand
+that memory across processes, so do not request a separate render server;
+virglrenderer then runs it as a thread (render-server-worker=thread).
+
+diff -ru a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+--- a/hw/display/virtio-gpu-virgl.c	2026-10-12 11:34:09
++++ b/hw/display/virtio-gpu-virgl.c	2026-10-12 11:34:09
+@@ -1528,7 +1528,17 @@
+ #endif
+ #if VIRGL_VERSION_MAJOR >= 1
+     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
+-        flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
++        flags |= VIRGL_RENDERER_VENUS;
++#ifndef CONFIG_DARWIN
++        flags |= VIRGL_RENDERER_RENDER_SERVER;
++#else
++        /*
++         * macOS: run the render server as a thread inside QEMU (virglrenderer
++         * built with render-server-worker=thread).  Venus device memory is
++         * Metal heap memory mapped into the guest by host pointer; without
++         * dma-buf a separate render-server process could not share it.
++         */
++#endif
+     }
+     if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+         flags |= VIRGL_RENDERER_DRM;

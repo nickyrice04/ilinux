@@ -1,0 +1,27 @@
+From: iLinux workspace
+Subject: [PATCH] venus: initialise the proxy for in-process (thread) render servers
+
+proxy_renderer_init() runs the render server in-process when
+VIRGL_RENDERER_RENDER_SERVER is clear, but virgl_renderer_init() only
+called it when that flag was set, so the in-process path was unreachable
+and the Venus capset came back zeroed (guest: "Unsupported wire format
+version 0").  Initialise the proxy for VIRGL_RENDERER_VENUS too.
+
+diff -ru a/src/virglrenderer.c b/src/virglrenderer.c
+--- a/src/virglrenderer.c	2026-10-12 11:40:53
++++ b/src/virglrenderer.c	2026-10-12 11:40:53
+@@ -990,7 +990,13 @@
+       state.vrend_initialized = true;
+    }
+ 
+-   if (!state.proxy_initialized && (flags & VIRGL_RENDERER_RENDER_SERVER)) {
++   /* Venus without VIRGL_RENDERER_RENDER_SERVER runs the render server as a
++    * thread in this process (render-server-worker=thread, e.g. on macOS,
++    * where Metal-backed device memory cannot cross processes); the proxy is
++    * still what serves the Venus contexts, so set it up for either flag.
++    */
++   if (!state.proxy_initialized &&
++       (flags & (VIRGL_RENDERER_RENDER_SERVER | VIRGL_RENDERER_VENUS))) {
+       ret = proxy_renderer_init(&proxy_cbs, flags | VIRGL_RENDERER_NO_VIRGL);
+       if (ret) {
+          virgl_error("failed to initialize venus renderer");
