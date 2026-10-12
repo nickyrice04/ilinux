@@ -1,3 +1,60 @@
+# Engineering Summary: Session 2 (2026-10-12)
+
+## Bottom line
+
+* **Omarchy 4 runs as a GPU-accelerated desktop on this Mac today**, in a
+  QEMU/HVF VM built entirely in the workspace (`virtualization/qemu/`,
+  `Omarchy.app`). Native Linux on t6050 is still blocked (see session 1);
+  a draft native patch series compile-tests clean.
+* **GPU:** Hyprland runs through VirGL into macOS OpenGL 4.1 (Metal) at
+  Retina resolution and 120 Hz. Against macOS's own GL:
+
+  | Test | Parity |
+  |---|---|
+  | Shader ALU | 99.7–100% |
+  | Blended fill | 74% (was 17%) |
+  | Readback | 61% (was 23%) |
+  | Draw calls | 50% |
+  | Texture upload | 28% |
+
+  The fill and readback gains came from replacing 1 ms fence polling with
+  event-driven fences. LLM compute from Linux goes through ggml RPC: 81–89%
+  of native Metal.
+* **CPU:**
+  * Foreground single-thread is 99% of native.
+  * Heterogeneous vCPUs mirror the M5 Max (Super + M clusters). Guest
+    background work runs on host M cores and gets 1.84–2.25× the work per
+    joule (`omarchy-qos` tiers map onto them automatically).
+  * App Nap `auto` keeps a hidden VM fast when it's busy and napping when
+    it's idle.
+* **Battery:**
+  * An idle Omarchy desktop costs +0.09 W of SoC power.
+  * Idle QEMU CPU is down 45% (adaptive display refresh).
+  * The guest shows the Mac's battery, and its clock stays right after the
+    Mac sleeps.
+* **Storage:** warm small reads at native latency. Random-I/O scaling
+  doubled with an iothread. Cold sequential reads reach 100% with the new
+  F_NOCACHE mode. fsync-heavy writes are still 22% (btrfs dependent-I/O
+  chains in a VM).
+* **Experience:**
+  * clipboard shared both ways;
+  * microphone capture added to QEMU's CoreAudio backend;
+  * Mac time zone followed;
+  * full-screen Space and full keyboard grab available;
+  * fixed an upstream Omarchy/Qt 6.12 bug that left the bar black;
+  * kernel packaged for pacman, so updates are clean.
+
+## Needs the user
+
+* **First launch of `Omarchy.app`:** right-click → Open (it's locally
+  built and ad-hoc signed).
+* **Optional permissions:** microphone (first recording), and Accessibility
+  for `--full-grab`.
+* **Next large step:** Vulkan in the guest (Venus with MoltenVK or
+  KosmicKrisp). This needs new third-party source downloads and builds.
+
+---
+
 # Engineering Summary: Session 1 (2026-10-11)
 
 ## Bottom line

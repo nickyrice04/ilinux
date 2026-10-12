@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-12 · Microphone, kernel package, Omarchy.app
+
+### Implemented
+
+* **QEMU patch 0007:** CoreAudio capture through an AudioQueue. The guest
+  sees a working capture source. A live recording was not tested on the
+  user's machine (privacy).
+* **`linux-ilinux-vm` pacman package:** built, installed and booted, and it
+  owns its modules. The limine boot integration and the stock kernel were
+  removed from the VM (D-026).
+* **`Omarchy.app`:** a Mach-O stub, launch script and bundled signed QEMU.
+  Its window and Dock identity show as "Omarchy". LaunchServices launch from
+  the agent shell is blocked by Gatekeeper (ad-hoc signed plus provenance);
+  the user approves it once.
+
+### Next
+
+1. Vulkan in the guest: Venus via MoltenVK or KosmicKrisp. This needs new
+   source downloads, so it needs approval.
+2. GPU texture-upload and draw-call gaps (blob or zero-copy resources).
+3. fsync-heavy storage: an ext4 data volume option, or lower virtio latency.
+4. Battery and Low Power Mode measurements (the machine was on AC so far).
+5. Native track: an m1n1 read-only session needs separate authorization.
+
+---
+
 ## 2026-10-12 · Storage, clipboard, host agent, idle refresh
 
 ### Implemented
