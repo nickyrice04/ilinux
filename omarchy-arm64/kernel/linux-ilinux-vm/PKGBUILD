@@ -1,0 +1,46 @@
+# Kernel for the Omarchy VM on Apple silicon (QEMU/HVF and
+# Virtualization.framework).  Arch Linux ARM's full stock config (extracted
+# from linux-aarch64 7.1.6-1 via IKCONFIG) plus: 16K pages, uclamp
+# (omarchy-qos tiers), test_power (Mac battery bridge), 9p/virtiofs, vsock,
+# and virtio net/blk/console/fs built in; no debug info (decision D-014).
+#
+# The VM boots this kernel directly from the host (QEMU -kernel), so the
+# package only has to own the modules: that lets Arch's
+# linux-modules-cleanup.service run again instead of deleting them.  No
+# pkgbase file, so mkinitcpio/limine hooks leave it alone.
+#   makepkg -s   (in the guest; ~5 min with 12-18 vCPUs)
+pkgname=linux-ilinux-vm
+pkgver=7.1.6
+pkgrel=2
+pkgdesc='Linux for the iLinux Omarchy VM (16K pages, uclamp, test_power, 9p, virtio built in)'
+arch=(aarch64)
+url='https://www.kernel.org/'
+license=(GPL-2.0-only)
+makedepends=(bc cpio flex bison openssl python)
+options=(!strip !debug)
+source=("https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/linux-$pkgver.tar.xz"
+        config)
+# Tarball hash as published in kernel.org's signed sha256sums.asc.
+sha256sums=('995dd7188d924662b94b48fd6fb783587267590e5b8bb33dade2c771e7d855c1'
+            'a9c3fca8409d1bc3da226b1b265a8ae63f57b67f0c54ed7263f6e18ef130b728')
+
+prepare() {
+  cd "linux-$pkgver"
+  cp ../config .config
+  make olddefconfig
+}
+
+build() {
+  cd "linux-$pkgver"
+  make -j"$(nproc)" Image modules
+}
+
+package() {
+  cd "linux-$pkgver"
+  local kver
+  kver=$(make -s kernelrelease)
+  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 DEPMOD=/doesnt/exist modules_install
+  rm -f "$pkgdir/usr/lib/modules/$kver/build"
+  # The Image for the host's direct kernel boot (copy it out of the VM).
+  install -Dm644 arch/arm64/boot/Image "$pkgdir/usr/share/linux-ilinux-vm/Image-$kver"
+}

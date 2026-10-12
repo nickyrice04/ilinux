@@ -326,3 +326,42 @@ streaming or memory-sensitive use.
   prompts (microphone, Accessibility) to "Omarchy" instead of the terminal
   or agent that started QEMU.
 * Nothing is installed outside the workspace.
+
+## D-025 · 2026-10-12 · Microphone via an AudioQueue input voice in QEMU's CoreAudio backend
+
+**Decision:** Workspace patch 0007 adds capture to QEMU's CoreAudio backend.
+It uses an AudioQueue on the default input device, set to the format QEMU
+requests, and starts it only while the guest records. Frames are dropped,
+never overwritten, if the guest falls behind.
+
+**Why:**
+
+* The backend had no input voice, so Linux apps had no microphone.
+* AudioQueue converts formats itself, so the Mac's input device is never
+  reconfigured. QEMU's playback path does change the output device's
+  sample rate.
+* The macOS microphone indicator and permission prompt stay meaningful.
+
+## D-026 · 2026-10-12 · VM kernel packaged for pacman; boot-integration packages removed from the VM
+
+**Decision:**
+
+* The VM kernel is now the package `linux-ilinux-vm`
+  (`omarchy-arm64/kernel/linux-ilinux-vm`: kernel.org 7.1.6 tarball, hash
+  from the signed `sha256sums.asc`, plus the job-010 config). It owns
+  `/usr/lib/modules/7.1.6-vzrun2`, so `linux-modules-cleanup.service` is
+  unmasked again.
+* The host boots the package's own Image (`images/alarm/Image-7.1.6-vzrun2-pkg`,
+  exported by job 019).
+* Removed from the VM: `limine`, `limine-mkinitcpio-hook`,
+  `limine-snapper-sync`, `efibootmgr`, and the unused stock `linux-aarch64`.
+  snapper stays.
+
+**Why:**
+
+* Direct kernel boot needs neither a bootloader nor an initramfs.
+* Limine's pacman hook fires on systemd, firmware and module updates. On a
+  non-Apple device tree it runs `limine-install`, which fails with no ESP,
+  so every Omarchy update ended in an error.
+* No package depends on these. try-omarchy's VM image ships without limine
+  too.

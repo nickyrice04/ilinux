@@ -31,7 +31,7 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 QEMU="${QEMU:-$ROOT/virtualization/qemu/runtime/bin/qemu-system-aarch64}"   # Omarchy.app passes its bundled copy
 IMG="$ROOT/virtualization/images/alarm"
 DISK="${DISK:-$IMG/root-btrfs.img}"
-KERNEL="${KERNEL:-$IMG/Image-7.1.6-vzrun2-16k}"
+KERNEL="${KERNEL:-$IMG/Image-7.1.6-vzrun2-pkg}"   # from the linux-ilinux-vm package (modules owned by pacman)
 CPUS="${CPUS:-12}"
 MEM_MIB="${MEM_MIB:-16384}"
 XRES="${XRES:-1728}"; YRES="${YRES:-1117}"   # half of the 3456x2234 panel; Hyprland scales

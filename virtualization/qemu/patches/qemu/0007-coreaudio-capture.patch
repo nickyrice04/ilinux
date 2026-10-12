@@ -1,0 +1,227 @@
+From: iLinux workspace
+Subject: [PATCH] audio/coreaudio: microphone capture via AudioQueue
+
+The CoreAudio backend had no input voice (max_voices_in = 0), so guests on
+macOS had no microphone.  Add one: an AudioQueue on the default input
+device converts to the format QEMU asks for (the device is not
+reconfigured, unlike playback), runs only while the guest records, and
+fills the generic input ring buffer under the voice mutex (frames are
+dropped, never overwritten, when the guest falls behind).
+
+diff -ru a/audio/coreaudio.m b/audio/coreaudio.m
+--- a/audio/coreaudio.m	2026-10-12 02:51:58
++++ b/audio/coreaudio.m	2026-10-12 02:51:58
+@@ -24,6 +24,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include <CoreAudio/CoreAudio.h>
++#include <AudioToolbox/AudioToolbox.h>
+ #include <pthread.h>            /* pthread_X */
+ 
+ #include "qemu/main-loop.h"
+@@ -650,14 +651,176 @@
+     update_out_device_playback_state(core);
+ }
+ 
++/*
++ * Capture.  An AudioQueue on the default input device converts from the
++ * device's native format to what QEMU asks for, so - unlike playback - the
++ * device itself is never reconfigured.  It runs only while the guest
++ * records, so the macOS microphone indicator means what it says.  The first
++ * recording triggers the macOS microphone permission prompt; if access is
++ * denied the queue delivers silence.
++ */
++typedef struct coreaudioVoiceIn {
++    HWVoiceIn hw;
++    pthread_mutex_t buf_mutex;
++    AudioQueueRef queue;
++    bool running;
++} CoreaudioVoiceIn;
++
++#define coreaudio_capture_logerr(status, ...) \
++    coreaudio_logerr2(status, "capture", __VA_ARGS__)
++
++/* AudioQueue thread: append captured frames; drop them if QEMU is behind. */
++static void in_queue_callback(void *opaque, AudioQueueRef queue,
++                              AudioQueueBufferRef buf,
++                              const AudioTimeStamp *start, UInt32 npackets,
++                              const AudioStreamPacketDescription *desc)
++{
++    CoreaudioVoiceIn *core = opaque;
++    HWVoiceIn *hw = &core->hw;
++    const uint8_t *src = buf->mAudioData;
++    size_t len = buf->mAudioDataByteSize;
++
++    pthread_mutex_lock(&core->buf_mutex);
++    len = MIN(len, hw->size_emul - hw->pending_emul);
++    len -= len % hw->info.bytes_per_frame;
++    while (len) {
++        size_t chunk = MIN(len, hw->size_emul - hw->pos_emul);
++
++        memcpy(hw->buf_emul + hw->pos_emul, src, chunk);
++        hw->pos_emul = (hw->pos_emul + chunk) % hw->size_emul;
++        hw->pending_emul += chunk;
++        src += chunk;
++        len -= chunk;
++    }
++    pthread_mutex_unlock(&core->buf_mutex);
++
++    AudioQueueEnqueueBuffer(queue, buf, 0, NULL);
++}
++
++static int coreaudio_init_in(HWVoiceIn *hw, struct audsettings *as)
++{
++    CoreaudioVoiceIn *core = (CoreaudioVoiceIn *)hw;
++    Audiodev *dev = hw->s->dev;
++    AudiodevCoreaudioPerDirectionOptions *cpdo = dev->u.coreaudio.in;
++    struct audsettings obt_as = *as;
++    AudioStreamBasicDescription fmt;
++    UInt32 frames, count, i;
++    OSStatus status;
++    int err;
++
++    err = pthread_mutex_init(&core->buf_mutex, NULL);
++    if (err) {
++        error_report("coreaudio: Could not create mutex: %s", strerror(err));
++        return -1;
++    }
++
++    obt_as.fmt = AUDIO_FORMAT_F32;
++    audio_pcm_init_info(&hw->info, &obt_as);
++    frames = audio_buffer_frames(
++        qapi_AudiodevCoreaudioPerDirectionOptions_base(cpdo), &obt_as, 11610);
++    count = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
++    hw->samples = frames * count;
++    audio_generic_initialize_buffer_in(hw);
++
++    fmt = (AudioStreamBasicDescription) {
++        .mSampleRate = hw->info.freq,
++        .mFormatID = kAudioFormatLinearPCM,
++        .mFormatFlags = kLinearPCMFormatFlagIsFloat |
++                        kLinearPCMFormatFlagIsPacked,
++        .mBytesPerPacket = hw->info.bytes_per_frame,
++        .mFramesPerPacket = 1,
++        .mBytesPerFrame = hw->info.bytes_per_frame,
++        .mChannelsPerFrame = hw->info.nchannels,
++        .mBitsPerChannel = 32,
++    };
++    status = AudioQueueNewInput(&fmt, in_queue_callback, core, NULL, NULL, 0,
++                                &core->queue);
++    if (status != noErr) {
++        coreaudio_capture_logerr(status, "Could not create input queue");
++        core->queue = NULL;
++        pthread_mutex_destroy(&core->buf_mutex);
++        return -1;
++    }
++    for (i = 0; i < count; i++) {
++        AudioQueueBufferRef buf;
++
++        status = AudioQueueAllocateBuffer(core->queue,
++                                          frames * hw->info.bytes_per_frame,
++                                          &buf);
++        if (status != noErr) {
++            coreaudio_capture_logerr(status, "Could not allocate input buffer");
++            AudioQueueDispose(core->queue, true);
++            core->queue = NULL;
++            pthread_mutex_destroy(&core->buf_mutex);
++            return -1;
++        }
++        AudioQueueEnqueueBuffer(core->queue, buf, 0, NULL);
++    }
++    return 0;
++}
++
++static void coreaudio_fini_in(HWVoiceIn *hw)
++{
++    CoreaudioVoiceIn *core = (CoreaudioVoiceIn *)hw;
++
++    if (core->queue) {
++        AudioQueueDispose(core->queue, true);
++        core->queue = NULL;
++    }
++    pthread_mutex_destroy(&core->buf_mutex);
++}
++
++static void coreaudio_enable_in(HWVoiceIn *hw, bool enable)
++{
++    CoreaudioVoiceIn *core = (CoreaudioVoiceIn *)hw;
++    OSStatus status;
++
++    if (!core->queue || enable == core->running) {
++        return;
++    }
++    if (enable) {
++        pthread_mutex_lock(&core->buf_mutex);
++        hw->pending_emul = 0;           /* never replay stale audio */
++        pthread_mutex_unlock(&core->buf_mutex);
++        status = AudioQueueStart(core->queue, NULL);
++        if (status != noErr) {
++            coreaudio_capture_logerr(status, "Could not start capture");
++            return;
++        }
++    } else {
++        AudioQueueStop(core->queue, true);
++    }
++    core->running = enable;
++}
++
++static void *coreaudio_get_buffer_in(HWVoiceIn *hw, size_t *size)
++{
++    CoreaudioVoiceIn *core = (CoreaudioVoiceIn *)hw;
++    void *buf;
++
++    pthread_mutex_lock(&core->buf_mutex);
++    buf = audio_generic_get_buffer_in(hw, size);
++    pthread_mutex_unlock(&core->buf_mutex);
++    return buf;
++}
++
++static void coreaudio_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size)
++{
++    CoreaudioVoiceIn *core = (CoreaudioVoiceIn *)hw;
++
++    pthread_mutex_lock(&core->buf_mutex);
++    audio_generic_put_buffer_in(hw, buf, size);
++    pthread_mutex_unlock(&core->buf_mutex);
++}
++
+ static void audio_coreaudio_class_init(ObjectClass *klass, const void *data)
+ {
+     AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+ 
+     k->max_voices_out = 1;
+-    k->max_voices_in = 0;
++    k->max_voices_in = 1;
+     k->voice_size_out = sizeof(CoreaudioVoiceOut);
+-    k->voice_size_in = 0;
++    k->voice_size_in = sizeof(CoreaudioVoiceIn);
+ 
+     k->init_out = coreaudio_init_out;
+     k->fini_out = coreaudio_fini_out;
+@@ -670,6 +833,14 @@
+     /* wrapper for audio_generic_put_buffer_out */
+     k->put_buffer_out = coreaudio_put_buffer_out;
+     k->enable_out = coreaudio_enable_out;
++
++    k->init_in = coreaudio_init_in;
++    k->fini_in = coreaudio_fini_in;
++    k->enable_in = coreaudio_enable_in;
++    /* the AudioQueue callback fills buf_emul; these lock against it */
++    k->get_buffer_in = coreaudio_get_buffer_in;
++    k->put_buffer_in = coreaudio_put_buffer_in;
++    k->read = audio_generic_read;
+ }
+ 
+ static const TypeInfo audio_types[] = {
+diff -ru a/meson.build b/meson.build
+--- a/meson.build	2026-10-12 02:51:58
++++ b/meson.build	2026-10-12 02:51:58
+@@ -1764,7 +1764,7 @@
+ 
+ coreaudio = not_found
+ if not get_option('coreaudio').auto() or (host_os == 'darwin' and have_system)
+-  coreaudio = dependency('appleframeworks', modules: 'CoreAudio',
++  coreaudio = dependency('appleframeworks', modules: ['CoreAudio', 'AudioToolbox'],
+                          required: get_option('coreaudio'))
+ endif
+ 

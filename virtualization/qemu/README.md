@@ -50,6 +50,9 @@ ONLY=qemu virtualization/qemu/build-qemu-virgl.sh  # QEMU only, after patch edit
    * `patches/qemu/0006-cocoa-adaptive-refresh.patch`: the display timer
      drops to 100 ms after a second without frames, instead of waking QEMU
      at 120 Hz forever.
+   * `patches/qemu/0007-coreaudio-capture.patch`: microphone input. The
+     CoreAudio backend had none, so this adds an AudioQueue on the default
+     input device.
 5. `spice-protocol` headers (SHA-256 published by spice-space.org) enable
    QEMU's `qemu-vdagent` for clipboard sharing.
 
@@ -141,8 +144,10 @@ locks the session on idle.
 
 ## Known gaps
 
-* **Microphone:** `hda-micro` has no capture with the CoreAudio backend
-  (`Can not open 'adc'`).
+* **Microphone:** capture works through patch 0007. The first recording
+  shows the macOS microphone prompt. Launched from `Omarchy.app`, the prompt
+  names Omarchy; from a terminal, it names that terminal app. The mic is
+  open only while a guest app records.
 * **Screenshots:** QEMU `screendump` can't read GL scanouts. Use `grim`
   inside the guest instead.
 * **No Vulkan in the guest:** Venus is not built. This needs MoltenVK and is

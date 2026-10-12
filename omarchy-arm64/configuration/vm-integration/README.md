@@ -23,3 +23,20 @@ tools/vmpush.py virtualization/run/console.sock <file> <guest path> [mode]
 ```
 
 Pushes are sha256-verified.
+
+## VM package set (D-026)
+
+**Kernel:** `linux-ilinux-vm` (`omarchy-arm64/kernel/linux-ilinux-vm`).
+
+* Build it in the guest with `makepkg`, then
+  `pacman -U --overwrite '/usr/lib/modules/7.1.6-vzrun2/*' linux-ilinux-vm-*.pkg.tar.xz`.
+* Copy `/usr/share/linux-ilinux-vm/Image-*` to the host (job 019 shows
+  how). The launcher boots `images/alarm/Image-7.1.6-vzrun2-pkg`.
+
+**Not installed in the VM:** `limine`, `limine-mkinitcpio-hook`,
+`limine-snapper-sync`, `efibootmgr` and `linux-aarch64`.
+
+* With direct kernel boot there is no bootloader or initramfs to maintain.
+* Limine's pacman hook failed on every systemd, firmware or module update.
+* snapper (btrfs snapshots) stays.
+
