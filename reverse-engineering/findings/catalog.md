@@ -10,7 +10,7 @@ Method tags:
 * `IOReg`: IORegistry class names
 * `SRC`: open-source code (Linux, Asahi, XNU)
 * `BENCH`: our measurements
-* `REA`: REA tool output (none yet; REA is not installed)
+* `REA`: REA tool output: metadata only (`inspect-plist` over driver bundles and launchd plists), no decompilation
 
 No entry is based on decompiled Apple code.
 
@@ -430,3 +430,23 @@ No entry is based on decompiled Apple code.
 | Inference | It's a gdb assumption about SME-only CPUs, and it will affect native Linux on M4/M5 too (Apple implements SME without SVE). Workarounds: `eu-stack`/`strace`, or a debug VM launched with SME hidden. Worth reporting to gdb. |
 | Confidence | **Confirmed** (symptom); gdb root cause **Likely** |
 | Linux mapping | Upstream gdb (report); our debugging uses `eu-stack` |
+
+## F-040 · Power · macOS's efficiency comes from an SoC policy layer with no Linux counterpart
+
+| Field | Value |
+|---|---|
+| Source | `REA` `inspect-plist` over all driver bundles, joined with the live IORegistry (`hardware/macos/block-map.tsv`). Launchd job names. |
+| Observation | Next to PMGR, this machine runs four policy drivers: `AppleT6050CLPC` (closed-loop performance controller), `AppleT6050SOCTuner`, `ApplePassthroughPPM` (peak power manager) and `ApplePTD`. The PPM is paired with `peakpowermanagerd`, and `powerd`, `thermalmonitord`, `perfpowermetricd` and `PerfPowerServices` sit above them. CLPC exists as a separate bundle for every SoC from T8103 to T8150. |
+| Inference | Battery efficiency on macOS isn't a property of individual device drivers: one closed loop joins CPU/GPU performance states, QoS, thermal and peak-power limits. Linux has the parts (cpufreq + EAS + uclamp + thermal governors + SMC hwmon) but nothing joining them. A Linux-native governor layer is original work that needs no Apple code: EAS capacities, QoS tiers (as `omarchy-qos` does in the VM), and battery- and thermal-aware limits. |
+| Confidence | Inventory **Confirmed**; component roles **Likely** (from names and daemon pairing) |
+| Linux mapping | Native track: governor and policy service. VM: `omarchy-qos`, host QoS mapping (D-019) |
+
+## F-041 · Coprocessors · Most M5 Max blocks are RTKit firmware coprocessors
+
+| Field | Value |
+|---|---|
+| Source | `REA` bundle dependencies (`OSBundleLibraries` contains `com.apple.driver.RTBuddy`) for the drivers live on this machine. ADT `iop` nodes (`ascwrap-v6`, `mxwrap`, `rtbuddy-v2`). |
+| Observation | These blocks are driven through RTKit coprocessors: GPU (`AGXG17X`), Neural Engine (`AppleH11/H16ANEInterface`), display (8 DCP-family bundles), camera ISP (`AppleH16CameraInterface`), AOP/SPU sensors (`AppleSPU`), SMC, NVMe and the keyboard/trackpad MTP. The wrappers are `AppleA7IOP-ASCWrap-v6` and `MXWrap` (Thunderbolt). |
+| Inference | The base for any native M5 bring-up is Linux's `apple-rtkit` and mailbox layer, which must be checked against ASCWrap v6 / `rtbuddy-v2`. Then each block needs its own firmware-ABI work, and macOS 26 firmware already changed the DCP and NVMe ABIs. |
+| Confidence | **Confirmed** (metadata); ABI-change scope **Likely** |
+| Linux mapping | `apple-rtkit`, `apple-mailbox`; per-block drivers (gap matrix) |

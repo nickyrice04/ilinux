@@ -1,0 +1,73 @@
+label	program	event	provider_class	name_match	property_match
+com.apple.AppleQEMUGuestAgent	/usr/libexec/AppleQEMUGuestAgent	com.apple.driver.applevirtio.console.match			{"AppleVirtIOAgentDevice":true}
+com.apple.DumpGPURestart	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/DumpGPURestart	GPURestartReport		GPURestartReport	
+com.apple.DumpGPURestart	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/DumpGPURestart	IOAccelGPURestartReport	IOAccelGPURestartReport		
+com.apple.DumpGPURestart	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/DumpGPURestart	IOGPURestartReport	IOGPURestartReport		
+com.apple.GameController.gamecontrollerd	/usr/libexec/gamecontrollerd	com.apple.iokit.match.gamecontroller	IOHIDDevice		
+com.apple.IOUIAgent	/System/Library/CoreServices/IOUIAgent.app/Contents/MacOS/IOUIAgent	port-authorization-pending	IOPort		{"AuthorizationRequired":true,"BuiltIn":true,"UserAuthorizationPending":true}
+com.apple.InstallerDiagnostics.installerdiagwatcher	/System/Library/PrivateFrameworks/InstallerDiagnostics.framework/Versions/A/Resources/installerdiagwatcher	com.apple.InstallerDiagnostics.installerdiagwatcher.nvram-match	AppleEFINVRAM		
+com.apple.NVMeAgent	/usr/libexec/NVMeAgent	com.apple.nvme.CriticalReliabilityWarning	AppleNVMeController		{"Critical Reliability Warning":true}
+com.apple.Virtualization.AppleVirtualPlatformHIDBridge	/usr/libexec/AppleVirtualPlatformHIDBridge	Bridged Service Present	AppleVirtualPlatformHIDInterface		
+com.apple.accessoryd	/System/Library/PrivateFrameworks/CoreAccessories.framework/Support/accessoryd	com.apple.accessoryd.matching.A2868.billboard	AppleUSBHostBillboardDevice		
+com.apple.accessoryd	/System/Library/PrivateFrameworks/CoreAccessories.framework/Support/accessoryd	com.apple.accessoryd.matching.A2869.billboard	AppleUSBHostBillboardDevice		
+com.apple.accessoryd	/System/Library/PrivateFrameworks/CoreAccessories.framework/Support/accessoryd	com.apple.accessoryd.matching.c99	IOPortTransportStateCC		{"Active":true,"AuthenticationRequired":true,"ParentPortType":17,"TransportType":1}
+com.apple.accessoryd	/System/Library/PrivateFrameworks/CoreAccessories.framework/Support/accessoryd	com.apple.accessoryd.matching.usbHost	IOUSBHostInterface		{"SupportsIAP":true}
+com.apple.airportd	/usr/libexec/airportd	com.apple.wifi.controller	IO80211Controller		
+com.apple.analyticsd	/System/Library/PrivateFrameworks/CoreAnalytics.framework/Support/analyticsd	com.apple.analyticsd	CoreAnalyticsMessenger		
+com.apple.aned	/usr/libexec/aned	com.apple.aned.exit	IOResources		{"aned":false}
+com.apple.aned	/usr/libexec/aned	com.apple.aned.launch	IOResources		{"aned":true}
+com.apple.aneuserd	/usr/libexec/aneuserd	com.apple.aneuserd.exit	IOResources		{"aneuserd":false}
+com.apple.aneuserd	/usr/libexec/aneuserd	com.apple.aneuserd.launch	IOResources		{"aneuserd":true}
+com.apple.apfsd	/usr/libexec/apfsd	apfsd-published	AppleAPFSContainer		
+com.apple.apfsuseragent	/System/Library/CoreServices/APFSUserAgent	apfsd-container	AppleAPFSContainer		
+com.apple.appleh13camerad	/usr/sbin/appleh13camerad	com.apple.appleh13camerad.destroy	IOResources		{"appleh13camerad":false}
+com.apple.appleh13camerad	/usr/sbin/appleh13camerad	com.apple.appleh13camerad.launch - 2	IOResources		{"appleh13camerad":true}
+com.apple.appleh16camerad	/usr/sbin/appleh16camerad	com.apple.appleh16camerad.destroy	IOResources		{"appleh16camerad":false}
+com.apple.appleh16camerad	/usr/sbin/appleh16camerad	com.apple.appleh16camerad.launch - 2	IOResources		{"appleh16camerad":true}
+com.apple.avbdeviced	/usr/sbin/avbdeviced	ATDECCRemoteDevice	IOAVB17221RemoteEntity		
+com.apple.boswatcher	/System/Library/PrivateFrameworks/BridgeOSInstallReporting.framework/Resources/boswatcher	com.apple.boswatcher.nvram-match	AppleEFINVRAM		
+com.apple.centaurid	/usr/libexec/centaurid	com.apple.centaurid.edt-node		centauri	
+com.apple.centaurid	/usr/libexec/centaurid	com.apple.centaurid.manager	AppleCentauriManager		
+com.apple.centaurid	/usr/libexec/centaurid	com.apple.centaurid.require-client	IOUserService	CentauriControl	{"RequireClient":true}
+com.apple.cmio.VDCAssistant	/System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/Resources/VDCAssistant	com.apple.device-attach-1	IOUSBHostDevice		
+com.apple.cmio.VDCAssistant	/System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/Resources/VDCAssistant	com.apple.device-attach-2	IOUSBHostDevice		
+com.apple.corecaptured	/usr/libexec/corecaptured	com.apple.corecaptured	CCCapture		
+com.apple.corecaptured	/usr/libexec/corecaptured	com.apple.corecaptured-driverkit			{"CCIOServiceObjType":5001}
+com.apple.corekdld	/System/Library/PrivateFrameworks/CoreKDL.framework/Support/corekdld	com.apple.corekdld.driver	CoreKDLDriver		
+com.apple.corestorage.corestoraged	/usr/libexec/corestoraged	CoreStorage-Published	CoreStorageGroup		
+com.apple.ifdreader	/System/Library/CryptoTokenKit/com.apple.ifdreader.slotd/Contents/MacOS/com.apple.ifdreader	com.apple.ctk.ifdreader.device	IOUSBHostDevice		
+com.apple.iomfb_fdr_loader	/usr/bin/IOMFB_FDR_Loader	com.apple.fdr.load			{"IOMFBLaunchFDR":true}
+com.apple.iomfb_fdr_loader	/usr/bin/IOMFB_FDR_Loader	com.apple.fdrusercal.load			{"IOMFBLaunchFDRUserCal":true}
+com.apple.ionodecache	/System/Library/CoreServices/ionodecache	com.apple.ionodecache.device-attach			
+com.apple.ionodecache	/System/Library/CoreServices/ionodecache	com.apple.ionodecache.device-detach			
+com.apple.ioupsd	/usr/libexec/ioupsd	HIDDevice attached	IOHIDDevice		
+com.apple.ioupsd	/usr/libexec/ioupsd	SMCAccessory attached	IOPMPowerSource		
+com.apple.liquiddetectiond	/System/Library/CoreServices/liquiddetectiond.app/liquiddetectiond	com.apple.liquiddetection.io-port-event	IOPort		
+com.apple.liquiddetectiond	/System/Library/CoreServices/liquiddetectiond.app/liquiddetectiond	com.apple.liquiddetection.ldcm-event	IOPortFeatureLDCM		
+com.apple.multiversed	/usr/libexec/multiversed	com.apple.coprocessor	IOBufferCopyEngine		
+com.apple.retimerd	/usr/libexec/retimerd	com.apple.retimerd	AppleTypeCRetimerReporter		
+com.apple.storagekitd	/usr/libexec/storagekitd	com.apple.storagekit.resize-match			
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	blockStorage-device-blueray.connected	IOBDBlockStorageDevice		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	blockStorage-device-blueray.disconnected	IOBDBlockStorageDevice		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	blockStorage-device-cd.connected	IOCDBlockStorageDevice		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	blockStorage-device-cd.disconnected	IOCDBlockStorageDevice		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	blockStorage-device-dvd.connected	IODVDBlockStorageDevice		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	blockStorage-device-dvd.disconnected	IODVDBlockStorageDevice		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	keyboard.connected	IOHIDDevice		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	keyboard.disconnected	IOHIDDevice		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	pointing-device.connected	IOHIDEventService		
+com.apple.systemsettingsagent	/System/Applications/System Settings.app/Contents/Resources/systemsettingsagent	pointing-device.disconnected	IOHIDDevice		
+com.apple.thermald	/usr/libexec/thermald	com.apple.device-attach	X86PlatformPlugin		{"ThermalLevelsSupported":true}
+com.apple.tracd	/usr/libexec/tracd	IOHIDInterface - Bluetooth	IOHIDInterface		
+com.apple.tracd	/usr/libexec/tracd	IOHIDInterface - USB	IOHIDInterface		
+com.apple.uarphidd	/usr/libexec/uarphidd	AppleDevices	IOHIDDevice		
+com.apple.uarphidd	/usr/libexec/uarphidd	BeatsByDreDevices	IOHIDDevice		
+com.apple.usbnotificationagent	/usr/libexec/usbnotificationagent	com.apple.sop.displayPort	IOPortTransportComponentCCUSBPDSOP		
+com.apple.usbnotificationagent	/usr/libexec/usbnotificationagent	com.apple.usb.billboardFailedDevice	AppleUSBHostBillboardDevice		
+com.apple.usbnotificationagent	/usr/libexec/usbnotificationagent	com.apple.usb.deviceLinkSpeedFailed	IOUSBHostDevice		
+com.apple.usbnotificationagent	/usr/libexec/usbnotificationagent	com.apple.usb.deviceLinkSpeedNonoptimal	IOUSBHostDevice		
+com.apple.usbnotificationagent	/usr/libexec/usbnotificationagent	com.apple.usb.powerFailedDevice	IOUSBHostDevice		
+com.apple.usbpowerd	/usr/libexec/usbpowerd	com.apple.usb.powerSinkDevice	IOUSBHostDevice		
+com.apple.usbsmartcardreaderd	/System/Library/CryptoTokenKit/usbsmartcardreaderd.slotd/Contents/MacOS/usbsmartcardreaderd	com.apple.ctk.ccid.device	IOUSBInterface		
+com.apple.watchdogd	/usr/libexec/watchdogd	com.apple.driver.watchdog	IOWatchdog		
+com.apple.wifiFirmwareLoader	/usr/libexec/wifiFirmwareLoader	com.apple.wifiFirmwareLoader	AppleBCMWLANCoreFirmwareLoader		

@@ -1,6 +1,24 @@
 # REA Setup Status
 
-**Status (2026-10-11): analyzed, not installed. Awaiting user approval.**
+**Status (2026-10-12): installed project-local (approved in session 1) and in use.**
+
+* `tools/rea/`: `rea-agents@6.4.0`, installed with `--ignore-scripts`.
+* `tools/rea.sh`: the CLI wrapper.
+* `~/Documents/iLinux/.mcp.json`: the MCP server, which loads at session
+  start.
+* `~/Documents/iLinux/.claude/settings.json`: the deny/ask rules.
+* No decompiler engine is installed, so only metadata tools are available.
+
+**First use:** the hardware-services inventory
+(`reverse-engineering/macos-hardware-services.md`, scripts in
+`reverse-engineering/scripts/`).
+
+**Usage notes:**
+
+* For a single plist, pass `inspect-plist <file> --relative-path <absolute file>`.
+* `inspect-macho` cannot read kernel collections (`dyld_info`: "too many
+  segments").
+* The status text below is the original pre-install analysis.
 
 Full analysis, with sources and an exact phased plan:
 [`../research/rea/rea-analysis.md`](../research/rea/rea-analysis.md).
