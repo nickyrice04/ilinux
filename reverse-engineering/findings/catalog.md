@@ -204,3 +204,98 @@ No entry is based on decompiled Apple code.
 | Inference | The earlier 0.34 GB/s VM write was mostly **first-write allocation of the sparse image** on APFS, not virtio overhead. `fsync` sync mode is the best durable setting. VZ's NVMe emulation is slower than virtio-blk here. |
 | Confidence | **Confirmed** (measured); single run per configuration |
 | Recommendation | Root disk: virtio, `--disk-sync fsync`. Disposable scratch or build disks: `--disk-cache cached --disk-sync none`. Pre-allocate images used for storage benchmarks. Never report cached-mode numbers as storage parity. |
+
+## F-019 · CPU · Real MPIDR encoding on M5 (resolves F-001)
+
+| Field | Value |
+|---|---|
+| Question | Which `reg` values must the Linux DT use for the t6050 CPUs? |
+| Source | `SRC` m1n1 `5d84c4c34d3f` and `c4c4d575e12c` (MPIDR examples `0x80000X0Y` E, `0x80010X0Y` P, `0x80040X0Y` M), m1n1 `src/kboot.c` `dt_set_cpus()`; `ADT` `/cpus/*` reg |
+| Observation | Aff2 carries a core-type bit: P = 1, M = 4. m1n1 compares each DT `cpu@` `reg` with `MPIDR & 0xffffff` and **prunes** the nodes that don't match, including the boot CPU's. The first draft DT used ADT `reg` (0x000…), so every CPU node would have been pruned. |
+| Inference | t6050: M cores `0x40000–0x40005`, `0x40100–0x40105`; P cores `0x10200–0x10205`. |
+| Confidence | Encoding **Likely** (m1n1 tested it on M5 Pro; our unit unverified). The pruning behaviour is **Confirmed** (code). |
+| Linux mapping | `t6050.dtsi` CPU nodes |
+| Implementation | `kernel/experiments/t6050-dt/gen_t6050_dt.py` (`mpidr_of()`) |
+| Validation | Native: m1n1 log "FDT: CPU n MPIDR=…" |
+
+## F-020 · SMP · t6050 secondary start: what is known
+
+| Field | Value |
+|---|---|
+| Question | Why don't t6050 secondaries run m1n1 code? |
+| Source | `SRC` m1n1 PR #610 (`b2d3f5eba7ce`) and its review; `src/smp.c` (`CPU_START_OFF_T6031` 0x88000); m1n1 RVBAR handling `7339546899ce` and `48d388bc5151`; the hypervisor CPUSTART table, which lacks 0x6050. `ADT` per CPU: `function-enable_core = <pmgr 'Core' BIT(cpu-id)>`, `function-cpu_idle = <pmgr 'cpuI'>`; P cores have `cluster-power-down = 1`. PMGR per-core PS registers `MCPU0_0…PCPU_5` sit at pmgr reg[0] + 0x00…0x88 (F-021). |
+| Observation | The cores power on (seen in PMGR) but never set their spin-table flag. RVBAR can't be written on M4+. The `+0x4` start/status register uses 4 bits per cluster, which aliases with 6-core clusters. m1n1 has no fix as of `57a9339` (2026-10-11). |
+| Inference | Ranked hypotheses: H1 locked RVBAR not pointing at m1n1; H2 a different start protocol (PMGR "Core" function); H3 cache attributes, possibly already fixed by `d16a2f4`; H4 an early locked-sysreg fault. Each has a cheap read-only proxy test (`kernel/native-enablement/plan.md` §1.2). |
+| Confidence | Facts **Confirmed**; cause **Unknown** |
+| Linux mapping | None until m1n1 starts the cores. Then spin-table, later PSCI-via-EFI. |
+| Validation | Native m1n1 proxy session (needs user authorization) |
+
+## F-021 · Power · PMGR device table decodes with m1n1's format
+
+| Field | Value |
+|---|---|
+| Question | Can the t6050 power domains be generated from the ADT? |
+| Source | `ADT` `/arm-io/pmgr` `devices` (31728 B), `ps-groups` (72 B); `SRC` m1n1 `proxyclient/m1n1/adt.py` (`PMGRDevices`, `PMGRPSRegs`), `src/pmgr.c`, `tools/pmgr_adt2dt.py` |
+| Observation | 661 records of 48 bytes, with u16 ids (`id1` is 0 everywhere). No `ps-regs`: 6 `ps-groups` (reg, offset 0, mask 0) → pmgr reg[0], [1], [9], [51], [46], [49]. Flags: 338 `no_ps` (virtual), 199 critical, and others. Ids are unique, and no two real devices share an address. ANS, MTP and SMC have *empty* `clock-gates` (M4+ style). AOP, SMC, MTP, audio and GPU-firmware domains are virtual (coprocessor-managed). |
+| Inference | Generated 188 domains (CPU, fabric, die-bridge and memory-controller domains skipped, as in Asahi t8132), with parents resolved through virtual nodes. |
+| Confidence | Format **Confirmed** (self-consistent decode); runtime semantics **Likely** |
+| Linux mapping | `apple-pmgr-pwrstate`; `t6050-pmgr.dtsi` |
+| Implementation | `gen_t6050_dt.py` (`decode_pmgr`, `Pmgr`) → `out/t6050-pmgr.dtsi` |
+| Validation | `validate.sh`: 0 dtc warnings. Native first boots should use `pd_ignore_unused`. |
+
+## F-022 · DVFS · CPU p-state tables in the ADT (cpufreq + energy model)
+
+| Field | Value |
+|---|---|
+| Question | Where are t6050's CPU frequency and voltage states? |
+| Source | `ADT` pmgr `acc-clusters` = (0x16, 0x117, 0x205) → cluster 0 → `voltage-states22`, cluster 1 → 23, cluster 2 → 5; `voltage-statesN` = (65535e6/f_kHz, core mV), `-sram` = (f_kHz, SRAM mV). `BENCH` `cpubench freq` 1 thread = 4.512 GHz; IOReport residency names `V0P14…V14P0` |
+| Observation | M clusters: 15 states, 1344–4380 MHz, 600–1025 mV. P cluster: 20 states, 1308–4608 MHz, 625–1090 mV. The period field × frequency = 65535e6 for every entry. The measured 4.512 GHz single thread equals P state index 18; macOS AC "Low Power Mode" may explain why 4.608 GHz isn't reached (B-009). PMGR reg holds per-cluster blocks at 0x2_1{0,1,2}e20000 (+0x12e8), the M1–M3 DVFS address pattern. |
+| Inference | Linux OPP tables with `opp-microvolt`, plus an energy model, are possible from ADT data alone. Hypotheses: `opp-level` = index+1, t8112-style 5-bit p-state field. EM coefficients from macOS energy are P ≈ 1054, M ≈ 550 uW/MHz/V² (includes leakage). |
+| Confidence | Tables **Confirmed**; register interface **Likely**; EM numbers **Hypothesis** |
+| Linux mapping | `apple-soc-cpufreq`, OPP v2, EAS (`dynamic-power-coefficient`, `capacity-dmips-mhz`), `omarchy-qos` |
+| Implementation | `gen_t6050_dt.py` (`dvfs_tables`) |
+| Validation | Native: set a p-state, then measure with `cpubench freq` |
+
+## F-023 · Storage · SARTv4 and the M4+ NVMe register split on t6050
+
+| Field | Value |
+|---|---|
+| Question | What does Linux need for the internal SSD on t6050? |
+| Source | `ADT` `sart-ans`: `sart,coastguard`, `sart-version = 4`, `sart-power-reg-offset = 0x13e8`; `ans`: `nvme-secure-bar`, `nvme-linear-sq`, `nvme-interrupt-idx = 4`, 10 reg entries (reg[3] 0x21dcc0000 +0x60010, reg[9] 0x25dcc0000 +0x10000), `iommu-parent` = SART (no ANS DART). `SRC` m1n1 `9bfdf8aeca30` and `53f8ee9b54ba`; AsahiLinux/linux `asahi`, `asahi-wip`, `apple-soc/drivers-7.4`, `b4/nvme-fwabi` |
+| Observation | The firmware-ABI fixes (`b4/nvme-fwabi`) are already in `asahi`. **No** Asahi branch has SARTv4 or the NVMMU/NVMe split and I/O-queue base registers. |
+| Inference | The Linux gap is small and well defined. |
+| Confidence | **Confirmed** (data and code reading) |
+| Linux mapping | `drivers/soc/apple/sart.c`, `drivers/nvme/host/apple.c`, bindings |
+| Implementation | `kernel/patches/t6050/0001`–`0005` (local, untested) |
+| Validation | VM compile test; native read-only probe |
+
+## F-024 · Platform · t6050 has a second die at +0x21_0000_0000
+
+| Field | Value |
+|---|---|
+| Question | Is the M5 Max a single die from the OS's point of view? |
+| Source | `ADT` `/arm-io` `die-count = 1`; `aic` `aic-numdies-per-die = 2`, `aic-die-offset-stride = 0x21_0000_0000`; pmgr `ps-groups` 4/5 → reg[46]/[49] at child 0x21_80600000 / 0x21_88300000 (= reg[0]/reg[9] + 0x21_0000_0000), holding `AIC_GFX`, `NUB_GFX_GPIO`, `AMCC0–31`, media (VENC, AVD, JPG, PRORES); GPU, scaler, AVE and AVD MMIO at 0x20xx/0x21xx child addresses |
+| Observation | macOS treats it as one die (`die-count = 1`), but PMGR and AIC each have a second instance at the same 0x21_0000_0000 stride. Interrupt numbers in the ADT are flat (< 4096). |
+| Inference | M5 Max = a CPU/SoC die plus a GPU/media/memory-controller die in one package. Linux DT: PMGR blocks on die 1 are separate nodes (done). Whether AIC needs 4-cell specifiers for die-1 interrupts is **Unknown**. |
+| Confidence | Data **Confirmed**; two-die interpretation **Likely** |
+| Linux mapping | AIC (`nr_die`), PMGR, all GPU/media drivers |
+
+## F-025 · Debug · Laptop console on M4+/M5 is the dockchannel UART over "debugusb"
+
+| Field | Value |
+|---|---|
+| Source | `SRC` m1n1 `e3b42cbdd55d` (dockchannel UART fallback), `1a0e81f9dcd9` and `5130a9a` (debugusb enabled by disabled authenticated-root); `ADT` `/arm-io/dockchannel-uart` (`aapl,dock-channels`, IRQ 360) |
+| Observation | The SoC UART0 isn't wired to a connector on laptops. m1n1's console goes through the dockchannel UART, exported over USB when debugusb is on. m1n1 notes that Linux and u-boot have no dockchannel-uart driver yet. |
+| Inference | For a serial console on t6050 Linux, write a small dockchannel-uart tty driver (register layout in m1n1, MIT at v1.9.9). Until then, use the framebuffer console. |
+| Confidence | **Confirmed** |
+| Linux mapping | new `drivers/tty/serial/apple-dockchannel-uart.c` (to be written) |
+
+## F-026 · Idle · M4+ Linux runs with `idle=nop arm64.nowfxt`
+
+| Field | Value |
+|---|---|
+| Source | `SRC` m1n1 `3a69c73f5933` and `9095a5ee70bf` (`src/kboot.c`): for `!apple_sysregs_unlocked` (all of M4/M5) m1n1 appends ` idle=nop arm64.nowfxt`. mBoot locks the chicken bits, so WFI loses state (Asahi 7.2 report). |
+| Observation | Idle CPUs on t6050 Linux would spin instead of executing WFI. |
+| Inference | Expect much higher idle power than macOS until a state-saving idle path exists: a cpuidle driver, or PSCI-via-EFI `CPU_SUSPEND` into m1n1 `deep_wfi` (branch `psci-via-efi`). This is a major item for performance per watt. |
+| Confidence | Mechanism **Confirmed**; power impact **Likely** (not measured) |
+| Linux mapping | cpuidle, PSCI-via-EFI (`efi-psci` branch), `omarchy-qos` |

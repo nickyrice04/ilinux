@@ -1,0 +1,173 @@
+From 6b29997280df577d7cc5e74ce68dd8e5e55204f4 Mon Sep 17 00:00:00 2001
+From: "iLinux local research (AI-generated draft)" <local@invalid>
+Date: Sun, 11 Oct 2026 20:04:00 +0000
+Subject: [PATCH 5/7] nvme-apple: Support the M4+ NVMMU/NVMe register split
+ (t8132, t6050)
+
+From M4 (t8132) on, the ANS ADT node has an "nvme-secure-bar" property
+and ten reg entries.  m1n1 found that the NVMMU registers (TCB count,
+TCB bases, TCB invalidation) stay in the window that held everything on
+M1-M3 (ADT reg[3]) while the NVMe controller registers, doorbells, boot
+status and the linear-SQ controls are accessed through ADT reg[9].  In
+addition, after the I/O queues have been created the I/O CQ and SQ base
+addresses have to be written to nvme+0x1208 and nvme+0x1200, otherwise
+the ANS firmware crashes and its crash log reports I/O SQ/CQ = 0.
+
+Add an "nvmmu" MMIO window for apple,t8132-nvme-ans2 (and SoCs that use
+it as fallback, e.g. t6050), route all APPLE_NVMMU_* accesses through
+it (it aliases the "nvme" window on older SoCs, so nothing changes
+there), and mirror the I/O queue bases on M4+.
+
+This builds on the macOS 15+ firmware-ABI series already in the asahi
+branch (Sven Peter, b4/nvme-fwabi; asahi commits 9c02d723ef80,
+07133e8a2fb8, 835cbc4205ac, 055df6031321, c3d4bb4f1cab, a4f6716c6a69),
+which is required as well: no opcode in the TCB, DMA direction only for
+data transfers, page-aligned admin buffers, and no access to the
+removed PRP-null-check register at 0x24008 (SErrors on new firmware).
+
+Provenance: m1n1 src/nvme.c, commit 53f8ee9b54ba ("nvme: support
+T8132", Yureka, 2026-07-26, AsahiLinux/m1n1 PR #652), MIT-licensed at
+tag v1.9.9 (commit 809541515659).  m1n1 PR #661 states that with this
+and SARTv4, nvme_init()/nvme_read() work on t6050.  No Apple binary was
+disassembled or decompiled.
+
+Open questions (need native hardware): m1n1 uses NVMMU_TCB_STAT at
+0x29120 while this driver uses 0x28120; the ADT sizes reg[9] as 0x10000
+but the linear-SQ registers at +0x24908..+0x24910 are accessed through
+it (the t6050 draft DT maps 0x40000); ADT nvme-queue-entries is 253 but
+the 64-tag limit is kept.
+
+Status: untested; compile test pending.
+
+NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
+Linux generative-AI policy).  No Signed-off-by on purpose.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ drivers/nvme/host/apple.c | 50 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 45 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index a3343c49..a01a53a7 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -42,6 +42,14 @@
+ #define APPLE_ANS_ACQ_DB  0x1004
+ #define APPLE_ANS_IOCQ_DB 0x100c
+ 
++/*
++ * M4 and later: the I/O submission and completion queue base addresses must
++ * also be written here once the I/O queues exist, otherwise the ANS firmware
++ * crashes and its crash log reports an I/O SQ/CQ base of 0 (m1n1 53f8ee9b).
++ */
++#define APPLE_ANS_IOQ_SQ_BASE 0x1200
++#define APPLE_ANS_IOQ_CQ_BASE 0x1208
++
+ #define APPLE_ANS_MAX_PEND_CMDS_CTRL 0x1210
+ 
+ #define APPLE_ANS_BOOT_STATUS	 0x1300
+@@ -167,6 +175,11 @@ struct apple_nvme_iod {
+ 
+ struct apple_nvme_hw {
+ 	bool has_lsq_nvmmu;
++	/*
++	 * M4 and later: NVMMU registers live in their own "nvmmu" MMIO window
++	 * and the I/O queue bases must be mirrored to APPLE_ANS_IOQ_*_BASE.
++	 */
++	bool has_separate_nvmmu;
+ 	u32 max_queue_depth;
+ };
+ 
+@@ -175,6 +188,8 @@ struct apple_nvme {
+ 
+ 	void __iomem *mmio_coproc;
+ 	void __iomem *mmio_nvme;
++	/* Equal to mmio_nvme unless hw->has_separate_nvmmu is set */
++	void __iomem *mmio_nvmmu;
+ 	const struct apple_nvme_hw *hw;
+ 
+ 	struct device **pd_dev;
+@@ -293,8 +308,8 @@ static void apple_nvmmu_inval(struct apple_nvme_queue *q, unsigned int tag)
+ {
+ 	struct apple_nvme *anv = queue_to_apple_nvme(q);
+ 
+-	writel(tag, anv->mmio_nvme + APPLE_NVMMU_TCB_INVAL);
+-	if (readl(anv->mmio_nvme + APPLE_NVMMU_TCB_STAT))
++	writel(tag, anv->mmio_nvmmu + APPLE_NVMMU_TCB_INVAL);
++	if (readl(anv->mmio_nvmmu + APPLE_NVMMU_TCB_STAT))
+ 		dev_warn_ratelimited(anv->dev,
+ 				     "NVMMU TCB invalidation failed\n");
+ }
+@@ -1160,7 +1175,7 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 
+ 		/* Setup the NVMMU for the maximum admin and IO queue depth */
+ 		writel(anv->hw->max_queue_depth - 1,
+-			anv->mmio_nvme + APPLE_NVMMU_NUM_TCBS);
++			anv->mmio_nvmmu + APPLE_NVMMU_NUM_TCBS);
+ 	}
+ 
+ 	/* Setup the admin queue */
+@@ -1173,9 +1188,9 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 	if (anv->hw->has_lsq_nvmmu) {
+ 		/* Setup NVMMU for both queues */
+ 		writeq(anv->adminq.tcb_dma_addr,
+-			anv->mmio_nvme + APPLE_NVMMU_ASQ_TCB_BASE);
++			anv->mmio_nvmmu + APPLE_NVMMU_ASQ_TCB_BASE);
+ 		writeq(anv->ioq.tcb_dma_addr,
+-			anv->mmio_nvme + APPLE_NVMMU_IOSQ_TCB_BASE);
++			anv->mmio_nvmmu + APPLE_NVMMU_IOSQ_TCB_BASE);
+ 	}
+ 
+ 	anv->ctrl.sqsize =
+@@ -1211,6 +1226,14 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 	if (ret)
+ 		goto out_remove_cq;
+ 
++	if (anv->hw->has_separate_nvmmu) {
++		/* Same order as m1n1: completion queue first. */
++		lo_hi_writeq(anv->ioq.cq_dma_addr,
++			     anv->mmio_nvme + APPLE_ANS_IOQ_CQ_BASE);
++		lo_hi_writeq(anv->ioq.sq_dma_addr,
++			     anv->mmio_nvme + APPLE_ANS_IOQ_SQ_BASE);
++	}
++
+ 	apple_nvme_init_queue(&anv->ioq);
+ 	nr_io_queues = 1;
+ 	ret = nvme_set_queue_count(&anv->ctrl, &nr_io_queues);
+@@ -1543,6 +1566,16 @@ static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
+ 		ret = PTR_ERR(anv->mmio_nvme);
+ 		goto put_dev;
+ 	}
++	if (anv->hw->has_separate_nvmmu) {
++		anv->mmio_nvmmu =
++			devm_platform_ioremap_resource_byname(pdev, "nvmmu");
++		if (IS_ERR(anv->mmio_nvmmu)) {
++			ret = PTR_ERR(anv->mmio_nvmmu);
++			goto put_dev;
++		}
++	} else {
++		anv->mmio_nvmmu = anv->mmio_nvme;
++	}
+ 
+ 	if (anv->hw->has_lsq_nvmmu) {
+ 		anv->adminq.sq_db = anv->mmio_nvme + APPLE_ANS_LINEAR_ASQ_DB;
+@@ -1761,9 +1794,16 @@ static const struct apple_nvme_hw apple_nvme_t8103_hw = {
+ 	.max_queue_depth = 64,
+ };
+ 
++static const struct apple_nvme_hw apple_nvme_t8132_hw = {
++	.has_lsq_nvmmu = true,
++	.has_separate_nvmmu = true,
++	.max_queue_depth = 64,
++};
++
+ static const struct of_device_id apple_nvme_of_match[] = {
+ 	{ .compatible = "apple,t8015-nvme-ans2", .data = &apple_nvme_t8015_hw },
+ 	{ .compatible = "apple,t8103-nvme-ans2", .data = &apple_nvme_t8103_hw },
++	{ .compatible = "apple,t8132-nvme-ans2", .data = &apple_nvme_t8132_hw },
+ 	{ .compatible = "apple,nvme-ans2", .data = &apple_nvme_t8103_hw },
+ 	{},
+ };
+-- 
+2.54.0 (Apple Git-157)
+

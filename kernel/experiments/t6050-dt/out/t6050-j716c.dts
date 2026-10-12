@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0+ OR MIT
 /*
  * Apple MacBook Pro (16-inch, M5 Max), Mac17,6 / J716c - DRAFT, untested.
+ *
+ * m1n1 (M4+ path) appends "idle=nop arm64.nowfxt" to bootargs and reserves
+ * the secondary-core CTRR region itself.  Recommended extra first-boot
+ * arguments: pd_ignore_unused clk_ignore_unused (PMGR table never validated).
  */
 
 /dts-v1/;

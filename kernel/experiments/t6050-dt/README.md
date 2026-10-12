@@ -1,70 +1,92 @@
-# t6050 (M5 Max) minimal device tree: DRAFT
+# t6050 (M5 Max) device tree: DRAFT
 
-**Status:** generated from data. It is checked by compiling it with `dtc`
-(see `validate.sh`). It has **never been booted** and can't be until m1n1
-supports t6050. Any boot experiment needs the user's explicit authorization
-and a separate deployment plan (`roadmap.md` Phase 3).
+**Status:**
+
+* The tree is generated from data and compile-checked with `dtc` 1.8.1:
+  `validate.sh` reports **0 warnings** and fails on any.
+* It has **never been booted**. It can't be until m1n1 can boot Linux on
+  t6050, and every boot experiment needs the user's explicit authorization
+  and a deployment plan (`roadmap.md` Phase 3).
+* Plan and evidence: `../../native-enablement/plan.md`.
 
 ## What it is
 
-`gen_t6050_dt.py` turns the sanitized macOS ADT capture
-(`hardware/adt/adt-sanitized.json`) into:
+`gen_t6050_dt.py` (Python standard library only) turns the sanitized macOS ADT
+capture (`hardware/adt/adt-sanitized.json`) into three files.
 
-* `out/t6050.dtsi`: CPUs (3 clusters, 18 cores, L2 caches), the AIC3
-  interrupt controller with PMU affinities, the arch timer, the 24 MHz
-  reference clock, the watchdog, three pinctrl/GPIO controllers (AP 221 pins,
-  AOP 85, NUB 61), nine I2C controllers and UART0.
-* `out/t6050-j716c.dts`: the board file for Mac17,6 (J716c), serial console
-  enabled.
+### `out/t6050.dtsi`
 
-The scope mirrors the Asahi "minimal" bring-up DT for t8132 (base M4, added
-2026-07-05). It's the smallest set needed for a serial-console kernel boot.
-Addresses are translated through the `arm-io` `ranges`. IRQ numbers are the
-ADT AIC numbers.
+* **18 CPUs.** `reg` is the real MPIDR: M = `0x40000|cluster<<8|core`,
+  P = `0x10000|cluster<<8|core`. The tree also has L2 caches and the
+  cpu-map.
+* **Three OPP tables** (one per cluster).
+* **Three cluster cpufreq controllers.**
+* **AIC3** and the arch timer.
+* **The watchdog.**
+* **Pinctrl:** AP, AOP and NUB.
+* **9 × I2C and UART0.**
+* **6 PMGR blocks.**
+* **42 t8110 DART instances**, all `status = "disabled"`.
+* **SART (SARTv4), the ANS mailbox and NVMe** (M4+ layout, disabled).
+
+### `out/t6050-pmgr.dtsi`
+
+188 PMGR power domains with their parent dependencies.
+
+### `out/t6050-j716c.dts`
+
+The board file for Mac17,6 (J716c).
+
+The scope goes past the Asahi "minimal" t8132 DT (2026-07) in three ways:
+
+* power domains (needed by every node);
+* DVFS / energy-model data;
+* disabled draft nodes for the storage path.
+
+The storage nodes need the local kernel patches in `../../patches/t6050/`.
+The same three files are in patch 0007 as
+`arch/arm64/boot/dts/apple/t6050*`.
+
+```sh
+python3 -I gen_t6050_dt.py ../../../hardware/adt/adt-sanitized.json out
+./validate.sh      # needs third_party/dtc/dtc and third_party/dt-include
+```
 
 ## Evidence and confidence per element
 
 | Element | Source | Confidence |
 |---|---|---|
 | CPU count, clusters, cache sizes | ADT `/cpus`, `sysctl hw.perflevel*` | Confirmed |
-| CPU `reg` (MPIDR) | ADT `reg` 0x000–0x005, 0x100–0x105, 0x200–0x205 | **Hypothesis**: Asahi's M4 DT puts P cores at `0x10100`, which suggests extra Aff2 bits in the real MPIDR |
-| CPU `compatible` (`apple,sotra-m/-p`) | named after `CPUFAMILY_ARM_SOTRA`, following Asahi's `apple,donan-e/-p` for M4 | Placeholder; needs a DT binding |
-| AIC3 core region 0x2_80400000 + 0x1cc000 | ADT `aic` reg via `arm-io` ranges | Likely |
-| AIC3 event region at core + 0x40000 | ADT `aic-iack-offset = 0x40000`, matching the t8122/t8132 layout | Likely |
-| AIC compatible fallback `apple,t8122-aic3` | ADT `aic,3`, `aic-rev = 11`, same core size as t8132 | Likely |
-| WDT, UART, I2C, GPIO addresses and IRQs | ADT reg and `interrupts` | Likely (direct data) |
-| Memory node | placeholder; macOS ADT `/memory` reg is empty, m1n1 fills it | Placeholder |
-
-## Not included (TODO)
-
-* **PMGR power domains** (`t6050-pmgr.dtsi`). These need decoding of the ADT
-  `pmgr` `devices`/`ps-regs` tables, whose layout may differ from earlier
-  SoCs. Without them, Linux relies on firmware-enabled state.
-* cpufreq (`apple,cluster-cpufreq`) and the OPP/energy-model tables, which EAS
-  needs (see `omarchy-qos`).
-* DARTs, NVMe (ANS3), SART (CoastGuard), SMC, USB/ATC, DCP, GPU, ANE. Each
-  needs driver work first (`reports/compatibility-matrix.md`).
+| CPU `reg` = MPIDR (M 0x4xxxx, P 0x1xxxx) | m1n1 `5d84c4c34d3f` (MPIDR examples, tested on M5 Pro). m1n1 `dt_set_cpus()` prunes DT CPUs whose `reg` doesn't match | Likely (needs this unit's MPIDR) |
+| CPU `compatible` `apple,sotra-m/-p` | named after m1n1's "Sotra" and M-core naming, following Asahi's `apple,donan-e/-p` | Placeholder |
+| AIC3 core 0x2_80400000 (+0x1cc000), event at +0x40000 | ADT `aic` reg via `arm-io` ranges; `aic-iack-offset` | Likely |
+| AIC3 layout | ADT `extint-baseaddress` 0x10000 = Linux `AIC3_IRQ_CFG`; `extintrcfg-stride` 0x4a00 = Linux die stride for 4096 IRQs | Likely |
+| AIC dies | ADT `aic-numdies-per-die = 2`, `aic-die-offset-stride = 0x21_0000_0000`; 3-cell specifiers are used | Unknown (see plan Q4) |
+| PMGR record format | m1n1 `proxyclient/m1n1/adt.py` `PMGRDevices` (48 B), `PMGRPSRegs` (12 B); `src/pmgr.c` | Confirmed (format); decodes to 661 unique records |
+| PMGR blocks | `ps-groups` → pmgr reg[0], [1], [9], [51], [46], [49]. Groups 4–5 hold `*_GFX` duplicates (AIC_GFX, NUB_GFX_GPIO), media and AMCC, at +0x21_0000_0000, which matches the AIC die stride: a second die | Confirmed (data); "second die" Likely |
+| PMGR domain selection | Skipped: 338 virtual (`no_ps`) and 135 CPU/fabric/die-bridge/memory-controller domains, like Asahi t8132. Virtual or skipped parents are replaced by their nearest emitted ancestors | Design choice |
+| `apple,always-on` | ADT `critical` flag, plus overrides copied from Asahi t8132 (AIC, ANS, DISP_SYS/FE, UART_P, SPI_P), plus AIC_GFX and CS (conservative). `DISP*_CPU` is disabled ("locked" on M4) | Likely / Hypothesis |
+| Node power domains | I2C, UART, DARTs: ADT `clock-gates` ids → PMGR device → real ancestor. AIC, GPIO and NUB_GPIO: by PMGR name. WDT: none (as in Asahi t8132) | Likely |
+| OPP tables | ADT `acc-clusters` → `voltage-states22/23/5` (+`-sram`): core mV and frequency. The decoded semantics are asserted per entry (period × f = 65535e6) and match the measured 4.512 GHz single-thread P-state | Confirmed (data); `opp-level` = index+1 is a Hypothesis |
+| cpufreq controllers 0x2_1{0,1,2}e20000 | ADT pmgr reg entries (size 0x12e8); same address pattern as M1–M3 | Likely |
+| `dynamic-power-coefficient`, `capacity-dmips-mhz` | macOS IOReport energy and QoS runs (plan §3f) | Hypothesis |
+| `clock-latency-ns` | not measured | Placeholder |
+| DART nodes | ADT `dart,t8110`; `instance` records (FourCC type, index, name) select which `reg` entries are DART register sets, so DAPF/GAPF/SMMU windows are skipped | Likely |
+| SART | ADT `sart,coastguard`, `sart-version 4` | Confirmed (data) |
+| NVMe regs and IRQ | ADT `ans` reg[9]/reg[3]/reg[0], `nvme-interrupt-idx = 4` → IRQ 2338; m1n1 `53f8ee9b` | Confirmed (data); 0x40000 window Likely |
+| ANS mailbox | ANS reg[0] + 0x8000 (m1n1 `asc.c`); IRQs 1347–1350 sorted from the ADT | Likely |
+| Memory node | placeholder; m1n1 fills it in | Placeholder |
 
 ## Open questions to resolve on hardware
 
-1. Real MPIDR values and core part numbers (`MIDR_EL1`) for the M and P cores.
-2. Whether AIC3 rev 11 needs driver changes, e.g. the `extint-baseaddress`
-   0x10000 or stride 0x4a00 values compared with t8122.
-3. Whether the samsung UART still runs at 24 MHz with the t8103 divisor scheme.
-4. Whether exclave-owned blocks are reachable from a normal-world kernel at all.
+See plan §6 (Q1–Q9): SMP, MIDR, the AIC VM-timer lock, AIC dies, the NVMe
+window, SARTv4 entry count, the DVFS mapping, locked PMGR domains, and the
+CTRR size.
 
 ## Upstream status: not contributable to Asahi
 
-This draft was produced by an AI agent. Asahi Linux's generative-AI policy
-(asahilinux.org/llm-policy, 2026-09-08) broadly forbids generative-AI tooling
-for material contributions, so **this file must not be submitted to Asahi
-projects** (decision D-007). It serves as a local reference for this project.
-
-Context from the Asahi research report (`research/asahi/`):
-
-* m1n1 gained initial T6050/T6051 support in PR #610 (2026-06-29). It adds
-  the M-core type, but secondary cores never start, so SMP is blocked.
-* Asahi's naming lists T6051 for "M5 Max". This machine's ADT reports
-  `chip-id` 0x6050 and `platform-name` t6050, and we follow the hardware.
-* An unofficial, unreviewed ADT-derived T6050 DTS exists in the community
-  (`betizzel/omarchy-m5`). Neither it nor this draft is reviewed by Asahi.
+An AI agent produced this draft. Asahi Linux's generative-AI policy
+(asahilinux.org/llm-policy, 2026-09-08) broadly forbids generative AI for
+material contributions, so **this must not be submitted to Asahi projects**
+(decision D-007). An unofficial community T6050 DTS (`betizzel/omarchy-m5`)
+exists. Neither it nor this draft has been reviewed by Asahi.

@@ -1,0 +1,118 @@
+From 56a9056cd9b79372b29ccce0432d42597478e787 Mon Sep 17 00:00:00 2001
+From: "iLinux local research (AI-generated draft)" <local@invalid>
+Date: Sun, 11 Oct 2026 20:02:00 +0000
+Subject: [PATCH 3/7] soc: apple: sart: Add SARTv4 support for t6050 (M5
+ Pro/Max)
+
+The NVMe SART on M5 Pro/Max (t6050) reports sart-version 4 in the ADT
+(compatible "sart,coastguard"; macOS binds IOCoastGuardSARTMapper).  Its
+entries use the SARTv3 format (CONFIG flags, PADDR >> 12, SIZE >> 12 with
+a 30-bit size field), but the PADDR array moved from 0x40 to 0x60 and the
+SIZE array from 0x80 to 0xc0.
+
+Add sart_ops_v4 and the "apple,t6050-sart" compatible.
+
+Provenance: register offsets, shifts, size limit and allow flags are
+taken from m1n1 src/sart.c, commit 9bfdf8aeca30 ("sart: add SARTv4
+support", Yureka, 2026-08-15, AsahiLinux/m1n1 PR #661; the file is
+"SPDX-License-Identifier: MIT" at tag v1.9.9, commit 809541515659).
+m1n1 reports that this layout, together with its M4+ NVMe changes
+(PR #652), makes nvme_init()/nvme_read() work on t6050.  No Apple
+binary was disassembled or decompiled.
+
+Evidence on this machine: ADT /arm-io/sart-ans: compatible
+"sart,coastguard", sart-version = 4, reg[0] = 0x21dc50000 (+0xc000,
+arm-io child address; physical 0x41dc50000), sart-power-managed present,
+sart-power-reg-offset = 0x13e8 (not used here: macOS power-manages the
+SART; Linux keeps the ANS domain always-on).
+
+Status: untested; compile test pending.
+
+NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
+Linux generative-AI policy).  No Signed-off-by on purpose.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ drivers/soc/apple/sart.c | 52 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
+
+diff --git a/drivers/soc/apple/sart.c b/drivers/soc/apple/sart.c
+index 4a3b4965..deab3a41 100644
+--- a/drivers/soc/apple/sart.c
++++ b/drivers/soc/apple/sart.c
+@@ -61,6 +61,25 @@
+ 
+ #define APPLE_SART3_FLAGS_ALLOW 0xff
+ 
++/*
++ * SARTv4 registers, first seen on M5 Pro/Max (t6050, ADT "sart,coastguard",
++ * sart-version 4).  Same entry format as SARTv3, but the PADDR and SIZE arrays
++ * moved.  Layout taken from m1n1 src/sart.c (commit 9bfdf8aeca30, "sart: add
++ * SARTv4 support"; MIT-licensed as of m1n1 v1.9.9).  The gap before PADDR
++ * would leave room for 24 CONFIG registers, but like m1n1 only the first
++ * APPLE_SART_MAX_ENTRIES entries are used.
++ */
++#define APPLE_SART4_CONFIG(idx)	(0x00 + 4 * (idx))
++
++#define APPLE_SART4_PADDR(idx)	(0x60 + 4 * (idx))
++#define APPLE_SART4_PADDR_SHIFT	12
++
++#define APPLE_SART4_SIZE(idx)	(0xc0 + 4 * (idx))
++#define APPLE_SART4_SIZE_SHIFT	12
++#define APPLE_SART4_SIZE_MAX	GENMASK(29, 0)
++
++#define APPLE_SART4_FLAGS_ALLOW 0xff
++
+ struct apple_sart_ops {
+ 	void (*get_entry)(struct apple_sart *sart, int index, u8 *flags,
+ 			  phys_addr_t *paddr, size_t *size);
+@@ -177,6 +196,35 @@ static struct apple_sart_ops sart_ops_v3 = {
+ 	.size_max = APPLE_SART3_SIZE_MAX,
+ };
+ 
++static void sart4_get_entry(struct apple_sart *sart, int index, u8 *flags,
++			    phys_addr_t *paddr, size_t *size)
++{
++	phys_addr_t paddr_ = readl(sart->regs + APPLE_SART4_PADDR(index));
++	size_t size_ = readl(sart->regs + APPLE_SART4_SIZE(index));
++
++	*flags = readl(sart->regs + APPLE_SART4_CONFIG(index));
++	*size = size_ << APPLE_SART4_SIZE_SHIFT;
++	*paddr = paddr_ << APPLE_SART4_PADDR_SHIFT;
++}
++
++static void sart4_set_entry(struct apple_sart *sart, int index, u8 flags,
++			    phys_addr_t paddr_shifted, size_t size_shifted)
++{
++	/* Same order as SARTv3 and m1n1: write flags (presumably the enable) last. */
++	writel(paddr_shifted, sart->regs + APPLE_SART4_PADDR(index));
++	writel(size_shifted, sart->regs + APPLE_SART4_SIZE(index));
++	writel(flags, sart->regs + APPLE_SART4_CONFIG(index));
++}
++
++static struct apple_sart_ops sart_ops_v4 = {
++	.get_entry = sart4_get_entry,
++	.set_entry = sart4_set_entry,
++	.flags_allow = APPLE_SART4_FLAGS_ALLOW,
++	.size_shift = APPLE_SART4_SIZE_SHIFT,
++	.paddr_shift = APPLE_SART4_PADDR_SHIFT,
++	.size_max = APPLE_SART4_SIZE_MAX,
++};
++
+ static int apple_sart_probe(struct platform_device *pdev)
+ {
+ 	int i;
+@@ -347,6 +395,10 @@ static void apple_sart_shutdown(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id apple_sart_of_match[] = {
++	{
++		.compatible = "apple,t6050-sart",
++		.data = &sart_ops_v4,
++	},
+ 	{
+ 		.compatible = "apple,t6000-sart",
+ 		.data = &sart_ops_v3,
+-- 
+2.54.0 (Apple Git-157)
+

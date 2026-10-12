@@ -1,0 +1,39 @@
+From 236afa178ca24757a94c055a28ccf42614bfbb64 Mon Sep 17 00:00:00 2001
+From: "iLinux local research (AI-generated draft)" <local@invalid>
+Date: Sun, 11 Oct 2026 20:01:00 +0000
+Subject: [PATCH 2/7] soc: apple: sart: Shift paddr and size by their own shift
+
+sart_set_entry() checks the alignment of paddr against paddr_shift and of
+size against size_shift, but then shifts paddr by size_shift and size by
+paddr_shift.  Every SART version supported so far uses 12 for both, so
+this has no functional effect today; fix it before a version with
+different shifts is added.
+
+Found by reading the code while adding SARTv4; untested.
+
+NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
+Linux generative-AI policy).  No Signed-off-by on purpose.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ drivers/soc/apple/sart.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/apple/sart.c b/drivers/soc/apple/sart.c
+index 9eaf3feb..4a3b4965 100644
+--- a/drivers/soc/apple/sart.c
++++ b/drivers/soc/apple/sart.c
+@@ -253,8 +253,8 @@ static int sart_set_entry(struct apple_sart *sart, int index, u8 flags,
+ 	if (paddr & ((1 << sart->ops->paddr_shift) - 1))
+ 		return -EINVAL;
+ 
+-	paddr >>= sart->ops->size_shift;
+-	size >>= sart->ops->paddr_shift;
++	paddr >>= sart->ops->paddr_shift;
++	size >>= sart->ops->size_shift;
+ 
+ 	if (size > sart->ops->size_max)
+ 		return -EINVAL;
+-- 
+2.54.0 (Apple Git-157)
+
