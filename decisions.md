@@ -455,3 +455,31 @@ timestamps, re-measure with the timestamps on.
 * None of this carries over to native Linux. The native path is the M5
   media engine (AVD) through a V4L2 stateless driver, which doesn't exist
   for M4/M5 yet (gap matrix: P1).
+
+## D-030 · 2026-10-12 · Draw guest frames on flush; IOSurface presenter opt-in
+
+**Decision:**
+
+* QEMU's Cocoa GL display asks Core Animation for a draw as soon as the
+  guest flushes a frame, instead of at the next GUI refresh tick (QEMU 0013).
+* The IOSurface presenter (`COCOA_GL_PRESENT=iosurface`) ships but is off by
+  default.
+* Display benchmarks run with the VM window on screen: `COCOA_FLOAT=1`
+  for measurement sessions only, and `playback_power.py` refuses hidden
+  windows (F-049).
+
+**Why:**
+
+* Drawing on flush cut flush-to-draw from p50 6.4–8.1 ms and p95 11–13 ms
+  to p50 0.14–0.23 ms and p95 about 2 ms.
+* It draws every frame at 60 and 120 fps; before, 70–80% of 120 fps guest
+  output was drawn.
+* No power change was measured (F-051).
+* The IOSurface presenter's lower p95 (0.25 ms) came with about +0.8 W in
+  4K60 playback.
+
+**Revisit:**
+
+* If a Metal-side presenter (compressed, framebuffer-only drawables)
+  removes the IOSurface presenter's video cost, it can become the default
+  and also take the BQL off AppKit's main thread.

@@ -59,17 +59,37 @@ measured, still unsupported, and next.
 * **Unpaced FIFO steady state:** 120 fps; 205 s with no input showed no
   throttling.
 
+### On-screen follow-up (same day, VM window floated with your OK)
+
+* **Presentation measured with the window on screen** (`COCOA_FLOAT=1`).
+  * 4K60 playback with the VM defaults: 3.60–4.14 W, against 2.91 W native
+    (71–81%).
+  * Presenting is about +0.3 W of that.
+* **Latency: a guest frame waited 6–8 ms** (p95 11–13 ms) for QEMU's GUI
+  tick, and only 70–80% of 120 fps output was drawn.
+* **QEMU 0013, drawing on flush, is the new default** (D-030, F-051): p50
+  0.14 ms, p95 about 2 ms, every frame drawn at 60 and 120 fps, no measured
+  power change.
+* **IOSurface presenter (opt-in, `COCOA_GL_PRESENT=iosurface`):**
+  * p50 0.12 ms, and 0 torn frames in 1,200 alternating-colour frames;
+  * but +0.8 W at 4K60 (ABBA);
+  * Apple's GL crashes rendering into lossless-compressed IOSurfaces.
+* **Vsync collapse (F-050) narrowed:**
+  * it strikes alternating fresh boots, in every configuration tried;
+  * it is not presentation, the window state or App Nap.
+* **Tools:**
+  * `vfill -a`: alternating colours, for tearing tests;
+  * `winvis` now counts floating windows.
+
 ### Next
 
-1. **Repeat the VM playback and present/no-present runs with the VM window
-   on screen.** This is the only way to measure QEMU's draw and
-   WindowServer's compositing.
-2. **Measure flush-to-draw latency** (`COCOA_GL_LATENCY=1`) with the window
-   on screen, then decide whether an IOSurface presenter is worth it. It
-   would draw on QEMU's thread, take the BQL off AppKit's main thread, and
-   skip the wait for the GUI tick.
-3. **F-050:** catch a collapse with Hyprland debug logs and QEMU fence
-   timing.
+1. **F-050:** trace guest DRM flips and fences, and Hyprland's frame
+   scheduling, in an affected boot. Affected boots alternate, so the boot
+   after a healthy one should reproduce it.
+2. **A Metal-side presenter** with compressed, framebuffer-only drawables.
+   It may give the IOSurface path's p95 without its video cost.
+3. **Then video encode, HEVC/VP9 decode, and the guest Mesa fixes**
+   (dirty decode targets, NV12-only).
 
 ## 2026-10-12 · Hardware video decode in the VM: VA-API on VideoToolbox
 

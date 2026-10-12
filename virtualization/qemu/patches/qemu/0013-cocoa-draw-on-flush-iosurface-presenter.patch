@@ -1,0 +1,524 @@
+Subject: [PATCH] cocoa: draw guest frames on flush; opt-in IOSurface presenter
+
+The GL display drew a guest frame only after the next GUI refresh tick and
+Core Animation's display callback: 6-8 ms from the guest's flush to the draw
+at 120 Hz (p95 11-13 ms), and 70-80% of 120 fps guest output was drawn.
+
+* Request the layer draw as soon as the guest flushes (Core Animation still
+  draws at most once per display refresh; a hidden window never draws).
+  Measured: flush-to-draw p50 0.14 ms, p95 ~2 ms, every frame drawn at 60
+  and 120 fps, 4K60 playback power within the earlier spread.
+* COCOA_GL_PRESENT=iosurface: copy each frame into one of three IOSurfaces
+  on the QEMU thread and only swap the layer contents on the main thread
+  (no BQL there).  p50 0.12 ms, p95 0.25 ms, no torn frames in 1,200
+  alternating-colour frames, but 4K60 playback cost 0.8 W more in an ABBA
+  comparison, so it is opt-in.  Apple's GL accepts but crashes on
+  lossless-compressed (&BGA) render targets, so compression is not an option.
+* Measurement aids: COCOA_FLOAT=1 keeps the window on screen on every Space
+  (accessory app, floating level) for display benchmarks;
+  COCOA_GL_PRESENT_CHECK=1 counts non-uniform frames (IOSurface path);
+  COCOA_GL_PRESENT_DUMP=<file.ppm> writes one presented frame.
+* Link IOSurface.framework for the Cocoa UI.
+
+---
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -64,6 +64,8 @@
+ #endif
+ #ifdef CONFIG_OPENGL
+ #include <epoxy/gl.h>
++#include <IOSurface/IOSurface.h>
++#include <OpenGL/CGLIOSurface.h>
+ #endif
+ 
+ #ifndef MAC_OS_VERSION_14_0
+@@ -160,6 +162,29 @@
+  * identical run.
+  */
+ static int cocoa_gl_nopresent = -1;
++
++/*
++ * IOSurface presenter (COCOA_GL_PRESENT=iosurface; the default is the
++ * CAOpenGLLayer path).  Guest frames are copied into one of a few IOSurfaces
++ * on the QEMU thread as soon as the guest flushes them, and the main thread
++ * only swaps the layer's contents: flush-to-present fell from 6-8 ms to
++ * ~0.15 ms and every frame is shown, but 4K60 video playback cost 0.8 W more
++ * than the layer path, so it is opt-in until that is understood.
++ */
++#define COCOA_PRESENT_SURFACES 3
++static bool cocoa_present_iosurface;
++static struct {
++    IOSurfaceRef surf;
++    GLuint tex, fbo;
++    int pending;                    /* sent to the main thread, not shown yet */
++} cocoa_present_ring[COCOA_PRESENT_SURFACES];
++static int cocoa_present_w, cocoa_present_h;
++static unsigned cocoa_present_gen;  /* bumped when the ring is reallocated */
++static int cocoa_present_current = -1;  /* slot the layer shows */
++static unsigned cocoa_present_next;
++static uint64_t cocoa_present_last_ns;
++static uint64_t cocoa_present_period_ns = 8333333;
++static int cocoa_window_visible = 1;    /* written on the main thread */
+ 
+ /*
+  * COCOA_GL_LATENCY=1 (measurement aid): log how long a guest frame waits
+@@ -640,7 +665,14 @@
+         [self setClipsToBounds:YES];
+ #endif
+         [self setWantsLayer:YES];
+-        if (cgl) {
++        if (cgl && cocoa_present_iosurface) {
++            /* contents are IOSurfaces set by cocoa_present_frame() */
++            CALayer *layer = [CALayer layer];
++            [layer setOpaque:YES];
++            [layer setContentsGravity:kCAGravityResize];
++            [layer setBackgroundColor:CGColorGetConstantColor(kCGColorBlack)];
++            [self setLayer:layer];
++        } else if (cgl) {
+             QemuCGLLayer *layer = [[QemuCGLLayer alloc] init];
+             [self setLayer:layer];
+             [layer release];
+@@ -968,6 +1000,10 @@
+ 
+         if (refreshRate) {
+             cocoa_refresh_ms = MAX(1u, 1000000u / refreshRate);
++#ifdef CONFIG_OPENGL
++            /* refreshRate is in mHz */
++            cocoa_present_period_ns = 1000000000000ull / refreshRate;
++#endif
+             if (!cocoa_refresh_idle) {
+                 qemu_console_listener_set_refresh(&dcl, cocoa_refresh_ms);
+             }
+@@ -1838,6 +1874,17 @@
+         }
+         [window setAcceptsMouseMovedEvents:YES];
+         [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
++        if (getenv("COCOA_FLOAT")) {
++            /*
++             * Measurement aid: macOS draws only on-screen windows, so a
++             * display benchmark needs the VM window visible.  Show it on
++             * every Space (fullscreen ones included), above normal
++             * windows, without making QEMU the active app.
++             */
++            [window setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces |
++                                          NSWindowCollectionBehaviorFullScreenAuxiliary];
++            [window setLevel:NSFloatingWindowLevel];
++        }
+         [window setTitle:qemu_name
+             ? [NSString stringWithUTF8String:qemu_name]
+             : @"QEMU"];
+@@ -1942,9 +1989,23 @@
+ 
+ - (void)windowDidChangeOcclusionState:(NSNotification *)notification
+ {
++    const bool visible = [[cocoaView window] occlusionState] & NSWindowOcclusionStateVisible;
++
++#ifdef CONFIG_OPENGL
++    if (cocoa_present_iosurface) {
++        /* hidden: nothing would show a frame, so none is copied; visible
++         * again: the next refresh tick presents the latest one */
++        qatomic_set(&cocoa_window_visible, visible);
++        if (visible) {
++            with_bql(^{
++                cocoa_gl_mark_dirty();
++            });
++        }
++        return;
++    }
++#endif
+     /* Frames that arrived while hidden were never drawn: draw the latest. */
+-    if (display_opengl &&
+-        ([[cocoaView window] occlusionState] & NSWindowOcclusionStateVisible)) {
++    if (display_opengl && visible) {
+         [[cocoaView layer] setNeedsDisplay];
+     }
+ }
+@@ -2777,8 +2838,53 @@
+ 
+     cocoa_switch(dcl, new_surface);
+     cocoa_gl_mark_dirty();
++}
++
++/*
++ * COCOA_GL_PRESENT_CHECK=1 (measurement aid for the IOSurface presenter, with
++ * a fullscreen client that fills each frame with one colour, e.g. vfill -a):
++ * after each present, wait for the GPU and sample a 5x5 grid in the lower-left
++ * 60% of the surface (clear of the notification area); count frames that are
++ * not one colour, i.e. torn.
++ */
++static int cocoa_gl_check_enabled = -1;
++static unsigned cocoa_gl_check_frames, cocoa_gl_check_torn;
++
++static bool cocoa_gl_check_on(void)
++{
++    if (cocoa_gl_check_enabled < 0) {
++        cocoa_gl_check_enabled = getenv("COCOA_GL_PRESENT_CHECK") != NULL;
++    }
++    return cocoa_gl_check_enabled;
+ }
+ 
++/* px(x, y) returns a BGRA or RGBA pixel as 0xAABBGGRR-ish; only equality matters */
++static void cocoa_gl_check_frame(int w, int h, uint32_t (^px)(int x, int y), const char *path)
++{
++    uint32_t first = 0;
++    bool torn = false;
++
++    for (int j = 0; j < 5; j++) {
++        for (int i = 0; i < 5; i++) {
++            const int x = w / 10 + i * (w / 2) / 4;
++            const int y = h * 4 / 10 + j * (h / 2) / 4;
++            const uint32_t v = px(x, y) & 0x00f0f0f0;  /* ignore dither noise */
++            if (i == 0 && j == 0) {
++                first = v;
++            } else if (v != first) {
++                torn = true;
++            }
++        }
++    }
++    cocoa_gl_check_frames++;
++    cocoa_gl_check_torn += torn;
++    if (cocoa_gl_check_frames == 240) {
++        fprintf(stderr, "cocoa-gl present check (%s): %u of 240 frames not uniform\n",
++                path, cocoa_gl_check_torn);
++        cocoa_gl_check_frames = cocoa_gl_check_torn = 0;
++    }
++}
++
+ static void cocoa_gl_render(void)
+ {
+     NSSize size = [cocoaView convertSizeToBacking:[cocoaView frame].size];
+@@ -2869,7 +2975,212 @@
+     /* Clear dirty flag after render completes to ensure clean handoff */
+     gl_dirty = false;
+     gl_render_requested = false;
++    cocoa_gl_lat_draw();
++}
++
++/* IOSurface presenter: everything below runs on the QEMU thread with the
++ * BQL held, in gl_view_ctx (where the blit shader state was created). */
++static void cocoa_present_free_ring(void)
++{
++    for (int i = 0; i < COCOA_PRESENT_SURFACES; i++) {
++        if (cocoa_present_ring[i].fbo) {
++            glDeleteFramebuffers(1, &cocoa_present_ring[i].fbo);
++        }
++        if (cocoa_present_ring[i].tex) {
++            glDeleteTextures(1, &cocoa_present_ring[i].tex);
++        }
++        if (cocoa_present_ring[i].surf) {
++            CFRelease(cocoa_present_ring[i].surf);
++        }
++        cocoa_present_ring[i].surf = NULL;
++        cocoa_present_ring[i].tex = 0;
++        cocoa_present_ring[i].fbo = 0;
++        qatomic_set(&cocoa_present_ring[i].pending, 0);
++    }
++    qatomic_set(&cocoa_present_current, -1);
++    cocoa_present_w = cocoa_present_h = 0;
++}
++
++static bool cocoa_present_alloc_ring(int w, int h)
++{
++    bool ok = true;
++
++    cocoa_present_free_ring();
++    qatomic_inc(&cocoa_present_gen);
++    @autoreleasepool {
++        NSDictionary *props = @{
++            (id)kIOSurfaceWidth: @(w),
++            (id)kIOSurfaceHeight: @(h),
++            (id)kIOSurfaceBytesPerElement: @4,
++            (id)kIOSurfacePixelFormat: @((uint32_t)'BGRA'),
++        };
++        for (int i = 0; i < COCOA_PRESENT_SURFACES && ok; i++) {
++            cocoa_present_ring[i].surf = IOSurfaceCreate((CFDictionaryRef)props);
++            if (!cocoa_present_ring[i].surf) {
++                ok = false;
++                break;
++            }
++            glGenTextures(1, &cocoa_present_ring[i].tex);
++            glBindTexture(GL_TEXTURE_RECTANGLE, cocoa_present_ring[i].tex);
++            /* Apple's GL binds IOSurfaces as rectangle textures only */
++            ok = CGLTexImageIOSurface2D(CGLGetCurrentContext(), GL_TEXTURE_RECTANGLE,
++                                        GL_RGBA8, w, h, GL_BGRA,
++                                        GL_UNSIGNED_INT_8_8_8_8_REV,
++                                        cocoa_present_ring[i].surf, 0) == kCGLNoError;
++            glGenFramebuffers(1, &cocoa_present_ring[i].fbo);
++            glBindFramebuffer(GL_FRAMEBUFFER, cocoa_present_ring[i].fbo);
++            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
++                                   GL_TEXTURE_RECTANGLE, cocoa_present_ring[i].tex, 0);
++            ok = ok && glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
++        }
++    }
++    glBindFramebuffer(GL_FRAMEBUFFER, 0);
++    glBindTexture(GL_TEXTURE_RECTANGLE, 0);
++    if (!ok) {
++        cocoa_present_free_ring();
++        return false;
++    }
++    cocoa_present_w = w;
++    cocoa_present_h = h;
++    return true;
++}
++
++/* COCOA_GL_PRESENT_DUMP=<file.ppm>: write the 600th presented frame,
++ * quarter size, to check orientation and content against the guest. */
++static void cocoa_present_dump(IOSurfaceRef s, int w, int h)
++{
++    static int left = -1;
++    const char *path = getenv("COCOA_GL_PRESENT_DUMP");
++
++    if (left < 0) {
++        left = path ? 600 : 0;
++    }
++    if (left == 0 || --left > 0) {
++        return;
++    }
++    glFinish();
++    FILE *f = fopen(path, "wb");
++    if (!f || IOSurfaceLock(s, kIOSurfaceLockReadOnly, NULL) != kIOReturnSuccess) {
++        if (f) {
++            fclose(f);
++        }
++        return;
++    }
++    const uint8_t *base = IOSurfaceGetBaseAddress(s);
++    const size_t stride = IOSurfaceGetBytesPerRow(s);
++    fprintf(f, "P6\n%d %d\n255\n", w / 4, h / 4);
++    for (int y = 0; y < h / 4; y++) {
++        for (int x = 0; x < w / 4; x++) {
++            const uint8_t *p = base + (size_t)(y * 4) * stride + (size_t)(x * 4) * 4;
++            const uint8_t rgb[3] = { p[2], p[1], p[0] };
++            fwrite(rgb, 1, 3, f);
++        }
++    }
++    IOSurfaceUnlock(s, kIOSurfaceLockReadOnly, NULL);
++    fclose(f);
++}
++
++/*
++ * Copy the current guest frame into a free IOSurface and hand it to the
++ * layer.  Returns false when the frame has to wait: window hidden, no free
++ * surface, or (for a present straight from a guest flush) less than a
++ * display refresh since the last one; the refresh tick then catches up.
++ */
++static bool cocoa_present_frame(bool from_flush)
++{
++    const uint64_t now = clock_gettime_nsec_np(CLOCK_UPTIME_RAW);
++    GLuint tex = 0;
++    int w = 0, h = 0, slot = -1;
++    bool flip;
++
++    if (!qatomic_read(&cocoa_window_visible)) {
++        return false;
++    }
++    if (from_flush && now - cocoa_present_last_ns < cocoa_present_period_ns * 3 / 4) {
++        return false;
++    }
++
++    CGLContextObj prev = CGLGetCurrentContext();
++    CGLSetCurrentContext((CGLContextObj)gl_view_ctx);
++    if (gl_scanout_borrow) {
++        DisplayGLTexture t = gl_scanout_borrow(gl_scanout_id);
++        tex = t.id;
++        w = t.width;
++        h = t.height;
++        /* Core Animation shows an IOSurface's first row at the top: the
++         * opposite of the layer path's GL drawable, hence the inversion */
++        flip = !t.y_0_top;
++    } else {
++        tex = surface ? surface->texture : 0;
++        w = surface ? surface_width(surface) : 0;
++        h = surface ? surface_height(surface) : 0;
++        flip = true;
++    }
++    if (!tex || w <= 0 || h <= 0 ||
++        ((w != cocoa_present_w || h != cocoa_present_h) && !cocoa_present_alloc_ring(w, h))) {
++        CGLSetCurrentContext(prev);
++        gl_dirty = false;
++        return true;
++    }
++
++    const int cur = qatomic_read(&cocoa_present_current);
++    for (int k = 0; k < COCOA_PRESENT_SURFACES; k++) {
++        int i = (cocoa_present_next + k) % COCOA_PRESENT_SURFACES;
++        if (i != cur && !qatomic_read(&cocoa_present_ring[i].pending) &&
++            !IOSurfaceIsInUse(cocoa_present_ring[i].surf)) {
++            slot = i;
++            break;
++        }
++    }
++    if (slot < 0) {
++        CGLSetCurrentContext(prev);
++        return false;
++    }
++
++    glBindFramebuffer(GL_FRAMEBUFFER, cocoa_present_ring[slot].fbo);
++    glViewport(0, 0, w, h);
++    glBindTexture(GL_TEXTURE_2D, tex);
++    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
++    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
++    qemu_gl_run_texture_blit(dgc.gls, flip);
++    glBindFramebuffer(GL_FRAMEBUFFER, 0);
++    cocoa_present_dump(cocoa_present_ring[slot].surf, w, h);
++    if (cocoa_gl_check_on()) {
++        IOSurfaceRef cs = cocoa_present_ring[slot].surf;
++        glFinish();
++        if (IOSurfaceLock(cs, kIOSurfaceLockReadOnly, NULL) == kIOReturnSuccess) {
++            const uint8_t *base = IOSurfaceGetBaseAddress(cs);
++            const size_t stride = IOSurfaceGetBytesPerRow(cs);
++            cocoa_gl_check_frame(w, h, ^uint32_t(int x, int y) {
++                const uint8_t *p = base + (size_t)y * stride + (size_t)x * 4;
++                return (uint32_t)p[2] | (uint32_t)p[1] << 8 | (uint32_t)p[0] << 16;
++            }, "iosurface");
++            IOSurfaceUnlock(cs, kIOSurfaceLockReadOnly, NULL);
++        }
++    }
++    glFlush();
++    CGLSetCurrentContext(prev);
++
++    IOSurfaceRef s = cocoa_present_ring[slot].surf;
++    const unsigned gen = qatomic_read(&cocoa_present_gen);
++    CFRetain(s);
++    qatomic_set(&cocoa_present_ring[slot].pending, 1);
++    cocoa_present_next = (slot + 1) % COCOA_PRESENT_SURFACES;
++    cocoa_present_last_ns = now;
++    gl_dirty = false;
+     cocoa_gl_lat_draw();
++    dispatch_async(dispatch_get_main_queue(), ^{
++        [CATransaction begin];
++        [CATransaction setDisableActions:YES];
++        [[cocoaView layer] setContents:(id)s];
++        [CATransaction commit];
++        if (qatomic_read(&cocoa_present_gen) == gen) {
++            qatomic_set(&cocoa_present_current, slot);
++            qatomic_set(&cocoa_present_ring[slot].pending, 0);
++        }
++        CFRelease(s);
++    });
++    return true;
+ }
+ 
+ static void cocoa_gl_refresh(DisplayChangeListener *dcl)
+@@ -2886,36 +3197,45 @@
+             cocoa_idle_ticks = 0;
+             return;
+         }
+-
+-        if (cocoa_gl_trace_enabled()) {
+-            cocoa_gl_log("refresh: triggering render dirty scanout=%d egl_surface=%d",
+-                         gl_scanout_borrow != NULL,
++        if (cocoa_present_iosurface) {
++            /* a frame deferred by the rate cap, or that arrived while the
++             * window was hidden or every surface was busy */
++            cocoa_present_frame(false);
++            if (!gl_dirty) {
++                cocoa_idle_ticks = 0;
++                return;
++            }
++        } else {
++            if (cocoa_gl_trace_enabled()) {
++                cocoa_gl_log("refresh: triggering render dirty scanout=%d egl_surface=%d",
++                             gl_scanout_borrow != NULL,
+ #ifdef CONFIG_EGL
+-                         egl_surface != NULL);
++                             egl_surface != NULL);
+ #else
+-                         0);
++                             0);
+ #endif
+-        }
++            }
+ 
+ #ifdef CONFIG_EGL
+-        if (egl_surface) {
+-            with_gl_view_ctx(^{
+-                cocoa_gl_render();
+-                eglSwapBuffers(qemu_egl_display, egl_surface);
+-                cocoa_gl_log_error("eglSwapBuffers");
+-            });
++            if (egl_surface) {
++                with_gl_view_ctx(^{
++                    cocoa_gl_render();
++                    eglSwapBuffers(qemu_egl_display, egl_surface);
++                    cocoa_gl_log_error("eglSwapBuffers");
++                });
+ 
+-            return;
+-        }
++                return;
++            }
+ #endif
+ 
+-        if (!gl_render_requested) {
+-            gl_render_requested = true;
+-            cocoa_idle_ticks = 0;
+-            dispatch_async(dispatch_get_main_queue(), ^{
+-                [[cocoaView layer] setNeedsDisplay];
+-            });
+-            return;
++            if (!gl_render_requested) {
++                gl_render_requested = true;
++                cocoa_idle_ticks = 0;
++                dispatch_async(dispatch_get_main_queue(), ^{
++                    [[cocoaView layer] setNeedsDisplay];
++                });
++                return;
++            }
+         }
+     }
+     if (!cocoa_refresh_idle &&
+@@ -2953,6 +3273,24 @@
+ {
+     cocoa_gl_lat_flush();
+     cocoa_gl_mark_dirty();
++    if (cocoa_gl_nopresent == 1) {
++        /* measurement run: frames are consumed by the refresh tick */
++    } else if (cocoa_present_iosurface) {
++        /* show the frame now instead of at the next refresh tick */
++        cocoa_present_frame(true);
++    } else if (!gl_render_requested) {
++        /*
++         * Ask Core Animation for the draw now instead of at the next refresh
++         * tick (up to a display refresh later).  Core Animation still draws
++         * at most once per display refresh, and a hidden window never draws,
++         * so gl_render_requested also keeps this from re-dispatching.
++         */
++        gl_render_requested = true;
++        cocoa_idle_ticks = 0;
++        dispatch_async(dispatch_get_main_queue(), ^{
++            [[cocoaView layer] setNeedsDisplay];
++        });
++    }
+ 
+     cocoa_gl_log("scanout flush region=%ux%u+%u+%u", w, h, x, y);
+ }
+@@ -3105,7 +3443,17 @@
+     TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+ 
+     [[NSProcessInfo processInfo] setProcessName:cocoa_product_name()];
++#ifdef CONFIG_OPENGL
++    cocoa_gl_nopresent = getenv("COCOA_GL_NOPRESENT") != NULL;
++    cocoa_present_iosurface = display_opengl && opts->gl != DISPLAY_GL_MODE_ES &&
++        getenv("COCOA_GL_PRESENT") && !strcmp(getenv("COCOA_GL_PRESENT"), "iosurface");
++#endif
+     [QemuApplication sharedApplication];
++    if (getenv("COCOA_FLOAT")) {
++        /* measurement aid (see the window setup): only accessory apps'
++         * windows can appear over another app's fullscreen Space */
++        [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
++    }
+     cocoa_set_product_icon();
+ 
+     dcl.con = qemu_console_lookup_default();
+--- a/meson.build
++++ b/meson.build
+@@ -1221,7 +1221,7 @@
+ endif
+ 
+ cocoa = dependency('appleframeworks',
+-                   modules: ['Cocoa', 'Carbon', 'CoreVideo', 'OpenGL', 'QuartzCore'],
++                   modules: ['Cocoa', 'Carbon', 'CoreVideo', 'IOSurface', 'OpenGL', 'QuartzCore'],
+                    required: get_option('cocoa'))
+ 
+ vmnet = dependency('appleframeworks', modules: 'vmnet', required: get_option('vmnet'))

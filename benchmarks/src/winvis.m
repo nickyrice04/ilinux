@@ -21,10 +21,12 @@ int main(int argc, char **argv)
         int count = 0;
         CGRect best = CGRectZero;
         for (NSDictionary *w in (__bridge NSArray *)list) {
-            if ([w[(id)kCGWindowOwnerPID] intValue] != pid || [w[(id)kCGWindowLayer] intValue] != 0)
+            /* any level: a measurement run may float the VM window (layer 3) */
+            if ([w[(id)kCGWindowOwnerPID] intValue] != pid || [w[(id)kCGWindowAlpha] doubleValue] <= 0)
                 continue;
             CGRect r;
-            if (!CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)w[(id)kCGWindowBounds], &r))
+            if (!CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)w[(id)kCGWindowBounds], &r) ||
+                r.size.width < 100 || r.size.height < 100)
                 continue;
             count++;
             if (r.size.width * r.size.height > best.size.width * best.size.height)

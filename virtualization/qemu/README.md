@@ -84,6 +84,18 @@ ONLY=qemu virtualization/qemu/build-qemu-virgl.sh  # QEMU only, after patch edit
      `COCOA_GL_NOPRESENT=1` consumes guest frames without drawing them, and
      `COCOA_GL_LATENCY=1` logs flush-to-draw latency. Both need the window on
      screen, because macOS doesn't draw hidden windows (F-049).
+   * `patches/qemu/0013-cocoa-draw-on-flush-iosurface-presenter.patch`
+     (D-030, F-051):
+     * A guest frame is drawn as soon as the guest flushes it, not at the
+       next GUI tick. Flush-to-draw went from p50 7 ms to 0.14 ms, and every
+       frame is drawn at 120 fps.
+     * `COCOA_GL_PRESENT=iosurface` is an opt-in presenter that copies on
+       QEMU's thread into IOSurfaces. p50 is 0.12 ms, but 4K60 video costs
+       +0.8 W.
+     * Measurement aids:
+       * `COCOA_FLOAT=1` keeps the VM window on screen on every Space;
+       * `COCOA_GL_PRESENT_CHECK=1` counts torn frames;
+       * `COCOA_GL_PRESENT_DUMP=<file.ppm>` writes one presented frame.
    * `patches/virglrenderer/0010-vrend-macos-fence-wait-without-spinning.patch`:
      Apple's `glClientWaitSync` busy-polls for its whole timeout, so the
      fence thread now polls and sleeps instead of spinning while it waits:
@@ -206,6 +218,9 @@ locks the session on idle.
 * The VM window was off screen in these runs, so QEMU's draw and
   WindowServer's compositing are not included. The native window was on
   screen (F-049).
+* With the VM window on screen, 4K60 playback with the VM defaults measured
+  3.6–4.1 W across five sessions, against 2.9 W native. Presenting
+  (QEMU's draw plus WindowServer) is about +0.3 W of that.
 
 ## Known gaps
 

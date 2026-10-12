@@ -531,12 +531,22 @@ No entry is based on decompiled Apple code.
 | Confidence | **Confirmed** |
 | Linux mapping | Methodology (benchmarks) |
 
-## F-050 · VM display · Intermittent vsync collapse to about 10 fps (open)
+## F-050 · VM display · Intermittent frame-rate collapse to about 10 fps, in alternating boots (open)
 
 | Field | Value |
 |---|---|
-| Source | `BENCH` `vfill -f 0` (unpaced, swap interval 1): 3 of 6 fresh-boot sessions ran at 7–14 fps for the client's whole life, and one lasted 200 s. Warm sessions and 6 targeted reproductions ran at 120 fps. |
-| Observation | During a collapse the guest is nearly idle (0.03–0.04 vCPUs) and Hyprland has the client mapped, fullscreen and visible. Ruled out by measurement: Omarchy's idle screensaver (no idle events in those boots' journals); toggling direct scanout (3 replays); the notification overlay layer (present in healthy runs too); CPU placement and cgroups; background CPU load; App Nap with the window hidden (60 s napped test at 120 fps). Mesa 26.2.4's EGL Wayland swap waits only on the compositor's frame callback (no fifo or commit-timing protocol), so the callbacks themselves arrived at about 10 Hz. |
-| Inference | Something in the first minutes of some boots slows Hyprland's frame callbacks for an already-running client. Next: Hyprland debug logs (frame scheduling, `misc:render_unfocused_fps`) and QEMU fence timing captured during a collapse. Benchmarks record `vfill` fps, so a collapsed case is visible in the data. |
-| Confidence | **Confirmed** (occurs); cause **Unknown** |
+| Source | `BENCH` `vfill` (`-f 60` paced and `-f 0` unpaced, swap interval 1) across 13+ fresh boots in three ABBA experiments; a fourth (`presenter-ab`) as well; `MEAS` window visibility (`winvis`), App Nap assertions (`pmset`), guest journal. |
+| Observation | In affected boots, a client started then runs at 7–19 fps for its whole life while the guest is nearly idle (0.03–0.04 vCPUs). Affected boots alternate with healthy ones: sessions 1 and 3 of every ABBA run, whatever their configuration (present or no-present, layer or IOSurface presenter, window hidden or on screen), plus manual boots 5 and 10/12. Healthy boots and warm sessions run at a steady 60 or 120 fps. Ruled out: presentation (it collapses in no-present runs too), the idle screensaver, direct scanout, the notification overlay, CPU placement, background load, App Nap. Mesa's EGL Wayland swap waits only on the compositor's frame callback, so the callbacks arrive at about 10 Hz. |
+| Inference | Some state alternates from one boot to the next and slows frame completion in the guest, in Hyprland or in its flip/fence path. Next: trace DRM flip and fence times in the guest, and Hyprland's frame scheduling, in an affected boot (boots alternate, so the next one after a healthy boot reproduces it). Benchmarks record `vfill` fps per case, so affected cases are visible. |
+| Confidence | **Confirmed** (occurs, alternating pattern); cause **Unknown** |
 | Linux mapping | VM display path |
+
+## F-051 · VM display · A guest frame waited 6–8 ms for QEMU's GUI tick; drawing on flush removes it
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` QEMU `COCOA_GL_LATENCY=1` (guest flush → layer draw, p50/p95 over 240 draws) with the VM window on screen (`COCOA_FLOAT=1`); `vfill` at 60 and 120 fps; `COCOA_GL_PRESENT_CHECK=1` with `vfill -a` (consecutive frames in opposite colours); power from `benchmarks/vm/playback_power.py` (`presenter-ab`, ABBA). |
+| Observation | The `CAOpenGLLayer` path drew a frame only after the next GUI refresh tick and Core Animation's display callback. Flush-to-draw was p50 6.4–8.1 ms and p95 11–13 ms at 60–120 fps, and only 70–80% of 120 fps guest frames were drawn. Requesting the draw at flush time gives p50 0.14–0.23 ms, p95 1.8–2.1 ms and 100% of frames at 60 and 120 fps, with 4K60 playback power within the layer path's spread (3.6–4.1 W). An IOSurface presenter (copy on the QEMU thread, swap contents on the main thread) reaches p50 0.12 ms and p95 0.25 ms, with 0 torn frames in 1,200 alternating-colour frames. But it cost about 0.8 W more for 4K60 playback in an ABBA comparison (4.41–4.50 W vs 3.60–3.73 W, extra GPU and DRAM traffic). Apple's GL accepts lossless-compressed (`&BGA`) IOSurfaces as render targets but crashes on the first draw. |
+| Inference | Most of the VM's display latency was a polling artifact; drawing on flush is the default now (QEMU 0013). The IOSurface presenter stays opt-in (`COCOA_GL_PRESENT=iosurface`) until its video power cost is understood. The likely cause is uncompressed linear surfaces that WindowServer composites by copy, which a Metal-side presenter could avoid. |
+| Confidence | **Confirmed** (latency, delivery, tearing check); power differences **Likely** (single-rep sessions vary by ±0.3 W) |
+| Linux mapping | VM: QEMU Cocoa display (patch 0013) |

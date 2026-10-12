@@ -1,0 +1,6 @@
+cocoa-gl latency: flush->draw over 240 draws (240 flushes): mean 0.52 p50 0.14 p95 1.83 max 7.03 ms
+cocoa-gl latency: flush->draw over 240 draws (240 flushes): mean 0.49 p50 0.14 p95 1.82 max 7.25 ms
+cocoa-gl latency: flush->draw over 240 draws (240 flushes): mean 0.55 p50 0.14 p95 1.94 max 5.63 ms
+cocoa-gl latency: flush->draw over 240 draws (240 flushes): mean 0.48 p50 0.14 p95 1.95 max 5.25 ms
+cocoa-gl latency: flush->draw over 240 draws (240 flushes): mean 0.61 p50 0.23 p95 2.06 max 7.59 ms
+cocoa-gl latency: flush->draw over 240 draws (240 flushes): mean 0.60 p50 0.23 p95 2.05 max 2.50 ms

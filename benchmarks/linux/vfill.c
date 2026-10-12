@@ -8,8 +8,9 @@
 //   wayland-scanner private-code  $XDG_SHELL xdg-shell-protocol.c
 //   cc -O2 vfill.c xdg-shell-protocol.c -o vfill $(pkg-config --cflags --libs
 //      wayland-client wayland-egl egl glesv2)
-//   vfill [-f FPS] [-t SECONDS] [-s WIDTHxHEIGHT] [-i] [-o STATSFILE]
+//   vfill [-f FPS] [-t SECONDS] [-s WIDTHxHEIGHT] [-i] [-a] [-o STATSFILE]
 //     defaults: 60 fps, 30 s, fullscreen; -f 0 = unpaced; -i = swap interval 0;
+//     -a alternates two very different colours every frame (tearing tests);
 //     -o rewrites "vfill_frames=N" once a second (for windowed measurements);
 //     SIGTERM/SIGINT end the run normally (the summary line is still printed)
 // The buffer is rendered at the output's scale (wl_output.scale), so on a
@@ -138,6 +139,7 @@ int main(int argc, char **argv)
 {
     double fps = 60, secs = 30;
     int win_w = 0, win_h = 0, interval = 1;
+    bool alternate = false;
     const char *stats = NULL;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-f") && i + 1 < argc)
@@ -150,8 +152,10 @@ int main(int argc, char **argv)
             interval = 0;
         else if (!strcmp(argv[i], "-o") && i + 1 < argc)
             stats = argv[++i];
+        else if (!strcmp(argv[i], "-a"))
+            alternate = true;
         else {
-            fprintf(stderr, "usage: vfill [-f FPS] [-t SECONDS] [-s WIDTHxHEIGHT] [-i] [-o FILE]\n");
+            fprintf(stderr, "usage: vfill [-f FPS] [-t SECONDS] [-s WIDTHxHEIGHT] [-i] [-a] [-o FILE]\n");
             return 2;
         }
     }
@@ -227,7 +231,7 @@ int main(int argc, char **argv)
             h = lh * out_scale;
             wl_egl_window_resize(ew, w, h, 0, 0);
         }
-        const float p = (float)(frames % 240) / 240.0f;
+        const float p = alternate ? (float)(frames & 1) : (float)(frames % 240) / 240.0f;
         glViewport(0, 0, w, h);
         glClearColor(p, 1.0f - p, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);

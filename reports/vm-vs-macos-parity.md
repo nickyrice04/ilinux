@@ -222,11 +222,24 @@ Power is the SoC sum from IOReport on AC. Scripts:
 Data: `benchmarks/results/macos-video-2026-10-12/` and
 `benchmarks/results/vm-video-2026-10-12/fencepoll/`.
 
-**Caveat: these are not like for like yet (F-049).** The native player's
-window was on screen. The VM window was not, so macOS never drew it, and the
-VM rows leave out QEMU's draw and WindowServer's compositing. Everything
-inside the guest is included. The VM runs must be repeated with the window
-on screen.
+**Like for like, with the VM window on screen** (`COCOA_FLOAT=1`, F-049;
+sessions `present-ab-onscreen` and `presenter-ab`):
+
+| 4K60 H.264 playback | macOS native | VM (VA-API decode, mpv `profile=fast`) | macOS ÷ VM |
+|---|---|---|---|
+| SoC power | **2.91 W** (median of 4) | **3.60–4.14 W** (5 sessions, median 4.11) | 71–81% |
+| Over idle (about 1.8–1.9 W both) | +1.0 W | +1.8–2.3 W | — |
+| Dropped frames per 1,500 | 0 | 0–10 | — |
+
+* Presenting (QEMU's draw plus WindowServer's compositing) accounts for
+  about +0.3 W of the VM figure: 4.11–4.12 W presenting vs 3.81 W not
+  presenting, one no-present sample.
+* Frames reach the screen within 0.14 ms (p50) of the guest's flush since
+  QEMU 0013 (F-051).
+
+The table below comes from earlier runs, where the native player's window
+was on screen and the VM's was not. In those, the VM rows leave out QEMU's
+draw and WindowServer's compositing (F-049).
 
 | Case | macOS native (median of 4, window on screen) | VM hardware decode, mpv defaults (mean of 2) | VM software decode (mean of 2) |
 |---|---|---|---|
@@ -254,8 +267,9 @@ same stream; this session's idle read 2.76 W):
   profile saves 3.4 W at 4K60.
 * **A fullscreen 60 fps client that only clears costs the whole guest chain
   about +0.8 W** (Hyprland plus virtio-gpu), measured with `vfill`.
-* **Open:** the host side of presentation (QEMU's draw plus WindowServer)
-  waits for runs with the VM window on screen.
+* **Host presentation, measured on screen:** about +0.3 W at 4K60. Flush to
+  draw went from p50 7 ms to 0.14 ms with QEMU 0013, at no measured power
+  cost (F-051).
 
 **Guest software decode:** at 4K60 it costs 9.5 W of CPU power. Hardware
 decode cuts whole-SoC playback power by 59% at 4K60 and 36% at 1080p60
