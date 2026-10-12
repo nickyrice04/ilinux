@@ -1,0 +1,28 @@
++ OUT=/mnt/job/out
++ uname -r
+7.1.6-vzrun2
++ systemctl is-active ufw NetworkManager
+active
+active
++ timeout 8 getent hosts arm-mirror.omarchy.org
+2606:4700::6812:3cc arm-mirror.omarchy.org
+2606:4700::6812:2cc arm-mirror.omarchy.org
++ pacman -S --needed --noconfirm socat cmake ninja git
++ mkdir -p /mnt/models
++ mount -t virtiofs models /mnt/models
++ cd /root/llama.cpp
++ git log -1 --format=%h
++ CC=clang
++ CXX=clang++
++ cmake -S . -B build-rpc -G Ninja -DCMAKE_BUILD_TYPE=Release -DGGML_RPC=ON -DGGML_NATIVE=OFF -DGGML_CPU_ARM_ARCH=armv8.6-a+dotprod+i8mm+sme -DGGML_BLAS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=OFF -DLLAMA_BUILD_TESTS=OFF
++ cmake --build build-rpc --target llama-bench -j 18
++ sleep 1
++ socat TCP-LISTEN:50052,bind=127.0.0.1,fork,reuseaddr VSOCK-CONNECT:2:5052
++ B=build-rpc/bin/llama-bench
++ build-rpc/bin/llama-bench --rpc 127.0.0.1:50052 --list-devices
++ for q in q4_0 q4_k_m
++ build-rpc/bin/llama-bench -m /mnt/models/synth-llama3-8b-q4_0.gguf --rpc 127.0.0.1:50052 -ngl 99 -p 512 -n 128 -r 3 -o jsonl
++ for q in q4_0 q4_k_m
++ build-rpc/bin/llama-bench -m /mnt/models/synth-llama3-8b-q4_k_m.gguf --rpc 127.0.0.1:50052 -ngl 99 -p 512 -n 128 -r 3 -o jsonl
+2026/10/12 04:07:40 socat[1007] W exiting on signal 15
+40Z exit=0

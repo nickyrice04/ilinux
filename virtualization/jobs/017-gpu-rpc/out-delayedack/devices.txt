@@ -1,0 +1,2 @@
+Available devices:
+  RPC0: 127.0.0.1:50052 (110100 MiB, 110099 MiB free)

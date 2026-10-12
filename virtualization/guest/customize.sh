@@ -21,22 +21,7 @@ Server = https://arm-mirror.omarchy.org/$arch/$repo
 EOF
 
 install -d "$R/usr/local/sbin"
-cat > "$R/usr/local/sbin/vzjob" <<'EOF'
-#!/bin/sh
-# Run the host-provided job (virtiofs tag "job"), then power off.
-mkdir -p /mnt/job
-modprobe virtiofs 2>/dev/null || true
-if mount -t virtiofs job /mnt/job 2>/dev/null && [ -x /mnt/job/run.sh ]; then
-  mkdir -p /mnt/job/out
-  start=$(date -u +%FT%TZ)
-  ( cd /mnt/job && ./run.sh ) > /mnt/job/out/run.log 2>&1
-  rc=$?
-  echo "vzjob: start=$start end=$(date -u +%FT%TZ) exit=$rc" >> /mnt/job/out/run.log
-  sync
-  if [ ! -e /mnt/job/no-poweroff ]; then systemctl poweroff; fi
-fi
-EOF
-chmod 755 "$R/usr/local/sbin/vzjob"
+install -m 755 "$(dirname "$0")/vzjob" "$R/usr/local/sbin/vzjob"
 
 cat > "$R/etc/systemd/system/vzjob.service" <<'EOF'
 [Unit]

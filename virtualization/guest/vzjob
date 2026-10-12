@@ -1,0 +1,21 @@
+#!/bin/sh
+# Run the host-provided job, then power off.  The job directory arrives as a
+# virtiofs share (vzrun) or a 9p share (QEMU), both with tag "job".
+mkdir -p /mnt/job
+modprobe virtiofs 2>/dev/null; modprobe 9pnet_virtio 2>/dev/null; modprobe 9p 2>/dev/null
+if { mount -t virtiofs job /mnt/job 2>/dev/null ||
+     mount -t 9p -o trans=virtio,version=9p2000.L,msize=1048576 job /mnt/job 2>/dev/null; } &&
+   [ -x /mnt/job/run.sh ]; then
+  mkdir -p /mnt/job/out
+  # DNS can lag network-online right after boot; wait up to ~60 s total.
+  end=$(( $(date +%s) + 60 ))
+  while [ "$(date +%s)" -lt "$end" ]; do
+    timeout 3 getent hosts arm-mirror.omarchy.org >/dev/null 2>&1 && break; sleep 1
+  done
+  start=$(date -u +%FT%TZ)
+  ( cd /mnt/job && ./run.sh ) > /mnt/job/out/run.log 2>&1
+  rc=$?
+  echo "vzjob: start=$start end=$(date -u +%FT%TZ) exit=$rc" >> /mnt/job/out/run.log
+  sync
+  if [ ! -e /mnt/job/no-poweroff ]; then systemctl poweroff; fi
+fi

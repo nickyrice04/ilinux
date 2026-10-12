@@ -35,7 +35,9 @@ struct Options {
     var nested = false
     var nvme = false
     var diskCache = "automatic"     // automatic | cached | uncached
-    var diskSync = "full"           // full | fsync | none
+    var diskSync = "full"           // full | fsync | none   (data disks)
+    var rootSync = "fsync"          // root disk: fsync is the best durable mode (F-018)
+    var vsockForwards: [(guestPort: UInt32, host: String, hostPort: UInt16)] = []
     var width = 1920, height = 1200
 }
 
@@ -45,6 +47,7 @@ func usage() -> Never {
                  (--efi [--efi-vars file] | --kernel Image [--initrd file] [--cmdline str])
                  [--share hostdir:tag[:ro]]... [--no-net] [--nested] [--gui [--size WxH]]
                  [--nvme] [--disk-cache automatic|cached|uncached] [--disk-sync full|fsync|none]
+                 [--root-sync full|fsync|none] [--vsock-forward port:host:hostport]...
 
     """.data(using: .utf8)!)
     exit(2)
@@ -71,6 +74,12 @@ func parse() -> Options {
         case "--nvme": o.nvme = true
         case "--disk-cache": o.diskCache = next()
         case "--disk-sync": o.diskSync = next()
+        case "--root-sync": o.rootSync = next()
+        case "--vsock-forward":
+            // guest connects to vsock CID 2 (host) port P; vzrun bridges to host:hostport (TCP)
+            let p = next().split(separator: ":").map(String.init)
+            guard p.count == 3, let gp = UInt32(p[0]), let hp = UInt16(p[2]) else { usage() }
+            o.vsockForwards.append((gp, p[1], hp))
         case "--size":
             let p = next().split(separator: "x").compactMap { Int($0) }
             if p.count == 2 { o.width = p[0]; o.height = p[1] }
@@ -128,9 +137,11 @@ func makeConfig(_ o: Options) throws -> VZVirtualMachineConfiguration {
         // The first disk is the root disk and always uses safe settings; the
         // cache/sync/NVMe experiment flags apply to additional (data) disks.
         let isRoot = i == 0
+        let rsync: VZDiskImageSynchronizationMode = o.rootSync == "full" ? .full :
+            o.rootSync == "none" ? .none : .fsync
         let att = try VZDiskImageStorageDeviceAttachment(url: fileURL(d), readOnly: false,
                                                          cachingMode: isRoot ? .automatic : caching,
-                                                         synchronizationMode: isRoot ? .full : sync)
+                                                         synchronizationMode: isRoot ? rsync : sync)
         if !isRoot && o.nvme {
             storage.append(VZNVMExpressControllerDeviceConfiguration(attachment: att))
         } else {
@@ -150,6 +161,9 @@ func makeConfig(_ o: Options) throws -> VZVirtualMachineConfiguration {
     }
 
     c.entropyDevices = [VZVirtioEntropyDeviceConfiguration()]
+    if !o.vsockForwards.isEmpty {
+        c.socketDevices = [VZVirtioSocketDeviceConfiguration()]
+    }
     c.memoryBalloonDevices = [VZVirtioTraditionalMemoryBalloonDeviceConfiguration()]
 
     // Console: virtio console on stdio (headless) - always present for logs.
@@ -180,6 +194,69 @@ func makeConfig(_ o: Options) throws -> VZVirtualMachineConfiguration {
     try c.validate()
     return c
 }
+
+
+// vsock -> TCP bridge: each guest connection to vsock port P is spliced to a
+// fresh TCP connection to host:hostport (e.g. a GPU compute server bound to
+// 127.0.0.1).  Nothing listens on the network; only the guest can reach it.
+final class VsockBridge: NSObject, VZVirtioSocketListenerDelegate {
+    let host: String, port: UInt16
+    var live: [VZVirtioSocketConnection] = []
+    let lock = NSLock()
+    init(host: String, port: UInt16) { self.host = host; self.port = port }
+
+    func listener(_ listener: VZVirtioSocketListener,
+                  shouldAcceptNewConnection connection: VZVirtioSocketConnection,
+                  from socketDevice: VZVirtioSocketDevice) -> Bool {
+        let tcp = socket(AF_INET, SOCK_STREAM, 0)
+        var addr = sockaddr_in()
+        addr.sin_family = sa_family_t(AF_INET)
+        addr.sin_port = port.bigEndian
+        inet_pton(AF_INET, host, &addr.sin_addr)
+        let ok = withUnsafePointer(to: &addr) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                connect(tcp, $0, socklen_t(MemoryLayout<sockaddr_in>.size)) == 0
+            }
+        }
+        if !ok { close(tcp); return false }
+        var one: Int32 = 1
+        setsockopt(tcp, IPPROTO_TCP, TCP_NODELAY, &one, socklen_t(MemoryLayout<Int32>.size))
+        lock.lock(); live.append(connection); lock.unlock()
+        let vfd = connection.fileDescriptor
+        let finish: () -> Void = { [weak self] in
+            shutdown(tcp, SHUT_RDWR)
+            guard let self = self else { return }
+            self.lock.lock()
+            if let i = self.live.firstIndex(where: { $0 === connection }) {
+                self.live.remove(at: i)
+                connection.close()
+                close(tcp)
+            }
+            self.lock.unlock()
+        }
+        func pump(_ from: Int32, _ to: Int32) {
+            Thread.detachNewThread {
+                var buf = [UInt8](repeating: 0, count: 1 << 20)
+                while true {
+                    let n = read(from, &buf, buf.count)
+                    if n <= 0 { break }
+                    var off = 0
+                    while off < n {
+                        let w = buf.withUnsafeBytes { write(to, $0.baseAddress! + off, n - off) }
+                        if w <= 0 { off = -1; break }
+                        off += w
+                    }
+                    if off < 0 { break }
+                }
+                finish()
+            }
+        }
+        pump(vfd, tcp)
+        pump(tcp, vfd)
+        return true
+    }
+}
+var vsockBridges: [VsockBridge] = []
 
 final class Delegate: NSObject, VZVirtualMachineDelegate {
     func guestDidStop(_ vm: VZVirtualMachine) {
@@ -223,6 +300,16 @@ vm.start { result in
         exit(1)
     }
     FileHandle.standardError.write("vzrun: VM started (\(config.cpuCount) vCPU, \(config.memorySize >> 30) GiB)\r\n".data(using: .utf8)!)
+    if let dev = vm.socketDevices.first as? VZVirtioSocketDevice {
+        for f in opts.vsockForwards {
+            let bridge = VsockBridge(host: f.host, port: f.hostPort)
+            vsockBridges.append(bridge)
+            let l = VZVirtioSocketListener()
+            l.delegate = bridge
+            dev.setSocketListener(l, forPort: f.guestPort)
+            FileHandle.standardError.write("vzrun: vsock \(f.guestPort) -> \(f.host):\(f.hostPort)\r\n".data(using: .utf8)!)
+        }
+    }
 }
 
 if opts.gui {
