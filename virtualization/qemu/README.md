@@ -33,16 +33,24 @@ ONLY=qemu virtualization/qemu/build-qemu-virgl.sh  # QEMU only, after patch edit
      context" instead of calling `abort()`;
    * a VirGL EGL-image guard;
    * the Cocoa GL include.
-4. `patches/qemu-cocoa-window-size-and-name.patch`:
-   * keeps the Retina window size stable (it used to shrink to 487×365 pt);
-   * sends the window size to the guest at launch;
-   * names the app from `-name`.
+4. Workspace patches, applied in order:
+   * `patches/qemu/0001-cocoa-window-size-and-name.patch`: keeps the Retina
+     window size stable (it used to shrink to 487×365 pt), sends the window
+     size to the guest at launch, and names the app from `-name`.
+   * `patches/qemu/0002-hvf-heterogeneous-vcpus.patch`:
+     `-machine virt,bg-vcpus=N[,bg-capacity=C]` gives the last N vCPUs host
+     background QoS (M cores) and guest `capacity-dmips-mhz` C (D-019, F-029).
+   * `patches/qemu/0003-cocoa-app-nap.patch`: `app-nap=on|off|auto`
+     (D-020, F-027).
+   * `patches/qemu/0004-virgl-macos-async-fences.patch` and
+     `patches/virglrenderer/0001-macos-thread-sync.patch`: event-driven
+     VirGL fences on macOS, replacing the 1 ms polling (D-021, F-030).
 
 ## Run
 
 ```bash
 tools/bin/mac-battery-feed --unix virtualization/run/battery.sock &   # Mac battery -> guest
-virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--console-socket]
+virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [--console-socket]
 ```
 
 | Option | Effect |
@@ -50,6 +58,8 @@ virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--console-s
 | (default) | Resizable window. The guest resolution follows the window's backing pixels, and Hyprland uses scale 2. A 1296×729 pt window gives a 2592×1458 guest at 120 Hz |
 | `--fullscreen` | Omarchy gets its own macOS Space with the menu bar and Dock hidden. The guest runs at the panel's native safe area, 3456×2160 at scale 2 (1728×1080 logical). Switch Spaces with a 4-finger swipe |
 | `--full-grab` | While the window is focused, Cmd-Space, Cmd-Tab and other system chords go to Hyprland (Cmd = Super). macOS asks once to allow Accessibility for the QEMU binary. Each rebuild changes the ad-hoc signature and needs the grant again |
+| `--hetero` | 18 vCPUs as 3 clusters of 6, mirroring the M5 Max. The last cluster runs at host background QoS (M cores) and appears to Linux at capacity 220/1024. `omarchy-qos` puts `background.slice` there and keeps everything else off it |
+| `APP_NAP=on\|off\|auto` (env) | macOS App Nap policy. Default `auto`: a hidden, idle VM naps, but a hidden VM doing foreground work runs at full speed |
 | `--console-socket` | Root shell on `virtualization/run/console.sock`; drive it with `tools/vmconsole.py` and `tools/vmpush.py` |
 | `--job DIR` | 9p share with tag `job`, for scripted runs |
 | `--headless` | No display |
@@ -81,6 +91,14 @@ locks the session on idle.
   at 2592×1458 at 120 Hz, scale 2.
 * The bar, notifications and lock screen are themed. This needed the Qt 6.12
   compatibility fix in `omarchy-arm64/configuration/compat/` (D-017).
+
+**Performance** (`reports/vm-vs-macos-parity.md`):
+
+* GPU shader ALU runs at 99.7% of macOS OpenGL. Blended fill is 74%, draw
+  calls 50%, texture upload 28% and readback 61%.
+* CPU foreground single-thread is 99% of native.
+* The background tier is 1.84–2.25× more energy-efficient than foreground.
+* An idle desktop costs +0.09 W of SoC power (`app-nap=auto`).
 
 **Integration:**
 

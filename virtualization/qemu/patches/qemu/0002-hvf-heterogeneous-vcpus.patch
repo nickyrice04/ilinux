@@ -1,0 +1,166 @@
+From: iLinux workspace
+Subject: [PATCH] hw/arm/virt, hvf: heterogeneous vCPUs (host QoS + guest capacity)
+
+-machine virt,bg-vcpus=N[,bg-capacity=C]: the last N vCPUs run their host
+threads at macOS QOS_CLASS_BACKGROUND, which the host scheduler places on
+efficiency (M) cores at low clocks (~2.4x the work per joule, ~4.7x slower,
+measured on M5 Max), and the guest DT gives them capacity-dmips-mhz = C
+(default 220) vs 1024, so Linux schedules asymmetric capacity: heavy tasks
+migrate off them, and cgroup cpusets can pin background work onto them.
+New ARMCPU string property host-qos (interactive|initiated|default|utility|
+background) is applied on the vCPU thread in hvf_arch_init_vcpu.  Inert
+unless bg-vcpus is set.
+
+diff -ru a/hw/arm/virt.c b/hw/arm/virt.c
+--- a/hw/arm/virt.c	2026-10-12 01:11:35
++++ b/hw/arm/virt.c	2026-10-12 01:11:55
+@@ -731,6 +731,12 @@
+                 ms->possible_cpus->cpus[cs->cpu_index].props.node_id);
+         }
+ 
++        if (vms->bg_vcpus) {
++            qemu_fdt_setprop_cell(ms->fdt, nodename, "capacity-dmips-mhz",
++                                  cpu >= (int)(smp_cpus - vms->bg_vcpus) ?
++                                  vms->bg_capacity : 1024);
++        }
++
+         phandle = qemu_fdt_alloc_phandle(ms->fdt);
+         qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", phandle);
+         vms->cpu_phandles[cpu] = phandle;
+@@ -3027,6 +3033,15 @@
+         exit(1);
+     }
+ 
++    if (vms->bg_vcpus >= smp_cpus) {
++        error_report("mach-virt: bg-vcpus=%u must leave at least one "
++                     "normal vCPU (smp=%u)", vms->bg_vcpus, smp_cpus);
++        exit(1);
++    }
++    if (vms->bg_vcpus && !vms->bg_capacity) {
++        vms->bg_capacity = 220;  /* M5 Max: background-QoS M core vs Super core */
++    }
++
+     create_fdt(vms);
+ 
+     assert(possible_cpus->len == max_cpus);
+@@ -3041,6 +3056,9 @@
+         cpuobj = object_new(possible_cpus->cpus[n].type);
+         object_property_set_int(cpuobj, "mp-affinity",
+                                 possible_cpus->cpus[n].arch_id, NULL);
++        if (vms->bg_vcpus && n >= (int)(smp_cpus - vms->bg_vcpus)) {
++            object_property_set_str(cpuobj, "host-qos", "background", NULL);
++        }
+ 
+         cs = CPU(cpuobj);
+         cs->cpu_index = n;
+@@ -4394,6 +4412,16 @@
+     vms->dtb_randomness = true;
+ 
+     vms->irqmap = a15irqmap;
++
++    object_property_add_uint32_ptr(obj, "bg-vcpus", &vms->bg_vcpus,
++                                   OBJ_PROP_FLAG_READWRITE);
++    object_property_set_description(obj, "bg-vcpus",
++        "Number of trailing vCPUs that run at host background QoS "
++        "(efficiency cores) and are advertised as lower-capacity CPUs");
++    object_property_add_uint32_ptr(obj, "bg-capacity", &vms->bg_capacity,
++                                   OBJ_PROP_FLAG_READWRITE);
++    object_property_set_description(obj, "bg-capacity",
++        "capacity-dmips-mhz of the bg-vcpus (others: 1024; default 220)");
+ 
+     vms->virtio_transports = NUM_VIRTIO_TRANSPORTS;
+ 
+diff -ru a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+--- a/include/hw/arm/virt.h	2026-10-12 01:11:35
++++ b/include/hw/arm/virt.h	2026-10-12 01:11:55
+@@ -175,6 +175,13 @@
+     bool tcg_its;
+     bool virt;
+     bool ras;
++    /*
++     * Heterogeneous vCPUs: the last bg_vcpus vCPUs run at host background
++     * QoS (macOS places them on efficiency cores) and are described to the
++     * guest with capacity-dmips-mhz = bg_capacity (the others get 1024).
++     */
++    uint32_t bg_vcpus;
++    uint32_t bg_capacity;
+     bool mte;
+     bool dtb_randomness;
+     bool second_ns_uart_present;
+diff -ru a/target/arm/cpu.c b/target/arm/cpu.c
+--- a/target/arm/cpu.c	2026-10-12 01:11:35
++++ b/target/arm/cpu.c	2026-10-12 01:11:55
+@@ -2491,6 +2491,7 @@
+                         mp_affinity, ARM64_AFFINITY_INVALID),
+     DEFINE_PROP_INT32("node-id", ARMCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
+     DEFINE_PROP_INT32("core-count", ARMCPU, core_count, -1),
++    DEFINE_PROP_STRING("host-qos", ARMCPU, host_qos),
+     /* True to default to the backward-compat old CNTFRQ rather than 1Ghz */
+     DEFINE_PROP_BOOL("backcompat-cntfrq", ARMCPU, backcompat_cntfrq, false),
+     DEFINE_PROP_BOOL("backcompat-pauth-default-use-qarma5", ARMCPU,
+diff -ru a/target/arm/cpu.h b/target/arm/cpu.h
+--- a/target/arm/cpu.h	2026-10-12 01:11:35
++++ b/target/arm/cpu.h	2026-10-12 01:11:55
+@@ -995,6 +995,9 @@
+      */
+     uint32_t psci_version;
+ 
++    /* Host scheduling class for this vCPU's thread (HVF): NULL = unchanged */
++    char *host_qos;
++
+     /* Current power state, access guarded by BQL */
+     ARMPSCIState power_state;
+ 
+diff -ru a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+--- a/target/arm/hvf/hvf.c	2026-10-12 01:11:35
++++ b/target/arm/hvf/hvf.c	2026-10-12 01:11:55
+@@ -10,6 +10,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include <pthread/qos.h>
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+ 
+@@ -1382,6 +1383,32 @@
+     return freq_hz;
+ }
+ 
++/*
++ * Runs on the vCPU thread: give it the requested macOS QoS class so the host
++ * scheduler places it (background QoS -> efficiency cores, lower clocks).
++ */
++static void hvf_arm_set_vcpu_qos(ARMCPU *arm_cpu)
++{
++    static const struct { const char *name; qos_class_t qos; } classes[] = {
++        { "interactive", QOS_CLASS_USER_INTERACTIVE },
++        { "initiated", QOS_CLASS_USER_INITIATED },
++        { "default", QOS_CLASS_DEFAULT },
++        { "utility", QOS_CLASS_UTILITY },
++        { "background", QOS_CLASS_BACKGROUND },
++    };
++
++    if (!arm_cpu->host_qos) {
++        return;
++    }
++    for (size_t i = 0; i < ARRAY_SIZE(classes); i++) {
++        if (!strcmp(arm_cpu->host_qos, classes[i].name)) {
++            pthread_set_qos_class_self_np(classes[i].qos, 0);
++            return;
++        }
++    }
++    warn_report("hvf: unknown host-qos '%s'", arm_cpu->host_qos);
++}
++
+ int hvf_arch_init_vcpu(CPUState *cpu)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+@@ -1391,6 +1418,8 @@
+     uint64_t pfr;
+     hv_return_t ret;
+     int i;
++
++    hvf_arm_set_vcpu_qos(arm_cpu);
+ 
+     if (__builtin_available(macOS 15.2, *)) {
+         if (hvf_arm_sme2_supported()) {

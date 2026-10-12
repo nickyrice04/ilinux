@@ -1,0 +1,11 @@
+[Unit]
+Description=Keep system services off reserved efficient CPUs (omarchy-qos)
+After=sysinit.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/omarchy-qos apply-system
+
+[Install]
+WantedBy=multi-user.target

@@ -17,8 +17,14 @@
 # window is focused; macOS asks once to allow Accessibility for QEMU (a
 # rebuilt, ad-hoc-signed binary needs the grant again).
 #
-#   virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--headless]
-#                                         [--console-socket] [--job DIR]
+# A hidden window no longer throttles a busy guest: app-nap=auto (see below).
+# CPU: --hetero mirrors the M5 Max (1 Super + 2 M clusters of 6): 18 vCPUs in 3
+# clusters; the last cluster runs at macOS background QoS (host M cores, low
+# clocks) and is described to Linux as capacity 220/1024, so omarchy-qos fences
+# background.slice onto it (workspace patch qemu-hvf-heterogeneous-vcpus).
+#
+#   virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero]
+#                                         [--headless] [--console-socket] [--job DIR]
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 QEMU="$ROOT/virtualization/qemu/runtime/bin/qemu-system-aarch64"
@@ -29,6 +35,8 @@ CPUS="${CPUS:-12}"
 MEM_MIB="${MEM_MIB:-16384}"
 XRES="${XRES:-1728}"; YRES="${YRES:-1117}"   # half of the 3456x2234 panel; Hyprland scales
 RUNDIR="$ROOT/virtualization/run"; mkdir -p "$RUNDIR"   # short path: AF_UNIX limit is 104 bytes
+# The guest follows the Mac's time zone (ilinux-timezone-sync reads ilinux.tz=).
+TZNAME=$(readlink /etc/localtime 2>/dev/null | sed -n 's|.*/zoneinfo/||p')
 # One VM per run directory: a second launch would unlink the running VM's
 # console/monitor sockets (QEMU's disk lock only stops it after that).
 if [[ -f $RUNDIR/qemu.pid ]] && kill -0 "$(cat "$RUNDIR/qemu.pid")" 2>/dev/null; then
@@ -36,30 +44,36 @@ if [[ -f $RUNDIR/qemu.pid ]] && kill -0 "$(cat "$RUNDIR/qemu.pid")" 2>/dev/null;
 fi
 rm -f "$RUNDIR"/{console,monitor,battery}.sock
 fullscreen=off; fullgrab=off; headless=0
+# App Nap: "auto" lets macOS nap a hidden, idle VM but not a busy one (workspace
+# patch qemu-cocoa-app-nap); APP_NAP=on|off overrides.
+appnap="${APP_NAP:-auto}"
+smp="$CPUS,sockets=1,cores=$CPUS,threads=1"; machine="virt,gic-version=3"
 job=()
 CONSOLE="stdio,id=hvc0,signal=off"
 while (($#)); do
   case "$1" in
     --fullscreen) fullscreen=on; shift ;;
     --full-grab) fullgrab=on; shift ;;
+    --hetero) smp="18,sockets=1,clusters=3,cores=6,threads=1"
+              machine="virt,gic-version=3,bg-vcpus=6"; shift ;;
     --headless) headless=1; shift ;;
     --console-socket) CONSOLE="socket,id=hvc0,path=$RUNDIR/console.sock,server=on,wait=off"; shift ;;
     --job) job=(-fsdev "local,id=job,path=$2,security_model=none"
                 -device "virtio-9p-pci,fsdev=job,mount_tag=job"); shift 2 ;;
-    *) echo "usage: $0 [--fullscreen] [--full-grab] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
+    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
   esac
 done
 if ((headless)); then
   display=(-display none)
 else
   display=(-device "virtio-gpu-gl-pci,max_outputs=1,xres=$XRES,yres=$YRES"
-           -display "cocoa,gl=on,show-cursor=on,zoom-to-fit=on,full-screen=$fullscreen,immersive=$fullscreen,full-grab=$fullgrab,swap-opt-cmd=off")
+           -display "cocoa,gl=on,show-cursor=on,zoom-to-fit=on,full-screen=$fullscreen,immersive=$fullscreen,full-grab=$fullgrab,swap-opt-cmd=off,app-nap=$appnap")
 fi
 
 exec "$QEMU" -name Omarchy \
-  -machine virt,gic-version=3 -accel hvf,kernel-irqchip=on -cpu host,pmu=off \
-  -smp "$CPUS,sockets=1,cores=$CPUS,threads=1" -m "${MEM_MIB}M" \
-  -kernel "$KERNEL" -append "${APPEND:-root=/dev/vda rootflags=subvol=@ rw rootwait console=hvc0 quiet loglevel=3}" \
+  -machine "$machine" -accel hvf,kernel-irqchip=on -cpu host,pmu=off \
+  -smp "$smp" -m "${MEM_MIB}M" \
+  -kernel "$KERNEL" -append "${APPEND:-root=/dev/vda rootflags=subvol=@ rw rootwait console=hvc0 quiet loglevel=3}${TZNAME:+ ilinux.tz=$TZNAME}" \
   -drive "if=none,id=root,file=$DISK,format=raw,cache=writeback,discard=unmap" \
   -device virtio-blk-pci,drive=root \
   "${display[@]}" \

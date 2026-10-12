@@ -1,0 +1,93 @@
+From: iLinux workspace
+Subject: [PATCH] virtio-gpu-virgl: event-driven fences on macOS (CGL)
+
+Use virglrenderer's sync thread with async fence callbacks on the CGL
+path (previously EGL-only): fences retire via the async-fence bottom half
+as soon as the GPU finishes, instead of on the next 1 ms poll tick (guest
+GL sync overhead ~1.5 ms -> ~0.1 ms; blended fill 17% -> 74% of native).
+Also watch virglrenderer's poll fd so pending-query checks run at once,
+and put the Darwin fence-poll backstop timer back to 10 ms in this mode.
+Needs patches/virglrenderer/0001-macos-thread-sync.patch.
+
+diff -ru a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+--- a/hw/display/virtio-gpu-virgl.c	2026-10-12 01:35:15
++++ b/hw/display/virtio-gpu-virgl.c	2026-10-12 01:38:53
+@@ -1371,6 +1371,21 @@
+     return qemu_console_gl_ctx_make_current(g->parent_obj.scanout[scanout_idx].con, qctx);
+ }
+ 
++#if defined(CONFIG_DARWIN) && VIRGL_CHECK_VERSION(1, 1, 2)
++/* Fences retire from virglrenderer's sync thread (async callbacks). */
++static bool virgl_async_fences;
++
++/* virglrenderer signals pending query checks through its poll fd. */
++static void virtio_gpu_virgl_poll_fd_read(void *opaque)
++{
++    VirtIOGPU *g = opaque;
++
++    if (VIRTIO_GPU_GL(g)->renderer_state == RS_INITED) {
++        virgl_renderer_poll();
++    }
++}
++#endif
++
+ static struct virgl_renderer_callbacks virtio_gpu_3d_cbs = {
+ #if VIRGL_VERSION_MAJOR >= 1
+     .version             = 3,
+@@ -1421,9 +1436,16 @@
+     if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
+ #ifdef CONFIG_DARWIN
+         /* ANGLE fences are polled on the render thread. The generic 10 ms
+-         * interval exceeds an entire 120 Hz frame and stalls guest uploads. */
+-        timer_mod(gl->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 1);
++         * interval exceeds an entire 120 Hz frame and stalls guest uploads.
++         * With async fences the timer is only a backstop: keep 10 ms and
++         * avoid ~1000 main-loop wakeups/s while frames are in flight. */
++        timer_mod(gl->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
++#if VIRGL_CHECK_VERSION(1, 1, 2)
++                  (virgl_async_fences ? 10 : 1));
+ #else
++                  1);
++#endif
++#else
+         timer_mod(gl->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
+ #endif
+     }
+@@ -1485,6 +1507,20 @@
+ #endif
+     }
+ #endif
++#if defined(CONFIG_DARWIN) && VIRGL_CHECK_VERSION(1, 1, 2)
++    /*
++     * macOS (CGL): retire fences from virglrenderer's sync thread through the
++     * async callbacks -> bottom half, instead of the 1 ms poll timer (which
++     * cost ~1.5 ms per guest GL sync, measured).  Relies on the workspace
++     * virglrenderer patch that emulates eventfd with a pipe on macOS.
++     */
++    if (!(flags & VIRGL_RENDERER_ASYNC_FENCE_CB)) {
++        virtio_gpu_3d_cbs.write_fence         = virgl_write_async_fence;
++        virtio_gpu_3d_cbs.write_context_fence = virgl_write_async_context_fence;
++        flags |= VIRGL_RENDERER_ASYNC_FENCE_CB | VIRGL_RENDERER_THREAD_SYNC;
++    }
++    virgl_async_fences = flags & VIRGL_RENDERER_ASYNC_FENCE_CB;
++#endif
+ #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+     if (qemu_egl_angle_d3d) {
+         flags |= VIRGL_RENDERER_D3D11_SHARE_TEXTURE;
+@@ -1523,6 +1559,16 @@
+ 
+     gl->fence_poll = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+                                   virtio_gpu_fence_poll, g);
++
++#if defined(CONFIG_DARWIN) && VIRGL_CHECK_VERSION(1, 1, 2)
++    if (flags & VIRGL_RENDERER_ASYNC_FENCE_CB) {
++        int fd = virgl_renderer_get_poll_fd();
++
++        if (fd >= 0) {
++            qemu_set_fd_handler(fd, virtio_gpu_virgl_poll_fd_read, NULL, g);
++        }
++    }
++#endif
+ 
+     if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+         gl->print_stats = timer_new_ms(QEMU_CLOCK_VIRTUAL,

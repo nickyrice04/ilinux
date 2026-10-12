@@ -1,0 +1,103 @@
+From: iLinux workspace
+Subject: [PATCH] macOS: pipe-backed eventfd; keep fences retiring if the sync thread fails
+
+macOS has no eventfd, so THREAD_SYNC was silently dropped and fences were
+only retired by QEMU's 1 ms poll timer.  Emulate eventfd with a
+non-blocking pipe (read end = the fd; writes go to the paired end), and
+if the sync thread cannot start, fall back to main-thread fence retirement
+instead of leaving use_async_fence_cb set with nobody retiring fences.
+
+diff -ru a/src/virgl_util.c b/src/virgl_util.c
+--- a/src/virgl_util.c	2026-10-12 01:35:15
++++ b/src/virgl_util.c	2026-10-12 01:35:15
+@@ -86,9 +86,22 @@
+    return key1 == key2;
+ }
+ 
++#if !defined(HAVE_EVENTFD_H) && defined(__APPLE__)
++#include <fcntl.h>
++/*
++ * macOS has no eventfd: emulate one with a non-blocking pipe.  The read end
++ * is "the eventfd" (polled and flushed by the caller); write_eventfd() maps
++ * it to the paired write end.  A full pipe already means "signalled", so a
++ * write that would block is treated as success, like a saturated counter.
++ */
++#define EVENTFD_EMULATED 1
++#define EVENTFD_PIPE_MAX 1024
++static int eventfd_pipe_write[EVENTFD_PIPE_MAX];   /* write fd + 1, 0 = none */
++#endif
++
+ bool has_eventfd(void)
+ {
+-#ifdef HAVE_EVENTFD_H
++#if defined(HAVE_EVENTFD_H) || defined(EVENTFD_EMULATED)
+    return true;
+ #else
+    return false;
+@@ -99,6 +112,24 @@
+ {
+ #ifdef HAVE_EVENTFD_H
+    return eventfd(initval, EFD_CLOEXEC | EFD_NONBLOCK);
++#elif defined(EVENTFD_EMULATED)
++   int p[2];
++
++   if (pipe(p))
++      return -1;
++   if (p[0] >= EVENTFD_PIPE_MAX) {
++      close(p[0]);
++      close(p[1]);
++      return -1;
++   }
++   for (int i = 0; i < 2; i++) {
++      fcntl(p[i], F_SETFL, fcntl(p[i], F_GETFL) | O_NONBLOCK);
++      fcntl(p[i], F_SETFD, FD_CLOEXEC);
++   }
++   eventfd_pipe_write[p[0]] = p[1] + 1;
++   if (initval)
++      write_eventfd(p[0], initval);
++   return p[0];
+ #else
+    (void)initval;
+    return -1;
+@@ -110,6 +141,13 @@
+    const char *buf = (const char *)&val;
+    size_t count = sizeof(val);
+    ssize_t ret = 0;
++
++#ifdef EVENTFD_EMULATED
++   if (fd >= 0 && fd < EVENTFD_PIPE_MAX && eventfd_pipe_write[fd]) {
++      ret = write(eventfd_pipe_write[fd] - 1, buf, count);
++      return (ret == (ssize_t)count || (ret < 0 && errno == EAGAIN)) ? 0 : -1;
++   }
++#endif
+ 
+    while (count) {
+       ret = write(fd, buf, count);
+diff -ru a/src/vrend/vrend_renderer.c b/src/vrend/vrend_renderer.c
+--- a/src/vrend/vrend_renderer.c	2026-10-12 01:35:15
++++ b/src/vrend/vrend_renderer.c	2026-10-12 01:35:15
+@@ -7520,6 +7520,8 @@
+    vrend_state.sync_context = vrend_clicbs->create_gl_context_surfaceless(0, &ctx_params);
+    if (vrend_state.sync_context == NULL) {
+       virgl_error("Failed to create sync opengl context\n");
++      /* Without the sync thread, fences must retire on the main thread. */
++      vrend_state.use_async_fence_cb = false;
+       return;
+    }
+ 
+@@ -7528,6 +7530,7 @@
+       if (vrend_state.eventfd == -1) {
+          virgl_error("Failed to create eventfd\n");
+          vrend_clicbs->destroy_gl_context_surfaceless(vrend_state.sync_context);
++         vrend_state.use_async_fence_cb = false;
+          return;
+       }
+    }
+@@ -7542,6 +7545,7 @@
+ 
+    vrend_state.sync_thread = u_thread_create(thread_sync, NULL);
+    if (!vrend_state.sync_thread) {
++      vrend_state.use_async_fence_cb = false;
+       close(vrend_state.eventfd);
+       vrend_state.eventfd = -1;
+       vrend_clicbs->destroy_gl_context_surfaceless(vrend_state.sync_context);

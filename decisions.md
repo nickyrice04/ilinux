@@ -228,3 +228,50 @@ Hyprland gets a crisp 2× mode from first boot.
 (recommended for daily use). Full grab needs a one-time Accessibility grant
 for the ad-hoc-signed QEMU, and each rebuild needs the grant again.
 
+
+## D-019 · 2026-10-12 · Heterogeneous vCPUs that mirror Super/M scheduling
+
+**Decision:** Add `-machine virt,bg-vcpus=N[,bg-capacity=C]` (workspace QEMU
+patch). The last N vCPUs run their host threads at macOS background QoS and
+are described to Linux as `capacity-dmips-mhz` C (default 220) vs 1024. The
+launcher's `--hetero` gives 18 vCPUs in 3 clusters (6 background).
+
+`omarchy-qos` keeps `background.slice` on the low-capacity CPUs. With
+`RESERVE_EFFICIENT_CPUS=auto` (min/max capacity below 40%), it also keeps
+system, session, app and utility slices off them.
+
+**Why:**
+
+* macOS only moves work to M cores under background QoS. That costs about
+  4.7× speed and buys about 2.4× work per joule (F-028).
+* Mapped this way, guest background work is 1.84–2.25× more energy-efficient
+  than foreground, while foreground stays at 99% of native (F-029).
+* Without the reservation, new tasks could start on a slow vCPU.
+
+## D-020 · 2026-10-12 · App Nap policy for the VM: `auto`
+
+**Decision:** Add a workspace Cocoa option, `app-nap=on|off|auto`. The
+launcher defaults to `auto`: macOS may nap a hidden, idle VM, but QEMU holds
+a user-initiated activity while non-background vCPUs are busy (more than 25%
+of a core over 1 s, released after 10 idle seconds).
+
+**Why:**
+
+* A hidden QEMU window put every vCPU at background priority, about 4×
+  slower, for work the user left running (F-027).
+* `auto` keeps the idle cost at +0.09 W vs +0.14 W for `off` (F-032).
+* Background-tier guest work does not wake the process.
+
+## D-021 · 2026-10-12 · Event-driven VirGL fences on macOS
+
+**Decision:**
+
+* virglrenderer emulates eventfd with a pipe on macOS.
+* QEMU enables threaded sync with async fence callbacks on the CGL path
+  (previously EGL-only) and watches the poll fd.
+* The 1 ms fence-poll timer becomes a 10 ms backstop in that mode.
+
+**Why:** Polling added about 1.5 ms to every guest GL sync. The change took
+blended fill from 17% to 74% of native, readback from 23% to 61%, and ALU
+from 92% to 99.7% (F-030). It also removes about 1000 main-loop wakeups/s
+during animation.

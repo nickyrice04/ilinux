@@ -1,0 +1,13 @@
+[Unit]
+Description=Follow the Mac's time zone (ilinux.tz= from the VM launcher)
+DefaultDependencies=no
+After=local-fs.target
+Before=sysinit.target time-set.target display-manager.service
+ConditionKernelCommandLine=ilinux.tz
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/ilinux-timezone-sync
+
+[Install]
+WantedBy=sysinit.target

@@ -11,8 +11,10 @@
 #     QEMU's virtio-gpu-virgl.c includes ui/egl-helpers.h unconditionally, and
 #     is patched so a missing libEGL means "no EGL context" instead of abort()
 #     (epoxy probes EGL on every GL entry-point lookup once EGL is compiled in).
-#   * workspace QEMU patches (virtualization/qemu/patches/) on top of the
-#     try-omarchy series: stable Retina window size, product name from -name
+#   * workspace patches (virtualization/qemu/patches/) on top of the
+#     try-omarchy series: stable Retina window size and product name, App Nap
+#     policy, heterogeneous vCPUs (host QoS + guest capacity), event-driven
+#     virgl fences on macOS (pipe-backed eventfd in virglrenderer)
 #   * audio uses QEMU's native CoreAudio backend instead of SDL
 #   * uses Homebrew's already-installed glib/pixman/pcre2/gettext for linking
 # Every source archive is SHA-256 pinned (hashes from try-omarchy where they
@@ -139,6 +141,9 @@ new = "#if defined(HAVE_EPOXY_EGL_H) && (defined(ENABLE_GBM) || defined(ENABLE_M
 assert old in s, "virgl EGL guard site not found"
 open(p, "w").write(s.replace(old, new, 1))
 PY
+for p in "$Q"/patches/virglrenderer/*.patch; do
+  patch -d "$SRC/virglrenderer" -p1 -f -s -i "$p"
+done
 log "build virglrenderer"
 CFLAGS="-I$RT/include" meson setup "$SRC/virglrenderer/build" "$SRC/virglrenderer" --prefix="$RT" \
   --libdir=lib --buildtype=debugoptimized -Db_ndebug=false --wrap-mode=nodownload \
@@ -177,7 +182,7 @@ t_new = ("#ifdef CONFIG_EGL\n                         egl_surface != NULL);\n#el
 assert t_old in s, "cocoa.m trace site not found"
 open(p, "w").write(s.replace(t_old, t_new, 1))
 PY
-for p in "$Q"/patches/qemu-*.patch; do
+for p in "$Q"/patches/qemu/*.patch; do
   patch -d "$SRC/qemu" -p1 -f -s -i "$p"
 done
 log "configure QEMU"

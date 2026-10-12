@@ -115,3 +115,43 @@
 | storage | seqread | 1 | MB/s | 1.108e+04 | 1450 | 13.1% |
 | storage | seqread | 4 | MB/s | 1.32e+04 | 3470 | 26.3% |
 | storage | seqwrite | 1 | MB/s | 1.118e+04 | 335.3 | 3.0% |
+
+---
+
+## QEMU desktop VM (HVF + VirGL), 2026-10-12
+
+This is the engine behind the GPU-accelerated Omarchy desktop
+(`virtualization/qemu/`). The CPU results above came from the
+Virtualization.framework VM. Raw data is in
+`benchmarks/results/vm-qemu-2026-10-12/`.
+
+### GPU: `glbench`, identical GL 4.1 core code (macOS CGL vs guest Mesa virgl), 2592×1458, medians of 3
+
+| Test | macOS GL (Metal) | VM, 1 ms fence poll (before) | VM, async fences (now) | Parity now |
+|---|---|---|---|---|
+| Fragment ALU (FMA) | 12.35 TFLOPS | 11.35 | 12.31 | **99.7%** |
+| Blended fill (16 layers per sync) | 200.7 Gpix/s | 33.8 | 149.4 | 74% |
+| Draw calls (with uniform update) | 2.42 M/s | 1.107 | 1.217 | 50% |
+| Texture upload (2048² RGBA8) | 48.0 GB/s | 12.0 | 13.4 | 28% |
+| Readback (`glReadPixels`) | 11.57 GB/s | 2.63 | 7.06 | 61% |
+
+* For reference, the Metal compute peak (session 1) is 14.75 TFLOPS FP32.
+  GL fragment shading reaches 84% of it, natively and in the VM alike.
+
+### CPU: heterogeneous vCPUs (`--hetero`), guest `cpubench intmix` (clang `-mcpu=apple-m4`) under host `powermon`
+
+| Placement | Threads | Guest Gop/s | Host CPU W | Gop/s per W |
+|---|---|---|---|---|
+| Native macOS, default QoS | 1 | 20.97 | 7.21 | 2.91 |
+| VM, foreground vCPU | 1 | 20.79 (99%) | 6.49 | 3.20 |
+| VM, `omarchy-qos run background` | 1 | 4.51 | 0.77 | 5.89 (1.84× foreground) |
+| VM, foreground vCPUs | 6 | 111.3 | 15.79 | 7.05 |
+| VM, `omarchy-qos run background` | 6 | 21.8 | 1.37 | 15.9 (2.25× foreground) |
+
+### Idle power (SoC sum, IOReport): back-to-back A/B, 3 × 30 s
+
+| State | SoC W | vs host only |
+|---|---|---|
+| Host only (VM off) | 1.713 | — |
+| VM idle desktop, `app-nap=auto` | 1.799 | +0.09 W |
+| VM idle desktop, `app-nap=off` | 1.855 | +0.14 W |

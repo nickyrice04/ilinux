@@ -1,0 +1,12 @@
+#!/bin/bash
+# Follow the Mac's time zone: the launcher passes ilinux.tz=<Area/City> (from
+# macOS /etc/localtime) on the kernel command line; apply it at boot if it
+# names a zone this system knows.  Only [A-Za-z0-9_+-/] is accepted.
+set -euo pipefail
+tz=$(tr ' ' '\n' < /proc/cmdline | sed -n 's/^ilinux\.tz=//p' | tail -n 1)
+[[ -n $tz && $tz =~ ^[A-Za-z0-9_+/-]+$ && $tz != *..* ]] || exit 0
+[[ -f /usr/share/zoneinfo/$tz ]] || { echo "unknown time zone: $tz" >&2; exit 0; }
+current=$(readlink /etc/localtime 2>/dev/null || true)
+[[ $current == */zoneinfo/$tz ]] && exit 0
+ln -sfn "../usr/share/zoneinfo/$tz" /etc/localtime
+echo "time zone set to $tz"

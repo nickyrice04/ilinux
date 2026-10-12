@@ -80,14 +80,21 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-See `progress.md`. As of 2026-10-11:
+See `progress.md`. As of 2026-10-12:
 
 * Hardware fully inventoried. M5 Max / t6050 is not supported by Asahi, so
   native Linux cannot boot yet.
-* The macOS baseline suite exists and was executed (CPU/SME, memory, storage,
-  GPU/MPS, llama.cpp with synthetic models).
-* REA, Asahi and Omarchy research reports are in `research/`.
-* Pending user approvals are listed in `blockers.md`.
+* A draft native patch series exists in `kernel/patches/t6050`. It
+  compile-tests clean and is unbooted.
+* **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
+  * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
+  * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;
+  * heterogeneous vCPUs map guest background work to host M cores;
+  * App Nap `auto`, with an idle cost of +0.09 W;
+  * the Mac battery and time zone are bridged into the guest.
+* GPU compute for LLMs from Linux runs through ggml RPC over vsock: 81–89% of
+  native Metal.
+* The macOS baseline suite and session-1 research are complete.
 
 ## Next recommended actions
 

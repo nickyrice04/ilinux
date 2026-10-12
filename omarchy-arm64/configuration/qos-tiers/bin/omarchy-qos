@@ -31,6 +31,11 @@ UTILITY_WEIGHT=50
 BACKGROUND_UCLAMP_MAX=30
 BACKGROUND_WEIGHT=20
 BACKGROUND_RESTRICT_CPUS=yes
+# Keep foreground work off the efficient CPUs: auto = only when they are much
+# slower (min/max capacity below RESERVE_RATIO_PCT), e.g. a VM whose efficient
+# vCPUs run at host background QoS; on Apple's M cores (fast) they stay shared.
+RESERVE_EFFICIENT_CPUS=auto
+RESERVE_RATIO_PCT=40
 # shellcheck source=/dev/null
 [ -r "$CONFIG" ] && . "$CONFIG"
 
@@ -57,6 +62,25 @@ efficient_cpus() {
   local max
   max=$(cpu_caps | awk '{ if ($2 > m) m = $2 } END { print m }')
   cpu_caps | awk -v m="$max" '$2 < m { printf "%s%s", sep, $1; sep="," }'
+}
+
+# Performance CPU set = CPUs at the maximum capacity.
+performance_cpus() {
+  local max
+  max=$(cpu_caps | awk '{ if ($2 > m) m = $2 } END { print m }')
+  cpu_caps | awk -v m="$max" '$2 == m { printf "%s%s", sep, $1; sep="," }'
+}
+
+# Should non-background work be kept off the efficient CPUs?
+reserve_efficient() {
+  case "$RESERVE_EFFICIENT_CPUS" in
+    yes) return 0 ;;
+    no) return 1 ;;
+  esac
+  [ -n "$(efficient_cpus)" ] || return 1
+  cpu_caps | awk -v r="$RESERVE_RATIO_PCT" '
+    { if ($2 > max) max = $2; if (min == "" || $2 < min) min = $2 }
+    END { exit !(min * 100 < r * max) }'
 }
 
 slice_cgroup() {
@@ -94,9 +118,26 @@ apply() {
     systemctl --user set-property --runtime background.slice AllowedCPUs="$eff" ||
       warn "AllowedCPUs failed (is cpuset delegated to user@.service?)"
   fi
+  if [ -n "$eff" ] && reserve_efficient; then
+    local perf s
+    perf=$(performance_cpus)
+    for s in session.slice app.slice utility.slice; do
+      systemctl --user set-property --runtime "$s" AllowedCPUs="$perf" ||
+        warn "AllowedCPUs failed for $s"
+    done
+  fi
   set_uclamp session.slice min "$INTERACTIVE_UCLAMP_MIN"
   set_uclamp utility.slice max "$UTILITY_UCLAMP_MAX"
   set_uclamp background.slice max "$BACKGROUND_UCLAMP_MAX"
+}
+
+# System side (root, at boot via omarchy-qos-system.service): keep system
+# services off reserved efficient CPUs too.
+apply_system() {
+  [ "$(id -u)" = 0 ] || die "apply-system must run as root"
+  [ -n "$(efficient_cpus)" ] && reserve_efficient || return 0
+  systemctl set-property --runtime system.slice AllowedCPUs="$(performance_cpus)" ||
+    warn "AllowedCPUs failed for system.slice"
 }
 
 tier_slice() {
@@ -124,6 +165,9 @@ status() {
   local eff
   eff=$(efficient_cpus)
   echo "efficient set: ${eff:-<none: homogeneous>}"
+  if [ -n "$eff" ] && reserve_efficient; then
+    echo "efficient CPUs reserved for background (foreground on $(performance_cpus))"
+  fi
   echo "== kernel"
   echo "EAS (sched_energy_aware): $(cat /proc/sys/kernel/sched_energy_aware 2>/dev/null || echo n/a)"
   echo "cpufreq governor(cpu0): $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null || echo n/a)"
@@ -142,7 +186,8 @@ status() {
 
 case "${1:-}" in
   apply) apply ;;
+  apply-system) apply_system ;;
   run) shift; run "$@" ;;
   status) status ;;
-  *) echo "usage: omarchy-qos apply | run <tier> -- cmd... | status" >&2; exit 2 ;;
+  *) echo "usage: omarchy-qos apply | apply-system | run <tier> -- cmd... | status" >&2; exit 2 ;;
 esac

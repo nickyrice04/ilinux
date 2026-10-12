@@ -5,6 +5,66 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-12 · Efficiency pass: CPU heterogeneity, App Nap, GPU fences, power
+
+### Discovered
+
+* **App Nap (F-027):** a hidden QEMU window naps the whole VM, putting every
+  vCPU at PRI 4 on M cores, about 4× slower.
+* **macOS QoS on M5 Max (F-028):** only `background` QoS reaches the M cores.
+  `utility` behaves like `default`.
+* **VirGL fences (F-030):** on macOS they were polled every 1 ms, costing
+  about 1.5 ms per guest GL sync. QEMU enabled the sync thread only for EGL,
+  and virglrenderer needs eventfd.
+* **Idle power (F-032):** an idle Omarchy VM costs only +0.09 W SoC. The
+  earlier +0.38 W reading included post-login churn and a lingering test
+  user manager.
+
+### Implemented
+
+* **Workspace QEMU and virglrenderer patches:**
+  * `bg-vcpus` heterogeneous vCPUs: host QoS plus guest
+    `capacity-dmips-mhz` (D-019);
+  * `app-nap=on|off|auto` (D-020);
+  * event-driven VirGL fences with a pipe-backed eventfd (D-021).
+* **Launcher:** `--hetero`, `APP_NAP` (default `auto`), and the guest time
+  zone follows the Mac (`ilinux.tz=`).
+* **`omarchy-qos`:** `RESERVE_EFFICIENT_CPUS=auto` keeps system and
+  foreground slices off much-slower efficient CPUs, plus a system unit
+  `omarchy-qos-system.service`.
+* **Tools:**
+  * `benchmarks/src/glbench.c`: the same GL 4.1 code on CGL and EGL;
+  * `benchmarks/vm/{vm_power_states,hetero_placement}.sh`;
+  * `tools/power_{summary,table}.py`;
+  * `vmconsole.py`: robust completion marker.
+
+### Measured (`reports/vm-vs-macos-parity.md`)
+
+* **GPU vs macOS GL:**
+
+  | Test | Parity |
+  |---|---|
+  | ALU | 99.7% |
+  | Blended fill | 74% (was 17%) |
+  | Readback | 61% (was 23%) |
+  | Draw calls | 50% |
+  | Texture upload | 28% |
+
+* **CPU:** foreground single-thread is 99% of native. The background tier
+  gives 1.84× (1 thread) and 2.25× (6 threads) more work per joule than
+  foreground.
+* **Idle:** +0.09 W (`app-nap=auto`) and +0.14 W (`off`) over host-only
+  1.713 W.
+
+### Next
+
+* Texture-upload and draw-call gaps: blob or zero-copy resources, and Venus
+  (Vulkan) via MoltenVK or KosmicKrisp.
+* Battery-mode measurements (on battery and in Low Power Mode).
+* Package the kernel for pacman.
+
+---
+
 ## 2026-10-12 · Session 2: Omarchy 4 desktop in a GPU-accelerated VM
 
 ### Implemented

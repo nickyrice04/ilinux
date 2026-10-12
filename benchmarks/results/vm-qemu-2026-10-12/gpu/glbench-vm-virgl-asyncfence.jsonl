@@ -1,0 +1,18 @@
+{"rep":1,"side":"vm-virgl-async","bench":"glbench-info","renderer":"virgl (Apple M5 Max)","version":"4.1 (Core Profile) Mesa 26.2.4-arch1.1"}
+{"rep":1,"side":"vm-virgl-async","bench":"glbench","test":"alu","value":1.166e+04,"unit":"GFLOPS","iterations":756,"seconds":2.006,"size":"2592x1458"}
+{"rep":1,"side":"vm-virgl-async","bench":"glbench","test":"fill_blend","value":73.31,"unit":"Gpix/s","iterations":38800,"seconds":2.000,"size":"2592x1458"}
+{"rep":1,"side":"vm-virgl-async","bench":"glbench","test":"draw_calls","value":0.2598,"unit":"Mdraws/s","iterations":520000,"seconds":2.001,"size":"2592x1458"}
+{"rep":1,"side":"vm-virgl-async","bench":"glbench","test":"tex_upload","value":8.18,"unit":"GB/s","iterations":976,"seconds":2.002,"size":"2592x1458"}
+{"rep":1,"side":"vm-virgl-async","bench":"glbench","test":"readback","value":7.193,"unit":"GB/s","iterations":1206,"seconds":2.003,"size":"2592x1458"}
+{"rep":2,"side":"vm-virgl-async","bench":"glbench-info","renderer":"virgl (Apple M5 Max)","version":"4.1 (Core Profile) Mesa 26.2.4-arch1.1"}
+{"rep":2,"side":"vm-virgl-async","bench":"glbench","test":"alu","value":1.231e+04,"unit":"GFLOPS","iterations":796,"seconds":2.002,"size":"2592x1458"}
+{"rep":2,"side":"vm-virgl-async","bench":"glbench","test":"fill_blend","value":149.4,"unit":"Gpix/s","iterations":79072,"seconds":2.000,"size":"2592x1458"}
+{"rep":2,"side":"vm-virgl-async","bench":"glbench","test":"draw_calls","value":1.238,"unit":"Mdraws/s","iterations":2480000,"seconds":2.003,"size":"2592x1458"}
+{"rep":2,"side":"vm-virgl-async","bench":"glbench","test":"tex_upload","value":13.46,"unit":"GB/s","iterations":1608,"seconds":2.004,"size":"2592x1458"}
+{"rep":2,"side":"vm-virgl-async","bench":"glbench","test":"readback","value":7.064,"unit":"GB/s","iterations":1184,"seconds":2.002,"size":"2592x1458"}
+{"rep":3,"side":"vm-virgl-async","bench":"glbench-info","renderer":"virgl (Apple M5 Max)","version":"4.1 (Core Profile) Mesa 26.2.4-arch1.1"}
+{"rep":3,"side":"vm-virgl-async","bench":"glbench","test":"alu","value":1.234e+04,"unit":"GFLOPS","iterations":800,"seconds":2.008,"size":"2592x1458"}
+{"rep":3,"side":"vm-virgl-async","bench":"glbench","test":"fill_blend","value":150.4,"unit":"Gpix/s","iterations":79584,"seconds":2.000,"size":"2592x1458"}
+{"rep":3,"side":"vm-virgl-async","bench":"glbench","test":"draw_calls","value":1.217,"unit":"Mdraws/s","iterations":2440000,"seconds":2.005,"size":"2592x1458"}
+{"rep":3,"side":"vm-virgl-async","bench":"glbench","test":"tex_upload","value":13.4,"unit":"GB/s","iterations":1600,"seconds":2.004,"size":"2592x1458"}
+{"rep":3,"side":"vm-virgl-async","bench":"glbench","test":"readback","value":7.006,"unit":"GB/s","iterations":1174,"seconds":2.001,"size":"2592x1458"}

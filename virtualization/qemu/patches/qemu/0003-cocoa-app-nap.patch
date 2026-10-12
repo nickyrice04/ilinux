@@ -1,0 +1,154 @@
+From: iLinux workspace
+Subject: [PATCH] cocoa: app-nap=on|off|auto display option
+
+A hidden QEMU window lets macOS App Nap the process: all threads, vCPUs
+included, drop to background priority (PRI 4) on efficiency cores, so a
+guest busy with user work runs ~5x slower (measured: 3.5 vs ~21 Gop/s).
+app-nap=auto holds NSActivityUserInitiatedAllowingIdleSystemSleep while
+non-background vCPUs are busy (>25% of a core over 1 s) and releases it
+after 10 idle seconds, so an idle hidden guest still naps.  off = never nap.
+Default stays "on" (upstream behaviour).
+
+diff -ru a/qapi/ui.json b/qapi/ui.json
+--- a/qapi/ui.json	2026-10-12 01:22:56
++++ b/qapi/ui.json	2026-10-12 01:22:56
+@@ -1459,6 +1459,12 @@
+ # @zoom-interpolation: Apply interpolation to smooth output when
+ #     zoom-to-fit is enabled.  Defaults to "off".  (Since 9.0)
+ #
++# @app-nap: macOS App Nap policy.  "on" lets macOS nap QEMU whenever
++#     its window is not visible, which runs the whole guest at
++#     background priority on efficiency cores; "off" never naps while
++#     the VM runs; "auto" naps only while the guest's non-background
++#     vCPUs are idle.  (default: on)
++#
+ # Since: 7.0
+ ##
+ { 'struct': 'DisplayCocoa',
+@@ -1468,7 +1474,8 @@
+       '*immersive': 'bool',
+       '*swap-opt-cmd': 'bool',
+       '*zoom-to-fit': 'bool',
+-      '*zoom-interpolation': 'bool'
++      '*zoom-interpolation': 'bool',
++      '*app-nap': 'OnOffAuto'
+   } }
+ 
+ ##
+diff -ru a/ui/cocoa.m b/ui/cocoa.m
+--- a/ui/cocoa.m	2026-10-12 01:22:56
++++ b/ui/cocoa.m	2026-10-12 01:22:56
+@@ -55,6 +55,7 @@
+ #include "qemu/module.h"
+ #include "qemu/error-report.h"
+ #include <Carbon/Carbon.h>
++#include <mach/mach.h>
+ #include <AppKit/NSOpenGL.h>
+ #include "hw/core/cpu.h"
+ 
+@@ -2881,6 +2882,87 @@
+     }
+ }
+ 
++/*
++ * App Nap.  A hidden QEMU window lets macOS nap the process: every thread,
++ * vCPUs included, drops to background priority on efficiency cores.  Great
++ * for an idle guest, terrible for work the user left running in it.  With
++ * app-nap=auto, hold a user-initiated activity (no nap; idle system sleep
++ * still allowed) while non-background vCPUs used more than a quarter of a
++ * core over the last second, and release it after ten idle seconds (<5%).
++ * vCPUs with host-qos=background (bg-vcpus) are not counted, so background
++ * guest work never wakes the process up.
++ */
++static OnOffAuto app_nap_mode = ON_OFF_AUTO_ON;
++static id<NSObject> app_nap_activity;       /* main thread only */
++static QEMUTimer *app_nap_timer;
++static int64_t app_nap_last_us = -1;
++static int app_nap_idle_ticks;
++
++static void cocoa_app_nap_hold(bool hold)
++{
++    if (hold && !app_nap_activity) {
++        app_nap_activity = [[[NSProcessInfo processInfo]
++            beginActivityWithOptions:NSActivityUserInitiatedAllowingIdleSystemSleep
++                              reason:@"Virtual machine is busy"] retain];
++    } else if (!hold && app_nap_activity) {
++        [[NSProcessInfo processInfo] endActivity:app_nap_activity];
++        [app_nap_activity release];
++        app_nap_activity = nil;
++    }
++}
++
++/* CPU time of the vCPU threads that are not host-qos=background, in us. */
++static int64_t cocoa_foreground_vcpu_us(void)
++{
++    int64_t total = 0;
++    CPUState *cpu;
++
++    CPU_FOREACH(cpu) {
++        thread_basic_info_data_t info;
++        mach_msg_type_number_t count = THREAD_BASIC_INFO_COUNT;
++        g_autofree char *qos = NULL;
++
++        if (!cpu->thread || !cpu->created) {
++            continue;
++        }
++        if (object_property_find(OBJECT(cpu), "host-qos")) {
++            qos = object_property_get_str(OBJECT(cpu), "host-qos", NULL);
++        }
++        if (qos && !strcmp(qos, "background")) {
++            continue;
++        }
++        if (thread_info(pthread_mach_thread_np(cpu->thread->thread),
++                        THREAD_BASIC_INFO, (thread_info_t)&info,
++                        &count) == KERN_SUCCESS) {
++            total += (int64_t)(info.user_time.seconds +
++                               info.system_time.seconds) * 1000000 +
++                     info.user_time.microseconds + info.system_time.microseconds;
++        }
++    }
++    return total;
++}
++
++static void cocoa_app_nap_tick(void *opaque)
++{
++    int64_t now_us = cocoa_foreground_vcpu_us();
++    int64_t used = app_nap_last_us < 0 ? 0 : now_us - app_nap_last_us;
++    bool hold = false, release = false;
++
++    app_nap_last_us = now_us;
++    if (used > 250000) {
++        app_nap_idle_ticks = 0;
++        hold = true;
++    } else if (used < 50000 && ++app_nap_idle_ticks >= 10) {
++        release = true;
++    }
++    if (hold || release) {
++        dispatch_async(dispatch_get_main_queue(), ^{
++            cocoa_app_nap_hold(hold);
++        });
++    }
++    timer_mod(app_nap_timer, qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + 1000);
++}
++
+ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+ {
+     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+@@ -2965,6 +3047,17 @@
+                         opts->u.cocoa.full_grab;
+     immersive_mode_enabled = !opts->u.cocoa.has_immersive ||
+                              opts->u.cocoa.immersive;
++
++    if (opts->u.cocoa.has_app_nap) {
++        app_nap_mode = opts->u.cocoa.app_nap;
++    }
++    if (app_nap_mode == ON_OFF_AUTO_OFF) {
++        cocoa_app_nap_hold(true);
++    } else if (app_nap_mode == ON_OFF_AUTO_AUTO) {
++        app_nap_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cocoa_app_nap_tick,
++                                     NULL);
++        timer_mod(app_nap_timer, qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + 1000);
++    }
+ 
+     /* if fullscreen mode is to be used */
+     if (opts->has_full_screen && opts->full_screen) {

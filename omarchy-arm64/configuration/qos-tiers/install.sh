@@ -11,4 +11,6 @@ install -Dm644 "$here/systemd/user/utility.slice" "$root/usr/lib/systemd/user/ut
 install -Dm644 "$here/systemd/user/omarchy-qos.service" "$root/usr/lib/systemd/user/omarchy-qos.service"
 install -Dm644 "$here/systemd/system/user@.service.d/omarchy-qos-delegate.conf" \
   "$root/usr/lib/systemd/system/user@.service.d/omarchy-qos-delegate.conf"
-echo "installed into $root; enable per user with: systemctl --user enable --now omarchy-qos.service"
+install -Dm644 "$here/systemd/system/omarchy-qos-system.service" \
+  "$root/usr/lib/systemd/system/omarchy-qos-system.service"
+echo "installed into $root; enable with: systemctl --global enable omarchy-qos.service && systemctl enable omarchy-qos-system.service"

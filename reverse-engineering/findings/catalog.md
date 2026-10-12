@@ -299,3 +299,64 @@ No entry is based on decompiled Apple code.
 | Inference | Expect much higher idle power than macOS until a state-saving idle path exists: a cpuidle driver, or PSCI-via-EFI `CPU_SUSPEND` into m1n1 `deep_wfi` (branch `psci-via-efi`). This is a major item for performance per watt. |
 | Confidence | Mechanism **Confirmed**; power impact **Likely** (not measured) |
 | Linux mapping | cpuidle, PSCI-via-EFI (`efi-psci` branch), `omarchy-qos` |
+
+## F-027 · VM · App Nap throttles a hidden QEMU VM to background priority
+
+| Field | Value |
+|---|---|
+| Question | Why did guest CPU work run far below native in QEMU/HVF but not in Virtualization.framework? |
+| Source | `MEAS`. `ps -M` on the QEMU process: all threads at PRI 4 while the Cocoa window was on another Space. Guest `cpubench intmix` (GCC build): 3.5 Gop/s napped vs 14.3 un-napped. Host `powermon`: the work ran on M cores. |
+| Observation | QEMU owns its Cocoa window, so macOS App Nap applies to the whole process, vCPUs included, whenever the window is not visible. Virtualization.framework guests run in a launchd XPC service and are not affected. |
+| Inference | A hidden VM needs an App Nap policy. The workspace `app-nap=auto` option holds `NSActivityUserInitiatedAllowingIdleSystemSleep` only while non-background vCPUs are busy. Verified: napped at idle (PRI 4); about 1 s after foreground load, PRI is 28–31 and the 6 background vCPUs stay at 4. |
+| Confidence | **Confirmed** |
+| Linux mapping | VM only (`virtualization/qemu/patches/qemu/0003-cocoa-app-nap.patch`) |
+
+## F-028 · Scheduling · macOS QoS placement on M5 Max (Super vs M cores)
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `cpubench intmix -t 1 -q {ui,default,utility,bg}` under `powermon`, on AC power |
+| Observation | `ui`, `default` and `utility` all run on a Super (P) core at full speed: about 21 Gop/s, about 7.2 W per CPU. Only `background` moves to an M core: 4.46 Gop/s at 0.65 W (6.9 vs 2.9 Gop/s/W). |
+| Inference | On this machine, `utility` is not an efficiency hint. Only background QoS buys efficiency, at about 4.7× lower speed (2.4× better work per joule). |
+| Confidence | **Confirmed** (AC power; battery and Low Power Mode not yet measured) |
+| Linux mapping | `omarchy-qos` tier ratios; VM `bg-vcpus` capacity (220/1024) |
+
+## F-029 · VM · Heterogeneous vCPUs mirror Super/M scheduling for Linux guests
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `benchmarks/vm/hetero_placement.sh` (QEMU `--hetero`: 18 vCPUs in 3 clusters; vCPUs 12–17 at host background QoS, `capacity-dmips-mhz` 220). Guest `cpubench` built with clang `-mcpu=apple-m4`. |
+| Observation | Guest `cpu_capacity` reads 1024×12 / 220×6, and `omarchy-qos` fences `background.slice` to 12–17 automatically. Single-thread intmix on a foreground vCPU: 20.79 Gop/s (**99%** of native). Background tier: 4.51 Gop/s at 0.77 W, **1.84×** the foreground's Gop/s/W. With 6 threads: 111 vs 21.8 Gop/s, 7.0 vs 15.9 Gop/s/W (**2.25×**). Without reservation, unpinned tasks could start on a slow vCPU; `RESERVE_EFFICIENT_CPUS=auto` keeps system, session, app and utility slices on 0–11. |
+| Inference | Guest background work gets macOS-like efficiency, and the guest scheduler sees an honest capacity map. |
+| Confidence | **Confirmed** |
+| Linux mapping | `patches/qemu/0002-hvf-heterogeneous-vcpus.patch`, `omarchy-qos` |
+
+## F-030 · VM GPU · VirGL fence latency on macOS: 1 ms polling → event-driven
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `benchmarks/src/glbench.c`: the same GL 4.1 core code on macOS CGL and in the guest (Mesa virgl). Three reps each, 2592×1458. |
+| Observation | QEMU only enabled virglrenderer's sync thread on EGL, and virglrenderer needs eventfd, which macOS lacks. So fences retired on a 1 ms timer, about 1.5 ms per guest GL sync. With async fences (pipe-backed eventfd, CGL path): ALU 92→**99.7%** of native, blended fill 17→**74%**, readback 23→**61%**. Draw calls stayed at 46→50% (command encoding bound), and texture upload at 25→28% (copy bound, 13.4 vs 48 GB/s). Native GL ALU is 12.35 TFLOPS, 84% of the Metal compute peak (14.75). |
+| Inference | GPU-bound work is at parity. The remaining gaps are per-draw encode/decode and the guest→host copy; zero-copy blob resources or Venus are the next levers. |
+| Confidence | **Confirmed** |
+| Linux mapping | `patches/qemu/0004-virgl-macos-async-fences.patch`, `patches/virglrenderer/0001-macos-thread-sync.patch` |
+
+## F-031 · Omarchy · Qt 6.12 `QtQuick/Color` shadows the Omarchy shell's `Color` singleton
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` Quickshell log (`Cannot read property 'bar' of undefined`). Minimal QML reproduction with Qt's `qml` tool. `QtQuick/plugins.qmltypes` exports `"QtQuick/Color 6.12"`. |
+| Observation | With an unversioned `import QtQuick`, Qt's type wins over `qs.Commons`' singleton even when that import comes later, so every theme colour is undefined: black, empty bar and unthemed popups. `import QtQuick 6.11` restores it. |
+| Inference | This is an upstream Omarchy bug on Qt ≥ 6.12, independent of ARM, Apple or the VM. It's fixed locally by an idempotent pin plus a pacman hook (D-017), and worth reporting upstream. |
+| Confidence | **Confirmed** |
+| Linux mapping | `omarchy-arm64/configuration/compat/qt612-color-shadowing` |
+
+## F-032 · VM power · An idle Omarchy VM costs under 0.1 W
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `benchmarks/vm/vm_power_states.sh`, back-to-back A/B, 3 × 30 s each, IOReport SoC sum. VM: desktop session up, display on, window hidden. |
+| Observation | Host only: 1.713 W. VM idle with `app-nap=auto`: 1.799 W (**+0.09 W**). VM idle with `app-nap=off`: 1.855 W (+0.14 W). DPMS off vs on made no difference with the window hidden. An earlier +0.38 W reading included post-login churn and a lingering test user manager. |
+| Inference | An idle guest isn't a battery problem. Busy-guest efficiency (F-029) and the rendering path (F-030) matter more. Panel and backlight power aren't in the IOReport SoC sum. |
+| Confidence | **Confirmed** for the SoC sum |
+| Linux mapping | VM launcher defaults |

@@ -1,0 +1,18 @@
+{"rep":1,"side":"macos-cgl","bench":"glbench-info","renderer":"Apple M5 Max","version":"4.1 Metal - 90.5"}
+{"rep":1,"side":"macos-cgl","bench":"glbench","test":"alu","value":1.235e+04,"unit":"GFLOPS","iterations":800,"seconds":2.006,"size":"2592x1458"}
+{"rep":1,"side":"macos-cgl","bench":"glbench","test":"fill_blend","value":200.7,"unit":"Gpix/s","iterations":106256,"seconds":2.000,"size":"2592x1458"}
+{"rep":1,"side":"macos-cgl","bench":"glbench","test":"draw_calls","value":2.413,"unit":"Mdraws/s","iterations":4830000,"seconds":2.002,"size":"2592x1458"}
+{"rep":1,"side":"macos-cgl","bench":"glbench","test":"tex_upload","value":47.89,"unit":"GB/s","iterations":5712,"seconds":2.001,"size":"2592x1458"}
+{"rep":1,"side":"macos-cgl","bench":"glbench","test":"readback","value":11.58,"unit":"GB/s","iterations":1940,"seconds":2.001,"size":"2592x1458"}
+{"rep":2,"side":"macos-cgl","bench":"glbench-info","renderer":"Apple M5 Max","version":"4.1 Metal - 90.5"}
+{"rep":2,"side":"macos-cgl","bench":"glbench","test":"alu","value":1.235e+04,"unit":"GFLOPS","iterations":800,"seconds":2.006,"size":"2592x1458"}
+{"rep":2,"side":"macos-cgl","bench":"glbench","test":"fill_blend","value":199,"unit":"Gpix/s","iterations":105328,"seconds":2.000,"size":"2592x1458"}
+{"rep":2,"side":"macos-cgl","bench":"glbench","test":"draw_calls","value":2.42,"unit":"Mdraws/s","iterations":4840000,"seconds":2.000,"size":"2592x1458"}
+{"rep":2,"side":"macos-cgl","bench":"glbench","test":"tex_upload","value":47.97,"unit":"GB/s","iterations":5720,"seconds":2.001,"size":"2592x1458"}
+{"rep":2,"side":"macos-cgl","bench":"glbench","test":"readback","value":11.57,"unit":"GB/s","iterations":1938,"seconds":2.001,"size":"2592x1458"}
+{"rep":3,"side":"macos-cgl","bench":"glbench-info","renderer":"Apple M5 Max","version":"4.1 Metal - 90.5"}
+{"rep":3,"side":"macos-cgl","bench":"glbench","test":"alu","value":1.234e+04,"unit":"GFLOPS","iterations":800,"seconds":2.008,"size":"2592x1458"}
+{"rep":3,"side":"macos-cgl","bench":"glbench","test":"fill_blend","value":202,"unit":"Gpix/s","iterations":106928,"seconds":2.000,"size":"2592x1458"}
+{"rep":3,"side":"macos-cgl","bench":"glbench","test":"draw_calls","value":2.568,"unit":"Mdraws/s","iterations":5140000,"seconds":2.002,"size":"2592x1458"}
+{"rep":3,"side":"macos-cgl","bench":"glbench","test":"tex_upload","value":48.33,"unit":"GB/s","iterations":5764,"seconds":2.001,"size":"2592x1458"}
+{"rep":3,"side":"macos-cgl","bench":"glbench","test":"readback","value":11.45,"unit":"GB/s","iterations":1920,"seconds":2.002,"size":"2592x1458"}
