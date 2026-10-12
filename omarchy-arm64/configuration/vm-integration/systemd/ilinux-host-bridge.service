@@ -1,0 +1,12 @@
+[Unit]
+Description=Apply Mac host state in the guest (battery, clock, time zone)
+ConditionPathExists=/dev/virtio-ports/org.ilinux.host
+After=systemd-timedated.service
+
+[Service]
+ExecStart=/usr/local/bin/ilinux-host-bridge
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

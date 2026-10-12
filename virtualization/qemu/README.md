@@ -49,7 +49,6 @@ ONLY=qemu virtualization/qemu/build-qemu-virgl.sh  # QEMU only, after patch edit
 ## Run
 
 ```bash
-tools/bin/mac-battery-feed --unix virtualization/run/battery.sock &   # Mac battery -> guest
 virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [--console-socket]
 ```
 
@@ -66,6 +65,9 @@ virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero] [
 
 The launcher also provides:
 
+* `tools/bin/ilinux-host-agent`, built on demand and exiting with QEMU. It
+  feeds the battery, the clock after the Mac sleeps, and the time zone into
+  the guest (`org.ilinux.host`).
 * An HMP monitor on `virtualization/run/monitor.sock`.
 * `-pidfile` and a single-instance guard. A second launch would otherwise
   unlink the running VM's sockets.
@@ -102,7 +104,9 @@ locks the session on idle.
 
 **Integration:**
 
-* The battery bridge shows the Mac battery in the bar.
+* The host bridge shows the Mac battery in the bar, keeps the guest clock
+  right after host sleep (tested: a 30 s lag was stepped within one 60 s
+  cycle), and follows the Mac time zone.
 * Omarchy's idle policy works: screensaver at 150 s, lock at 300 s, then
   DPMS off. With DPMS off the guest stops rendering.
 

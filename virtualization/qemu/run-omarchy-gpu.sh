@@ -6,8 +6,9 @@
 # Settings follow try-omarchy's tuned launcher (MIT; see third_party/try-omarchy):
 # kernel-irqchip=on cuts idle CPU, balloon free-page reporting returns freed
 # guest memory to macOS, discard=unmap returns trimmed blocks to the sparse
-# disk image.  Host integration channels (virtio-serial):
-#   org.ilinux.battery  <- tools/bin/mac-battery-feed (Mac battery -> guest BAT)
+# disk image.  Host integration channel (virtio-serial):
+#   org.ilinux.host  <- tools/bin/ilinux-host-agent (battery, clock after the
+#                       Mac sleeps, time zone), started here and tied to QEMU
 # HMP monitor: virtualization/run/monitor.sock (e.g. "screendump shot.ppm").
 #
 # Display: the guest resolution follows the window's Retina backing pixels
@@ -42,7 +43,7 @@ TZNAME=$(readlink /etc/localtime 2>/dev/null | sed -n 's|.*/zoneinfo/||p')
 if [[ -f $RUNDIR/qemu.pid ]] && kill -0 "$(cat "$RUNDIR/qemu.pid")" 2>/dev/null; then
   echo "a VM is already running (pid $(cat "$RUNDIR/qemu.pid")); stop it first" >&2; exit 1
 fi
-rm -f "$RUNDIR"/{console,monitor,battery}.sock
+rm -f "$RUNDIR"/{console,monitor,battery,host}.sock
 fullscreen=off; fullgrab=off; headless=0
 # App Nap: "auto" lets macOS nap a hidden, idle VM but not a busy one (workspace
 # patch qemu-cocoa-app-nap); APP_NAP=on|off overrides.
@@ -70,6 +71,14 @@ else
            -display "cocoa,gl=on,show-cursor=on,zoom-to-fit=on,full-screen=$fullscreen,immersive=$fullscreen,full-grab=$fullgrab,swap-opt-cmd=off,app-nap=$appnap")
 fi
 
+# Host agent: (re)build when the source is newer; exits when QEMU (this PID,
+# after exec) is gone.
+AGENT="$ROOT/tools/bin/ilinux-host-agent"; AGENT_SRC="$ROOT/tools/ilinux-host-agent.swift"
+if [[ ! -x $AGENT || $AGENT_SRC -nt $AGENT ]]; then
+  mkdir -p "$ROOT/tools/bin" && swiftc -O "$AGENT_SRC" -o "$AGENT"
+fi
+"$AGENT" --unix "$RUNDIR/host.sock" --parent $$ > "$RUNDIR/host-agent.log" 2>&1 &
+
 exec "$QEMU" -name Omarchy \
   -machine "$machine" -accel hvf,kernel-irqchip=on -cpu host,pmu=off \
   -smp "$smp" -m "${MEM_MIB}M" \
@@ -84,8 +93,8 @@ exec "$QEMU" -name Omarchy \
   -audiodev coreaudio,id=snd -device intel-hda -device hda-micro,audiodev=snd \
   -device virtio-serial-pci,id=vser \
   -chardev "$CONSOLE" -device virtconsole,bus=vser.0,nr=0,chardev=hvc0 \
-  -chardev "socket,id=battery,path=$RUNDIR/battery.sock,server=on,wait=off" \
-  -device virtserialport,bus=vser.0,nr=1,chardev=battery,name=org.ilinux.battery \
+  -chardev "socket,id=host,path=$RUNDIR/host.sock,server=on,wait=off" \
+  -device virtserialport,bus=vser.0,nr=1,chardev=host,name=org.ilinux.host \
   ${job[@]+"${job[@]}"} \
   -monitor "unix:$RUNDIR/monitor.sock,server=on,wait=off" \
   -pidfile "$RUNDIR/qemu.pid" \

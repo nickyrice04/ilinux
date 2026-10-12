@@ -28,8 +28,8 @@ text = text.replace("\r", "")
 if marker in text:
     head = text[:text.index(marker)]
     # Drop the echoed command line: everything up to the newline after the
-    # quoted marker (falls back to the first line if the echo was mangled).
-    echo = head.rfind("''" + tag)
+    # echoed marker tag (its digits survive readline redraw garbling).
+    echo = head.rfind(tag)
     start = head.find("\n", echo) + 1 if echo >= 0 else head.find("\n") + 1
     print(head[start:], end="")
 else:
