@@ -1,0 +1,12 @@
+{"bench":"glbench-info","renderer":"virgl (Apple M5 Max)","version":"4.1 (Core Profile) Mesa 26.2.4-arch1.1"}
+{"bench":"glbench","test":"alu","value":1.164e+04,"unit":"GFLOPS","iterations":752,"seconds":2.001,"size":"2592x1458"}
+{"bench":"glbench","test":"fill_blend","value":88.24,"unit":"Gpix/s","iterations":46704,"seconds":2.000,"size":"2592x1458"}
+{"bench":"glbench","test":"draw_calls","value":0.3033,"unit":"Mdraws/s","iterations":610000,"seconds":2.011,"size":"2592x1458"}
+{"bench":"glbench","test":"tex_upload","value":8.677,"unit":"GB/s","iterations":1036,"seconds":2.003,"size":"2592x1458"}
+{"bench":"glbench","test":"readback","value":7.644,"unit":"GB/s","iterations":1280,"seconds":2.000,"size":"2592x1458"}
+{"bench":"glbench-info","renderer":"virgl (Apple M5 Max)","version":"4.1 (Core Profile) Mesa 26.2.4-arch1.1"}
+{"bench":"glbench","test":"alu","value":1.224e+04,"unit":"GFLOPS","iterations":792,"seconds":2.003,"size":"2592x1458"}
+{"bench":"glbench","test":"fill_blend","value":152.4,"unit":"Gpix/s","iterations":80688,"seconds":2.000,"size":"2592x1458"}
+{"bench":"glbench","test":"draw_calls","value":1.226,"unit":"Mdraws/s","iterations":2460000,"seconds":2.006,"size":"2592x1458"}
+{"bench":"glbench","test":"tex_upload","value":15.75,"unit":"GB/s","iterations":1880,"seconds":2.003,"size":"2592x1458"}
+{"bench":"glbench","test":"readback","value":7.431,"unit":"GB/s","iterations":1246,"seconds":2.003,"size":"2592x1458"}

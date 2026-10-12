@@ -26,7 +26,7 @@
 # background.slice onto it (workspace patch qemu-hvf-heterogeneous-vcpus).
 #
 #   virtualization/qemu/run-omarchy-gpu.sh [--fullscreen] [--full-grab] [--hetero]
-#                                         [--headless] [--console-socket] [--job DIR]
+#                                         [--no-venus] [--headless] [--console-socket] [--job DIR]
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 QEMU="${QEMU:-$ROOT/virtualization/qemu/runtime/bin/qemu-system-aarch64}"   # Omarchy.app passes its bundled copy
@@ -48,7 +48,11 @@ rm -f "$RUNDIR"/{console,monitor,battery,host}.sock
 fullscreen=off; fullgrab=off; headless=0
 # Guest Vulkan (Venus): virglrenderer's Venus renderer runs inside QEMU on
 # MoltenVK through the Khronos loader; blob resources map Metal heap memory
-# into a host-memory BAR.  --venus turns it on (VENUS_HOSTMEM sizes the BAR).
+# into a host-memory BAR (VENUS_HOSTMEM sizes it; address space only, pages
+# are committed per blob).  On by default since presentation works
+# (virglrenderer 0007, QEMU 0010) and desktop GL is unchanged with it
+# (glbench within 1%); --no-venus turns it off.
+venus=1
 gpu_extra=""
 # Clipboard sharing with macOS: QEMU's qemu-vdagent (Cocoa owns the Mac
 # pasteboard) <-> guest ilinux-clipboard-agent (wl-clipboard).  Text, on demand.
@@ -71,10 +75,8 @@ while (($#)); do
   case "$1" in
     --fullscreen) fullscreen=on; shift ;;
     --full-grab) fullgrab=on; shift ;;
-    --venus) gpu_extra=",venus=on,blob=on,hostmem=${VENUS_HOSTMEM:-4G}"
-             export VIRGL_VULKAN_LIBRARY="$ROOT/virtualization/qemu/runtime/lib/libvulkan.1.dylib"
-             export VK_DRIVER_FILES="$ROOT/virtualization/qemu/runtime/share/vulkan/icd.d/MoltenVK_icd.json"
-             export VK_ICD_FILENAMES="$VK_DRIVER_FILES"; shift ;;
+    --venus) venus=1; shift ;;
+    --no-venus) venus=0; shift ;;
     --no-clipboard) clipboard=(); shift ;;
     --hetero) smp="18,sockets=1,clusters=3,cores=6,threads=1"
               machine="virt,gic-version=3,bg-vcpus=6"; shift ;;
@@ -82,9 +84,15 @@ while (($#)); do
     --console-socket) CONSOLE="socket,id=hvc0,path=$RUNDIR/console.sock,server=on,wait=off"; shift ;;
     --job) job=(-fsdev "local,id=job,path=$2,security_model=none"
                 -device "virtio-9p-pci,fsdev=job,mount_tag=job"); shift 2 ;;
-    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--venus] [--no-clipboard] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
+    *) echo "usage: $0 [--fullscreen] [--full-grab] [--hetero] [--no-venus] [--no-clipboard] [--headless] [--console-socket] [--job DIR]" >&2; exit 2 ;;
   esac
 done
+if ((venus)); then
+  gpu_extra=",venus=on,blob=on,hostmem=${VENUS_HOSTMEM:-4G}"
+  export VIRGL_VULKAN_LIBRARY="$ROOT/virtualization/qemu/runtime/lib/libvulkan.1.dylib"
+  export VK_DRIVER_FILES="$ROOT/virtualization/qemu/runtime/share/vulkan/icd.d/MoltenVK_icd.json"
+  export VK_ICD_FILENAMES="$VK_DRIVER_FILES"
+fi
 if ((headless)); then
   display=(-display none)
 else
