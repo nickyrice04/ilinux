@@ -5,6 +5,105 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-12 · Session 2: Omarchy 4 desktop in a GPU-accelerated VM
+
+### Implemented
+
+* **Guest system:**
+  * Omarchy 4.0.4 (aarch64 edge) on btrfs (`@`, `@home`, `@log`, `@pkg`,
+    zstd) with snapper (D-013).
+  * Kernel v2: 7.1.6 with 16K pages and uclamp, the full ALARM module set,
+    essentials built in (D-014).
+  * Network: Quad9 with DoT (D-015).
+* **GPU compute from Linux:** guest llama.cpp → ggml RPC → vsock (vzrun
+  `--vsock-forward`) → host Metal `ggml-rpc-server`.
+* **GPU desktop:** QEMU 11.1.1 (HVF) + VirGL 1.3.0 + upstream libepoxy, all
+  built from pinned sources in the workspace (D-012). The launcher is
+  `virtualization/qemu/run-omarchy-gpu.sh`.
+* **Fixes we wrote:**
+  * libepoxy: a missing `libEGL` no longer aborts. Every GL lookup probed
+    EGL first.
+  * QEMU Cocoa patch: stable Retina window size, window size sent to the
+    guest at launch, app name from `-name`.
+  * Omarchy shell under Qt 6.12: the `QtQuick/Color` type shadowed the
+    shell's `Color` singleton, leaving a black, empty bar. Fixed with a
+    self-disabling pin plus a pacman hook (D-017).
+* **Mac integration:**
+  * the battery bridge feeds IOKit data over virtio-serial into
+    `test_power`, so UPower and the bar show the Mac battery;
+  * SDDM autologin (D-016);
+  * opt-in full-screen Space and full keyboard grab (D-018).
+
+### Tested / measured
+
+* **ggml RPC:** Q4_0 8B prefill 2737 t/s (**89%** of native Metal),
+  generation 85.1 t/s (**81%**). Socat `nodelay` was essential: with delayed
+  ACK, generation was 23%.
+* **Guest renderer:** `virgl (Apple M5 Max)`, OpenGL 4.1 core, GLES 3.0
+  (Mesa 26.2.4).
+* **Desktop:** Hyprland 0.56.2 at 2592×1458 at 120 Hz, scale 2. The bar,
+  notifications and lock screen are themed (screenshots taken in the guest
+  with `grim`).
+* **Idle desktop cost:** QEMU used ≈ 3.4% of one host core with the desktop
+  idle. Omarchy's idle chain works: screensaver at 150 s, lock at 300 s, then
+  DPMS off, after which the guest stops rendering.
+* **Native series (job 018):** `git am` on asahi 77cb8f24 is clean. `sart.o`
+  and nvme `apple.o` build with 0 errors and 0 warnings, and
+  `t6050-j716c.dtb` builds.
+
+### Still unsupported / next
+
+* No Vulkan in the guest (Venus/MoltenVK not built). No microphone capture
+  with the CoreAudio backend.
+* GPU benchmark (guest VirGL vs native GL) and host power: idle desktop vs
+  macOS idle.
+* Package the custom kernel for pacman. Guest timezone should follow the
+  Mac's.
+
+---
+
+## 2026-10-11 · Native-enablement research pass (m1n1, Asahi Linux, PMGR/DVFS, drafts)
+
+### Discovered
+
+* **m1n1 (`57a9339`) on t6050:** single core plus NVMe read. SMP is still
+  broken: cores power on but never run m1n1 code (PR #610). The cause is
+  Unknown; ranked hypotheses are in `kernel/native-enablement/plan.md` §1.2.
+* **M5 MPIDR:** M cores are 0x4XXYY and P cores 0x1XXYY (F-019). The old
+  draft DT would have had every CPU node pruned by m1n1. Fixed.
+* **Our ADT, decoded:**
+  * the PMGR table: 661 records, 6 blocks, a second die at +0x21_0000_0000
+    (F-021, F-024);
+  * CPU DVFS: M 15 states up to 4.380 GHz, P 20 states up to 4.608 GHz
+    (F-022);
+  * SART `sart-version = 4`, the NVMe M4+ layout, and per-CPU
+    `function-enable_core` (F-020, F-023).
+* **AsahiLinux/linux:** `asahi` already has the NVMe firmware-ABI series.
+  No branch has SARTv4 or the M4+ NVMe register split.
+* **Idle:** m1n1 forces `idle=nop arm64.nowfxt` on M4+ (F-026).
+
+### Implemented
+
+* **`adt_extract.py`:** wider whitelist, full binary tables, and a
+  content-based leak check (`--check-only`). Re-extracted: 0 problems.
+* **The DT generator:** now covers PMGR power domains (188), MPIDR-correct
+  CPUs, OPP and energy-model data, cpufreq, disabled DART/SART/NVMe drafts.
+  `validate.sh` fixed and strict: **0 dtc warnings**.
+* **Local patch series `kernel/patches/t6050/0001–0007`:** SARTv4, the NVMe
+  M4+ split, bindings, and the DT. Untested; compile test pending. Not for
+  upstream.
+* **`kernel/native-enablement/plan.md`:** a dependency-ordered plan for items
+  (a)–(j).
+
+### Next
+
+1. Compile-test the series and run `dtbs_check` in the VM, once it is free.
+2. A native m1n1 read-only diagnostics session. This needs user
+   authorization and a deployment plan.
+3. Draft the SPMI gen-4 driver and a dockchannel-uart console driver.
+
+---
+
 ## 2026-10-11 · Session 1: foundations, baselines, VM track, energy
 
 ### Discovered

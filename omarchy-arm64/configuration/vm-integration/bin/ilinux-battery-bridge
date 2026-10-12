@@ -1,0 +1,25 @@
+#!/bin/bash
+# ilinux-battery-bridge: mirror the Mac host's battery into this VM.
+# Reads "capacity=N status=S ac=on|off ..." lines from the virtio-serial port
+# org.ilinux.battery (written by tools/bin/mac-battery-feed on the host) and
+# drives the kernel's test_power power_supply device, which UPower - and so
+# Omarchy's bar - reads like a real battery.  Values are whitelisted.
+set -u
+PORT=/dev/virtio-ports/org.ilinux.battery
+P=/sys/module/test_power/parameters
+modprobe test_power || { echo "test_power module missing (CONFIG_TEST_POWER)" >&2; exit 1; }
+echo off  > "$P/usb_online"
+echo true > "$P/battery_present"
+echo LION > "$P/battery_technology"
+echo good > "$P/battery_health"
+exec 3<"$PORT"
+while read -r line <&3; do
+  for kv in $line; do
+    k=${kv%%=*}; v=${kv#*=}
+    case $k in
+      capacity) [[ $v =~ ^[0-9]{1,3}$ ]] && (( v <= 100 )) && echo "$v" > "$P/battery_capacity" ;;
+      status) case $v in charging|discharging|not-charging|full) echo "$v" > "$P/battery_status" ;; esac ;;
+      ac) case $v in on|off) echo "$v" > "$P/ac_online" ;; esac ;;
+    esac
+  done
+done

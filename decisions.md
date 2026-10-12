@@ -119,3 +119,112 @@ MIDR is masked (part 0x000).
 differently: Apple clang knows the host, while Linux clang sees the masked
 MIDR. `-march=armv9*` must never be used, because it implies SVE, which this
 CPU lacks.
+
+## D-010 · 2026-10-11 · ADT extractor: full PMGR/DVFS tables plus a content-based leak check
+
+**Decision:** Whitelist the PMGR `devices`, `ps-groups`, `voltage-states*`,
+`acc-clusters` and `perf-*` tables, the CPU `function-enable_core` and
+`function-cpu_idle` values, and the SART, NVMe and DART layout properties.
+Emit binary tables as full hex. Before anything is written, compare in
+memory the values of every denylisted property against every
+representation in the output (strings, u32/u64 words, hex blobs). Output
+is refused on any match. The only exception is a denylisted value that
+equals the public model string (e.g. `/product/unique-model`). The denylist
+was only extended.
+
+**Context:** Decoding PMGR power domains and DVFS states needs complete
+binary tables. Name-based filtering alone can't prove that a large hex blob
+doesn't contain an identifier.
+
+**Consequences:** `adt_extract.py --check-only` re-verifies any capture.
+The 2026-10-11 capture reports "54 denylisted values compared, 0 problems".
+
+## D-011 · 2026-10-11 · Clean-room boundary for t6050 SMP research
+
+**Decision:** Use only m1n1, Linux and this machine's ADT as sources for
+t6050 enablement. m1n1 PR #631 (closed, unmerged) describes Apple kext
+internals, which implies binary analysis. Do not use it as a source.
+
+**Consequences:** The SMP root cause must come from register-level probing
+or hypervisor tracing on this machine. Both need user authorization.
+
+
+## D-012 · 2026-10-12 · GPU-accelerated VM engine: QEMU + VirGL built in the workspace
+
+**Decision (user-approved):** Build QEMU 11.1.1 (HVF, in-hypervisor GICv3) with
+virglrenderer 1.3.0 and native macOS OpenGL from source into
+`virtualization/qemu/runtime/`, following omacom/try-omarchy's MIT recipe and
+patches. libepoxy comes from upstream (GNOME-published hash). A small patch
+compiles EGL dispatch in for Apple and makes a missing `libEGL` mean "no EGL
+context": epoxy probes EGL on every GL lookup, and aborted without it.
+Khronos EGL headers are pinned by commit. There's no ANGLE and no
+third-party prebuilt bottle, and audio uses CoreAudio.
+
+**Why:** Virtualization.framework can't give Linux guests 3D. Accelerated
+Hyprland is required for a smooth Omarchy experience and for battery
+efficiency, since llvmpipe burns CPU.
+
+## D-013 · 2026-10-12 · VM root on btrfs with Omarchy's subvolume layout
+
+**Decision:** Migrate the VM disk to btrfs (`@`, `@home`, `@log`, `@pkg`,
+zstd:1). Omarchy's system phase requires snapper/btrfs, so patching snapshots
+out would diverge from the Omarchy experience. Compression shrank the 10 GB
+system to 7.9 GiB.
+
+## D-014 · 2026-10-12 · Guest kernel: full Arch ARM module set, essentials built in
+
+**Decision:** Kernel v2 uses Arch Linux ARM's full stock config, extracted
+from the stock Image via IKCONFIG, plus 16K pages, uclamp, test_power and 9p.
+virtio net, fs, 9p, console and blk are built in.
+
+**Why (lessons from v1):** `localmodconfig` trimmed modules ufw needs, and a
+half-applied firewall cut all networking. Separately, Arch's
+`linux-modules-cleanup.service` deletes `/usr/lib/modules` trees that no
+package owns, which removed the custom kernel's modules. That service is
+masked in the VM. Next step: package the kernel so pacman owns it.
+
+## D-015 · 2026-10-12 · VM DNS through Quad9 with opportunistic DNS-over-TLS
+
+**Decision:** NetworkManager `dns=none`. systemd-resolved uses
+`DNS=9.9.9.9#dns.quad9.net …`, `DNSOverTLS=opportunistic`, `Domains=~.`.
+
+**Why:** The NAT DNS proxy (192.168.64.1) never answered resolved's queries.
+Before Omarchy switched networking to NetworkManager, lookups had silently
+used resolved's Quad9 fallback.
+
+## D-016 · 2026-10-12 · VM logs the owner straight into Omarchy (SDDM autologin)
+
+**Decision:** `/etc/sddm.conf.d/20-ilinux-vm-autologin.conf` autologins user
+`omarchy` into `omarchy.desktop`. hypridle and the shell lock still lock the
+session on idle. Delete the file to get the SDDM password prompt back.
+
+**Why:** Omarchy keeps autologin permanently on encrypted installs, because
+the LUKS prompt is the auth boundary. In the VM, the boundary is the macOS
+login session that launches QEMU. Anyone in that session can read the disk
+image directly, so an SDDM password protects nothing and costs a second
+login.
+
+## D-017 · 2026-10-12 · Pin the Omarchy shell's QtQuick import to 6.11 (Qt 6.12 compat)
+
+**Decision:** Install `compat/qt612-color-shadowing`, an idempotent script
+plus a pacman hook. It rewrites the shell's unversioned `import QtQuick` as
+`import QtQuick 6.11`.
+
+**Why:** QtQuick 6.12's new `Color` type shadows the shell's `qs.Commons`
+singleton `Color`, which leaves a black, empty bar and unthemed popups
+(Confirmed, minimal reproduction). The pin hides only 6.12-only types. The
+fix is self-disabling once upstream renames the singleton, and it applies on
+native installs too.
+
+## D-018 · 2026-10-12 · Desktop launcher: windowed by default, full screen and full grab opt-in
+
+**Decision:** `run-omarchy-gpu.sh` opens a resizable Retina window by
+default. `--fullscreen` (immersive Space) and `--full-grab` (system key
+chords go to Hyprland) are opt-in. A workspace QEMU patch keeps the initial
+window size and gives the guest the window's backing pixels at launch, so
+Hyprland gets a crisp 2× mode from first boot.
+
+**Why:** Full screen takes over the display, so it is the user's choice
+(recommended for daily use). Full grab needs a one-time Accessibility grant
+for the ad-hoc-signed QEMU, and each rebuild needs the grant again.
+

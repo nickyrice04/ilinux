@@ -37,7 +37,7 @@ in, so no initramfs is needed.
 * **Memory:** 4K guest pages and two-stage translation raise large-buffer
   latency (≈128 vs 108 ns at 256 MiB). STREAM medians are close to native.
   "Best" values are unreliable because of vCPU preemption.
-* **No GPU acceleration.** The framework exposes virtio-gpu 2D only.
+* **No GPU acceleration in Virtualization.framework:** it exposes virtio-gpu 2D only. See "GPU in the VM" below for the QEMU engine.
 * **Storage modes (job 005, F-018).** Extra `--disk` images honour
   `--disk-sync full|fsync|none`, `--disk-cache automatic|cached|uncached`
   and `--nvme`.
@@ -47,10 +47,15 @@ in, so no initramfs is needed.
     crash-safe, so use it for scratch disks only.
   * Sparse images pay a one-time allocation cost on first write.
 
-## GPU-in-VM options (not installed; each needs a host install, so new approval)
+## GPU in the VM (2026-10-12)
 
-| Option | Path | Expected |
+| Path | Status | Measured |
 |---|---|---|
-| krunkit / libkrun (podman machine or Lima `vmType: krunkit`) | virtio-gpu Venus → virglrenderer → MoltenVK → Metal | ≈ 50–57% of native Metal for llama.cpp (published M2 Max data) |
-| llama.cpp GGML-VirtGPU (API remoting) | guest ggml forwards graphs to host `ggml-metal` | Could use the M5 GPU matrix units. Untested on macOS 26; no published numbers |
-| QEMU/HVF + VirGL (UTM, try-omarchy) | OpenGL ≤ 4.3 / GLES 3 for the desktop | Accelerated Hyprland desktop; not compute |
+| **Desktop:** QEMU/HVF + VirGL to macOS OpenGL 4.1 (`qemu/`, workspace build, D-012) | **Working.** The Omarchy 4 desktop (Hyprland and the Quickshell bar) is accelerated at Retina resolution | Guest `virgl (Apple M5 Max)`, GL 4.1 core, GLES 3.0 |
+| **Compute:** guest llama.cpp → ggml RPC → vsock → host `ggml-rpc-server` (Metal), job 017 | **Working** | Q4_0 8B: prefill 89%, generation 81% of native Metal |
+| Venus (Vulkan) → MoltenVK → Metal | Not built yet. Needs MoltenVK in the workspace | Published M2 Max data: ≈ 50–57% for llama.cpp |
+| llama.cpp GGML-VirtGPU (API remoting) | Not tried | Could use the M5 matrix units; no published numbers |
+
+Virtualization.framework (`vzrun`) remains the engine for headless jobs
+(CPU, memory and storage benchmarks, builds). The QEMU engine is used for
+the desktop.

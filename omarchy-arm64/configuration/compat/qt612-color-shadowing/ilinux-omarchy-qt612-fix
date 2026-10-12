@@ -1,0 +1,24 @@
+#!/bin/bash
+# Work around Omarchy shell vs Qt >= 6.12: QtQuick 6.12 exports a `Color` QML
+# type that shadows the shell's own `qs.Commons` singleton `Color`, so every
+# `Color.<role>` binding evaluates to undefined (black bar, unthemed popups).
+# Pin the shell's unversioned `import QtQuick` to 6.11, which hides only the
+# types Qt added in 6.12 (the shell predates them).
+#
+# Idempotent; does nothing unless QtQuick exports Color AND the shell defines
+# its own Color singleton, so it turns into a no-op once upstream renames or
+# qualifies the singleton.  Run by ilinux-omarchy-qt612-fix.hook after
+# omarchy / qt6-declarative upgrades.
+set -euo pipefail
+SHELL_DIR=${1:-/usr/share/omarchy/shell}
+QT_TYPES=/usr/lib/qt6/qml/QtQuick/plugins.qmltypes
+[[ -f $SHELL_DIR/Commons/qmldir && -f $QT_TYPES ]] || exit 0
+grep -q '^singleton Color ' "$SHELL_DIR/Commons/qmldir" || exit 0
+grep -q '"QtQuick/Color 6\.' "$QT_TYPES" || exit 0
+n=0
+while IFS= read -r -d '' f; do
+  if grep -q '^import QtQuick$' "$f"; then
+    sed -i 's/^import QtQuick$/import QtQuick 6.11/' "$f"; n=$((n + 1))
+  fi
+done < <(find "$SHELL_DIR" -name '*.qml' -print0)
+echo "ilinux-omarchy-qt612-fix: pinned QtQuick 6.11 in $n file(s)"

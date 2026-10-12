@@ -10,7 +10,11 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 * No DT exists for t604x/t605x/t8142 in mainline or any Asahi branch.
   Mainline stops at M3. Asahi has a minimal t8132 (base M4) DT from 2026-07.
 * m1n1 has **initial** T6050/T6051 support (PR #610, 2026-06-29), but
-  **secondary CPUs never start**. No public fix was found as of 2026-10.
+  **secondary CPUs never start**. There is still no fix on m1n1 `main` @
+  `57a9339` (2026-10-11). Ranked hypotheses and read-only tests are in
+  `kernel/native-enablement/plan.md` §1.2.
+* A local draft DT now exists (`kernel/experiments/t6050-dt/`). It has
+  MPIDR-correct CPUs and 188 PMGR domains, and has never been booted.
 * Asahi's M5 support page (2026-10-03) shows no active work on any block.
   The installer accepts M1–M3 only.
 * Consequence: native Linux can't boot on this machine.
@@ -36,7 +40,11 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   it **SARTv4**).
 * m1n1 can read NVMe on T6050. Linux `nvme-apple` and `apple-sart` support
   only older revisions. The macOS-15+ ANS firmware ABI change needs the
-  `b4/nvme-fwabi` series.
+  `b4/nvme-fwabi` series, which is already in the AsahiLinux `asahi` branch.
+* 2026-10-11: the remaining Linux gaps are drafted locally (untested) in
+  `kernel/patches/t6050/0001–0005`: SARTv4, the M4+ NVMMU/NVMe register
+  split, and the I/O-queue base registers. Unblocking needs a VM compile
+  test, then native hardware.
 
 ### B-012 🔴 Wi-Fi / Bluetooth
 

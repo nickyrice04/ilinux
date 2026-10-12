@@ -35,3 +35,11 @@ tools/venv/
 virtualization/bin/
 virtualization/jobs/*/out/
 kernel/experiments/t6050-dt/out/*.dtb
+virtualization/qemu/downloads/
+virtualization/qemu/src/
+virtualization/qemu/runtime/
+virtualization/qemu/*.log
+tools/bin/
+third_party/
+virtualization/run/
+tools/rpc-cache/

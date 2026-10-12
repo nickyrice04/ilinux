@@ -1,0 +1,11 @@
+[Unit]
+Description=Mirror the Mac host battery into the guest (test_power)
+ConditionPathExists=/dev/virtio-ports/org.ilinux.battery
+
+[Service]
+ExecStart=/usr/local/bin/ilinux-battery-bridge
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

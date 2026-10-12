@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = omarchy
+Target = qt6-declarative
+
+[Action]
+Description = Pinning Omarchy shell QtQuick imports (Qt 6.12 Color shadowing)...
+When = PostTransaction
+Exec = /usr/local/bin/ilinux-omarchy-qt612-fix

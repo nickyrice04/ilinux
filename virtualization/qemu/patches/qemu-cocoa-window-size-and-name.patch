@@ -1,0 +1,127 @@
+From: iLinux workspace
+Subject: [PATCH] cocoa: stable initial window size; product name from -name
+
+Applies after the try-omarchy Cocoa patch series (third_party/try-omarchy).
+
+* The initial window frame is in points but QemuCocoaView.screen is in guest
+  pixels, so viewDidMoveToWindow -> resizeWindow halved the window on Retina
+  screens; the 640x480 output-inactive placeholder then forced it to 4:3, and
+  dynamic-display EDID handed that 974x730 size to the guest.  Scale the
+  initial size, never reshape the window for placeholder surfaces, and send
+  the window size to the guest once the app has launched (it previously went
+  out only with the first resize).
+* Name the app (process, menus, quit prompt) from -name instead of a
+  hard-coded "Try Omarchy".
+
+--- a/ui/cocoa.m	2026-10-12 00:33:01
++++ b/ui/cocoa.m	2026-10-12 00:37:29
+@@ -527,8 +527,17 @@
+ 
+         [self addTrackingArea:trackingArea];
+         [trackingArea release];
+-        screen.width = frameRect.size.width;
+-        screen.height = frameRect.size.height;
++        /*
++         * screen is in guest pixels but the initial frame is in points.
++         * Scale it, or viewDidMoveToWindow -> resizeWindow halves the window
++         * on Retina displays before zoom-to-fit makes it resizable.
++         */
++        CGFloat initialScale = [[NSScreen mainScreen] backingScaleFactor];
++        if (initialScale <= 0) {
++            initialScale = 1.0;
++        }
++        screen.width = frameRect.size.width * initialScale;
++        screen.height = frameRect.size.height * initialScale;
+         colorspace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+ #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
+         [self setClipsToBounds:YES];
+@@ -1671,6 +1680,12 @@
+ - (void)adjustSpeed:(id)sender;
+ @end
+ 
++/* The app's visible name: -name if given (e.g. "Omarchy"), else QEMU. */
++static NSString *cocoa_product_name(void)
++{
++    return qemu_name ? [NSString stringWithUTF8String:qemu_name] : @"QEMU";
++}
++
+ static NSRect cocoa_initial_window_frame(void)
+ {
+     NSScreen *hostScreen = [NSScreen mainScreen];
+@@ -1760,6 +1775,12 @@
+ {
+     COCOA_DEBUG("QemuCocoaAppController: applicationDidFinishLaunching\n");
+     allow_events = true;
++    /*
++     * Hand the guest the window's size now.  It used to arrive only with the
++     * first window resize, which the output-inactive placeholder no longer
++     * causes, so the guest would boot at the device's xres/yres instead.
++     */
++    [cocoaView updateUIInfo];
+ }
+ 
+ - (void)applicationWillTerminate:(NSNotification *)aNotification
+@@ -2065,7 +2086,7 @@
+ {
+     NSAlert *alert = [NSAlert new];
+     [alert autorelease];
+-    [alert setMessageText: @"Are you sure you want to quit Try Omarchy?"];
++    [alert setMessageText: [NSString stringWithFormat:@"Are you sure you want to quit %@?", cocoa_product_name()]];
+     [alert addButtonWithTitle: @"Cancel"];
+     [alert addButtonWithTitle: @"Quit"];
+     if([alert runModal] == NSAlertSecondButtonReturn) {
+@@ -2155,17 +2176,17 @@
+ 
+     // Application menu
+     menu = [[NSMenu alloc] initWithTitle:@""];
+-    [menu addItemWithTitle:@"About Try Omarchy" action:@selector(do_about_menu_item:) keyEquivalent:@""];
++    [menu addItemWithTitle:[NSString stringWithFormat:@"About %@", cocoa_product_name()] action:@selector(do_about_menu_item:) keyEquivalent:@""];
+     [menu addItem:[NSMenuItem separatorItem]]; //Separator
+     menuItem = [menu addItemWithTitle:@"Services" action:nil keyEquivalent:@""];
+     [menuItem setSubmenu:[NSApp servicesMenu]];
+     [menu addItem:[NSMenuItem separatorItem]];
+-    [menu addItemWithTitle:@"Hide Try Omarchy" action:@selector(hide:) keyEquivalent:@"h"];
++    [menu addItemWithTitle:[NSString stringWithFormat:@"Hide %@", cocoa_product_name()] action:@selector(hide:) keyEquivalent:@"h"];
+     menuItem = (NSMenuItem *)[menu addItemWithTitle:@"Hide Others" action:@selector(hideOtherApplications:) keyEquivalent:@"h"]; // Hide Others
+     [menuItem setKeyEquivalentModifierMask:(NSEventModifierFlagOption|NSEventModifierFlagCommand)];
+     [menu addItemWithTitle:@"Show All" action:@selector(unhideAllApplications:) keyEquivalent:@""]; // Show All
+     [menu addItem:[NSMenuItem separatorItem]]; //Separator
+-    [menu addItemWithTitle:@"Quit Try Omarchy" action:@selector(terminate:) keyEquivalent:@"q"];
++    [menu addItemWithTitle:[NSString stringWithFormat:@"Quit %@", cocoa_product_name()] action:@selector(terminate:) keyEquivalent:@"q"];
+     menuItem = [[NSMenuItem alloc] initWithTitle:@"Apple" action:nil keyEquivalent:@""];
+     [menuItem setSubmenu:menu];
+     [[NSApp mainMenu] addItem:menuItem];
+@@ -2465,6 +2486,15 @@
+     COCOA_DEBUG("qemu_cocoa: cocoa_switch\n");
+ 
+     surface = new_surface;
++
++    /*
++     * QEMU's 640x480 "Display output is not active" placeholder is not a
++     * guest mode.  Fitting the window to it would advertise a 4:3 preferred
++     * mode to the guest (dynamic-display EDID) before its driver loads.
++     */
++    if (surface_is_placeholder(new_surface)) {
++        return;
++    }
+ 
+     dispatch_async(dispatch_get_main_queue(), ^{
+         BQL_LOCK_GUARD();
+@@ -2842,7 +2872,7 @@
+           stringByDeletingLastPathComponent]
+          stringByDeletingLastPathComponent];
+     NSString *iconPath =
+-        [resourcesPath stringByAppendingPathComponent:@"TryOmarchy.icns"];
++        [resourcesPath stringByAppendingPathComponent:@"Omarchy.icns"];
+     NSImage *icon = [[NSImage alloc] initWithContentsOfFile:iconPath];
+ 
+     if (icon) {
+@@ -2863,7 +2893,7 @@
+     ProcessSerialNumber psn = { 0, kCurrentProcess };
+     TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+ 
+-    [[NSProcessInfo processInfo] setProcessName:@"Try Omarchy"];
++    [[NSProcessInfo processInfo] setProcessName:cocoa_product_name()];
+     [QemuApplication sharedApplication];
+     cocoa_set_product_icon();
+ 
