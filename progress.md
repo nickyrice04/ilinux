@@ -5,6 +5,21 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Second-machine agent: proxy client prepared offline
+
+* Prepared ignored m1n1 checkout at the plan's `57a9339ffd1876e78297b17d34dece8cff8fa1ba`
+  and a workspace venv with upstream-pinned construct/pyserial wheels.
+* Python 3.9.6 imports proxy/proxyutils/shell/HV successfully; pip dependency
+  check passes. The local offline checker opens no devices. No USB modem
+  path is currently present, and no hardware session was attempted.
+* User reports the M5 backup is in progress. Remaining: verified backup,
+  data cable, target m1n1 entry/version, physical handshake, checksummed
+  job-020 payload transfer, and LLVM tools for assembly-dependent operations.
+* Flagged upstream shell's startup panic-counter reset and home-directory
+  history, and `linux.py`'s need for `--compression none` with raw `Image`.
+* Handoff/check command: `tools/m1n1-client/README.md`. No target boot,
+  security change, host-wide package installation or upstream edit.
+
 ## 2026-10-13 · Second-machine agent: GitHub checkout setup
 
 * Downloaded the private `nickyrice04/ilinux` repository on the user-designated

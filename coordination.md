@@ -24,8 +24,9 @@ reset away another agent's work. Local advisory locks do not coordinate
 separate computers: record ownership and handoffs here before shared work.
 Credentials remain in the OS credential store, never in tracked files.
 Ignored VM disks, build payloads and local third-party checkouts are not
-downloaded by Git. Proxy-client dependencies and the physical USB connection
-still need a separate readiness check against the first-boot plan.
+downloaded by Git. Proxy-client dependencies now pass offline imports; see
+`tools/m1n1-client/README.md`. Physical USB connectivity, target boot-entry
+readiness and assembly-toolchain availability remain unverified/incomplete.
 
 | Agent | Who | Owns |
 |---|---|---|
