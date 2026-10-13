@@ -3,6 +3,7 @@
 set -eu
 client_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 project_root=$(CDPATH= cd -- "$client_dir/../.." && pwd)
+"$client_dir/.venv/bin/python" -I "$client_dir/pin_check.py" >&2
 export TOOLCHAIN="$project_root/third_party/LLVM-23.1.3-macOS-ARM64/bin/"
 export LLDDIR="$TOOLCHAIN"
 export ARCH=aarch64-linux-gnu-

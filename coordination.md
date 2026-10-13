@@ -42,6 +42,14 @@ link and disassembly. A bounded P_NOP-only USB check is prepared and fake-
 transport tested. Physical connectivity and target boot-entry readiness
 remain unverified; no target session has run.
 
+**User direction (2026-10-13, package handoff):** the second-machine agent
+prepares receipt/checksums only, keeps the client pinned to the agreed target
+revision, and waits for A's corrected single-core launcher and boot-entry
+procedure. Do not run upstream `proxyclient/tools/linux.py`. First live test
+is the bounded USB handshake; thereafter record only approved diagnostic
+boots. Intake requirements and the result template are in
+`tools/m1n1-client/README.md`. No package has been received yet.
+
 | Agent | Who | Owns |
 |---|---|---|
 | **A** | The session that wrote this plan (`AGENT_ID=agent-a`) | VM responsiveness: goals 2–3. QEMU source and patches (`virtualization/qemu/src/qemu`, `patches/qemu/`), the VM kernel config (`omarchy-arm64/kernel/linux-ilinux-vm/`), latency benchmarks |
