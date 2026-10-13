@@ -644,3 +644,26 @@ results of approved diagnostic boots.
 verification against the sender's separate digest, a clean-client pin check
 and an observation template. Checksum verification does not authorize a boot
 or establish the target's actual running version. No live test has occurred.
+
+## D-044 · 2026-10-13 · Dedicated M5 entry via a matching macOS scaffold
+
+**Decision:** Prepare the exact procedure for a second full macOS installation
+named `iLinux Boot Lab` in the existing APFS container, followed by a lab-only
+m1n1 boot object. No execution is authorized by this preparation request.
+
+**Evidence:** Read-only checks show approximately 1.017 TB free and Apple still
+offers the host's exact 26.6.2 / 25G83 installer. Apple documents volume-based
+multiple installations and per-OS recovery pairing. Local tool help and pinned
+Asahi stage-two source substantiate the policy/boot-object command sequence.
+
+**Limits:** The installer can touch shared boot metadata and service firmware;
+the matching build does not guarantee no firmware effects. No supported Asahi
+M5 installer or native J716c boot has been validated here. Actual installer
+metadata, future volume identities, paired 1TR and owner authentication must
+be checked at the appropriate stage. There is no need for a Linux root/ESP or
+container shrink for the proposed RAM test.
+
+**Validation/next:** Five shell blocks parse; a mocked preflight passes the
+valid case and rejects eleven failures. No host disk/policy calls were made
+by those tests. See `kernel/native-enablement/boot-entry-setup.md`; wait for
+M1 receipt and explicit installation/boot approval before any host changes.

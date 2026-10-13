@@ -29,6 +29,11 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   the native blocker. No dedicated M5 OS entry exists. Its Apple boot assets,
   paired recovery, provisioning layout and per-entry policy remain a separate
   reviewed/user-approved task. Native framebuffer output is also unverified.
+* A concrete preparation procedure now exists in
+  `kernel/native-enablement/boot-entry-setup.md`: second full macOS scaffold,
+  available matching 26.6.2 / 25G83 installer, paired-Recovery preflight and
+  lab-only custom boot policy. It is not executed or hardware-validated;
+  installer effects and actual target layout remain approval/verification gates.
 
 ### B-002 🔴 GPU (AGX G17X) unsupported
 
@@ -86,8 +91,9 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
 Client/LLVM and offline checks are ready. Job 021 now provides the package,
 sender checksums and corrected launcher/instructions; M1 receipt remains
-pending. User reports backup completed. Boot-entry provisioning remains
-unresolved and separately gated.
+pending. User reports backup completed. Boot-entry provisioning now has a
+concrete proposal in `kernel/native-enablement/boot-entry-setup.md`;
+execution is separately gated and unvalidated on hardware.
 Upstream `proxyclient/tools/linux.py` is explicitly on hold. Package integrity
 is not boot approval; first live test is the bounded P_NOP USB handshake.
 

@@ -18,6 +18,14 @@ build outputs, not Apple artifacts. Follow the corrected first-boot plan;
 older statements about an empty APFS stub or persistent proxy console are
 superseded. No native hardware success is claimed by this handoff.
 
+B's next preparation milestone is complete: the user requested exact dedicated
+entry steps while M1 verifies. `kernel/native-enablement/boot-entry-setup.md`
+selects a second full macOS installation named `iLinux Boot Lab`, matching the
+available 26.6.2 / 25G83 installer. It documents paired-Recovery checks,
+lab-only policy/boot-object commands and macOS return. No installer download,
+volume creation, policy change or reboot has run. M1 verifies/reads and waits;
+an offline receipt does not authorize these host changes.
+
 ### Second-machine checkout (2026-10-13)
 
 The user designated a separate macOS computer as the second-machine agent.

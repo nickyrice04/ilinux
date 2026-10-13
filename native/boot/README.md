@@ -6,6 +6,10 @@ The user authorized package preparation, launcher corrections and the private
 GitHub handoff on 2026-10-13, and explicitly said to stop before boot changes.
 Neither downloading nor verifying this package authorizes a physical boot.
 
+The proposed M5 entry installation is documented in
+[boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).
+It is preparation only; do not execute those M5 commands on the M1.
+
 ## M1 agent: do these offline steps now
 
 From the existing `~/Documents/ilinux` checkout, preserve any local changes

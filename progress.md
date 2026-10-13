@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: dedicated M5 entry procedure, no host changes
+
+* Prepared `kernel/native-enablement/boot-entry-setup.md` at the user's request.
+  Read-only checks found about 1.017 TB free, no lab entry, original FileVault
+  enabled and the exact 26.6.2 / 25G83 Apple installer available (~18.4 GB).
+* Proposed a second full macOS installation named `iLinux Boot Lab` in the
+  current APFS container, then a lab-only custom m1n1 boot object. Described
+  shared metadata/possible installer firmware effects and explicit approval.
+* Checked local kmutil/bputil help, Apple pairing/volume instructions and Asahi
+  stage-two source. The Recovery preflight checks separate System/Data group
+  identity, payload/build and paired 1TR without saving identifiers.
+* Validation: five shell blocks parse; a simulated valid preflight passes and
+  eleven mismatch/error cases fail. Rehashed the actual 3,932,160-byte m1n1.
+  No claim of actual Recovery, installer or native hardware validation.
+* No installer downloaded; no volume, boot policy, startup setting or reboot
+  changed. Next: M1 receipt, then separate authorization for the reviewed
+  installation procedure, Stage A and eventually Stage B.
+
 ## 2026-10-13 · Agent B: first-boot package and corrected controller launcher
 
 * User authorized preparation, launcher/instruction fixes and GitHub handoff,

@@ -19,6 +19,11 @@ M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 
 ## 2. Dedicated OS entry: separate installation gate
 
+The current concrete proposal, observed disk capacity, matching Apple installer,
+recovery preflight and gated commands are in
+[boot-entry-setup.md](boot-entry-setup.md). Preparation is complete; execution
+and native validation remain pending. The alternatives below are background.
+
 An empty APFS volume alone is not a bootable m1n1 stub. It needs an OS volume
 group, Apple boot components, paired recovery and an owner-authorized custom
 boot policy. Asahi's conventional layout uses a separate APFS container
@@ -44,8 +49,9 @@ OS version, m1n1 checksum, recovery-pairing checks, per-entry policy change and
 return-to-macOS procedure for approval. The original macOS entry retains its
 policy; never use its System volume as the custom boot-object destination.
 Do not disable authenticated-root or SIP on the original macOS installation.
-Actual install commands depend on those observed details and are not provided
-as a generic paste-and-run recipe in this preparation handoff.
+The companion procedure targets a second full macOS 26.6.2 / 25G83 installation
+named `iLinux Boot Lab`. Its commands are explicitly gated and must be checked
+against the actual new volume group and paired Recovery before execution.
 
 Sources: [Apple multiple-macOS volumes](https://support.apple.com/en-us/118282),
 [Asahi OS layout](https://asahilinux.org/docs/platform/open-os-interop/),
