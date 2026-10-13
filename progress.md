@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: M1 return report reviewed; native observation plan prepared
+
+* Reviewed/fast-forwarded M1 commit **f34970e**. It records the user's successful
+  lab setup/boot at 26.6.2 / 25G83 and return to original Macintosh HD. It does
+  not claim any m1n1 or Linux boot.
+* Independently read the returned M5: original root Macintosh HD, same build,
+  FileVault/SIP/authenticated-root enabled. Lab System/Data are in one group
+  distinct from the original; mounted lab metadata confirms the matching build.
+  Lab FileVault is off, as planned. About 968.43 GB of container space is free.
+* Rehashed packaged m1n1: expected 3,932,160 bytes/SHA-256 match. Lab payload
+  staging is absent. No copy, policy write, custom-boot install or live test run.
+* **Remaining check:** current per-OS boot-security modes need administrator
+  authentication. `sudo -n` is unavailable and computer-use safety review
+  blocked opening Terminal. A local read-only helper was prepared but **NOT RUN**;
+  no workaround or security change was attempted. Original Full Security before
+  installation remains historical evidence, not a fresh post-return result.
+* Updated first-boot plan/result template with package provenance, P_NOP,
+  preflight/handoff, on-screen kernel/PID 1/CPU/memory/interrupts, 60-second
+  heartbeats and return evidence. Specified the proposed screen time limit and
+  distinguished it from the existing controller deadline. No native USB console
+  is promised; blank output requires a logging plan before further attempts.
+* Next: finish read-only policy verification, stage the exact boot object, then
+  separately authorized lab-only policy/custom-boot work, Stage A and Stage B.
+  All live USB/m1n1/Linux/Omarchy results remain **NOT RUN**.
+
 ## 2026-10-13 · M1 handoff: lab setup and return to Macintosh HD succeeded (user-observed)
 
 * User completed the installer-managed restart and Setup Assistant, reached

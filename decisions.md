@@ -733,3 +733,24 @@ report, not a fresh content check. A normal macOS installation writes shared
 boot metadata and may service recovery/firmware, as already disclosed in D-044.
 The original System/Data volumes are not installation destinations. See the
 current execution handoff in `kernel/native-enablement/boot-entry-setup.md`.
+
+## D-048 · 2026-10-13 · Separate macOS boot success from native evidence
+
+**User direction:** review the M1 restart report and determine next steps for
+booting Linux and collecting data. This does not lift the previous security hold.
+
+**Evidence:** M1 report `f34970e` records user-observed lab setup/boot and return
+to Macintosh HD. B independently verifies both builds, lab/original volume-group
+separation and original FileVault/SIP/authenticated-root. Post-return boot-policy
+modes remain pending an authenticated read; automated Terminal access was blocked.
+Packaged m1n1 still hashes correctly but is not staged on the lab Data volume.
+
+**Next experiment:** lab-only custom boot setup after explicit authorization;
+Stage A m1n1/P_NOP, then separately approved Stage B one-core RAM Linux. Record
+provenance, controller checkpoint/exit, M5 screen/PID 1/CPU/memory/interrupts,
+60-second liveness and macOS return. No native success follows from a controller
+handoff alone. The proposed screen-observation limit is 120 seconds after
+handoff; the existing 180-second controller deadline is a different bound.
+Blank output is an observation-path problem to investigate before another
+blind attempt, not evidence of a particular driver failure. No native performance
+or desktop-compatibility claim follows from this first diagnostic.

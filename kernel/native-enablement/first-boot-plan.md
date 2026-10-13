@@ -2,8 +2,9 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Authorization: prepare/test/package/push only. Stop before boot settings,
-storage changes, boot-entry installation or physical reboot.**
+**Current authorization:** lab macOS provisioning is complete. Review and
+read-only checks are allowed; boot-security/custom-object changes and native
+Stage A/B testing remain on hold pending the user's explicit authorization.
 
 ## 1. Current state
 
@@ -14,15 +15,20 @@ Stage-B DT/initramfs. See [package instructions](../../native/boot/README.md).
 
 The user reports a completed backup and a USB-connected M1 controller.
 Controller tools pass offline tests; the physical proxy is untested. Read-only
-inspection found only macOS volumes on the M5: no dedicated m1n1 OS entry.
+checks now confirm the original macOS and a separate installed lab System/Data
+group, both at 26.6.2 / 25G83. The user booted the lab and returned to Macintosh
+HD (M1 report `f34970e`). Original FileVault, SIP and authenticated-root are on;
+post-return per-OS boot-policy modes await an administrator-only read. m1n1 is
+not yet staged or installed as the lab's boot object.
 M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 
 ## 2. Dedicated OS entry: separate installation gate
 
 The current concrete proposal, observed disk capacity, matching Apple installer,
 recovery preflight and gated commands are in
-[boot-entry-setup.md](boot-entry-setup.md). Preparation is complete; execution
-and native validation remain pending. The alternatives below are background.
+[boot-entry-setup.md](boot-entry-setup.md). Lab macOS installation is complete;
+custom boot/security work and native validation remain pending. The alternatives
+below explain the provisioning choice, not work to repeat.
 
 An empty APFS volume alone is not a bootable m1n1 stub. It needs an OS volume
 group, Apple boot components, paired recovery and an owner-authorized custom
@@ -74,6 +80,33 @@ do not save raw ADT, serial numbers, MAC addresses or personal data.
 
 A blank screen means **no observable Linux output**, not a proven AIC/SMP/display
 failure. Further blind attempts should wait for an established observation path.
+
+### Data to collect from the first approved native session
+
+Use [the existing result template](../../tools/m1n1-client/boot-result-template.md)
+in the M1's ignored `build/native-intake/results/` directory. Record:
+
+| Phase | Evidence | What it establishes |
+|---|---|---|
+| Before boot | Git commit, package/manifest hashes, clean client pin, source file hashes, approvals | Exact software and allowed experiment |
+| Stage A | Visible m1n1 output/version if available, P_NOP result and elapsed time | Bootloader/proxy response; no Linux result |
+| Stage B controller | Exact invocation/bootargs, preflight PASS or specific rejection, handoff message and exit status | Checked target and requested handoff; not proof of Linux execution |
+| Stage B M5 display | First/last visible kernel line, panic/error text, `PID 1 reached`, model, CPU mask/count, available memory/interrupt excerpt | Actual native kernel/userspace milestones |
+| Stability/return | Five-second heartbeats through the explicit 60-second message, then original-macOS return/build/protections | Bounded liveness and return path |
+
+The diagnostic already prints these kernel/CPU/memory/interrupt fields. Short
+local screen recordings can help catch text that scrolls away; transcribe only
+non-sensitive observations for Git and do not upload raw recordings, ADT,
+policy dumps, serial numbers, UUIDs or MAC addresses. An unreadable or missed
+line is **NOT OBSERVED**, not a pass/fail inferred from another checkpoint.
+
+The controller has a 180-second deadline for upload/preparation/handoff. For
+the proposed human observation, stop after the 60-second liveness message, an
+explicit panic/failure, or **120 seconds after the handoff message**, whichever
+comes first, then use the agreed return procedure. The 120-second screen bound
+is a proposed session limit, not new launcher behavior or a hardware-tested
+boot-time allowance. Do not perform an automatic retry. A post-handoff USB
+disconnect is expected and does not itself establish either success or failure.
 
 ## 4. Stage A: m1n1 only, after separate approval
 

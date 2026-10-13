@@ -26,17 +26,17 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 * Consequence: there is no validated native Linux boot on this unit yet.
 * Job 021 now supplies a checksummed controller package and tested single-core
   launcher. Generic VM boot reaches diagnostic userspace; this does not resolve
-  the native blocker. An empty iLinux Boot Lab APFS volume now exists; it is
-  not yet a bootable M5 OS entry. Its Apple boot assets,
-  paired recovery, provisioning layout and per-entry policy remain a separate
-  reviewed/user-approved task. Native framebuffer output is also unverified.
+  the native blocker. The lab macOS entry is installed and has booted by user
+  observation; original macOS return also succeeded (M1 report `f34970e`). B
+  verified matching builds and separate System/Data groups. It is not an m1n1
+  entry yet: payload staging, paired-Recovery checks and separately approved
+  lab policy/custom-object work remain. Native framebuffer output is unverified.
 * A concrete preparation procedure now exists in
   `kernel/native-enablement/boot-entry-setup.md`: second full macOS scaffold,
   available matching 26.6.2 / 25G83 installer, paired-Recovery preflight and
   lab-only custom boot policy. The user authorized the lab macOS installation;
-  B created the volume and selected it in Apple's installer. Installation is
-  now in progress; completion/boot validation are unverified and custom boot/
-  security changes are still on hold.
+  installation and first lab boot are complete. Custom boot/security changes
+  and native m1n1/Linux tests are still on hold.
 
 ### B-002 🔴 GPU (AGX G17X) unsupported
 
@@ -98,8 +98,11 @@ reviewed: archive/13 files verified, 26 tests and LLVM checks pass, clean client
 at the agreed revision. All live USB/native tests remain **NOT RUN**.
 User reports backup completed. Boot-entry provisioning now has a
 current execution handoff in `kernel/native-enablement/boot-entry-setup.md`;
-volume creation/installer selection are complete, installation is in progress and
-native boot remains unvalidated. Boot-security changes remain unauthorized.
+lab macOS boot/return succeeded, and B verified original build/FileVault/SIP/
+authenticated-root plus the lab's separate installed volume group/build.
+Current per-OS boot-policy modes need an administrator-only read (automated
+Terminal access was safety-blocked). Native Linux remains unvalidated and
+boot-security changes remain unauthorized.
 Upstream `proxyclient/tools/linux.py` is explicitly on hold. Package integrity
 is not boot approval; first live test is the bounded P_NOP USB handshake.
 
@@ -114,10 +117,10 @@ The whole-app custom-omit-rule rejection remains unchanged and unsuppressed;
 it is not a successful whole-app execution assessment. The independent package
 and content checks resolve the authenticity/integrity investigation. Actual
 normal installer GUI launch subsequently succeeded under the user's lab-setup
-authorization. OS installation is in progress. Details and the repeatable verifier:
+authorization. Installation and lab boot are now user-confirmed. Details and the repeatable verifier:
 `native/boot/macos-installer-download.md`. Eleven synthetic regressions pass.
-The lab volume exists and installation is underway. No boot-policy change or
-restart has been performed by B. See the current provisioning handoff above.
+No boot-policy/custom-object change or native test has been performed. See the
+current post-return handoff above.
 
 ### B-005 🟢 Isolated Linux environment (resolved 2026-10-11)
 

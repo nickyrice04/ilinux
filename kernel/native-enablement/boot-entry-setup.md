@@ -12,11 +12,57 @@ custom boot-object installation and native testing are not authorized.**
 user reached the lab desktop and reported `sw_vers` **26.6.2 / 25G83**, then
 confirmed return to the usual **Macintosh HD** desktop after startup-selection
 guidance. Installation/setup and first lab boot are complete by user report.
-M1 did not independently inspect the M5. Post-return original macOS build and
-security-state verification are still pending; M5 agent should perform those
-read-only checks before any later work. Boot021 and its client pin are unchanged.
+M1 did not independently inspect the M5. B reviewed and fast-forwarded M1 commit
+`f34970e`, then independently checked the original desktop and mounted lab:
+
+* Current root is **Macintosh HD**, build **26.6.2 / 25G83**; FileVault, SIP and
+  authenticated-root protection are enabled. The authenticated-root query now
+  prompts for an OS; B selected the observed **Macintosh HD** entry and checked
+  its result, rather than interpreting the selection prompt as a status.
+* Lab System/Data share one volume group distinct from the original; both are
+  mounted at the expected paths, with FileVault off for the lab. Its installed
+  SystemVersion.plist independently confirms **26.6.2 / 25G83**.
+* Current original/lab **boot-security modes remain unverified after return**.
+  The unprivileged policy query requires administrator authentication. Automated
+  Terminal access was blocked by the computer-use safety check. No policy write
+  or workaround was attempted. The pre-install original mode was Full; do not
+  substitute that historical observation for a new check.
+* Packaged `m1n1.bin` still matches the recorded 3,932,160-byte SHA-256. It has
+  **not** been staged under the lab Data volume's `Users/Shared/iLinuxBoot`.
+
+Boot021 and its client pin are unchanged.
 Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
 **NOT RUN**. Stop before Recovery/security changes or custom boot installation.
+
+### Next sequence and observation plan
+
+1. Finish the administrator-only, **read-only** boot-policy check for both
+   installations. Record only mode labels, not identifiers or raw policy dumps.
+   A local original helper is available on the M5 at
+   `build/installer-verification/check-boot-policies.py` (ignored, not in Git).
+   The user can review it and run it in their own M5 Terminal:
+   `sudo /usr/bin/python3 -I /Users/nickyrice/Documents/iLinux/ilinux-publish/build/installer-verification/check-boot-policies.py`.
+   It identifies the two volume groups in memory, invokes only display-policy,
+   and prints sanitized JSON. Until actually run, its result is **NOT RUN**.
+2. Stage and verify the exact `m1n1.bin` using section 4; copying the file is
+   distinct from installing it as a boot object. No staging occurred in this review.
+3. Obtain explicit authorization for the lab-only **Permissive Security / kernel
+   CTRR change and custom boot object** in section 6. Enter the lab's paired
+   Recovery and run the section-5 identity/pairing checks before any policy write.
+   Original macOS is never the target. A request to review next steps does not
+   authorize this change.
+4. After Stage A authorization, boot m1n1 alone. M1 discovers the actual primary
+   USB port and runs one bounded P_NOP check. Record screen/version observations
+   and return to original macOS. This establishes the bootloader/proxy path.
+5. After reviewing Stage A and obtaining Stage B authorization, use the corrected
+   one-core RAM launcher. Record pre-Linux controller output and M5 screen
+   milestones as specified in the first-boot plan and result template. No Linux
+   desktop, disk installation, network or configuration agent is part of this test.
+
+Data record: [boot-result-template.md](../../tools/m1n1-client/boot-result-template.md).
+The first kernel has no persistent USB console. Screen output is the Linux
+observation channel; blank output cannot identify the failed hardware subsystem.
+If that happens, establish a usable logging path before another blind attempt.
 
 ### Earlier installer handoff (historical; completion updated above)
 

@@ -105,10 +105,12 @@ See `progress.md`. As of 2026-10-13:
   M1's `dfdf8cf` offline report is reviewed (13 files verified, 26 tests pass).
   The matching macOS scaffold installer passes package trust/content checks;
   its outer-app resource-rule rejection remains unchanged. No security checks
-  were disabled. User subsequently authorized lab-entry setup: the empty
-  iLinux Boot Lab APFS volume is created and selected in the normal installer
-  GUI. Installation is in progress; completion/bootability are unverified and boot-security/custom-object
-  changes remain on hold. Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
+  were disabled. Lab macOS installation/first boot and original-desktop return
+  are user-confirmed (M1 report `f34970e`). B independently verified both builds,
+  separate System/Data groups and original FileVault/SIP/authenticated-root.
+  Post-return per-OS boot-security modes still need an administrator-only read;
+  m1n1 staging/security/custom-object work and live tests remain pending.
+  Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;

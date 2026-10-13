@@ -26,11 +26,24 @@ selected and visually verified **iLinux Boot Lab** as destination.
 reached the lab desktop and reported `sw_vers` **26.6.2 / 25G83**, then confirmed
 successful return to the usual **Macintosh HD** desktop. These observations
 establish lab first boot and return; M1 has not remotely inspected the M5.
-Post-return original-build/security checks are still pending: M5 agent should
-perform the planned read-only verification, without advancing to security or
-custom-boot changes. Boot021 and the existing client pin are unchanged.
+B reviewed/integrated M1 report `f34970e` and independently confirmed current
+Macintosh HD build 26.6.2 / 25G83, FileVault/SIP/authenticated-root enabled,
+and a separate mounted lab System/Data group with the same installed build.
+Post-return **boot-policy mode** checks still need an administrator-only read;
+computer-use safety review blocked Terminal automation. No mode is inferred
+from the pre-install baseline. The m1n1 binary hash still matches and it is
+not staged in the lab yet. No security/custom-boot change occurred.
+Boot021 and the existing client pin are unchanged.
 Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
 **NOT RUN**. Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
+
+**Next staged session:** finish read-only policy checks, stage/hash the exact
+boot object, then request authorization for lab-only Permissive Security and
+custom boot installation. Stage A tests only m1n1/P_NOP; Stage B separately
+tests one-core Linux PID 1 and 60-second liveness. The result template now
+separates controller output, screen observations, timing and macOS return.
+No persistent USB Linux console or SSH is present. Blank screen means output
+not observed; establish logging before another blind attempt.
 
 ### Current boot-package assignment (user authorized 2026-10-13)
 
