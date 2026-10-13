@@ -5,6 +5,21 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Second-machine agent: GitHub checkout setup
+
+* Downloaded the private `nickyrice04/ilinux` repository on the user-designated
+  second macOS machine; local `main` tracks `origin/main`.
+* Git 2.50.1 is installed; GitHub CLI 2.102.0 authenticated as `nickyrice04`
+  with credentials in the OS keyring. Git fetch and push dry-run succeeded;
+  GitHub reports push permission. This entry is the real push verification.
+* Set repository-local commit identity to the account's GitHub noreply
+  address, fast-forward-only pulls and simple pushes.
+* Recorded user authorization for GitHub handoffs and cross-machine
+  coordination limits. No native boot, USB proxy test or build performed.
+* Next: prepare/check the second-machine m1n1 proxy environment and cable
+  before the separately authorized native gates. Ignored build artifacts
+  and VM disks are absent from this checkout.
+
 ## 2026-10-13 · Agent B: native CPU dispatch, idle hooks and startup guard
 
 * **Investigated:** REA/Ghidra completed six CPU/idle queries; 872 instruction

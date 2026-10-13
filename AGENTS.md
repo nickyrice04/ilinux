@@ -76,7 +76,9 @@ that reads it with `-I`.
 * For anything meant for upstream Asahi, follow Asahi's clean-room
   copyright policy (see `research/asahi/`). Do not base contributions on
   decompiled Apple code.
-* Git: local repository only, no remote. Never commit VM images, models,
+* Git: the user authorized the private `nickyrice04/ilinux` GitHub remote
+  on 2026-10-13 for second-machine setup and agent handoffs. This supersedes
+  the former local-only rule. Never commit VM images, models,
   build outputs, raw IORegistry dumps or proprietary binaries (see
   `.gitignore`).
 

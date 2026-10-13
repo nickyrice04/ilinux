@@ -6,6 +6,27 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Second-machine checkout (2026-10-13)
+
+The user designated a separate macOS computer as the second-machine agent.
+Its checkout is `~/Documents/ilinux`, tracking the private
+`https://github.com/nickyrice04/ilinux.git` repository. GitHub authentication
+as `nickyrice04`, fetch access and account push permission are verified.
+This role is distinct from research agent B and post-boot configuration
+agent C. It supports the m1n1 USB proxy and cross-machine handoffs; USB
+connectivity and native boot have not been tested by this setup.
+
+The user explicitly authorized repository pushes for agent communication,
+superseding the older local-only Git rule. Fetch and use `git pull --ff-only`
+before work, commit explicit paths, then push without force. If another
+machine advances the branch, fetch and reconcile before retrying; never
+reset away another agent's work. Local advisory locks do not coordinate
+separate computers: record ownership and handoffs here before shared work.
+Credentials remain in the OS credential store, never in tracked files.
+Ignored VM disks, build payloads and local third-party checkouts are not
+downloaded by Git. Proxy-client dependencies and the physical USB connection
+still need a separate readiness check against the first-boot plan.
+
 | Agent | Who | Owns |
 |---|---|---|
 | **A** | The session that wrote this plan (`AGENT_ID=agent-a`) | VM responsiveness: goals 2–3. QEMU source and patches (`virtualization/qemu/src/qemu`, `patches/qemu/`), the VM kernel config (`omarchy-arm64/kernel/linux-ilinux-vm/`), latency benchmarks |
