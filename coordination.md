@@ -51,6 +51,15 @@ separates controller output, screen observations, timing and macOS return.
 No persistent USB Linux console or SSH is present. Blank screen means output
 not observed; establish logging before another blind attempt.
 
+**M1 offline preparation complete:** `tools/m1n1-client/stage-a-instructions.md`
+contains the later authorized handshake checklist. Stage B evidence draft is
+local/ignored at `build/native-intake/results/boot021-stage-b-prepared.md`,
+pre-filled from the current template and verified package with provenance,
+expected milestones and timing bounds. All 13 payload checksums still match;
+boot021 and the clean client pin are unchanged. M1 read B's policy-result
+handoff at `1607f2a`, without an independent target query. Explicit approvals
+remain pending; all live USB/target-version/native tests are **NOT RUN**.
+
 ### Current boot-package assignment (user authorized 2026-10-13)
 
 B now owns preparing/exporting the boot package, correcting the single-core
