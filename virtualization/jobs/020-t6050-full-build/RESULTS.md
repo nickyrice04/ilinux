@@ -27,6 +27,11 @@ Ran 2026-10-13 in the Linux guest toolchain (18 cores). Reproducible via
 The Image/modules/initramfs stay in the guest (only useful for a native
 boot, which is user-gated). Digests here fix provenance.
 
+**Job-021 export note:** these exact payloads have now been exported into the
+checksummed private boot package. The seven-patch Image was linked before
+section 5's separate HID hardening/object test and was not relinked afterward.
+Do not describe that additional HID patch as included in this Image.
+
 ## DT validation (`dtbs-check-exit.txt`, `dtbs_check-t6050.txt`)
 
 `dtbs_check` exit 0 (dtschema 2026.9). **The t6050-j716c.dtb produces zero

@@ -6,6 +6,18 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current boot-package assignment (user authorized 2026-10-13)
+
+B now owns preparing/exporting the boot package, correcting the single-core
+launcher and first-boot instructions, testing them in isolation and pushing
+the M1 handoff. Work is in `native/boot/` and job 021; A's QEMU/latency work
+is untouched. The M1 agent downloads/verifies and reports offline readiness.
+**Explicit stop: no boot settings, entry installation, partition changes or
+physical boot.** Payload publication is authorized; these are open-source
+build outputs, not Apple artifacts. Follow the corrected first-boot plan;
+older statements about an empty APFS stub or persistent proxy console are
+superseded. No native hardware success is claimed by this handoff.
+
 ### Second-machine checkout (2026-10-13)
 
 The user designated a separate macOS computer as the second-machine agent.
@@ -146,11 +158,13 @@ the `vm` lock.
 
 * **N1. Prerequisites.**
   * A current full macOS backup (Time Machine or equivalent).
-  * A second computer and a USB-C cable for m1n1's proxy and serial console.
-    Early boots have no display driver and no Wi-Fi, and that link is how
-    they are driven and observed.
-  * The user, in recoveryOS, sets Permissive Security for a dedicated m1n1
-    boot entry on a small separate APFS volume. No repartitioning yet.
+  * A second computer and a USB-C data cable for the pre-Linux m1n1 proxy.
+    Native Linux output is initially attempted on the M5 framebuffer;
+    no persistent USB Linux console is established.
+  * A separately reviewed and authorized OS boot environment with Apple boot
+    assets, paired recovery and its own custom boot policy. An empty APFS
+    volume is insufficient. Exact layout and installation remain gated; see
+    `kernel/native-enablement/first-boot-plan.md`.
 * **N2. RAM-only boots** over USB from the second computer: kernel,
   initramfs and device tree, with nothing written to the Mac's disk. In
   order:

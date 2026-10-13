@@ -24,6 +24,11 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   startup guard; Linux regressions/sanitizers and the full `smp.o` build pass.
   It is not an SMP fix or a native compatibility result.
 * Consequence: there is no validated native Linux boot on this unit yet.
+* Job 021 now supplies a checksummed controller package and tested single-core
+  launcher. Generic VM boot reaches diagnostic userspace; this does not resolve
+  the native blocker. No dedicated M5 OS entry exists. Its Apple boot assets,
+  paired recovery, provisioning layout and per-entry policy remain a separate
+  reviewed/user-approved task. Native framebuffer output is also unverified.
 
 ### B-002 🔴 GPU (AGX G17X) unsupported
 

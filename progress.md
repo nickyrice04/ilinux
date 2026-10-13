@@ -5,6 +5,26 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: first-boot package and corrected controller launcher
+
+* User authorized preparation, launcher/instruction fixes and GitHub handoff,
+  explicitly stopping before boot settings. Work is in the published checkout.
+* Exported the three existing job-020 artifacts and matched every original
+  checksum. Clean-linked unmodified pinned m1n1 in the Linux VM; prepared a
+  Stage-B DT with NVMe/cpufreq disabled and a static diagnostic initramfs.
+* Added an offline-default, checksummed launcher with no SMP-start, cpufreq-init,
+  setup.py/PMU reset or shell. It checks chip/build/board, secondary state,
+  framebuffer and the final DT before a separately approved handoff.
+* Validation: 17 tests on macOS and ARM64 Linux, one real-proxy-serializer test,
+  zero Stage-B schema diagnostics; diskless VM reaches PID 1 and sustains one
+  CPU/heartbeats for 60 seconds. No native M5 compatibility result.
+* Corrected the APFS boot-entry prerequisite, unsupported persistent USB/log
+  assumptions, and HID provenance (object-tested separately, not in Image).
+* Handoff: `native/boot/README.md`; job-021 results and manifest. Payload is a
+  private prerelease asset, not a Git blob. M1 verifies offline and stops.
+* Remaining: separately reviewed OS-entry provisioning and user approval,
+  then physical P_NOP and RAM diagnostic. No boot/security/partition change.
+
 ## 2026-10-13 · Second-machine agent: LLVM and non-mutating USB checker
 
 * Installed a minimal official LLVM 23.1.3 macOS ARM64 toolchain inside ignored

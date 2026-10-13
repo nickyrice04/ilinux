@@ -612,3 +612,22 @@ user approves native prerequisites. Keep entry-vector, mask, early-state
 and exception hypotheses separate. No guessed CPU_START encoding or idle
 policy change follows from static decompilation alone. Full handoff:
 `reverse-engineering/findings/cpu-startup-2026-10-13/handoff.md`.
+
+## D-043 · 2026-10-13 · Offline boot package with explicit native stop point
+
+**Decision:** At the user's request, export/publish job-020 payloads with a
+fresh unmodified m1n1 build and an original one-core diagnostic launcher.
+Keep binaries in a private prerelease asset and checksums/source recipes in
+Git. Offline verification is the default. No boot settings or physical boot.
+
+**Evidence:** upstream linux.py starts secondaries unconditionally; setup.py
+resets the panic counter; native handoff shuts down m1n1 USB. Its phram log
+is not a Linux crash recorder. The new launcher avoids those controller setup
+paths, verifies the packaged target build, and reads back the effective DT
+before a separately approved handoff. NVMe/cpufreq stay disabled in Stage B.
+
+**Validation/limits:** job-021 build/schema checks, 17 offline tests and one
+real serializer test pass. The exact kernel/initramfs reaches PID 1 and 60
+seconds of heartbeats in a diskless ARM64 VM. Native J716c DT/USB/framebuffer,
+SMP and power remain untested. A real OS entry requires Apple boot assets and
+paired recovery; an empty APFS volume is insufficient. See `native/boot/`.

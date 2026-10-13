@@ -3,6 +3,11 @@
 Prepared 2026-10-13 on the second macOS computer. This is client preparation,
 not authorization to install a boot entry, change security or boot the M5.
 
+**Current handoff:** follow [`../../native/boot/README.md`](../../native/boot/README.md)
+for the checksummed job-021 package and offline-only launcher checks. The
+user authorized preparation/pushes only and explicitly stopped before boot
+settings. Do not run the live examples below during this preparation phase.
+
 ## Installed locally
 
 * `third_party/m1n1` is an unmodified, detached checkout at
@@ -97,9 +102,10 @@ effects before use; no shell or boot command was executed during setup.
 If the first session must be strictly read-only, prepare a separate minimal
 handshake instead of using that shell.
 
-When eventually using `tools/linux.py`, the uncompressed job-020 `Image`
-requires `--compression none` (the script cannot infer compression from
-the filename `Image`). Final boot arguments still need agent A's review.
+Do not use `tools/linux.py` for the first single-core test. It unconditionally
+starts secondary CPUs before Linux, even with `maxcpus=1`. Use the reviewed
+`native/boot/launch.py` instead, only after separate live-session approval.
+It loads the verified uncompressed Image directly, with no compression guess.
 
 ## Sources
 

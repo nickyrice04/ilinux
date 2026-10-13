@@ -1,155 +1,128 @@
-# t6050 first-boot observation and staged-test plan
+# t6050 first native boot: corrected staged plan
 
-* **Date:** 2026-10-13 (agent A, goal 5). Builds on
-  [`plan.md`](plan.md) §1.2 and §3(a), and the job 020 build artifacts.
-* **Status:** preparation only. **No native boot has happened.** Nothing here
-  is executed without the user's explicit per-gate approval (coordination.md
-  gates N1–N4). Nothing is written to the Mac's storage in the early stages.
-* **Separating history from this machine:** m1n1 single-core boot and the SMP
-  failure are reported on **M5 Pro** hardware (PRs #610/#652/#661), chip-id
-  0x6050. This unit is an **M5 Max**, also chip-id 0x6050. So single-core boot
-  here is **Likely, not Confirmed**, and the SMP failure is an inherited
-  report, **not** an observation on this machine. The first native session
-  tests both.
+Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
+single-core, APFS-stub, persistent-console and power-cycle guarantees.
+**Authorization: prepare/test/package/push only. Stop before boot settings,
+storage changes, boot-entry installation or physical reboot.**
 
-## 1. What can actually observe an early boot (and what cannot)
+## 1. Current state
 
-The internal UART is not reachable on laptops, so the usual serial console is
-out. The channels that work, in order of availability:
+This Mac is Mac17,6 / J716c / t6050 M5 Max. No native Linux boot has been
+observed. Job 020 built the kernel, DT and diagnostic initramfs. Job 021
+exports the same bytes and adds a built, pinned m1n1 plus a conservative
+Stage-B DT/initramfs. See [package instructions](../../native/boot/README.md).
 
-| Channel | Works when | Needs | Role |
-|---|---|---|---|
-| **m1n1 USB proxy** (second machine, USB-C) | before Linux, and alongside it | m1n1 running as the boot object; `m1n1/proxyclient` on the 2nd machine | Primary pre-Linux channel: read registers, load Image/initramfs/DTB into RAM, chainload, trace |
-| **Framebuffer console** (simpledrm on mBoot's framebuffer) | once the kernel reaches `simpledrm` + fbcon | our kernel config (`DRM_SIMPLEDRM`, `FRAMEBUFFER_CONSOLE`), the diag initramfs | Primary early-Linux channel: kernel log + diag output appear **on the Mac's own screen** |
-| **m1n1 `phram` MTD / its own log** | throughout | m1n1 | Secondary: captures m1n1's and the kernel's early log in RAM for read-back over the proxy |
+The user reports a completed backup and a USB-connected M1 controller.
+Controller tools pass offline tests; the physical proxy is untested. Read-only
+inspection found only macOS volumes on the M5: no dedicated m1n1 OS entry.
+M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 
-**Explicitly NOT assumed to work** (each needs a driver or a boot-policy
-change we will not make, so none is a bring-up dependency):
+## 2. Dedicated OS entry: separate installation gate
 
-* **dockchannel-UART serial console** — needs a Linux `dockchannel-uart`
-  driver (does not exist) **and** `csrutil authenticated-root disable` (a
-  boot-policy change, out of scope).
-* **USB Ethernet / USB host** — needs the t6050 ATC PHY + XHCI bring-up.
-* **Keyboard / trackpad** — needs `dockchannel-hid` + DART + MTP firmware
-  startup (the parser is hardened; the transport is not up).
-* **SSH / network of any kind** — nothing above the framebuffer exists yet.
+An empty APFS volume alone is not a bootable m1n1 stub. It needs an OS volume
+group, Apple boot components, paired recovery and an owner-authorized custom
+boot policy. Asahi's conventional layout uses a separate APFS container
+partition plus an ESP and Linux storage. Sharing a container is possible;
+the earlier blanket claim that a small empty volume suffices was incorrect.
 
-So the first boots are **non-interactive**: the diag initramfs prints to the
-framebuffer and heartbeats; the second machine drives and reads over the m1n1
-proxy. No input from the Mac's own keyboard is expected or needed.
+The standard Asahi installer does not support this M5 Max. Do not bypass its
+model checks. No installer or boot-policy command is included in job 021.
+For the next separately approved task, review one concrete route:
 
-## 2. Prerequisites (gate N1 — all user actions)
+* **Dedicated second macOS installation as a development scaffold.** Apple's
+  additional-APFS-volume procedure creates a real OS volume group and paired
+  recovery. It consumes more space than a stripped stub. Choose a compatible
+  release and assess firmware/update implications first. Replacing only that
+  new OS's boot object with m1n1 is a proposal, not a validated M5 installation.
+* **Minimal stub provisioning.** Requires an independently reviewed M5-capable
+  flow with correct Apple restore assets and recovery pairing. No such flow
+  has been validated here. Do not improvise Preboot copying or patch out an
+  installer's unsupported-model check.
 
-1. A **current full macOS backup** (Time Machine or equivalent).
-2. A **second computer** (Linux or macOS) with Python 3, and a **USB-C
-   cable** between the two machines. This is the only way to drive and read
-   early boots.
-3. In **recoveryOS**, set **Permissive Security** for a **dedicated m1n1 boot
-   entry** on a **small separate APFS volume** created in the existing
-   container. **No repartitioning, no change to the macOS volume.** This is
-   Asahi's normal stub arrangement; the user performs it.
-4. Install `m1n1` (pinned `57a9339f…`, `third_party/m1n1`) as that entry's
-   boot object, per Asahi's documented procedure.
+Before changing anything, present the actual volume/container layout, capacity,
+OS version, m1n1 checksum, recovery-pairing checks, per-entry policy change and
+return-to-macOS procedure for approval. The original macOS entry retains its
+policy; never use its System volume as the custom boot-object destination.
+Do not disable authenticated-root or SIP on the original macOS installation.
+Actual install commands depend on those observed details and are not provided
+as a generic paste-and-run recipe in this preparation handoff.
 
-Recovery from any failure in the RAM stages is the same and total: **hold the
-power button to force off, then boot macOS normally.** The RAM stages write
-nothing to storage, and the m1n1 stub is on its own volume, so the macOS
-install is untouched.
+Sources: [Apple multiple-macOS volumes](https://support.apple.com/en-us/118282),
+[Asahi OS layout](https://asahilinux.org/docs/platform/open-os-interop/),
+[m1n1 installation/pairing](https://asahilinux.org/docs/sw/m1n1-user-guide/),
+[M5 support](https://asahilinux.org/docs/platform/feature-support/m5/).
 
-## 3. Staged tests
+## 3. Observation
 
-Each stage lists goal, method, **expected output**, **failure checkpoint**
-(what a failure looks like and what it most likely means), and recovery.
-Do not proceed to the next stage until the current one passes.
+| Channel | Scope | Limit |
+|---|---|---|
+| m1n1 primary USB proxy | Pre-Linux handshake, upload, preparation | Native handoff shuts down m1n1 USB |
+| M5 framebuffer, simpledrm/fbcon | Proposed kernel/userspace output | Actual native output unvalidated |
+| m1n1 phram region | m1n1's own log | Not a Linux crash recorder or guaranteed post-hang retrieval path |
+| Hypervisor virtual UART | Separate hypervisor execution mode | Not this native launcher; M5 support unvalidated |
 
-### Stage A — m1n1 proxy connectivity (no Linux)
+No keyboard, SSH, Ethernet or serial bridge is assumed. The RAM initramfs is
+non-interactive and contains no agent. The M1 agent coordinates while the human
+observes the M5 screen. Record checkpoints and transcribed non-sensitive errors;
+do not save raw ADT, serial numbers, MAC addresses or personal data.
 
-* **Goal:** confirm the second machine can drive this Mac through m1n1 before
-  risking a kernel.
-* **Method:** boot the m1n1 entry; on the second machine run the
-  `m1n1.proxyclient` shell; read chip-id and a few PMGR registers.
-* **Expected:** proxy connects; chip-id reads **0x6050**; `EARLY_UART_BASE`
-  and PMGR reads succeed; m1n1 prints the ADT it parsed.
-* **Failure checkpoint:** no proxy handshake → m1n1 did not boot or USB device
-  mode is down (re-check the stub entry and cable; M5 Max device-mode fix is
-  in current m1n1). A hang in m1n1 before the proxy → RVBAR/boot-object issue
-  (H1), to be read from m1n1's own log.
-* **Recovery:** force off → macOS.
+A blank screen means **no observable Linux output**, not a proven AIC/SMP/display
+failure. Further blind attempts should wait for an established observation path.
 
-### Stage B — single-core RAM diagnostic boot (the first Linux)
+## 4. Stage A: m1n1 only, after separate approval
 
-* **Goal:** prove our kernel + DT reach userspace on one core, and read the
-  first observables.
-* **Method:** over the proxy, load into **RAM only**: `Image` (job 020),
-  `t6050-j716c.dtb` (job 020), `initramfs.cpio.gz` (diag). Cmdline:
-  `earlycon=... console=tty0 idle=nop arm64.nowfxt pd_ignore_unused
-  clk_ignore_unused loglevel=8` (m1n1 adds `idle=nop arm64.nowfxt`
-  automatically on M4+). Boot.
-* **Expected (on the Mac's framebuffer):** kernel banner, then the diag
-  initramfs:
-  * `PID 1 reached: the kernel booted and ran userspace.`
-  * DT model shows the MacBook Pro / t6050 J716c string (confirms our DT
-    loaded, not a stale one).
-  * `online_cpus=1`.
-  * `MemTotal` roughly the machine's RAM.
-  * a 5-second heartbeat that keeps updating.
-* **Failure checkpoints:**
-  * *Nothing on screen* → kernel did not reach simpledrm, or panicked before
-    fbcon. Read the kernel log from m1n1 `phram` over the proxy.
-  * *Early SError / panic in AIC init* → the **AIC VM-timer FIQ register may
-    be locked on t6050** (plan §3(a) risk #5, H-level). Next action: proxy
-    `mrs`/`msr` test of `SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2`; if locked, build the
-    capability-guard mitigation and retry.
-  * *Hang after "PID 1 reached" with no heartbeat* → userspace stuck (unlikely
-    for a static init); re-read the log.
-  * *Wrong/garbled framebuffer* → mBoot framebuffer format vs simpledrm
-    mismatch; fall back to reading `phram` only.
-* **Recovery:** force off → macOS. Nothing persisted.
+Prerequisites: dedicated entry provisioned with the packaged m1n1; matching
+client; backup verified; both computers powered; direct cable; agreed macOS
+return procedure. None is installed by the preparation package.
 
-### Stage C — SMP register observation (diagnose, don't fix)
+Boot only the dedicated entry. Discover the actual primary USB path on the M1,
+then perform the bounded P_NOP-only check. Success proves a responding proxy,
+not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
+its setup resets the PMU panic counter and writes home-directory history.
 
-* **Goal:** find why secondaries don't run, on **this** machine (the plan's
-  ranked H1–H4). This is observation, not a register-poking fix.
-* **Method:** over the proxy, before/after a secondary-start attempt, read:
-  per-core RVBAR / `cpu_impl_reg` (H1), CPU_START `+0x0..+0x14` and the
-  per-core PMGR PS registers (H2), and watch m1n1's `cpu_reset` 'O'/'K' output
-  (H4). Retest on current m1n1 `main` first (H3 is free).
-* **Expected:** one of the hypotheses is confirmed by the register reads
-  (e.g. RVBAR locked to a non-m1n1 address → H1).
-* **Failure checkpoint:** all reads look correct yet cores still don't run →
-  escalates to m1n1-hypervisor tracing of macOS's own secondary start (needs
-  0x6050 in the hypervisor CPUSTART table; interpretation must be human per
-  Asahi's AI policy, so this is a hand-off to the user, not an agent step).
-* **Recovery:** force off → macOS.
+## 5. Stage B: one-core RAM diagnostic, after separate approval
 
-### Stage D — NVMe read-only identify (first storage touch, read-only)
+Use only `native/boot/launch.py` as documented in its README. Upstream
+`tools/linux.py` unconditionally starts secondary cores before Linux sees
+`maxcpus=1`. The replacement never issues that request, rejects already-started
+secondaries reported by m1n1, and skips `cpufreq_init()` and `m1n1.setup`.
 
-* **Goal:** confirm the SARTv4 + M4+ register-split patches bring up ANS far
-  enough to *identify* the controller. **Read-only. No writes to the SSD.**
-* **Method:** once a single-core shell is reachable (extend the initramfs with
-  read-only tools), load `nvme-apple`, read controller identify and namespace
-  list. Do **not** mount, write, or touch the macOS APFS volumes.
-* **Expected:** the Apple NVMe controller identifies; namespaces enumerate.
-* **Failure checkpoint:** ANS init timeout → NVMMU/register-split offsets
-  wrong (patch 0005), or SARTv4 shift wrong (0002/0003); compare against the
-  macOS-15 firmware-ABI series already in `asahi`.
-* **Recovery:** force off → macOS. No writes were issued.
+Fixed arguments select `console=tty0 fbcon=nodefer`, limit Linux to one CPU,
+disable cpufreq and retain M4+ idle/unused-clock/domain workarounds. There is
+no `earlycon=...` placeholder or arbitrary argument override. Those idle
+workarounds do not establish efficient native idle.
 
-### Stage E and later — input, display, power
+The Stage-B DT keeps NVMe disabled despite its built-in driver. The initramfs
+mounts no storage. m1n1 still initializes hardware; RAM-only describes payload
+and rootfs placement, not an absence of register writes or firmware activity.
+The launcher validates the effective DT after m1n1 fixups, in memory only.
+It is never saved because m1n1 adds identifiers to it.
 
-Only after C/D. Input needs `dockchannel-hid` (parser hardened this pass) +
-DART + MTP firmware; display beyond the framebuffer needs the DCP ABI; power
-needs the DVFS/idle work. Each is its own staged effort with its own RAM-first
-test. Not detailed here.
+Pass criteria on the M5 display:
 
-## 4. The exact next physical test requiring user approval
+1. Kernel output followed by `PID 1 reached`.
+2. J716c/t6050 diagnostics and `online_cpus=1`.
+3. At least 60 seconds of five-second heartbeats.
+4. Successful return to original macOS afterward.
 
-**Gate N1 + Stage A:** with a fresh macOS backup, a second computer and USB-C
-cable, and Permissive Security set for a dedicated m1n1 stub volume (user
-actions), boot m1n1 and confirm the proxy reads **chip-id 0x6050**. This
-writes nothing to the Mac and is fully reverted by a power-cycle. It is the
-prerequisite for Stage B (the first Linux boot).
+Record package checksum, launcher commit, actual checkpoint, visible error,
+elapsed time and macOS return outcome. A successful handoff request is not
+proof of a Linux boot. On failure, do not retry automatically, poke CPU
+registers or weaken validation. A fresh m1n1 session is needed before any
+reviewed retry; RAM allocations and hardware setup are not rolled back.
 
-Agents do not perform any of gate N1 or any boot. When the user is ready, the
-build artifacts from job 020 (`Image`, `t6050-j716c.dtb`, `initramfs.cpio.gz`)
-are the RAM payload for Stage B.
+## 6. Later stages
+
+* **SMP:** separate secondary-start experiment after single-core evidence.
+  Stage B has no SMP switch. B's startup guard remains an optional experiment.
+* **NVMe:** separately reviewed DT/initramfs must enable it. Controller identify
+  is read-only data access, but initialization writes registers/admin commands.
+  Never mount or write macOS storage. Stage B cannot identify disabled storage.
+* **Input/network/display/power:** validate transports before USB accessories,
+  SSH or the configuration agent. GPU, DCP, N1, suspend and idle remain work.
+* **Installed Omarchy:** separately approved Linux root-storage plan and
+  reliable access first; then `native/handoff/`, excluding VM-only bridges.
+
+Force-off/startup-picker return to macOS is the intended recovery path, not a
+guarantee against every failure. Power cycling discards RAM; it does not undo
+an OS entry, boot policy, partition changes or firmware updates.

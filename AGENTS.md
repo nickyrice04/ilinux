@@ -89,12 +89,19 @@ See `progress.md`. As of 2026-10-13:
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.
 * A draft native patch series exists in `kernel/patches/t6050`. Job 020 /
-  F-056 built the full kernel Image, modules, DTBs and initramfs, including
-  the DockChannel hardening patch. The draft DT is schema-clean (0
+  F-056 built the full kernel Image, modules, DTBs and initramfs. DockChannel
+  hardening was separately object-tested after the Image link; that extra
+  patch is not in the exported Image. The draft DT is schema-clean (0
   dtbs_check warnings) and probe-ready (every bring-up device matches a
   driver on its t6050 string or generic fallback; `probe-audit.sh`). It
   remains **unbooted**: actual probing and firmware startup are runtime
   questions for the first native session.
+* Job 021 packages the original kernel plus a separately built m1n1 and
+  Stage-B DT/initramfs. The launcher defaults to offline verification, never
+  requests secondary-core start, and checks the final target DT before a
+  separately authorized handoff. Generic diskless VM PID-1/60-second heartbeat
+  succeeds; native hardware remains untested. `native/boot/README.md` is the
+  current M1 handoff. Stop before boot settings or physical boot.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;

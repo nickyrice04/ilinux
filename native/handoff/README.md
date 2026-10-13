@@ -77,8 +77,10 @@ N1 Wi-Fi has no driver, so plan C's own connectivity before handoff:
 
 1. **USB Ethernet dongle** (or USB-C tethering from a phone), once USB host is
    up. This is the primary path.
-2. **The second machine** from the first-boot setup, over its USB link or a
-   serial/SSH bridge, if USB host is not yet reliable.
+2. **The second machine** can continue coordinating tests, but m1n1's
+   pre-Linux USB proxy does not survive a native handoff as a Linux console.
+   A serial/SSH bridge is usable only after that distinct transport is
+   implemented and tested; none is supplied by the initial RAM diagnostic.
 
 C must confirm one of these works before it depends on fetching packages.
 
