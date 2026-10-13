@@ -27,6 +27,13 @@ Regular applications keep their current driver selection. Opting in through
 the wrapper requires no desktop restart. Remove the guest package with
 `pacman -R mesa-virgl-video-ilinux` to remove the opt-in path.
 
+**Session default (D-032).** The VM also makes this driver the default for
+desktop-launched apps through
+`omarchy-arm64/configuration/vm-integration/etc/environment.d/70-ilinux-vm-video.conf`,
+so plain `mpv`/FFmpeg use it without the wrapper. The wrapper remains for
+explicit, per-process use (e.g. from a bare `sudo -u`, which does not import
+`environment.d`).
+
 ## Rebuild
 
 From the repository root, stage the source recipe and patch checksums:

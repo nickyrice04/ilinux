@@ -531,3 +531,37 @@ then obtain explicitly authorized native observations before integrating a
 startup-sequence change. Agent C configures the native desktop only after
 the existing native gates. Full handoff:
 `reverse-engineering/findings/rea-native-2026-10-13/handoff.md`.
+
+## D-032 · 2026-10-13 · Fixed virgl VA-API driver is the VM session default
+
+**Decision (agent A, goal 4):** The VM session makes
+`mesa-virgl-video-ilinux` the default VA-API driver through
+`omarchy-arm64/configuration/vm-integration/etc/environment.d/70-ilinux-vm-video.conf`:
+
+```
+LIBVA_DRIVERS_PATH=/usr/lib/ilinux-va:/usr/lib/dri
+LIBVA_DRIVER_NAME=virtio_gpu
+VIRGL_VIDEO_DECODE_NV12=1
+```
+
+So plain `mpv`/FFmpeg launched from the Omarchy desktop hardware-decode
+H.264 with the lossless-download fix and NV12 decode, without the
+`ilinux-video` wrapper. The wrapper (D-031) stays for explicit use.
+
+**Why:**
+
+* The driver is a strict superset of stock Mesa's virgl VA driver: it fixes
+  cross-format 8-bit 4:2:0 CPU downloads (F-045) and, with
+  `VIRGL_VIDEO_DECODE_NV12=1`, skips VideoToolbox's per-frame planar
+  conversion (~41% less QEMU CPU for paced 4K60 decode, F-052/F-053).
+* `LIBVA_DRIVERS_PATH` lists the fixed driver first and stock Mesa second, so
+  removing the package degrades to stock video rather than breaking it.
+* Only the VA video driver changes; OpenGL (virgl) and Vulkan (Venus) keep
+  stock Mesa, confirmed after the switch.
+
+**Opt out:** `VIRGL_VIDEO_DECODE_NV12=0` keeps the download fix without the
+NV12 narrowing; remove the file to return to stock video entirely.
+
+**Scope:** VM only. The handoff kit (coordination.md, goal 7) lists this
+among the `vm-integration` files that must not be applied on native Asahi
+hardware, where the path is the M5 AVD through V4L2.

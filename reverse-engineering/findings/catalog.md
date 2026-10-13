@@ -624,3 +624,13 @@ not a validated root cause for today's stack. Missing decode fences remain.
 | Implementation | Original `startup_layout.[ch]` validates caller-supplied nonoverlapping layouts and produces masks without MMIO. `audit_startup_layout.py` records the data comparison. No Apple algorithm is transcribed. |
 | Validation | Linux GCC build and runtime test; macOS ASan/UBSan; 18-core uniqueness, 5,984 valid single-cluster cases, overlap/range/error-output tests. No native compatibility or performance claim. |
 | Next | Resolve PMGR descriptor/dispatch evidence; validate RVBAR and startup behavior after native authorization. Do not apply VM vmpoll or these candidate masks as a verified native idle/startup policy. |
+
+## F-055 · VM video · Session-default VA driver verified; environment.d does not reach `sudo -u`
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` fresh-boot VM with `70-ilinux-vm-video.conf` installed; session-launched `mpv` via `systemd-run --user` with `--log-file`; `/proc/<quickshell>/environ`; `ffmpeg` framemd5 download regression. |
+| Observation | A session-launched plain `mpv r2160.mp4` (no wrapper, no explicit env) logs `libva: Trying to open /usr/lib/ilinux-va/virtio_gpu_drv_video.so`, `Using hardware decoding (vaapi)`, `VO: [gpu] 3840x2160 vaapi[nv12]`: the fixed driver, hardware decode, NV12 zero-copy. A session process (`quickshell`) carries `LIBVA_DRIVERS_PATH=/usr/lib/ilinux-va:/usr/lib/dri` and `VIRGL_VIDEO_DECODE_NV12=1`. Download regression (hwdownload→yuv420p vs software) is 0/180 mismatched. GL renderer stays `virgl (Apple M5 Max)` and Vulkan `Virtio-GPU Venus`. **Caveat:** `sudo -u omarchy mpv …` loads the *stock* driver and `vaapi[yuv420p]`, because `sudo` starts from a clean environment that never imported `environment.d`. Real desktop launches (app launcher, keybinds, session terminals) inherit the systemd user environment and do get the default; only a bare `sudo -u` test does not. |
+| Inference | The default is correct for actual desktop use. Any future VM test of session environment must launch through the session (`systemd-run --user`, `uwsm app`, or a session terminal), not `sudo -u`, or it will wrongly report the stock driver. On-screen visual capture was blocked by hyprlock (idle lock holds the Wayland session-lock and ignores `loginctl unlock-sessions`); decode correctness is covered frame-exact, and the NV12 zero-copy display path was validated on-screen earlier (F-048/F-051). |
+| Confidence | **Confirmed** (driver load, decode, formats, regression). On-screen power unchanged (same driver) is **Likely**; a fresh floating-window power run is offered, not done. |
+| Linux mapping | `omarchy-arm64/configuration/vm-integration/etc/environment.d/70-ilinux-vm-video.conf` (D-032) |

@@ -26,6 +26,26 @@ measured, still unsupported, and next.
   (F-070–F-072, D-040). Analysis VM stopped and `quiet` released. A continues
   vmpoll/F-050; agent C's native configuration role stays behind native gates.
 
+## 2026-10-13 · Agent A, goal 4: fixed VA-API driver is the VM default
+
+The user assigned agent A goals 4–7. Goal 4 done:
+
+* **Shipped** `vm-integration/etc/environment.d/70-ilinux-vm-video.conf`, so
+  desktop-launched `mpv`/FFmpeg use `mesa-virgl-video-ilinux` by default
+  (lossless-download fix + NV12 decode), no `ilinux-video` wrapper (D-032).
+* **Verified** after a fresh boot: a session-launched `mpv r2160.mp4` loads
+  `/usr/lib/ilinux-va/virtio_gpu_drv_video.so`, `Using hardware decoding
+  (vaapi)`, `VO: [gpu] 3840x2160 vaapi[nv12]`; download regression 0/180
+  mismatched; GL and Vulkan unchanged (F-055).
+* **Gotcha recorded:** `sudo -u omarchy` bypasses `environment.d`, so VM
+  session tests must launch through the session (`systemd-run --user`).
+* **Not done:** on-screen visual capture (hyprlock idle-lock blocked grim;
+  decode is frame-exact and the zero-copy display path was validated earlier,
+  F-048/F-051). A fresh floating-window power run is offered, not taken.
+* **Goals 5–7 note:** A owns them per the user. B's RE/driver-interface work
+  feeds A as evidence; A owns the native build/validation (5), backup prep
+  (6) and the handoff kit (7). Confirm with the user if B expects to own any.
+
 ## 2026-10-13 · Agent A, goal 2: cross-vCPU wakeup latency (in progress)
 
 * **Root cause found (F-054).** A cross-vCPU wakeup costs about 21 µs
