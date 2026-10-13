@@ -239,12 +239,12 @@ locks the session on idle.
   `eu-stack` and `strace`.
 * **Video decode scope:** H.264 only so far. HEVC, VP9 and AV1 decode and all
   encode are not offered yet.
-* **Video readback:** zero-copy consumers (mpv, compositors, browsers) see
-  decoded frames, but CPU readback of a decoded surface (`hwdownload`,
-  `vaGetImage`, mpv `--hwdec=vaapi-copy`) returns stale data. The guest's
-  Mesa virgl driver never marks decode targets dirty, so this needs a guest
-  Mesa fix (F-045).
-* **Planar surfaces:** FFmpeg-based players ask for 3-plane I420 surfaces,
-  so VideoToolbox's NV12 output goes through a CPU conversion first (about
-  0.6 ms per 4K frame on the QEMU main thread). A guest Mesa change that
-  offers only NV12 for decode would remove it (F-042).
+* **Video readback:** same-format downloads work; the observed failure is
+  cross-format GPU conversion, correcting the broader F-045 hypothesis.
+  The installed optional [Mesa package](../../omarchy-arm64/packages/mesa-virgl-video/README.md)
+  fixes tested even progressive NV12/I420/YV12 downloads. Odd crops, scaling,
+  interlacing and other formats remain unvalidated (F-052).
+* **Planar surfaces:** the same package's `ilinux-video` wrapper selects
+  NV12 H.264 decode and avoids the host planar conversion. Paced 4K60 decode
+  used 41.3% less QEMU CPU time across two ABBA blocks (F-053). Applications
+  must opt in; no display-power improvement is established by that test.

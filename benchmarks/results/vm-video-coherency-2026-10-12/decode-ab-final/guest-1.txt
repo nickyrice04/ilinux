@@ -1,0 +1,13 @@
+0
+frame=960
+fps=60.74
+stream_0_0_q=-0.0
+bitrate=N/A
+total_size=N/A
+out_time_us=16000000
+out_time_ms=16000000
+out_time=00:00:16.000000
+dup_frames=0
+drop_frames=0
+speed=1.01x
+progress=end

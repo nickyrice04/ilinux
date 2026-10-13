@@ -10,8 +10,9 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 * No DT exists for t604x/t605x/t8142 in mainline or any Asahi branch.
   Mainline stops at M3. Asahi has a minimal t8132 (base M4) DT from 2026-07.
 * m1n1 has **initial** T6050/T6051 support (PR #610, 2026-06-29), but
-  **secondary CPUs never start**. There is still no fix on m1n1 `main` @
-  `57a9339` (2026-10-11). Ranked hypotheses and read-only tests are in
+  the original test reported secondary CPUs not starting. That is historical
+  evidence, not a fresh test on this unit; current behavior remains unverified.
+  The checked m1n1 snapshot is `57a9339` (2026-10-11). Ranked hypotheses and read-only tests are in
   `kernel/native-enablement/plan.md` §1.2.
 * A local draft DT now exists (`kernel/experiments/t6050-dt/`). It has
   MPIDR-correct CPUs and 188 PMGR domains, and has never been booted.
@@ -43,8 +44,9 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   `b4/nvme-fwabi` series, which is already in the AsahiLinux `asahi` branch.
 * 2026-10-11: the remaining Linux gaps are drafted locally (untested) in
   `kernel/patches/t6050/0001–0005`: SARTv4, the M4+ NVMMU/NVMe register
-  split, and the I/O-queue base registers. Unblocking needs a VM compile
-  test, then native hardware.
+  split, and the I/O-queue base registers. Job 018 already applied all seven patches, compiled the driver objects and
+  built the DTBs successfully. Remaining gates are schema/full-kernel checks
+  and native hardware validation, not the already-passed object build.
 
 ### B-012 🔴 Wi-Fi / Bluetooth
 
@@ -104,13 +106,14 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 * Single-core peak was unaffected. Multi-core and GPU sustained limits may be
   lower than in High Power mode. The user chose to keep current settings.
 
-### B-011 🟠 uclamp missing in the stock Arch Linux ARM kernel
+### B-011 🟢 VM uclamp resolved by the packaged custom kernel
 
 * `linux-aarch64` 7.1.6 has no `CONFIG_UCLAMP_TASK`/`UCLAMP_TASK_GROUP`, so
   `omarchy-qos` can test slices, weights and cpusets in the VM but not
   utilization clamps.
-* Fix path: a custom kernel config in the VM, a future Asahi or native
-  kernel with uclamp enabled, or both.
+* The current `linux-ilinux-vm` kernel enables both options (D-014/D-026).
+  The stock-kernel observation remains true, but it no longer blocks the VM.
+  Native kernel configuration and hardware scheduling validation remain.
 
 ## Knowledge gaps
 
@@ -131,3 +134,15 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   contributions. See decision D-007.
 * This project's code, DT drafts and findings stay local. Upstream
   progress depends on human contributors working independently.
+
+
+### B-015 🟠 Remaining video conversion and completion gaps
+
+* F-052 fixes tested even/progressive NV12/I420/YV12 downloads; F-053 removes
+  planar conversion through opt-in NV12 decode. Package installed in the VM.
+* Shader conversions for excluded cases (odd crops/sizes, scaling,
+  interlacing, higher bit depth) remain unvalidated and potentially affected.
+* Missing decode completion fences still prevent safely making the host
+  decoder asynchronous. HEVC/VP9/AV1 and encode are not implemented here.
+* REA deep analysis is unavailable without a local Ghidra/JDK, Hopper or IDA
+  backend. Metadata inspection and supplemental LLVM disassembly work.

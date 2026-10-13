@@ -1,0 +1,11 @@
+#!/bin/sh
+# Per-process opt-in. The normal Mesa graphics and Vulkan drivers stay selected.
+set -eu
+if [ "$#" -eq 0 ]; then
+    echo 'usage: ilinux-video COMMAND [ARGUMENT...]' >&2
+    exit 2
+fi
+export LIBVA_DRIVERS_PATH=/usr/lib/ilinux-va
+export LIBVA_DRIVER_NAME=virtio_gpu
+export VIRGL_VIDEO_DECODE_NV12=1
+exec "$@"

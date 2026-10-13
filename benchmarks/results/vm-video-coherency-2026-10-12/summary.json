@@ -1,0 +1,45 @@
+{
+  "experimental_O3": {
+    "False": {
+      "n": 4,
+      "mean_qemu_cores": 0.28942500000000004,
+      "range_qemu_cores": [
+        0.2873,
+        0.2926
+      ]
+    },
+    "True": {
+      "n": 4,
+      "mean_qemu_cores": 0.179375,
+      "range_qemu_cores": [
+        0.1678,
+        0.188
+      ]
+    },
+    "qemu_cpu_reduction_percent": 38.02366761682647
+  },
+  "installed_O2": {
+    "False": {
+      "n": 4,
+      "mean_qemu_cores": 0.2962,
+      "range_qemu_cores": [
+        0.2887,
+        0.3148
+      ]
+    },
+    "True": {
+      "n": 4,
+      "mean_qemu_cores": 0.17385,
+      "range_qemu_cores": [
+        0.1518,
+        0.1872
+      ]
+    },
+    "qemu_cpu_reduction_percent": 41.306549628629305
+  },
+  "limitations": [
+    "Decode only: no presentation or frame downloads.",
+    "Whole-SoC energy is affected by variable host activity; no power saving claimed.",
+    "Experimental O3 benchmark preceded final download-only extension; installed O2 benchmark used final packaged driver."
+  ]
+}

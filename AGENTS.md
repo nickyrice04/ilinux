@@ -82,10 +82,11 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-12:
 
-* Hardware fully inventoried. M5 Max / t6050 is not supported by Asahi, so
-  native Linux cannot boot yet.
+* Hardware fully inventoried. Native Linux is not boot-tested on this unit;
+  t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.
 * A draft native patch series exists in `kernel/patches/t6050`. It
-  compile-tests clean and is unbooted.
+  passed driver-object and DTB compilation (job 018) and is unbooted. Full
+  kernel linking and DT schema validation are not established by that job.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;
@@ -100,8 +101,14 @@ See `progress.md`. As of 2026-10-12:
   VA-API on VideoToolbox (D-029). It is bit-exact against FFmpeg.
   * 4K60 playback with the VM's mpv defaults (`profile=fast`): 3.9 W, against
     7.3 W with mpv's default scaling and 2.9 W native (F-048).
-  * Host-side presentation is not measured yet: the VM window was off screen
-    during those runs (F-049).
+  * Later on-screen sessions measured 3.6–4.1 W; see F-050/F-051 for pacing
+    limitations and the display change.
+  * A separate `mesa-virgl-video-ilinux` package now fixes tested lossless
+    4:2:0 downloads and opts into NV12 decode with `ilinux-video`. Paced 4K60
+    decode uses 41.3% less QEMU CPU time (F-052/F-053); no energy gain claimed.
+* The current user authorized local analysis of appropriate accessible
+  binaries. REA metadata and targeted LLVM ARM64 disassembly were used;
+  deep REA providers remain unavailable. Preserve host and artifact rules.
 * The macOS baseline suite and session-1 research are complete.
 
 ## Next recommended actions

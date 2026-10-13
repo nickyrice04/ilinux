@@ -116,7 +116,16 @@ table: [`vm-vs-macos-parity.md`](vm-vs-macos-parity.md). Raw data:
 | Storage 4K random read QD1 / QD32 | **57% / 30%** | |
 | llama.cpp CPU, 8B Q4_0, tg64 / pp512 (6–18 threads) | **92–100% / 104–117%** | VM: same llama.cpp commit, CPU-only ggml (SME), no BLAS. macOS: Homebrew build with Accelerate (F-017) |
 | llama.cpp CPU, 8B Q4_K_M, tg64 / pp512 | **111–124% / 207–223%** | macOS Accelerate path dequantizes k-quants to FP32. Build config dominates, not the OS |
-| GPU | **not available** (2D virtio-gpu only) | GPU-in-VM needs krunkit/Venus (approval) |
+| GPU in this initial VZ test | **not available** (2D virtio-gpu only) | Superseded for the working desktop by QEMU/VirGL/Venus; see the current VM report |
+
+### Later QEMU video improvement (2026-10-12)
+
+The installed `mesa-virgl-video-ilinux` package provides lossless tested
+4:2:0 downloads and optional NV12 H.264 decode. Two ABBA blocks measured
+0.296200 → 0.173850 QEMU cores for paced 4K60 decode: **41.3% less CPU time**.
+This comparison is between two guest decode formats, not against macOS.
+It excludes presentation; noisy whole-SoC power cannot establish an energy
+gain. See [implementation and validation](video-download-and-nv12-2026-10-12.md).
 
 ## Notes and limitations
 

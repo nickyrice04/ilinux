@@ -1,0 +1,11 @@
+{
+  "kind": "decode_only",
+  "window_s": 8,
+  "driver": "/var/tmp/mesa-video/patched",
+  "clip": "/var/tmp/vt/r2160.mp4",
+  "host_os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+  "power": "Now drawing from 'AC Power'",
+  "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         2\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            2\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10\n",
+  "guest": "7.1.6-vzrun2\nffmpeg 2:9.0.2-2\nmesa 1:26.2.4-1\nlibva 2.24.1-1\ncc (GCC) 16.1.1 20260430\n",
+  "started_local": "2026-10-12T20:04:03-0400"
+}

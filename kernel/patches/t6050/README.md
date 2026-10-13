@@ -1,6 +1,7 @@
 # t6050 (M5 Max) kernel patches: local drafts
 
-**Status: untested. Compile test pending. Never booted.** These are local
+**Status: driver objects and all DTBs compiled in job 018; never booted.**
+Full kernel linking and DT schema validation remain pending. These are local
 research drafts. They were written by an AI agent, so under Asahi Linux's
 generative-AI policy they **must not be submitted** to Asahi, to mainline or to
 any mailing list (decision D-007). For that reason they carry no
@@ -80,7 +81,11 @@ running macOS 15+ firmware.
 
 ## Test plan
 
-**Can be done without native boot (in the project VM, once it is free):**
+**Can be done without native boot (in the project VM):**
+
+Steps 1–3 already passed in `virtualization/jobs/018-asahi-compile-test/`.
+The saved build logs contain no warning/error matches. This verifies build
+compatibility only; it does not validate the hardware assumptions below.
 
 1. Full checkout of `asahi@77cb8f24`, then `git am` this series.
 2. `make ARCH=arm64 defconfig` plus `CONFIG_APPLE_SART=y`,

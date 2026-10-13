@@ -7,7 +7,10 @@
 * `~/Documents/iLinux/.mcp.json`: the MCP server, which loads at session
   start.
 * `~/Documents/iLinux/.claude/settings.json`: the deny/ask rules.
-* No decompiler engine is installed, so only metadata tools are available.
+* No decompiler engine is installed. A 2026-10-12 explicit Ghidra request
+  returned `provider_unavailable`; metadata tools work. Supplemental LLVM
+  ARM64 disassembly was used for the video-interface investigation.
+  See `findings/video-coherency-2026-10-12/rea-summary.json`.
 
 **First use:** the hardware-services inventory
 (`reverse-engineering/macos-hardware-services.md`, scripts in

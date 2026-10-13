@@ -5,6 +5,46 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-12 · Linux Mesa video: lossless downloads and NV12 decode
+
+* Continued from commit `4d8987e`; audited existing kernel patches, VM,
+  benchmarks and current Asahi evidence. The top native gaps are boot/SMP,
+  G17 GPU/DCP and idle/DVFS, with precise uncertainties in
+  `reports/bottleneck-priorities-2026-10-12.md`.
+* **Implemented and installed** `mesa-virgl-video-ilinux 26.2.4-1` in the VM:
+  opt-in NV12 H.264 decode plus lossless NV12/I420/YV12 CPU downloads.
+  Source/recipe: `omarchy-arm64/packages/mesa-virgl-video/`.
+  Use `ilinux-video mpv FILE` in the guest; system Mesa/GL/Vulkan stay intact.
+* **Validated:** final VA image/crop tests 18/18, zero incorrect bytes
+  (stock: 37,008); 1,440/1,440 hardware-decoded 1080p/4K frames match software
+  in the final matrix; installed package repeats it and passes another
+  240/240 Baseline/Main frames. mpv hardware-decode/EGL
+  smoke passes 120 frames. Package builds and installs; `pacman -Qkk` passes.
+* **Measured:** paced 4K60 decode, two ABBA blocks, QEMU CPU use falls from
+  0.2962 to 0.17385 cores (**41.3%**). Whole-SoC power is noisy; no energy or
+  display-performance gain is claimed. F-052/F-053, D-031.
+* **REA:** actual metadata evidence for the renderer and AppleVideoDecoder
+  arm64e, plus bounded LLVM disassembly of the H.264 factory. REA deep
+  analysis reports missing backends; no successful decompilation claimed.
+* **Corrected F-045:** current failure is cross-format download, not every
+  CPU readback. An experimental dirty-flag change failed to fix it and was
+  removed. The final fix bypasses shader conversion for lossless 4:2:0.
+* **Limits:** VM only; shader conversions outside the even/progressive
+  fast path, decode fences, other codecs and native hardware remain open.
+  Full method, evidence, build limits and next work:
+  `reports/video-download-and-nv12-2026-10-12.md`.
+* No macOS system, boot, firmware, partition, security or personal-data edits.
+
+### Next
+
+1. Investigate F-050's intermittent guest display stall using DRM fence and
+   compositor timing evidence.
+2. Run controlled on-screen playback/power comparisons with the NV12 driver.
+3. Trace the remaining shader conversion path (odd crops, scaling, interlace)
+   and add proper decode-fence lifetime handling before async host decode.
+4. Prepare full native-kernel/schema validation and a reviewable, explicitly
+   authorized native boot experiment; do not infer hardware support from VM tests.
+
 ## 2026-10-12 · Display path: measured stage by stage; mpv defaults; methodology fix
 
 ### Discovered

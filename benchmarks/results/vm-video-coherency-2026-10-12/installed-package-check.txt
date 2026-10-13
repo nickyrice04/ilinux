@@ -1,0 +1,11 @@
+[root@alarm-vz mesa-video]# pacman -Q mesa-virgl-video-ilinux; pacman -Qkk mesa-vvirgl-video-ilinux; ldd /usr/lib/ilinux-va/virtio_gpu_drv_video.so; echo __VM''DOONE_1791850698866__
+mesa-virgl-video-ilinux 26.2.4-1
+mesa-virgl-video-ilinux: 10 total files, 0 altered files
+	linux-vdso.so.1 (0x0000ffff65dbc000)
+	libdrm.so.2 => /usr/lib/libdrm.so.2 (0x0000ffff65310000)
+	libz.so.1 => /usr/lib/libz.so.1 (0x0000ffff652d0000)
+	libzstd.so.1 => /usr/lib/libzstd.so.1 (0x0000ffff651e0000)
+	libexpat.so.1 => /usr/lib/libexpat.so.1 (0x0000ffff65190000)
+	libm.so.6 => /usr/lib/libm.so.6 (0x0000ffff650b0000)
+	libc.so.6 => /usr/lib/libc.so.6 (0x0000ffff64ee0000)
+	/usr/lib/ld-linux-aarch64.so.1 (0x0000ffff65dc0000)

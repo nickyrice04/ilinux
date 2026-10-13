@@ -1,0 +1,8 @@
+{
+  "repository_base": "4d8987e45ad190a44096b75b9c0c370a4f0351f0",
+  "qemu_version": "QEMU emulator version 11.1.1\nCopyright (c) 2003-2026 Fabrice Bellard and the QEMU Project developers",
+  "binaries": {
+    "virtualization/qemu/runtime/bin/qemu-system-aarch64": "27fc7cf2e510b8890e1036478f4c480e860da610adf63ac5a5992420b8e04068",
+    "virtualization/qemu/runtime/lib/libvirglrenderer.1.dylib": "c978cf6b14128ba90d6cf8f5bdbceb51854bd5bb59bf49819b5e9fca7598d4d5"
+  }
+}

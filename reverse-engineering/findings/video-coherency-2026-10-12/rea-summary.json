@@ -1,0 +1,69 @@
+{
+  "rea_version": "6.4.0",
+  "evidence_id": "ev_08f345e7e5afca19658855063ba920ec45a00146d5675700843739ffa2252c28",
+  "artifact_sha256": "be97fbd18250c11555d9fb32da66085acf18aee581b642049ccd4eaab494e542",
+  "slice": "arm64e",
+  "source": "/System/Library/Video/Plug-Ins/AppleVideoDecoder.bundle/Contents/MacOS/AppleVideoDecoder",
+  "imports": [
+    {
+      "name": "_IOSurfaceAcceleratorTransformSurface",
+      "address": null,
+      "weak": true,
+      "reexport": null,
+      "source": "IOSurfaceAccelerator"
+    },
+    {
+      "name": "_CVPixelBufferGetIOSurface",
+      "address": null,
+      "weak": null,
+      "reexport": null,
+      "source": "CoreVideo"
+    },
+    {
+      "name": "_VTDecoderSessionEmitDecodedFrame",
+      "address": null,
+      "weak": null,
+      "reexport": null,
+      "source": "VideoToolbox"
+    },
+    {
+      "name": "_VTDecoderSessionGetDestinationPixelBufferAttributes",
+      "address": null,
+      "weak": null,
+      "reexport": null,
+      "source": "VideoToolbox"
+    },
+    {
+      "name": "_VTDecoderSessionSetPixelBufferAttributes",
+      "address": null,
+      "weak": null,
+      "reexport": null,
+      "source": "VideoToolbox"
+    },
+    {
+      "name": "_kCVPixelBufferPixelFormatTypeKey",
+      "address": null,
+      "weak": null,
+      "reexport": null,
+      "source": "CoreVideo"
+    },
+    {
+      "name": "_kVTDecompressionPropertyKey_SupportedPixelFormatsOrderedByQuality",
+      "address": null,
+      "weak": null,
+      "reexport": null,
+      "source": "VideoToolbox"
+    }
+  ],
+  "inspection": "REA metadata; supplementary Apple LLVM 21 ARM64 disassembly",
+  "disassembly_range": "0xd3d98..0xd3f30 (factory entry only)",
+  "observations": [
+    "Factory entry calls VTVideoDecoderGetClassID, CMDerivedObjectCreate and CMBaseObjectGetDerivedStorage.",
+    "Imports expose pixel-buffer attribute negotiation, IOSurface access and decoded-frame emission."
+  ],
+  "limits": [
+    "Static imports do not establish runtime paths or preferred pixel format.",
+    "No Ghidra/Hopper/IDA provider installed; no successful REA decompilation.",
+    "No native AVD firmware protocol reconstructed; implementation uses public Mesa source and pixel tests."
+  ]
+}

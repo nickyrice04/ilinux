@@ -1,0 +1,88 @@
+--- a/src/gallium/frontends/va/image.c
++++ b/src/gallium/frontends/va/image.c
+@@ -431,6 +431,6 @@
+    struct pipe_resource *view_resources[VL_NUM_COMPONENTS];
+    enum pipe_format format;
+-   uint8_t *data[3];
+-   unsigned pitches[3], i, j;
++   uint8_t *data[3] = {0};
++   unsigned pitches[3] = {0}, i, j;
+ 
+    if (!ctx)
+@@ -482,7 +482,21 @@
+       return VA_STATUS_ERROR_UNSUPPORTED_RT_FORMAT;
+    }
+ 
+-   if (format != surf->buffer->buffer_format) {
++   /* A CPU download of 8-bit 4:2:0 only needs a lossless plane
++    * rearrangement. Avoid a temporary GPU surface, shaders and a second
++    * transfer for this case. Keep scaling, interlacing and odd crops on
++    * the general processing path. */
++   enum pipe_format src_format = surf->buffer->buffer_format;
++   bool rearrange_420 = !surf->buffer->interlaced &&
++      !((x | y | width | height) & 1) &&
++      width == vaimage->width && height == vaimage->height &&
++      src_format != format &&
++      (src_format == PIPE_FORMAT_NV12 || src_format == PIPE_FORMAT_IYUV ||
++       src_format == PIPE_FORMAT_YV12) &&
++      (format == PIPE_FORMAT_NV12 || format == PIPE_FORMAT_IYUV ||
++       format == PIPE_FORMAT_YV12);
++
++   if (format != src_format && !rearrange_420) {
+       tmp_surf = CALLOC(1, sizeof(vlVaSurface));
+       if (!tmp_surf) {
+          mtx_unlock(&drv->mutex);
+@@ -540,7 +553,19 @@
+       pitches[i] = vaimage->pitches[i];
+    }
+ 
+-   for (i = 0; i < vaimage->num_planes; i++) {
++   /* The NV12 helpers address planar output in Y,V,U order. */
++   if (rearrange_420 && format == PIPE_FORMAT_IYUV) {
++      uint8_t *tmp_data = data[1];
++      unsigned tmp_pitch = pitches[1];
++      data[1] = data[2];
++      pitches[1] = pitches[2];
++      data[2] = tmp_data;
++      pitches[2] = tmp_pitch;
++   }
++
++   unsigned num_src_planes = rearrange_420 ?
++      util_format_get_num_planes(src_format) : vaimage->num_planes;
++   for (i = 0; i < num_src_planes; i++) {
+       unsigned box_w = align(width, 2);
+       unsigned box_h = align(height, 2);
+       unsigned box_x = x & ~1;
+@@ -563,10 +587,28 @@
+             mtx_unlock(&drv->mutex);
+             return VA_STATUS_ERROR_OPERATION_FAILED;
+          }
+-         util_copy_rect((uint8_t*)(data[i] + pitches[i] * j),
+-            view_resources[i]->format,
+-            pitches[i] * view_resources[i]->array_size, 0, 0,
+-            box.width, box.height, map, transfer->stride, 0, 0);
++         if (rearrange_420 && i > 0) {
++            if (src_format == PIPE_FORMAT_NV12) {
++               u_copy_nv12_to_yv12((void *const *)data, pitches, i, j,
++                  transfer->stride, view_resources[i]->array_size,
++                  map, box.width, box.height);
++            } else if (format == PIPE_FORMAT_NV12) {
++               int plane = src_format == PIPE_FORMAT_IYUV ? 3 - i : i;
++               u_copy_yv12_to_nv12((void *const *)data, pitches, plane, j,
++                  transfer->stride, view_resources[i]->array_size,
++                  map, box.width, box.height);
++            } else {
++               unsigned plane = src_format == PIPE_FORMAT_IYUV ? 3 - i : i;
++               util_copy_rect(data[plane], view_resources[i]->format,
++                  pitches[plane], 0, 0, box.width, box.height,
++                  map, transfer->stride, 0, 0);
++            }
++         } else {
++            util_copy_rect((uint8_t*)(data[i] + pitches[i] * j),
++               view_resources[i]->format,
++               pitches[i] * view_resources[i]->array_size, 0, 0,
++               box.width, box.height, map, transfer->stride, 0, 0);
++         }
+          pipe_texture_unmap(drv->pipe, transfer);
+       }
+    }

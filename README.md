@@ -4,12 +4,13 @@ Long-running engineering project. The goal is the highest achievable
 **Linux (Omarchy) performance on this MacBook Pro (Apple M5 Max, SoC t6050)**,
 measured against macOS on the same machine.
 
-> **Current reality (2026-10-11):** the t6050 SoC has no Asahi or upstream
-> Linux support (no m1n1, no device tree, no drivers for its new blocks), so
-> native Linux can't boot on this machine yet. Native parity is 0% by
-> definition today. This workspace builds the evidence, tooling and
-> components needed to get there, and measures what is achievable meanwhile
-> (Linux VMs).
+> **Current reality (2026-10-12):** native Linux has not been booted or
+> validated on this unit. Initial m1n1 support exists, and the seven local
+> t6050 patches passed driver-object and device-tree compilation. Boot/SMP,
+> G17 graphics/display and idle/DVFS remain the largest native gaps.
+> Omarchy already runs in an accelerated VM with heterogeneous vCPUs,
+> Vulkan compute and hardware H.264 decode. These results are a separate
+> VM track, not proof of native hardware support.
 
 ## Start here
 
@@ -24,6 +25,8 @@ measured against macOS on the same machine.
 | [`reports/compatibility-matrix.md`](reports/compatibility-matrix.md) | Every SoC block → Linux driver → status |
 | [`reports/performance-parity.md`](reports/performance-parity.md) | Scorecard: macOS baselines, AI and energy, Linux-VM track |
 | [`reports/vm-vs-macos-parity.md`](reports/vm-vs-macos-parity.md) | Full VM-vs-macOS table (identical code and flags) |
+| [`reports/bottleneck-priorities-2026-10-12.md`](reports/bottleneck-priorities-2026-10-12.md) | Current audit of all eight hardware areas and ranked blockers |
+| [`reports/video-download-and-nv12-2026-10-12.md`](reports/video-download-and-nv12-2026-10-12.md) | Packaged Linux video improvements, REA evidence and measured CPU savings |
 | [`reverse-engineering/findings/catalog.md`](reverse-engineering/findings/catalog.md) | Research findings database |
 
 ## Reproduce the macOS baseline

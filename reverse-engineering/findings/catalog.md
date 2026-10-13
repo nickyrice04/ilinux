@@ -481,7 +481,7 @@ No entry is based on decompiled Apple code.
 | Confidence | **Confirmed** (exactness); cause **Unknown** |
 | Linux mapping | VM: virgl patch 0008 |
 
-## F-045 · VM video · Mesa's virgl driver never marks decode targets dirty, and has no decode fence
+## F-045 · VM video · Initial readback hypothesis (corrected by F-052)
 
 | Field | Value |
 |---|---|
@@ -490,6 +490,13 @@ No entry is based on decompiled Apple code.
 | Inference | Copy-back needs a small guest Mesa fix: mark the target's planes dirty in `end_frame`. The missing fence means the host decode must stay synchronous in command order; an asynchronous host decode would first need per-resource completion tracking in vrend. |
 | Confidence | **Confirmed** (symptom, source); fix **Likely** |
 | Linux mapping | VM: guest Mesa patch (planned) |
+
+**2026-10-12 correction:** F-052 reproduces cross-format failures while
+same-format readback works. VA surface allocation dirties textures by
+clearing them; explicit decode dirtying did not fix the failing conversion.
+The final package uses lossless CPU plane rearrangement and optional NV12
+decode. The broad stale-readback claim above describes the earlier observation,
+not a validated root cause for today's stack. Missing decode fences remain.
 
 ## F-046 · VM video · Hardware decode costs about native's whole playback increment; the rest was mpv's scaling (corrected)
 
@@ -550,3 +557,26 @@ No entry is based on decompiled Apple code.
 | Inference | Most of the VM's display latency was a polling artifact; drawing on flush is the default now (QEMU 0013). The IOSurface presenter stays opt-in (`COCOA_GL_PRESENT=iosurface`) until its video power cost is understood. The likely cause is uncompressed linear surfaces that WindowServer composites by copy, which a Metal-side presenter could avoid. |
 | Confidence | **Confirmed** (latency, delivery, tearing check); power differences **Likely** (single-rep sessions vary by ±0.3 W) |
 | Linux mapping | VM: QEMU Cocoa display (patch 0013) |
+
+
+## F-052 · VM video · Lossless plane rearrangement fixes cross-format downloads
+
+| Field | Value |
+|---|---|
+| Source | Mesa 26.2.4 release source; `benchmarks/linux/va_image_roundtrip.c`, `video_decode_validate.py`; `benchmarks/results/vm-video-coherency-2026-10-12/`; REA `rea-summary.json` under the matching findings directory |
+| Observation | Same-format downloads work; NV12 ↔ planar GPU conversions produce zero-filled frames. Explicit decode dirtying does not fix them. The final lossless CPU download path passes all 18 image/crop cases (stock: 37,008 wrong bytes) and 1,440/1,440 decoded frame comparisons at 1080p/4K. Installed package repeats the tests and passes another 240 Baseline/Main frames. |
+| Inference | The missing dirty assignment alone is not the tested root cause (corrects F-045). Bypass the failing shader path for simple even/progressive 8-bit 4:2:0 rearrangement, using existing Mesa copy helpers; exact shader failure remains unresolved. |
+| Confidence | **Confirmed** for source behavior and tests; other format/scaling/interlace cases **Unknown** |
+| Linux mapping | `omarchy-arm64/packages/mesa-virgl-video/patches/0002-va-lossless-420-download.patch`; guest package `mesa-virgl-video-ilinux` |
+| RE limit | REA establishes metadata/interface identity. Supplemental LLVM ARM64 factory inspection supplies no firmware protocol. REA deep analysis is unavailable without a backend; no proprietary code is used. |
+
+## F-053 · VM video · NV12 negotiation reduces packaged QEMU decode CPU cost by 41.3%
+
+| Field | Value |
+|---|---|
+| Source | `benchmarks/vm/video_decode_ab.py`, `benchmarks/results/vm-video-coherency-2026-10-12/decode-ab-installed/` (plus earlier `decode-ab-final/`), FFmpeg format negotiation log, existing host VideoToolbox implementation |
+| Observation | Same-driver NV12 option off/on, two ABBA blocks of paced 4K60 decode (4 s warmup, 8 s measure). Installed package: mean QEMU cores 0.296200 off, 0.173850 on, 41.3% lower. Earlier experimental `-O3` build measured 38.0% lower; each comparison toggles the option within the same binary. Four runs each; 960 completed frames per run. mpv confirms VA-API NV12 and completes its 120-frame smoke test. |
+| Inference | Selecting the decoder's existing NV12 format avoids the host's planar conversion. This is CPU cost at fixed rate, not faster playback. |
+| Confidence | **Measured**, one machine/session; whole-SoC power varied with host activity and is not used for an efficiency claim |
+| Linux mapping | `0001-virgl-nv12-decode-option.patch`, selected with `VIRGL_VIDEO_DECODE_NV12=1` by `ilinux-video` |
+| Limits | Decode-only benchmark, no display measurement or native Linux claim; raw protocol preferred-format numbers are not used. |

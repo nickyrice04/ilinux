@@ -26,7 +26,8 @@ approval · ⬜ not started.
 | 1.4 | Arch Linux ARM container or VM: resolve Omarchy package set on aarch64 (`pacman -Sp`) | Ground-truth package availability |
 | 1.5 | Omarchy-arm64 installer branch: arch guards, package substitutions, bootloader abstraction | Target userspace |
 | 1.6 | Hyprland in VM (virtio-gpu, software GL) smoke test | Desktop integration without GPU acceleration |
-| 1.7 | GPU-in-VM path evaluation: krunkit/libkrun Venus → MoltenVK → Metal (≈50–57% of Metal on M2 Max per published data), and llama.cpp GGML-VirtGPU API remoting (host ggml-metal, which could reach the M5 matrix units; untested on macOS 26). **Needs host installs, so new approval** | Pragmatic Linux GPU compute on this machine today |
+| 1.7 | ✅ QEMU/VirGL graphics, Venus/MoltenVK compute and ggml RPC implemented in the existing workspace/VM | Measured results in `reports/vm-vs-macos-parity.md`; no new host install needed for this path |
+| 1.8 | ✅ Separate Mesa VA package: lossless NV12/I420/YV12 downloads and optional NV12 H.264 decode | 18 image cases pass; QEMU decode CPU cost reduced 41.3%; see `reports/video-download-and-nv12-2026-10-12.md` |
 
 ## Phase 2 — Native enablement research for t6050 (no hardware writes)
 
@@ -37,12 +38,13 @@ approval · ⬜ not started.
 | 2.3 | CPU scheduling design for M+P clusters: EAS capacities from measured per-cluster throughput, uclamp/cgroup "QoS tiers" that mimic macOS placement | Measured macOS behaviour: background QoS → M cores at about 25% speed |
 | 2.4 | GPU: track Asahi AGX (G13–G15 supported; G16/G17 not). Document the G17 matrix-unit gap | Metal FP16 GEMM ≈ 64 TFLOPS vs ≈ 17.6 TFLOPS scalar FP16 FMA |
 | 2.5 | ANE: document the exclave-mediated design (`ane,t8132exclave`) and what Linux would need | Likely the hardest block |
-| 2.6 | REA-assisted interface research (after approval), limited to public-interface and metadata level for anything that might go upstream | Asahi clean-room policy |
+| 2.6 | 🔄 User-authorized local REA/binary analysis for focused implementation questions; artifact identity, confidence and independent experiments recorded | Metadata and supplemental LLVM ARM64 analysis completed; REA decompilation backend unavailable. Original local implementations; no proprietary code copied |
 
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
-Only after m1n1 and kernel support for t6050 exist upstream or in Asahi
-development trees. A deployment plan covering backup, APFS resize, stub
+Only after the independently maintained boot chain and kernel patches pass
+the required pre-boot checks; upstream acceptance is not a prerequisite.
+A deployment plan covering backup, APFS resize, stub
 macOS, boot policy, recovery and rollback will be written first. **Nothing
 here proceeds without explicit user approval.**
 

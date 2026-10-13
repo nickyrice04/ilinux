@@ -483,3 +483,27 @@ timestamps, re-measure with the timestamps on.
 * If a Metal-side presenter (compressed, framebuffer-only drawables)
   removes the IOSurface presenter's video cost, it can become the default
   and also take the BQL off AppKit's main thread.
+
+
+## D-031 · 2026-10-12 · Separate Linux VA driver, NV12 decode and lossless downloads
+
+**Decision:** Build Mesa 26.2.4 plus two original patches as
+`mesa-virgl-video-ilinux`, installed only in the existing VM, selected per
+process by `ilinux-video`. Keep ordinary Mesa/GL/Vulkan packages intact.
+
+**Evidence:** F-052/F-053. Cross-format VA downloads, rather than all CPU
+readbacks, failed. Plane rearrangement avoids the failing shader conversion
+and preserves samples exactly. NV12 decode removes the host's planar
+conversion and reduces measured QEMU CPU cost by 41.3% for paced 4K60.
+The experimental decode dirty-flag patch had no demonstrated benefit and
+is not shipped. No whole-SoC power gain is claimed.
+
+**RE scope:** The current user explicitly authorizes targeted local binary
+analysis beyond earlier metadata-only research. REA establishes artifact
+identity and interfaces; LLVM supplies bounded supplemental ARM64 inspection
+while Ghidra/Hopper/IDA are unavailable. No proprietary code is copied, no
+artifacts are uploaded, and native security/boot changes remain unauthorized.
+
+**Limits:** Even progressive 8-bit 4:2:0 downloads only; other shader paths,
+other codecs, asynchronous decode, native AVD and hardware validation remain.
+See `reports/video-download-and-nv12-2026-10-12.md` for reproduction and rollback.

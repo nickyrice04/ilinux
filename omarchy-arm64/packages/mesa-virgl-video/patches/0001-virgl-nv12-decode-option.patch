@@ -1,0 +1,30 @@
+--- a/src/gallium/drivers/virgl/virgl_screen.c
++++ b/src/gallium/drivers/virgl/virgl_screen.c
+@@ -55,6 +55,8 @@
+    DEBUG_NAMED_VALUE_END
+ };
+ DEBUG_GET_ONCE_FLAGS_OPTION(virgl_debug, "VIRGL_DEBUG", virgl_debug_options, 0)
++DEBUG_GET_ONCE_BOOL_OPTION(virgl_video_decode_nv12,
++                           "VIRGL_VIDEO_DECODE_NV12", false)
+ 
+ static const char *
+ virgl_get_vendor(struct pipe_screen *screen)
+@@ -758,6 +760,18 @@
+                                             enum pipe_video_profile profile,
+                                             enum pipe_video_entrypoint entrypoint)
+ {
++    /* The video protocol has no exhaustive surface-format capability list.
++     * Opt in on NV12-native hosts to avoid converting each 8-bit AVC frame
++     * to planar YUV.  Keep image queries, encoding and other codecs intact. */
++    if (entrypoint == PIPE_VIDEO_ENTRYPOINT_BITSTREAM &&
++        debug_get_option_virgl_video_decode_nv12() &&
++        (profile == PIPE_VIDEO_PROFILE_MPEG4_AVC_BASELINE ||
++         profile == PIPE_VIDEO_PROFILE_MPEG4_AVC_CONSTRAINED_BASELINE ||
++         profile == PIPE_VIDEO_PROFILE_MPEG4_AVC_MAIN ||
++         profile == PIPE_VIDEO_PROFILE_MPEG4_AVC_HIGH) &&
++        format != PIPE_FORMAT_NV12)
++        return false;
++
+     return vl_video_buffer_is_format_supported(screen, format, profile, entrypoint);
+ }
+ 
