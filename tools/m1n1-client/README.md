@@ -85,6 +85,13 @@ tools/m1n1-client/run.sh tools/m1n1-client/test_usb_check.py
 
 ## Receive and checksum the native package
 
+The actual boot021 handoff is now specified in `native/boot/README.md`.
+Download its private release asset and use the separately tracked
+`native/boot/intake-manifest-sha256.txt` with the verifier below. Launcher and
+corrected procedure are reviewed Git files under `native/boot/` and
+`kernel/native-enablement/`; they are not executable files inside the archive.
+Record the checked-out Git commit alongside the binary receipt.
+
 Local intake directories are ready and ignored by Git:
 
 * `build/native-intake/inbox/`: received package, in its own subdirectory.

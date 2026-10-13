@@ -24,6 +24,7 @@ nm -an "$WORK/m1n1/build/m1n1-raw.elf" > "$OUT/m1n1-symbols.txt"
 readelf -h "$WORK/m1n1/build/m1n1-raw.elf" > "$OUT/m1n1-elf.txt"
 cp "$WORK/m1n1/build/build_cfg.h" "$OUT/export/m1n1-build-config.h"
 cp "$WORK/m1n1/LICENSE" "$OUT/export/m1n1-LICENSE"
+printf '%s\n' "$PIN" > "$OUT/export/m1n1-revision.txt"
 
 # Original job-020 DT already disables NVMe. Reassert it and also leave
 # unvalidated frequency controllers disabled for the first diagnostic boot.

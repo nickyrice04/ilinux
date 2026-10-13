@@ -20,6 +20,12 @@ gh release download native-j716c-boot021 --repo nickyrice04/ilinux \
 tar -xzf build/native-boot-download/ilinux-j716c-boot021.tar.gz -C build/native-boot-download
 python3 -I native/boot/launch.py --package build/native-boot-download/ilinux-j716c-boot021
 python3 -I native/boot/test_launcher.py
+python3 -I tools/m1n1-client/test_package.py
+mkdir -p build/native-intake/receipts
+tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
+  build/native-boot-download/ilinux-j716c-boot021 \
+  --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
+  > build/native-intake/receipts/boot021.json
 tools/m1n1-client/run.sh tools/m1n1-client/check-toolchain.py
 tools/m1n1-client/run.sh tools/m1n1-client/test_usb_check.py
 tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py
@@ -31,6 +37,10 @@ come from Git; do not substitute a manifest from an unverified download.
 `launch.py` without `--launch` uses only Python's standard library and local
 files. It neither imports m1n1 nor opens serial ports. The last command only
 lists device paths; absence while the M5 runs macOS is not a failed cable test.
+
+Require exit 0 and a complete JSON receipt from the M1 agent's intake verifier;
+the separately tracked manifest digest and `m1n1-revision.txt` satisfy its
+existing format. A successful receipt still says `boot_authorized: false`.
 
 Report the Git commit, archive checksum, verifier result, test counts and
 client/toolchain pin. Keep the payload under ignored `build/`. Stop there.

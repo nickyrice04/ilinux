@@ -20,6 +20,9 @@ measured, still unsupported, and next.
   CPU/heartbeats for 60 seconds. No native M5 compatibility result.
 * Corrected the APFS boot-entry prerequisite, unsupported persistent USB/log
   assumptions, and HID provenance (object-tested separately, not in Image).
+* Integrated M1 commit `33d99f7`, preserving its receipt tools. Seven intake
+  regressions pass; its verifier accepts the actual package with boot approval
+  still false. Sender manifest digest and revision metadata are included.
 * Handoff: `native/boot/README.md`; job-021 results and manifest. Payload is a
   private prerelease asset, not a Git blob. M1 verifies offline and stops.
 * Remaining: separately reviewed OS-entry provisioning and user approval,

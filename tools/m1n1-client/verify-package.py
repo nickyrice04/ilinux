@@ -71,7 +71,7 @@ def verify(root, revision, manifest_digest):
         "files": entries,
         "boot_authorized": False,
         "target_version_observed_live": False,
-        "next": "Await corrected single-core launcher and boot-entry procedure review; first live test is bounded USB handshake",
+        "next": "Read native/boot/README.md; stop until dedicated boot-entry provisioning and explicit live-session approval; first live test is bounded USB handshake",
     }
 
 

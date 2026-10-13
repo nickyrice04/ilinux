@@ -15,7 +15,7 @@ from fdt import check_stage_b, properties
 
 FILES = ("Image", "t6050-j716c.dtb", "initramfs.cpio.gz", "kernel.config",
          "t6050-j716c-stage-b.dtb", "initramfs-stage-b.cpio.gz", "m1n1.bin",
-         "m1n1-build-config.h", "m1n1-LICENSE", "diag-init.c", "toolchain.txt")
+         "m1n1-build-config.h", "m1n1-LICENSE", "m1n1-revision.txt", "diag-init.c", "toolchain.txt")
 ORIGINAL = {
     "Image": "f9cf7c0046712cdf60e686e7a13d998b3e4d1b55a1d64de5dba997aa9a77f704",
     "t6050-j716c.dtb": "5d6fe64812b05e8c5d42ce3b97e3ede4c675e7a9a59d8fcf85d6906ef8daac9e",
@@ -67,6 +67,7 @@ def main():
     (HERE / "package-manifest.json").write_bytes(encoded)
     data["package-manifest.json"] = encoded
     data["SHA256SUMS"] = "".join(f"{hashlib.sha256(b).hexdigest()}  {n}\n" for n, b in sorted(data.items())).encode()
+    (HERE / "intake-manifest-sha256.txt").write_text(hashlib.sha256(data["SHA256SUMS"]).hexdigest() + "\n")
     args.destination.mkdir(parents=True, exist_ok=True)
     archive = args.destination / (NAME + ".tar.gz")
     with archive.open("wb") as raw, gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as zipped:

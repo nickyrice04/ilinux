@@ -84,9 +84,10 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
 ### Second-machine native handoff pending (2026-10-13)
 
-Client/LLVM and offline checks are ready. Await the M5's native package,
-sender checksum handoff, corrected single-core launcher and boot-entry
-procedure. User reports backup in progress; completion is not confirmed.
+Client/LLVM and offline checks are ready. Job 021 now provides the package,
+sender checksums and corrected launcher/instructions; M1 receipt remains
+pending. User reports backup completed. Boot-entry provisioning remains
+unresolved and separately gated.
 Upstream `proxyclient/tools/linux.py` is explicitly on hold. Package integrity
 is not boot approval; first live test is the bounded P_NOP USB handshake.
 

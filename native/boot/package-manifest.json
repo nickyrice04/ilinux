@@ -47,6 +47,10 @@
       "size": 17984,
       "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
     },
+    "m1n1-revision.txt": {
+      "size": 41,
+      "sha256": "e125d21d1ec9f861d9fd1d2908f2e7ecdf24379401fd08861ec1f64e4cea2985"
+    },
     "diag-init.c": {
       "size": 3558,
       "sha256": "55b277100f7cc3ab890cd933525572bc8988ed9eaae69db40ee8a63370f3a3b9"

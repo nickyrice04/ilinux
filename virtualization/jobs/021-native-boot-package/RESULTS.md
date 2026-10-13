@@ -55,10 +55,19 @@ find init; the documented invocation corrects that existing Btrfs layout.
 All exports/builds/tests above used the corrected VM boot. The diskless
 payload smoke test has no Btrfs/root-disk dependency.
 
+## M1 intake integration
+
+Merged M1 commit `33d99f7` without discarding its intake tools or records.
+All seven synthetic intake regressions pass on macOS. Its actual verifier
+accepts the final extracted archive (13 manifest entries plus SHA256SUMS),
+using the separately tracked manifest digest and declared pinned revision.
+The receipt explicitly retains `boot_authorized: false`. All runtime payload
+bytes are unchanged from the final VM tests; only revision metadata was added.
+
 ## Package and remaining gate
 
-Archive `ilinux-j716c-boot021.tar.gz`: **16,717,312 bytes**. SHA-256:
-`b23400be72488b801c549be3a71d8bddee1b81549e5cda961e949b1d47c1cc81`.
+Archive `ilinux-j716c-boot021.tar.gz`: **16,717,560 bytes**. SHA-256:
+`b534680fc25dff78d8eaecfb96ed5b9733a3f408ae20cb4947722cb8163edc15`.
 The tracked [manifest](../../../native/boot/package-manifest.json) pins every
 file. Raw logs remain ignored in `out/`; the archive is a private prerelease
 asset, not a Git blob. Only allowlisted open-source outputs are packaged.
