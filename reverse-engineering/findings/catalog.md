@@ -664,3 +664,33 @@ not a validated root cause for today's stack. Missing decode fences remain.
 | Implementation | Original portable software queue, modulo/span arithmetic and bounded extraction helpers in `kernel/experiments/driver-contracts/acipc/`. No MMIO, DMA, firmware transfer, netdev or HCI registration. |
 | Validation | Linux GCC plus Clang ASan/UBSan: 8,525,654 wrap cases and 49,840 queue state/count cases, bounds/overflow and unchanged-state rejection; 18 Python tests. |
 | Next | Selected ordinary ring descriptor/completion methods, source index encoding, memory ordering, PCIe/DART and firmware lifecycle; only then a native transport. |
+
+## F-076 · 2026-10-13 · B: PMGR static dispatch and startup descriptor provenance
+
+| Field | Value |
+|---|---|
+| Source | Same ARM64e carrier as F-070, pinned REA/Ghidra, Apple's public format-8 pointer layout, original chained-reference parser and independent LLVM. `cpu-startup-2026-10-13/`. |
+| Observation | Twelve chained dispatch references match exact PMGR symbols; eleven call-site discriminators agree. Initial REA batch: three functions / 334 words, with whole `enableCluster` pseudocode rejected. Two idle hooks poll through `readACCReg`, with unresolved physical mapping. A 51-word slice links the `clusters` property to the table read by `configMiscCores`. |
+| Validation | Seventeen synthetic parser tests pass on host. Raw bytes, pseudocode and disassembly stay ignored/local. Linux checks and three follow-up queries are queued behind A's build lock. |
+| Confidence | **Confirmed** selected static references, bytes and property link. **Unknown** live branch selection, full register contract, physical startup and safe native idle. |
+| Engineering decision | Strengthen the existing mask hypothesis without installing it; keep CPU context-resume and firmware entry questions separate. |
+
+## F-077 · 2026-10-13 · B: conservative locked-vector startup guard (test pending)
+
+| Field | Value |
+|---|---|
+| Source | Public m1n1 `57a9339` `src/smp.c`, existing hypothesis H1. No proprietary implementation used. |
+| Observation | The baseline warns about a locked reset-vector mismatch but proceeds into shared-state changes and CPU_START writes. |
+| Implementation | Local optional guard returns before those actions, caches the existing read, and identifies the rejected CPU. Actual-function harness plus full object build are prepared under `kernel/experiments/native-startup/`. |
+| Validation | Linux regression/ASan/UBSan and freestanding object compilation queued; not yet asserted to pass. |
+| Limit | A firmware trampoline is not ruled out. Retest the unmodified baseline first; this is conservative diagnostic policy, not an SMP fix or a performance gain. Native tests require separate user authorization. |
+
+## F-056 · Native build · Full t6050 kernel builds clean; draft DT has 248 compatible-enum warnings; dockchannel hardening is warning-clean
+
+| Field | Value |
+|---|---|
+| Source | `BENCH` job `020-t6050-full-build` in the Linux guest toolchain (reproducible `run.sh`): AsahiLinux/linux `77cb8f24` + the committed t6050 series 0001-0007, `make Image modules dtbs`, `dtbs_check` (dtschema 2026.9), and the real in-tree `drivers/hid/dockchannel-hid/` built `W=1` baseline vs the a351bff patch. Artifacts and logs in the job's `out/`. |
+| Observation | The 16 KiB-page bring-up config builds **Image (44.5 MB) + 1,571 modules + DTBs, exit 0, 0 warning/error lines**, with every requested Apple bring-up symbol set. The t6050 DTB compiles (0 dtc warnings) but `dtbs_check` reports **248 schema warnings**, essentially all one class: a node's `compatible` is not in its binding's enum. The offending strings are borrowed from other SoCs (`apple,t6031/t6030/t6000-dart` ×138, `*-asc-mailbox` ×~100, `apple,t6031-cluster-cpufreq` ×18); the series added t6050 only to sart, nvme-ans and the top-level binding. The dockchannel-hid driver has **0 baseline W=1 warnings**; the a351bff hardening patch applies cleanly and adds/removes **0** warnings. |
+| Inference | A full native kernel + DT + initramfs now build reproducibly here — the offline half of bring-up (plan §3a "kernel build in the VM: pending") is done. The DT compatible mismatches are not a build blocker but matter at boot: a node whose single non-fallback compatible no driver claims will not probe. Next DT task: give each subnode the t6050 variant plus the correct generic fallback, or extend the DART/asc-mailbox/cluster-cpufreq bindings to list t6050. The dockchannel result clears the build-level bar before any native input test. **No native support is implied; none of this has booted.** |
+| Confidence | **Confirmed** (build/validation outputs). Boot impact of the compatibles is **Likely** (depends on each driver's of_match fallbacks) |
+| Linux mapping | `virtualization/jobs/020-t6050-full-build/`; DT audit in `kernel/experiments/t6050-dt` / patch 0007; `kernel/native-enablement/first-boot-plan.md` |
