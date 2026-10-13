@@ -384,12 +384,15 @@ static void run_kernel(const struct kernel *k, int threads, int reps, double sec
 
 // ---------------------------------------------------------- OS overheads --
 // Pipe ping-pong between two threads: measures wakeup + context switch cost.
+// -c A,B pins the two ends to CPUs A and B (Linux); -c A pins both to A.
+// Without -c the scheduler places them, so same- and cross-CPU mix.
 static int pp_a[2], pp_b[2];
 static long pp_rounds;
 static const char *pp_qos;
+static int pp_peer_pin = -1;
 static void *pp_peer(void *x) {
     (void)x;
-    apply_placement(pp_qos, -1);
+    apply_placement(pp_qos, pp_peer_pin);
     char c;
     for (long i = 0; i < pp_rounds; i++) {
         if (read(pp_a[0], &c, 1) != 1) break;
@@ -397,7 +400,9 @@ static void *pp_peer(void *x) {
     }
     return NULL;
 }
-static void run_pingpong(int reps, const char *qos, long rounds) {
+static void run_pingpong(int reps, const char *qos, long rounds, const int *pins, int npins) {
+    const int self_pin = npins ? pins[0] : -1;
+    pp_peer_pin = npins > 1 ? pins[1] : self_pin;
     pp_rounds = rounds;
     pp_qos = qos;
     double *v = calloc(reps, sizeof *v);
@@ -405,7 +410,7 @@ static void run_pingpong(int reps, const char *qos, long rounds) {
         if (pipe(pp_a) || pipe(pp_b)) { perror("pipe"); exit(1); }
         pthread_t t;
         pthread_create(&t, NULL, pp_peer, NULL);
-        apply_placement(qos, -1);
+        apply_placement(qos, self_pin);
         char c = 'x';
         double t0 = now();
         for (long i = 0; i < pp_rounds; i++) {
@@ -418,9 +423,9 @@ static void run_pingpong(int reps, const char *qos, long rounds) {
         v[r] = dt / pp_rounds * 1e6;  // us per round trip
     }
     qsort(v, reps, sizeof *v, cmpd);
-    printf("{\"bench\":\"cpu\",\"kernel\":\"pipe_pingpong_roundtrip\",\"qos\":\"%s\",\"reps\":%d,"
-           "\"rounds\":%ld,\"unit\":\"us\",\"median\":%.3f,\"min\":%.3f,\"max\":%.3f}\n",
-           qos ? qos : "none", reps, rounds, v[reps / 2], v[0], v[reps - 1]);
+    printf("{\"bench\":\"cpu\",\"kernel\":\"pipe_pingpong_roundtrip\",\"qos\":\"%s\",\"pins\":\"%d,%d\","
+           "\"reps\":%d,\"rounds\":%ld,\"unit\":\"us\",\"median\":%.3f,\"min\":%.3f,\"max\":%.3f}\n",
+           qos ? qos : "none", self_pin, pp_peer_pin, reps, rounds, v[reps / 2], v[0], v[reps - 1]);
     free(v);
 }
 
@@ -462,7 +467,7 @@ int main(int argc, char **argv) {
             while ((tok = strsep(&s, ",")) && npins < 512) pins[npins++] = atoi(tok);
         }
     }
-    if (!strcmp(which, "pingpong")) { run_pingpong(reps, qos, rounds); return 0; }
+    if (!strcmp(which, "pingpong")) { run_pingpong(reps, qos, rounds, pins, npins); return 0; }
     if (!strcmp(which, "syscall")) { run_syscall(reps); return 0; }
     int ran = 0, sme = have_sme();
 #if defined(__ARM_FEATURE_SME)
