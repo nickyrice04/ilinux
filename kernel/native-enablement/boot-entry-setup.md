@@ -1,10 +1,11 @@
-# M5 dedicated boot entry: lab installation authorized, security changes on hold
+# M5 dedicated boot entry: m1n1 staged, security changes on hold
 
 Prepared by B on 2026-10-13 for **Mac17,6 / J716c / t6050 M5 Max**.
 Initially prepared without execution approval. The user now authorizes setting
 up **iLinux Boot Lab**, preserving original macOS and stopping before boot
-security changes. **Lab macOS installation is authorized; sections 5–7,
-custom boot-object installation and native testing are not authorized.**
+security changes. Lab macOS installation/first boot are complete. The user's
+subsequent m1n1 file-staging authorization is now complete too. **Sections 5–7,
+custom boot-object installation and native testing remain unauthorized.**
 
 ## Current execution handoff — 2026-10-13
 
@@ -27,8 +28,12 @@ M1 did not independently inspect the M5. B reviewed and fast-forwarded M1 commit
   Terminal access was blocked by the computer-use safety check. No policy write
   or workaround was attempted. The pre-install original mode was Full; do not
   substitute that historical observation for a new check.
-* Packaged `m1n1.bin` still matches the recorded 3,932,160-byte SHA-256. It has
-  **not** been staged under the lab Data volume's `Users/Shared/iLinuxBoot`.
+* **Staging complete:** after explicit user authorization, B copied the exact
+  `m1n1.bin` to the lab Data volume's `Users/Shared/iLinuxBoot/m1n1.bin`.
+  Rechecked lab System/Data roles, matching group and separation from original.
+  Exclusive creation overwrote nothing; reread bytes match the source and
+  tracked manifest (3,932,160 bytes; SHA-256 in section 4). It is an ordinary
+  file, not an installed custom boot object. No startup/security setting changed.
 
 Boot021 and its client pin are unchanged.
 Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
@@ -44,8 +49,8 @@ Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
    `sudo /usr/bin/python3 -I /Users/nickyrice/Documents/iLinux/ilinux-publish/build/installer-verification/check-boot-policies.py`.
    It identifies the two volume groups in memory, invokes only display-policy,
    and prints sanitized JSON. Until actually run, its result is **NOT RUN**.
-2. Stage and verify the exact `m1n1.bin` using section 4; copying the file is
-   distinct from installing it as a boot object. No staging occurred in this review.
+2. **DONE:** exact `m1n1.bin` staged and verified using section 4. No restart is
+   needed for the copy. Do not repeat installation or substitute another binary.
 3. Obtain explicit authorization for the lab-only **Permissive Security / kernel
    CTRR change and custom boot object** in section 6. Enter the lab's paired
    Recovery and run the section-5 identity/pairing checks before any policy write.
@@ -63,6 +68,26 @@ Data record: [boot-result-template.md](../../tools/m1n1-client/boot-result-templ
 The first kernel has no persistent USB console. Screen output is the Linux
 observation channel; blank output cannot identify the failed hardware subsystem.
 If that happens, establish a usable logging path before another blind attempt.
+
+### Current human and M1 handoff
+
+Stay in the original macOS for now and run the read-only command in step 1.
+Both modes are expected to be Full; report the actual sanitized result, including
+any UNVERIFIED/error result, before proceeding. Staging alone does not require
+Recovery or a restart. The next restart sequence belongs to the separately
+authorized lab policy/custom-boot task, after policy results are reviewed.
+
+Send M1:
+
+> Pull latest main with `git pull --ff-only` and read the current handoff here,
+> `coordination.md` and `tools/m1n1-client/boot-result-template.md`. M5 has staged
+> and hash-verified the original boot021 m1n1 on lab Data. It is not installed
+> as a boot object; boot settings are unchanged. Keep the verified package and
+> existing client pin. Prepare the Stage A handshake instructions and Stage B
+> evidence record offline. Wait for the M5 policy-check result and explicit
+> authorization before Recovery/security/custom-boot work or any live USB/native
+> action. Do not run `--connect`, `--launch` or upstream `linux.py`.
+> Keep live USB/P_NOP, target-version, m1n1/Linux/Omarchy checks NOT RUN.
 
 ### Earlier installer handoff (historical; completion updated above)
 
@@ -240,6 +265,11 @@ second installation or reboot manually. Steps below retain the procedure.
 Source: [Apple's additional macOS volume procedure](https://support.apple.com/en-us/118282).
 
 ## 4. Stage the exact m1n1 binary on the lab's Data volume — after verified installation
+
+**Completed on 2026-10-13 with explicit user authorization.** The destination
+below was newly created on verified lab Data, then reread and compared with
+the source and tracked manifest. No boot installation was performed. Retain
+the procedure below for reference; do not repeat the copy over an existing file.
 
 While back in the original macOS, use Finder/Disk Utility to identify the
 **lab Data** volume by its volume-group relationship. Expected mounted name:

@@ -108,8 +108,10 @@ See `progress.md`. As of 2026-10-13:
   were disabled. Lab macOS installation/first boot and original-desktop return
   are user-confirmed (M1 report `f34970e`). B independently verified both builds,
   separate System/Data groups and original FileVault/SIP/authenticated-root.
-  Post-return per-OS boot-security modes still need an administrator-only read;
-  m1n1 staging/security/custom-object work and live tests remain pending.
+  Post-return per-OS boot-security modes still need an administrator-only read.
+  User-authorized m1n1 staging is complete: the lab Data copy matches the
+  package's 3,932,160 bytes/SHA-256. It is an ordinary file, not an installed
+  boot object. Security/custom-object work and all live tests remain pending.
   Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;

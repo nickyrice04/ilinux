@@ -29,8 +29,9 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   the native blocker. The lab macOS entry is installed and has booted by user
   observation; original macOS return also succeeded (M1 report `f34970e`). B
   verified matching builds and separate System/Data groups. It is not an m1n1
-  entry yet: payload staging, paired-Recovery checks and separately approved
-  lab policy/custom-object work remain. Native framebuffer output is unverified.
+  entry yet: the exact payload is now staged and hash-verified on lab Data,
+  but paired-Recovery checks and separately approved lab policy/custom-object
+  installation remain. Native framebuffer output is unverified.
 * A concrete preparation procedure now exists in
   `kernel/native-enablement/boot-entry-setup.md`: second full macOS scaffold,
   available matching 26.6.2 / 25G83 installer, paired-Recovery preflight and
@@ -101,8 +102,10 @@ current execution handoff in `kernel/native-enablement/boot-entry-setup.md`;
 lab macOS boot/return succeeded, and B verified original build/FileVault/SIP/
 authenticated-root plus the lab's separate installed volume group/build.
 Current per-OS boot-policy modes need an administrator-only read (automated
-Terminal access was safety-blocked). Native Linux remains unvalidated and
-boot-security changes remain unauthorized.
+Terminal access was safety-blocked; the user now has the manual command).
+The m1n1 file is staged and hash-verified on lab Data, not installed as a boot
+object. Native Linux remains unvalidated and boot-security changes remain
+unauthorized. No restart is needed for this staging milestone.
 Upstream `proxyclient/tools/linux.py` is explicitly on hold. Package integrity
 is not boot approval; first live test is the bounded P_NOP USB handshake.
 

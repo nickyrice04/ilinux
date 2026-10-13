@@ -2,8 +2,9 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Current authorization:** lab macOS provisioning is complete. Review and
-read-only checks are allowed; boot-security/custom-object changes and native
+**Current authorization:** lab macOS provisioning and the user-authorized m1n1
+file staging are complete. Review/read-only checks are allowed;
+boot-security/custom-object changes and native
 Stage A/B testing remain on hold pending the user's explicit authorization.
 
 ## 1. Current state
@@ -18,8 +19,9 @@ Controller tools pass offline tests; the physical proxy is untested. Read-only
 checks now confirm the original macOS and a separate installed lab System/Data
 group, both at 26.6.2 / 25G83. The user booted the lab and returned to Macintosh
 HD (M1 report `f34970e`). Original FileVault, SIP and authenticated-root are on;
-post-return per-OS boot-policy modes await an administrator-only read. m1n1 is
-not yet staged or installed as the lab's boot object.
+post-return per-OS boot-policy modes await the user's administrator-only read.
+m1n1 is staged under the lab Data volume's `Users/Shared/iLinuxBoot`, with
+package size/SHA-256 verified. It is not installed as the lab's boot object.
 M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 
 ## 2. Dedicated OS entry: separate installation gate

@@ -6,15 +6,14 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current authorization: create the lab macOS entry, preserve boot security
+### Current authorization: stage m1n1 on lab Data, preserve boot security
 
-The user now authorizes the dedicated **iLinux Boot Lab** entry using the
-matching macOS installer, preserving the original macOS. B owns this stage.
-This supersedes the earlier volume/installer-launch hold below, but **does not
-authorize changing boot security, installing a custom boot object or running
-native m1n1/Linux**. Stop at the installer/restart handoff to the human; record
-the actual destination and result before describing the entry as bootable.
-M1 keeps the offline boot021 package ready and performs no live USB actions.
+The dedicated **iLinux Boot Lab** macOS installation and first boot are complete.
+The user now authorizes staging the verified m1n1 file on the lab Data volume
+and requests a manual read-only policy command. B owns this stage. This **does
+not authorize changing boot security, installing a custom boot object or running
+native m1n1/Linux**. M1 keeps the offline boot021 package ready and performs no
+live USB actions. No restart is needed for file staging.
 
 **Observed progress:** B created the unique empty APFS lab volume, preserving
 the original volumes' names/roles/FileVault states. Original policy reports
@@ -31,14 +30,19 @@ Macintosh HD build 26.6.2 / 25G83, FileVault/SIP/authenticated-root enabled,
 and a separate mounted lab System/Data group with the same installed build.
 Post-return **boot-policy mode** checks still need an administrator-only read;
 computer-use safety review blocked Terminal automation. No mode is inferred
-from the pre-install baseline. The m1n1 binary hash still matches and it is
-not staged in the lab yet. No security/custom-boot change occurred.
+from the pre-install baseline. B has now staged the exact m1n1 binary at
+`/Volumes/iLinux Boot Lab - Data/Users/Shared/iLinuxBoot/m1n1.bin` after
+rechecking the lab System/Data roles and separate volume group. The reread
+copy matches the tracked manifest: 3,932,160 bytes, SHA-256
+`ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664`.
+Only a new folder and ordinary file were created on lab Data; no existing
+file was overwritten. No security/custom-boot/startup-disk change occurred.
 Boot021 and the existing client pin are unchanged.
 Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
 **NOT RUN**. Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
 
-**Next staged session:** finish read-only policy checks, stage/hash the exact
-boot object, then request authorization for lab-only Permissive Security and
+**Next staged session:** finish the user's read-only policy checks, then
+obtain authorization for lab-only Permissive Security/kernel CTRR and
 custom boot installation. Stage A tests only m1n1/P_NOP; Stage B separately
 tests one-core Linux PID 1 and 60-second liveness. The result template now
 separates controller output, screen observations, timing and macOS return.

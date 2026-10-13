@@ -754,3 +754,24 @@ handoff; the existing 180-second controller deadline is a different bound.
 Blank output is an observation-path problem to investigate before another
 blind attempt, not evidence of a particular driver failure. No native performance
 or desktop-compatibility claim follows from this first diagnostic.
+
+## D-049 · 2026-10-13 · Stage an ordinary lab file without installing a boot object
+
+**User direction:** provide the read-only policy-check command, then stage m1n1;
+preserve original macOS and supply restart timing and an M1-agent handoff.
+
+**Action/evidence:** rechecked the mounted lab System/Data roles and group,
+separation from original, original FileVault and destination parents. Created
+only the lab Data `Users/Shared/iLinuxBoot` directory and `m1n1.bin` with exclusive
+file creation. Reread bytes match the boot021 source and tracked manifest:
+3,932,160 bytes, SHA-256
+`ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664`.
+No existing file was overwritten; no boot policy or startup setting changed.
+
+**Boundary/next:** staging is reversible file preparation, not custom boot
+installation. It needs no restart or policy reduction. Current per-OS policy
+modes remain pending the user's manual read-only helper output. Review that
+result and obtain explicit authorization before lab-only Permissive Security,
+kernel CTRR/custom-boot work and the paired-Recovery restart. M1 prepares
+records offline; all live/native checks remain NOT RUN. Original macOS remains
+the protected reference environment.

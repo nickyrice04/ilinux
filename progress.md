@@ -5,6 +5,28 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: m1n1 file staged on lab Data; boot settings unchanged
+
+* User authorized staging m1n1 while preserving original macOS. Rechecked
+  the mounted lab System/Data roles and shared volume group, its separation
+  from the original group, and original FileVault. Destination parents are
+  real directories on lab Data; the destination file did not exist.
+* Created only `Users/Shared/iLinuxBoot/m1n1.bin` under
+  `/Volumes/iLinux Boot Lab - Data`, with exclusive creation and no overwrite.
+  Reread bytes equal the source and tracked manifest: **3,932,160 bytes**,
+  SHA-256 `ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664`.
+  Sanitized local receipt: ignored `build/installer-verification/m1n1-staged.json`.
+* Gave the user the administrator-only read-only policy helper command for
+  their M5 Terminal. Its result is still **PENDING USER CHECK**; neither OS's
+  current policy mode is inferred from earlier results. No raw policy/IDs saved.
+* This is file staging only. No custom boot object installed, no startup-disk
+  or security change, and no restart. Original System/personal files untouched.
+  Boot021 and client pin unchanged. Live USB/P_NOP, native m1n1/Linux/Omarchy
+  remain **NOT RUN**.
+* Next: review the user's sanitized policy output; obtain explicit approval
+  for lab-only policy/custom-boot setup before the paired-Recovery restart.
+  M1 can pull this handoff and prepare the existing result template offline.
+
 ## 2026-10-13 · Agent B: M1 return report reviewed; native observation plan prepared
 
 * Reviewed/fast-forwarded M1 commit **f34970e**. It records the user's successful
