@@ -1,5 +1,11 @@
 # macOS hardware services on the M5 Max (t6050), and what Linux would need
 
+**Historical metadata-only pass.** The user later authorized bounded binary
+analysis. The [2026-10-13 driver-interface handoff](findings/driver-interfaces-2026-10-13/handoff.md)
+supersedes the analysis-access limits and selected Linux-support claims
+below (notably, the pinned ISP already supports M3). It records current
+scope, tested code, evidence limits and unresolved native functionality.
+
 **What this is:** a block-by-block map of how macOS drives each piece of
 hardware in this MacBook Pro (Mac17,6), set against what Linux has today. The
 question it answers: *what has to exist on the Linux side to boot into Linux

@@ -1,0 +1,30 @@
+{
+  "carrier_sha256": "c0cb9e3f489efe860ec67122bd51b93c816eac5ff4f48884375f0c908fea536d",
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "targets": [
+    {
+      "id": "n1-ring-init",
+      "artifact": "Airship-ring-analysis.elf",
+      "sha256": "16df41d0151d4d0657fe9654eed21d6e9d894e9898eea19db1d3831cd46a9577",
+      "member": "AirshipDK:selected-ring-functions",
+      "address": "0x18023000c",
+      "question": "How is the configured software ring bound stored?"
+    },
+    {
+      "id": "n1-ring-head",
+      "artifact": "Airship-ring-analysis.elf",
+      "sha256": "16df41d0151d4d0657fe9654eed21d6e9d894e9898eea19db1d3831cd46a9577",
+      "member": "AirshipDK:selected-ring-functions",
+      "address": "0x180237ef8",
+      "question": "Does producer arithmetic use modulo or wrap against a bound?"
+    },
+    {
+      "id": "n1-ring-tail",
+      "artifact": "Airship-ring-analysis.elf",
+      "sha256": "16df41d0151d4d0657fe9654eed21d6e9d894e9898eea19db1d3831cd46a9577",
+      "member": "AirshipDK:selected-ring-functions",
+      "address": "0x180237fbc",
+      "question": "Does consumer arithmetic expose reserved-slot or phase semantics?"
+    }
+  ]
+}

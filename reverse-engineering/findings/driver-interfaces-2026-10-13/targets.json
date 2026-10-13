@@ -1,0 +1,118 @@
+{
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "targets": [
+    {
+      "id": "hid-frame",
+      "artifact": "AppleHIDTransportFIFO.macho",
+      "sha256": "181c9a9b1311d4a643d79453ede4cb8eae888466b43d5343ef471c8e1a023234",
+      "member": "com.apple.driver.AppleHIDTransportFIFO",
+      "address": "0xfffffe0009175e04",
+      "question": "Which message types and bounds are checked before HID dispatch?"
+    },
+    {
+      "id": "dock-read",
+      "artifact": "AppleDockChannel.macho",
+      "sha256": "1456b5a61090f51c1cad0b79c089d57d9771d14c9725960696e4d0c15a027e17",
+      "member": "com.apple.driver.AppleDockChannel",
+      "address": "0xfffffe0008e484b4",
+      "question": "Can a second asynchronous read replace the pending completion?"
+    },
+    {
+      "id": "audio-descriptor",
+      "artifact": "AudioDMAController-T605x.macho",
+      "sha256": "3ec584f500c2a7028088f42fa68450783628c3614ac6d8b2a2b12a44d9094ed3",
+      "member": "com.apple.driver.AudioDMAController-T605x",
+      "address": "0xfffffe0009b78c58",
+      "question": "What host-side descriptor slot size and slot count are observable?"
+    },
+    {
+      "id": "mic-command",
+      "artifact": "AOPAudio2.macho",
+      "sha256": "6b1422f1285482936f7560780ad4e1668c25bcf9fe192d36cad0887af45d5ec8",
+      "member": "com.apple.driver.AOPAudio2",
+      "address": "0xfffffe00089dc77c",
+      "question": "What ordinary host command interface precedes AOP transport?"
+    },
+    {
+      "id": "camera-doorbell",
+      "artifact": "AppleH16CameraInterface.macho",
+      "sha256": "f6d4ee66dbd02a011736b62c0f3986475155af4cb6001806be62a2baaf3ea4e9",
+      "member": "com.apple.driver.AppleH16CameraInterface",
+      "address": "0xfffffe00090c581c",
+      "question": "Is the notification an MMIO doorbell and what gates it?"
+    },
+    {
+      "id": "ane-command",
+      "artifact": "AppleH16ANEInterface.macho",
+      "sha256": "49287be5ee89bf033c82607e8f37630bdd5335927db2ba2148a11cc3630cec84",
+      "member": "com.apple.driver.AppleH16ANEInterface",
+      "address": "0xfffffe0008fb6fb4",
+      "question": "Does the ordinary host command wrapper expose the full firmware ABI?"
+    },
+    {
+      "id": "gpu-kick",
+      "artifact": "AGXG17X.macho",
+      "sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "member": "com.apple.AGXG17X",
+      "address": "0xfffffe0008986470",
+      "question": "What state update precedes kick-queue notification?"
+    },
+    {
+      "id": "network-pci-client",
+      "artifact": "AppleCentauriManager.macho",
+      "sha256": "be541c24c9afeb83f16747d651acca1085f219e38f3ddf1320d32ef63e651d29",
+      "member": "com.apple.driver.AppleCentauriManager",
+      "address": "0xfffffe0008d1c91c",
+      "question": "How does the N1 manager select the client of a PCI function?"
+    },
+    {
+      "id": "display-send",
+      "artifact": "AppleDCP.macho",
+      "sha256": "bd66f3fe0e34dde2e3b0544f8f0f931c8e2785415cab703a73cbf27c4995234d",
+      "member": "com.apple.driver.AppleDCP",
+      "address": "0xfffffe0008da2a34",
+      "question": "Does the DCP adapter carry payload directly or delegate to AFK?"
+    },
+    {
+      "id": "rtkit-send",
+      "artifact": "RTBuddy.macho",
+      "sha256": "e41f5311a2ca2077b6987bc86bcb528a390c831bd6f3d75400663014d41e48c1",
+      "member": "com.apple.driver.RTBuddy",
+      "address": "0xfffffe000ae830a8",
+      "question": "What state gates sending an ordinary endpoint message?"
+    },
+    {
+      "id": "camera-pool",
+      "artifact": "AppleH16CameraInterface.macho",
+      "sha256": "f6d4ee66dbd02a011736b62c0f3986475155af4cb6001806be62a2baaf3ea4e9",
+      "member": "com.apple.driver.AppleH16CameraInterface",
+      "address": "0xfffffe00090e2174",
+      "question": "Does the buffer-pool wrapper match the public Linux ISP command?"
+    },
+    {
+      "id": "camera-scaler",
+      "artifact": "AppleH16CameraInterface.macho",
+      "sha256": "f6d4ee66dbd02a011736b62c0f3986475155af4cb6001806be62a2baaf3ea4e9",
+      "member": "com.apple.driver.AppleH16CameraInterface",
+      "address": "0xfffffe00090e2668",
+      "question": "Does the scaler wrapper match the public Linux ISP command?"
+    },
+    {
+      "id": "gpu-mailbox",
+      "artifact": "AGXG17X.macho",
+      "sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "member": "com.apple.AGXG17X",
+      "address": "0xfffffe000896bff0",
+      "question": "Which mailbox path is selected to notify GPU firmware?"
+    },
+    {
+      "id": "audio-interrupt",
+      "artifact": "AudioDMAController-T605x.macho",
+      "sha256": "3ec584f500c2a7028088f42fa68450783628c3614ac6d8b2a2b12a44d9094ed3",
+      "member": "com.apple.driver.AudioDMAController-T605x",
+      "address": "0xfffffe0009b5a6e4",
+      "question": "How are channel interrupt status and enable masks accessed?"
+    }
+  ]
+}

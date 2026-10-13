@@ -114,6 +114,10 @@ See `progress.md`. As of 2026-10-12:
   experiments remain read-only/unvalidated on hardware (F-072). See
   `reverse-engineering/findings/rea-native-2026-10-13/handoff.md`.
 * The macOS baseline suite and session-1 research are complete.
+* B's expanded driver pass (F-073–F-075) adds a Linux-tested DockChannel
+  bounds/rearm patch and original offline N1 ACIPC helpers. REA covered
+  17 functions; two ISP layouts match existing Linux. Native compatibility
+  remains untested. See `reverse-engineering/findings/driver-interfaces-2026-10-13/handoff.md`.
 
 ## Next recommended actions
 

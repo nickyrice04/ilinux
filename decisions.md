@@ -565,3 +565,27 @@ NV12 narrowing; remove the file to return to stock video entirely.
 **Scope:** VM only. The handoff kit (coordination.md, goal 7) lists this
 among the `vm-integration` files that must not be applied on native Asahi
 hardware, where the path is the M5 AVD through V4L2.
+
+## D-041 · 2026-10-13 · Driver contracts, local input patch and explicit hardware gates
+
+**Decision:** Expand B's authorized REA work across driver families using
+bounded, provenance-checked functions. Keep N1 ACIPC distinct from RTKit;
+use ordinary host interfaces only. Independently verify instruction words
+and reject out-of-body/truncated decompilations before deriving conclusions.
+
+**Evidence:** F-073–F-075: 17 functions and 1,107 independently checked
+instruction words; reusable selected ISP layouts; Linux-tested original
+DockChannel input hardening and offline N1 queue helpers. Synthetic parser
+checking overhead is +0.97% median, not a native performance claim.
+
+**Implementation:** The input patch is for A's disposable native kernel
+build, pending full-object and hardware validation. N1 helpers model bounded
+software queues; they do not establish descriptor semantics, DMA barriers,
+firmware ownership or operational Wi-Fi/Bluetooth. All raw proprietary
+results stay ignored and local. No Apple code is copied into Linux.
+
+**Next gate:** Build the full HID object, then validate physical input after
+the existing native boot gates. Continue selected N1 descriptor/completion
+and ISP startup questions. Agent C configures native Omarchy only after the
+boot gate, with this hardware matrix and without VM-only bridge settings.
+See `reverse-engineering/findings/driver-interfaces-2026-10-13/handoff.md`.

@@ -34,6 +34,16 @@ class EvidenceGate(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.check()
 
+    def test_truncated_pseudocode_rejected_inside_valid_bounds(self):
+        self.evidence["normalized_result"]["pseudocode"] = "/* WARNING: Bad instruction */ halt_baddata();"
+        self.assertEqual(self.check()["pseudocode_gate"], "rejected_truncated_control_flow")
+
+    def test_unresolved_jump_is_visible_and_still_needs_review(self):
+        self.evidence["normalized_result"]["pseudocode"] = "/* Could not recover jumptable */"
+        result = self.check()
+        self.assertEqual(result["pseudocode_gate"], "manual_review_required")
+        self.assertIn("unresolved_indirect_jump", result["decompiler_warning_classes"])
+
     def test_changed_payload_fails_even_with_updated_digest(self):
         self.derived = b"XXXXXXXX"
         self.manifest["derived_sha256"] = sha(self.derived)

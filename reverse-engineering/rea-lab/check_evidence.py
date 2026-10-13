@@ -53,6 +53,21 @@ def inspect(evidence, manifest, carrier, derived):
     operations = value.get("native_value_flow", {}).get("operations", [])
     outside = [op for op in operations if op.get("address", "").startswith("0x")
                and not any(a <= int(op["address"], 16) <= b for a, b in ranges)]
+    pseudo = value.get("pseudocode", "")
+    truncated = any(marker in pseudo for marker in
+                    ("halt_baddata", "Truncating control flow", "Control flow encountered bad instruction"))
+    warnings = []
+    if truncated:
+        warnings.append("bad_instruction_or_truncated_control_flow")
+    if "Could not recover jumptable" in pseudo:
+        warnings.append("unresolved_indirect_jump")
+    if "Removing unreachable block" in pseudo:
+        warnings.append("provider_removed_blocks")
+    gate = "manual_review_required"
+    if truncated:
+        gate = "rejected_truncated_control_flow"
+    if outside:
+        gate = "rejected_cross_boundary"
     # Ghidra-derived membership tags are not sufficient: compare numeric PCs.
     return {
         "evidence_id": evidence["evidence_id"],
@@ -61,7 +76,7 @@ def inspect(evidence, manifest, carrier, derived):
         "original_bytes_verified": True,
         "pcode_operations": len(operations), "pcode_outside_body": len(outside),
         "outside_addresses": sorted({op["address"] for op in outside}),
-        "pseudocode_gate": "rejected_cross_boundary" if outside else "manual_review_required",
+        "pseudocode_gate": gate, "decompiler_warning_classes": warnings,
         "limits": ["No semantic or runtime equivalence claim",
                    "Unresolved indirect calls and collection fixups remain unknown",
                    "Whole-function pseudocode must not guide implementation after a rejected gate"],

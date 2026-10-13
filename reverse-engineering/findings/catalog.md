@@ -634,3 +634,33 @@ not a validated root cause for today's stack. Missing decode fences remain.
 | Inference | The default is correct for actual desktop use. Any future VM test of session environment must launch through the session (`systemd-run --user`, `uwsm app`, or a session terminal), not `sudo -u`, or it will wrongly report the stock driver. On-screen visual capture was blocked by hyprlock (idle lock holds the Wayland session-lock and ignores `loginctl unlock-sessions`); decode correctness is covered frame-exact, and the NV12 zero-copy display path was validated on-screen earlier (F-048/F-051). |
 | Confidence | **Confirmed** (driver load, decode, formats, regression). On-screen power unchanged (same driver) is **Likely**; a fresh floating-window power run is offered, not done. |
 | Linux mapping | `omarchy-arm64/configuration/vm-integration/etc/environment.d/70-ilinux-vm-video.conf` (D-032) |
+
+## F-073 · 2026-10-13 · B: bounded REA across driver families
+
+| Field | Value |
+|---|---|
+| Source | REA 6.4.0/Ghidra 12.1.4, selected ARM64e kernel members and three narrowly extracted AirshipDK functions; independent Apple LLVM and original-byte checks. `reverse-engineering/findings/driver-interfaces-2026-10-13/{targets,n1-targets,checks,n1-checks}.json`. |
+| Observation | 17 functions / 1,107 instruction words. Four kernel-member whole-function pseudocode results rejected for out-of-body operations; remaining results require manual semantic review. ISP pool/scaler routines retain Linux's selected opcodes 0x0117/0x0b01 and lengths 0x9c/0x38. GPU kick constants and bounded ordinary host ANE/DCP/RTKit interfaces are recorded, with unresolved dispatch. |
+| Confidence | **Confirmed** static bytes, bounds and selected packet construction; active runtime paths and native compatibility **Unknown**. |
+| Engineering decision | Reuse the two established ISP layouts; do not add unsupported hardware compatibles or translate rejected pseudocode. Preserve version and ownership checks. |
+| Next | N1 descriptor/completion ordering, ISP firmware/sensor startup, ordinary AFK dispatch and ADMAC evolution; see handoff for each family. |
+
+## F-074 · 2026-10-13 · B: Linux DockChannel input bounds and receive rearming
+
+| Field | Value |
+|---|---|
+| Source | Public Asahi base `77cb8f24c2381a8abb7272d7bbdec548d6426a8a`; actual source functions extracted by the digest-pinned harness. Patch in `kernel/experiments/driver-contracts/dockchannel-hid/`. |
+| Observation | Missing malformed-input checks, out-of-range interface indexing, malformed-work cleanup and allocation-failure receive rearming. Ten baseline cases fail independently; all ten plus three valid cases pass the patch in ARM64 Linux with Clang 21.1.2 ASan/UBSan. |
+| Measurement | Six 10-million-packet synthetic VM runs: median 29.581 → 29.868 ns/packet (+0.97%). This is parser overhead, not physical input latency, power or hardware throughput. |
+| Confidence | **Confirmed** in extracted real-function harness with synthetic hooks. Full kernel object, IRQ concurrency and native MTP operation remain **Unknown**. |
+| Engineering decision | Carry original local bounds/cleanup/rearm patch into A's disposable native build. Do not install it in the virtio-input VM path. No rejected Apple pseudocode guided the implementation. |
+
+## F-075 · 2026-10-13 · B: N1 ACIPC operational facts and original queue model
+
+| Field | Value |
+|---|---|
+| Source | Field-allowlisted Alpha/Beta AirshipDK configuration, content digests; DriverKit-cache Airship ring constructor/head/tail via 524 selected code bytes in a non-loadable ELF analysis carrier. No full cache, personal traffic or protected service code copied. |
+| Observation | Configuration names ACIPC v0x300 and non-power-of-two sizes including 5, 9, 17. REA plus independent LLVM confirm division/remainder in normal ring-index paths and guards consistent with one-empty-slot local state. ACIPC is distinct from RTKit. Actual hardware index/phase encoding and use by each live queue remain unresolved. |
+| Implementation | Original portable software queue, modulo/span arithmetic and bounded extraction helpers in `kernel/experiments/driver-contracts/acipc/`. No MMIO, DMA, firmware transfer, netdev or HCI registration. |
+| Validation | Linux GCC plus Clang ASan/UBSan: 8,525,654 wrap cases and 49,840 queue state/count cases, bounds/overflow and unchanged-state rejection; 18 Python tests. |
+| Next | Selected ordinary ring descriptor/completion methods, source index encoding, memory ordering, PCIe/DART and firmware lifecycle; only then a native transport. |

@@ -15,6 +15,14 @@ ALLOWED = {
     "com.apple.driver.AppleARMPlatform", "com.apple.driver.ApplePMGR",
     "com.apple.driver.AppleT6050PMGR", "com.apple.driver.AppleT6050CLPC",
     "com.apple.driver.AppleT6050SOCTuner", "com.apple.iokit.IONVMeFamily",
+    # User-authorized driver-interface pass; ordinary host drivers only.
+    "com.apple.AGXG17X", "com.apple.driver.AppleDCP",
+    "com.apple.driver.AppleCentauriManager", "com.apple.iokit.IOBluetoothFamily",
+    "com.apple.driver.AppleH16ANEInterface", "com.apple.driver.AppleH16CameraInterface",
+    "com.apple.driver.AudioDMAController-T605x", "com.apple.driver.AOPAudio2",
+    "com.apple.driver.AppleDockChannel", "com.apple.driver.AppleHIDTransportFIFO",
+    "com.apple.driver.AppleHIDTransport", "com.apple.driver.RTBuddy",
+    "com.apple.driver.AppleT8110DART",
 }
 
 

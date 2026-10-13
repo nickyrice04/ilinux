@@ -1,0 +1,2 @@
+ACIPC software ring arithmetic: 8525654 wrap cases pass; bounds/overflow cases pass; no hardware access
+ACIPC one-empty-slot software queue: 49840 state/count cases pass

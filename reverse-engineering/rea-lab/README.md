@@ -4,6 +4,14 @@ Validated 2026-10-13. See
 [`../findings/rea-native-2026-10-13/handoff.md`](../findings/rea-native-2026-10-13/handoff.md)
 for findings, confidence and the implementation handoff.
 
+The expanded [driver-interface pass](../findings/driver-interfaces-2026-10-13/handoff.md)
+adds 17 queries across device families, original Linux input hardening and
+an N1 software queue experiment. `analyze_drivers.py` runs only explicitly
+selected, digest-pinned targets inside Linux, with per-query time limits;
+`crosscheck_drivers.py` verifies saved instruction bytes using existing host
+LLVM tools. The latter accepts `--carrier` for a narrowly extracted dyld-cache
+analysis carrier. All raw results stay in ignored lab paths.
+
 This is a diskless, 2-vCPU/8-GiB Linux job. It never attaches the live
 Omarchy disk. Only `build/rea-lab` is shared writable; source and the existing
 REA npm tree are read-only. Downloaded tools execute only in this VM. Raw

@@ -1,0 +1,620 @@
+{
+  "evidence": "observed_static_configuration",
+  "format_version": 1,
+  "hardware_semantics": "unvalidated",
+  "sources": [
+    {
+      "operational_facts": {
+        "chipset": "t2026",
+        "completion_rings": {
+          "cmd-request": {
+            "id": 1,
+            "index_array_vector": 1,
+            "interrupt": "control",
+            "ring_size": 1024
+          },
+          "cmd-response": {
+            "id": 2,
+            "index_array_vector": 2,
+            "interrupt": "control",
+            "ring_size": 1024
+          },
+          "data-rx": {
+            "doorbell": {
+              "name": "ringdb-data-rx"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "footer_size": 16,
+            "id": 15,
+            "index_array_vector": 207,
+            "interrupt": "data-rx",
+            "multi": {
+              "count": 27,
+              "doorbell_stride": false
+            },
+            "ring_size": 2048
+          },
+          "data-rx-llw": {
+            "doorbell": {
+              "name": "ringdb-data-rx"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "footer_size": 16,
+            "id": 12,
+            "index_array_vector": 204,
+            "interrupt": "data-rx-llw",
+            "multi": {
+              "count": 2,
+              "doorbell_stride": false
+            },
+            "ring_size": 2048
+          },
+          "data-tx": {
+            "doorbell": {
+              "name": "ringdb-data-tx"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "footer_size": 16,
+            "id": 76,
+            "index_array_vector": 192,
+            "interrupt": "data-tx",
+            "multi": {
+              "count": 12,
+              "doorbell_stride": false,
+              "interrupt_stride": false
+            },
+            "ring_size": 2048
+          },
+          "events": {
+            "id": 3,
+            "index_array_vector": 3,
+            "interrupt": "control",
+            "ring_size": 1024
+          },
+          "management": {
+            "id": 4,
+            "index_array_vector": 4,
+            "interrupt": "control",
+            "ring_size": 1024
+          },
+          "monitor": {
+            "doorbell": {
+              "name": "ringdb-data-rx"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "footer_size": 16,
+            "id": 14,
+            "index_array_vector": 206,
+            "interrupt": "data-rx",
+            "multi": {
+              "count": 1,
+              "doorbell_stride": false
+            },
+            "ring_size": 256
+          }
+        },
+        "doorbells": {
+          "ringdb-control": {
+            "min_interval_usec": 1000,
+            "mode": "shared_constant",
+            "register": {
+              "bank": 0,
+              "offset": 4100,
+              "width": 4
+            },
+            "value": 1,
+            "vector": 0
+          },
+          "ringdb-data-rx": {
+            "min_interval_usec": 1000,
+            "mode": "shared_constant",
+            "register": {
+              "bank": 0,
+              "offset": 4176,
+              "width": 4
+            },
+            "value": 1,
+            "vector": 11
+          },
+          "ringdb-data-tx": {
+            "min_interval_usec": 1000,
+            "mode": "shared_constant",
+            "register": {
+              "bank": 0,
+              "offset": 4144,
+              "width": 4
+            },
+            "value": 1,
+            "vector": 18
+          }
+        },
+        "os_stage": {
+          "cr_index_count": 234,
+          "mcr": {
+            "ring_size": 16
+          },
+          "mtr": {
+            "in_place": false,
+            "ring_size": 16
+          },
+          "registers": {
+            "context_info_address_hi": {
+              "bank": 0,
+              "offset": 20
+            },
+            "context_info_address_lo": {
+              "bank": 0,
+              "offset": 16
+            },
+            "ipc_control": {
+              "bank": 0,
+              "offset": 4136
+            },
+            "ipc_status": {
+              "bank": 0,
+              "offset": 12
+            },
+            "sleep_control": {
+              "bank": 0,
+              "offset": 4132
+            },
+            "window_base_hi": {
+              "bank": 0,
+              "offset": 28
+            },
+            "window_base_lo": {
+              "bank": 0,
+              "offset": 24
+            },
+            "window_size": {
+              "bank": 0,
+              "offset": 32
+            }
+          },
+          "tr_index_count": 192,
+          "version": 768
+        },
+        "protocol": "acipc",
+        "role": "CentauriAlpha",
+        "transfer_rings": {
+          "cmd-request": {
+            "completion_ring": "cmd-request",
+            "doorbell": {
+              "name": "ringdb-control"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 1,
+            "index_array_vector": 1,
+            "interrupt": "control",
+            "nominal_transfer_size": 2048,
+            "ring_size": 64
+          },
+          "cmd-response": {
+            "completion_ring": "cmd-response",
+            "doorbell": {
+              "name": "ringdb-control"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 2,
+            "index_array_vector": 2,
+            "interrupt": "control",
+            "nominal_transfer_size": 2048,
+            "ring_size": 192
+          },
+          "data-rx": {
+            "completion_footer_size": 16,
+            "doorbell": {
+              "name": "ringdb-data-rx"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 12,
+            "index_array_vector": 12,
+            "interrupt": "data-rx",
+            "multi": {
+              "count": 1,
+              "doorbell_stride": false
+            },
+            "out_of_order": true,
+            "ring_size": 2048
+          },
+          "data-rx-llw": {
+            "completion_footer_size": 16,
+            "doorbell": {
+              "name": "ringdb-data-rx"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 13,
+            "index_array_vector": 13,
+            "interrupt": "data-rx-llw",
+            "multi": {
+              "count": 1,
+              "doorbell_stride": false
+            },
+            "out_of_order": true,
+            "ring_size": 2048
+          },
+          "data-tx": {
+            "completion_footer_size": 16,
+            "completion_ring": "data-tx",
+            "doorbell": {
+              "name": "ringdb-data-tx"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 25,
+            "index_array_vector": 25,
+            "interrupt": "data-tx",
+            "multi": {
+              "count": 166,
+              "doorbell_stride": false,
+              "interrupt_stride": false
+            },
+            "ring_size": 2048,
+            "transfer_footer_size": 16
+          },
+          "events": {
+            "completion_ring": "events",
+            "doorbell": {
+              "name": "ringdb-control"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 3,
+            "index_array_vector": 3,
+            "interrupt": "control",
+            "nominal_transfer_size": 4096,
+            "ring_size": 96
+          },
+          "management": {
+            "completion_ring": "management",
+            "doorbell": {
+              "name": "ringdb-control"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 4,
+            "index_array_vector": 4,
+            "interrupt": "control",
+            "nominal_transfer_size": 2048,
+            "ring_size": 192
+          },
+          "monitor": {
+            "completion_footer_size": 16,
+            "completion_ring": "monitor",
+            "doorbell": {
+              "name": "ringdb-data-rx"
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 14,
+            "index_array_vector": 14,
+            "interrupt": "data-rx",
+            "multi": {
+              "count": 1,
+              "doorbell_stride": false
+            },
+            "nominal_transfer_size": 16384,
+            "out_of_order": true,
+            "ring_size": 256
+          }
+        }
+      },
+      "source": {
+        "bytes": 28755,
+        "path": "/System/DriverKit/System/Library/PrivateFrameworks/AirshipDK.framework/t2026-CentauriAlpha.plist",
+        "sha256": "030f2ad01853938932bc98accb6763b02e38e8b77b77885126d43fa3f861278f"
+      }
+    },
+    {
+      "operational_facts": {
+        "chipset": "t2026",
+        "completion_rings": {},
+        "doorbells": {
+          "ringdb": {
+            "mode": "index",
+            "multi": {
+              "count": 16
+            },
+            "register": {
+              "bank": 0,
+              "offset": 4096
+            },
+            "vector": 0
+          }
+        },
+        "os_stage": {
+          "cr_index_count": 1,
+          "mcr": {
+            "footer_size": 16,
+            "ring_size": 16
+          },
+          "mtr": {
+            "in_place": false,
+            "ring_size": 16
+          },
+          "registers": {
+            "context_info_address_hi": {
+              "bank": 0,
+              "offset": 8
+            },
+            "context_info_address_lo": {
+              "bank": 0,
+              "offset": 4
+            },
+            "ipc_control": {
+              "bank": 0,
+              "offset": 4220
+            },
+            "ipc_status": {
+              "bank": 0,
+              "offset": 0
+            },
+            "sleep_control": {
+              "bank": 0,
+              "offset": 4216
+            },
+            "window_base_hi": {
+              "bank": 0,
+              "offset": 16
+            },
+            "window_base_lo": {
+              "bank": 0,
+              "offset": 12
+            },
+            "window_size": {
+              "bank": 0,
+              "offset": 20
+            }
+          },
+          "tr_index_count": 16,
+          "version": 768
+        },
+        "protocol": "acipc",
+        "role": "CentauriBeta",
+        "transfer_rings": {
+          "acl-rx": {
+            "completion_footer_size": 2592,
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 8
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 8,
+            "in_place": true,
+            "index_array_vector": 8,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 9,
+            "transfer_footer_size": 2592
+          },
+          "acl-tx": {
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 2
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 2,
+            "in_place": true,
+            "index_array_vector": 2,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 9,
+            "transfer_footer_size": 2592
+          },
+          "hci-rx": {
+            "completion_footer_size": 260,
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 7
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 7,
+            "in_place": true,
+            "index_array_vector": 7,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 17,
+            "transfer_footer_size": 260
+          },
+          "hci-tx": {
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 1
+            },
+            "doorbell_moderation": {
+              "interval_usec": 1000,
+              "leeway_usec": 50
+            },
+            "id": 1,
+            "in_place": true,
+            "index_array_vector": 1,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 5,
+            "transfer_footer_size": 260
+          },
+          "le-rx": {
+            "completion_footer_size": 256,
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 10
+            },
+            "id": 10,
+            "in_place": true,
+            "index_array_vector": 10,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 17,
+            "transfer_footer_size": 256
+          },
+          "le-tx": {
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 4
+            },
+            "id": 4,
+            "in_place": true,
+            "index_array_vector": 4,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 17,
+            "transfer_footer_size": 256
+          },
+          "lea-rx": {
+            "completion_footer_size": 268,
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 11
+            },
+            "id": 11,
+            "in_place": true,
+            "index_array_vector": 11,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 9,
+            "transfer_footer_size": 268
+          },
+          "lea-tx": {
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 5
+            },
+            "id": 5,
+            "in_place": true,
+            "index_array_vector": 5,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 9,
+            "transfer_footer_size": 260
+          },
+          "lla-tx": {
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 6
+            },
+            "id": 6,
+            "in_place": true,
+            "index_array_vector": 6,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 5,
+            "transfer_footer_size": 1024
+          },
+          "lmp-rx": {
+            "completion_footer_size": 260,
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 13
+            },
+            "id": 13,
+            "in_place": true,
+            "index_array_vector": 13,
+            "interrupt": "main",
+            "ring_size": 17,
+            "transfer_footer_size": 260
+          },
+          "sco-rx": {
+            "completion_footer_size": 724,
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 9
+            },
+            "id": 9,
+            "in_place": true,
+            "index_array_vector": 9,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 9,
+            "transfer_footer_size": 724
+          },
+          "sco-tx": {
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 3
+            },
+            "id": 3,
+            "in_place": true,
+            "index_array_vector": 3,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 9,
+            "transfer_footer_size": 724
+          },
+          "tsi-rx": {
+            "completion_footer_size": 1304,
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 15
+            },
+            "id": 15,
+            "in_place": true,
+            "index_array_vector": 15,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 9,
+            "transfer_footer_size": 1304
+          },
+          "tsi-tx": {
+            "doorbell": {
+              "name": "ringdb",
+              "selector": 14
+            },
+            "id": 14,
+            "in_place": true,
+            "index_array_vector": 14,
+            "interrupt": "main",
+            "optimized_completion": false,
+            "ring_size": 9,
+            "transfer_footer_size": 1304
+          }
+        }
+      },
+      "source": {
+        "bytes": 17861,
+        "path": "/System/DriverKit/System/Library/PrivateFrameworks/AirshipDK.framework/t2026-CentauriBeta.plist",
+        "sha256": "989c3eaf8ce324d9a1086e509bb58b628d04ca0bac9849c9ed8575d00681b18d"
+      }
+    }
+  ]
+}

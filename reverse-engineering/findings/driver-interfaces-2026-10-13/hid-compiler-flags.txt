@@ -1,0 +1,1 @@
+-std=gnu11 -g -O1 -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -fsanitize=address,undefined -fno-omit-frame-pointer

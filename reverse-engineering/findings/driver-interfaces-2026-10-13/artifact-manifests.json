@@ -1,0 +1,573 @@
+[
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.AppleHIDTransportFIFO",
+    "member_header_offset": 4398752,
+    "derived_sha256": "181c9a9b1311d4a643d79453ede4cb8eae888466b43d5343ef471c8e1a023234",
+    "derived_bytes": 178280,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe0007435ea0",
+        "source_offset": 4398752,
+        "derived_offset": 0,
+        "bytes": 12827,
+        "source_sha256": "b58990e6d70743875ccaa4d1558c2ebdc316299cffa74272d372d8b779c66575",
+        "verified_payload_sha256": "1b1839d1a2a76466d6203ca830229035bf25b2b4196ed49b8870498e85164fd7"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe000916ec80",
+        "source_offset": 35040384,
+        "derived_offset": 16384,
+        "bytes": 83972,
+        "source_sha256": "21bd6e4b9d4ff7b392bd8ad2c4d0d0297d87d9b239e04f28311479f2155c0eca",
+        "verified_payload_sha256": "21bd6e4b9d4ff7b392bd8ad2c4d0d0297d87d9b239e04f28311479f2155c0eca"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c4730f0",
+        "source_offset": 88535280,
+        "derived_offset": 102400,
+        "bytes": 297,
+        "source_sha256": "45acb1871744dedaedb7e0555a93688d44f51605551977f03b1928b27065caa7",
+        "verified_payload_sha256": "45acb1871744dedaedb7e0555a93688d44f51605551977f03b1928b27065caa7"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0007fb8d48",
+        "source_offset": 16469320,
+        "derived_offset": 106496,
+        "bytes": 7840,
+        "source_sha256": "81e9cb429a9f2a4f3563fddb85fb99d96ac350c3344f95f092545333c4252887",
+        "verified_payload_sha256": "81e9cb429a9f2a4f3563fddb85fb99d96ac350c3344f95f092545333c4252887"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.AppleDockChannel",
+    "member_header_offset": 3615712,
+    "derived_sha256": "1456b5a61090f51c1cad0b79c089d57d9771d14c9725960696e4d0c15a027e17",
+    "derived_bytes": 65192,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe0007376be0",
+        "source_offset": 3615712,
+        "derived_offset": 0,
+        "bytes": 7067,
+        "source_sha256": "03a448084c73464954a530607c5769a621930c5a68d1b15e3f29e21292b1535e",
+        "verified_payload_sha256": "81ec3e0824b855c7ff323eadd04af7caf42360ba7efb23b20c995fde8e1ce38e"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe0008e47480",
+        "source_offset": 31732864,
+        "derived_offset": 8192,
+        "bytes": 11560,
+        "source_sha256": "ff73c54e11fa3393c6f4b5936b615e6afe16bf84b92afc2cc0da50e08274439b",
+        "verified_payload_sha256": "ff73c54e11fa3393c6f4b5936b615e6afe16bf84b92afc2cc0da50e08274439b"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c4687b0",
+        "source_offset": 88491952,
+        "derived_offset": 20480,
+        "bytes": 336,
+        "source_sha256": "39c0f5062b1bebcdca96b04a1e8ae70d16fcc315144d18716041b7b995f88239",
+        "verified_payload_sha256": "39c0f5062b1bebcdca96b04a1e8ae70d16fcc315144d18716041b7b995f88239"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0007f0bbd8",
+        "source_offset": 15760344,
+        "derived_offset": 24576,
+        "bytes": 8360,
+        "source_sha256": "6625dd079c6330c478e864df19a8e2bc4c8c1a06cd20ee88d953235291309832",
+        "verified_payload_sha256": "6625dd079c6330c478e864df19a8e2bc4c8c1a06cd20ee88d953235291309832"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.AudioDMAController-T605x",
+    "member_header_offset": 7617360,
+    "derived_sha256": "3ec584f500c2a7028088f42fa68450783628c3614ac6d8b2a2b12a44d9094ed3",
+    "derived_bytes": 302216,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe0007747b50",
+        "source_offset": 7617360,
+        "derived_offset": 0,
+        "bytes": 33730,
+        "source_sha256": "02cab8656fdf71ae5b5b0f4b98c7314334f2db96cc868405bc370e9ad7a33fb7",
+        "verified_payload_sha256": "93a57ef972109b96d92aad22b916e31f4a1079114d59ae9713ea67a07f2c6827"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe0009b583f0",
+        "source_offset": 45433840,
+        "derived_offset": 36864,
+        "bytes": 176708,
+        "source_sha256": "587e3bee003493013eb3d972f57b1138af437498ba61145bd05c4dc0a0c4d114",
+        "verified_payload_sha256": "587e3bee003493013eb3d972f57b1138af437498ba61145bd05c4dc0a0c4d114"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c504ad8",
+        "source_offset": 89131736,
+        "derived_offset": 217088,
+        "bytes": 920,
+        "source_sha256": "6fed6095c634ece3c0f23728665b1f0098dbe968fbd53cf6132fafc300d1ea09",
+        "verified_payload_sha256": "6fed6095c634ece3c0f23728665b1f0098dbe968fbd53cf6132fafc300d1ea09"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe000827ef68",
+        "source_offset": 19378024,
+        "derived_offset": 221184,
+        "bytes": 11136,
+        "source_sha256": "0be13c2b7cf7ddb6e2def5eb8c4088a9845c97ee6ecd810b3168ef5aedd7d389",
+        "verified_payload_sha256": "0be13c2b7cf7ddb6e2def5eb8c4088a9845c97ee6ecd810b3168ef5aedd7d389"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.AOPAudio2",
+    "member_header_offset": 1369744,
+    "derived_sha256": "6b1422f1285482936f7560780ad4e1668c25bcf9fe192d36cad0887af45d5ec8",
+    "derived_bytes": 62736,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe0007152690",
+        "source_offset": 1369744,
+        "derived_offset": 0,
+        "bytes": 5739,
+        "source_sha256": "a251a917101b4b65dc7e551c7108fe7a7ebb33d0729e39c2dc0c2dcc5ad7953e",
+        "verified_payload_sha256": "30823eb241835015025ff06bfea8025e81437689657b2bc2f955e39eafcb7689"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe00089daf80",
+        "source_offset": 27094912,
+        "derived_offset": 8192,
+        "bytes": 11252,
+        "source_sha256": "7f096f1e9a7a2219c8d38be262ff3299b79628ac49dac216426adeed0295b0e7",
+        "verified_payload_sha256": "7f096f1e9a7a2219c8d38be262ff3299b79628ac49dac216426adeed0295b0e7"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c4528d0",
+        "source_offset": 88402128,
+        "derived_offset": 20480,
+        "bytes": 264,
+        "source_sha256": "20d179f88598f4a7acba5d4defc0591127cc874b19b8054ee54bd0dd2f51f5fb",
+        "verified_payload_sha256": "20d179f88598f4a7acba5d4defc0591127cc874b19b8054ee54bd0dd2f51f5fb"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0007e27860",
+        "source_offset": 14825568,
+        "derived_offset": 24576,
+        "bytes": 3496,
+        "source_sha256": "14516da2798df7d4233b48f4357ac811567deda3e43499ccfd8d1a891ca4a274",
+        "verified_payload_sha256": "14516da2798df7d4233b48f4357ac811567deda3e43499ccfd8d1a891ca4a274"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.AppleH16CameraInterface",
+    "member_header_offset": 4166304,
+    "derived_sha256": "f6d4ee66dbd02a011736b62c0f3986475155af4cb6001806be62a2baaf3ea4e9",
+    "derived_bytes": 1077512,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe00073fd2a0",
+        "source_offset": 4166304,
+        "derived_offset": 0,
+        "bytes": 159421,
+        "source_sha256": "dafe5b3fdf532ccaf98f0e5a241d95d952d484bb8643e006e6320dd09ce55442",
+        "verified_payload_sha256": "fbc492346883d4c6b1fd28d931da06fb544b6b5458410674914fe06e6301f079"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe0009066e10",
+        "source_offset": 33959440,
+        "derived_offset": 159744,
+        "bytes": 519140,
+        "source_sha256": "37f5d14b8feefc642754f0d3bdd391f2578b0da5a4d3ff5bdf9725886c4ce43b",
+        "verified_payload_sha256": "37f5d14b8feefc642754f0d3bdd391f2578b0da5a4d3ff5bdf9725886c4ce43b"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c471cc8",
+        "source_offset": 88530120,
+        "derived_offset": 679936,
+        "bytes": 1936,
+        "source_sha256": "9fd8224c7e1c59b729b3b595df285229ee6d9bb6c7a327dac96c03c137c4f309",
+        "verified_payload_sha256": "9fd8224c7e1c59b729b3b595df285229ee6d9bb6c7a327dac96c03c137c4f309"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0007f86368",
+        "source_offset": 16261992,
+        "derived_offset": 684032,
+        "bytes": 121176,
+        "source_sha256": "fa321f99906b0672c7df025924353c5257eda6be4e390a595a8948add979c6be",
+        "verified_payload_sha256": "fa321f99906b0672c7df025924353c5257eda6be4e390a595a8948add979c6be"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.AppleH16ANEInterface",
+    "member_header_offset": 3864608,
+    "derived_sha256": "49287be5ee89bf033c82607e8f37630bdd5335927db2ba2148a11cc3630cec84",
+    "derived_bytes": 2333104,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe00073b3820",
+        "source_offset": 3864608,
+        "derived_offset": 0,
+        "bytes": 301694,
+        "source_sha256": "5c24febdef6dc53757705d9c9b58b0e78c0a66d7a00a74929662dc4b7e2e3ae6",
+        "verified_payload_sha256": "26e26e43679aad32c7df4e87175b6ac354a51b3601cadcec2788f085e675a94d"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe0008f59770",
+        "source_offset": 32855920,
+        "derived_offset": 303104,
+        "bytes": 1103512,
+        "source_sha256": "14f39f74908102e95426f48a43a869ef1fb3ec285d7d5af02528f15a9efb78b4",
+        "verified_payload_sha256": "14f39f74908102e95426f48a43a869ef1fb3ec285d7d5af02528f15a9efb78b4"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c46c7e0",
+        "source_offset": 88508384,
+        "derived_offset": 1409024,
+        "bytes": 21736,
+        "source_sha256": "cef8577dfaad1248ad084b21786d67ce16ad4db9272d9f9766f83524d6ec4012",
+        "verified_payload_sha256": "cef8577dfaad1248ad084b21786d67ce16ad4db9272d9f9766f83524d6ec4012"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0007f6a7c8",
+        "source_offset": 16148424,
+        "derived_offset": 1433600,
+        "bytes": 113568,
+        "source_sha256": "e1450c0094645d4dce533a35990ee206791f27a034ad68e4dbe85acd919f8ad5",
+        "verified_payload_sha256": "e1450c0094645d4dce533a35990ee206791f27a034ad68e4dbe85acd919f8ad5"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.AGXG17X",
+    "member_header_offset": 1265568,
+    "derived_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+    "derived_bytes": 1638096,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe0007138fa0",
+        "source_offset": 1265568,
+        "derived_offset": 0,
+        "bytes": 104171,
+        "source_sha256": "00dd8d0b9a493591abe43810897ddc3770e991875743345d473cd519fdf47331",
+        "verified_payload_sha256": "6fa73bc2b33776f366ff791e4976cc671fe03829f9180d00669bb730c37db53a"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe00088fad50",
+        "source_offset": 26176848,
+        "derived_offset": 106496,
+        "bytes": 918052,
+        "source_sha256": "4a2c90c686294f3203c974d905bbf63c0dc6bc35cbf514d8fff00a94f00ad0fa",
+        "verified_payload_sha256": "4a2c90c686294f3203c974d905bbf63c0dc6bc35cbf514d8fff00a94f00ad0fa"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c44c290",
+        "source_offset": 88375952,
+        "derived_offset": 1028096,
+        "bytes": 16384,
+        "source_sha256": "ca643b008ec8a566f66484ac79a7648fae590cb6dbe4d554a67e0208be50f6a4",
+        "verified_payload_sha256": "ca643b008ec8a566f66484ac79a7648fae590cb6dbe4d554a67e0208be50f6a4"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0007e05690",
+        "source_offset": 14685840,
+        "derived_offset": 1044480,
+        "bytes": 139728,
+        "source_sha256": "4423bfd6af0a445d3c41c770c7f3dae9fc86f95e84cf2295d824fdddc7f1b27c",
+        "verified_payload_sha256": "4423bfd6af0a445d3c41c770c7f3dae9fc86f95e84cf2295d824fdddc7f1b27c"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.AppleCentauriManager",
+    "member_header_offset": 3336032,
+    "derived_sha256": "be541c24c9afeb83f16747d651acca1085f219e38f3ddf1320d32ef63e651d29",
+    "derived_bytes": 236552,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe0007332760",
+        "source_offset": 3336032,
+        "derived_offset": 0,
+        "bytes": 24736,
+        "source_sha256": "86ceb8837d7c5abc6a173a582054199ac5d8e5e8caddc53764743ad2f6738cf3",
+        "verified_payload_sha256": "3501a96a8b97676e7ca88d10d8c6823b89f14f13510dee8efb78ef12854fa200"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe0008d11a30",
+        "source_offset": 30464560,
+        "derived_offset": 28672,
+        "bytes": 108472,
+        "source_sha256": "458cf2cf8dcd9aa43018aa461271e15573db8d19407739783bca4ad9746e48f6",
+        "verified_payload_sha256": "458cf2cf8dcd9aa43018aa461271e15573db8d19407739783bca4ad9746e48f6"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c45a2c0",
+        "source_offset": 88433344,
+        "derived_offset": 139264,
+        "bytes": 704,
+        "source_sha256": "86f5d4b9c8f0adfbc3a5b0b8fe3a228e57f1fc48ddcf3fa03e8fdc980bc4d99e",
+        "verified_payload_sha256": "86f5d4b9c8f0adfbc3a5b0b8fe3a228e57f1fc48ddcf3fa03e8fdc980bc4d99e"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0007ecaee8",
+        "source_offset": 15494888,
+        "derived_offset": 143360,
+        "bytes": 11752,
+        "source_sha256": "87a22a4413df55ee91ed5fbe6543ab45bf23311d1ea9dea0c3bfc76484ed8d6c",
+        "verified_payload_sha256": "87a22a4413df55ee91ed5fbe6543ab45bf23311d1ea9dea0c3bfc76484ed8d6c"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.AppleDCP",
+    "member_header_offset": 3473840,
+    "derived_sha256": "bd66f3fe0e34dde2e3b0544f8f0f931c8e2785415cab703a73cbf27c4995234d",
+    "derived_bytes": 103032,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe00073541b0",
+        "source_offset": 3473840,
+        "derived_offset": 0,
+        "bytes": 8989,
+        "source_sha256": "d87613afec8a2bd48cf709c493b41ce370a5ca71486de239011f31d467cd9e75",
+        "verified_payload_sha256": "045308a3bd91453c21dddbc50a244e5184319daec0aac8c483b12d28993c2f36"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe0008da1790",
+        "source_offset": 31053712,
+        "derived_offset": 12288,
+        "bytes": 33056,
+        "source_sha256": "28949da3ee706dd422a6e3ed8bb46f53817d57d9cd6b8ba0d190ed597ef47aa2",
+        "verified_payload_sha256": "28949da3ee706dd422a6e3ed8bb46f53817d57d9cd6b8ba0d190ed597ef47aa2"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c466de0",
+        "source_offset": 88485344,
+        "derived_offset": 49152,
+        "bytes": 392,
+        "source_sha256": "6fe0c384874ec5e4b7e24cc41b1a2b473dbdd07e59f966e4a2c82fb1979905d3",
+        "verified_payload_sha256": "6fe0c384874ec5e4b7e24cc41b1a2b473dbdd07e59f966e4a2c82fb1979905d3"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0007ed36f8",
+        "source_offset": 15529720,
+        "derived_offset": 53248,
+        "bytes": 9480,
+        "source_sha256": "b39f85fe64a397d040742ef404b37d4a4fbf07475484e34e3f830ebc468cc9e4",
+        "verified_payload_sha256": "b39f85fe64a397d040742ef404b37d4a4fbf07475484e34e3f830ebc468cc9e4"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "source_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "member": "com.apple.driver.RTBuddy",
+    "member_header_offset": 11835232,
+    "derived_sha256": "e41f5311a2ca2077b6987bc86bcb528a390c831bd6f3d75400663014d41e48c1",
+    "derived_bytes": 717368,
+    "mappings": [
+      {
+        "segment": "__TEXT",
+        "vmaddr": "0xfffffe0007b4d760",
+        "source_offset": 11835232,
+        "derived_offset": 0,
+        "bytes": 43520,
+        "source_sha256": "a14fcf008b416a5f88d98404b22d88e66c2bb3ac3d5692f7fe280a881e46c7ca",
+        "verified_payload_sha256": "39ce6ff4c198e0fe374c6337774026337240b393fe9947b564fa119e90881ae7"
+      },
+      {
+        "segment": "__TEXT_EXEC",
+        "vmaddr": "0xfffffe000ae613f0",
+        "source_offset": 65393648,
+        "derived_offset": 45056,
+        "bytes": 281532,
+        "source_sha256": "a3742510f1146fc1926936b8a978efcc1ae9f2e2660c0b06bacbada8618b4e4f",
+        "verified_payload_sha256": "a3742510f1146fc1926936b8a978efcc1ae9f2e2660c0b06bacbada8618b4e4f"
+      },
+      {
+        "segment": "__DATA",
+        "vmaddr": "0xfffffe000c582998",
+        "source_offset": 89647512,
+        "derived_offset": 327680,
+        "bytes": 3304,
+        "source_sha256": "2968a37e6668afbce52d6d81900d91f3997565069348fea0b0379935b66ab7b0",
+        "verified_payload_sha256": "2968a37e6668afbce52d6d81900d91f3997565069348fea0b0379935b66ab7b0"
+      },
+      {
+        "segment": "__DATA_CONST",
+        "vmaddr": "0xfffffe0008835870",
+        "source_offset": 25368688,
+        "derived_offset": 331776,
+        "bytes": 91400,
+        "source_sha256": "c64571fa8c7fdb6d8780f5d8c4ab41eafa188d11567a81afaf48ff01b6e37e57",
+        "verified_payload_sha256": "c64571fa8c7fdb6d8780f5d8c4ab41eafa188d11567a81afaf48ff01b6e37e57"
+      }
+    ],
+    "limits": [
+      "Static analysis derivative; not loadable or executable",
+      "Collection fixups not applied; external calls/pointers may be unresolved",
+      "Only original member symbol names retained; metadata offsets rewritten"
+    ]
+  },
+  {
+    "derived_sha256": "16df41d0151d4d0657fe9654eed21d6e9d894e9898eea19db1d3831cd46a9577",
+    "format_version": 1,
+    "functions": [
+      {
+        "address": "0x18023000c",
+        "bounds": "LC_FUNCTION_STARTS",
+        "bytes": 136,
+        "sha256": "3d781667bc385e9549a84e09d4ad0cce1e814f3235b1fd9635efd6a32d1def3e",
+        "source_offset": 2293772,
+        "symbol": "__ZN4ashp15ring_index_pairItEC2Et"
+      },
+      {
+        "address": "0x180237ef8",
+        "bounds": "LC_FUNCTION_STARTS",
+        "bytes": 196,
+        "sha256": "6fc05052e57155353a36eb4e1af2e3594f116bc40e04f851f43626bb3998f928",
+        "source_offset": 2326264,
+        "symbol": "__ZN4ashp15ring_index_pairItE18advance_head_indexEt"
+      },
+      {
+        "address": "0x180237fbc",
+        "bounds": "LC_FUNCTION_STARTS",
+        "bytes": 192,
+        "sha256": "33701a3f64fed4e863cd06e792b9926ee33066c73a0811f84900b5d4b173f1b6",
+        "source_offset": 2326460,
+        "symbol": "__ZN4ashp15ring_index_pairItE18advance_tail_indexEt"
+      }
+    ],
+    "kind": "synthetic_nonloadable_static_analysis_carrier",
+    "limitations": [
+      "Not an original Mach-O, recovered library or runnable executable",
+      "External branch targets are absent; cross-function analysis is incomplete",
+      "No data, shared strings, relocations or authenticated pointer fixups copied",
+      "No target function has been executed; names/bounds do not establish semantics"
+    ],
+    "mappings": [
+      {
+        "bytes": 136,
+        "derived_offset": 64,
+        "source_offset": 2293772,
+        "vmaddr": "0x18023000c"
+      },
+      {
+        "bytes": 196,
+        "derived_offset": 200,
+        "source_offset": 2326264,
+        "vmaddr": "0x180237ef8"
+      },
+      {
+        "bytes": 192,
+        "derived_offset": 396,
+        "source_offset": 2326460,
+        "vmaddr": "0x180237fbc"
+      }
+    ],
+    "member": "AirshipDK:selected-ring-functions",
+    "output": {
+      "bytes": 1344,
+      "elf_machine": "AArch64",
+      "entry_point": 0,
+      "program_headers": 0,
+      "sha256": "16df41d0151d4d0657fe9654eed21d6e9d894e9898eea19db1d3831cd46a9577"
+    },
+    "source": {
+      "image": "/System/DriverKit/System/Library/PrivateFrameworks/AirshipDK.framework/AirshipDK",
+      "path": "/System/Volumes/Preboot/Cryptexes/OS/System/DriverKit/System/Library/dyld/dyld_shared_cache_arm64e",
+      "sha256": "c0cb9e3f489efe860ec67122bd51b93c816eac5ff4f48884375f0c908fea536d"
+    },
+    "source_sha256": "c0cb9e3f489efe860ec67122bd51b93c816eac5ff4f48884375f0c908fea536d"
+  }
+]

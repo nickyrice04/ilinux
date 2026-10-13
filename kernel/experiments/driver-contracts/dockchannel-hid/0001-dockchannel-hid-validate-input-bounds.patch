@@ -1,0 +1,100 @@
+--- a/drivers/hid/dockchannel-hid/dockchannel-hid.c
++++ b/drivers/hid/dockchannel-hid/dockchannel-hid.c
+@@ -424,6 +424,11 @@
+ 	if (ret)
+ 		return ret;
+ 
++	if (fw->size < sizeof(*hdr)) {
++		ret = -EINVAL;
++		goto done;
++	}
++
+ 	hdr = (struct fw_header *)fw->data;
+ 
+ 	if (hdr->magic != FW_MAGIC || hdr->version != FW_VER ||
+@@ -785,6 +790,9 @@
+ 	if (length < sizeof(*hdr))
+ 		return;
+ 
++	if (!memchr(hdr->name, 0, sizeof(hdr->name)))
++		return;
++
+ 	iface = dchid_get_interface(dchid, hdr->iface, hdr->name);
+ 	if (!iface)
+ 		return;
+@@ -808,7 +816,7 @@
+ 		case INIT_GPIO_REQUEST: {
+ 			struct dchid_gpio_request *req = data;
+ 
+-			if (sizeof(*req) > length)
++			if (sizeof(*req) > blk->length)
+ 				break;
+ 
+ 			if (iface->gpio_id) {
+@@ -828,7 +836,7 @@
+ 		case INIT_PRODUCT_NAME: {
+ 			char *product = data;
+ 
+-			if (product[blk->length - 1] != 0) {
++			if (!blk->length || product[blk->length - 1] != 0) {
+ 				dev_warn(dchid->dev, "Unterminated product name for %s\n",
+ 					 iface->name);
+ 			} else {
+@@ -920,6 +928,10 @@
+ static void dchid_handle_event(struct dockchannel_hid *dchid, void *data, size_t length)
+ {
+ 	u8 *p = data;
++
++	if (!length)
++		return;
++
+ 	switch (*p) {
+ 	case EVENT_INIT:
+ 		dchid_handle_init(dchid, data, length);
+@@ -959,7 +971,7 @@
+ 	if (shdr->length + sizeof(*shdr) > work->hdr.length) {
+ 		dev_err(dchid->dev, "Bad sub header length (%hu > %zu)\n",
+ 			shdr->length, work->hdr.length - sizeof(*shdr));
+-		return;
++		goto out;
+ 	}
+ 
+ 	switch (type) {
+@@ -974,6 +986,7 @@
+ 		break;
+ 	}
+ 
++out:
+ 	kfree(work);
+ }
+ 
+@@ -1041,6 +1054,12 @@
+ 		goto done;
+ 	}
+ 
++	/* The body contains a subheader and is padded to whole words. */
++	if (hdr.length < sizeof(struct dchid_subhdr) || (hdr.length & 3)) {
++		dev_err(dchid->dev, "Bad packet body length %hu\n", hdr.length);
++		goto done;
++	}
++
+ 	checksum = dchid_checksum(&hdr, sizeof(hdr));
+ 	checksum += dchid_checksum(dchid->pkt_buf, hdr.length + 4);
+ 
+@@ -1053,6 +1072,7 @@
+ 
+ 	if (hdr.iface >= MAX_INTERFACES) {
+ 		dev_err(dchid->dev, "Bad iface %d\n", hdr.iface);
++		goto done;
+ 	}
+ 
+ 	iface = dchid->ifaces[hdr.iface];
+@@ -1076,7 +1096,7 @@
+ 
+ 	work = kzalloc(sizeof(*work) + hdr.length, GFP_KERNEL);
+ 	if (!work)
+-		return;
++		goto done;
+ 
+ 	work->hdr = hdr;
+ 	work->iface = iface;

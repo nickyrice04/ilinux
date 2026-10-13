@@ -51,6 +51,11 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 ### B-012 🔴 Wi-Fi / Bluetooth
 
 * Apple's own **N1** wireless chip has no Linux driver (Asahi report).
+* 2026-10-13: B located selected ACIPC operational configuration and real
+  AirshipDK ring routines behind DriverKit stubs (F-075). Offline software
+  helpers are Linux-tested; they do not register a network/HCI device.
+  PCIe/DART, descriptors, index encoding, firmware lifecycle and physical
+  packet/completion behavior remain blockers. ACIPC is distinct from RTKit.
 
 ### B-014 🔴 Touch ID (out of scope by design)
 

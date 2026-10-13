@@ -1,0 +1,6 @@
+{"scope":"synthetic_vm_parser","variant":"baseline","iterations":10000000,"elapsed_s":0.293252500,"ns_per_packet":29.325,"compiler":"Alpine Clang 21.1.2","pointer_bits":64}
+{"scope":"synthetic_vm_parser","variant":"patched","iterations":10000000,"elapsed_s":0.298468459,"ns_per_packet":29.847,"compiler":"Alpine Clang 21.1.2","pointer_bits":64}
+{"scope":"synthetic_vm_parser","variant":"patched","iterations":10000000,"elapsed_s":0.304995334,"ns_per_packet":30.500,"compiler":"Alpine Clang 21.1.2","pointer_bits":64}
+{"scope":"synthetic_vm_parser","variant":"baseline","iterations":10000000,"elapsed_s":0.296462916,"ns_per_packet":29.646,"compiler":"Alpine Clang 21.1.2","pointer_bits":64}
+{"scope":"synthetic_vm_parser","variant":"baseline","iterations":10000000,"elapsed_s":0.295806334,"ns_per_packet":29.581,"compiler":"Alpine Clang 21.1.2","pointer_bits":64}
+{"scope":"synthetic_vm_parser","variant":"patched","iterations":10000000,"elapsed_s":0.298682042,"ns_per_packet":29.868,"compiler":"Alpine Clang 21.1.2","pointer_bits":64}

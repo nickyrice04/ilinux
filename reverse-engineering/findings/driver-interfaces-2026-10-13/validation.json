@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-13",
+  "host": "Mac17,6 / M5 Max / t6050",
+  "macos": "26.6.2 / 25G83",
+  "environment": "isolated diskless ARM64 Linux 7.1.6, 2 vCPU, 8 GiB, 4 KiB pages",
+  "linux_gcc": "15.2.0",
+  "linux_clang": "21.1.2",
+  "compiler_rt": "21.1.2",
+  "rea": "6.4.0",
+  "ghidra": "12.1.4",
+  "hid": {
+    "baseline_failures": {
+      "unterminated_name": "assertion",
+      "short_gpio": "assertion",
+      "allocation_rearm": "assertion",
+      "bad_subheader": "assertion",
+      "short_firmware": "ASan",
+      "unaligned_body": "assertion",
+      "empty_product": "ASan",
+      "short_body": "ASan",
+      "empty_event": "UBSan",
+      "bad_iface": "UBSan"
+    },
+    "patched_cases_passed": 13,
+    "actual_source_functions": 7,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "benchmark": {
+      "runs": 6,
+      "iterations_per_run": 10000000,
+      "median_ns_per_packet": {
+        "baseline": 29.581,
+        "patched": 29.868
+      },
+      "relative_change_percent": 0.97,
+      "scope": "synthetic extracted parser with mocked transport/HID callbacks, not physical latency",
+      "quiet_lock": "agent-b held",
+      "limitations": [
+        "3 samples per variant",
+        "no core pinning or controlled guest frequency",
+        "wall time includes virtualization noise",
+        "no native compatibility, power or hardware performance claim"
+      ]
+    }
+  },
+  "acipc": {
+    "c_wrap_cases_passed": 8525654,
+    "bounds_overflow": "pass",
+    "scope": "ordinary software index/span arithmetic; not hardware indices",
+    "python_tests_passed": 18,
+    "queue_cases_passed": 49840,
+    "linux_sanitizers": "Clang 21.1.2 ASan+UBSan pass"
+  },
+  "lab_python_tests_passed": 26,
+  "full_kernel_object": "not built in this lab",
+  "native_boot": "not attempted",
+  "macos_modified": false,
+  "rea_functions": 17,
+  "llvm_instruction_words": 1107,
+  "lab_stopped": true,
+  "quiet_lock_released": true
+}

@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: driver-interface REA and Linux input robustness
+
+* **Investigated:** GPU/display, N1 network/Bluetooth, ANE host API, ISP,
+  audio/mic and HID/shared transports. REA/Ghidra completed 17 functions;
+  Apple LLVM and original bytes agree on 1,107 instruction words. Four
+  whole-function pseudocode results are rejected; others remain reviewed
+  static evidence with explicit unresolved dispatch/ownership.
+* **Implemented/tested:** local DockChannel HID bounds/cleanup/rearm patch,
+  against pinned Asahi source; seven actual extracted driver functions in
+  ARM64 Linux. Ten baseline regressions reproduce, all pass after patch,
+  plus three valid cases (Clang ASan/UBSan). Full kernel-object/native tests
+  remain pending; the VM virtio-input driver is unchanged.
+* **Measured:** synthetic parser median 29.581 → 29.868 ns/packet (+0.97%),
+  six 10-million-packet runs. This is software overhead, not physical input
+  latency or power. No hardware performance gain claimed.
+* **Implemented:** original ACIPC geometry/span helpers and strict N1
+  operational-config extraction; 8,525,654 arithmetic cases and 18 Python
+  tests pass in Linux. Real AirshipDK ring functions were located behind
+  DriverKit stubs and analyzed through a narrowly extracted ELF carrier.
+* **Next:** A's native build can consume the standalone HID patch; B's
+  next REA questions are N1 descriptors/ordering and ISP firmware startup.
+  The tested ISP pool/scaler command IDs and sizes match existing Linux.
+  C still configures a native installation only after the existing gates.
+* **Handoff:** `reverse-engineering/findings/driver-interfaces-2026-10-13/handoff.md`
+  (F-073–F-075, D-041). No macOS, boot, firmware or live-VM changes.
+
 ## 2026-10-13 · Agent B: isolated REA/Ghidra and native SMP evidence
 
 * **Implemented:** diskless Linux analysis lab, Ghidra 12.1.4 ARM64 native

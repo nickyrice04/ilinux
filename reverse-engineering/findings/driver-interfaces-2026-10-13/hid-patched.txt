@@ -1,0 +1,13 @@
+PASS short_firmware
+PASS unterminated_name
+PASS short_gpio
+PASS empty_product
+PASS empty_event
+PASS short_body
+PASS unaligned_body
+PASS bad_iface
+PASS bad_subheader
+PASS allocation_rearm
+PASS valid_input
+PASS valid_init
+PASS valid_firmware

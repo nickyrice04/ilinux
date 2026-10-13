@@ -1,0 +1,100 @@
+{
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "carrier_sha256": "c0cb9e3f489efe860ec67122bd51b93c816eac5ff4f48884375f0c908fea536d",
+  "results": [
+    {
+      "evidence_id": "ev_c4ecd1102df42f25145acdc55110b88b8c411511ccf2c7b8d402440462ccb206",
+      "member": "AirshipDK:selected-ring-functions",
+      "function": "__ZN4ashp15ring_index_pairItEC2Et",
+      "body_anchors": [
+        {
+          "start": "0x18023000c",
+          "end_inclusive": "0x180230093",
+          "carrier_offset": 2293772,
+          "derived_offset": 64,
+          "bytes": 136,
+          "sha256": "3d781667bc385e9549a84e09d4ad0cce1e814f3235b1fd9635efd6a32d1def3e"
+        }
+      ],
+      "assembly_instructions": 34,
+      "original_bytes_verified": true,
+      "pcode_operations": 13,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "n1-ring-init",
+      "llvm_instruction_words_verified": 34,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_df87fdcdbaad5382e5c0b1ee3104e5ec0b211c2f64d913135804e4f77da1c820",
+      "member": "AirshipDK:selected-ring-functions",
+      "function": "__ZN4ashp15ring_index_pairItE18advance_head_indexEt",
+      "body_anchors": [
+        {
+          "start": "0x180237ef8",
+          "end_inclusive": "0x180237fbb",
+          "carrier_offset": 2326264,
+          "derived_offset": 200,
+          "bytes": 196,
+          "sha256": "6fc05052e57155353a36eb4e1af2e3594f116bc40e04f851f43626bb3998f928"
+        }
+      ],
+      "assembly_instructions": 49,
+      "original_bytes_verified": true,
+      "pcode_operations": 47,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "n1-ring-head",
+      "llvm_instruction_words_verified": 49,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_c5cbbb0fc9fba60457caedaf121ecc868395d968103c136ce34607eea1ace1ec",
+      "member": "AirshipDK:selected-ring-functions",
+      "function": "__ZN4ashp15ring_index_pairItE18advance_tail_indexEt",
+      "body_anchors": [
+        {
+          "start": "0x180237fbc",
+          "end_inclusive": "0x18023807b",
+          "carrier_offset": 2326460,
+          "derived_offset": 396,
+          "bytes": 192,
+          "sha256": "33701a3f64fed4e863cd06e792b9926ee33066c73a0811f84900b5d4b173f1b6"
+        }
+      ],
+      "assembly_instructions": 48,
+      "original_bytes_verified": true,
+      "pcode_operations": 45,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "n1-ring-tail",
+      "llvm_instruction_words_verified": 48,
+      "llvm_unknown_instructions": []
+    }
+  ],
+  "limits": [
+    "Static consistency only, not semantic or runtime equivalence",
+    "Rejected pseudocode cannot guide implementation; manual gates are not passes"
+  ]
+}

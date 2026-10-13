@@ -34,6 +34,21 @@ The analysis VM is stopped and B's locks are released. A's live VM, QEMU,
 vmpoll and frame-rate work remain A-owned. The candidate native masks are
 not validated MMIO semantics and must not be installed as a hardware fix.
 
+B's next user-authorized pass covers GPU/display, network/Bluetooth, ANE's
+ordinary host interface, camera, audio/microphone, HID input and shared
+transports. Findings live in `reverse-engineering/findings/driver-interfaces-2026-10-13/`;
+original protocol experiments live in `kernel/experiments/driver-contracts/`.
+B retains the isolated lab and does not own A's live VM/video changes.
+Protected services and personal sensor recordings remain excluded.
+
+B completed F-073–F-075: 17 REA functions, independent byte/LLVM evidence,
+a Linux-tested DockChannel HID patch and original offline N1 ACIPC queue
+helpers. Full handoff: `reverse-engineering/findings/driver-interfaces-2026-10-13/handoff.md`.
+The lab is stopped and B's `quiet` lock released. A's goal-5 native build
+can apply `kernel/experiments/driver-contracts/dockchannel-hid/0001-dockchannel-hid-validate-input-bounds.patch`
+to a disposable checkout and compile the full driver object. Do not install
+it in the VM's virtio-input path or advertise native input as tested.
+
 ## Shared resources: rules
 
 1. **Locks** (`tools/lock.sh`, advisory, stored in the gitignored
