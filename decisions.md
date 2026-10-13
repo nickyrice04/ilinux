@@ -775,3 +775,10 @@ result and obtain explicit authorization before lab-only Permissive Security,
 kernel CTRR/custom-boot work and the paired-Recovery restart. M1 prepares
 records offline; all live/native checks remain NOT RUN. Original macOS remains
 the protected reference environment.
+
+**Follow-up, 2026-10-13:** the user supplied the read-only helper JSON: original
+Full / exit 0; lab Full / exit 0; `read_only: true`. B reviewed it and resolved
+the pending policy read, without independently rerunning the privileged query.
+This result does not lift the user's stop before boot-security changes. The
+prepared lab-only Recovery/custom-boot procedure still needs authorization;
+pairing/target checks must pass in Recovery before any write. No live test ran.

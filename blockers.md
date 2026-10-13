@@ -101,8 +101,9 @@ User reports backup completed. Boot-entry provisioning now has a
 current execution handoff in `kernel/native-enablement/boot-entry-setup.md`;
 lab macOS boot/return succeeded, and B verified original build/FileVault/SIP/
 authenticated-root plus the lab's separate installed volume group/build.
-Current per-OS boot-policy modes need an administrator-only read (automated
-Terminal access was safety-blocked; the user now has the manual command).
+The user supplied the administrator-only read-only helper's result: original
+and lab both Full Security, both exit 0. B reviewed the supplied JSON; the
+pending policy read is resolved without a separate privileged rerun by B.
 The m1n1 file is staged and hash-verified on lab Data, not installed as a boot
 object. Native Linux remains unvalidated and boot-security changes remain
 unauthorized. No restart is needed for this staging milestone.

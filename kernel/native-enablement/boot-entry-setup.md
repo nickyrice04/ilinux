@@ -23,11 +23,11 @@ M1 did not independently inspect the M5. B reviewed and fast-forwarded M1 commit
 * Lab System/Data share one volume group distinct from the original; both are
   mounted at the expected paths, with FileVault off for the lab. Its installed
   SystemVersion.plist independently confirms **26.6.2 / 25G83**.
-* Current original/lab **boot-security modes remain unverified after return**.
-  The unprivileged policy query requires administrator authentication. Automated
-  Terminal access was blocked by the computer-use safety check. No policy write
-  or workaround was attempted. The pre-install original mode was Full; do not
-  substitute that historical observation for a new check.
+* **Post-return policy check passed:** the user ran the administrator-only
+  read-only helper and supplied JSON reporting original **Full / exit 0** and
+  lab **Full / exit 0**, with `read_only: true`. B reviewed the user-provided
+  result, not an independent privileged rerun. The earlier Terminal automation
+  block was respected; no policy write or workaround was attempted.
 * **Staging complete:** after explicit user authorization, B copied the exact
   `m1n1.bin` to the lab Data volume's `Users/Shared/iLinuxBoot/m1n1.bin`.
   Rechecked lab System/Data roles, matching group and separation from original.
@@ -41,14 +41,15 @@ Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
 
 ### Next sequence and observation plan
 
-1. Finish the administrator-only, **read-only** boot-policy check for both
-   installations. Record only mode labels, not identifiers or raw policy dumps.
+1. **DONE:** the user's administrator-only, **read-only** boot-policy check
+   reports Full for both installations, both exit 0. Only sanitized labels
+   and outcomes were recorded, not identifiers or raw policy dumps.
    A local original helper is available on the M5 at
    `build/installer-verification/check-boot-policies.py` (ignored, not in Git).
    The user can review it and run it in their own M5 Terminal:
    `sudo /usr/bin/python3 -I /Users/nickyrice/Documents/iLinux/ilinux-publish/build/installer-verification/check-boot-policies.py`.
    It identifies the two volume groups in memory, invokes only display-policy,
-   and prints sanitized JSON. Until actually run, its result is **NOT RUN**.
+   and prints sanitized JSON. The user-provided output has now been reviewed.
 2. **DONE:** exact `m1n1.bin` staged and verified using section 4. No restart is
    needed for the copy. Do not repeat installation or substitute another binary.
 3. Obtain explicit authorization for the lab-only **Permissive Security / kernel
@@ -71,11 +72,12 @@ If that happens, establish a usable logging path before another blind attempt.
 
 ### Current human and M1 handoff
 
-Stay in the original macOS for now and run the read-only command in step 1.
-Both modes are expected to be Full; report the actual sanitized result, including
-any UNVERIFIED/error result, before proceeding. Staging alone does not require
-Recovery or a restart. The next restart sequence belongs to the separately
-authorized lab policy/custom-boot task, after policy results are reviewed.
+Stay in the original macOS for now. The policy check and staging are complete.
+The next restart sequence belongs to the separately authorized lab
+policy/custom-boot task. Its commands and target checks are prepared in
+sections 5–6; the actual pairing check must pass in the lab's Recovery before
+any policy or boot-object write. The supplied policy result does not authorize
+security changes or native boot tests.
 
 Send M1:
 
@@ -84,8 +86,9 @@ Send M1:
 > and hash-verified the original boot021 m1n1 on lab Data. It is not installed
 > as a boot object; boot settings are unchanged. Keep the verified package and
 > existing client pin. Prepare the Stage A handshake instructions and Stage B
-> evidence record offline. Wait for the M5 policy-check result and explicit
-> authorization before Recovery/security/custom-boot work or any live USB/native
+> evidence record offline. The user's M5 policy check reports original and lab
+> both Full Security, both exit 0. Wait for explicit authorization before
+> Recovery/security/custom-boot work or any live USB/native
 > action. Do not run `--connect`, `--launch` or upstream `linux.py`.
 > Keep live USB/P_NOP, target-version, m1n1/Linux/Omarchy checks NOT RUN.
 

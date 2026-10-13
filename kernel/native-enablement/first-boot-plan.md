@@ -19,7 +19,8 @@ Controller tools pass offline tests; the physical proxy is untested. Read-only
 checks now confirm the original macOS and a separate installed lab System/Data
 group, both at 26.6.2 / 25G83. The user booted the lab and returned to Macintosh
 HD (M1 report `f34970e`). Original FileVault, SIP and authenticated-root are on;
-post-return per-OS boot-policy modes await the user's administrator-only read.
+the user's post-return read-only helper output reports Full Security for both
+installations, both exit 0 (reviewed by B, not independently rerun).
 m1n1 is staged under the lab Data volume's `Users/Shared/iLinuxBoot`, with
 package size/SHA-256 verified. It is not installed as the lab's boot object.
 M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.

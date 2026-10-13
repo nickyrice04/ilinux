@@ -28,9 +28,11 @@ establish lab first boot and return; M1 has not remotely inspected the M5.
 B reviewed/integrated M1 report `f34970e` and independently confirmed current
 Macintosh HD build 26.6.2 / 25G83, FileVault/SIP/authenticated-root enabled,
 and a separate mounted lab System/Data group with the same installed build.
-Post-return **boot-policy mode** checks still need an administrator-only read;
-computer-use safety review blocked Terminal automation. No mode is inferred
-from the pre-install baseline. B has now staged the exact m1n1 binary at
+The user subsequently ran the read-only policy helper and supplied its JSON:
+**original Full / exit 0; lab Full / exit 0; read_only true**. B reviewed this
+user-provided result; it is not an independently rerun query or an inference
+from the pre-install baseline. This resolves the pending policy read.
+B has now staged the exact m1n1 binary at
 `/Volumes/iLinux Boot Lab - Data/Users/Shared/iLinuxBoot/m1n1.bin` after
 rechecking the lab System/Data roles and separate volume group. The reread
 copy matches the tracked manifest: 3,932,160 bytes, SHA-256
@@ -41,8 +43,8 @@ Boot021 and the existing client pin are unchanged.
 Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
 **NOT RUN**. Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
 
-**Next staged session:** finish the user's read-only policy checks, then
-obtain authorization for lab-only Permissive Security/kernel CTRR and
+**Next staged session:** the read-only policy check and staging are complete.
+Obtain authorization for lab-only Permissive Security/kernel CTRR and
 custom boot installation. Stage A tests only m1n1/P_NOP; Stage B separately
 tests one-core Linux PID 1 and 60-second liveness. The result template now
 separates controller output, screen observations, timing and macOS return.

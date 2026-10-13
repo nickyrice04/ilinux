@@ -5,6 +5,19 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: user-provided policy check passes for both installations
+
+* Reviewed the user's sanitized output from the M5 read-only helper:
+  `read_only: true`, original `exit: 0, mode: Full`, lab `exit: 0, mode: Full`.
+  This resolves the pending post-return policy check. Evidence is the user's
+  supplied command output; B did not independently rerun the privileged query.
+* The already verified m1n1 file remains staged on lab Data. No new host write,
+  startup/security change, custom boot installation or restart was performed.
+* Next: obtain the user's explicit authorization for the prepared lab-only
+  Recovery/security/custom-boot procedure. Recheck recovery pairing and the
+  target volume group in Recovery before any write. Preserve original Full
+  Security. Stage A and Stage B live tests remain separately gated and **NOT RUN**.
+
 ## 2026-10-13 · Agent B: m1n1 file staged on lab Data; boot settings unchanged
 
 * User authorized staging m1n1 while preserving original macOS. Rechecked
