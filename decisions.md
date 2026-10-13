@@ -612,3 +612,16 @@ user approves native prerequisites. Keep entry-vector, mask, early-state
 and exception hypotheses separate. No guessed CPU_START encoding or idle
 policy change follows from static decompilation alone. Full handoff:
 `reverse-engineering/findings/cpu-startup-2026-10-13/handoff.md`.
+
+## 2026-10-13 · Second-machine package intake and staged execution
+
+**User direction:** receive/checksum the M5 native package with the client
+pinned to the agreed target m1n1 revision. Await the corrected single-core
+launcher and boot-entry procedure; do not run upstream `tools/linux.py`.
+The first live action is the bounded USB handshake, then recording the
+results of approved diagnostic boots.
+
+**Implementation:** local-only package/receipt/result directories, manifest
+verification against the sender's separate digest, a clean-client pin check
+and an observation template. Checksum verification does not authorize a boot
+or establish the target's actual running version. No live test has occurred.

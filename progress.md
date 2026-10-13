@@ -5,6 +5,23 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Second-machine agent: native package intake ready, boot on hold
+
+* Created ignored inbox/receipt/result directories under `build/native-intake/`.
+  Added a streaming SHA-256 verifier using the sender's separately supplied
+  manifest digest; checks required payloads and declared target revision.
+* Recorded `57a9339ffd1876e78297b17d34dece8cff8fa1ba` as the client pin. The
+  shared runner checks the revision and clean checkout before invocation.
+* Seven synthetic intake regressions pass (valid receipt, corruption,
+  manifest mismatch, revision mismatch, missing/extra content, links and
+  traversal); both existing USB fake-transport tests pass with the pin guard.
+* Added an approved-boot result template with provenance, observations,
+  timeout/recovery and explicit NOT RUN defaults. No real package or result
+  has been received, and no USB connection or boot command was attempted.
+* Per user: wait for corrected single-core launcher and boot-entry procedure;
+  upstream linux.py stays on hold. First live action is bounded handshake,
+  followed only by approved diagnostic boots and recorded observations.
+
 ## 2026-10-13 · Second-machine agent: LLVM and non-mutating USB checker
 
 * Installed a minimal official LLVM 23.1.3 macOS ARM64 toolchain inside ignored

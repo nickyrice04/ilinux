@@ -3,6 +3,11 @@
 Prepared 2026-10-13 on the second macOS computer. This is client preparation,
 not authorization to install a boot entry, change security or boot the M5.
 
+**Current user direction:** prepare to receive/checksum the native boot package.
+Wait for the corrected single-core launcher and boot-entry procedure. Do not
+run upstream `proxyclient/tools/linux.py`. The first live action is the bounded
+USB handshake; subsequent work records only approved diagnostic boot results.
+
 ## Installed locally
 
 * `third_party/m1n1` is an unmodified, detached checkout at
@@ -29,8 +34,10 @@ tools/m1n1-client/.venv/bin/python -I tools/m1n1-client/check.py
    target-side installation/security prerequisites. GitHub and this client
    do not create that entry. Follow `kernel/native-enablement/first-boot-plan.md`
    and its gates; do not run the standard Asahi installer assuming M5 support.
-4. Agree on the target m1n1 version with agent A. The proxy ABI is not stable;
-   use a matching client checkout if the target version changes.
+4. Keep the client pinned to `m1n1-revision.txt`. `run.sh` refuses a different
+   or dirty client checkout. The current pin matches the project's planned
+   target version, which has not been observed live. If the sender declares
+   a different revision, stop and reconcile the handoff; never auto-update.
 5. For Stage B, transfer agent A's actual job-020 `Image`,
    `t6050-j716c.dtb` and diagnostic `initramfs.cpio.gz` with checksums.
    They are ignored build outputs and are absent from this clone.
@@ -76,6 +83,44 @@ zero arguments, and verifies closure on success and timeout:
 tools/m1n1-client/run.sh tools/m1n1-client/test_usb_check.py
 ```
 
+## Receive and checksum the native package
+
+Local intake directories are ready and ignored by Git:
+
+* `build/native-intake/inbox/`: received package, in its own subdirectory.
+* `build/native-intake/receipts/`: successful verification JSON.
+* `build/native-intake/results/`: reviewed observations from approved tests.
+
+Expected sender handoff: `Image`, `t6050-j716c.dtb`, `initramfs.cpio.gz`, and
+`m1n1-revision.txt` containing the full target commit. Include the corrected
+single-core launcher and boot-entry procedure when ready, with their review
+status and exact intended boot arguments. Include a standard `SHA256SUMS`
+covering every file except itself. Send the SHA-256 of `SHA256SUMS` separately
+in the GitHub handoff so transfer errors can be detected against the sender's
+record. Existing packaging can be accommodated after reviewing its format.
+
+For a received directory (replace placeholders with the actual values):
+
+```sh
+tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
+  build/native-intake/inbox/PACKAGE \
+  --manifest-sha256 SENDER_MANIFEST_SHA256 \
+  > build/native-intake/receipts/PACKAGE.json
+```
+
+Check exit status: only exit 0 with a complete JSON receipt is a pass. The
+verifier rejects missing, changed, unlisted or linked files, unsafe paths,
+and a declared target revision different from the client pin. It only reads
+files; it never extracts archives, imports package code or executes a launcher.
+Checksum success proves agreement with the supplied handoff, not boot safety
+or authenticity independent of that handoff. No real package has arrived yet.
+
+Before any approved diagnostic session, reverify the package and copy
+`boot-result-template.md` into a new results file. Record the manifest digest,
+launcher/procedure digests, approval scope, exact invocation, expected vs
+observed output, timeout/failure checkpoint and recovery outcome. Keep
+unobserved results explicitly marked. No automatic raw logging or upload.
+
 ## Connection check after the target gate is approved
 
 Run the offline checker again with the M5 booted into its approved m1n1
@@ -83,23 +128,14 @@ proxy entry. On macOS the primary interface is normally
 `/dev/cu.usbmodemP_01`; `P_03` is the secondary virtual UART. Confirm actual
 device names rather than assuming them. No extra USB driver is installed.
 
-The upstream interactive command, for an explicitly authorized target
-session, is:
-
-```sh
-M1N1DEVICE=/dev/cu.usbmodemP_01 tools/m1n1-client/.venv/bin/python -I third_party/m1n1/proxyclient/tools/shell.py
-```
-
-**This is not a read-only handshake:** upstream `m1n1.setup` calls
+Use the bounded checker above for the first live test. The upstream shell
+is not a read-only handshake: `m1n1.setup` calls
 `PMU(u).reset_panic_counter()` during startup. It also permits hardware writes
-from the shell and stores history in `~/.m1n1-history`. Review/authorize those
-effects before use; no shell or boot command was executed during setup.
-If the first session must be strictly read-only, prepare a separate minimal
-handshake instead of using that shell.
+from the shell and stores history in `~/.m1n1-history`.
 
-When eventually using `tools/linux.py`, the uncompressed job-020 `Image`
-requires `--compression none` (the script cannot infer compression from
-the filename `Image`). Final boot arguments still need agent A's review.
+The user has explicitly put upstream `tools/linux.py` on hold. Wait for the
+corrected single-core launcher and reviewed boot-entry procedure; do not
+substitute the earlier first-boot plan's command line for that handoff.
 
 ## Sources
 
