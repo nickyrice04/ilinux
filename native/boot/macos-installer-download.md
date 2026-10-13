@@ -7,8 +7,12 @@ launch, boot-setting changes or restart.
 **Current result: package authenticity and installed-file integrity verified.**
 The outer application's custom-resource-rule rejection remains unchanged;
 it was neither suppressed nor converted to an application-assessment pass.
-This clears the investigation into the downloaded contents, not the separate
-installation/boot approval gate. Installation and launch behavior are untested.
+This clears the investigation into the downloaded contents. Subsequently the
+user authorized lab-entry setup: the normal installer GUI launched successfully
+without a bypass, and the new lab volume was selected. Installation is now in
+progress; completion is unverified and boot-security changes remain unauthorized.
+Current execution handoff:
+[boot-entry setup](../../kernel/native-enablement/boot-entry-setup.md).
 
 ## Observed result
 

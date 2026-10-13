@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: lab volume created; macOS installation in progress
+
+* User authorized lab-entry setup while preserving original macOS and stopping
+  before boot-security changes. Created one empty **iLinux Boot Lab** APFS
+  volume in the original internal container, without resizing partitions or
+  setting a quota/reserve. Existing-volume names/roles/FileVault states match.
+* Read-only original-policy check reports **Full Security**. SIP and authenticated
+  root are enabled; FileVault is on. Current OS **26.6.2 / 25G83**, AC/100%,
+  about 997.93 GB free after creation. No project QEMU/vzrun processes running.
+  Backup completion is user-reported; destination disconnected, no content recheck.
+* Full installer verification repeated: PASS. The ordinary Apple GUI opened
+  successfully with no security override. The user authorized its displayed
+  license; after disk selection B observed **iLinux Boot Lab** as the explicit
+  installation destination, not the original Macintosh HD.
+* **Partial completion:** volume created and installer destination selected.
+  During the handoff the GUI advanced to installation progress, still explicitly
+  targeting the lab. Completion, first lab boot and original-macOS return checks
+  are unverified. No security change, custom
+  boot object, startup-disk change or restart has been performed by B.
+* Prepared the human/M1 restart handoff at the top of
+  `kernel/native-enablement/boot-entry-setup.md`. Save remaining work and let
+  Apple's installation/restarts finish, use a local lab account,
+  verify the matching build and return to original macOS. No Recovery/security
+  work yet. Live USB/P_NOP, native m1n1/Linux/Omarchy remain **NOT RUN**.
+
 ## 2026-10-13 · Agent B: installer contents verified without security changes
 
 * User authorized resolving verification and stopping before volumes/boot changes.

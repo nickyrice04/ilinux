@@ -707,3 +707,29 @@ normal launch is blocked. See `native/boot/macos-installer-download.md`.
 **Coordination:** M1 report `dfdf8cf` is reviewed and integrated. Offline ready;
 all live checks **NOT RUN**. Dedicated-entry provisioning remains a separate
 user-authorized step, not implied by either machine's verification results.
+
+## D-047 · 2026-10-13 · Provision the lab macOS entry, stop before boot security
+
+**User direction:** set up iLinux Boot Lab, preserve original macOS, stop before
+changing boot security, and provide restart timing and an M1-agent handoff.
+
+**Action:** selected the current original installation's internal APFS container
+after read-only checks; created exactly one uniquely named lab volume with no
+partition resize/quota/reserve. Existing volumes retain names/roles/encryption.
+Original security mode is Full, with SIP/authenticated-root and FileVault enabled.
+Installer content verification was repeated successfully; the normal GUI launched,
+the user authorized the license, and the lab was explicitly selected as destination.
+
+**Boundary:** an empty volume is not a bootable entry. During the handoff the
+installer advanced to installation progress, still targeting the lab. Completion,
+new local-account setup and return-to-original verification are unverified.
+Apple's installer manages the required restarts; save remaining work and let
+it finish. No boot-security changes, custom boot object, live USB/native tests,
+firmware recovery or automatic erase/removal are authorized. The M1 assists with
+the bounded provisioning handoff, retaining NOT RUN for all live tests.
+
+**Limits:** the backup destination is disconnected; its completion is the user's
+report, not a fresh content check. A normal macOS installation writes shared
+boot metadata and may service recovery/firmware, as already disclosed in D-044.
+The original System/Data volumes are not installation destinations. See the
+current execution handoff in `kernel/native-enablement/boot-entry-setup.md`.

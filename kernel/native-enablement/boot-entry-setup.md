@@ -1,17 +1,72 @@
-# M5 dedicated boot entry: reviewed procedure, NOT execution approval
+# M5 dedicated boot entry: lab installation authorized, security changes on hold
 
 Prepared by B on 2026-10-13 for **Mac17,6 / J716c / t6050 M5 Max**.
-The user requested exact steps while the M1 verifies boot021, explicitly
-prohibiting boot-setting changes. **Every installation/reboot/policy step below
-is pending separate approval. None has been executed.**
+Initially prepared without execution approval. The user now authorizes setting
+up **iLinux Boot Lab**, preserving original macOS and stopping before boot
+security changes. **Lab macOS installation is authorized; sections 5–7,
+custom boot-object installation and native testing are not authorized.**
+
+## Current execution handoff — 2026-10-13
+
+* Created the unique, empty **iLinux Boot Lab** APFS volume in the existing
+  internal container, with no quota/reserve or partition resize. It is mounted
+  at `/Volumes/iLinux Boot Lab`. The original volumes' names, roles and FileVault
+  states match their pre-creation values. **An empty volume is not bootable.**
+* Original macOS is **26.6.2 / 25G83**. Read-only policy inspection reports
+  **Full Security**; SIP/authenticated-root are enabled and FileVault is on.
+  No boot-security or startup-disk setting has been changed.
+* About **997.93 GB** of container space remained after creation. AC attached,
+  battery 100%; no project QEMU/vzrun processes were running. Backup completion
+  is user-reported; its destination is disconnected, so no content recheck was
+  possible in this session. Keep the backup disconnected during installation.
+* Repeated the full installer verifier: PASS. The normal Apple GUI launch
+  succeeded without a security override. User authorized the displayed license;
+  the installer then reached disk selection. B selected the lab and observed:
+  **“macOS Tahoe will be installed on the disk ‘iLinux Boot Lab’.”**
+* OS installation, the lab's first boot and return-to-original verification
+  are not yet complete. **The installer has since advanced to installation
+  progress and still explicitly targets iLinux Boot Lab.** Completion/bootability
+  are unverified. No custom boot object or live native test has run.
+
+**Human restart handoff:** installation is now in progress. Save/quit remaining
+work and enter any requested credentials only into Apple's prompts. Let the
+installer initiate and complete its restarts; do not perform a
+manual reboot during preparation or interrupt installation. If it proposes a
+different destination, erase, OS upgrade or security downgrade, stop.
+
+At the new lab desktop, complete a local administrator setup with a nonempty
+password, skip migration and Apple Account/iCloud setup, and check `sw_vers`
+for **26.6.2 / 25G83**. Do not open Startup Security Utility or run `bputil`
+policy-changing commands, `kmutil configure-boot`, or any m1n1 launcher.
+Shut down, hold power for startup options, select **Macintosh HD → Continue**
+and return to this M5 checkout. Verify original macOS and security state before
+any later work. Installation may make the lab the default; restoring the
+original default in Startup Disk is a separate ordinary startup selection,
+not a security downgrade. This session has not performed that selection.
+
+Send the M1 agent:
+
+> Pull the latest `main` with `git pull --ff-only` and read the current execution
+> handoff in `kernel/native-enablement/boot-entry-setup.md`, `progress.md` and
+> `coordination.md`. The M5 has a new iLinux Boot Lab APFS volume and the verified
+> matching macOS installer is now showing installation progress targeting it.
+> This is macOS boot-scaffold provisioning,
+> not a Linux boot. Keep the verified boot021 package and existing client pin.
+> Help the user through installer-managed restarts and local lab setup, then
+> return to Macintosh HD and report the observed build and successful return.
+> Do not change boot security, configure a custom boot object, erase/resize
+> disks, enter DFU, run a restore/revive, open a live USB proxy connection, or
+> run any native launcher. Keep live USB/m1n1/Linux checks NOT RUN. A later
+> explicit authorization is required for the security/custom-boot stage.
 
 **Verification update:** the matching 26.6.2 / 25G83 installer is downloaded.
 Its original package passes Apple's signature and Gatekeeper install assessment;
 all signed entries and installed app contents match. The outer app's custom-
 resource-rule rejection remains unchanged, with no exception or bypass. See the
 [verification record](../../native/boot/macos-installer-download.md). M1's
-offline receipt is published and reviewed. All volume, installer-launch,
-OS-installation, policy and reboot steps below remain on hold.
+offline receipt is published and reviewed. The execution handoff above records
+the subsequent volume/GUI work and current stop point. Security/custom-boot
+steps below remain on hold.
 
 ## Chosen route and observed prerequisites
 
@@ -29,7 +84,7 @@ Read-only inspection on 2026-10-13 found:
 | Current OS | macOS 26.6.2, build 25G83 |
 | Main APFS container | 1,995,165,736,960 bytes total; 1,016,906,117,120 bytes free |
 | Original installation | System `Macintosh HD`, Data `Data`; FileVault enabled |
-| Other boot environment | No dedicated Linux/m1n1 entry |
+| Other boot environment | Empty iLinux Boot Lab volume created; OS install and bootability pending |
 | Power | AC, battery 100% |
 | Installer now present | `/Applications/Install macOS Tahoe.app`; download record above |
 | Apple installer catalog | **26.6.2 / 25G83**, 17,953,734 KiB (about 18.4 GB) available |
@@ -50,7 +105,7 @@ a second volume. Choosing the same OS build avoids a deliberate upgrade,
 but is **not a guarantee of zero firmware changes**. Approval must cover
 those installer effects; otherwise stop at preparation.
 
-## 1. Finish readiness checks, then obtain installation approval
+## 1. Readiness checks and authorization scope
 
 Before any host changes:
 
@@ -66,9 +121,8 @@ Before any host changes:
    Record the original entry's security mode before installation using a
    read-only policy view; retain only the mode/encryption/SIP outcomes, not
    the full policy or identifiers. Stop if the current mode is unclear.
-5. The installer download/verification are complete. Obtain separate approval
-   for the new lab installation, temporary startup-disk selection and subsequent
-   **lab-only** boot policy.
+5. Download/verification, volume creation and lab installation are now authorized.
+   The subsequent **lab-only** boot-policy/custom-object change is not authorized.
    Stage A (m1n1/USB) and Stage B (Linux) remain separately identified actions.
 
 ## 2. Fetch the matching Apple installer — only after approval
@@ -76,8 +130,8 @@ Before any host changes:
 **Completed under download-only authorization. Do not repeat the download.**
 The subsequent read-only investigation verified package authenticity and app
 contents without disabling security checks; see the verification record.
-Installer launch remains untested and requires separate approval. The commands
-below retain the acquisition recipe for reproducibility.
+The later authorized normal GUI launch succeeded; actual OS installation is
+still pending. The commands below retain the acquisition recipe for reproducibility.
 
 In the original M5 macOS, recheck the catalog and require the same version
 **and build** before downloading:
@@ -96,7 +150,11 @@ review it rather than substituting the newest installer.
 
 Source: [Apple's installer download procedure](https://support.apple.com/en-us/102662).
 
-## 3. Create and install the lab OS — only after approval
+## 3. Create and install the lab OS — authorized, partially complete
+
+The volume already exists: **do not repeat steps 1–2**. The installer is already
+showing progress for the correct destination. Let it finish; do not start a
+second installation or reboot manually. Steps below retain the procedure.
 
 1. Open **Disk Utility**, select the existing internal APFS volume
    **Macintosh HD**, then **Edit → Add APFS Volume**.
@@ -123,7 +181,7 @@ Source: [Apple's installer download procedure](https://support.apple.com/en-us/1
 
 Source: [Apple's additional macOS volume procedure](https://support.apple.com/en-us/118282).
 
-## 4. Stage the exact m1n1 binary on the lab's Data volume
+## 4. Stage the exact m1n1 binary on the lab's Data volume — after verified installation
 
 While back in the original macOS, use Finder/Disk Utility to identify the
 **lab Data** volume by its volume-group relationship. Expected mounted name:
@@ -162,7 +220,7 @@ build with marker `ilinux-57a9339-boot021`, raw entry offset **2048**, lowest
 virtual address **0**, and no appended Linux payload. Do not rebuild,
 concatenate payloads, or substitute a release/chainloading image here.
 
-## 5. Enter the lab's paired recoveryOS
+## 5. Enter the lab's paired recoveryOS — HOLD for later authorization
 
 Set **iLinux Boot Lab** as the default using **System Settings → General →
 Startup Disk**. Boot it once and confirm the lab desktop/build. Then shut
@@ -297,9 +355,8 @@ starts after native input/network and a persistent Linux environment exist.
 
 ## M1 handoff for this preparation
 
-Pull the latest Git changes with `git pull --ff-only`, retain the existing
-boot021 receipt/pin, and read this procedure. Do not run its M5 commands on
-the M1. Report offline receipt readiness and keep the Stage A instructions
-available while the M5 is in Recovery. All boot/policy/live actions remain
-on hold. GitHub receives this procedure and public-source payloads only,
-never Apple's installer, boot policies, identifiers or personal data.
+Use the current execution handoff at the top. Do not run this document's M5
+commands on the M1. Ordinary lab macOS installation is authorized; security
+changes, Recovery/custom-boot work and live native tests remain on hold.
+GitHub receives this procedure and public-source payloads only, never Apple's
+installer, raw boot policies, identifiers or personal data.

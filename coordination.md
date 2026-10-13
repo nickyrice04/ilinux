@@ -6,6 +6,26 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current authorization: create the lab macOS entry, preserve boot security
+
+The user now authorizes the dedicated **iLinux Boot Lab** entry using the
+matching macOS installer, preserving the original macOS. B owns this stage.
+This supersedes the earlier volume/installer-launch hold below, but **does not
+authorize changing boot security, installing a custom boot object or running
+native m1n1/Linux**. Stop at the installer/restart handoff to the human; record
+the actual destination and result before describing the entry as bootable.
+M1 keeps the offline boot021 package ready and performs no live USB actions.
+
+**Observed progress:** B created the unique empty APFS lab volume, preserving
+the original volumes' names/roles/FileVault states. Original policy reports
+Full Security; SIP/authenticated-root enabled. Repeated installer verification
+PASS. Normal GUI launch succeeded; after the user authorized its license, B
+selected and visually verified **iLinux Boot Lab** as destination. The installer
+has since advanced to installation progress, still naming the lab. Completion
+and bootability remain unverified. Save work and allow installer-managed restarts;
+do not restart manually or begin a second installation. The current human/
+M1 handoff is at the top of `kernel/native-enablement/boot-entry-setup.md`.
+
 ### Current boot-package assignment (user authorized 2026-10-13)
 
 B now owns preparing/exporting the boot package, correcting the single-core
@@ -36,7 +56,8 @@ rule rejection remains unchanged; no security exception or bypass was used.
 See `native/boot/macos-installer-download.md` and D-046.
 M1 has now published its observed offline results below and in `progress.md`.
 USB/P_NOP, live target-version check, native m1n1, native Linux and native
-Omarchy remain **NOT RUN**. Installer launch and all boot changes stay on hold.
+Omarchy remain **NOT RUN**. The current authorization above supersedes the
+earlier installer-launch hold; boot-security and native-test holds remain.
 
 ### M1 offline receipt: ready for coordination, physical testing on hold
 
@@ -58,8 +79,8 @@ There are no offline verification blockers. USB discovery opened no port and
 found no modem paths; it does not establish cable status. First live test is
 still the separately authorized bounded handshake. Boot-entry provisioning
 and explicit physical-test approval remain pending. B reviewed and integrated
-this report (`dfdf8cf`) while completing installer content verification; actual
-installer launch remains **NOT RUN**.
+this report (`dfdf8cf`) while completing installer content verification. The
+subsequent normal GUI launch succeeded; installation is pending as recorded above.
 
 ### Second-machine checkout (2026-10-13)
 
