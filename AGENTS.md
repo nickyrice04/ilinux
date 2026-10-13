@@ -121,6 +121,11 @@ See `progress.md`. As of 2026-10-13:
   completed Stage A handshake. Live USB/P_NOP, live version checking and Linux
   remain **NOT RUN**. No further live test is authorized. Current handoff:
   `kernel/native-enablement/boot-entry-setup.md` and `coordination.md`.
+  B reviewed M1 commit `c6f2c6f` after return and independently checked original
+  build/FileVault/SIP/authenticated-root and the staged payload hash. The user
+  then supplied a fresh read-only result: original Full/lab Permissive, both
+  exit 0. Do not repeat installation. Next proposed test: controlled Stage A
+  boot and one bounded USB P_NOP, followed by original-macOS return.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;

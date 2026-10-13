@@ -6,6 +6,32 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### M5 review after return — 2026-10-13
+
+B reviewed and fast-forwarded M1 report `c6f2c6f`. Native m1n1 reached
+`Running proxy...` by the screen evidence reviewed by M1; that is an actual
+bootloader milestone on this unit. USB/P_NOP and Linux remain NOT RUN.
+
+Read-only M5 checks now independently confirm original root **Macintosh HD**,
+**26.6.2 / 25G83**, original System/Data FileVault enabled, SIP enabled and
+original authenticated-root enabled. The csrutil installation menu changed
+order between queries: choose by the name in the same live prompt, never by
+a cached number. Staged m1n1 size/hash still match; the installed boot object
+was not separately read. Default restoration remains the user's observation.
+
+The user supplied the fresh post-return helper result: **original Full / exit
+0; lab Permissive / exit 0; read_only true**. This completes the return-policy
+check; B did not independently rerun the privileged query. The M5 local helper
+now accepts `--expected-lab Permissive` so the intended lab policy is not
+mistaken for a failure. No policy/startup/payload changes were made this review.
+
+Next proposed session: the existing Stage A checklist, one bounded P_NOP on
+the actual primary M1 USB path, then return to Macintosh HD. The installed
+entry is ready for that separately authorized test; no Recovery/reinstallation
+is needed for the planned boot. After Stage A, review and authorize Stage B's
+one-core RAM Linux/PID-1/60-second heartbeat diagnostic. Native desktop,
+peripheral functionality and performance parity remain unvalidated.
+
 ### Current M1 handoff — 2026-10-13: lab m1n1 installation and original macOS return complete
 
 Evidence: human-entered commands on the M5, user-reported results and screen

@@ -1,5 +1,13 @@
 # M5 dedicated boot entry: installed; original macOS return complete
 
+**Post-return review by B:** M1 report `c6f2c6f` is integrated. Original build
+26.6.2 / 25G83, FileVault, SIP and original authenticated-root are independently
+checked; staged payload size/hash match. The user supplied a fresh policy read:
+original Full/lab Permissive, both exit 0. Return checks are complete. The
+csrutil OS list may reorder between queries; choose by name within the same
+live prompt. Use the installed entry for the next separately authorized Stage
+A test; do not repeat provisioning or change the default from Macintosh HD.
+
 ## 2026-10-13 · M1: lab m1n1 installation and original macOS return complete
 
 Evidence: human-entered commands on the M5, user-reported results and screen
@@ -34,10 +42,10 @@ are retained. Raw photographs, policy identifiers and credentials are not copied
 * Boot021 package/ignored intake receipt are unchanged. M1 rechecked the clean
   client pin: `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. No new offline
   test run was needed for this documentation-only update; prior results stand.
-* Next: M5 agent reviews this handoff and can verify original macOS protections
-  read-only after return. The Full/Permissive result above was observed in
-  Recovery after installation; post-return policy/SIP/FileVault checks have
-  not been newly reported. Do not repeat installation. Wait for explicit
+* Subsequent M5 review and post-return checks are recorded at the top. The
+  Full/Permissive result in this M1 report was observed in Recovery; the user
+  has since supplied the fresh post-return policy result. Do not repeat
+  installation. Wait for explicit
   Stage A authorization before any controlled m1n1 boot or USB connection;
   Stage B requires its own approval.
 

@@ -11,8 +11,11 @@ disabled. User confirms original desktop return and Macintosh HD default.
 An incidental m1n1 startup reached on-screen `Running proxy...` before power-off.
 This supersedes older provisioning-pending/m1n1-unobserved statements below.
 Controlled USB/P_NOP, live version check and Linux tests remain **NOT RUN**;
-no native Linux blocker is resolved. Post-return protection checks are not
-newly reported. See the current M1 handoff in `coordination.md`.
+no native Linux blocker is resolved. B's post-return checks confirm original
+build/FileVault/SIP/authenticated-root; the user's fresh policy helper reports
+original Full/lab Permissive, both exit 0. Return checks are complete. Next is
+the separately authorized controlled USB handshake, not repeat provisioning.
+See the current handoff in `coordination.md`.
 
 ## Hardware enablement
 

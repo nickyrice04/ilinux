@@ -5,6 +5,30 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: installed m1n1 handoff reviewed; return checks complete
+
+* Reviewed/integrated M1 commit `c6f2c6f`: lab-only policy/install succeeded,
+  incidental native m1n1 screen reached `Running proxy...`, original desktop
+  return/default restoration user-confirmed. No USB handshake or Linux boot.
+* Independently checked current root Macintosh HD, build 26.6.2 / 25G83,
+  original System/Data FileVault, SIP and original authenticated-root enabled.
+  The numbered csrutil OS menu reordered between invocations; verified the
+  original by selecting its name in the same interactive process. Record this
+  as a tooling gotcha, not a protection failure.
+* Staged m1n1 still matches package size/SHA-256. This rechecks the staged file,
+  not the installed boot object or the incidental runtime version.
+* User supplied a fresh read-only policy result after return: original Full,
+  lab Permissive, both exit 0. Updated the local ignored policy helper with
+  an explicit expected-lab argument; no policy writes or privileged rerun.
+* Updated Stage A/first-boot instructions to reflect completed provisioning.
+  No rebuild or repeat installation is needed. Recovery's missing shasum and
+  the temporary sha256 adapter remain recorded in M1's original report; the
+  pinned Recovery helper and staged binary were not modified.
+* Next: separately authorized controlled m1n1 boot + one 10-second-bounded
+  USB P_NOP, then macOS return; after review, the one-core RAM Linux test.
+  No live/native test or benchmark was run in this review. Nothing yet
+  establishes native Linux/Omarchy or macOS-class hardware performance.
+
 ## 2026-10-13 · M1: lab m1n1 installation and original macOS return complete
 
 Evidence: human-entered commands on the M5, user-reported results and screen

@@ -2,10 +2,10 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Current authorization:** lab macOS provisioning and m1n1 file staging are
-complete. The user now authorizes lab-only paired Recovery, Permissive Security,
-disabling kernel CTRR and verified m1n1 installation, preserving original Full
-Security. Recovery execution is pending. Native Stage A/B testing remains on hold.
+**Current state:** lab-only Recovery/policy/custom-boot installation is complete
+by M1's reviewed report `c6f2c6f`. Incidental m1n1 startup reached the proxy
+message. Original-macOS return checks are complete. Controlled native Stage
+A/P_NOP and Stage B/Linux still await explicit authorization.
 
 ## 1. Current state
 
@@ -18,11 +18,13 @@ The user reports a completed backup and a USB-connected M1 controller.
 Controller tools pass offline tests; the physical proxy is untested. Read-only
 checks now confirm the original macOS and a separate installed lab System/Data
 group, both at 26.6.2 / 25G83. The user booted the lab and returned to Macintosh
-HD (M1 report `f34970e`). Original FileVault, SIP and authenticated-root are on;
-the user's post-return read-only helper output reports Full Security for both
-installations, both exit 0 (reviewed by B, not independently rerun).
-m1n1 is staged under the lab Data volume's `Users/Shared/iLinuxBoot`, with
-package size/SHA-256 verified. It is not installed as the lab's boot object.
+HD. M1 report `c6f2c6f` records successful m1n1 installation and an incidental
+native startup reaching `Running proxy...`, followed by original return.
+B independently rechecked original FileVault/SIP/authenticated-root and build.
+The user's fresh post-return helper output reports original Full/lab Permissive,
+both exit 0. Staged m1n1 still matches package size/SHA-256; B did not read the
+installed object or verify the exact runtime version. No live P_NOP or Linux
+test has run. The next controlled boot uses the existing lab entry.
 M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 
 ## 2. Dedicated OS entry: separate installation gate
@@ -30,9 +32,8 @@ M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 The current concrete proposal, observed disk capacity, matching Apple installer,
 recovery preflight and gated commands are in
 [boot-entry-setup.md](boot-entry-setup.md). Lab macOS installation is complete;
-custom boot/security work is authorized but awaits Recovery execution; native
-validation remains pending. The alternatives below explain the provisioning
-choice, not work to repeat.
+custom boot/security work is also complete. USB/native Linux validation remains
+pending. The alternatives below explain the provisioning choice, not work to repeat.
 
 An empty APFS volume alone is not a bootable m1n1 stub. It needs an OS volume
 group, Apple boot components, paired recovery and an owner-authorized custom
@@ -55,8 +56,8 @@ The reviewed provisioning alternatives were:
   installer's unsupported-model check.
 
 The volume layout, version, checksum, per-entry change and return procedure
-were presented and approved for the lab. The recovery-pairing check must still
-pass in actual Recovery before any write. The original macOS entry retains its
+were presented and approved for the lab, and Recovery checks/installation
+subsequently passed. Do not repeat them for Stage A. The original entry retains its
 policy; never use its System volume as the custom boot-object destination.
 Do not disable authenticated-root or SIP on the original macOS installation.
 The companion procedure targets a second full macOS 26.6.2 / 25G83 installation

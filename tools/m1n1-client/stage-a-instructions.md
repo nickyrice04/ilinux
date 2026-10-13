@@ -1,16 +1,18 @@
 # Stage A controller instructions — prepared offline, NOT RUN
 
-Prepared against handoff `1607f2a` (includes `2438c01`). This checklist does
-not authorize Recovery, policy/custom-boot changes or a live USB connection.
-The staged lab Data file is not yet an installed custom boot object.
+Updated after reviewed M1 handoff `c6f2c6f`. The custom boot object is installed;
+incidental m1n1 startup reached `Running proxy...`, and original-macOS return
+checks are complete. This checklist does not itself authorize a controlled
+boot or live USB connection. Do not repeat Recovery or boot-object installation.
 
 ## Before a later authorized session
 
-* B's handoff reports user-supplied read-only policy results: original Full,
-  lab Full, both exit 0. M1 has not independently queried M5 policy.
-* Wait for explicit authorization and M5 confirmation that the separate
-  lab-only Recovery/pairing/policy/custom-boot procedure succeeded. Do not
-  run those M5 commands on this controller.
+* B's post-return review confirms original build/FileVault/SIP/authenticated-root.
+  The user's fresh read-only policy result is original Full/lab Permissive,
+  both exit 0. M1 has not independently queried M5 policy.
+* The lab Recovery/pairing/policy/custom-boot procedure succeeded as recorded
+  by M1. Use the installed entry; keep Macintosh HD as the default and use
+  the held-power startup picker for the test. No policy command belongs in it.
 * Require explicit Stage A authorization, backup confirmation, power to both
   Macs, direct USB data cable, the M5 screen visible and the agreed return path.
 * Preserve boot021 and clean client revision

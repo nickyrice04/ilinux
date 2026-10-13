@@ -808,3 +808,13 @@ return. Record that incidental screen observation separately from controlled
 tests. Live USB/P_NOP, exact live version checking, Stage B/Linux and native
 Omarchy remain NOT RUN. This event grants no further authorization and does
 not complete Stage A. No raw photos or device identifiers are saved.
+
+**M5 review/next, 2026-10-13:** B reviewed M1 commit `c6f2c6f`, verified original
+build/FileVault/SIP/authenticated-root and staged payload hash, and received
+the user's fresh read-only original Full/lab Permissive result (both exit 0).
+Treat provisioning and return verification as complete; do not repeat Recovery
+or reinstall m1n1. Next proposed experiment is controlled Stage A boot/P_NOP,
+then review before the one-core RAM Linux diagnostic. Incidental proxy screen
+output establishes bootloader execution, not USB transport, Linux execution,
+GPU acceleration or performance parity. No live test was authorized or run
+by this request to review progress and recommend next steps.
