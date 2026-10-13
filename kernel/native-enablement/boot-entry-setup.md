@@ -1,11 +1,13 @@
-# M5 dedicated boot entry: m1n1 staged, security changes on hold
+# M5 dedicated boot entry: lab Recovery installation authorized
 
 Prepared by B on 2026-10-13 for **Mac17,6 / J716c / t6050 M5 Max**.
-Initially prepared without execution approval. The user now authorizes setting
-up **iLinux Boot Lab**, preserving original macOS and stopping before boot
-security changes. Lab macOS installation/first boot are complete. The user's
-subsequent m1n1 file-staging authorization is now complete too. **Sections 5–7,
-custom boot-object installation and native testing remain unauthorized.**
+Lab macOS installation/first boot and m1n1 file staging are complete.
+**The user now explicitly authorizes sections 5–6:** lab-only Recovery setup,
+Permissive Security, disabling kernel CTRR for that entry and installing the
+verified m1n1 boot object, while keeping Macintosh HD at Full Security.
+This supersedes earlier security holds. Stage A/P_NOP and Stage B/Linux tests
+remain outside this authorization. Policy/install execution is still pending
+the human's M5 Recovery session; preparation is not installation success.
 
 ## Current execution handoff — 2026-10-13
 
@@ -37,7 +39,8 @@ M1 did not independently inspect the M5. B reviewed and fast-forwarded M1 commit
 
 Boot021 and its client pin are unchanged.
 Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
-**NOT RUN**. Stop before Recovery/security changes or custom boot installation.
+**NOT RUN**. The authorized next operation is lab Recovery/custom-boot setup;
+stop after installation/policy verification and return to original macOS.
 
 ### Next sequence and observation plan
 
@@ -52,11 +55,11 @@ Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
    and prints sanitized JSON. The user-provided output has now been reviewed.
 2. **DONE:** exact `m1n1.bin` staged and verified using section 4. No restart is
    needed for the copy. Do not repeat installation or substitute another binary.
-3. Obtain explicit authorization for the lab-only **Permissive Security / kernel
+3. **AUTHORIZED, execution pending:** lab-only **Permissive Security / kernel
    CTRR change and custom boot object** in section 6. Enter the lab's paired
    Recovery and run the section-5 identity/pairing checks before any policy write.
-   Original macOS is never the target. A request to review next steps does not
-   authorize this change.
+   Original macOS is never the target. Do not repeat the approval request for
+   this scope; stop and investigate a failed prerequisite or changed target.
 4. After Stage A authorization, boot m1n1 alone. M1 discovers the actual primary
    USB port and runs one bounded P_NOP check. Record screen/version observations
    and return to original macOS. This establishes the bootloader/proxy path.
@@ -72,25 +75,41 @@ If that happens, establish a usable logging path before another blind attempt.
 
 ### Current human and M1 handoff
 
-Stay in the original macOS for now. The policy check and staging are complete.
-The next restart sequence belongs to the separately authorized lab
-policy/custom-boot task. Its commands and target checks are prepared in
-sections 5–6; the actual pairing check must pass in the lab's Recovery before
-any policy or boot-object write. The supplied policy result does not authorize
-security changes or native boot tests.
+The policy check and staging are complete, and the user has now explicitly
+authorized the lab policy/custom-boot task. M5 rechecked the payload, separate
+volume groups and AC power. No project VM processes were found. System Settings
+currently shows **iLinux Boot Lab** selected and the **Restart…** button; B
+opened that pane but has not clicked Restart or changed its selection.
+
+First have M1 pull this handoff. Save work, leave the M5 on power, then restart
+into the lab macOS through that Startup Disk pane. At the lab desktop confirm
+26.6.2 / 25G83 and the lab identity, then shut down. Hold power continuously
+to startup options and choose **Options → Continue** for paired Recovery.
+The M5 desktop agent will not run in Recovery; M1 guides the human entering the
+commands on the M5. The actual pairing check must pass before a policy write.
+
+After section 6 succeeds, shut down and select **Macintosh HD → Continue** in
+the startup picker. Restore Macintosh HD as the default in Startup Disk,
+then report the result here. Do not select the converted lab entry for a live
+m1n1 test yet. Installing it changes what the lab entry boots; it no longer
+boots the lab macOS normally. The original macOS entry is preserved.
 
 Send M1:
 
-> Pull latest main with `git pull --ff-only` and read the current handoff here,
-> `coordination.md` and `tools/m1n1-client/boot-result-template.md`. M5 has staged
-> and hash-verified the original boot021 m1n1 on lab Data. It is not installed
-> as a boot object; boot settings are unchanged. Keep the verified package and
-> existing client pin. Prepare the Stage A handshake instructions and Stage B
-> evidence record offline. The user's M5 policy check reports original and lab
-> both Full Security, both exit 0. Wait for explicit authorization before
-> Recovery/security/custom-boot work or any live USB/native
-> action. Do not run `--connect`, `--launch` or upstream `linux.py`.
-> Keep live USB/P_NOP, target-version, m1n1/Linux/Omarchy checks NOT RUN.
+> I authorize the lab-only Recovery setup, Permissive Security, disabling
+> kernel CTRR and verified m1n1 installation, preserving Macintosh HD at Full
+> Security. Pull latest main with `git pull --ff-only`; read this document's
+> current handoff and sections 5–6, plus `coordination.md`. Guide me on the M5
+> through lab startup, shutdown/held-power paired Recovery, the read-only
+> helper and the two gated operations, one at a time. Do not run M5 policy
+> commands on the M1. No further approval is needed for this exact scope.
+> Stop on identity, pairing, hash, policy or command errors; no bypass/retry
+> loops. Record sanitized preflight, bputil and kmutil outcomes, final original
+> Full/lab Permissive, and successful return to Macintosh HD. Restore Macintosh
+> HD as default afterward. Commit/push the observed results to progress.md and
+> coordination.md. Keep the verified boot021 package/client pin unchanged.
+> Stage A/P_NOP and Linux boots are not authorized by this setup: no --connect,
+> --launch or upstream linux.py; keep all live native checks NOT RUN.
 
 ### Earlier installer handoff (historical; completion updated above)
 
@@ -151,8 +170,8 @@ all signed entries and installed app contents match. The outer app's custom-
 resource-rule rejection remains unchanged, with no exception or bypass. See the
 [verification record](../../native/boot/macos-installer-download.md). M1's
 offline receipt is published and reviewed. The execution handoff above records
-the subsequent volume/GUI work and current stop point. Security/custom-boot
-steps below remain on hold.
+the subsequent volume/GUI work. The earlier security/custom-boot hold recorded
+in this historical section is superseded by the current authorization at top.
 
 ## Chosen route and observed prerequisites
 
@@ -163,7 +182,8 @@ Apple supports an additional macOS installation on another APFS volume;
 the [M5 support table](https://asahilinux.org/docs/platform/feature-support/m5/)
 does not provide a supported Asahi installation route for this machine.
 
-Read-only inspection on 2026-10-13 found:
+Historical read-only observations before lab installation (current state is
+at the top; do not repeat provisioning):
 
 | Item | Observation |
 |---|---|
@@ -207,17 +227,17 @@ Before any host changes:
    Record the original entry's security mode before installation using a
    read-only policy view; retain only the mode/encryption/SIP outcomes, not
    the full policy or identifiers. Stop if the current mode is unclear.
-5. Download/verification, volume creation and lab installation are now authorized.
-   The subsequent **lab-only** boot-policy/custom-object change is not authorized.
-   Stage A (m1n1/USB) and Stage B (Linux) remain separately identified actions.
+5. Download, volume creation and lab installation are complete. The user now
+   authorizes **lab-only** Recovery/policy/custom-object installation under
+   sections 5–6. Stage A (m1n1/USB) and Stage B (Linux) remain on hold.
 
 ## 2. Fetch the matching Apple installer — only after approval
 
 **Completed under download-only authorization. Do not repeat the download.**
 The subsequent read-only investigation verified package authenticity and app
 contents without disabling security checks; see the verification record.
-The later authorized normal GUI launch succeeded; actual OS installation is
-still pending. The commands below retain the acquisition recipe for reproducibility.
+The later normal GUI launch and OS installation succeeded. The commands below
+retain the acquisition recipe for reproducibility; do not run them again.
 
 In the original M5 macOS, recheck the catalog and require the same version
 **and build** before downloading:
@@ -236,11 +256,11 @@ review it rather than substituting the newest installer.
 
 Source: [Apple's installer download procedure](https://support.apple.com/en-us/102662).
 
-## 3. Create and install the lab OS — authorized, partially complete
+## 3. Create and install the lab OS — complete; historical procedure
 
-The volume already exists: **do not repeat steps 1–2**. The installer is already
-showing progress for the correct destination. Let it finish; do not start a
-second installation or reboot manually. Steps below retain the procedure.
+The lab OS is installed and has booted successfully: **do not repeat this
+section**. These steps retain the historical procedure. Continue at section 5
+for the currently authorized Recovery setup.
 
 1. Open **Disk Utility**, select the existing internal APFS volume
    **Macintosh HD**, then **Edit → Add APFS Volume**.
@@ -311,7 +331,7 @@ build with marker `ilinux-57a9339-boot021`, raw entry offset **2048**, lowest
 virtual address **0**, and no appended Linux payload. Do not rebuild,
 concatenate payloads, or substitute a release/chainloading image here.
 
-## 5. Enter the lab's paired recoveryOS — HOLD for later authorization
+## 5. Enter the lab's paired recoveryOS — authorized, human execution pending
 
 Set **iLinux Boot Lab** as the default using **System Settings → General →
 Startup Disk**. Boot it once and confirm the lab desktop/build. Then shut
@@ -329,63 +349,52 @@ lab System and Data volumes. The expected System path is
 `/Volumes/iLinux Boot Lab`. Keep the original data locked when it is not
 needed. Do not record full disk/policy dumps or machine identifiers.
 
-Run this **read-only preflight** in Recovery Terminal. It uses built-in tools,
-keeps volume-group identifiers only in shell memory and stops on mismatch.
-If any path differs, stop and review the actual layout before editing it.
+The original read-only helper is staged next to m1n1. Its reviewed source is
+[recovery-preflight.sh](recovery-preflight.sh); it defines checks and performs
+no writes, mounts or restart. First check its hash, then source it and run
+the preflight. It requires distinct original/lab groups, exact internal APFS
+mounts, expected lab build/payload, Full policy for both entries and paired
+1TR for the lab. Identifiers/policy text stay in shell memory. If paths differ
+or an expected tool/output is absent, stop; do not bypass a check.
 
 ```sh
 /bin/bash --noprofile --norc
 set +o history
-
-ilinux_preflight() {
-    ILINUX_READY=no
-    ILINUX_OS='/Volumes/iLinux Boot Lab'
-    ILINUX_DATA='/Volumes/iLinux Boot Lab - Data'
-    ILINUX_ORIGINAL='/Volumes/Macintosh HD'
-    ILINUX_BOOT="$ILINUX_DATA/Users/Shared/iLinuxBoot/m1n1.bin"
-    ILINUX_HASH=ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664
-
-    test "$(diskutil info -plist "$ILINUX_OS" | plutil -extract VolumeName raw -o - -)" = 'iLinux Boot Lab' || return 1
-    test "$(diskutil info -plist "$ILINUX_DATA" | plutil -extract VolumeName raw -o - -)" = 'iLinux Boot Lab - Data' || return 1
-    test "$(diskutil info -plist "$ILINUX_ORIGINAL" | plutil -extract VolumeName raw -o - -)" = 'Macintosh HD' || return 1
-    ILINUX_VG=$(diskutil info -plist "$ILINUX_OS" | plutil -extract APFSVolumeGroupID raw -o - -) || return 1
-    ILINUX_DATA_VG=$(diskutil info -plist "$ILINUX_DATA" | plutil -extract APFSVolumeGroupID raw -o - -) || return 1
-    ILINUX_ORIGINAL_VG=$(diskutil info -plist "$ILINUX_ORIGINAL" | plutil -extract APFSVolumeGroupID raw -o - -) || return 1
-    test -n "$ILINUX_VG" && test -n "$ILINUX_ORIGINAL_VG" || return 1
-    test "$ILINUX_VG" = "$ILINUX_DATA_VG" || return 1
-    test "$ILINUX_VG" != "$ILINUX_ORIGINAL_VG" || return 1
-    test "$(diskutil info -plist "$ILINUX_DATA" | plutil -extract FileVault raw -o - -)" = false || return 1
-    test "$(plutil -extract ProductBuildVersion raw -o - "$ILINUX_OS/System/Library/CoreServices/SystemVersion.plist")" = 25G83 || return 1
-    test "$(stat -f %z "$ILINUX_BOOT")" = 3932160 || return 1
-    test "$(shasum -a 256 "$ILINUX_BOOT" | awk '{print $1}')" = "$ILINUX_HASH" || return 1
-    ILINUX_POLICY=$(bputil --display-policy --vuid "$ILINUX_VG") || return 1
-    case "$ILINUX_POLICY" in *': Paired'*) ;; *) return 1 ;; esac
-    case "$ILINUX_POLICY" in *'one true recoveryOS'*) ;; *) return 1 ;; esac
-    unset ILINUX_POLICY ILINUX_DATA_VG ILINUX_ORIGINAL_VG
-    ILINUX_READY=yes
-    echo 'Preflight passed: separate lab group, expected build/payload, paired 1TR.'
-}
+ILINUX_HELPER='/Volumes/iLinux Boot Lab - Data/Users/Shared/iLinuxBoot/recovery-preflight.sh'
+ILINUX_HELPER_HASH=e65636d03cfb7a7000f86810fdc8888e209b99bedaa1b36ca7a125de4bf72188
+if test "$(shasum -a 256 "$ILINUX_HELPER" | awk '{print $1}')" = "$ILINUX_HELPER_HASH"; then
+    source "$ILINUX_HELPER"
+else
+    echo 'STOP: helper hash mismatch; do not continue.'
+fi
 ilinux_preflight || echo 'STOP: preflight failed; do not change policy or boot objects.'
 ```
 
-The plist keys and hash/size commands were checked on the running host;
-pairing predicates match Asahi's installer. All five shell blocks pass Bash
-syntax checking. With stand-ins for the system tools, the preflight accepts
-one valid layout and rejects eleven identity, build, hash, encryption and
-recovery failures; those checks invoke no real disk/policy operations.
-This block has not been run in
-the future lab Recovery. Different output, missing mounts, absent tools or
-credentials errors require review, never bypassing a check. Disk numbers
-can change across boots; none is hard-coded here.
+The helper's Bash syntax and 21 synthetic preflight cases pass (valid plus
+20 failures); policy postchecks also reject original downgrade and wrong lab
+mode. Stand-ins invoke no real disk or policy operations. Tests:
+`python3 -I kernel/native-enablement/test_recovery_preflight.py`.
+Actual paired-Recovery checks remain NOT RUN. Disk numbers are not hard-coded.
 
 ## 6. Change only the lab policy and install its custom boot object
 
-**This is the actual security-change gate. Not authorized by preparation.**
-Require the preflight success line and the human's explicit authorization.
+**Explicitly authorized by the user on 2026-10-13.** Require the preflight
+success line before proceeding. No repeat authorization is needed for this
+exact lab target and package. Preserve Macintosh HD at Full Security.
 In the same Recovery Terminal shell, issue one command at a time:
 
 ```sh
-test "$ILINUX_READY" = yes && bputil --permissive-security --disable-kernel-ctrr --vuid "$ILINUX_VG"
+ILINUX_POLICY_OK=no
+if test "$ILINUX_READY" = yes && bputil --permissive-security --disable-kernel-ctrr --vuid "$ILINUX_VG"; then
+    if ilinux_check_policies Permissive; then
+        ILINUX_POLICY_OK=yes
+        echo 'Lab policy change succeeded; original remains Full.'
+    else
+        echo 'STOP: policy postcheck failed; do not install the boot object.'
+    fi
+else
+    echo 'STOP: preflight or lab policy command failed; do not continue.'
+fi
 ```
 
 This selects **Permissive Security** and disables kernel CTRR enforcement
@@ -398,10 +407,22 @@ to the next command or retry automatically.
 Only after that succeeds:
 
 ```sh
-test "$ILINUX_READY" = yes && kmutil configure-boot \
-  --custom-boot-object "$ILINUX_BOOT" \
-  --raw --entry-point 2048 --lowest-virtual-address 0 \
-  --volume "$ILINUX_OS"
+ILINUX_INSTALLED=no
+if test "$ILINUX_READY" = yes && test "$ILINUX_POLICY_OK" = yes &&
+   ilinux_check_policies Permissive && ilinux_payload_ok; then
+    kmutil configure-boot --custom-boot-object "$ILINUX_BOOT" \
+      --raw --entry-point 2048 --lowest-virtual-address 0 --volume "$ILINUX_OS"
+    ILINUX_KMUTIL_EXIT=$?
+    printf 'kmutil exit: %s\n' "$ILINUX_KMUTIL_EXIT"
+    if test "$ILINUX_KMUTIL_EXIT" = 0 && ilinux_check_policies Permissive; then
+        ILINUX_INSTALLED=yes
+        echo 'Custom boot installation reported success; original remains Full.'
+    else
+        echo 'STOP: installation or final policy check failed; record the partial result.'
+    fi
+else
+    echo 'STOP: policy/payload prerequisites failed; no installation attempted.'
+fi
 ```
 
 Require a successful exit and the correct lab destination in any prompt.
@@ -412,9 +433,14 @@ change on the original OS, global `nvram boot-args`, upstream shell, or
 Asahi installer model-check bypass belongs in this procedure. Do not run
 the full upstream stage-two script: it also performs stub-specific writes.
 
-**Stop here unless Stage A boot has also been approved.** Installation alone
-is not proof that m1n1 runs on this unit. On a pairing/policy error, leave
-the original entry alone and return for review.
+**Stop native testing here; Stage A has not been approved.** Record the command
+outcomes and sanitized original Full / lab Permissive result. Successful kmutil
+exit is an installation result, not proof that m1n1 runs. Shut down and use the
+held-power picker to choose **Macintosh HD → Continue**, then restore it as the
+default Startup Disk and report original build/FileVault/SIP/authenticated-root
+and Full Security. Do not reboot blindly into the now-converted lab entry.
+On a pairing/policy/command error, preserve the original entry and report the
+partial state; no retries, policy resets, removal or firmware recovery.
 
 ## 7. Stage A acceptance and normal macOS return
 
@@ -447,7 +473,7 @@ starts after native input/network and a persistent Linux environment exist.
 ## M1 handoff for this preparation
 
 Use the current execution handoff at the top. Do not run this document's M5
-commands on the M1. Ordinary lab macOS installation is authorized; security
-changes, Recovery/custom-boot work and live native tests remain on hold.
+commands on the M1. Lab-only Recovery/policy/custom-boot installation is now
+authorized; live Stage A/P_NOP and Stage B/Linux tests remain on hold.
 GitHub receives this procedure and public-source payloads only, never Apple's
 installer, raw boot policies, identifiers or personal data.

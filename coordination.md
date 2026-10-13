@@ -6,14 +6,17 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current authorization: stage m1n1 on lab Data, preserve boot security
+### Current authorization: lab-only Recovery policy and m1n1 installation
 
-The dedicated **iLinux Boot Lab** macOS installation and first boot are complete.
-The user now authorizes staging the verified m1n1 file on the lab Data volume
-and requests a manual read-only policy command. B owns this stage. This **does
-not authorize changing boot security, installing a custom boot object or running
-native m1n1/Linux**. M1 keeps the offline boot021 package ready and performs no
-live USB actions. No restart is needed for file staging.
+The user explicitly authorized lab-only Recovery setup, Permissive Security,
+disabling kernel CTRR and installing the verified m1n1 boot object, while
+keeping **Macintosh HD at Full Security**. This supersedes prior security and
+custom-boot holds for this exact lab scope. No repeat approval is needed.
+B prepared/staged a tested read-only Recovery helper and the one-operation-
+at-a-time instructions. M1 guides the human on the M5 through sections 5–6 of
+`kernel/native-enablement/boot-entry-setup.md`, records actual results and helps
+return to original macOS. M1 must not run the M5 commands on itself.
+Stage A/P_NOP and Stage B/Linux testing are still not authorized by this setup.
 
 **Observed progress:** B created the unique empty APFS lab volume, preserving
 the original volumes' names/roles/FileVault states. Original policy reports
@@ -37,15 +40,24 @@ B has now staged the exact m1n1 binary at
 rechecking the lab System/Data roles and separate volume group. The reread
 copy matches the tracked manifest: 3,932,160 bytes, SHA-256
 `ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664`.
-Only a new folder and ordinary file were created on lab Data; no existing
-file was overwritten. No security/custom-boot/startup-disk change occurred.
+Only the new staging folder, m1n1 and now the read-only `recovery-preflight.sh`
+were created on lab Data; no existing file was overwritten. Helper SHA-256:
+`e65636d03cfb7a7000f86810fdc8888e209b99bedaa1b36ca7a125de4bf72188`.
+Its 21 preflight cases, seven documented-operation guard cases and syntax checks
+pass with stand-ins; no real policy writes were tested. Current root and payload
+were rechecked; AC power, no project VM processes. System Settings already
+shows **iLinux Boot Lab** selected. B opened the pane but did not change its
+selection or click Restart. No security/custom-boot change has run yet.
 Boot021 and the existing client pin are unchanged.
 Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
 **NOT RUN**. Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
 
-**Next staged session:** the read-only policy check and staging are complete.
-Obtain authorization for lab-only Permissive Security/kernel CTRR and
-custom boot installation. Stage A tests only m1n1/P_NOP; Stage B separately
+**Next human/M1 session:** pull this handoff before restarting. Boot lab macOS,
+shut down and enter its paired Recovery with one continuous power hold. Run
+the helper and gated policy/install commands; verify original Full/lab
+Permissive and actual kmutil exit. Stop on failures without bypass/retry loops.
+Return via the picker to Macintosh HD and restore it as default. Publish only
+sanitized observed outcomes. Stage A later tests only m1n1/P_NOP; Stage B separately
 tests one-core Linux PID 1 and 60-second liveness. The result template now
 separates controller output, screen observations, timing and macOS return.
 No persistent USB Linux console or SSH is present. Blank screen means output
@@ -57,8 +69,9 @@ B now owns preparing/exporting the boot package, correcting the single-core
 launcher and first-boot instructions, testing them in isolation and pushing
 the M1 handoff. Work is in `native/boot/` and job 021; A's QEMU/latency work
 is untouched. The M1 agent downloads/verifies and reports offline readiness.
-**Explicit stop: no boot settings, entry installation, partition changes or
-physical boot.** Payload publication is authorized; these are open-source
+**Earlier package-only boundary, superseded by the current lab authorization
+above.** Partition changes and live native tests remain on hold.
+Payload publication is authorized; these are open-source
 build outputs, not Apple artifacts. Follow the corrected first-boot plan;
 older statements about an empty APFS stub or persistent proxy console are
 superseded. No native hardware success is claimed by this handoff.
@@ -67,9 +80,10 @@ B's next preparation milestone is complete: the user requested exact dedicated
 entry steps while M1 verifies. `kernel/native-enablement/boot-entry-setup.md`
 selects a second full macOS installation named `iLinux Boot Lab`, matching the
 available 26.6.2 / 25G83 installer. It documents paired-Recovery checks,
-lab-only policy/boot-object commands and macOS return. No volume creation,
-policy change or reboot has run; an offline receipt does not authorize those
-host changes.
+lab-only policy/boot-object commands and macOS return. At that preparation
+milestone no volume creation, policy change or reboot had run. The current
+handoff above records subsequent installation and authorization; an offline
+receipt alone does not authorize host changes.
 
 **Download and verification result:** the matching 26.6.2 / 25G83 installer is
 downloaded. User subsequently authorized resolving verification without
@@ -82,7 +96,7 @@ See `native/boot/macos-installer-download.md` and D-046.
 M1 has now published its observed offline results below and in `progress.md`.
 USB/P_NOP, live target-version check, native m1n1, native Linux and native
 Omarchy remain **NOT RUN**. The current authorization above supersedes the
-earlier installer-launch hold; boot-security and native-test holds remain.
+earlier installer-launch and lab boot-security holds; native-test holds remain.
 
 ### M1 offline receipt: ready for coordination, physical testing on hold
 

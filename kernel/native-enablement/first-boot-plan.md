@@ -2,10 +2,10 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Current authorization:** lab macOS provisioning and the user-authorized m1n1
-file staging are complete. Review/read-only checks are allowed;
-boot-security/custom-object changes and native
-Stage A/B testing remain on hold pending the user's explicit authorization.
+**Current authorization:** lab macOS provisioning and m1n1 file staging are
+complete. The user now authorizes lab-only paired Recovery, Permissive Security,
+disabling kernel CTRR and verified m1n1 installation, preserving original Full
+Security. Recovery execution is pending. Native Stage A/B testing remains on hold.
 
 ## 1. Current state
 
@@ -30,8 +30,9 @@ M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 The current concrete proposal, observed disk capacity, matching Apple installer,
 recovery preflight and gated commands are in
 [boot-entry-setup.md](boot-entry-setup.md). Lab macOS installation is complete;
-custom boot/security work and native validation remain pending. The alternatives
-below explain the provisioning choice, not work to repeat.
+custom boot/security work is authorized but awaits Recovery execution; native
+validation remains pending. The alternatives below explain the provisioning
+choice, not work to repeat.
 
 An empty APFS volume alone is not a bootable m1n1 stub. It needs an OS volume
 group, Apple boot components, paired recovery and an owner-authorized custom
@@ -41,7 +42,7 @@ the earlier blanket claim that a small empty volume suffices was incorrect.
 
 The standard Asahi installer does not support this M5 Max. Do not bypass its
 model checks. No installer or boot-policy command is included in job 021.
-For the next separately approved task, review one concrete route:
+The reviewed provisioning alternatives were:
 
 * **Dedicated second macOS installation as a development scaffold.** Apple's
   additional-APFS-volume procedure creates a real OS volume group and paired
@@ -53,9 +54,9 @@ For the next separately approved task, review one concrete route:
   has been validated here. Do not improvise Preboot copying or patch out an
   installer's unsupported-model check.
 
-Before changing anything, present the actual volume/container layout, capacity,
-OS version, m1n1 checksum, recovery-pairing checks, per-entry policy change and
-return-to-macOS procedure for approval. The original macOS entry retains its
+The volume layout, version, checksum, per-entry change and return procedure
+were presented and approved for the lab. The recovery-pairing check must still
+pass in actual Recovery before any write. The original macOS entry retains its
 policy; never use its System volume as the custom boot-object destination.
 Do not disable authenticated-root or SIP on the original macOS installation.
 The companion procedure targets a second full macOS 26.6.2 / 25G83 installation

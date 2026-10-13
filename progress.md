@@ -5,6 +5,33 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: authorized lab Recovery installation handoff ready
+
+* User explicitly approved lab-only Recovery setup, Permissive Security,
+  disabling kernel CTRR and m1n1 installation, preserving original Full
+  Security. Earlier policy/install holds are superseded for this scope.
+* Rechecked root Macintosh HD/FileVault, lab group separation and m1n1
+  hash/size. AC power; no project VM process. Opened Startup Disk: it already
+  shows iLinux Boot Lab selected. No selection change or Restart click by B.
+* Added an original read-only `kernel/native-enablement/recovery-preflight.sh`.
+  It checks exact internal APFS mounts, separate groups, build/payload,
+  original/lab Full policy and lab paired 1TR, keeping identifiers in memory.
+  It supports postchecks requiring original Full/lab Permissive. Staged a new
+  copy beside m1n1 on verified lab Data; reread SHA-256 matches source:
+  `e65636d03cfb7a7000f86810fdc8888e209b99bedaa1b36ca7a125de4bf72188`.
+* Validation: 21 synthetic preflight cases (valid + 20 failures), seven
+  documented-operation guard cases and all five documentation shell blocks
+  pass. Tests use stand-ins; no real policy/install operation. The real
+  read-only plist helper correctly identifies Macintosh HD.
+* Refreshed primary Apple pairing and Asahi installation references, checked
+  this host's bputil/kmutil help, and prepared one-at-a-time guarded commands.
+  Policy failures prevent installation; final checks keep original Full.
+* **Pending human execution:** after M1 pulls the handoff, restart into lab
+  macOS, shut down/hold power for paired Recovery, run sections 5–6, then
+  return to Macintosh HD and restore its default selection. No boot-policy
+  change, custom-object installation or restart has occurred in this session.
+  Stage A/P_NOP and native Linux/Omarchy remain **NOT RUN** and separately gated.
+
 ## 2026-10-13 · Agent B: user-provided policy check passes for both installations
 
 * Reviewed the user's sanitized output from the M5 read-only helper:

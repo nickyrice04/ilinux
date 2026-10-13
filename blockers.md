@@ -30,14 +30,15 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   observation; original macOS return also succeeded (M1 report `f34970e`). B
   verified matching builds and separate System/Data groups. It is not an m1n1
   entry yet: the exact payload is now staged and hash-verified on lab Data,
-  but paired-Recovery checks and separately approved lab policy/custom-object
-  installation remain. Native framebuffer output is unverified.
+  but paired-Recovery checks and execution of the now-authorized lab
+  policy/custom-object installation remain. Native framebuffer is unverified.
 * A concrete preparation procedure now exists in
   `kernel/native-enablement/boot-entry-setup.md`: second full macOS scaffold,
   available matching 26.6.2 / 25G83 installer, paired-Recovery preflight and
   lab-only custom boot policy. The user authorized the lab macOS installation;
-  installation and first lab boot are complete. Custom boot/security changes
-  and native m1n1/Linux tests are still on hold.
+  installation and first lab boot are complete. Lab-only custom boot/security
+  changes are now authorized, pending human execution in paired Recovery.
+  Native m1n1/Linux tests remain on hold.
 
 ### B-002 🔴 GPU (AGX G17X) unsupported
 
@@ -105,8 +106,10 @@ The user supplied the administrator-only read-only helper's result: original
 and lab both Full Security, both exit 0. B reviewed the supplied JSON; the
 pending policy read is resolved without a separate privileged rerun by B.
 The m1n1 file is staged and hash-verified on lab Data, not installed as a boot
-object. Native Linux remains unvalidated and boot-security changes remain
-unauthorized. No restart is needed for this staging milestone.
+object. A tested read-only Recovery helper is also staged. The user now
+authorizes the exact lab policy/custom-object procedure, preserving original
+Full Security. Actual Recovery execution is pending; the desktop agent cannot
+complete recovery-only operations from macOS. Native Linux remains unvalidated.
 Upstream `proxyclient/tools/linux.py` is explicitly on hold. Package integrity
 is not boot approval; first live test is the bounded P_NOP USB handshake.
 

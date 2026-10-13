@@ -782,3 +782,14 @@ the pending policy read, without independently rerunning the privileged query.
 This result does not lift the user's stop before boot-security changes. The
 prepared lab-only Recovery/custom-boot procedure still needs authorization;
 pairing/target checks must pass in Recovery before any write. No live test ran.
+
+**Authorization expansion, 2026-10-13:** the user then explicitly authorized
+lab-only Recovery setup, Permissive Security, disabling kernel CTRR and m1n1
+installation, preserving Macintosh HD at Full Security. This supersedes the
+previous hold for that scope; do not ask for the same approval again. Pairing,
+target, payload and original Full checks remain execution prerequisites.
+The read-only helper and guarded one-at-a-time commands are prepared/tested;
+helper staged on lab Data, no boot-policy/install command run from the desktop.
+M1 guides the human through Recovery and returns to original macOS afterward.
+Stage A/P_NOP and Stage B/Linux remain separately gated. No native success is
+inferred from authorization, preparation or a future kmutil success alone.

@@ -101,7 +101,8 @@ See `progress.md`. As of 2026-10-13:
   requests secondary-core start, and checks the final target DT before a
   separately authorized handoff. Generic diskless VM PID-1/60-second heartbeat
   succeeds; native hardware remains untested. `native/boot/README.md` is the
-  current M1 handoff. Stop before boot settings or physical boot.
+  current M1 handoff. Follow the updated lab-only authorization below;
+  live m1n1/P_NOP and Linux boots remain on hold.
   M1's `dfdf8cf` offline report is reviewed (13 files verified, 26 tests pass).
   The matching macOS scaffold installer passes package trust/content checks;
   its outer-app resource-rule rejection remains unchanged. No security checks
@@ -112,7 +113,11 @@ See `progress.md`. As of 2026-10-13:
   original and lab, both exit 0. B reviewed that output, not an independent rerun.
   User-authorized m1n1 staging is complete: the lab Data copy matches the
   package's 3,932,160 bytes/SHA-256. It is an ordinary file, not an installed
-  boot object. Security/custom-object work and all live tests remain pending.
+  boot object. The user now authorizes lab-only paired Recovery setup,
+  Permissive Security/kernel CTRR and m1n1 installation, preserving original
+  Full Security. The tested read-only helper is staged beside m1n1. Startup
+  Disk shows the lab selected; Restart has not been clicked. Policy/install
+  execution awaits the human/M1 Recovery session; all live tests remain pending.
   Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
