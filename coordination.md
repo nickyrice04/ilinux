@@ -30,10 +30,30 @@ host changes.
 downloaded. Embedded metadata confirms 26.6.2 / 25G83; image checksum passes.
 The app's codesign/Gatekeeper assessment reports a custom-resource-envelope
 error, unresolved before launch. See `native/boot/macos-installer-download.md`.
-The user reports M1 offline verification completed; M1 owns publishing its
-actual receipt/test results in these shared logs. B has not inferred its test
-counts or marked live readiness. USB/P_NOP, native m1n1, native Linux and native
+M1 has now published its observed offline results below and in `progress.md`.
+USB/P_NOP, live target-version check, native m1n1, native Linux and native
 Omarchy remain **NOT RUN**. Installer launch and all boot changes stay on hold.
+
+### M1 offline receipt: ready for coordination, physical testing on hold
+
+Verified handoff commit: `58dc2baffceda76d546b0e6fb8f101089dfd35b8`.
+Private prerelease `native-j716c-boot021` was downloaded and its archive
+SHA-256 matched Git before extraction:
+`b534680fc25dff78d8eaecfb96ed5b9733a3f408ae20cb4947722cb8163edc15`.
+Offline launcher and intake verification passed for all 13 files; SHA256SUMS
+matched tracked digest
+`9d2b9ec1ae9dad601fb25a6536e838b57ab436160ab6ceddf208b764de41f581`.
+Tests passed: **17 launcher, 7 intake, 2 fake-serial USB**. LLVM 23.1.3 passed
+ARM64 assembly/link/objcopy/nm/disassembly. The clean client remains pinned
+to `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
+
+M1's complete JSON receipt is local and ignored:
+`build/native-intake/receipts/boot021.json` (2026-10-13 20:02:34 UTC).
+It records `boot_authorized: false` and `target_version_observed_live: false`.
+There are no offline verification blockers. USB discovery opened no port and
+found no modem paths; it does not establish cable status. First live test is
+still the separately authorized bounded handshake. Boot-entry provisioning,
+installer assessment and explicit physical-test approval remain pending.
 
 ### Second-machine checkout (2026-10-13)
 
@@ -59,13 +79,13 @@ link and disassembly. A bounded P_NOP-only USB check is prepared and fake-
 transport tested. Physical connectivity and target boot-entry readiness
 remain unverified; no target session has run.
 
-**User direction (2026-10-13, package handoff):** the second-machine agent
-prepares receipt/checksums only, keeps the client pinned to the agreed target
-revision, and waits for A's corrected single-core launcher and boot-entry
-procedure. Do not run upstream `proxyclient/tools/linux.py`. First live test
-is the bounded USB handshake; thereafter record only approved diagnostic
-boots. Intake requirements and the result template are in
-`tools/m1n1-client/README.md`. No package has been received yet.
+**User direction (2026-10-13, package handoff):** the second-machine agent has
+received B's corrected single-core package/launcher and completed offline
+verification only. Keep the client pinned to the agreed target revision.
+Do not run upstream `proxyclient/tools/linux.py`. First live test is the
+separately authorized bounded USB handshake; thereafter record only approved
+diagnostic boots. Intake requirements and the result template are in
+`tools/m1n1-client/README.md`; current package instructions are in `native/boot/README.md`.
 
 | Agent | Who | Owns |
 |---|---|---|

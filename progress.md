@@ -5,6 +5,34 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1 agent: boot021 offline verification complete; live checks NOT RUN
+
+* **Verified checkout:** `58dc2baffceda76d546b0e6fb8f101089dfd35b8`, obtained
+  by a clean `git pull --ff-only`. These are the M1's observed results from
+  that handoff; this report was added after pulling B's later preparation notes.
+* **Archive:** downloaded private prerelease `native-j716c-boot021` and matched
+  `ilinux-j716c-boot021.tar.gz` against Git's checksum **before extraction**:
+  `b534680fc25dff78d8eaecfb96ed5b9733a3f408ae20cb4947722cb8163edc15`.
+* **Verifiers:** offline launcher PASS against the repository manifest; intake
+  PASS for all 13 files and the declared m1n1 revision. The tracked SHA256SUMS
+  digest matched `9d2b9ec1ae9dad601fb25a6536e838b57ab436160ab6ceddf208b764de41f581`.
+* **Tests:** 17 launcher + 7 intake + 2 fake-serial USB tests passed (26 total).
+  LLVM 23.1.3 passed ARM64 assembly, link, objcopy, nm and disassembly checks.
+* **Client:** clean, pinned to `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
+  Package revision agreement is an offline check, not a live version observation.
+* **Receipt:** retained locally at ignored `build/native-intake/receipts/boot021.json`,
+  timestamp `2026-10-13T20:02:34.601710+00:00`, with `boot_authorized: false`
+  and `target_version_observed_live: false`. Payloads remain under ignored
+  `build/native-boot-download/`; neither binaries nor the local receipt are committed.
+* **Live status:** USB handshake/P_NOP, live target-version check, native m1n1,
+  native Linux and native Omarchy **NOT RUN**. Discovery only found no USB
+  modem paths; no serial port was opened. This is not a failed cable test.
+* **Ready for the next coordinated step:** no offline verification blockers.
+  Physical testing remains on hold pending boot-entry provisioning and explicit
+  authorization; B's installer assessment issue remains separately unresolved.
+  No `--connect`, `--launch`, upstream launcher, boot installation, disk/security
+  change or reboot was performed by the M1 agent.
+
 ## 2026-10-13 · Agent B: matching installer downloaded; native checks NOT RUN
 
 * User authorized the 26.6.2 installer download only. Apple's softwareupdate
