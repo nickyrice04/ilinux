@@ -44,3 +44,9 @@ third_party/
 virtualization/run/
 tools/rpc-cache/
 virtualization/app/*.app/
+
+# Generated Core ML / ML packages (synthetic, regenerable via
+# benchmarks/ai/coreml_ane_bench.py). Never commit model weights.
+*.mlpackage/
+*.mlmodelc/
+weight.bin
