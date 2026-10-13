@@ -8,6 +8,18 @@ custom boot-object installation and native testing are not authorized.**
 
 ## Current execution handoff — 2026-10-13
 
+**Latest M1 handoff — lab setup and return succeeded (user-observed):** the
+user reached the lab desktop and reported `sw_vers` **26.6.2 / 25G83**, then
+confirmed return to the usual **Macintosh HD** desktop after startup-selection
+guidance. Installation/setup and first lab boot are complete by user report.
+M1 did not independently inspect the M5. Post-return original macOS build and
+security-state verification are still pending; M5 agent should perform those
+read-only checks before any later work. Boot021 and its client pin are unchanged.
+Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
+**NOT RUN**. Stop before Recovery/security changes or custom boot installation.
+
+### Earlier installer handoff (historical; completion updated above)
+
 * Created the unique, empty **iLinux Boot Lab** APFS volume in the existing
   internal container, with no quota/reserve or partition resize. It is mounted
   at `/Volumes/iLinux Boot Lab`. The original volumes' names, roles and FileVault

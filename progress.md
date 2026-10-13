@@ -5,6 +5,21 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1 handoff: lab setup and return to Macintosh HD succeeded (user-observed)
+
+* User completed the installer-managed restart and Setup Assistant, reached
+  the iLinux Boot Lab desktop, and reported `sw_vers` **26.6.2 / 25G83**.
+* After guidance to shut down, use startup options and select Macintosh HD,
+  the user confirmed: "I'm back at my usual Macintosh HD desktop now."
+  Lab first boot/setup and return to the original desktop are therefore
+  confirmed by the user's observations, not remote inspection by M1.
+* No post-return original-build or security-state checks have been reported
+  yet. Do not infer current Full Security/SIP/FileVault status from the return
+  alone. M5 agent should perform the planned read-only verification next.
+* Verified boot021 package and m1n1 client pin are unchanged. Live USB/P_NOP,
+  live target-version check, native m1n1, native Linux and native Omarchy
+  remain **NOT RUN**. No security/custom-boot stage is authorized by this result.
+
 ## 2026-10-13 · Agent B: lab volume created; macOS installation in progress
 
 * User authorized lab-entry setup while preserving original macOS and stopping

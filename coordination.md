@@ -20,11 +20,17 @@ M1 keeps the offline boot021 package ready and performs no live USB actions.
 the original volumes' names/roles/FileVault states. Original policy reports
 Full Security; SIP/authenticated-root enabled. Repeated installer verification
 PASS. Normal GUI launch succeeded; after the user authorized its license, B
-selected and visually verified **iLinux Boot Lab** as destination. The installer
-has since advanced to installation progress, still naming the lab. Completion
-and bootability remain unverified. Save work and allow installer-managed restarts;
-do not restart manually or begin a second installation. The current human/
-M1 handoff is at the top of `kernel/native-enablement/boot-entry-setup.md`.
+selected and visually verified **iLinux Boot Lab** as destination.
+
+**M1 return handoff (user-observed):** the user completed installation/setup,
+reached the lab desktop and reported `sw_vers` **26.6.2 / 25G83**, then confirmed
+successful return to the usual **Macintosh HD** desktop. These observations
+establish lab first boot and return; M1 has not remotely inspected the M5.
+Post-return original-build/security checks are still pending: M5 agent should
+perform the planned read-only verification, without advancing to security or
+custom-boot changes. Boot021 and the existing client pin are unchanged.
+Live USB/P_NOP, live target-version check, native m1n1/Linux/Omarchy remain
+**NOT RUN**. Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
 
 ### Current boot-package assignment (user authorized 2026-10-13)
 
