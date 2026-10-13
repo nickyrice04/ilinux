@@ -25,8 +25,10 @@ separate computers: record ownership and handoffs here before shared work.
 Credentials remain in the OS credential store, never in tracked files.
 Ignored VM disks, build payloads and local third-party checkouts are not
 downloaded by Git. Proxy-client dependencies now pass offline imports; see
-`tools/m1n1-client/README.md`. Physical USB connectivity, target boot-entry
-readiness and assembly-toolchain availability remain unverified/incomplete.
+`tools/m1n1-client/README.md`. LLVM 23.1.3 now passes offline ARM64 assembly,
+link and disassembly. A bounded P_NOP-only USB check is prepared and fake-
+transport tested. Physical connectivity and target boot-entry readiness
+remain unverified; no target session has run.
 
 | Agent | Who | Owns |
 |---|---|---|

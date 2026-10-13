@@ -5,6 +5,21 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Second-machine agent: LLVM and non-mutating USB checker
+
+* Installed a minimal official LLVM 23.1.3 macOS ARM64 toolchain inside ignored
+  `third_party/`; SHA-256 matches GitHub's release asset digest. The archive
+  is removed after extraction. No global install or PATH changes.
+* Actual upstream ARMAsm builds `nop; ret` for ARM64 ELF: clang, lld,
+  objcopy, nm and objdump pass, including exact expected instruction bytes.
+* Added an explicit USB connection checker: only P_NOP, 10-second bound,
+  no setup.py, feature negotiation, memory/register access or boot request.
+  Fake-serial tests verify the serialized request and close-on-timeout.
+* Default discovery opens nothing; no device is detected. Explicit serial
+  opening can interrupt target autoboot into proxy mode. No M5 session run.
+* Remaining: verified backup (user reports in progress), cable, approved
+  target entry/version, physical check and checksummed Stage-B artifacts.
+
 ## 2026-10-13 · Second-machine agent: proxy client prepared offline
 
 * Prepared ignored m1n1 checkout at the plan's `57a9339ffd1876e78297b17d34dece8cff8fa1ba`

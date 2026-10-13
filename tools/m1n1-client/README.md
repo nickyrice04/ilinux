@@ -34,9 +34,47 @@ tools/m1n1-client/.venv/bin/python -I tools/m1n1-client/check.py
 5. For Stage B, transfer agent A's actual job-020 `Image`,
    `t6050-j716c.dtb` and diagnostic `initramfs.cpio.gz` with checksums.
    They are ignored build outputs and are absent from this clone.
-6. LLVM/lld/llvm-objcopy are not installed here. Assembly-based operations
-   need a separately prepared toolchain; basic imports do not test those.
-   Do not interpret this environment as full hypervisor readiness.
+6. Project-local LLVM 23.1.3 provides clang, lld, llvm-objcopy, llvm-nm and
+   llvm-objdump. Use `tools/m1n1-client/run.sh SCRIPT [ARGS]` to select it.
+   A local ARM64 assembly/link/disassembly smoke check is provided below.
+   This does not establish full hypervisor or hardware readiness.
+
+## LLVM and USB checks
+
+LLVM is a minimal extraction of the official ARM64 macOS release under
+`third_party/LLVM-23.1.3-macOS-ARM64/`, ignored by Git. No Homebrew, global
+PATH change or system package installation is needed. Release archive:
+https://github.com/llvm/llvm-project/releases/tag/llvmorg-23.1.3
+
+The archive SHA-256 was checked against GitHub's release asset digest:
+`3dcfd88aec10be204a24037bcb0dc0ad777882e9dbe8ac60e2639060d8a794b1`.
+The downloaded archive is removed after successful installation to save space.
+
+```sh
+tools/m1n1-client/run.sh tools/m1n1-client/check-toolchain.py
+tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py
+```
+
+The USB checker defaults to device-path discovery only. After the backup
+and target boot-entry gates are complete, explicitly connect with:
+
+```sh
+tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py --connect /dev/cu.usbmodemP_01
+```
+
+Connection mode sends exactly one **proxy P_NOP** request and closes the port,
+with a 10-second deadline. It does not import `m1n1.setup`, negotiate transport
+features, access registers/memory, reset the panic counter or request a boot.
+It suppresses incidental target console output and does not save logs/history.
+Opening the serial port can interrupt target autoboot into proxy mode; the
+serial transport transmits a request, so this is a non-mutating protocol
+check rather than passive USB observation. Run it only in the agreed target
+session. A fake serial transport test checks the exact outgoing opcode and
+zero arguments, and verifies closure on success and timeout:
+
+```sh
+tools/m1n1-client/run.sh tools/m1n1-client/test_usb_check.py
+```
 
 ## Connection check after the target gate is approved
 
