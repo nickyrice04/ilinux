@@ -31,6 +31,27 @@ measured, still unsupported, and next.
   return to Macintosh HD and restore its default selection. No boot-policy
   change, custom-object installation or restart has occurred in this session.
   Stage A/P_NOP and native Linux/Omarchy remain **NOT RUN** and separately gated.
+* Integrated M1 commit `1420572`: offline Stage A checklist and Stage B
+  evidence draft are prepared, package hashes/client pin unchanged. Both
+  agents' progress entries are preserved; current lab authorization is above.
+
+## 2026-10-13 · M1: Stage A instructions and Stage B evidence draft prepared offline
+
+* Fast-forwarded to `1607f2a` (includes requested `2438c01`) and read the current
+  staging/policy handoff. B reports original/lab Full Security, both exit 0,
+  from user-provided read-only JSON; M1 has not independently queried policy.
+* Added `tools/m1n1-client/stage-a-instructions.md`: separately authorized
+  discovery, one bounded P_NOP handshake, stop/return criteria and no automatic
+  transition to Stage B. No instructions were executed against the target.
+* Prepared ignored `build/native-intake/results/boot021-stage-b-prepared.md`
+  from the updated result template, with source/manifest/payload hashes,
+  proposed fixed invocation/arguments and separate controller/screen deadlines.
+  Actual timestamps/results remain NOT RUN or NOT OBSERVED.
+* All 13 package files still match the existing receipt. Boot021, receipt and
+  clean client pin `57a9339ffd1876e78297b17d34dece8cff8fa1ba` are unchanged.
+* Wait for explicit Recovery/security/custom-boot and separate Stage A/B
+  authorization. USB/P_NOP, live target-version, native m1n1/Linux/Omarchy
+  remain **NOT RUN**. No reboot, policy write, live connection or launch.
 
 ## 2026-10-13 · Agent B: user-provided policy check passes for both installations
 
