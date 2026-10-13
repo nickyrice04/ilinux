@@ -102,6 +102,11 @@ See `progress.md`. As of 2026-10-13:
   separately authorized handoff. Generic diskless VM PID-1/60-second heartbeat
   succeeds; native hardware remains untested. `native/boot/README.md` is the
   current M1 handoff. Stop before boot settings or physical boot.
+  M1's `dfdf8cf` offline report is reviewed (13 files verified, 26 tests pass).
+  The matching macOS scaffold installer passes package trust/content checks;
+  its outer-app resource-rule rejection remains unchanged. No security checks
+  were disabled. See `native/boot/macos-installer-download.md`; installer launch
+  and dedicated-entry creation still require separate authorization.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;

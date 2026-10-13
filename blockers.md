@@ -87,23 +87,31 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
 ## Testing infrastructure
 
-### Second-machine native handoff pending (2026-10-13)
+### Second-machine offline handoff complete; live testing pending (2026-10-13)
 
 Client/LLVM and offline checks are ready. Job 021 now provides the package,
-sender checksums and corrected launcher/instructions; M1 receipt remains
-pending. User reports backup completed. Boot-entry provisioning now has a
+sender checksums and corrected launcher/instructions. M1's `dfdf8cf` report is
+reviewed: archive/13 files verified, 26 tests and LLVM checks pass, clean client
+at the agreed revision. All live USB/native tests remain **NOT RUN**.
+User reports backup completed. Boot-entry provisioning now has a
 concrete proposal in `kernel/native-enablement/boot-entry-setup.md`;
 execution is separately gated and unvalidated on hardware.
 Upstream `proxyclient/tools/linux.py` is explicitly on hold. Package integrity
 is not boot approval; first live test is the bounded P_NOP USB handshake.
 
-### Matching installer application assessment pending (2026-10-13)
+### Matching installer content verification resolved (2026-10-13)
 
-The authorized installer download completed and embedded OS metadata matches
-26.6.2 / 25G83. Its disk-image checksum passes. Both codesign verification and
-Gatekeeper assessment report `resource envelope is obsolete (custom omit rules)`.
-This remains unresolved before installer launch; do not bypass it or claim
-successful trust verification. Details: `native/boot/macos-installer-download.md`.
+The downloaded 26.6.2 / 25G83 installer contains the original Apple-signed
+XAR package at SharedSupport.dmg. `pkgutil` verifies signed Apple Software;
+Gatekeeper's package assessment accepts it as Apple Installer. All five signed
+entry checksums pass; the installed 695 files/226 directories/26 symlinks match
+the signed Payload. Three executable signatures pass strict Apple-anchor checks.
+The whole-app custom-omit-rule rejection remains unchanged and unsuppressed;
+it is not a successful whole-app execution assessment. The independent package
+and content checks resolve the authenticity/integrity investigation. Actual
+installer launch is **NOT RUN** and requires separate authorization; stop if
+that future normal launch is blocked. Details and the repeatable verifier:
+`native/boot/macos-installer-download.md`. Eleven synthetic regressions pass.
 No volume creation, OS installation, boot policy change or restart has occurred.
 
 ### B-005 🟢 Isolated Linux environment (resolved 2026-10-11)

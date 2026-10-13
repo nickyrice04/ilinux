@@ -5,11 +5,12 @@ The user requested exact steps while the M1 verifies boot021, explicitly
 prohibiting boot-setting changes. **Every installation/reboot/policy step below
 is pending separate approval. None has been executed.**
 
-**Download update:** the user subsequently authorized only the matching
-installer download. It is complete; payload metadata confirms 26.6.2 / 25G83
-and the image checksum passes. The application trust assessment reports a
-custom-resource-envelope error and remains unresolved. See the
-[download record](../../native/boot/macos-installer-download.md). All volume,
+**Verification update:** the matching 26.6.2 / 25G83 installer is downloaded.
+Its original package passes Apple's signature and Gatekeeper install assessment;
+all signed entries and installed app contents match. The outer app's custom-
+resource-rule rejection remains unchanged, with no exception or bypass. See the
+[verification record](../../native/boot/macos-installer-download.md). M1's
+offline receipt is published and reviewed. All volume, installer-launch,
 OS-installation, policy and reboot steps below remain on hold.
 
 ## Chosen route and observed prerequisites
@@ -33,7 +34,7 @@ Read-only inspection on 2026-10-13 found:
 | Installer now present | `/Applications/Install macOS Tahoe.app`; download record above |
 | Apple installer catalog | **26.6.2 / 25G83**, 17,953,734 KiB (about 18.4 GB) available |
 | Backup | User reports completion; verify its latest dated backup before proceeding |
-| Controller | User reports offline completion; published receipt pending; live checks NOT RUN |
+| Controller | M1 report `dfdf8cf`: archive/13 files verified, 26 tests pass; live checks NOT RUN |
 
 The proposed volume shares the existing APFS container's free space. No
 container shrink, new GPT partition, ESP or Linux root filesystem is needed
@@ -53,9 +54,9 @@ those installer effects; otherwise stop at preparation.
 
 Before any host changes:
 
-1. M1 reports the package receipt, matching client pin and offline tests from
+1. M1 has reported the package receipt, matching client pin and offline tests from
    [native/boot/README.md](../../native/boot/README.md). Successful verification
-   does not authorize `--connect` or `--launch`.
+   does not authorize `--connect` or `--launch`. Recheck if artifacts change.
 2. Confirm the external backup's latest completed date and that it can be
    opened. Eject/disconnect it before installation so it is not a destination.
 3. Keep both Macs powered and the M1 instructions available independently.
@@ -65,15 +66,18 @@ Before any host changes:
    Record the original entry's security mode before installation using a
    read-only policy view; retain only the mode/encryption/SIP outcomes, not
    the full policy or identifiers. Stop if the current mode is unclear.
-5. Approve the approximately 18.4 GB installer download, new lab installation,
-   temporary startup-disk selection and subsequent **lab-only** boot policy.
+5. The installer download/verification are complete. Obtain separate approval
+   for the new lab installation, temporary startup-disk selection and subsequent
+   **lab-only** boot policy.
    Stage A (m1n1/USB) and Stage B (Linux) remain separately identified actions.
 
 ## 2. Fetch the matching Apple installer — only after approval
 
 **Completed under download-only authorization. Do not repeat the download.**
-Resolve the assessment error in the download record before installer launch.
-The commands below retain the acquisition recipe for reproducibility.
+The subsequent read-only investigation verified package authenticity and app
+contents without disabling security checks; see the verification record.
+Installer launch remains untested and requires separate approval. The commands
+below retain the acquisition recipe for reproducibility.
 
 In the original M5 macOS, recheck the catalog and require the same version
 **and build** before downloading:
@@ -101,6 +105,8 @@ Source: [Apple's installer download procedure](https://support.apple.com/en-us/1
 3. Open **Install macOS Tahoe**. At destination selection choose **Show All
    Disks → iLinux Boot Lab**. Stop if that exact destination is unavailable,
    an erase is proposed, or the selected destination is Macintosh HD/Data.
+   If macOS blocks the launch, stop and investigate; do not override Gatekeeper,
+   strip quarantine, re-sign the app or suppress signature verification.
 4. Authorize with the original volume owner's credentials when Apple asks.
    Let the installer complete its reboots; do not interrupt installation.
 5. Complete the new installation's setup with a local administrator account

@@ -682,3 +682,28 @@ resolved before launch. No installer launch or assessment bypass was attempted.
 keeping all live USB/native boot checks **NOT RUN**. A working native desktop
 is not established by this download or the controller's offline test success.
 The dedicated entry and first native diagnostic remain separate later steps.
+
+## D-046 · 2026-10-13 · Authenticate the original package without bypassing app checks
+
+**User direction:** resolve installer verification without disabling security
+checks; stop before volume creation or boot changes.
+
+**Finding:** the app's custom resource rules explain the generic whole-app
+verification rejection. The installed SharedSupport.dmg also contains the
+original Apple XAR package, as described by its signed postinstall script.
+That package passes `pkgutil` trust verification and Gatekeeper's install
+assessment. Its table matches Apple's catalog and stored signed checksum;
+all five signed entries and installed app contents match. Three executable
+signatures pass strict Apple-anchor checks. No replacement download was needed.
+
+**Decision:** record authenticity/integrity as verified using that independent
+chain, while retaining the whole-app rejection as an unchanged observation.
+Do not re-sign, suppress errors, strip quarantine or add security exceptions.
+The original read-only verifier passes on the actual package; eleven synthetic
+integrity/parser regressions pass. This is not proof of successful installer
+launch, OS installation or native Linux boot. Stop if a later authorized
+normal launch is blocked. See `native/boot/macos-installer-download.md`.
+
+**Coordination:** M1 report `dfdf8cf` is reviewed and integrated. Offline ready;
+all live checks **NOT RUN**. Dedicated-entry provisioning remains a separate
+user-authorized step, not implied by either machine's verification results.

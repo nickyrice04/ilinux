@@ -26,10 +26,14 @@ lab-only policy/boot-object commands and macOS return. No volume creation,
 policy change or reboot has run; an offline receipt does not authorize those
 host changes.
 
-**Download-only authorization and result:** the matching macOS installer is now
-downloaded. Embedded metadata confirms 26.6.2 / 25G83; image checksum passes.
-The app's codesign/Gatekeeper assessment reports a custom-resource-envelope
-error, unresolved before launch. See `native/boot/macos-installer-download.md`.
+**Download and verification result:** the matching 26.6.2 / 25G83 installer is
+downloaded. User subsequently authorized resolving verification without
+disabling security checks. Its original package passes Apple's signature and
+Gatekeeper install assessment; all five signed entries and the installed
+695 files/226 directories/26 symlinks match. Three executable signature checks
+and eleven synthetic verifier regressions pass. The outer app's custom-omit-
+rule rejection remains unchanged; no security exception or bypass was used.
+See `native/boot/macos-installer-download.md` and D-046.
 M1 has now published its observed offline results below and in `progress.md`.
 USB/P_NOP, live target-version check, native m1n1, native Linux and native
 Omarchy remain **NOT RUN**. Installer launch and all boot changes stay on hold.
@@ -52,8 +56,10 @@ M1's complete JSON receipt is local and ignored:
 It records `boot_authorized: false` and `target_version_observed_live: false`.
 There are no offline verification blockers. USB discovery opened no port and
 found no modem paths; it does not establish cable status. First live test is
-still the separately authorized bounded handshake. Boot-entry provisioning,
-installer assessment and explicit physical-test approval remain pending.
+still the separately authorized bounded handshake. Boot-entry provisioning
+and explicit physical-test approval remain pending. B reviewed and integrated
+this report (`dfdf8cf`) while completing installer content verification; actual
+installer launch remains **NOT RUN**.
 
 ### Second-machine checkout (2026-10-13)
 

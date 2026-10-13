@@ -5,6 +5,33 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: installer contents verified without security changes
+
+* User authorized resolving verification and stopping before volumes/boot changes.
+  Found the installed SharedSupport.dmg also contains Apple's original XAR
+  InstallAssistant package; the signed postinstall script explains that layout.
+  Inspected only as data; no scripts or installer code executed, no images mounted.
+* `pkgutil --check-signature`: **signed Apple Software**. Gatekeeper's **install**
+  assessment: accepted, **Apple Installer**. Both exit 0. Official catalog and
+  embedded metadata identify **26.6.2 / 25G83**, product `140-93587`.
+* Verified compressed XAR table against the catalog and signed stored checksum;
+  every archived/extracted checksum for all five entries passes. Compared the
+  signed Payload against the installed app: **695 files, 226 directories,
+  26 symlinks**, zero mismatches or unexplained additions. Three executable
+  signatures pass strict/all-architecture Apple-anchor verification.
+* The generic whole-app custom-omit-rule rejection remains unchanged. It was
+  explained and independently checked, not suppressed or relabeled as a pass.
+  No Gatekeeper exception, quarantine removal, re-signing or weakened policy.
+* Added a read-only pinned-product verifier; actual run PASS and **11 synthetic
+  regressions PASS**. Apple artifacts and raw receipts remain local/ignored.
+  No second 18 GB download. See `native/boot/macos-installer-download.md`, D-046.
+* Reviewed/integrated M1 report `dfdf8cf`: package/13 files and 26 offline tests
+  pass, clean client at agreed pin. Its published observations remain below.
+* Next: separately approved lab provisioning. Installer launch, live USB/P_NOP,
+  native m1n1/Linux/Omarchy remain **NOT RUN**. No volume, boot policy, startup
+  selection, security setting or reboot changed. If a later normal installer
+  launch is blocked, stop for that specific failure; no override is authorized.
+
 ## 2026-10-13 · M1 agent: boot021 offline verification complete; live checks NOT RUN
 
 * **Verified checkout:** `58dc2baffceda76d546b0e6fb8f101089dfd35b8`, obtained
