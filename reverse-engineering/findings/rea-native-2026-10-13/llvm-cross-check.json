@@ -1,0 +1,26 @@
+[
+  {
+    "evidence_id": "ev_48d2c4c0c5b87ec6f97611c2f93a917b766b48287cfc0622458a15f6142604fc",
+    "function": "__ZN9ApplePMGR13enableCPUCoreEj",
+    "llvm_instructions": 16,
+    "all_instruction_words_match_original_carrier": true
+  },
+  {
+    "evidence_id": "ev_20613f48cf9799a7f295fcd6eb6021922b3d39560bf6ba3b0272918d7a111b41",
+    "function": "__ZN9ApplePMGR15configMiscCoresEyb",
+    "llvm_instructions": 449,
+    "all_instruction_words_match_original_carrier": true
+  },
+  {
+    "evidence_id": "ev_8069a3123aa9f1c2590d777b0550208db14e5d437b0330c75726a81f9841d575",
+    "function": "__ZN14AppleT6050PMGR26configCPUComplexPowerStateEjb",
+    "llvm_instructions": 51,
+    "all_instruction_words_match_original_carrier": true
+  },
+  {
+    "evidence_id": "ev_e2eeb4edfcba9d0776406bc471bf7db489f5633a2eb3b6ac387552b0c66c795f",
+    "function": "__ZN23AppleANS2CGv2Controller17SetupIOQARegisterEv",
+    "llvm_instructions": 38,
+    "all_instruction_words_match_original_carrier": true
+  }
+]

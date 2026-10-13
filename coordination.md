@@ -15,6 +15,25 @@ older plan disagree, this file wins for ownership and order of work.
 The user makes every gated decision (N1–N4 below). No agent changes boot
 security, partitions, firmware or the macOS installation.
 
+### Agent B scope update from the user (2026-10-13)
+
+The user has directed B to focus on REA/backend setup and targeted macOS
+binary research, with an evidence and implementation handoff for A. B will
+leave A's wakeup, QEMU and display work untouched and defer live-guest video
+changes while A owns that VM. B's current files are under
+`reverse-engineering/rea-lab/` and
+`reverse-engineering/findings/rea-native-2026-10-13/`. Analysis tools will run
+in a separate diskless Linux job, never against the live Omarchy disk.
+Build/analysis jobs must acquire `quiet` so A's measurements do not overlap.
+The agent C configuration handoff remains required before native desktop use.
+
+B milestone: REA/Ghidra works; original extraction/evidence tools and a
+read-only startup-layout experiment pass ARM64 Linux tests. See
+`reverse-engineering/findings/rea-native-2026-10-13/handoff.md` (F-070–F-072).
+The analysis VM is stopped and B's locks are released. A's live VM, QEMU,
+vmpoll and frame-rate work remain A-owned. The candidate native masks are
+not validated MMIO semantics and must not be installed as a hardware fix.
+
 ## Shared resources: rules
 
 1. **Locks** (`tools/lock.sh`, advisory, stored in the gitignored

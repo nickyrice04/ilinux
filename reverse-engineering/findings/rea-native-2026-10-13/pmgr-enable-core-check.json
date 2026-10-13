@@ -1,0 +1,26 @@
+{
+  "evidence_id": "ev_48d2c4c0c5b87ec6f97611c2f93a917b766b48287cfc0622458a15f6142604fc",
+  "member": "com.apple.driver.ApplePMGR",
+  "function": "__ZN9ApplePMGR13enableCPUCoreEj",
+  "body_anchors": [
+    {
+      "start": "0xfffffe00094964a4",
+      "end_inclusive": "0xfffffe00094964e3",
+      "carrier_offset": 38347940,
+      "derived_offset": 203172,
+      "bytes": 64,
+      "sha256": "a8cb4e94774013fbb20b93806451e99cfcc60569060426d1c1e0cce991ec1b04"
+    }
+  ],
+  "assembly_instructions": 16,
+  "original_bytes_verified": true,
+  "pcode_operations": 9,
+  "pcode_outside_body": 0,
+  "outside_addresses": [],
+  "pseudocode_gate": "manual_review_required",
+  "limits": [
+    "No semantic or runtime equivalence claim",
+    "Unresolved indirect calls and collection fixups remain unknown",
+    "Whole-function pseudocode must not guide implementation after a rejected gate"
+  ]
+}

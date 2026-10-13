@@ -109,8 +109,10 @@ See `progress.md`. As of 2026-10-12:
     4:2:0 downloads and opts into NV12 decode with `ilinux-video`. Paced 4K60
     decode uses 41.3% less QEMU CPU time (F-052/F-053); no energy gain claimed.
 * The current user authorized local analysis of appropriate accessible
-  binaries. REA metadata and targeted LLVM ARM64 disassembly were used;
-  deep REA providers remain unavailable. Preserve host and artifact rules.
+  binaries. REA/Ghidra now works in a separate diskless Linux lab (F-070),
+  with extraction and function-boundary checks (F-071). Native startup-mask
+  experiments remain read-only/unvalidated on hardware (F-072). See
+  `reverse-engineering/findings/rea-native-2026-10-13/handoff.md`.
 * The macOS baseline suite and session-1 research are complete.
 
 ## Next recommended actions

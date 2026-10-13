@@ -507,3 +507,27 @@ artifacts are uploaded, and native security/boot changes remain unauthorized.
 **Limits:** Even progressive 8-bit 4:2:0 downloads only; other shader paths,
 other codecs, asynchronous decode, native AVD and hardware validation remain.
 See `reports/video-download-and-nv12-2026-10-12.md` for reproduction and rollback.
+
+## D-040 · 2026-10-13 · Isolated REA native analysis with evidence gates
+
+**Decision:** Run pinned REA/Ghidra in B's diskless ARM64 Linux lab, never
+in the live Omarchy VM or through host-level installs. Copy only permitted
+software payloads, retain full raw results locally in ignored files, and
+publish provenance/behavioral conclusions rather than proprietary code.
+
+**Evidence:** F-070–F-072. The provider smoke test and four native dossiers
+work. Independent LLVM/original-byte checks cover 554 instructions. Three
+decompilations contain out-of-body high-pcode despite `member` labels;
+`check_evidence.py` therefore rejects their whole-function pseudocode.
+
+**Engineering consequence:** Advance the existing SMP H2 with an original
+read-only ADT audit and portable C mask-layout experiment. Linux builds and
+tests validate arithmetic/error handling only. Hardware register semantics,
+RVBAR, collection fixups and runtime dispatch remain unresolved; no native
+MMIO change follows from this evidence alone. A owns the virtual wakeup path.
+
+**Next gate:** Corroborate the selected PMGR dispatch and descriptor mapping,
+then obtain explicitly authorized native observations before integrating a
+startup-sequence change. Agent C configures the native desktop only after
+the existing native gates. Full handoff:
+`reverse-engineering/findings/rea-native-2026-10-13/handoff.md`.

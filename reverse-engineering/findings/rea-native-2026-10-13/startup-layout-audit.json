@@ -1,0 +1,232 @@
+{
+  "adt_sha256": "6f143434d2f05310067559f8fa3836ae564dd9934ebc5912660f2a9f5a8a73af",
+  "cluster_bytes": "060000000600060006000c00",
+  "candidate_cluster_records": [
+    {
+      "count": 6,
+      "first_bit": 0
+    },
+    {
+      "count": 6,
+      "first_bit": 6
+    },
+    {
+      "count": 6,
+      "first_bit": 12
+    }
+  ],
+  "cpus": [
+    {
+      "cpu_id": 0,
+      "adt_affinity": "0x0",
+      "cluster": 0,
+      "core": 0,
+      "adt_core_selector_mask": "0x1",
+      "candidate_global_mask": "0x1",
+      "candidate_matches_selector": true,
+      "legacy_bit": 0
+    },
+    {
+      "cpu_id": 1,
+      "adt_affinity": "0x1",
+      "cluster": 0,
+      "core": 1,
+      "adt_core_selector_mask": "0x2",
+      "candidate_global_mask": "0x2",
+      "candidate_matches_selector": true,
+      "legacy_bit": 1
+    },
+    {
+      "cpu_id": 2,
+      "adt_affinity": "0x2",
+      "cluster": 0,
+      "core": 2,
+      "adt_core_selector_mask": "0x4",
+      "candidate_global_mask": "0x4",
+      "candidate_matches_selector": true,
+      "legacy_bit": 2
+    },
+    {
+      "cpu_id": 3,
+      "adt_affinity": "0x3",
+      "cluster": 0,
+      "core": 3,
+      "adt_core_selector_mask": "0x8",
+      "candidate_global_mask": "0x8",
+      "candidate_matches_selector": true,
+      "legacy_bit": 3
+    },
+    {
+      "cpu_id": 4,
+      "adt_affinity": "0x4",
+      "cluster": 0,
+      "core": 4,
+      "adt_core_selector_mask": "0x10",
+      "candidate_global_mask": "0x10",
+      "candidate_matches_selector": true,
+      "legacy_bit": 4
+    },
+    {
+      "cpu_id": 5,
+      "adt_affinity": "0x5",
+      "cluster": 0,
+      "core": 5,
+      "adt_core_selector_mask": "0x20",
+      "candidate_global_mask": "0x20",
+      "candidate_matches_selector": true,
+      "legacy_bit": 5
+    },
+    {
+      "cpu_id": 6,
+      "adt_affinity": "0x100",
+      "cluster": 1,
+      "core": 0,
+      "adt_core_selector_mask": "0x40",
+      "candidate_global_mask": "0x40",
+      "candidate_matches_selector": true,
+      "legacy_bit": 4
+    },
+    {
+      "cpu_id": 7,
+      "adt_affinity": "0x101",
+      "cluster": 1,
+      "core": 1,
+      "adt_core_selector_mask": "0x80",
+      "candidate_global_mask": "0x80",
+      "candidate_matches_selector": true,
+      "legacy_bit": 5
+    },
+    {
+      "cpu_id": 8,
+      "adt_affinity": "0x102",
+      "cluster": 1,
+      "core": 2,
+      "adt_core_selector_mask": "0x100",
+      "candidate_global_mask": "0x100",
+      "candidate_matches_selector": true,
+      "legacy_bit": 6
+    },
+    {
+      "cpu_id": 9,
+      "adt_affinity": "0x103",
+      "cluster": 1,
+      "core": 3,
+      "adt_core_selector_mask": "0x200",
+      "candidate_global_mask": "0x200",
+      "candidate_matches_selector": true,
+      "legacy_bit": 7
+    },
+    {
+      "cpu_id": 10,
+      "adt_affinity": "0x104",
+      "cluster": 1,
+      "core": 4,
+      "adt_core_selector_mask": "0x400",
+      "candidate_global_mask": "0x400",
+      "candidate_matches_selector": true,
+      "legacy_bit": 8
+    },
+    {
+      "cpu_id": 11,
+      "adt_affinity": "0x105",
+      "cluster": 1,
+      "core": 5,
+      "adt_core_selector_mask": "0x800",
+      "candidate_global_mask": "0x800",
+      "candidate_matches_selector": true,
+      "legacy_bit": 9
+    },
+    {
+      "cpu_id": 12,
+      "adt_affinity": "0x200",
+      "cluster": 2,
+      "core": 0,
+      "adt_core_selector_mask": "0x1000",
+      "candidate_global_mask": "0x1000",
+      "candidate_matches_selector": true,
+      "legacy_bit": 8
+    },
+    {
+      "cpu_id": 13,
+      "adt_affinity": "0x201",
+      "cluster": 2,
+      "core": 1,
+      "adt_core_selector_mask": "0x2000",
+      "candidate_global_mask": "0x2000",
+      "candidate_matches_selector": true,
+      "legacy_bit": 9
+    },
+    {
+      "cpu_id": 14,
+      "adt_affinity": "0x202",
+      "cluster": 2,
+      "core": 2,
+      "adt_core_selector_mask": "0x4000",
+      "candidate_global_mask": "0x4000",
+      "candidate_matches_selector": true,
+      "legacy_bit": 10
+    },
+    {
+      "cpu_id": 15,
+      "adt_affinity": "0x203",
+      "cluster": 2,
+      "core": 3,
+      "adt_core_selector_mask": "0x8000",
+      "candidate_global_mask": "0x8000",
+      "candidate_matches_selector": true,
+      "legacy_bit": 11
+    },
+    {
+      "cpu_id": 16,
+      "adt_affinity": "0x204",
+      "cluster": 2,
+      "core": 4,
+      "adt_core_selector_mask": "0x10000",
+      "candidate_global_mask": "0x10000",
+      "candidate_matches_selector": true,
+      "legacy_bit": 12
+    },
+    {
+      "cpu_id": 17,
+      "adt_affinity": "0x205",
+      "cluster": 2,
+      "core": 5,
+      "adt_core_selector_mask": "0x20000",
+      "candidate_global_mask": "0x20000",
+      "candidate_matches_selector": true,
+      "legacy_bit": 13
+    }
+  ],
+  "legacy_collisions": [
+    {
+      "bit": 4,
+      "cpu_ids": [
+        4,
+        6
+      ]
+    },
+    {
+      "bit": 5,
+      "cpu_ids": [
+        5,
+        7
+      ]
+    },
+    {
+      "bit": 8,
+      "cpu_ids": [
+        10,
+        12
+      ]
+    },
+    {
+      "bit": 9,
+      "cpu_ids": [
+        11,
+        13
+      ]
+    }
+  ],
+  "register_semantics_validated": false,
+  "meaning": "Supports testing the existing SMP layout hypothesis; does not prove the cause of failed secondary entry"
+}

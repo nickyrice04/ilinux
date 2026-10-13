@@ -1,16 +1,20 @@
 # REA Setup Status
 
-**Status (2026-10-12): installed project-local (approved in session 1) and in use.**
+**Status (2026-10-13): project-local CLI plus a tested isolated Ghidra backend.**
 
 * `tools/rea/`: `rea-agents@6.4.0`, installed with `--ignore-scripts`.
 * `tools/rea.sh`: the CLI wrapper.
 * `~/Documents/iLinux/.mcp.json`: the MCP server, which loads at session
   start.
 * `~/Documents/iLinux/.claude/settings.json`: the deny/ask rules.
-* No decompiler engine is installed. A 2026-10-12 explicit Ghidra request
-  returned `provider_unavailable`; metadata tools work. Supplemental LLVM
-  ARM64 disassembly was used for the video-interface investigation.
-  See `findings/video-coherency-2026-10-12/rea-summary.json`.
+* Ghidra 12.1.4 with JDK 21 and its compiled ARM64 decompiler now works in
+  the separate diskless Linux lab. See [setup/reproduction](rea-lab/README.md)
+  and [validated findings](findings/rea-native-2026-10-13/handoff.md).
+  Alpine remains outside REA's supported distro list; actual bounded
+  operations pass. Collection fixups and function-boundary failures are
+  explicit limitations. The host CLI alone still lacks a deep provider.
+* The 2026-10-12 video investigation used metadata and supplemental LLVM;
+  its then-missing backend record remains historical evidence.
 
 **First use:** the hardware-services inventory
 (`reverse-engineering/macos-hardware-services.md`, scripts in

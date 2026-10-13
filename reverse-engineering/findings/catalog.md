@@ -10,9 +10,12 @@ Method tags:
 * `IOReg`: IORegistry class names
 * `SRC`: open-source code (Linux, Asahi, XNU)
 * `BENCH`: our measurements
-* `REA`: REA tool output: metadata only (`inspect-plist` over driver bundles and launchd plists), no decompilation
+* `REA`: REA tool output; each entry distinguishes metadata, assembly and
+  inferred pseudocode. Deep Ghidra analysis begins with F-070 (2026-10-13).
 
-No entry is based on decompiled Apple code.
+Earlier metadata/source findings keep their original provenance. F-070 and
+later explicitly identify binary-analysis evidence and its limits. Original
+Linux code must not copy Apple implementations or unverified pseudocode.
 
 ---
 
@@ -590,3 +593,34 @@ not a validated root cause for today's stack. Missing decode fences remain.
 | Inference | About 8 µs of a cross-vCPU wake is the framework's park and wake; polling before WFI removes it. The remaining ~13 µs is the IPI path. arm64 does not define `TIF_POLLING_NRFLAG`, so a waker always sends an IPI, even to a polling vCPU. Defining it (free arm64 TIF bits: 14–17, 22) would let the waker set NEED_RESCHED on a polling vCPU with no IPI and no exit. Next: a VM-kernel patch, then rebuild and validate. |
 | Confidence | **Confirmed** (mechanism; A/B/A). Absolute numbers were taken while another agent's build loaded the host, and will be repeated under the `quiet` lock with an idle-power check. The `TIF_POLLING_NRFLAG` gain is a **Hypothesis**. |
 | Linux mapping | VM kernel: `cpuidle-vmpoll` (out-of-tree module now; built in next), then the arm64 polling-flag patch |
+
+## F-070 · REA · Ghidra native analysis works in a separate diskless Linux lab
+
+| Field | Value |
+|---|---|
+| Source | `REA` 6.4.0, Ghidra 12.1.4; original ARM64 smoke fixture; readable IM4P krnl carrier; selected Mach-O fileset members |
+| Observation | Full JDK 21, locally compiled ARM64 `ghidra_opt`, `procps` and minimal guest filesystem fixes enable successful smoke decompilation and four Apple driver function dossiers. The visible macOS `.kc` files are Intel; the selected decompressed Preboot payload is ARM64e. |
+| Confidence | **Confirmed** for these operations; selected running boot identity and official Alpine support are not established |
+| Implementation | `reverse-engineering/rea-lab/`; provenance and versions in `findings/rea-native-2026-10-13/` |
+| Limits | No host installation, live Omarchy disk access, native Linux boot, protected credential access or artifact upload. Collection fixups remain unapplied in derivatives. |
+
+## F-071 · REA · Function-boundary checks reject misleading pseudocode
+
+| Field | Value |
+|---|---|
+| Source | Four REA/Ghidra dossiers, independent LLVM disassembly, carrier/derivative byte comparisons |
+| Observation | All 554 instruction words match the original carrier. High-pcode escapes the reported body in t6050 complex power (93/129 operations), PMGR misc-core configuration (449/1,633) and ANS queue setup (1/51), despite REA's `member` classification. The 16-instruction core-enable wrapper has no such escape. |
+| Confidence | **Confirmed** numerical boundary discrepancy; missing cross-member no-return knowledge is a possible cause, not proven |
+| Implementation | Original `check_evidence.py` checks digests, mappings, complete instruction coverage and numeric pcode PCs. Three whole-function pseudocode results are rejected. A passing gate still requires semantic review. |
+| Validation | Synthetic corruption/provenance regressions; 24 Python tests pass on macOS and ARM64 Linux. Four original-body byte comparisons and LLVM checks pass. |
+
+## F-072 · Native SMP · Executable follow-up to the existing cluster-mask hypothesis
+
+| Field | Value |
+|---|---|
+| Source | `ADT` sanitized PMGR `clusters` and CPU Core declarations; `SRC` m1n1 `57a9339` `smp.c`; bounded `REA`/LLVM core-enable wrapper and misc-core assembly |
+| Observation | Public m1n1's `4 * cluster + core` mask aliases CPU pairs 4/6, 5/7, 10/12 and 11/13. Candidate `(count,start)` records `(6,0),(6,6),(6,12)` give 18 unique bits and match all ADT Core selector masks. This expands H2 already recorded in `kernel/native-enablement/plan.md`; it is not a newly discovered failure. |
+| Confidence | **Confirmed** source arithmetic and ADT data; hardware CPU_START encoding and causal relation to failed secondary entry remain **Hypothesis** |
+| Implementation | Original `startup_layout.[ch]` validates caller-supplied nonoverlapping layouts and produces masks without MMIO. `audit_startup_layout.py` records the data comparison. No Apple algorithm is transcribed. |
+| Validation | Linux GCC build and runtime test; macOS ASan/UBSan; 18-core uniqueness, 5,984 valid single-cluster cases, overlap/range/error-output tests. No native compatibility or performance claim. |
+| Next | Resolve PMGR descriptor/dispatch evidence; validate RVBAR and startup behavior after native authorization. Do not apply VM vmpoll or these candidate masks as a verified native idle/startup policy. |

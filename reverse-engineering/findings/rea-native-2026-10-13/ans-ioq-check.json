@@ -1,0 +1,28 @@
+{
+  "evidence_id": "ev_e2eeb4edfcba9d0776406bc471bf7db489f5633a2eb3b6ac387552b0c66c795f",
+  "member": "com.apple.iokit.IONVMeFamily",
+  "function": "__ZN23AppleANS2CGv2Controller17SetupIOQARegisterEv",
+  "body_anchors": [
+    {
+      "start": "0xfffffe000a649fb0",
+      "end_inclusive": "0xfffffe000a64a047",
+      "carrier_offset": 56909744,
+      "derived_offset": 263696,
+      "bytes": 152,
+      "sha256": "0d20826937a72e12d012a2ca0fdfdc45635d08d8d8213e053b40d403f19c850d"
+    }
+  ],
+  "assembly_instructions": 38,
+  "original_bytes_verified": true,
+  "pcode_operations": 51,
+  "pcode_outside_body": 1,
+  "outside_addresses": [
+    "0xfffffe000a64a04c"
+  ],
+  "pseudocode_gate": "rejected_cross_boundary",
+  "limits": [
+    "No semantic or runtime equivalence claim",
+    "Unresolved indirect calls and collection fixups remain unknown",
+    "Whole-function pseudocode must not guide implementation after a rejected gate"
+  ]
+}

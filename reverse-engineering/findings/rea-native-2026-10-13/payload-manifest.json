@@ -1,0 +1,9 @@
+{
+  "source": "readable Preboot IMG4 krnl payload; unique locator omitted",
+  "running_boot_identity_verified": false,
+  "payload_offset": 70,
+  "payload_bytes": 30306795,
+  "payload_sha256": "ce4a499572ff177792656ce7a25f716c3bb2273266140b1966c8359cfbe9050b",
+  "personalization_copied": false,
+  "operation": "read and copy unencrypted compressed payload only"
+}

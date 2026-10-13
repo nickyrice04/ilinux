@@ -1,0 +1,36 @@
+#!/bin/sh
+set -x
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+for module in fuse virtiofs failover net_failover virtio_net; do
+    [ ! -f "/modules/$module.ko" ] || insmod "/modules/$module.ko"
+done
+mkdir -p /dev/pts /mnt/lab /mnt/source /mnt/rea /tmp /run
+mount -t devpts devpts /dev/pts
+ln -s /proc/self/fd /dev/fd
+ln -s /proc/self/fd/0 /dev/stdin
+ln -s /proc/self/fd/1 /dev/stdout
+ln -s /proc/self/fd/2 /dev/stderr
+mount -t virtiofs lab /mnt/lab || exec sh
+mount -t virtiofs source /mnt/source || exec sh
+mount -t virtiofs rea /mnt/rea || exec sh
+hostname rea-lab
+ip link set lo up
+interface=$(ls /sys/class/net | sed '/^lo$/d' | head -n 1)
+ip link set "$interface" up
+timeout 20 udhcpc -i "$interface" -s /net-config -n -q -t 3 -T 3 >/tmp/dhcp.log 2>&1
+if [ -f /mnt/lab/tool-root.tar.gz ]; then
+    tar -xzf /mnt/lab/tool-root.tar.gz -C /
+fi
+sh /mnt/source/setup-guest.sh > /mnt/lab/setup.log 2>&1
+echo "REA_LAB_SETUP_EXIT=$?"
+if [ -f /mnt/lab/job.sh ]; then
+    timeout 240 sh /mnt/lab/job.sh > /mnt/lab/job.log 2>&1
+    echo "REA_LAB_JOB_EXIT=$?"
+    sync
+    poweroff -f
+fi
+echo "REA_LAB_READY"
+exec sh

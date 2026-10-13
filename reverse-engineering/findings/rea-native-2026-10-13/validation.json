@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-13",
+  "host": "Mac17,6 / M5 Max / t6050; macOS 26.6.2 (25G83)",
+  "analysis_guest": "diskless Alpine 3.23.0 aarch64, Linux 7.1.6-1-aarch64-ARCH; 2 vCPUs; 8 GiB RAM",
+  "versions": {
+    "rea": "6.4.0",
+    "ghidra": "12.1.4",
+    "java": "OpenJDK 21.0.12+8-alpine-r0",
+    "javac": "21.0.12",
+    "node": "24.18.1",
+    "gcc": "15.2.0",
+    "lzfse_commit": "e634ca58b4821d9f3d560cdc6df5dec02ffc93fd",
+    "macos_clang": "Apple clang 21.0.0 (clang-2100.3.34.2)"
+  },
+  "ghidra_archive_sha256": "ddac49f903da9d5bac833e5cc79395098b9c33cfd3279be5f31bd00387d2d4db",
+  "native_build": "make -j2 ARCH_TYPE= OSDIR=linux_arm_64 ghidra_opt",
+  "smoke": {
+    "runtime_cases_pass": 5,
+    "rea_evidence_id": "ev_05b0c37da79e4f21df3c0da3922f8eae94750270ff1e1af57ebb8f634f2ff998",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "target_sha256": "5d10da72f9e28e3d99ef728316f911727a65fdd9a48c70e8f6930a9223f454a1",
+    "recovered_behavior": "32-bit unsigned addition with saturation on carry"
+  },
+  "tests": {
+    "python_macos": "........................\n----------------------------------------------------------------------\nRan 24 tests in 0.005s\n\nOK\n",
+    "python_linux": "........................\n----------------------------------------------------------------------\nRan 24 tests in 0.008s\n\nOK\n",
+    "c_linux": "PASS: 18-core uniqueness, legacy collision rejection, all 5984 valid single-cluster masks, bounds and no output on errors\n",
+    "c_macos_sanitized": "PASS: 18-core uniqueness, legacy collision rejection, all 5984 valid single-cluster masks, bounds and no output on errors\n"
+  },
+  "limits": [
+    "Alpine is outside REA official supported distro list; audit-wide doctor is not fully healthy",
+    "Actual Ghidra operations succeeded; this is a validated local experimental setup",
+    "No native Linux execution, physical MMIO writes, power benchmark, or performance gain established",
+    "No proprietary target was executed; raw target and full decompiler results are local gitignored files"
+  ],
+  "compile_flags": {
+    "linux": "-O2 -std=c11 -Wall -Wextra -Werror",
+    "macos": "-O2 -Wall -Wextra -Werror -fsanitize=undefined,address",
+    "ghidra_native": "g++ -std=c++11 -O2 -Wall -Wno-sign-compare; make -j2 ARCH_TYPE= OSDIR=linux_arm_64 ghidra_opt"
+  },
+  "kernel_module_reproduction": "prepare_modules.py reproduced all five boot modules byte-for-byte from the cached Arch rootfs archive"
+}

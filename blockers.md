@@ -82,8 +82,11 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 * `~/Documents/iLinux/.mcp.json` plus a deny-list `.claude/settings.json`
   are in place. MCP tools load in the next session launched from
   `~/Documents/iLinux`; the CLI works now.
-* No decompiler engine (Ghidra/JDK not approved), so only metadata-level
-  tools are available.
+* 2026-10-13: Ghidra 12.1.4/JDK 21 now run in B's isolated diskless Linux
+  lab. REA smoke and four native dossiers succeeded (F-070). macOS has no
+  new tool installation. Alpine support and incomplete collection fixups
+  remain explicit limitations; three pseudocode results fail the new
+  function-boundary gate (F-071).
 
 ### B-007 🟢 AI framework baselines (resolved 2026-10-11)
 
@@ -144,5 +147,6 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   interlacing, higher bit depth) remain unvalidated and potentially affected.
 * Missing decode completion fences still prevent safely making the host
   decoder asynchronous. HEVC/VP9/AV1 and encode are not implemented here.
-* REA deep analysis is unavailable without a local Ghidra/JDK, Hopper or IDA
-  backend. Metadata inspection and supplemental LLVM disassembly work.
+* REA deep analysis is now available in the isolated lab (F-070/F-071),
+  enabling further video research. This has not resolved the remaining
+  video format or completion-fence gaps.

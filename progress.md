@@ -5,6 +5,27 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: isolated REA/Ghidra and native SMP evidence
+
+* **Implemented:** diskless Linux analysis lab, Ghidra 12.1.4 ARM64 native
+  decompiler build with JDK 21 and REA 6.4.0; safe kernel-payload/member
+  extraction and provenance checks. No live Omarchy disk or A-owned changes.
+* **Observed:** the actual ARM64e carrier includes PMGR/CLPC/SoCTuner/NVMe;
+  the visible `.kc` files are Intel. Four REA driver dossiers obtained;
+  all 554 instruction words independently cross-checked with LLVM and the
+  original carrier. Three pseudocode results fail function-boundary checks.
+* **Implemented/tested:** original evidence gate, sanitized ADT layout audit
+  and portable C startup-mask prototype. The latter exercises existing SMP
+  hypothesis H2 without MMIO. 24 Python tests pass on macOS and ARM64 Linux;
+  C tests pass with Linux GCC and macOS ASan/UBSan, including 18-core
+  uniqueness and 5,984 valid single-cluster masks.
+* **Limits:** experimental Alpine provider environment; unknown collection
+  fixups/cross-member dispatch; candidate mask semantics, RVBAR and physical
+  SMP remain unverified. No native performance or compatibility gain claimed.
+* **Handoff:** `reverse-engineering/findings/rea-native-2026-10-13/handoff.md`
+  (F-070–F-072, D-040). Analysis VM stopped and `quiet` released. A continues
+  vmpoll/F-050; agent C's native configuration role stays behind native gates.
+
 ## 2026-10-13 · Agent A, goal 2: cross-vCPU wakeup latency (in progress)
 
 * **Root cause found (F-054).** A cross-vCPU wakeup costs about 21 µs
