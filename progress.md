@@ -72,7 +72,70 @@ The user assigned agent A goals 4–7. Goal 4 done:
   feeds A as evidence; A owns the native build/validation (5), backup prep
   (6) and the handoff kit (7). Confirm with the user if B expects to own any.
 
-## 2026-10-13 · Agent A, goal 2: cross-vCPU wakeup latency (in progress)
+## 2026-10-13 · Agent A, goal 5+7: native kernel build and handoff kit
+
+Per the user, goals 5 then 7 are prioritized; goal 2 is checkpointed below
+and goal 3 deferred unless they block native work.
+
+**Goal 5 (native kernel build + first-boot plan), in progress:**
+
+* Read the native-enablement plan and both REA handoffs. Separated this
+  machine's facts from inherited M5 Pro reports: m1n1 single-core boot and
+  the SMP failure are M5 Pro reports (chip-id 0x6050); this unit is an M5 Max
+  (also 0x6050), so single-core boot here is Likely, not Confirmed, and the
+  SMP failure is not a local observation. Recorded in the first-boot plan.
+* **Reproducible full build** as job `020-t6050-full-build` (runs in the
+  Linux guest toolchain, not the live-VM measurement path): fetches pinned
+  AsahiLinux/linux `77cb8f24`, applies the committed t6050 series (0001-0007,
+  am exit 0), configures a 16 KiB-page bring-up kernel (framebuffer console,
+  initrd, Apple drivers, dockchannel), builds `Image` + modules + DTBs, runs
+  `dtbs_check`, builds the **real in-tree `dockchannel-hid` driver** baseline
+  vs the a351bff hardening patch (new-vs-baseline warning diff), and makes a
+  static diagnostic initramfs. Build results committed separately.
+* **[First-boot plan](kernel/native-enablement/first-boot-plan.md):** the
+  credible early-boot observation path is the **m1n1 USB proxy** (second
+  machine, pre-Linux) plus the **framebuffer console** (simpledrm on mBoot's
+  framebuffer) — **not** dockchannel-UART serial, USB Ethernet, keyboard or
+  SSH (each needs a missing driver or a boot-policy change). Staged tests A-E
+  with expected output, failure checkpoints and uniform recovery (RAM-only;
+  force-off → macOS). The exact next physical test needing user approval is
+  gate N1 + Stage A (m1n1 proxy reads chip-id 0x6050).
+* Fixed two build-script issues found in the first run: no `/usr/bin/time` in
+  the guest (removed), and non-idempotent re-runs (now reset+clean+re-am).
+
+**Goal 7 (config-agent handoff kit):** `native/handoff/` — VM-only files not
+to apply natively, what carries over, a hardware matrix with fallbacks
+(consuming B's driver-interface findings, no RE duplicated), how agent C gets
+network (USB Ethernet / the second machine, since N1 Wi-Fi has no driver),
+a read-only `acceptance-checks.sh`, and guardrails.
+
+**No native boot, host-security, partition, firmware or git-history change
+was made.** No native support is inferred from VM success.
+
+## 2026-10-13 · Agent A, goal 2: cross-vCPU wakeup latency (CHECKPOINTED)
+
+Checkpointed 2026-10-13 and deferred per the user, pending native work. The
+`cpuidle-vmpoll` interim fix is committed (`f4baf47`); the `TIF_POLLING_NRFLAG`
+kernel change and idle-power re-measure are **not started**. Resume only if
+latency blocks native development.
+
+* **Root cause found (F-054).** A cross-vCPU wakeup costs about 21 µs
+  (one vCPU: 1.6 µs; macOS: 3.8 µs). With Apple's in-kernel GIC,
+  Hypervisor.framework parks an idle vCPU inside `hv_vcpu_run`, and arm64
+  always IPIs the CPU it wakes.
+* **Implemented:** `omarchy-arm64/kernel/vmpoll`, a cpuidle driver with a
+  bounded POLL state before WFI. A/B/A results:
+  * cross-vCPU: 21.2 → 13.3 → 20.9 µs;
+  * unpinned: 36.6 → 13.3 → 39.8 µs;
+  * same-vCPU unchanged; idle QEMU CPU unchanged.
+* **Fixed:** `cpubench pingpong` now pins each end (`-c A,B`).
+* **Deferred next (not started):**
+  1. Repeat the matrix plus an idle-power ABBA under the `quiet` lock.
+  2. Add `TIF_POLLING_NRFLAG` to arm64 in the VM kernel, build `vmpoll` in,
+     rebuild the package and validate (IPI-free wakeups of polling vCPUs).
+  3. Re-test F-050 (goal 3).
+
+## 2026-10-12 · Linux Mesa video: lossless downloads and NV12 decode
 
 * **Root cause found (F-054).** A cross-vCPU wakeup costs about 21 µs
   (one vCPU: 1.6 µs; macOS: 3.8 µs). With Apple's in-kernel GIC,
