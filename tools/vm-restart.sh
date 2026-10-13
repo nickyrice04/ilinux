@@ -10,6 +10,13 @@
 # launcher. Env passes through (e.g. VIRGL_IOSURFACE_MIRROR_STATS=1).
 set -u
 cd "$(dirname "$0")/.." || exit 1
+# Agents share this VM (coordination.md): never restart it while another
+# agent holds the "vm" lock. Set AGENT_ID to your lock owner name.
+holder=$(tools/lock.sh holder vm)
+if [ -n "$holder" ] && [ "$holder" != "${AGENT_ID:-}" ]; then
+  echo "vm lock held by '$holder' (tools/lock.sh status); not restarting" >&2
+  exit 1
+fi
 C=virtualization/run/console.sock; M=virtualization/run/monitor.sock
 if pgrep -f qemu-system-aarch64 >/dev/null; then
   # Omarchy maps the ACPI power key to its menu: power off from inside

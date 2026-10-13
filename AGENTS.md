@@ -1,7 +1,9 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
-Read this file, then `progress.md`, `blockers.md` and `decisions.md`, before
-doing any work. Update them after every meaningful milestone.
+Read this file, then `coordination.md` (several agents share this workspace:
+ownership, locks, ID ranges and the order of work), `progress.md`,
+`blockers.md` and `decisions.md`, before doing any work. Update them after
+every meaningful milestone.
 
 ## Mission (short form)
 

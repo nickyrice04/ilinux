@@ -1,0 +1,125 @@
+# Coordination: agents working in this workspace
+
+Created 2026-10-13. Read this together with `AGENTS.md`, `progress.md`,
+`blockers.md` and `decisions.md` before starting work. If this file and an
+older plan disagree, this file wins for ownership and order of work.
+
+## Roles
+
+| Agent | Who | Owns |
+|---|---|---|
+| **A** | The session that wrote this plan (`AGENT_ID=agent-a`) | VM responsiveness: goals 2–3. QEMU source and patches (`virtualization/qemu/src/qemu`, `patches/qemu/`), the VM kernel config (`omarchy-arm64/kernel/linux-ilinux-vm/`), latency benchmarks |
+| **B** | The second build agent (`AGENT_ID=agent-b`) | Goals 4–7: video default, native readiness (`kernel/`, new `virtualization/jobs/`), backup preparation, the configuration handoff kit |
+| **C** | A configuration agent, later | Omarchy configuration on a natively booted install (goal 9). Starts only after gate N4 |
+
+The user makes every gated decision (N1–N4 below). No agent changes boot
+security, partitions, firmware or the macOS installation.
+
+## Shared resources: rules
+
+1. **Locks** (`tools/lock.sh`, advisory, stored in the gitignored
+   `virtualization/run/locks`):
+   * `vm`: hold it for any QEMU Omarchy VM console command, restart, or
+     install into the guest. `tools/vm-restart.sh` refuses to restart while
+     another agent holds it, so export `AGENT_ID`.
+   * `quiet`: hold it for power and latency measurements. While someone holds
+     it, nobody else builds, benchmarks or restarts a VM. Keep it short
+     (usually 30 minutes or less); measurements are invalid without it.
+   * `qemu-build`: QEMU and virglrenderer builds and `runtime/` installs.
+   * `git-history`: history rewrites. Only with the user's OK, and only while
+     no other agent is committing.
+
+   Run `tools/lock.sh status` before heavy work. Release locks as soon as you
+   are done. Never clear another agent's lock unless it is stale and the
+   user agrees.
+2. **Git:** one shared working tree and branch. Commit with explicit paths
+   only: no `git add -A`, `git add .` or `git commit -a`. Never commit another
+   agent's uncommitted files. Use the attribution line from your session
+   instructions.
+3. **Shared docs** (`progress.md`, `decisions.md`, the findings catalog,
+   `blockers.md`, READMEs): re-read right before editing, make small
+   targeted edits, and never rewrite a whole shared file from a stale copy.
+   Each agent writes its own progress entry.
+4. **ID ranges:** agent A uses F-054–F-069 and D-032–D-039. Agent B uses
+   F-070–F-089 and D-040–D-049. Agent C uses F-090 and up, and D-050 and up.
+5. **Native kernel builds** run in the separate job VM
+   (`virtualization/jobs/`). They load the host heavily, so never run one
+   during someone else's `quiet` window.
+6. **The floating VM window** (`COCOA_FLOAT=1`, which keeps the VM window on
+   screen) is for on-screen measurements only. Tell the user before a session
+   that uses it.
+
+## Goals, in order
+
+| # | Goal | Owner | Done when |
+|---|---|---|---|
+| 1 | Commit the verified Mesa video work | A | Done: `47efd62` |
+| 2 | **Cross-core wakeup latency.** Message passing between two processes takes 1.6 µs on one vCPU (macOS: 3.8 µs) but about 21 µs across vCPUs. QEMU uses Apple's hardware GIC (`kernel-irqchip=on`), so the leading suspect is an idle vCPU being parked and then woken through the macOS scheduler. Bounded spinning before parking (in QEMU's HVF idle path, and/or the guest's `cpuidle-haltpoll`, which our kernel does not build) is the candidate fix. Note: arm64 7.1.6 ignores `idle=poll` | A | Cross-vCPU pingpong and syscall improve measurably; idle power is unchanged within noise; the poll window is bounded and documented; new QEMU patch or kernel config committed |
+| 3 | **F-050 frame-rate collapse:** 7–19 fps on alternating fresh boots. Re-test after goal 2, then trace DRM flips, fences and Hyprland frame callbacks during an affected boot | A | Cause identified with evidence; fixed or documented with a workaround |
+| 4 | **Video fix as the default** (`mesa-virgl-video-ilinux`, now opt-in via `ilinux-video`). Do an on-screen playback and power check first | B | Plain `mpv`/FFmpeg use the fixed driver; pixel-exact and zero-copy regressions pass |
+| 5 | **Native track, safe steps:** full kernel build and `dtbs_check` for `kernel/patches/t6050` in the job VM; a written first-boot plan (see gates) | B | Kernel links; schema warnings triaged; plan committed |
+| 6 | **Backup preparation:** a scrub list (local paths, the test VM password), licences (GPL-2.0 for QEMU patches, MIT for virglrenderer and Mesa patches, a choice for our own code), and a plan to remove the 640 MB of Core ML weights from history or start fresh from a clean snapshot | B prepares; user approves; `git-history` lock to execute | Private repo ready to push on the user's go-ahead |
+| 7 | **Configuration handoff kit for agent C** (below) | B | `native/handoff/` committed and reviewed by A |
+| 8 | Native gates N1–N4 (below) | User decides; then A and B | Per gate |
+| 9 | **Omarchy configuration on the native install** | C | Acceptance checks in the handoff kit pass |
+
+Agents may pull work forward when blocked, but keep goal 2 before goal 3 (3
+re-tests 2). Keep goal 4's guest changes out of the VM while agent A holds
+the `vm` lock.
+
+## Native gates (all user decisions)
+
+* **N1. Prerequisites.**
+  * A current full macOS backup (Time Machine or equivalent).
+  * A second computer and a USB-C cable for m1n1's proxy and serial console.
+    Early boots have no display driver and no Wi-Fi, and that link is how
+    they are driven and observed.
+  * The user, in recoveryOS, sets Permissive Security for a dedicated m1n1
+    boot entry on a small separate APFS volume. No repartitioning yet.
+* **N2. RAM-only boots** over USB from the second computer: kernel,
+  initramfs and device tree, with nothing written to the Mac's disk. In
+  order:
+  1. single-core console;
+  2. secondary CPU start-up (SMP);
+  3. NVMe read-only identification;
+  4. keyboard and trackpad;
+  5. boot framebuffer.
+* **N3. Linux root partition.** Resizing the APFS container is a separate
+  user decision, made after another backup.
+* **N4. Omarchy installed natively.** Hand over to agent C with the kit.
+
+## Configuration handoff kit (goal 7, for agent C)
+
+Agent B writes it in `native/handoff/`. It must cover:
+
+1. **VM-only files that must not be applied natively:**
+   * `omarchy-arm64/configuration/vm-integration/*`: host bridge, vdagent,
+     NAT DNS, `MESA_VK_WSI_DEBUG=nowlts`, the VM `mpv.conf`, autologin;
+   * the VM kernel package.
+2. **What carries over:**
+   * `omarchy-qos` and the QoS tiers;
+   * kernel options (16 KiB pages, uclamp);
+   * the t6050 energy-model and OPP drafts (unvalidated);
+   * the aarch64-apple package choices.
+3. **A hardware matrix for the boot under test:** what works, what is
+   absent, and the fallback for each absent device:
+   * llvmpipe instead of GPU acceleration;
+   * USB Ethernet or tethering for networking, since N1 Wi-Fi has no driver;
+   * an external libfprint reader or FIDO2 key instead of Touch ID;
+   * no Neural Engine.
+4. **Access:** how agent C reaches the system. It needs network for itself:
+   USB Ethernet, or running from the second computer over the serial or
+   SSH link.
+5. **Acceptance checks:**
+   * all 18 CPUs and their capacities;
+   * storage health;
+   * display and input;
+   * audio;
+   * idle power with the WFI workaround in place;
+   * suspend (expected not to work yet);
+   * Omarchy's own test suite where applicable.
+6. **Guardrails:**
+   * never touch macOS volumes or the APFS container;
+   * no firmware, SEP or boot-policy changes;
+   * no credential handling;
+   * record every change as a package or config file in this repository.
