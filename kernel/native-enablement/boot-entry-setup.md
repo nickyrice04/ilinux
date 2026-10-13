@@ -1,13 +1,48 @@
-# M5 dedicated boot entry: lab Recovery installation authorized
+# M5 dedicated boot entry: installed; original macOS return complete
 
-Prepared by B on 2026-10-13 for **Mac17,6 / J716c / t6050 M5 Max**.
-Lab macOS installation/first boot and m1n1 file staging are complete.
-**The user now explicitly authorizes sections 5–6:** lab-only Recovery setup,
-Permissive Security, disabling kernel CTRR for that entry and installing the
-verified m1n1 boot object, while keeping Macintosh HD at Full Security.
-This supersedes earlier security holds. Stage A/P_NOP and Stage B/Linux tests
-remain outside this authorization. Policy/install execution is still pending
-the human's M5 Recovery session; preparation is not installation success.
+## 2026-10-13 · M1: lab m1n1 installation and original macOS return complete
+
+Evidence: human-entered commands on the M5, user-reported results and screen
+photos reviewed by M1; no remote M5 query by M1. Only sanitized conclusions
+are retained. Raw photographs, policy identifiers and credentials are not copied.
+
+* Lab desktop build confirmed **26.6.2 / 25G83** before paired Recovery.
+  Staged helper SHA-256 matched
+  `e65636d03cfb7a7000f86810fdc8888e209b99bedaa1b36ca7a125de4bf72188`.
+  Recovery lacked `shasum`; a temporary same-shell function accepted only
+  `shasum -a 256 FILE` and delegated to `/sbin/sha256 -q`. No helper file
+  or system tool was modified. The helper/payload checks then passed.
+* Read-only preflight: **exit 0; original Full; lab Full; lab paired 1TR**.
+  An initial mistyped readiness variable stopped the guarded operation;
+  the corrected command subsequently reached authentication and succeeded.
+* Authorized lab policy update succeeded: **lab Permissive, kernel CTRR
+  Disabled**, with helper postcheck **original Full / lab Permissive / paired
+  1TR**. The guarded installation rechecked policy and payload before kmutil.
+* User reports **kmutil exit 0; Installed yes**, and final policy check
+  **original Full / lab Permissive**. This completes boot-object installation.
+* **Incidental m1n1 startup observed:** user released the power button early
+  during the return sequence. Their photo shows m1n1 screen output/logo and
+  `Running proxy...`. User reports promptly powering off, then successfully
+  returning to the usual Macintosh HD desktop and selecting **Macintosh HD
+  as the default startup disk**. This is screen evidence of m1n1 execution,
+  not a completed Stage A test or evidence of Linux execution. Duration and
+  exact running version were not verified; USB initialization text does not
+  establish a controller connection or a successful P_NOP exchange.
+* **NOT RUN:** live USB connection/P_NOP, live target-version check, Stage A
+  controlled handshake, Stage B/native Linux and native Omarchy. No launcher
+  was run by M1. No Linux boot, liveness or performance result is claimed.
+* Boot021 package/ignored intake receipt are unchanged. M1 rechecked the clean
+  client pin: `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. No new offline
+  test run was needed for this documentation-only update; prior results stand.
+* Next: M5 agent reviews this handoff and can verify original macOS protections
+  read-only after return. The Full/Permissive result above was observed in
+  Recovery after installation; post-return policy/SIP/FileVault checks have
+  not been newly reported. Do not repeat installation. Wait for explicit
+  Stage A authorization before any controlled m1n1 boot or USB connection;
+  Stage B requires its own approval.
+
+<details>
+<summary>Historical pre-execution handoff (do not repeat the completed installation)</summary>
 
 ## Current execution handoff — 2026-10-13
 
@@ -110,6 +145,8 @@ Send M1:
 > coordination.md. Keep the verified boot021 package/client pin unchanged.
 > Stage A/P_NOP and Linux boots are not authorized by this setup: no --connect,
 > --launch or upstream linux.py; keep all live native checks NOT RUN.
+
+</details>
 
 ### Earlier installer handoff (historical; completion updated above)
 

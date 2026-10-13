@@ -793,3 +793,18 @@ helper staged on lab Data, no boot-policy/install command run from the desktop.
 M1 guides the human through Recovery and returns to original macOS afterward.
 Stage A/P_NOP and Stage B/Linux remain separately gated. No native success is
 inferred from authorization, preparation or a future kmutil success alone.
+
+## 2026-10-13 · Record completed lab installation and incidental m1n1 startup separately
+
+The authorized human/M1 Recovery session reports preflight exit 0, lab-only
+Permissive/kernel CTRR change, kmutil exit 0/Installed yes and final original
+Full/lab Permissive. User confirms return to Macintosh HD and default restored.
+Recovery's missing shasum was handled by a temporary, narrowly scoped shell
+function using the available sha256; the verified helper file stayed unchanged.
+
+During return the user accidentally booted m1n1; their photo shows
+`Running proxy...`, followed by user-reported power-off and original macOS
+return. Record that incidental screen observation separately from controlled
+tests. Live USB/P_NOP, exact live version checking, Stage B/Linux and native
+Omarchy remain NOT RUN. This event grants no further authorization and does
+not complete Stage A. No raw photos or device identifiers are saved.

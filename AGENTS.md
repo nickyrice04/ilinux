@@ -112,13 +112,15 @@ See `progress.md`. As of 2026-10-13:
   The user's post-return read-only helper output reports Full Security for
   original and lab, both exit 0. B reviewed that output, not an independent rerun.
   User-authorized m1n1 staging is complete: the lab Data copy matches the
-  package's 3,932,160 bytes/SHA-256. It is an ordinary file, not an installed
-  boot object. The user now authorizes lab-only paired Recovery setup,
-  Permissive Security/kernel CTRR and m1n1 installation, preserving original
-  Full Security. The tested read-only helper is staged beside m1n1. Startup
-  Disk shows the lab selected; Restart has not been clicked. Policy/install
-  execution awaits the human/M1 Recovery session; all live tests remain pending.
-  Current handoff: `kernel/native-enablement/boot-entry-setup.md`.
+  package's 3,932,160 bytes/SHA-256. Lab-only Recovery installation is now
+  complete by human command results: preflight exit 0, paired 1TR, lab
+  Permissive/kernel CTRR disabled, kmutil exit 0 and final original Full/lab
+  Permissive. User confirms return to Macintosh HD and restoration as default.
+  An accidental m1n1 startup reached the on-screen `Running proxy...` message
+  before the user powered off; this is incidental screen evidence, not a
+  completed Stage A handshake. Live USB/P_NOP, live version checking and Linux
+  remain **NOT RUN**. No further live test is authorized. Current handoff:
+  `kernel/native-enablement/boot-entry-setup.md` and `coordination.md`.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;
