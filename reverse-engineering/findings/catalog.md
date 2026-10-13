@@ -580,3 +580,13 @@ not a validated root cause for today's stack. Missing decode fences remain.
 | Confidence | **Measured**, one machine/session; whole-SoC power varied with host activity and is not used for an efficiency claim |
 | Linux mapping | `0001-virgl-nv12-decode-option.patch`, selected with `VIRGL_VIDEO_DECODE_NV12=1` by `ilinux-video` |
 | Limits | Decode-only benchmark, no display measurement or native Linux claim; raw protocol preferred-format numbers are not used. |
+
+## F-054 · VM latency · Cross-vCPU wakeups cost ~21 µs: Hypervisor.framework parks idle vCPUs, and arm64 always sends an IPI
+
+| Field | Value |
+|---|---|
+| Source | `MEAS` `cpubench pingpong` with each end pinned (`-c A,B`), A/B/A on a fresh boot; `sample` of QEMU during a cross-vCPU ping-pong; QEMU runs `-accel hvf,kernel-irqchip=on` (Apple's in-kernel GIC); `SRC` guest Linux 7.1.6 (`drivers/cpuidle/Kconfig`, `arch/arm64/include/asm/thread_info.h`, `include/linux/sched/idle.h`). |
+| Observation | A pipe round trip on one vCPU takes 1.6 µs (macOS: 3.8 µs). Across vCPUs it takes 21 µs, and 37–40 µs with scheduler-chosen placement. During a guest WFI, the vCPU thread sits in `Hv::Vcpu::run` → `VcpuStateManager::wait_for_interrupt` → `pthread_cond_wait`: the framework parks it, and QEMU never sees the WFI. With a guest polling idle state (`omarchy-arm64/kernel/vmpoll`), the round trip drops to 13.3 µs cross-vCPU and 13.3 µs unpinned; same-vCPU is unchanged and idle QEMU CPU does not rise (0.019 vs 0.022 cores). Corrections: `idle=poll` is ignored on arm64 7.1.6, and an earlier "busy target = 1.65 µs" result came from both threads landing on one CPU (the benchmark did not pin each end; fixed). |
+| Inference | About 8 µs of a cross-vCPU wake is the framework's park and wake; polling before WFI removes it. The remaining ~13 µs is the IPI path. arm64 does not define `TIF_POLLING_NRFLAG`, so a waker always sends an IPI, even to a polling vCPU. Defining it (free arm64 TIF bits: 14–17, 22) would let the waker set NEED_RESCHED on a polling vCPU with no IPI and no exit. Next: a VM-kernel patch, then rebuild and validate. |
+| Confidence | **Confirmed** (mechanism; A/B/A). Absolute numbers were taken while another agent's build loaded the host, and will be repeated under the `quiet` lock with an idle-power check. The `TIF_POLLING_NRFLAG` gain is a **Hypothesis**. |
+| Linux mapping | VM kernel: `cpuidle-vmpoll` (out-of-tree module now; built in next), then the arm64 polling-flag patch |

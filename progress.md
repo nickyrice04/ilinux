@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent A, goal 2: cross-vCPU wakeup latency (in progress)
+
+* **Root cause found (F-054).** A cross-vCPU wakeup costs about 21 µs
+  (one vCPU: 1.6 µs; macOS: 3.8 µs). With Apple's in-kernel GIC,
+  Hypervisor.framework parks an idle vCPU inside `hv_vcpu_run`, and arm64
+  always IPIs the CPU it wakes.
+* **Implemented:** `omarchy-arm64/kernel/vmpoll`, a cpuidle driver with a
+  bounded POLL state before WFI. A/B/A results:
+  * cross-vCPU: 21.2 → 13.3 → 20.9 µs;
+  * unpinned: 36.6 → 13.3 → 39.8 µs;
+  * same-vCPU unchanged; idle QEMU CPU unchanged.
+* **Fixed:** `cpubench pingpong` now pins each end (`-c A,B`).
+* **Next:**
+  1. Repeat the matrix plus an idle-power ABBA under the `quiet` lock.
+  2. Add `TIF_POLLING_NRFLAG` to arm64 in the VM kernel, build `vmpoll` in,
+     rebuild the package and validate (IPI-free wakeups of polling vCPUs).
+  3. Re-test F-050 (goal 3).
+
 ## 2026-10-12 · Linux Mesa video: lossless downloads and NV12 decode
 
 * Continued from commit `4d8987e`; audited existing kernel patches, VM,
