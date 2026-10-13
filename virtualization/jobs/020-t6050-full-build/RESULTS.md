@@ -29,27 +29,49 @@ boot, which is user-gated). Digests here fix provenance.
 
 ## DT validation (`dtbs-check-exit.txt`, `dtbs_check-t6050.txt`)
 
-`dtbs_check` exit 0 (dtschema 2026.9). The DTB compiles with 0 dtc warnings,
-but the draft DT has **248 schema warnings**, essentially all one class:
-*compatible string not in the binding's enum*. The offending compatibles are
-borrowed from other SoCs that the t6050-updated bindings don't list:
+`dtbs_check` exit 0 (dtschema 2026.9). **The t6050-j716c.dtb produces zero
+schema warnings** (`grep "^…/t6050-j716c.dtb:" dtbs_check-full.log` → 0).
 
-| Compatible in the draft DT | Count | Expected t6050 value |
+> **Correction.** An earlier version of this file reported "248 schema
+> warnings" for our DT. That was a filtering error: the first filter matched
+> any log line containing `t6050`, which caught warnings belonging to **other**
+> Apple SoC DTBs (t6022, t6031, t6030…) whose allowed-enum text lists
+> `apple,t6050-*`. Warnings are prefixed with their own dtb path; attributed
+> correctly, **our DT has none**. The filter in `run.sh` is fixed. See the
+> DT compatible audit below (F-056, corrected).
+
+**DT compatible audit (probe-readiness).** Beyond schema, each device probes
+only if a driver's `of_match_table` matches one of its compatibles.
+`../../../kernel/experiments/t6050-dt/probe-audit.sh`, run against this built
+tree, confirms **every bring-up-critical device matches a driver** on its
+t6050 string or its generic fallback:
+
+| Device | Matches driver on | Driver |
 |---|---|---|
-| `apple,t6031-dart` | 90 | `apple,t6050-dart` |
-| `apple,t6030-dart` | 34 | `apple,t6050-dart` |
-| `apple,t6000-dart` | 14 | `apple,t6050-dart` |
-| `apple,t6031-cluster-cpufreq` | 18 | `apple,t6050-cluster-cpufreq` |
-| `*-asc-mailbox` (t6000/t6031/t6030…) | ~100 | `apple,t6050-asc-mailbox` |
+| AIC | `apple,t8122-aic3` (fallback) | irq-apple-aic |
+| DART | `apple,t8110-dart` (fallback) | apple-dart |
+| ASC mailbox / RTKit | `apple,asc-mailbox-v4` (fallback) | soc/apple/mailbox |
+| PMGR pwrstate | `apple,t8103-pmgr-pwrstate` (fallback) | pmdomain/apple/pmgr-pwrstate |
+| PMGR bus | `apple,t8103-pmgr` (fallback) | simple-pm-bus |
+| NVMe (ANS2) | `apple,t8132-nvme-ans2` (fallback) | nvme/host/apple |
+| SART | `apple,t6050-sart` (our patch) | soc/apple/sart |
+| pinctrl/GPIO | `apple,t8103-pinctrl` (fallback) | pinctrl-apple-gpio |
+| cluster cpufreq | `apple,t8112-cluster-cpufreq` (fallback) | apple-soc-cpufreq |
+| watchdog | `apple,t8103-wdt` (fallback) | apple_wdt |
+| I²C | `apple,t8103-i2c` (fallback) | i2c-pasemi |
+| UART | `apple,s5l-uart` | samsung_tty |
+| timer / cache / OPP / fixed-clock / simple-bus | generic | core |
 
-**Why it matters (not just schema):** at boot a device probes only if a
-driver's `of_match_table` matches its compatible. If a node carries a single
-non-fallback compatible no driver claims, that device won't come up. **Next
-action for the DT:** audit each subnode's compatible — use the t6050 variant
-with the correct generic fallback (e.g. `"apple,t6050-dart","apple,t8110-dart"`),
-or extend the DART / asc-mailbox / cluster-cpufreq bindings to list t6050
-(our series only added t6050 to sart, nvme-ans and the top-level binding).
-This is a DT-source task, not a build blocker.
+The only compatibles with no driver match are the 18 **CPU cores**
+(`apple,sotra-m` / `apple,sotra-p`). That is **correct**: CPUs are
+core-enumerated, not driver-probed, and both names are already in the CPU
+binding enum (`Documentation/devicetree/bindings/arm/cpus.yaml`), following
+the same pattern as M4's `apple,donan-e/p`. No code references the bare CPU
+compatible (only a separate `-pmu` node would, for perf).
+
+**Audit conclusion: the draft DT is schema-clean and probe-ready; no
+compatible change is needed.** (Perf PMU and any not-yet-present device nodes
+are separate, non-compatible questions.)
 
 ## DockChannel HID hardening against the real in-tree driver (`dch-exit.txt`)
 

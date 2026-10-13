@@ -80,8 +80,12 @@ pip -q install dtschema yamllint > "$OUT/dtschema-install.log" 2>&1 && \
   echo "dtschema $(python3 -c 'import dtschema,sys;print(dtschema.__version__)' 2>/dev/null)" | tee "$OUT/dtbs-check-exit.txt"
 make -j"$JOBS" ARCH=arm64 dtbs_check > "$OUT/dtbs_check-full.log" 2>&1
 echo "dtbs_check exit=$?" | tee -a "$OUT/dtbs-check-exit.txt"
-grep -iE "t6050|j716c" "$OUT/dtbs_check-full.log" > "$OUT/dtbs_check-t6050.txt" || true
-echo "t6050 dtbs_check lines: $(wc -l < "$OUT/dtbs_check-t6050.txt")" | tee -a "$OUT/dtbs-check-exit.txt"
+# Attribute warnings by their dtb-path prefix. A loose "t6050" match is wrong:
+# other SoCs' warnings list apple,t6050-* in their allowed-enum text.
+grep "^arch/arm64/boot/dts/apple/t6050-j716c.dtb:" "$OUT/dtbs_check-full.log" \
+  > "$OUT/dtbs_check-t6050.txt" || true
+echo "t6050-j716c.dtb dtbs_check warnings: $(wc -l < "$OUT/dtbs_check-t6050.txt")" \
+  | tee -a "$OUT/dtbs-check-exit.txt"
 deactivate 2>/dev/null || true
 
 sect "5. dockchannel-hid: real in-tree driver, baseline vs hardened"

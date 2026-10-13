@@ -97,6 +97,26 @@ The user assigned agent A goals 4–7. Goal 4 done:
   feeds A as evidence; A owns the native build/validation (5), backup prep
   (6) and the handoff kit (7). Confirm with the user if B expects to own any.
 
+## 2026-10-13 · Agent A: DT compatible audit (and a correction)
+
+Audited the draft t6050 DT's compatibles for probe-readiness. **Result: the
+DT is already correct — schema-clean and probe-ready; no change needed.**
+
+* **Correction:** my job-020 report of "248 DT schema warnings" was a grep
+  error. The filter matched any log line containing `t6050`, which caught
+  warnings for *other* Apple SoC DTBs whose allowed-enum text lists
+  `apple,t6050-*`. Attributed by dtb-path prefix, **`t6050-j716c.dtb` has 0
+  dtbs_check warnings.** Fixed the filter in `run.sh`; corrected F-056,
+  RESULTS.md and AGENTS.md.
+* **Probe audit** (`kernel/experiments/t6050-dt/probe-audit.sh`, run against
+  the built tree): every bring-up-critical device matches a driver on its
+  t6050 string or generic fallback (AIC, DART, mailbox, PMGR, NVMe, SART,
+  pinctrl, cluster-cpufreq, WDT, I²C, UART). The only non-matches are the 18
+  CPU cores (`apple,sotra-m/p`) — correct, as CPUs are core-enumerated and
+  both names are already in `cpus.yaml` (like M4's `apple,donan-e/p`).
+* Probe *matching* is confirmed; actual *probing* and firmware startup remain
+  runtime questions for the first native session.
+
 ## 2026-10-13 · Agent A, goal 5+7: native kernel build and handoff kit
 
 Per the user, goals 5 then 7 are prioritized; goal 2 is checkpointed below

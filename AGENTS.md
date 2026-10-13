@@ -88,8 +88,11 @@ See `progress.md`. As of 2026-10-13:
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.
 * A draft native patch series exists in `kernel/patches/t6050`. Job 020 /
   F-056 built the full kernel Image, modules, DTBs and initramfs, including
-  the DockChannel hardening patch. It remains unbooted; 248 DT schema
-  compatible-enum warnings and runtime probe matching need resolution.
+  the DockChannel hardening patch. The draft DT is schema-clean (0
+  dtbs_check warnings) and probe-ready (every bring-up device matches a
+  driver on its t6050 string or generic fallback; `probe-audit.sh`). It
+  remains **unbooted**: actual probing and firmware startup are runtime
+  questions for the first native session.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;
