@@ -667,3 +667,18 @@ container shrink for the proposed RAM test.
 valid case and rejects eleven failures. No host disk/policy calls were made
 by those tests. See `kernel/native-enablement/boot-entry-setup.md`; wait for
 M1 receipt and explicit installation/boot approval before any host changes.
+
+## D-045 · 2026-10-13 · Download authorization does not authorize installation
+
+**User direction:** download the matching macOS installer while M1 finishes
+verification; stop before creating volumes or changing boot settings.
+
+**Result:** downloaded 26.6.2 through Apple's softwareupdate. Embedded asset
+metadata confirms 25G83; disk-image checksum passes. Application signature/
+Gatekeeper assessment reports a custom-resource-envelope error, which must be
+resolved before launch. No installer launch or assessment bypass was attempted.
+
+**Coordination:** M1 should publish its actual offline receipt/test results,
+keeping all live USB/native boot checks **NOT RUN**. A working native desktop
+is not established by this download or the controller's offline test success.
+The dedicated entry and first native diagnostic remain separate later steps.

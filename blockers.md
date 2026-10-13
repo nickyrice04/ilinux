@@ -97,6 +97,15 @@ execution is separately gated and unvalidated on hardware.
 Upstream `proxyclient/tools/linux.py` is explicitly on hold. Package integrity
 is not boot approval; first live test is the bounded P_NOP USB handshake.
 
+### Matching installer application assessment pending (2026-10-13)
+
+The authorized installer download completed and embedded OS metadata matches
+26.6.2 / 25G83. Its disk-image checksum passes. Both codesign verification and
+Gatekeeper assessment report `resource envelope is obsolete (custom omit rules)`.
+This remains unresolved before installer launch; do not bypass it or claim
+successful trust verification. Details: `native/boot/macos-installer-download.md`.
+No volume creation, OS installation, boot policy change or restart has occurred.
+
 ### B-005 🟢 Isolated Linux environment (resolved 2026-10-11)
 
 * User approved the workspace VM. `vzrun` boots a GPG-verified Arch Linux

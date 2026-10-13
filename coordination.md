@@ -22,9 +22,18 @@ B's next preparation milestone is complete: the user requested exact dedicated
 entry steps while M1 verifies. `kernel/native-enablement/boot-entry-setup.md`
 selects a second full macOS installation named `iLinux Boot Lab`, matching the
 available 26.6.2 / 25G83 installer. It documents paired-Recovery checks,
-lab-only policy/boot-object commands and macOS return. No installer download,
-volume creation, policy change or reboot has run. M1 verifies/reads and waits;
-an offline receipt does not authorize these host changes.
+lab-only policy/boot-object commands and macOS return. No volume creation,
+policy change or reboot has run; an offline receipt does not authorize those
+host changes.
+
+**Download-only authorization and result:** the matching macOS installer is now
+downloaded. Embedded metadata confirms 26.6.2 / 25G83; image checksum passes.
+The app's codesign/Gatekeeper assessment reports a custom-resource-envelope
+error, unresolved before launch. See `native/boot/macos-installer-download.md`.
+The user reports M1 offline verification completed; M1 owns publishing its
+actual receipt/test results in these shared logs. B has not inferred its test
+counts or marked live readiness. USB/P_NOP, native m1n1, native Linux and native
+Omarchy remain **NOT RUN**. Installer launch and all boot changes stay on hold.
 
 ### Second-machine checkout (2026-10-13)
 

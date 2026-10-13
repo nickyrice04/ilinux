@@ -5,6 +5,13 @@ The user requested exact steps while the M1 verifies boot021, explicitly
 prohibiting boot-setting changes. **Every installation/reboot/policy step below
 is pending separate approval. None has been executed.**
 
+**Download update:** the user subsequently authorized only the matching
+installer download. It is complete; payload metadata confirms 26.6.2 / 25G83
+and the image checksum passes. The application trust assessment reports a
+custom-resource-envelope error and remains unresolved. See the
+[download record](../../native/boot/macos-installer-download.md). All volume,
+OS-installation, policy and reboot steps below remain on hold.
+
 ## Chosen route and observed prerequisites
 
 Use a second, full macOS installation named **iLinux Boot Lab** as the initial
@@ -23,10 +30,10 @@ Read-only inspection on 2026-10-13 found:
 | Original installation | System `Macintosh HD`, Data `Data`; FileVault enabled |
 | Other boot environment | No dedicated Linux/m1n1 entry |
 | Power | AC, battery 100% |
-| Installer already present | None in `/Applications` |
+| Installer now present | `/Applications/Install macOS Tahoe.app`; download record above |
 | Apple installer catalog | **26.6.2 / 25G83**, 17,953,734 KiB (about 18.4 GB) available |
 | Backup | User reports completion; verify its latest dated backup before proceeding |
-| Controller | M1 offline receipt pending; physical proxy untested |
+| Controller | User reports offline completion; published receipt pending; live checks NOT RUN |
 
 The proposed volume shares the existing APFS container's free space. No
 container shrink, new GPT partition, ESP or Linux root filesystem is needed
@@ -64,6 +71,10 @@ Before any host changes:
 
 ## 2. Fetch the matching Apple installer — only after approval
 
+**Completed under download-only authorization. Do not repeat the download.**
+Resolve the assessment error in the download record before installer launch.
+The commands below retain the acquisition recipe for reproducibility.
+
 In the original M5 macOS, recheck the catalog and require the same version
 **and build** before downloading:
 
@@ -72,8 +83,8 @@ softwareupdate --list-full-installers
 softwareupdate --fetch-full-installer --full-installer-version 26.6.2
 ```
 
-The second command downloads the installer into `/Applications`; it is not
-part of today's read-only work. Require successful completion. Review the
+The second command downloads the installer into `/Applications`. Require
+successful completion. Review the
 downloaded installer metadata before starting it; do not infer the OS build
 from the application bundle's own version. If the requested build is no
 longer available or the installer proposes a different OS release, stop and

@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: matching installer downloaded; native checks NOT RUN
+
+* User authorized the 26.6.2 installer download only. Apple's softwareupdate
+  completed successfully; `/Applications/Install macOS Tahoe.app` is present.
+* Embedded asset plist confirms **26.6.2 / 25G83**. SharedSupport.dmg is
+  18,384,624,402 bytes and passes hdiutil checksum verification. No disk image
+  was mounted. Running macOS build and observed APFS volume names/roles match
+  the pre-download state; no lab entry was created.
+* `codesign` verification and Gatekeeper assessment reject the app's custom
+  resource-envelope rules. Record this as unresolved, not as successful trust
+  verification or proven corruption. Installer was not launched; no workaround
+  or security exception was applied. See `native/boot/macos-installer-download.md`.
+* User reports M1 offline verification finished; its published detailed receipt
+  is still pending. Let M1 record its own observed results. Live USB/P_NOP,
+  native m1n1, native Linux and native Omarchy all remain **NOT RUN**.
+* Next: M1 publishes offline results; resolve installer assessment before a
+  separately approved lab installation. No volume/boot-setting change or reboot.
+
 ## 2026-10-13 · Agent B: dedicated M5 entry procedure, no host changes
 
 * Prepared `kernel/native-enablement/boot-entry-setup.md` at the user's request.
