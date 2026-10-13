@@ -1,0 +1,68 @@
+{
+  "tested_hardware": "Mac17,6 / J716c / t6050 M5 Max; tests inside a diskless VM",
+  "environment": {
+    "virtual_cpus": 2,
+    "memory_gib": 8,
+    "kernel": "Linux 7.1.6-1-aarch64-ARCH #1 SMP PREEMPT_DYNAMIC Wed Aug  5 00:20:13 UTC 2026 aarch64 Linux",
+    "distribution": "Alpine 3.23 cached userspace",
+    "compiler": "GCC 15.2.0",
+    "sanitizer_compiler": "Clang 21.1.2",
+    "rea": "6.4.0",
+    "ghidra": "12.1.4",
+    "jdk": "21",
+    "host_python": "3.9.6"
+  },
+  "source": {
+    "base_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "source_path": "src/smp.c",
+    "source_sha256": {
+      "baseline": "4b000be8d4e6437fc24351a57db5277785cc2e427045fb45d1750b158f2b8766",
+      "patched": "e4b93c02dd051cf7f72c36f4e8d019133b5793d1b64165a265fa7912c9b4cc45"
+    },
+    "patch_sha256": "53780fa689ad29da7850c44be983baab087717c6e8c73ff680feab2509aa5f53",
+    "scope": "actual startup function with synthetic CPU/register hooks; full smp.o compile"
+  },
+  "regression": {
+    "baseline_expected_failure": "FAIL mismatch: reads=2 writes32=2 writes64=0 waits=0",
+    "unchanged_baseline_cases_passed": 7,
+    "patched_cases_passed": 8,
+    "asan_ubsan_cases_passed": 8,
+    "mismatch_startup_register_writes": 0,
+    "mismatch_shared_state_changes": 0,
+    "matching_timeout_test_poll_iterations": 100
+  },
+  "full_startup_object": {
+    "result": "compiled freestanding AArch64 relocatable smp.o",
+    "sha256": "a5ae5456d74a7a6a14fe57585f870739a7bd42917057c0eb7bd552f3fa67310f",
+    "bytes": 54080,
+    "command_source": "kernel/experiments/native-startup/run-linux.sh",
+    "full_bootloader_linked": false
+  },
+  "analysis_tool_tests": {
+    "linux_reference_parser": 17,
+    "host_full_python_suite": 43
+  },
+  "rea": {
+    "successful_queries": 6,
+    "original_and_llvm_verified_instruction_words": 872,
+    "supplemental_slice_words": 51,
+    "rejected_whole_function_pseudocode": [
+      "pmgr-cluster-enable"
+    ],
+    "other_decompiler_warnings": {
+      "t6050-write-reg": "unresolved indirect jump",
+      "t6050-init-regmaps": "removed blocks"
+    }
+  },
+  "repair": "First object compile lacked copied config.h; source preparer corrected, final Linux batch passed.",
+  "not_tested": [
+    "Native CPU startup",
+    "Firmware trampoline behavior",
+    "CPU_START register semantics",
+    "Native idle/resume",
+    "Performance or energy changes"
+  ],
+  "host_changes": "None outside the project workspace",
+  "lab_stopped": true,
+  "agent_b_quiet_lock_released": true
+}

@@ -670,19 +670,19 @@ not a validated root cause for today's stack. Missing decode fences remain.
 | Field | Value |
 |---|---|
 | Source | Same ARM64e carrier as F-070, pinned REA/Ghidra, Apple's public format-8 pointer layout, original chained-reference parser and independent LLVM. `cpu-startup-2026-10-13/`. |
-| Observation | Twelve chained dispatch references match exact PMGR symbols; eleven call-site discriminators agree. Initial REA batch: three functions / 334 words, with whole `enableCluster` pseudocode rejected. Two idle hooks poll through `readACCReg`, with unresolved physical mapping. A 51-word slice links the `clusters` property to the table read by `configMiscCores`. |
-| Validation | Seventeen synthetic parser tests pass on host. Raw bytes, pseudocode and disassembly stay ignored/local. Linux checks and three follow-up queries are queued behind A's build lock. |
+| Observation | Twelve chained dispatch references match exact PMGR symbols; eleven call-site discriminators agree. Six REA functions / 872 words, with whole `enableCluster` pseudocode rejected. Two idle hooks poll through `readACCReg`, with unresolved physical mapping. A 51-word slice links the `clusters` property to the table read by `configMiscCores`. |
+| Validation | Seventeen synthetic parser tests pass on ARM64 Linux; all 43 analysis-tool Python tests pass on host. Every REA instruction word matches original bytes and LLVM. Raw bytes, pseudocode and disassembly stay ignored/local. |
 | Confidence | **Confirmed** selected static references, bytes and property link. **Unknown** live branch selection, full register contract, physical startup and safe native idle. |
 | Engineering decision | Strengthen the existing mask hypothesis without installing it; keep CPU context-resume and firmware entry questions separate. |
 
-## F-077 · 2026-10-13 · B: conservative locked-vector startup guard (test pending)
+## F-077 · 2026-10-13 · B: conservative locked-vector startup guard
 
 | Field | Value |
 |---|---|
 | Source | Public m1n1 `57a9339` `src/smp.c`, existing hypothesis H1. No proprietary implementation used. |
 | Observation | The baseline warns about a locked reset-vector mismatch but proceeds into shared-state changes and CPU_START writes. |
 | Implementation | Local optional guard returns before those actions, caches the existing read, and identifies the rejected CPU. Actual-function harness plus full object build are prepared under `kernel/experiments/native-startup/`. |
-| Validation | Linux regression/ASan/UBSan and freestanding object compilation queued; not yet asserted to pass. |
+| Validation | One baseline regression reproduces; seven unchanged baseline cases pass; eight patched cases pass under GCC 15.2.0 and Clang 21.1.2 ASan/UBSan. Complete patched `smp.c` compiles to freestanding ARM64 `smp.o`. No native execution or full bootloader link. |
 | Limit | A firmware trampoline is not ruled out. Retest the unmodified baseline first; this is conservative diagnostic policy, not an SMP fix or a performance gain. Native tests require separate user authorization. |
 
 ## F-056 · Native build · Full t6050 kernel builds clean; draft DT has 248 compatible-enum warnings; dockchannel hardening is warning-clean

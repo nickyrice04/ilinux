@@ -1,0 +1,199 @@
+{
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "results": [
+    {
+      "evidence_id": "ev_741196476624caa4078bc795cf9ed55ffe3ac78585cad9d4bb82f950fec8f98e",
+      "member": "com.apple.driver.AppleT6050PMGR",
+      "function": "__ZN14AppleT6050PMGR19cpuComplexIdleEnterEv",
+      "body_anchors": [
+        {
+          "start": "0xfffffe0009882068",
+          "end_inclusive": "0xfffffe000988216b",
+          "carrier_offset": 42459240,
+          "derived_offset": 26888,
+          "bytes": 260,
+          "sha256": "7242ce2c166a2541d137f2545a5171f327876fb49e78804c716f14769213e456"
+        }
+      ],
+      "assembly_instructions": 65,
+      "original_bytes_verified": true,
+      "pcode_operations": 49,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "t6050-idle-enter",
+      "llvm_instruction_words_verified": 65,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_099866f3f8a74216c0fce04a69e89693a536ba38ffc9109cfd7a5ee39edb31b3",
+      "member": "com.apple.driver.AppleT6050PMGR",
+      "function": "__ZN14AppleT6050PMGR18cpuComplexIdleExitEv",
+      "body_anchors": [
+        {
+          "start": "0xfffffe000988216c",
+          "end_inclusive": "0xfffffe000988220b",
+          "carrier_offset": 42459500,
+          "derived_offset": 27148,
+          "bytes": 160,
+          "sha256": "d8565916a5fa54bd15d18b6e24dda5f8ca3c6a9ea41523b079499ed660c4ed0b"
+        }
+      ],
+      "assembly_instructions": 40,
+      "original_bytes_verified": true,
+      "pcode_operations": 22,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "t6050-idle-exit",
+      "llvm_instruction_words_verified": 40,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_ad4c2fc7710ce642a898046b5d7b2e217a4c2cde80c99a4f62a4ec4c7153019e",
+      "member": "com.apple.driver.ApplePMGR",
+      "function": "__ZN9ApplePMGR13enableClusterEhbbjb",
+      "body_anchors": [
+        {
+          "start": "0xfffffe000949e47c",
+          "end_inclusive": "0xfffffe000949e80f",
+          "carrier_offset": 38380668,
+          "derived_offset": 235900,
+          "bytes": 916,
+          "sha256": "1f2d8445ae50944ac55ccba700f6ef86db2e44d6a3c36f6b4a3a4b472cb8eedc"
+        }
+      ],
+      "assembly_instructions": 229,
+      "original_bytes_verified": true,
+      "pcode_operations": 156,
+      "pcode_outside_body": 1,
+      "outside_addresses": [
+        "0xfffffe000bcd48cc"
+      ],
+      "pseudocode_gate": "rejected_cross_boundary",
+      "decompiler_warning_classes": [
+        "bad_instruction_or_truncated_control_flow",
+        "provider_removed_blocks"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "pmgr-cluster-enable",
+      "llvm_instruction_words_verified": 229,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_ff6aeecf1f45282cdda450526eee3f16a3a859887f80b568c16d626d80a359e2",
+      "member": "com.apple.driver.AppleT6050PMGR",
+      "function": "__ZN14AppleT6050PMGR10readACCRegEjjj",
+      "body_anchors": [
+        {
+          "start": "0xfffffe0009884934",
+          "end_inclusive": "0xfffffe0009884a37",
+          "carrier_offset": 42469684,
+          "derived_offset": 37332,
+          "bytes": 260,
+          "sha256": "579493e67e0d8a120292d493a72ba6f703eed36fb8148a0062569cb8ac739fea"
+        }
+      ],
+      "assembly_instructions": 65,
+      "original_bytes_verified": true,
+      "pcode_operations": 59,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "t6050-read-acc",
+      "llvm_instruction_words_verified": 65,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_8b7042cd8d7d5a9370fd75b93b82f1e1e1d76d32007e1f16af6fdb84527b769f",
+      "member": "com.apple.driver.AppleT6050PMGR",
+      "function": "__ZN14AppleT6050PMGR10writeReg32EN9ApplePMGR6RegMapEjjj",
+      "body_anchors": [
+        {
+          "start": "0xfffffe0009884dc4",
+          "end_inclusive": "0xfffffe0009884ee7",
+          "carrier_offset": 42470852,
+          "derived_offset": 38500,
+          "bytes": 292,
+          "sha256": "32140fc723672481cb2d177324ef7e976e6c8cbe76971d94286c16fe16214cda"
+        }
+      ],
+      "assembly_instructions": 73,
+      "original_bytes_verified": true,
+      "pcode_operations": 49,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [
+        "unresolved_indirect_jump"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "t6050-write-reg",
+      "llvm_instruction_words_verified": 73,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_7f0d7b24995a47aac1278d0e6b20a30dcba095ba75f8cc79afc11ef9831264d5",
+      "member": "com.apple.driver.AppleT6050PMGR",
+      "function": "__ZN14AppleT6050PMGR11initRegMapsEv",
+      "body_anchors": [
+        {
+          "start": "0xfffffe000987ea54",
+          "end_inclusive": "0xfffffe000987f093",
+          "carrier_offset": 42445396,
+          "derived_offset": 13044,
+          "bytes": 1600,
+          "sha256": "ee7f03825874f618ba02db5a184f6a0deccafbecd53faff9f92b0bded7156540"
+        }
+      ],
+      "assembly_instructions": 400,
+      "original_bytes_verified": true,
+      "pcode_operations": 79,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "t6050-init-regmaps",
+      "llvm_instruction_words_verified": 400,
+      "llvm_unknown_instructions": []
+    }
+  ],
+  "limits": [
+    "Static consistency only, not semantic or runtime equivalence",
+    "Rejected pseudocode cannot guide implementation; manual gates are not passes"
+  ]
+}

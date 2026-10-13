@@ -589,3 +589,26 @@ the existing native boot gates. Continue selected N1 descriptor/completion
 and ISP startup questions. Agent C configures native Omarchy only after the
 boot gate, with this hardware matrix and without VM-only bridge settings.
 See `reverse-engineering/findings/driver-interfaces-2026-10-13/handoff.md`.
+
+## D-042 · 2026-10-13 · Native critical path and bounded startup diagnostics
+
+**Decision:** Per the user's new priority, A owns native full builds and the
+first-boot/configuration handoff; B concentrates REA on startup, GPU/display
+and idle/DVFS. Preserve the working VM as development infrastructure.
+
+**Evidence:** F-076 resolves twelve static PMGR dispatch entries and links
+the `clusters` property to descriptor-based startup packing. REA idle hooks
+show status polling, not a complete safe Linux idle/resume protocol.
+
+**Implementation:** F-077 is a public-source-only m1n1 guard experiment:
+decline secondary activation after the existing locked-RVBAR check finds a
+mismatch. It introduces no new hardware register access. The baseline
+regression reproduces; eight Linux cases pass with GCC and Clang ASan/UBSan,
+and the complete source compiles to ARM64 `smp.o`. Treat it as optional
+diagnostic policy, never as a verified SMP-enablement patch.
+
+**Next gate:** Retest unmodified pinned m1n1 on the actual unit after the
+user approves native prerequisites. Keep entry-vector, mask, early-state
+and exception hypotheses separate. No guessed CPU_START encoding or idle
+policy change follows from static decompilation alone. Full handoff:
+`reverse-engineering/findings/cpu-startup-2026-10-13/handoff.md`.

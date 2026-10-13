@@ -82,13 +82,14 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-See `progress.md`. As of 2026-10-12:
+See `progress.md`. As of 2026-10-13:
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.
-* A draft native patch series exists in `kernel/patches/t6050`. It
-  passed driver-object and DTB compilation (job 018) and is unbooted. Full
-  kernel linking and DT schema validation are not established by that job.
+* A draft native patch series exists in `kernel/patches/t6050`. Job 020 /
+  F-056 built the full kernel Image, modules, DTBs and initramfs, including
+  the DockChannel hardening patch. It remains unbooted; 248 DT schema
+  compatible-enum warnings and runtime probe matching need resolution.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;
@@ -118,6 +119,11 @@ See `progress.md`. As of 2026-10-12:
   bounds/rearm patch and original offline N1 ACIPC helpers. REA covered
   17 functions; two ISP layouts match existing Linux. Native compatibility
   remains untested. See `reverse-engineering/findings/driver-interfaces-2026-10-13/handoff.md`.
+* B's startup/idle pass (F-076–F-077) resolves 12 PMGR references and checks
+  six REA functions against original bytes and LLVM. An optional m1n1
+  locked-vector mismatch guard passed eight Linux cases with sanitizers
+  and full startup-object compilation; it is not an SMP fix. See
+  `reverse-engineering/findings/cpu-startup-2026-10-13/handoff.md`.
 
 ## Next recommended actions
 

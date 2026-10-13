@@ -1,0 +1,41 @@
+{
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "member": "com.apple.driver.ApplePMGR",
+  "start": "0xfffffe000947d794",
+  "end_exclusive": "0xfffffe000947d860",
+  "carrier_offset": 38246292,
+  "bytes": 204,
+  "sha256": "6f74de90ec618d393a5be65212b995302b2e8cf07a313e54481fbd2a59fd9ad8",
+  "llvm_verified_instruction_words": 51,
+  "string_reference": {
+    "address": "0xfffffe0007575eae",
+    "value": "clusters"
+  },
+  "observations": [
+    "This slice requests the literal clusters property, obtains a length, allocates a multiple of four bytes, stores the pointer at object+0x6310 and copies data to it.",
+    "The earlier REA-verified configMiscCores assembly loads object+0x6310 and uses 4-byte records with two 16-bit fields."
+  ],
+  "confidence": "Static assembly observations; runtime branch selection and register mapping are unverified",
+  "not_a_complete_function": true,
+  "ordinary_kernel_callees": [
+    {
+      "address": "0xfffffe000bb98a10",
+      "exact_symbols": [
+        "__ZN15OSMetaClassBase12safeMetaCastEPKS_PK11OSMetaClass"
+      ]
+    },
+    {
+      "address": "0xfffffe000bc0ea40",
+      "exact_symbols": [
+        "_IOMallocTypeVarImpl"
+      ]
+    },
+    {
+      "address": "0xfffffe000b3ecbd0",
+      "exact_symbols": [
+        "_memcpy",
+        "_memmove"
+      ]
+    }
+  ]
+}

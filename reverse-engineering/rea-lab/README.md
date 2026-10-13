@@ -20,6 +20,13 @@ stay under ignored `build/rea-lab`. No macOS installation or global agent
 configuration is changed. This share is isolation from the reference OS,
 not a claim that VM software cannot change its explicitly writable lab files.
 
+The [CPU-startup pass](../findings/cpu-startup-2026-10-13/handoff.md) adds
+`kernelcache_refs.py` for selected format-8 chained references and
+`verify_cpu_references.py` for replaying the stored dispatch/property facts.
+These inspect static file metadata only; they do not authenticate or modify
+runtime pointers. An optional public-m1n1 guard is separately tested in
+`kernel/experiments/native-startup/`, with no native deployment.
+
 ## The compiler issue
 
 REA 6.4.0 needs an analysis provider; installing its npm package does not

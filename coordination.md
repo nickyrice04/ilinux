@@ -51,6 +51,23 @@ it in the VM's virtio-input path or advertise native input as tested.
 
 ## Shared resources: rules
 
+### Current assignment (user confirmed 2026-10-13)
+
+A owns goals 5–7: the complete native kernel/schema build, first-boot
+observation plan, backup preparation and C's configuration handoff. Goals
+2–3 are checkpointed unless they block native development. B owns targeted
+REA work on CPU startup, GPU/display and idle/DVFS, with original offline
+experiments and findings for A. The older owner table and goal ordering
+below are historical where they conflict with this assignment.
+
+B's completed startup/idle pass is recorded in
+`reverse-engineering/findings/cpu-startup-2026-10-13/`. Its optional startup
+guard passed eight Linux cases with sanitizers and startup-object compilation;
+the analysis VM is stopped and B's locks are released. B has not modified A's
+kernel build jobs, native payloads or handoff kit. The dockchannel proxy is
+not established as a Linux console; early-boot observability remains a
+goal-5 prerequisite.
+
 1. **Locks** (`tools/lock.sh`, advisory, stored in the gitignored
    `virtualization/run/locks`):
    * `vm`: hold it for any QEMU Omarchy VM console command, restart, or

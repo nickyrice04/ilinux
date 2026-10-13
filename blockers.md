@@ -18,7 +18,12 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
   MPIDR-correct CPUs and 188 PMGR domains, and has never been booted.
 * Asahi's M5 support page (2026-10-03) shows no active work on any block.
   The installer accepts M1–M3 only.
-* Consequence: native Linux can't boot on this machine.
+* 2026-10-13: F-076 resolves selected PMGR virtual targets and connects the
+  `clusters` property to the startup descriptor table. Live register/branch
+  selection remains unverified. F-077 supplies an optional locked-RVBAR
+  startup guard; Linux regressions/sanitizers and the full `smp.o` build pass.
+  It is not an SMP fix or a native compatibility result.
+* Consequence: there is no validated native Linux boot on this unit yet.
 
 ### B-002 🔴 GPU (AGX G17X) unsupported
 

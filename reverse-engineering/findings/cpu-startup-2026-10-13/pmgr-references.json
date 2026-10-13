@@ -1,0 +1,273 @@
+{
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "references": [
+    {
+      "target": "0xfffffe000948e7a4",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 26014,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166240",
+      "carrier_offset": 18227776,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0x9c8",
+      "exact_symbols": [
+        "__ZN9ApplePMGR21getCurrentCoreComplexEPjS0_"
+      ],
+      "callsite_diversity": 26014
+    },
+    {
+      "target": "0xfffffe0009880428",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 60199,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166560",
+      "carrier_offset": 18228576,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0xce8",
+      "exact_symbols": [
+        "__ZN14AppleT6050PMGR10quiesceACCEj"
+      ],
+      "callsite_diversity": 60199
+    },
+    {
+      "target": "0xfffffe00098804a8",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 60359,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166568",
+      "carrier_offset": 18228584,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0xcf0",
+      "exact_symbols": [
+        "__ZN14AppleT6050PMGR10restoreACCEjb"
+      ],
+      "callsite_diversity": 60359
+    },
+    {
+      "target": "0xfffffe0009495968",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 28853,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166590",
+      "carrier_offset": 18228624,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0xd18",
+      "exact_symbols": [
+        "__ZN9ApplePMGR15configMiscCoresEyb"
+      ],
+      "callsite_diversity": 28853
+    },
+    {
+      "target": "0xfffffe0009880a64",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 56328,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166598",
+      "carrier_offset": 18228632,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0xd20",
+      "exact_symbols": [
+        "__ZN14AppleT6050PMGR26configCPUComplexPowerStateEjb"
+      ],
+      "callsite_diversity": 56328
+    },
+    {
+      "target": "0xfffffe0009883458",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 24351,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166630",
+      "carrier_offset": 18228784,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0xdb8",
+      "exact_symbols": [
+        "__ZN14AppleT6050PMGR22enableSingingCapWidgetEhb"
+      ],
+      "callsite_diversity": 24351
+    },
+    {
+      "target": "0xfffffe000949e47c",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 41330,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe00081667c8",
+      "carrier_offset": 18229192,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0xf50",
+      "exact_symbols": [
+        "__ZN9ApplePMGR13enableClusterEhbbjb"
+      ],
+      "callsite_diversity": 41330
+    },
+    {
+      "target": "0xfffffe00094987ec",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 29646,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe00081668c8",
+      "carrier_offset": 18229448,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0x1050",
+      "exact_symbols": [
+        "__ZN9ApplePMGR9readReg32ENS_6RegMapEjj"
+      ],
+      "callsite_diversity": null
+    },
+    {
+      "target": "0xfffffe0009884dc4",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 64779,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe00081668d0",
+      "carrier_offset": 18229456,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0x1058",
+      "exact_symbols": [
+        "__ZN14AppleT6050PMGR10writeReg32EN9ApplePMGR6RegMapEjjj"
+      ],
+      "callsite_diversity": 64779
+    },
+    {
+      "target": "0xfffffe0009884f50",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 35858,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe00081668e0",
+      "carrier_offset": 18229472,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0x1068",
+      "exact_symbols": [
+        "__ZN14AppleT6050PMGR7isPsRegEN9ApplePMGR6RegMapEjjj"
+      ],
+      "callsite_diversity": 35858
+    },
+    {
+      "target": "0xfffffe0009883a40",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 56831,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166918",
+      "carrier_offset": 18229528,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0x10a0",
+      "exact_symbols": [
+        "__ZN14AppleT6050PMGR23getComplexToVoltageRailEj"
+      ],
+      "callsite_diversity": 56831
+    },
+    {
+      "target": "0xfffffe0009884934",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 38906,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166998",
+      "carrier_offset": 18229656,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "vtable_symbol": "__ZTV14AppleT6050PMGR",
+      "address_point_bias": 16,
+      "slot": "0x1120",
+      "exact_symbols": [
+        "__ZN14AppleT6050PMGR10readACCRegEjjj"
+      ],
+      "callsite_diversity": 38906
+    }
+  ],
+  "limits": [
+    "Static dispatch table, not runtime object identity",
+    "Callsite address-point and slot interpretation manually reviewed; no runtime authentication performed"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "targets": [
+    {
+      "id": "t6050-idle-enter",
+      "artifact": "AppleT6050PMGR.macho",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "address": "0xfffffe0009882068"
+    },
+    {
+      "id": "t6050-idle-exit",
+      "artifact": "AppleT6050PMGR.macho",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "address": "0xfffffe000988216c"
+    },
+    {
+      "id": "pmgr-cluster-enable",
+      "artifact": "ApplePMGR.macho",
+      "sha256": "a74c641b1445c3347d72840a95a08cdff344a14fed8700c2ff9fb75a0a4d0b0f",
+      "address": "0xfffffe000949e47c"
+    },
+    {
+      "id": "t6050-read-acc",
+      "artifact": "AppleT6050PMGR.macho",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "address": "0xfffffe0009884934"
+    },
+    {
+      "id": "t6050-write-reg",
+      "artifact": "AppleT6050PMGR.macho",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "address": "0xfffffe0009884dc4"
+    },
+    {
+      "id": "t6050-init-regmaps",
+      "artifact": "AppleT6050PMGR.macho",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "address": "0xfffffe000987ea54"
+    }
+  ]
+}

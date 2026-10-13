@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: native CPU dispatch, idle hooks and startup guard
+
+* **Investigated:** REA/Ghidra completed six CPU/idle queries; 872 instruction
+  words match original bytes and LLVM. `enableCluster` pseudocode is rejected;
+  two bounded idle hooks and selected mapping/writer paths were reviewed.
+* **Implemented:** an original read-only kernel-collection reference parser.
+  Twelve PMGR dispatch entries resolve to exact symbols; eleven stored
+  call-site discriminators agree. Seventeen synthetic parser tests pass on
+  ARM64 Linux; all 43 analysis-tool Python tests pass on the host.
+* **Corroborated:** a further 51-instruction slice connects the literal
+  `clusters` property to the descriptor pointer read by the startup routine.
+  This strengthens H2 but does not prove live branch/register semantics.
+* **Implemented/tested:** a conservative public-m1n1 startup guard and
+  actual-function harness: one baseline regression reproduced; eight patched
+  cases pass under GCC and Clang ASan/UBSan. Mismatch has zero startup writes
+  or shared-state changes. Complete patched `smp.c` compiles to ARM64 `smp.o`.
+  The first object attempt exposed a missing copied header; setup fixed and
+  the final batch passed. No boot image linked or deployed.
+* **Next:** A can use the optional guard after testing the unmodified native
+  baseline. B's remaining question is live branch/register-map selection,
+  followed by GPU/display and idle/context restore. A owns native builds,
+  DT validation and C's handoff. The analysis VM is stopped; B's lock released.
+* **Handoff:** `reverse-engineering/findings/cpu-startup-2026-10-13/handoff.md`
+  (F-076/F-077, D-042). No native compatibility or performance gain claimed.
+
 ## 2026-10-13 · Agent B: driver-interface REA and Linux input robustness
 
 * **Investigated:** GPU/display, N1 network/Bluetooth, ANE host API, ISP,
