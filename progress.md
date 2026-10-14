@@ -5,6 +5,21 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: Stage A authorized; M1/human execution handoff ready
+
+* User approved one m1n1 boot, one USB handshake and return to Macintosh HD,
+  preserving Full Security. This lifts the Stage A hold only, not Stage B/Linux.
+* Rechecked current root Macintosh HD/FileVault, staged m1n1 package hash/size,
+  AC power and no project VM processes. The user's fresh Full/Permissive policy
+  result from the preceding turn remains the pre-session baseline.
+* Updated the M1 checklist with explicit scope, one-time picker selection,
+  unchanged default/security settings, one 10-second-bounded P_NOP, no retries,
+  power-off/held-power return and sanitized outcome reporting. M1 confirms it
+  has the instructions before the human shuts down the M5.
+* No payload/client/handshake code changed, so prior offline tests remain valid.
+  No reboot or live USB action performed here; Stage A results remain NOT RUN.
+  Next: M1/human performs the approved session and publishes actual evidence.
+
 ## 2026-10-13 · Agent B: installed m1n1 handoff reviewed; return checks complete
 
 * Reviewed/integrated M1 commit `c6f2c6f`: lab-only policy/install succeeded,

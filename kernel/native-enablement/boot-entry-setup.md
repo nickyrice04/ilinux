@@ -1,12 +1,19 @@
 # M5 dedicated boot entry: installed; original macOS return complete
 
+**Stage A is now authorized (2026-10-13):** one m1n1 boot, one bounded USB
+P_NOP handshake on M1, then return to Macintosh HD. Use
+[the controller checklist](../../tools/m1n1-client/stage-a-instructions.md).
+Leave the default and security policies unchanged; no Recovery/reinstallation.
+Stage B/Linux remains on hold. Live Stage A execution is still pending.
+
 **Post-return review by B:** M1 report `c6f2c6f` is integrated. Original build
 26.6.2 / 25G83, FileVault, SIP and original authenticated-root are independently
 checked; staged payload size/hash match. The user supplied a fresh policy read:
 original Full/lab Permissive, both exit 0. Return checks are complete. The
 csrutil OS list may reorder between queries; choose by name within the same
 live prompt. Use the installed entry for the next separately authorized Stage
-A test; do not repeat provisioning or change the default from Macintosh HD.
+A test (now authorized above); do not repeat provisioning or change the default
+from Macintosh HD.
 
 ## 2026-10-13 · M1: lab m1n1 installation and original macOS return complete
 
@@ -487,9 +494,9 @@ and Full Security. Do not reboot blindly into the now-converted lab entry.
 On a pairing/policy/command error, preserve the original entry and report the
 partial state; no retries, policy resets, removal or firmware recovery.
 
-## 7. Stage A acceptance and normal macOS return
+## 7. Stage A acceptance and normal macOS return — one session authorized
 
-After Stage A approval, shut down and use the power-button startup picker
+Stage A approval is now recorded above. Shut down and use the power-button startup picker
 to select **iLinux Boot Lab**. The M1 discovers the actual primary USB path
 and runs only the bounded P_NOP check in the package README. Record visible
 m1n1 output and handshake result. Stop after one failed attempt; neither a

@@ -102,7 +102,7 @@ See `progress.md`. As of 2026-10-13:
   separately authorized handoff. Generic diskless VM PID-1/60-second heartbeat
   succeeds; native hardware remains untested. `native/boot/README.md` is the
   current M1 handoff. Follow the updated lab-only authorization below;
-  live m1n1/P_NOP and Linux boots remain on hold.
+  one controlled m1n1/P_NOP session is now authorized; Linux remains on hold.
   M1's `dfdf8cf` offline report is reviewed (13 files verified, 26 tests pass).
   The matching macOS scaffold installer passes package trust/content checks;
   its outer-app resource-rule rejection remains unchanged. No security checks
@@ -119,12 +119,13 @@ See `progress.md`. As of 2026-10-13:
   An accidental m1n1 startup reached the on-screen `Running proxy...` message
   before the user powered off; this is incidental screen evidence, not a
   completed Stage A handshake. Live USB/P_NOP, live version checking and Linux
-  remain **NOT RUN**. No further live test is authorized. Current handoff:
+  remain **NOT RUN**. The user has now authorized one controlled Stage A
+  boot/P_NOP/return session; Stage B/Linux remains unauthorized. Current handoff:
   `kernel/native-enablement/boot-entry-setup.md` and `coordination.md`.
   B reviewed M1 commit `c6f2c6f` after return and independently checked original
   build/FileVault/SIP/authenticated-root and the staged payload hash. The user
   then supplied a fresh read-only result: original Full/lab Permissive, both
-  exit 0. Do not repeat installation. Next proposed test: controlled Stage A
+  exit 0. Do not repeat installation. Next authorized test: controlled Stage A
   boot and one bounded USB P_NOP, followed by original-macOS return.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;

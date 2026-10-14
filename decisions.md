@@ -818,3 +818,12 @@ then review before the one-core RAM Linux diagnostic. Incidental proxy screen
 output establishes bootloader execution, not USB transport, Linux execution,
 GPU acceleration or performance parity. No live test was authorized or run
 by this request to review progress and recommend next steps.
+
+**Stage A approval, 2026-10-13:** the user subsequently explicitly authorized
+one m1n1 boot, one USB handshake and return to Macintosh HD, retaining Full
+Security. This lifts the Stage A hold for one session; no repeat approval is
+needed. Keep the original as default, use the existing lab entry through the
+picker, send only the bounded P_NOP and return after success or failure.
+No retries, policy/boot-object writes or Linux launch. Record actual evidence;
+authorization/preparation does not change NOT RUN to PASS. M1 guides the human
+while the M5 desktop agent is offline and publishes a sanitized result.

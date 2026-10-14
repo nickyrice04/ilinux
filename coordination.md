@@ -6,6 +6,29 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current authorization — Stage A only, 2026-10-13
+
+The user explicitly approved **one m1n1 boot, one USB handshake, then back to
+Macintosh HD**, keeping Macintosh HD at Full Security. This supersedes earlier
+Stage A approval holds; no repeat approval is needed for this exact scope.
+Follow `tools/m1n1-client/stage-a-instructions.md`. Stage B/Linux, upstream
+shells/launchers, register/memory requests, policy changes and reinstallations
+are outside this session.
+
+M5 checks: current root Macintosh HD/FileVault on, staged m1n1 hash/size match,
+AC power, no project VM processes. Fresh original Full/lab Permissive policy
+result was supplied by the user in the preceding turn. Artifacts are unchanged;
+existing offline tests/receipt remain applicable, no redundant test run.
+
+M1 pulls this handoff and confirms ready before the user shuts down the M5.
+Use the held-power picker, **iLinux Boot Lab → Continue**, leaving Macintosh
+HD as default. On M1 discover the actual primary port and run the existing
+10-second-bounded P_NOP checker once. Record actual outcome; no retries. After
+success or failure, power off M5, use the held-power picker for **Macintosh HD
+→ Continue**, then verify return/protections and publish sanitized results.
+All Stage A results are still **NOT RUN** until observed. The M5 agent has not
+restarted this computer or opened any USB connection during preparation.
+
 ### M5 review after return — 2026-10-13
 
 B reviewed and fast-forwarded M1 report `c6f2c6f`. Native m1n1 reached
@@ -25,9 +48,9 @@ check; B did not independently rerun the privileged query. The M5 local helper
 now accepts `--expected-lab Permissive` so the intended lab policy is not
 mistaken for a failure. No policy/startup/payload changes were made this review.
 
-Next proposed session: the existing Stage A checklist, one bounded P_NOP on
-the actual primary M1 USB path, then return to Macintosh HD. The installed
-entry is ready for that separately authorized test; no Recovery/reinstallation
+Next session is now authorized above: the existing Stage A checklist, one
+bounded P_NOP on the actual primary M1 USB path, then return to Macintosh HD.
+The installed entry is ready for that test; no Recovery/reinstallation
 is needed for the planned boot. After Stage A, review and authorize Stage B's
 one-core RAM Linux/PID-1/60-second heartbeat diagnostic. Native desktop,
 peripheral functionality and performance parity remain unvalidated.

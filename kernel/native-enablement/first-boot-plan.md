@@ -4,8 +4,9 @@ Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
 **Current state:** lab-only Recovery/policy/custom-boot installation is complete
 by M1's reviewed report `c6f2c6f`. Incidental m1n1 startup reached the proxy
-message. Original-macOS return checks are complete. Controlled native Stage
-A/P_NOP and Stage B/Linux still await explicit authorization.
+message. Original-macOS return checks are complete. The user now authorizes
+one controlled Stage A boot/P_NOP/macOS-return session. Stage B/Linux remains
+on hold; Stage A results are NOT RUN until the M1/human session occurs.
 
 ## 1. Current state
 
@@ -113,7 +114,11 @@ is a proposed session limit, not new launcher behavior or a hardware-tested
 boot-time allowance. Do not perform an automatic retry. A post-handoff USB
 disconnect is expected and does not itself establish either success or failure.
 
-## 4. Stage A: m1n1 only, after separate approval
+## 4. Stage A: m1n1 only — one session now authorized
+
+User approval on 2026-10-13 covers one boot, one P_NOP and macOS return.
+Follow [the controller checklist](../../tools/m1n1-client/stage-a-instructions.md);
+no repeat approval for that scope, no automatic transition to Stage B.
 
 Prerequisites: dedicated entry provisioned with the packaged m1n1; matching
 client; backup verified; both computers powered; direct cable; agreed macOS

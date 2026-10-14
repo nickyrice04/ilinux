@@ -14,7 +14,8 @@ Controlled USB/P_NOP, live version check and Linux tests remain **NOT RUN**;
 no native Linux blocker is resolved. B's post-return checks confirm original
 build/FileVault/SIP/authenticated-root; the user's fresh policy helper reports
 original Full/lab Permissive, both exit 0. Return checks are complete. Next is
-the separately authorized controlled USB handshake, not repeat provisioning.
+the now-authorized single controlled boot/USB handshake/macOS return session,
+not repeat provisioning. Execution is pending; Stage B/Linux remains on hold.
 See the current handoff in `coordination.md`.
 
 ## Hardware enablement
