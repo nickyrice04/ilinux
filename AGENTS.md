@@ -86,15 +86,17 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest: boot025 attempt 6 reached native late Linux initialization; screen
-ended at `calling clk_debug_init+0x0/0x120 @ 1` (1.360189 s), confirmed unchanged
-by the human until shutdown. Controller exit 0 (10.391 s), DAPF/descriptor/final
-gates PASS. No panic visible; diagnostic PID 1/online_cpus=1/60-second liveness
-NOT OBSERVED. Human confirms Macintosh HD return. M5 next performs read-only
-return checks and exact-build clock debug initialization analysis offline.
-Attempt 6 consumed; no retry/reinstall/settings changes. Installed boot021
-m1n1 and client pin unchanged. See `native/boot/stage-b-2026-10-14-attempt6-result.md`
-and `coordination.md`. Older bullets retain historical context.
+Latest: attempt 6 reached late native initcalls; the screen remained at
+`calling clk_debug_init` without a visible panic. Attempt 7 reuses unchanged
+boot025 with one fixed argument, `initcall_blacklist=clk_debug_init`, to isolate
+optional clock debug registration. Exact-build REA/source checks, 69 controller
+tests, 13-file intake and explicit skip/PID-1/one-CPU/60-second generic VM test
+PASS. Native attempt 7 NOT RUN; root cause unknown. M1 verifies offline and
+publishes readiness, then the human starts one filmed boot under
+`tools/m1n1-client/stage-b-instructions.md`. No reinstall, settings change,
+expanded blacklist or auto-retry. Post-attempt-6 original Full/lab Permissive
+JSON PASS. See `kernel/experiments/clock-debug/` and current coordination.md.
+Older bullets below retain historical context.
 
 * Hardware fully inventoried. Native Linux now reaches late initialization,
   but diagnostic userspace/liveness remains unobserved. Full native boot/SMP,

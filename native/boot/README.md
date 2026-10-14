@@ -1,28 +1,32 @@
-# J716c native handoff — boot025 restricted AIC bring-up
+# J716c native handoff — attempt 7 with existing boot025
 
 **M1: follow [the current Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).**
 It contains download/checksum/test commands, readiness reporting, the one-shot
 launch command, screen-recording requirements and the Macintosh HD return plan.
-Complete offline readiness before the human restarts. Native attempt 6 is
+Complete offline readiness before the human restarts. Native attempt 7 is
 **NOT RUN**. No installation, Recovery, volume/security/default changes or
 m1n1 reinstall are part of this handoff.
 
-Attempt 5 reached readable native Linux, then an undefined instruction at
-`aic_init_cpu+0x9c`. Exact boot024 disassembly identifies the legacy guest-timer
-FIQ enable write. See the [attempt-5 report](stage-b-2026-10-13-attempt5-result.md)
-and [REA evidence, implementation and tests](../../kernel/experiments/aic-t6050/README.md).
+Attempt 6 reached late native initialization and stopped visibly at
+`calling clk_debug_init`. The [M1 result](stage-b-2026-10-14-attempt6-result.md)
+does not prove the exact blocking instruction. Source, matching disassembly and
+REA identify optional clock debugfs registration; see
+[evidence/tests](../../kernel/experiments/clock-debug/README.md).
 
-Boot025 adds an exact t6050 AIC profile: preserve host timers/fast IPIs, mask
-unused guest timers through architectural registers, withhold unsupported
-legacy guest IRQ/KVM handling and avoid unvalidated legacy uncore accesses.
-Only `Image` differs from boot024. Every other payload and installed boot021
-m1n1/client pin remain unchanged. The early framebuffer console/rectangles,
-96-byte DAPF RAM correction, verified 16-byte framebuffer descriptor and all
-controller gates remain. No installed boot files are patched.
+Attempt 7 reuses **unchanged boot025** with one new fixed controller argument:
+`initcall_blacklist=clk_debug_init`. No new package download or kernel build is
+needed if M1 already has boot025. Recheck the updated controller and retained
+package before the human restart. The installed m1n1 and all payloads remain.
 
-The full Image build, 38 actual-driver scenarios with ASan/UBSan, 65 controller
-cases, 13-file intake and exact packaged generic VM PID-1/one-CPU/60-second
-liveness check pass. Native AIC/timer behavior remains unvalidated.
+All 69 controller cases and 13-file intake pass. The exact packaged kernel in
+networkless/diskless generic VZ explicitly skips only that initializer, reaches
+PID 1/one CPU and passes the 60-second message. This does not reproduce or fix
+the native hang; attempt 7 is a bounded physical diagnostic test.
+
+The [boot025 AIC workaround](../../kernel/experiments/aic-t6050/README.md), early
+framebuffer/rectangles, DAPF correction and every safety gate remain. Normal
+clock framework operation is not disabled; clock debug files are unavailable
+for this test. No installed boot files or host settings change.
 
 The private prerelease `native-j716c-boot025` carries the 16.7 MB archive.
 `archive-sha256.txt`, `intake-manifest-sha256.txt` and `package-manifest.json`

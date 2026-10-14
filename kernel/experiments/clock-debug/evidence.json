@@ -1,0 +1,46 @@
+{
+  "image_sha256": "8849de7c2b8e529ad5895707ed26f535993cc8ff85447c450b2c13240185a0ea",
+  "object_sha256": "c90ec2fb27f879b5d0d4ba4408e793e7e1ff69b0e1f790527172ea8e35dabd94",
+  "vmlinux_sha256": "3abfbe1e4d8a86c496488230bf2cc788d15cecf1cca34bd836e7bc46ae9391bc",
+  "functions": [
+    {
+      "elf_symbol": "clk_debug_init",
+      "rea_function": "clk_debug_init",
+      "section": ".init.text",
+      "symbol_bytes": 288,
+      "llvm_instruction_words": 72,
+      "image_relative_offset": "0x21d9444",
+      "linked_matching_nonrelocated_words": 48,
+      "relocation_words_reviewed_separately": 24,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_544171bb1d02a52f427ca875563b7dfef2f929bc5d6950f59bac91985af2c4cd",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    },
+    {
+      "elf_symbol": "clk_debug_create_one.part.0",
+      "rea_function": "clk_debug_create_one",
+      "section": ".text",
+      "symbol_bytes": 492,
+      "llvm_instruction_words": 123,
+      "image_relative_offset": "0x810b68",
+      "linked_matching_nonrelocated_words": 81,
+      "relocation_words_reviewed_separately": 42,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_d4a44e43bc018286180c0caccad3a445fdc3c9017f6cf1564be013e4b85fa620",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    }
+  ],
+  "limits": [
+    "Static call graph identifies optional debug registration, not the runtime hang instruction.",
+    "Relocations require linked disassembly review; pseudocode call signatures can be incomplete.",
+    "No native success or hardware-clock fault is inferred from a last-visible initcall."
+  ]
+}

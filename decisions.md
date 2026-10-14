@@ -1111,3 +1111,17 @@ validation. Keep diagnostic PID 1/CPU/liveness NOT OBSERVED; initcall @ 1 does
 not establish execution of /init. User confirms Macintosh HD return. M5 owns
 read-only return checks and exact-build offline analysis next. No retry,
 reinstall or boot-setting changes under this consumed attempt.
+
+## 2026-10-14 · Isolate optional clock debug registration with one fixed skip
+
+Attempt-6 late native progress moves the evidence beyond the AIC panic, but the
+last clk_debug_init line is not an exact hang PC. Exact source and bounded REA
+show debugfs setup, separate from normal clock operation. Select the existing
+Linux initcall blacklist for only clk_debug_init; do not change clocks, remove
+locks, disable all debugfs or rebuild identical payloads. Keep the argument
+fixed and validated in the prepared DT, with omission/expansion regressions.
+The unchanged boot025 Image passes the explicit skip and 60-second userspace
+VM check. This is a temporary diagnostic workaround, not a native fix claim.
+If another initializer stalls, investigate shared dependencies/visibility rather
+than automatically expanding the blacklist. Publish one attempt-7 procedure;
+M1 readiness and human start suffice. Fresh post-attempt-6 policies already PASS.

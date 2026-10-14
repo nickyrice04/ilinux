@@ -3,18 +3,22 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — late Linux init; last visible clk_debug_init
+## Current Stage B blocker — native userspace not observed; clock-debug isolation ready
 
-Boot025 attempt 6 passed all controller/DAPF/descriptor gates and kboot reply.
-Native Linux advanced through late initcalls to 1.360189 s; last visible line
-`calling clk_debug_init+0x0/0x120 @ 1` remained until shutdown by human report.
-No panic/Oops shown; exact blocking instruction/cause not established. Diagnostic
-PID 1 / online_cpus=1 / 60-second liveness NOT OBSERVED. Exact AIC profile/final
-Initialized and arch_timer lines were not captured in the supplied still.
-Human confirms Macintosh HD return after the screen bound. M5 performs read-only
-return checks and matching-build clock/debug registration analysis offline.
-See `native/boot/stage-b-2026-10-14-attempt6-result.md`. Attempt 6 consumed;
-no reconnect, retry, reinstall or security/volume/default changes authorized.
+Attempt 6 reached late native initcalls, with `calling clk_debug_init` remaining
+on screen. No exact blocking PC or panic was captured. REA plus exact-build
+source/disassembly establishes optional clock debug registration at this
+boundary, not a hardware-clock failure. Attempt 7 adds exactly
+`initcall_blacklist=clk_debug_init` while reusing unchanged boot025. It passes
+69 controller cases, 13-file intake and explicit skip/PID-1/one-CPU/60-second
+liveness in generic VZ. **Native attempt 7 NOT RUN; root cause unknown.**
+
+M1 next re-verifies the existing package and updated controller, then the human
+starts one filmed RAM boot. Preserve installed m1n1 and all guards. Record the
+skip and subsequent boundary or userspace, then return to Macintosh HD. Do not
+chain speculative skips if another routine stalls. Post-attempt-6 original
+Full/lab Permissive policy JSON PASS. No settings or storage changes.
+Evidence: `kernel/experiments/clock-debug/README.md`; current M1 checklist governs.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

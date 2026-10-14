@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-14",
+  "package": "ilinux-j716c-boot025 (unchanged)",
+  "kernel": "Linux 7.1.9-g863199d8b4a3-dirty #4 SMP PREEMPT",
+  "compiler": "GCC 16.1.1 20260430 / GNU ld 2.46.0",
+  "image_sha256": "8849de7c2b8e529ad5895707ed26f535993cc8ff85447c450b2c13240185a0ea",
+  "config_sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169",
+  "change": "Append fixed initcall_blacklist=clk_debug_init; no payload/config change",
+  "tests": {
+    "launcher": 35,
+    "descriptor": 6,
+    "dapf": 16,
+    "framebuffer": 5,
+    "real_dapf_parser": 2,
+    "root_adt": 4,
+    "real_serializer": 1,
+    "total": 69,
+    "result": "PASS"
+  },
+  "intake_files": 13,
+  "generic_vm": {
+    "cpus": 1,
+    "memory_gib": 4,
+    "disk": false,
+    "network": false,
+    "console": "hvc0",
+    "exact_skip_observed": true,
+    "other_initcalls_skipped": 0,
+    "pid1": true,
+    "online_cpus": 1,
+    "liveness_seconds": 60.089095,
+    "termination": "Host SIGTERM after success; no attached disk."
+  },
+  "native_attempt7": "NOT RUN",
+  "root_cause": "Unknown; last visible initializer is a test boundary, not an exact blocking PC.",
+  "performance": "NOT MEASURED"
+}

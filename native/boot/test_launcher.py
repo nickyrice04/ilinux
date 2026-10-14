@@ -185,6 +185,27 @@ class LauncherTests(unittest.TestCase):
         self.iface.tree = prepared(bootargs=launch.BOOTARGS + " root=/dev/nvme0n1")
         self.reject("appended bootargs")
 
+    def test_clock_debug_skip_is_exact_and_uploaded(self):
+        self.run_launch()
+        args = dict(self.proxy.calls)["bootargs"].split()
+        self.assertEqual([a for a in args if a.startswith("initcall_blacklist=")],
+                         ["initcall_blacklist=clk_debug_init"])
+
+    def test_missing_clock_debug_skip_rejected(self):
+        args = launch.BOOTARGS.replace(" initcall_blacklist=clk_debug_init", "")
+        self.iface.tree = prepared(bootargs=args)
+        self.reject("fixed diagnostic arguments")
+
+    def test_expanded_clock_debug_skip_rejected(self):
+        args = launch.BOOTARGS.replace("initcall_blacklist=clk_debug_init",
+                                       "initcall_blacklist=clk_debug_init,clk_disable_unused")
+        self.iface.tree = prepared(bootargs=args)
+        self.reject("fixed diagnostic arguments")
+
+    def test_appended_initcall_skip_rejected(self):
+        self.iface.tree = prepared(bootargs=launch.BOOTARGS + " initcall_blacklist=init_clocksource_sysfs")
+        self.reject("appended bootargs")
+
     def test_m1n1_workaround_append(self):
         self.iface.tree = prepared(bootargs=launch.BOOTARGS + " idle=nop arm64.nowfxt")
         self.run_launch()

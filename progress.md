@@ -5,6 +5,35 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: attempt 7 ready with one optional clock-debug skip
+
+* Reviewed M1 `039a17b`: boot025 attempt 6 passed controller/DAPF/descriptor
+  gates and reached late native initialization. The screen stopped after
+  `calling clk_debug_init` at 1.360189 s. No visible panic or diagnostic
+  userspace/one-CPU/60-second heartbeat. Last line is not an exact blocking PC.
+* Exact boot025 ELF/Image, two full REA/Ghidra function bodies and 195 LLVM
+  instruction-word checks identify optional clock debugfs registration. Normal
+  clock registration/consumer APIs are separate. Root cause remains unknown.
+* Implemented one fixed controller argument: `initcall_blacklist=clk_debug_init`.
+  Reuse **unchanged boot025**; no new kernel build or release asset. Prepared-DT
+  validation rejects missing, expanded or appended blacklist changes.
+* **69 controller cases PASS**, including four new argument-boundary tests;
+  all **13 package files PASS**. Exact Image/initramfs in diskless/networkless
+  one-vCPU/4-GiB VZ reports exactly one skipped initcall, reaches diagnostic
+  PID 1/online_cpus=1 and passes the 60-second heartbeat. Native attempt 7
+  **NOT RUN**; this generic VM does not reproduce/resolve the native hang.
+* Post-attempt-6 human JSON PASS: original Full/lab Permissive, both exit 0.
+  Independent read-only root Macintosh HD/build 25G83/FileVault=true/SIP enabled
+  and unchanged staged boot021 m1n1 SHA. Default/installed object/authenticated-
+  root not separately queried. No host boot/volume/security/default changes.
+* **Next:** M1 pulls current main, rechecks the existing boot025 package and
+  updated launcher, publishes readiness, then the human starts one filmed
+  attempt 7. No extra M5 approval round trip. Capture the exact blacklist
+  checkpoint, later initcall boundary and userspace/liveness or first failure,
+  then Macintosh HD within existing bounds. No retry or expanded blacklist.
+  Follow `tools/m1n1-client/stage-b-instructions.md`; evidence and limits are
+  in `kernel/experiments/clock-debug/README.md`.
+
 ## 2026-10-14 · M1: attempt 6 reaches late Linux initialization; return confirmed
 
 * One boot025 attempt at readiness `32f5bcf`, reviewed M5 handoff `f8e98ee`.

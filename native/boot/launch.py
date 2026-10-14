@@ -24,7 +24,7 @@ M1N1_COMMIT = "57a9339ffd1876e78297b17d34dece8cff8fa1ba"
 BOOTARGS = ("console=tty0 fbcon=nodefer rdinit=/init ro maxcpus=1 nr_cpus=1 "
             "cpufreq.off=1 idle=nop arm64.nowfxt pd_ignore_unused "
             "clk_ignore_unused loglevel=8 ignore_loglevel printk.time=1 panic=0 "
-            "earlycon=ilinuxfb initcall_debug")
+            "earlycon=ilinuxfb initcall_debug initcall_blacklist=clk_debug_init")
 CONFIRM = "BOOT-J716C-RAM-DIAGNOSTIC"
 
 

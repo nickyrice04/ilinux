@@ -2,12 +2,13 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest (2026-10-14):** attempt 5 established native early Linux and an AIC
-legacy guest-timer write panic. Boot025 adds a tested restricted t6050 AIC
-profile. M1 verifies the new release offline, then the human can start one
-filmed attempt 6 through the existing lab entry. Native boot025 NOT RUN.
-No boot/security/volume changes or m1n1 reinstall. Post-attempt-5 original
-Full/lab Permissive JSON PASS. The authoritative current procedure is
+**Latest (2026-10-14):** attempt 6 reached late native initialization and stopped
+visibly at clk_debug_init; no diagnostic userspace/heartbeat observed. Attempt 7
+reuses boot025 with one optional debug-init skip. REA/source, 69 controller cases,
+13-file intake and generic VM exact-skip/60-second liveness checks PASS. Native
+attempt 7 NOT RUN. M1 verifies offline, publishes readiness, then the human
+starts one filmed boot. No boot/security/volume changes or m1n1 reinstall.
+Post-attempt-6 original Full/lab Permissive JSON PASS. Authoritative procedure:
 [the Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
@@ -142,16 +143,16 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: attempt 6, boot025 restricted AIC profile
+## 5. Stage B: attempt 7, boot025 with optional clock-debug init skipped
 
-M1 downloads/verifies boot025 before restart. Only Image changes from boot024;
-legacy guest-timer enable accesses are excluded in the exact t6050 profile,
-unused guest timers are source-masked, unsupported guest IRQ/KVM interfaces
-are withheld and legacy uncore access is separated from fast IPIs. Existing
-DT/config/initramfs/arguments and DAPF/descriptor guards remain. Record video
-before launch and capture the new profile, AIC Initialized, timer progress,
-PID 1/CPU/liveness or earliest failure. Keep the 120-second observation and
-Macintosh HD return bounds. Native boot025 NOT RUN. No automatic retries.
+M1 re-verifies the existing boot025 package and new controller before restart.
+No payload changes. Exactly one fixed `initcall_blacklist=clk_debug_init`
+argument isolates optional debugfs clock registration. Normal clock operation
+and all AIC/DT/framebuffer/DAPF/CPU/storage guards remain. Record video before
+launch, capture `initcall clk_debug_init blacklisted`, the later initializer
+boundary, PID 1/CPU/liveness or failure. Preserve the existing 120-second bound
+and Macintosh HD return. Native attempt 7 NOT RUN; root cause unknown. No
+retry or extension of the blacklist without new evidence and a reviewed test.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.
