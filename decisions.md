@@ -1134,3 +1134,14 @@ clk_debug_init blacklist. Preserve earlier receipts/results; publish readiness
 before one human-started recorded invocation. Human reports proxy/video ready;
 post-attempt-6 policy PASS already suffices. Capture skip and subsequent progress;
 no speculative additional skip/retry/settings change. Return within the bound.
+
+## 2026-10-14 · Record later initialization without inventing the skip message
+
+Attempt 7 passes exact prepared arguments and controller gates; fresh photo
+shows initialization past the former clock-debug boundary to deferred_probe_initcall.
+Record that progress, while leaving the unreadable blacklist checkpoint and
+diagnostic userspace/liveness NOT OBSERVED. Exclude the accidentally repeated
+attempt-6 photo. The last initializer is an observation boundary, not a proven
+hang cause. At the time limit, instruct original-macOS return; confirmation is
+pending. Preserve the one-skip limit: M5 analyzes shared dependencies offline,
+with read-only post-return checks, not another speculative skip or retry.

@@ -6,7 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 7 PASS, 2026-10-14
+### Current M1 result — attempt 7 later initcalls; return pending, 2026-10-14
+
+* One boot025 attempt at readiness `9bda4dd`, reviewed handoff `995efd7`.
+  **Controller exit 0, 10.433 s**, UTC 2026-10-14
+  04:53:40.692574–04:53:51.122617; handoff 04:53:50.882694.
+* Both DAPF checkpoints, 96-byte RAM correction/readback, 16-byte framebuffer
+  descriptor/readback, target boot021 marker, final DT/arguments and kboot reply
+  PASS. Only fixed `initcall_blacklist=clk_debug_init` added; package unchanged.
+* Fresh photo **OBSERVES later native initcalls**: `boot_wait_for_devices` and
+  `sync_state_resume_initcall` return 0; final visible line is
+  `calling deferred_probe_initcall+0x0/0xb8 @ 1` at 1.371769 s.
+  No returned line or panic/Oops visible. Exact blocking cause not established.
+* Exact blacklist/AIC/timer log lines and rectangle count **NOT OBSERVED** in
+  the supplied still; timestamp progress is observed. **Diagnostic PID 1 /
+  online_cpus=1 / 60-second liveness NOT OBSERVED**. Initcall `@ 1` is distinct.
+* Prior photo `IMG_2655.jpeg` was excluded; fresh `IMG_2657.jpeg` reviewed.
+  Full photos/video not copied or committed; video has not been reviewed.
+* Stop/return instructed at the 120-second limit. **Macintosh HD desktop return
+  PENDING HUMAN CONFIRMATION.** Fresh security/default checks NOT CHECKED.
+* Result: `native/boot/stage-b-2026-10-14-attempt7-result.md`. M5 next performs
+  read-only return checks after confirmation, then exact-build deferred-probe /
+  shared-dependency analysis offline. **Attempt 7 consumed**; no additional
+  skip, reconnect, retry, reinstall or settings changes authorized.
+
+### Historical M1 readiness — attempt 7 PASS, 2026-10-14
 
 * Pulled/read `995efd7` and the exact-build clock-debug evidence. Retained
   boot025 archive, all **13 files**, offline launcher and reviewed controller

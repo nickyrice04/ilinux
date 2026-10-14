@@ -86,14 +86,15 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest: M1 reverified unchanged boot025 and the one-argument clock-debug skip
-at `995efd7`: archive/13 files, reviewed controller hashes, clean client pin and
-69 offline cases PASS. Attempt 7/live checks NOT RUN at readiness. Human reports
-Running proxy and video recording; after readiness publication, one documented
-RAM attempt may proceed, then Macintosh HD return. Prior original Full/lab
-Permissive policy PASS. No reinstall, settings changes, expanded blacklist or
-retry. See `coordination.md` and current Stage B checklist. Older bullets retain
-historical context.
+Latest: boot025 attempt 7 reached later native initcalls after the one fixed
+clock-debug skip. Last visible call: deferred_probe_initcall at 1.371769 s;
+no diagnostic userspace/liveness or explicit panic observed. Controller exit 0
+(10.433 s), both DAPF checks, descriptor and final gates PASS. Return instructed
+at the 120-second limit; Macintosh HD desktop return PENDING HUMAN CONFIRMATION.
+Attempt 7 consumed. M5 read-only return checks after confirmation and exact-build
+offline shared-dependency analysis next; no further skip/retry/settings change.
+See `native/boot/stage-b-2026-10-14-attempt7-result.md` and coordination.md.
+Older bullets retain historical context.
 
 * Hardware fully inventoried. Native Linux now reaches late initialization,
   but diagnostic userspace/liveness remains unobserved. Full native boot/SMP,

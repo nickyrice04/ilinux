@@ -1,4 +1,19 @@
-# Stage B — attempt 7 / boot025 with one clock-debug skip
+# Stage B — attempt 7 consumed; later initcalls recorded
+
+**Current status:** one boot025 attempt at readiness `9bda4dd` passed controller,
+DAPF, descriptor, prepared arguments and handoff. Fresh photo shows later
+initcalls ending at `calling deferred_probe_initcall` (1.371769 s). Diagnostic
+userspace/liveness NOT OBSERVED; no visible panic. Stop/return instructed at the
+120-second bound; Macintosh HD desktop return PENDING HUMAN CONFIRMATION.
+
+M5 next performs read-only return checks after confirmation, then exact-build
+offline analysis. Read `native/boot/stage-b-2026-10-14-attempt7-result.md` and
+`coordination.md`. No extra skip/reconnect/retry/reinstall/settings changes.
+The checklist below is **historical and consumed**, not a new authorization.
+
+---
+
+## Historical attempt 7 / boot025 with one clock-debug skip
 
 **Current instruction for M1.** Pull latest main with `git pull --ff-only`
 (preserve local work; stop on divergence). Read this file and `coordination.md`.

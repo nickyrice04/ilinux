@@ -3,23 +3,19 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — native userspace not observed; clock-debug isolation ready
+## Current Stage B blocker — later initcalls; deferred-probe checkpoint
 
-Attempt 6 reached late native initcalls, with `calling clk_debug_init` remaining
-on screen. No exact blocking PC or panic was captured. REA plus exact-build
-source/disassembly establishes optional clock debug registration at this
-boundary, not a hardware-clock failure. Attempt 7 adds exactly
-`initcall_blacklist=clk_debug_init` while reusing unchanged boot025. It passes
-69 controller cases, 13-file intake and explicit skip/PID-1/one-CPU/60-second
-liveness in generic VZ. **Native attempt 7 NOT RUN; root cause unknown.**
-
-M1 independently passes the retained archive/13-file checks, reviewed source
-hashes and all 69 offline cases. Human reports proxy/video ready; after readiness
-publication, one filmed attempt proceeds. Preserve installed m1n1 and all guards. Record the
-skip and subsequent boundary or userspace, then return to Macintosh HD. Do not
-chain speculative skips if another routine stalls. Post-attempt-6 original
-Full/lab Permissive policy JSON PASS. No settings or storage changes.
-Evidence: `kernel/experiments/clock-debug/README.md`; current M1 checklist governs.
+Attempt 7, unchanged boot025 plus the sole fixed clk_debug_init skip, passed
+controller/DAPF/descriptor/final gates. Fresh photo shows boot_wait_for_devices
+and sync_state_resume_initcall completed, then calling deferred_probe_initcall
+at 1.371769 s. No return from that call, panic or diagnostic userspace shown.
+The exact skip message is not readable; prepared arguments verified, later
+progress observed. Last visible line does not prove the blocking instruction.
+Return instructed at the screen deadline; Macintosh HD return remains pending
+human confirmation. M5 should perform read-only return checks after confirmation
+and investigate exact-build deferred-probe/shared dependencies offline. Attempt
+7 consumed; do not expand the blacklist or retry. No settings changes.
+See `native/boot/stage-b-2026-10-14-attempt7-result.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 
