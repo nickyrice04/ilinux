@@ -46,7 +46,17 @@ def fdt(nodes):
 def prepared(cpu_count=1, storage=False, framebuffer=True, bootargs=None):
     children = [("nvme@1", {"compatible": b"apple,t6050-nvme-ans2\0", "status": b"okay\0" if storage else b"disabled\0"}, [])]
     children += [("perf@" + str(i), {"compatible": b"apple,t8112-cluster-cpufreq\0", "status": b"disabled\0"}, []) for i in range(3)]
-    nodes = [("soc", {}, children), ("cpus", {}, [("cpu@" + str(i), {}, []) for i in range(cpu_count)])]
+    children.append(("interrupt-controller@280400000", {
+        "compatible": b"apple,t6050-aic3\0apple,t8122-aic3\0", "phandle": struct.pack(">I", 99),
+        "#interrupt-cells": struct.pack(">I", 3), "interrupt-controller": b"",
+        "reg": struct.pack(">4Q", 0x280400000, 0x1cc000, 0x280440000, 0x4000)}, []))
+    nodes = [("soc", {"#address-cells": struct.pack(">I", 2), "#size-cells": struct.pack(">I", 2), "ranges": b""}, children),
+             ("cpus", {"#address-cells": struct.pack(">I", 2), "#size-cells": bytes(4)},
+              [("cpu@%x" % (0x40000+i), {"device_type": b"cpu\0", "compatible": b"apple,sotra-m\0",
+                "reg": struct.pack(">Q", 0x40000+i)}, []) for i in range(cpu_count)]),
+             ("timer", {"compatible": b"arm,armv8-timer\0", "interrupt-parent": struct.pack(">I", 99),
+                        "interrupt-names": b"phys\0virt\0hyp-phys\0hyp-virt\0",
+                        "interrupts": struct.pack(">12I", 1, 2, 4, 1, 3, 4, 1, 0, 4, 1, 1, 4)}, [])]
     frame = [("framebuffer@10000000", {"compatible": b"simple-framebuffer\0",
               "reg": struct.pack(">QQ", 0x10000000, 640 * 480 * 4),
               "width": struct.pack(">I", 640), "height": struct.pack(">I", 480),
@@ -200,6 +210,14 @@ class LauncherTests(unittest.TestCase):
         args = launch.BOOTARGS.replace("initcall_blacklist=clk_debug_init",
                                        "initcall_blacklist=clk_debug_init,clk_disable_unused")
         self.iface.tree = prepared(bootargs=args)
+        self.reject("fixed diagnostic arguments")
+
+    def test_missing_probe_diagnostics_rejected(self):
+        self.iface.tree = prepared(bootargs=launch.BOOTARGS.replace(" ilinux_probe_diag=1", ""))
+        self.reject("fixed diagnostic arguments")
+
+    def test_disabled_probe_diagnostics_rejected(self):
+        self.iface.tree = prepared(bootargs=launch.BOOTARGS.replace("ilinux_probe_diag=1", "ilinux_probe_diag=0"))
         self.reject("fixed diagnostic arguments")
 
     def test_appended_initcall_skip_rejected(self):

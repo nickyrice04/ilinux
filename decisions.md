@@ -1153,3 +1153,23 @@ reports no later screen message. Update the pending-return record to confirmed;
 keep diagnostic PID 1/CPU/liveness NOT OBSERVED and fresh protection/default
 checks NOT CHECKED. M5 can proceed with read-only return checks and offline
 analysis. No new live session or settings changes are authorized.
+
+## 2026-10-14 · Instrument deferred probing and verify the hardware description
+
+Attempt 7 moves beyond the clock boundary but does not prove a deferred driver
+or timer fault. Exact-build REA and source locate a debugfs call and two worker
+flushes. Keep normal work and the existing single skip; add bounded phase,
+counter/tick and independent timer-softirq observations in boot027. Do not
+substitute another guessed register write or blacklist. The helper is opt-in,
+single-CPU, finite in its logging and stops explicitly if its counter/tick
+preconditions fail. Hardware description checks reject mismatched t6050 AIC,
+timer routes and CPU topology; they do not claim physical delivery works.
+
+Preserve boot025 and installed boot021 m1n1; only the new RAM Image changes.
+Correct the verifier's historical provisioning hint to use the current stage.
+Full build, sanitizer/controller/intake checks and exact-image generic VM pass
+are prerequisites, not native compatibility evidence. M1 offline readiness and
+human start authorize one filmed attempt 8 under the unchanged scope; no extra
+M5 round trip, Recovery, volume/security/default change or automatic retry.
+Post-attempt-7 policy JSON is already PASS. Use the new observations for a
+root-cause fix, or advance to Linux control/input if userspace becomes stable.

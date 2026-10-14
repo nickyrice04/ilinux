@@ -71,7 +71,7 @@ def verify(root, revision, manifest_digest):
         "files": entries,
         "boot_authorized": False,
         "target_version_observed_live": False,
-        "next": "Read native/boot/README.md; stop until dedicated boot-entry provisioning and explicit live-session approval; first live test is bounded USB handshake",
+        "next": "Read tools/m1n1-client/stage-b-instructions.md and coordination.md for the current stage. This receipt verifies files only; preserve the installed boot setup and follow the current live-session authorization/checklist.",
     }
 
 

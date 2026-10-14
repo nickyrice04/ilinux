@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-14",
+  "package": "ilinux-j716c-boot027",
+  "kernel": "Linux 7.1.9-g863199d8b4a3-dirty #5 SMP PREEMPT",
+  "compiler": "GCC 16.1.1 20260430 / GNU ld 2.46.0",
+  "page_size": 16384,
+  "image_sha256": "5a5ca64eaf2c3389e9fca226d7244150edbc8975738fe11a9304c0c996e29b64",
+  "config_sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169",
+  "archive_sha256": "33c7ff4d1f8e93c929a5024ebb19b7dee825cb14e1c7bf93f7df8c5526bf6a8c",
+  "changed_payload_files": [
+    "Image"
+  ],
+  "full_link": "PASS",
+  "elf_image_roundtrip": "PASS",
+  "rea": {
+    "functions": 2,
+    "llvm_instruction_words": 94,
+    "nonrelocated_linked_matches": 66
+  },
+  "tests": {
+    "launcher": 37,
+    "descriptor": 6,
+    "dapf": 16,
+    "framebuffer": 5,
+    "hardware_binding": 19,
+    "real_dapf_parser": 2,
+    "root_adt": 4,
+    "real_serializer": 1,
+    "total": 90,
+    "result": "PASS"
+  },
+  "actual_helper_sanitizers": {
+    "scenarios": 11,
+    "result": "PASS",
+    "instrumentation": "ASan + UBSan"
+  },
+  "intake_files": 13,
+  "generic_vm": {
+    "cpus": 1,
+    "memory_gib": 4,
+    "disk": false,
+    "network": false,
+    "console": "hvc0",
+    "reported_target": "generic-test",
+    "reported_mode": "EL1",
+    "counter_sample_ms": 100,
+    "ticks": 25,
+    "phases": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "pid1": true,
+    "online_cpus": 1,
+    "liveness_seconds": 60.187341,
+    "termination": "Host SIGTERM after success; no attached disk.",
+    "timer_status": {
+      "phys": 4,
+      "virt": 1,
+      "irq_masked": 0,
+      "fiq_masked": 0,
+      "note": "Pending is meaningful only if the corresponding timer is enabled."
+    }
+  },
+  "native_attempt8": "NOT RUN",
+  "root_cause": "Unknown; instrumentation separates debugfs, driver work and timer/softirq progress.",
+  "post_attempt7_protection": {
+    "user_policy_json": {
+      "original": "Full",
+      "lab": "Permissive",
+      "both_exit": 0
+    },
+    "independent_read_only": {
+      "root": "Macintosh HD",
+      "build": "25G83",
+      "FileVault": true,
+      "SIP": "enabled",
+      "staged_m1n1_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "default_and_installed_boot_object": "Not separately re-queried"
+  },
+  "performance": "NOT MEASURED",
+  "source_sha256": {
+    "kernel/experiments/deferred-probe/ilinux_probe_diag.h": "b62efa6dedfe6929133419213d609f80856236b8986acc6f26982c2f3c1f87ff",
+    "kernel/experiments/deferred-probe/apply.py": "f6a34c274e5bf583709e73bf445b69e66e84dc40f79147221af0fa94223099f5"
+  }
+}

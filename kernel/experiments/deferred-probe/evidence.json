@@ -1,0 +1,46 @@
+{
+  "image_sha256": "8849de7c2b8e529ad5895707ed26f535993cc8ff85447c450b2c13240185a0ea",
+  "object_sha256": "2e3db1646e915ed2fb173c0b50e582c40b45d99747d0507b8ff62167e6038662",
+  "vmlinux_sha256": "3abfbe1e4d8a86c496488230bf2cc788d15cecf1cca34bd836e7bc46ae9391bc",
+  "functions": [
+    {
+      "elf_symbol": "deferred_probe_initcall",
+      "rea_function": "deferred_probe_initcall",
+      "section": ".text",
+      "symbol_bytes": 184,
+      "llvm_instruction_words": 46,
+      "image_relative_offset": "0xa83ccc",
+      "linked_matching_nonrelocated_words": 32,
+      "relocation_words_reviewed_separately": 14,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_c3ed5e8a1e109090519ec3e897097b1e90b53cfe9435b368d0c6708e59e9632c",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    },
+    {
+      "elf_symbol": "deferred_probe_work_func",
+      "rea_function": "deferred_probe_work_func",
+      "section": ".text",
+      "symbol_bytes": 192,
+      "llvm_instruction_words": 48,
+      "image_relative_offset": "0xa832cc",
+      "linked_matching_nonrelocated_words": 34,
+      "relocation_words_reviewed_separately": 14,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_029259cf020ff3fdcb82681d8eadee8f5b507d9f15263795eec1ac7a2ce6e671",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    }
+  ],
+  "limits": [
+    "Two debugfs/workqueue boundaries require native phase and timer evidence; last-visible line is not an exact blocking PC.",
+    "Relocations require linked disassembly review; pseudocode call signatures can be incomplete.",
+    "No native success, timer interrupt failure or faulty device is inferred from static analysis."
+  ]
+}

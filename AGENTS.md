@@ -86,15 +86,17 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest: boot025 attempt 7 reached later native initcalls after the one fixed
-clock-debug skip. Last visible call: deferred_probe_initcall at 1.371769 s;
-no diagnostic userspace/liveness or explicit panic observed. Controller exit 0
-(10.433 s), both DAPF checks, descriptor and final gates PASS. Return instructed
-at the 120-second limit; human now confirms Macintosh HD desktop return.
-Attempt 7 consumed. M5 read-only return checks and exact-build
-offline shared-dependency analysis next; no further skip/retry/settings change.
-See `native/boot/stage-b-2026-10-14-attempt7-result.md` and coordination.md.
-Older bullets retain historical context.
+Latest: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
+still unobserved. Boot027 keeps the working boot021 setup and changes only
+Image, adding bounded timer/tick/deferred-work diagnostics. Hardware detection
+now validates the t6050 AIC/timer routes and observed CPU topology. Full link,
+11 sanitizer scenarios, 90 controller cases, 13-file intake and generic VM
+phases/PID-1/60-second liveness PASS; **native attempt 8 NOT RUN**. M1 verifies
+private boot027, publishes readiness, then the human starts one filmed boot.
+No repeated provisioning/Stage A, Recovery, new blacklist or automatic retry.
+Post-attempt-7 original Full/lab Permissive JSON PASS. Root cause unknown.
+Follow current coordination and `tools/m1n1-client/stage-b-instructions.md`.
+Older bullets below retain historical context.
 
 * Hardware fully inventoried. Native Linux now reaches late initialization,
   but diagnostic userspace/liveness remains unobserved. Full native boot/SMP,

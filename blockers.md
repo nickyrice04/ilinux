@@ -3,19 +3,23 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — later initcalls; deferred-probe checkpoint
+## Current Stage B blocker — deferred-probe boundary; boot027 diagnostics ready
 
-Attempt 7, unchanged boot025 plus the sole fixed clk_debug_init skip, passed
-controller/DAPF/descriptor/final gates. Fresh photo shows boot_wait_for_devices
-and sync_state_resume_initcall completed, then calling deferred_probe_initcall
-at 1.371769 s. No return from that call, panic or diagnostic userspace shown.
-The exact skip message is not readable; prepared arguments verified, later
-progress observed. Last visible line does not prove the blocking instruction.
-Return instructed at the screen deadline; human now confirms Macintosh HD
-desktop return, with no later screen message reported. M5 performs read-only return checks
-and investigate exact-build deferred-probe/shared dependencies offline. Attempt
-7 consumed; do not expand the blacklist or retry. No settings changes.
-See `native/boot/stage-b-2026-10-14-attempt7-result.md`.
+Attempt 7 advanced beyond clock debug initialization to `deferred_probe_initcall`
+at 1.371769 s, without observed diagnostic userspace. Exact REA/source identify
+both debugfs creation and worker flushes here; a precise hang cause is unknown.
+Boot027 keeps both waits and adds bounded timer/tick, main/worker phase and
+retry-class diagnostics. The current controller validates this board's CPU
+MPIDR/family, AIC3 and host/guest timer descriptions in addition to prior guards.
+
+Full Image link, 11 actual-helper sanitizer scenarios, 90 controller cases,
+13-file intake and exact-image generic VM timer/phases/PID-1/60-second liveness
+PASS. **Native attempt 8 NOT RUN.** Only Image differs from boot025; installed
+m1n1/DT/initramfs/config remain. No extra initcall skip or hardware-driver change
+is justified yet. M1 follows the current Stage-B checklist for one filmed boot,
+then Macintosh HD return. Fresh post-attempt-7 original Full/lab Permissive
+JSON PASS. Continue the established installation; do not repeat provisioning.
+Evidence: `kernel/experiments/deferred-probe/README.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

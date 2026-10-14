@@ -24,7 +24,8 @@ M1N1_COMMIT = "57a9339ffd1876e78297b17d34dece8cff8fa1ba"
 BOOTARGS = ("console=tty0 fbcon=nodefer rdinit=/init ro maxcpus=1 nr_cpus=1 "
             "cpufreq.off=1 idle=nop arm64.nowfxt pd_ignore_unused "
             "clk_ignore_unused loglevel=8 ignore_loglevel printk.time=1 panic=0 "
-            "earlycon=ilinuxfb initcall_debug initcall_blacklist=clk_debug_init")
+            "earlycon=ilinuxfb initcall_debug initcall_blacklist=clk_debug_init "
+            "ilinux_probe_diag=1")
 CONFIRM = "BOOT-J716C-RAM-DIAGNOSTIC"
 
 
@@ -123,6 +124,7 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
         raise ValueError("prepared DT bootargs differ from fixed diagnostic arguments")
     if any(a not in ("idle=nop", "arm64.nowfxt") for a in args[len(BOOTARGS.split()):]):
         raise ValueError("unexpected appended bootargs")
+    print("Hardware DT PASS: J716c/t6050 CPU topology, AIC3 and timer routes verified.", flush=True)
     descriptor = entry_guard.plan(image, tree)
     ensure_no_secondaries(proxy)
     dapf_guard.apply(iface, dapf_plan)

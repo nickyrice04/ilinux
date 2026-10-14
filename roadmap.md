@@ -48,15 +48,15 @@ survey is not the next dependency. No proprietary code is copied into Linux.
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
 The dedicated lab entry and Stage A handshake/return are established.
-Attempt 6 reached late native initialization; the last visible call was
-clk_debug_init. Attempt 7 reuses boot025 with an exact optional debug-init skip.
-REA/source checks, 69 controller tests and generic VM skip/userspace/liveness
-pass. Native attempt 7 is NOT RUN; root cause remains unknown. Post-attempt-6
-policy JSON keeps original Full/lab Permissive.
+Attempt 7 reached later native initialization at `deferred_probe_initcall`.
+Boot027 preserves the installation and adds bounded timer/tick and driver-work
+observations. REA/source, full build, 11 sanitizer scenarios, 90 controller
+cases and generic VM timer/phases/PID-1/liveness PASS. Native attempt 8 NOT RUN;
+root cause remains unknown. Post-attempt-7 original Full/lab Permissive PASS.
 
 | Order | Next experiment | Evidence required before advancing |
 |---|---|---|
-| 1 | One human-started attempt 7 using boot025 plus the exact clk_debug_init skip; installed m1n1 stays boot021, single core, Linux NVMe/cpufreq disabled | Record before launch: exact blacklist checkpoint, subsequent initcall progress, PID 1, one CPU, 60-second liveness, then original macOS return. Use `tools/m1n1-client/stage-b-instructions.md` |
+| 1 | One human-started attempt 8 using boot027 and fixed probe diagnostics; installed m1n1 stays boot021, single core, NVMe/cpufreq disabled | Record video before launch; timer/tick, deferred phases, worker/retry class, PID 1/one CPU/60-second liveness or first failure; then original macOS return. Use the current Stage-B checklist. |
 | 2 | Diagnose the earliest actual failure, or improve logging if screen output is absent | A reproducible checkpoint and tested patch; no blind retry or guessed driver diagnosis |
 | 3 | Establish Linux-side USB/input and an observable control channel | Linux USB enumeration and tested input/network access. The working m1n1 USB proxy does not survive Linux handoff |
 | 4 | Separate bounded SMP/idle/DVFS experiments, informed by existing REA startup findings | Correct core identities/topology, stable incremental secondary startup, validated idle/wake and frequency transitions; no assumed masks or OPP values |

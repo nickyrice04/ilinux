@@ -2,13 +2,16 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest (2026-10-14):** attempt 6 reached late native initialization and stopped
-visibly at clk_debug_init; no diagnostic userspace/heartbeat observed. Attempt 7
-reuses boot025 with one optional debug-init skip. REA/source, 69 controller cases,
-13-file intake and generic VM exact-skip/60-second liveness checks PASS. Native
-attempt 7 NOT RUN. M1 verifies offline, publishes readiness, then the human
-starts one filmed boot. No boot/security/volume changes or m1n1 reinstall.
-Post-attempt-6 original Full/lab Permissive JSON PASS. Authoritative procedure:
+**Latest (2026-10-14):** attempt 7 reached `deferred_probe_initcall`; no
+diagnostic userspace/liveness observed. Boot027 adds bounded timer/tick and
+deferred-work diagnostics without bypassing probing. Only Image changes;
+hardware description checks are stronger. Full build, 11 sanitizer scenarios,
+90 controller cases, 13-file intake and generic VM timer/phases/60-second
+liveness PASS. **Native attempt 8 NOT RUN.** M1 verifies offline and publishes
+readiness, then the human starts one filmed boot and returns to Macintosh HD.
+Continue the installed Boot Lab entry/boot021 m1n1: no Recovery, provisioning,
+Stage A repeat, reinstall or settings change. Post-attempt-7 original Full/lab
+Permissive JSON already PASS. Authoritative procedure:
 [the Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
@@ -23,7 +26,7 @@ not run; attempt 5 now establishes early Linux and the boot021 marker. Boot021 a
 ## 1. Current state
 
 This Mac is Mac17,6 / J716c / t6050 M5 Max. Native early Linux is observed;
-diagnostic userspace/liveness and native boot025 remain unvalidated. Job 020 built the kernel, DT and diagnostic initramfs. Job 021
+boot025 reaches late initialization; diagnostic userspace/liveness remain unobserved. Job 020 built the kernel, DT and diagnostic initramfs. Job 021
 exports the same bytes and adds a built, pinned m1n1 plus a conservative
 Stage-B DT/initramfs. See [package instructions](../../native/boot/README.md).
 
@@ -143,16 +146,15 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: attempt 7, boot025 with optional clock-debug init skipped
+## 5. Stage B: attempt 8, boot027 deferred-probe diagnostics
 
-M1 re-verifies the existing boot025 package and new controller before restart.
-No payload changes. Exactly one fixed `initcall_blacklist=clk_debug_init`
-argument isolates optional debugfs clock registration. Normal clock operation
-and all AIC/DT/framebuffer/DAPF/CPU/storage guards remain. Record video before
-launch, capture `initcall clk_debug_init blacklisted`, the later initializer
-boundary, PID 1/CPU/liveness or failure. Preserve the existing 120-second bound
-and Macintosh HD return. Native attempt 7 NOT RUN; root cause unknown. No
-retry or extension of the blacklist without new evidence and a reviewed test.
+M1 takes the new boot027 package and latest controller through offline readiness.
+Only Image changes from boot025; all installed setup, DT/initramfs/config and
+prior safeguards stay. Retain exactly one clock-debug skip and add the fixed
+`ilinux_probe_diag=1` argument. Record before launch; capture counter/tick,
+main phase, worker/retry and userspace/liveness milestones or first failure.
+Use the existing 120-second bound and Macintosh HD return. Native attempt 8
+NOT RUN; root cause unknown. No repeated provisioning or speculative skip.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.

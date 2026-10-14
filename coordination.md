@@ -6,7 +6,43 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 result — attempt 7 later initcalls; return confirmed, 2026-10-14
+### Current M5 handoff — boot027 / attempt 8, 2026-10-14
+
+* Reviewed M1 `a2239f9` / attempt 7: native Linux progressed to
+  `deferred_probe_initcall` at 1.371769 seconds after two completed late
+  initializers. No panic or diagnostic userspace observed; last line is not a
+  blocking PC. Macintosh HD return confirmed.
+* Exact boot025 REA/Ghidra and source analysis covers two deferred-probe bodies,
+  94 LLVM instruction words and linked relocations. Debugfs, deferred worker
+  locks/device probes, timer/scheduling and console visibility remain possible
+  causes. **Root cause unknown; no speculative additional blacklist.**
+* Boot027 adds opt-in bounded timer/tick and deferred-probe phase diagnostics,
+  six maximum timer-softirq heartbeats and 32 detailed driver retries. Both
+  normal triggers/flushes are preserved. Only **Image** changes; the existing
+  clock-debug skip stays and `ilinux_probe_diag=1` is fixed in the launcher.
+* Hardware validation now checks this J716c/t6050 CPU MPIDR/family topology,
+  AIC3 geometry/phandle/translation and timer routes before handoff, retaining
+  live chip/board/pin/secondary/DAPF/framebuffer guards. Corrected stale intake
+  receipt instructions so M1 continues Stage B instead of repeating setup.
+* Full Linux 7.1.9 Image link/ELF roundtrip, **11 actual-helper ASan/UBSan
+  scenarios**, **90 controller cases** and **13-file intake PASS**. Exact
+  packaged Image/initramfs in one-CPU/4-GiB diskless/networkless VZ reports
+  counter PASS/25 ticks in 100 ms, phases 1–9, PID 1/one CPU and liveness at
+  **60.187341 seconds**. This VM does not test native M5 AIC or reproduce the hang.
+* Post-attempt-7 fresh human JSON PASS: original Full/lab Permissive, both exit
+  0. Independent root Macintosh HD/build 25G83/FileVault/SIP/staged m1n1 hash
+  PASS. Default/installed object/authenticated-root not separately queried.
+  No boot/security/volume/default changes or installed m1n1 replacement.
+* **Next:** M1 verifies private `native-j716c-boot027` and latest controller,
+  publishes readiness, then the human starts one filmed attempt 8. No extra M5
+  approval loop. Record timer/phase/worker checkpoints and PID 1/liveness or
+  first failure, return within the existing bound. **Native attempt 8 NOT RUN.**
+  Follow `tools/m1n1-client/stage-b-instructions.md` and
+  `kernel/experiments/deferred-probe/README.md`. Continue the existing Boot Lab
+  setup; no Recovery, reinstall, repeated Stage A, automatic retry or widened skip.
+
+
+### Historical M1 result — attempt 7 later initcalls; return confirmed, 2026-10-14
 
 * One boot025 attempt at readiness `9bda4dd`, reviewed handoff `995efd7`.
   **Controller exit 0, 10.433 s**, UTC 2026-10-14

@@ -117,4 +117,67 @@ def check_stage_b(blob, prepared=False):
                 and n.get("status", b"okay\0") in (b"okay\0", b"ok\0")]
         if len(cpus) != 1:
             raise ValueError("prepared DT must expose exactly one CPU")
+    check_hardware(tree)
     return tree
+
+
+def check_hardware(tree):
+    """Validate this board's CPU family and AIC/timer route, not just its name.
+
+    These are public/sanitized layout facts from the packaged J716c tree.
+    This does not claim that an interrupt has actually been delivered.
+    """
+    def cells(*values):
+        return struct.pack('>' + 'I' * len(values), *values)
+
+    def enabled(path):
+        while path:
+            if tree.get(path, {}).get('status', b'okay\0') not in (b'okay\0', b'ok\0'):
+                return False
+            path = path.rsplit('/', 1)[0]
+        return True
+
+    if 'apple,t6050' not in strings(tree['/'].get('compatible', b'')):
+        raise ValueError('DT chip is not t6050')
+    aics = [(p, n) for p, n in tree.items() if 'apple,t6050-aic3' in
+            (strings(n['compatible']) if 'compatible' in n else [])]
+    if len(aics) != 1:
+        raise ValueError('expected one t6050 AIC3')
+    path, aic = aics[0]
+    if not enabled(path) or aic.get('interrupt-controller') != b'' or aic.get('#interrupt-cells') != cells(3):
+        raise ValueError('AIC3 interrupt controller disabled or malformed')
+    if aic.get('reg') != struct.pack('>4Q', 0x280400000, 0x1cc000, 0x280440000, 0x4000):
+        raise ValueError('AIC3 core/event layout differs from this board')
+    parent = tree.get(path.rsplit('/', 1)[0], {})
+    if parent.get('#address-cells') != cells(2) or parent.get('#size-cells') != cells(2) or parent.get('ranges') != b'':
+        raise ValueError('AIC3 parent address translation differs')
+    phandle = aic.get('phandle')
+    if not phandle or len(phandle) != 4 or phandle in (cells(0), cells(0xffffffff)) or sum(n.get('phandle') == phandle for n in tree.values()) != 1:
+        raise ValueError('AIC3 phandle missing or ambiguous')
+    timers = [(p, n) for p, n in tree.items() if 'arm,armv8-timer' in
+              (strings(n['compatible']) if 'compatible' in n else [])]
+    if len(timers) != 1 or not enabled(timers[0][0]):
+        raise ValueError('expected one enabled architectural timer')
+    timer = timers[0][1]
+    if timer.get('interrupt-parent') != phandle:
+        raise ValueError('timer is not routed to t6050 AIC3')
+    if timer.get('interrupt-names') != b'phys\0virt\0hyp-phys\0hyp-virt\0' or timer.get('interrupts') != cells(1, 2, 4, 1, 3, 4, 1, 0, 4, 1, 1, 4):
+        raise ValueError('timer host/guest FIQ routes differ from this board')
+    cpus = tree.get('/cpus', {})
+    if cpus.get('#address-cells') != cells(2) or cpus.get('#size-cells') != cells(0):
+        raise ValueError('CPU address encoding differs')
+    seen = set()
+    for path, cpu in tree.items():
+        if not path.startswith('/cpus/cpu@'):
+            continue
+        reg = cpu.get('reg', b'')
+        if cpu.get('device_type') != b'cpu\0' or len(reg) != 8:
+            raise ValueError('CPU identity missing or malformed')
+        mpidr, = struct.unpack('>Q', reg)
+        family = ('apple,sotra-m' if mpidr in {*range(0x40000, 0x40006), *range(0x40100, 0x40106)}
+                  else 'apple,sotra-p' if mpidr in range(0x10200, 0x10206) else None)
+        if not family or mpidr in seen or family not in strings(cpu.get('compatible', b'')):
+            raise ValueError('CPU MPIDR/family is not this J716c topology')
+        seen.add(mpidr)
+    if not seen:
+        raise ValueError('CPU topology missing')

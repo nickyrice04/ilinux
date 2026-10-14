@@ -1,43 +1,42 @@
-# J716c native handoff — attempt 7 with existing boot025
+# J716c native handoff — attempt 8 / boot027
 
 **M1: follow [the current Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).**
-It contains download/checksum/test commands, readiness reporting, the one-shot
-launch command, screen-recording requirements and the Macintosh HD return plan.
-Complete offline readiness before the human restarts. Native attempt 7 is
-**NOT RUN**. No installation, Recovery, volume/security/default changes or
-m1n1 reinstall are part of this handoff.
+It contains the new package/intake commands, exact tests/hashes, readiness,
+one filmed launch and Macintosh HD return. **Native attempt 8 NOT RUN.**
+Keep the established Boot Lab entry and installed boot021 m1n1. Do not repeat
+provisioning, Recovery, Stage A or installation; no boot/security/volume changes.
 
-Attempt 6 reached late native initialization and stopped visibly at
-`calling clk_debug_init`. The [M1 result](stage-b-2026-10-14-attempt6-result.md)
-does not prove the exact blocking instruction. Source, matching disassembly and
-REA identify optional clock debugfs registration; see
-[evidence/tests](../../kernel/experiments/clock-debug/README.md).
+Attempt 7 reached later Linux initialization and stopped visibly at
+`deferred_probe_initcall`. [M1's report](stage-b-2026-10-14-attempt7-result.md)
+does not prove the blocking PC. Exact REA/source show a debugfs call and two
+worker flushes. [Boot027 diagnostics](../../kernel/experiments/deferred-probe/README.md)
+identify those boundaries, test counter/tick progress and report worker/retry
+state. Both flushes remain. Root cause is unknown; no additional initcall skip.
 
-Attempt 7 reuses **unchanged boot025** with one new fixed controller argument:
-`initcall_blacklist=clk_debug_init`. No new package download or kernel build is
-needed if M1 already has boot025. Recheck the updated controller and retained
-package before the human restart. The installed m1n1 and all payloads remain.
+Only **Image** differs from boot025. The fixed `ilinux_probe_diag=1` argument
+activates diagnostics; the sole clock-debug skip is retained. Hardware checks
+now verify t6050 CPU topology, AIC3 geometry and timer routes in the packaged
+and effective DT. Existing chip/board/pin/DAPF/framebuffer/one-core/storage gates
+remain. The receipt's stale provisioning hint is corrected to the current stage.
 
-All 69 controller cases and 13-file intake pass. The exact packaged kernel in
-networkless/diskless generic VZ explicitly skips only that initializer, reaches
-PID 1/one CPU and passes the 60-second message. This does not reproduce or fix
-the native hang; attempt 7 is a bounded physical diagnostic test.
+Full Image/ELF link, 11 actual-helper sanitizer scenarios, 90 controller cases
+and 13-file intake PASS. Exact Image/initramfs in diskless/networkless generic
+VZ reports timer PASS/25 ticks in 100 ms, phases 1–9, PID 1/one CPU and the
+60-second checkpoint. This is not native M5 interrupt/driver validation.
+Fresh post-attempt-7 original Full/lab Permissive policy JSON already PASS.
 
-The [boot025 AIC workaround](../../kernel/experiments/aic-t6050/README.md), early
-framebuffer/rectangles, DAPF correction and every safety gate remain. Normal
-clock framework operation is not disabled; clock debug files are unavailable
-for this test. No installed boot files or host settings change.
-
-The private prerelease `native-j716c-boot025` carries the 16.7 MB archive.
+The private prerelease `native-j716c-boot027` carries the 16.7 MB archive.
 `archive-sha256.txt`, `intake-manifest-sha256.txt` and `package-manifest.json`
 pin its bytes. Keep prior packages/receipts; `boot021-package-manifest.json`
-`boot022-package-manifest.json` and `boot024-package-manifest.json` preserve
+`boot022-package-manifest.json`, `boot024-package-manifest.json` and
+`boot025-package-manifest.json` preserve
 payload baselines. Binaries are
 release assets, never Git history. No Apple binary, raw device tree, serial,
 credential or personal file is in the package.
 
 Build foundation: kernel base `77cb8f24c2381a8abb7272d7bbdec548d6426a8a` plus
-t6050 patches 0001–0007, with job024's original instrumentation and job025's restricted AIC patch. GCC 16.1.1,
+t6050 patches 0001–0007, with job024's original instrumentation, job025's restricted AIC patch and
+job027's bounded deferred-probe diagnostics. GCC 16.1.1,
 Linux 7.1.9, original 16-KiB config. The separate post-link DockChannel proof
 patch remains absent. m1n1 is still the unmodified pin
 `57a9339ffd1876e78297b17d34dece8cff8fa1ba`, marker
