@@ -3,29 +3,28 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — native reschedule progress unobserved; boot029 ready offline
+## Current Stage B blocker — native deferred-worker/probe progress; userspace unobserved
 
-Attempt 9's reviewed video observes native J716c/t6050 EL2/one CPU, 25 ticks,
-phases 1/10/11/12 and pending=1/strip=0. Phase 13, readable lanes, watchdog stack
-and userspace/liveness remain unobserved. This locates a boundary, not an exact
-blocking PC. Video samples cover 21.598 seconds, not the full observation window.
+Attempt 10's reviewed boot029 video shows native Linux and readable
+**P:05 S:09 W:04**, unchanged across later samples from 11 to 27.05 seconds.
+Three strip lanes now visibly render. Source places P=05 at the first flush,
+S=09 at scheduler exit and W=04 before bus_probe_device in deferred work.
+This supports investigating that boundary, not an exact blocked PC/driver or
+register-fault diagnosis. Progress beyond phase 13 is inferred from P=05's
+source path; phase-13 text was not directly read.
 
-REA/source and the old-function regression test confirm that boot028's mapper
-can skip the independent strip when its early console is absent/retired. The
-specific native prerequisite causing strip=0 is unknown. Boot029 initializes
-from validated DT independently, reports failure state, enlarges the strip and
-adds generic/ARM64 context-switch subphases. No native hang fix is claimed.
-Full build/sanitizers/90 controller cases/intake/generic VM liveness PASS;
-physical display and scheduling are the next validation gate.
+H/full transition sequence, watchdog stack and diagnostic PID 1/one-CPU/
+60-second liveness are unobserved. Small timer/display/pending fields cannot
+be confirmed from the blurred/overlapping text. Clip duration is 27.197 seconds,
+with paused samples rather than exhaustive coverage of the 120-second window.
 
-Post-attempt-9 original Full/lab Permissive JSON PASS; no settings changed.
-M1 verifies boot029 and publishes readiness before one human-started attempt 10.
-M1 independently verifies archive/intake/controller and all 90 tests PASS.
-Human confirms proxy/video ready. Native/live NOT RUN at readiness. Preserve installed boot021, single skip and hardware gates;
-no installation restart or automatic retry. Evidence and exact procedure:
-`kernel/experiments/context-display/README.md`,
-`native/boot/stage-b-2026-10-14-attempt9-result.md`,
-`tools/m1n1-client/stage-b-instructions.md`.
+Controller exit 0/10.496 s; hardware/DAPF/descriptor/kboot gates PASS. Human
+confirms Macintosh HD return. Fresh post-attempt-10 protection/default checks
+NOT CHECKED; post-attempt-9 policies are historical. M5 owns read-only return
+checks and offline worker/probe/visibility analysis. Attempt 10 consumed;
+no automatic retry, wider blacklist, reinstall or settings changes.
+See `native/boot/stage-b-2026-10-14-attempt10-result.md` and
+`kernel/experiments/context-display/README.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

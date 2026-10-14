@@ -86,22 +86,20 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1: boot029 archive/13-file intake, offline launcher, all 90 tests,
-reviewed controller hashes and clean client pin PASS. Readiness published;
-human reports proxy and video ready. Attempt 10 native/live NOT RUN at readiness.
-One filmed launch with display/strip evidence, then return; no retry.
+Latest M1: **attempt 10 consumed**, boot029 at readiness `8c96579`.
+Controller exit 0/10.496 s; hardware/DAPF/descriptor/kboot checks PASS.
+Reviewed video observes native Linux and literal **P:05 S:09 W:04** in later
+samples. H and full sequence unobserved; small diagnostic fields not confirmed.
+Source places this at the first deferred-work flush and worker probe entry;
+no exact fault established. PID 1/userspace one-CPU/60-second liveness unobserved.
+Human confirms Macintosh HD return. Fresh protection/default checks NOT CHECKED.
 
-Current M5 handoff: **boot029 / attempt 10, native/live NOT RUN**. M1 attempt 9
-video shows timer PASS/25 ticks, phases 1/10/11/12, pending=1/strip=0; no phase 13
-or userspace. REA/source/regression tests confirm a diagnostic mapper lifecycle
-bug; boot029 fixes it and adds enlarged strip/context-switch subphases. Exact
-native hang cause remains unknown. Full link, sanitizers, 90 controller cases,
-13-file intake and generic VM PID-1/60-second liveness PASS. Post-attempt-9
-original Full/lab Permissive JSON PASS. M1 verifies/publishes readiness, then
-one human-started filmed attempt 10 under the current Stage-B checklist.
-Preserve installed boot021 and established entry; no provisioning/Recovery,
-settings changes, wider skip or automatic retry. Next after native liveness:
-Linux control/input, usable root and configuration-agent Omarchy handoff.
+Current M5 next: review `native/boot/stage-b-2026-10-14-attempt10-result.md`,
+perform read-only return checks, and investigate deferred-worker/probe progress
+and diagnostic visibility offline. Preserve installed boot021/client pin,
+working entry and existing gates/single skip. No retry, reinstall, settings
+changes or new live session from this report. Stable native diagnostic userspace
+precedes Linux control/input and the configuration agent's Omarchy handoff.
 
 Historical M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
 still unobserved. Boot027 keeps the working boot021 setup and changes only

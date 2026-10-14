@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: attempt 10 readable strip; return confirmed
+
+* One boot029 RAM attempt at readiness `8c96579`, reviewed M5 handoff `73c5e0d`.
+  **Controller exit 0, 10.496 s**; UTC 14:48:59.495128–14:49:09.991426,
+  handoff 14:49:09.756446. Target boot021 marker, hardware DT, both DAPF
+  checkpoints/96-byte readback, 16-byte descriptor/readback and kboot reply PASS.
+* **Video reviewed:** 27.197-second `IMG_2660.mov`; sampled frames/crops through
+  27.05 seconds show native Linux/deferred-probe diagnostics and literal
+  **`P:05 S:09 W:04`**, unchanged at 11, 12, 13.6, 20.4 and 27.05 seconds.
+  Three strip lanes visibly render. H/full transition sequence **NOT OBSERVED**;
+  H is not inferred zero. Small timer/display/pending fields **NOT CONFIRMED**
+  because of blur/overlap; no prior attempt's values substituted.
+* Source decodes P=05 as first deferred-work flush, S=09 as scheduler exit and
+  W=04 as the boundary before `bus_probe_device`. Progress beyond phase 13 is
+  **inferred from P=05's source path**; phase-13 text not directly observed.
+  No exact blocked driver/PC, timer fault or hang fix established.
+* PID 1/userspace `online_cpus=1`/60-second liveness, readable heartbeat/stack
+  and retry-compatible details **NOT OBSERVED**. Video samples do not cover
+  every frame or the full observation window. Full media remains out of Git.
+* **Macintosh HD return CONFIRMED by human** (“back, update”). No later
+  strip/message observation supplied. Fresh protection/default **NOT CHECKED**.
+  No retry, reconnect, reinstall or boot/security/volume/default changes.
+* **Attempt 10 consumed.** Result: `native/boot/stage-b-2026-10-14-attempt10-result.md`.
+  M5 next: read-only return checks and offline deferred-worker/device-probe
+  and diagnostic-visibility analysis. Preserve boot021/client pin and gates.
+
 ## 2026-10-14 · M1: boot029 attempt 10 offline readiness PASS
 
 * Pulled/read M5 handoff `73c5e0d`, context-display README/evidence/validation.

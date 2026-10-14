@@ -1,6 +1,14 @@
 # Stage B — attempt 10 / boot029 display and context-switch checkpoints
 
-**Current M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`;
+**Attempt 10 consumed — 2026-10-14.** One boot029 launch completed with
+controller exit 0; reviewed video shows native Linux and **P:05 S:09 W:04**.
+H/diagnostic userspace/liveness are unobserved; small fields not confirmed.
+Human confirms Macintosh HD return. Fresh protection/default checks pending
+M5 read-only review. No automatic retry. See
+`native/boot/stage-b-2026-10-14-attempt10-result.md`.
+The checklist below is retained as the reviewed pre-attempt procedure.
+
+**Reviewed pre-attempt M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`;
 preserve local work and stop on divergence. Read `coordination.md` and this
 file. Attempt 9 is consumed: reviewed video shows timer PASS/25 ticks, phases
 1/10/11/12, then `reschedule pending=1 strip=0`. Phase 13, literal strip lanes

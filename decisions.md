@@ -1262,3 +1262,15 @@ Publish readiness before one attempt 10. Capture actual display-state and
 literal enlarged strip values, review recording, and separate mapping from
 visibility and diagnostic progress from boot success. Preserve installed setup
 and earlier results; no retry, wider skip, reinstall or settings changes.
+
+## 2026-10-14 · Use observed worker/probe boundaries without inventing an exact fault
+
+Attempt 10 passes controller gates and reviewed video exposes P:05 S:09 W:04.
+Three native strip lanes now visibly render. Decode these as first deferred-work
+flush, scheduler exit and boundary before bus_probe_device; do not equate them
+with an exact blocked driver/PC. Earlier phase-13 passage is a source-path
+inference, not directly observed phase text. H is unobserved, not zero; blurred
+small timer/display fields remain unconfirmed, with no values inherited from
+prior attempts. Userspace/liveness remain unobserved. Human confirms Macintosh
+HD return. M5 performs read-only return checks and offline probe/visibility
+analysis next. Preserve the installed setup and all gates; no retry or new skip.
