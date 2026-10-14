@@ -1303,3 +1303,16 @@ Publish readiness before one filmed attempt 11. Record literal lanes before
 using the offline public-table decoder; preserve unreadable fields as unobserved.
 Review early and final video within the existing stop bound. Preserve installed
 boot021/gates/single skip; no retry, settings changes or inferred driver fault.
+
+## 2026-10-14 · Preserve decoded probe identity and distinguish watchdog task context
+
+Attempt 11 video/photo identifies final D=C=0059 / B=63 at the second pin-controller
+platform callback boundary, while the first D=C=0057 instance returned 0. Follow
+this device/operation evidence offline rather than guessing a driver skip.
+Photo directly confirms phase 13, 25 timer ticks and two watchdog reports. The
+first dump interrupted kdevtmpfs; later scheduler summary names kworker/u4:1.
+Do not assign the first stack to the final callback or claim an exact fault.
+Keep obscured lower frames unconfirmed and kernel heartbeats separate from
+unobserved diagnostic userspace/liveness. Return was instructed at the bound;
+confirmation remains pending. No retry/settings changes; fresh M5 return checks
+and targeted offline analysis next. Preserve media locally and publish safe text.

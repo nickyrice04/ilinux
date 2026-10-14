@@ -5,6 +5,39 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: attempt 11 panel/heartbeat/stack evidence; return pending
+
+* One boot030 RAM attempt at readiness `3c0b051`, reviewed handoff `1125c33`.
+  **Controller exit 0, 10.526 s**; UTC 15:27:11.254767–15:27:21.781567,
+  handoff 15:27:21.541577. Target boot021 marker, hardware DT, both DAPF
+  checks/96-byte readback, 16-byte descriptor/readback and kboot reply PASS.
+* Reviewed **43.43-second video** plus detailed **IMG_2662.jpeg**. Photo directly
+  confirms J716c/t6050 **EL2, cpus=1**, counter **PASS/25 ticks**, timer
+  **phys=1 virt=7 irq_masked=0 fiq_masked=0**, printed phases
+  **1 → 10 → 11 → 12 → 13 → 2 → 3 → 4 → 5**, and **pending=1 strip=1 display=6**.
+* Four-row panel changes through first and second device probes; final readable
+  **P:05 S:09 / W:04 H:02 / D:0059 / B:63 C:0059** at video 30/43.28 s and photo.
+  Offline public-table decode: **/soc/pinctrl@29c000000**, t6050/t8103 pinctrl,
+  platform driver probe callback boundary. Earlier D=C=0057 maps to
+  **/soc/pinctrl@2881e4000**; photo reads **returned 0 after 164043 usecs**, retry 1 end.
+* First watchdog: **phase=5 worker=4 device=1 ticks=1304**; scheduler
+  **sched=7 selections=1274 prev=52 next=20 current=20/kdevtmpfs**. Photo provides
+  14 readable symbolic frames/offsets through timer softirq/IRQ exit; lower
+  frames obscured. Later **device=2 ticks=2584**, selections=2550/prev=52/
+  next=38/current=38/**kworker/u4:1**. First stack is not a proven final-driver
+  stack. H=02 is a kernel watchdog count, not userspace liveness.
+* **PID 1/userspace online_cpus=1/60-second liveness NOT OBSERVED**. No explicit
+  panic observed. Video sampled at 0/10/15/20/30/43.28 s; no 60/90-second or full
+  120-second coverage. Photo improves text, not duration evidence. Hidden
+  fields/stack frames remain unconfirmed; no exact blocked PC/cause established.
+* Return instructed at deadline **11:29:21 a.m. Eastern**; **Macintosh HD return
+  PENDING HUMAN CONFIRMATION**, fresh protection/default **NOT CHECKED**.
+  No retry, reconnect, reinstall or settings change. Full media remains out of Git.
+* **Attempt 11 consumed.** Detailed report:
+  `native/boot/stage-b-2026-10-14-attempt11-result.md`. M5 next: read-only checks
+  after confirmed return and offline analysis of the decoded pin-controller
+  callback/dependencies. Preserve installed boot021, clean client pin and gates.
+
 ## 2026-10-14 · M1: boot030 attempt 11 offline readiness PASS
 
 * Pulled/read M5 handoff `1125c33`, probe-path README/evidence/validation and

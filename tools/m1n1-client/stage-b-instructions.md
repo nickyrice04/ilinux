@@ -1,6 +1,14 @@
 # Stage B — attempt 11 / boot030 deferred-device and probe-path diagnostics
 
-**Current M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`;
+**Attempt 11 consumed — 2026-10-14.** One boot030 launch passed controller
+checks. Reviewed video/detailed photo shows phase 13 and phases 2–5 and final
+**P05 S09 W04 H02 D0059 B63 C0059**, decoded to the pin-controller platform
+probe callback boundary. Diagnostic userspace/liveness unobserved.
+Return instructed at deadline; **Macintosh HD confirmation pending**.
+No automatic retry. See `native/boot/stage-b-2026-10-14-attempt11-result.md`.
+The procedure below is retained as the reviewed pre-attempt checklist.
+
+**Reviewed pre-attempt M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`;
 preserve local work and stop on divergence. Read `coordination.md` and this file.
 Attempt 10 is consumed. Its reviewed video observes **P:05 S:09 W:04**; the
 previous three strip lanes now work, but H/small fields/userspace are unconfirmed

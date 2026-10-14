@@ -86,24 +86,22 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1: boot030 archive/13-file intake, offline launcher, 90 cases and
-reviewed controller/decoder hashes PASS; clean pin and installed boot021 unchanged.
-Human proxy/video ready. Attempt 11 native/live NOT RUN at readiness.
-One filmed launch after publication; capture all four rows and return.
+Latest M1: **attempt 11 consumed**, boot030 at readiness `3c0b051`.
+Controller exit 0/10.526 s; all hardware/DAPF/descriptor/kboot gates PASS.
+Video plus detailed photo observes EL2/one CPU, PASS/25 ticks, phase 13 and phases 2–5,
+pending=1/strip=1/display=6 and final **P05 S09 W04 H02 D0059 B63 C0059**.
+Public decode: pinctrl@29c000000 at platform driver callback boundary; earlier
+pinctrl@2881e4000 returned 0. First watchdog stack was current kdevtmpfs, later
+summary kworker/u4:1; do not conflate them. Exact fault and userspace/liveness
+remain unresolved. Return instructed; **desktop confirmation PENDING**.
+Fresh protection/default NOT CHECKED. Full report:
+`native/boot/stage-b-2026-10-14-attempt11-result.md`.
 
-Current M5 handoff: **boot030 / attempt 11; native/live NOT RUN**. Attempt 10
-video reads P:05 S:09 W:04, locating the first deferred-work flush/probe entry
-by source; three native display lanes now work. Exact driver/fault unknown.
-REA/source/LLVM/linked-byte audit informs 56 probe checkpoints and public
-root/current device IDs in a compact four-row panel. Only Image changes.
-Full link, actual helper/panel/identity/platform/parser sanitizers, 90 controller
-cases, 13-file intake and generic VM PID-1/60-second liveness PASS.
-Post-attempt-10 original Full/lab Permissive JSON PASS. M1 verifies/publishes
-readiness, then one human-started filmed attempt 11. Follow the current Stage-B
-checklist; preserve installed boot021 and the working entry/gates/single skip.
-No repeated provisioning/Recovery, settings changes or automatic retry.
-Native diagnostic userspace remains the gate before Linux control/input and
-configuration-agent Omarchy setup. No native performance parity claim.
+M5 next: read-only return checks after confirmation and targeted offline
+pin-controller callback/dependency analysis. Preserve installed boot021/client
+pin and current entry/gates/single skip. No repeated setup, settings changes or
+automatic retry. Stable diagnostic userspace precedes Linux control/input and
+configuration-agent Omarchy work. No native performance-parity claim.
 
 Historical M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
 still unobserved. Boot027 keeps the working boot021 setup and changes only
