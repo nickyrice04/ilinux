@@ -90,8 +90,8 @@ Latest: boot025 attempt 7 reached later native initcalls after the one fixed
 clock-debug skip. Last visible call: deferred_probe_initcall at 1.371769 s;
 no diagnostic userspace/liveness or explicit panic observed. Controller exit 0
 (10.433 s), both DAPF checks, descriptor and final gates PASS. Return instructed
-at the 120-second limit; Macintosh HD desktop return PENDING HUMAN CONFIRMATION.
-Attempt 7 consumed. M5 read-only return checks after confirmation and exact-build
+at the 120-second limit; human now confirms Macintosh HD desktop return.
+Attempt 7 consumed. M5 read-only return checks and exact-build
 offline shared-dependency analysis next; no further skip/retry/settings change.
 See `native/boot/stage-b-2026-10-14-attempt7-result.md` and coordination.md.
 Older bullets retain historical context.

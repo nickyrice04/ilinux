@@ -1,4 +1,4 @@
-# Stage B attempt 7 — later initcalls; deferred_probe_initcall boundary; return pending
+# Stage B attempt 7 — later initcalls; deferred_probe_initcall boundary; return confirmed
 
 2026-10-14 America/New_York. One human-started, phone-recorded RAM attempt.
 Readiness `9bda4dd`; reviewed M5 handoff `995efd7`. Reused unchanged boot025.
@@ -62,7 +62,7 @@ be reconstructed or treated as direct evidence of execution.
 | Highest rectangle count / exact AIC profile/Initialized lines | **NOT OBSERVED** |
 | Timer/progress | Advancing printk timestamps **OBSERVED**; `arch_timer` line **NOT OBSERVED** |
 | Diagnostic PID 1 / online_cpus=1 / 60-second liveness | **NOT OBSERVED** |
-| Macintosh HD return | **PENDING HUMAN CONFIRMATION** |
+| Macintosh HD return | **PASS — human confirmed** |
 | Fresh security/default checks | **NOT CHECKED — M5 next** |
 
 The earlier reattached `IMG_2655.jpeg` is from attempt 6 and was excluded from
@@ -72,12 +72,13 @@ Initcall `@ 1` does not establish diagnostic userspace, and the last printed
 call does not prove the blocking instruction or hardware cause.
 
 At the 120-second screen deadline, stop and Macintosh HD return were instructed.
-Return and whether the final line stayed unchanged are awaiting human confirmation.
+The human now confirms return to the usual Macintosh HD desktop ("back at
+regular mac same process"). No later screen message was reported.
 No reconnect, retry, expanded blacklist, reinstall or boot-setting changes.
 
 ## Next M5 work
 
-After return, perform read-only original macOS protection checks. Analyze the
+Perform read-only original macOS protection checks after the confirmed return. Analyze the
 exact boot025 deferred-probe initialization path and shared dependencies offline;
 do not chain additional speculative skips. Preserve the passing guards and
 installed boot021 m1n1. Native diagnostic userspace/liveness remains unobserved.

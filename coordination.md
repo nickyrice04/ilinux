@@ -6,7 +6,7 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 result — attempt 7 later initcalls; return pending, 2026-10-14
+### Current M1 result — attempt 7 later initcalls; return confirmed, 2026-10-14
 
 * One boot025 attempt at readiness `9bda4dd`, reviewed handoff `995efd7`.
   **Controller exit 0, 10.433 s**, UTC 2026-10-14
@@ -24,9 +24,10 @@ older plan disagree, this file wins for ownership and order of work.
 * Prior photo `IMG_2655.jpeg` was excluded; fresh `IMG_2657.jpeg` reviewed.
   Full photos/video not copied or committed; video has not been reviewed.
 * Stop/return instructed at the 120-second limit. **Macintosh HD desktop return
-  PENDING HUMAN CONFIRMATION.** Fresh security/default checks NOT CHECKED.
+  CONFIRMED by the human.** No later screen message reported. Fresh security/
+  default checks NOT CHECKED.
 * Result: `native/boot/stage-b-2026-10-14-attempt7-result.md`. M5 next performs
-  read-only return checks after confirmation, then exact-build deferred-probe /
+  read-only return checks, then exact-build deferred-probe /
   shared-dependency analysis offline. **Attempt 7 consumed**; no additional
   skip, reconnect, retry, reinstall or settings changes authorized.
 

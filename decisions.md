@@ -1145,3 +1145,11 @@ attempt-6 photo. The last initializer is an observation boundary, not a proven
 hang cause. At the time limit, instruct original-macOS return; confirmation is
 pending. Preserve the one-skip limit: M5 analyzes shared dependencies offline,
 with read-only post-return checks, not another speculative skip or retry.
+
+## 2026-10-14 · Close attempt-7 return confirmation
+
+The human confirms successful return to the usual Macintosh HD desktop and
+reports no later screen message. Update the pending-return record to confirmed;
+keep diagnostic PID 1/CPU/liveness NOT OBSERVED and fresh protection/default
+checks NOT CHECKED. M5 can proceed with read-only return checks and offline
+analysis. No new live session or settings changes are authorized.

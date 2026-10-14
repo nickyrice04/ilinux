@@ -11,8 +11,8 @@ and sync_state_resume_initcall completed, then calling deferred_probe_initcall
 at 1.371769 s. No return from that call, panic or diagnostic userspace shown.
 The exact skip message is not readable; prepared arguments verified, later
 progress observed. Last visible line does not prove the blocking instruction.
-Return instructed at the screen deadline; Macintosh HD return remains pending
-human confirmation. M5 should perform read-only return checks after confirmation
+Return instructed at the screen deadline; human now confirms Macintosh HD
+desktop return, with no later screen message reported. M5 performs read-only return checks
 and investigate exact-build deferred-probe/shared dependencies offline. Attempt
 7 consumed; do not expand the blacklist or retry. No settings changes.
 See `native/boot/stage-b-2026-10-14-attempt7-result.md`.
