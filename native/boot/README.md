@@ -1,20 +1,20 @@
 # J716c Linux boot package — boot022 framebuffer correction
 
-Target: **this Mac17,6 / J716c / t6050 M5 Max**. Latest physical result:
-attempt 2 uploaded the payloads but stopped at the framebuffer gate, before
-Linux handoff. **Native Linux remains NOT RUN.** The missing framebuffer
-placeholder is now confirmed in boot021 and corrected in boot022; six tests
-using pinned m1n1's actual C function reproduce the defect and validate the fix.
-See [job 022 results](../../virtualization/jobs/022-framebuffer-handoff/RESULTS.md).
+Target: **this Mac17,6 / J716c / t6050 M5 Max**. Boot022's corrected framebuffer
+passed physical preflight in attempt 3. The launcher requested kernel handoff,
+then timed out; the target photo shows **m1n1 SError in EL2** and unhandled-
+exception reboot output. Linux kernel/PID 1/one-CPU/60-second liveness are
+**NOT OBSERVED**. User confirms Macintosh HD return. See
+[attempt 3 result](stage-b-2026-10-13-attempt3-result.md) for sanitized evidence
+and M5 offline investigation steps. No retry or new live session authorized.
 
-The next step is one reviewed Stage B attempt with **boot022**, after M1
-verifies the new archive and the post-return policy check is confirmed.
-Use [the current checklist](../../tools/m1n1-client/stage-b-instructions.md).
-Only the RAM-sent Stage-B DT changes. Kernel, initramfs and installed m1n1 are
-unchanged: its **boot021 version marker is still correct**. Do not reinstall
-m1n1, repeat Recovery setup, or change volumes/security/default startup.
-Preserve [attempt 1](stage-b-2026-10-13-result.md) and
-[attempt 2](stage-b-2026-10-13-attempt2-result.md).
+Kernel, initramfs and installed m1n1 remain unchanged from boot021; its version
+marker is still correct and passed the live check. Keep client pin/boot022
+intact during diagnosis. No reinstall, Recovery or volume/security/default
+changes. Preserve [attempt 1](stage-b-2026-10-13-result.md) and
+[attempt 2](stage-b-2026-10-13-attempt2-result.md). The
+[Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md) is consumed
+history until a new reviewed/user-authorized session.
 
 The completed M5 entry installation is documented in
 [boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).
@@ -101,7 +101,7 @@ hardware, and its DT preparation/handoff runs additional hardware setup.
 Disabling a Linux DT node does not undo bootloader initialization. The test
 intentionally issues no filesystem writes to the internal SSD.
 
-## Live command — one reviewed attempt 3
+## Historical live command — attempt 3 consumed
 
 Use the command and stop/return rules in
 [the current checklist](../../tools/m1n1-client/stage-b-instructions.md), once,

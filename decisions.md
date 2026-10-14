@@ -981,3 +981,14 @@ Confirm ready directly to the human and wait for Running proxy; one documented
 attempt 3 only, then screen milestones and Macintosh HD return. No USB opened
 at readiness; Linux/current live checks remain NOT RUN. Preserve both earlier
 attempts and all receipts; no retry, reinstall or boot-setting changes.
+
+## 2026-10-13 · Preserve passing boot022 gates; diagnose m1n1 exception offline
+
+Attempt 3 passed all controller preflight checks and requested handoff. Target
+photo establishes m1n1 SError/EL2 and unhandled-exception reboot output; the
+controller USB timeout alone would not establish success or failure. Kernel,
+PID 1, online CPU count and 60-second liveness remain NOT OBSERVED. User confirms
+Macintosh HD return. Record safe code offset/log text only, omit raw register/
+address data, and distinguish nearby PCIe warnings from a proven cause. M5
+reviews the exact pinned handoff path/build symbols offline and checks return
+protections; no retry, reinstall or boot-setting changes are authorized.

@@ -3,21 +3,16 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B gate — boot022 prepared, native validation pending
+## Current Stage B blocker — m1n1 SError after boot022 preflight PASS
 
-The missing framebuffer template in boot021 is confirmed and corrected in a
-DT-only successor. Actual pinned m1n1 C/libfdt reproduces the old failure and
-passes three supported pixel formats with the new node. No kernel or m1n1
-rebuild/reinstall needed. See `virtualization/jobs/022-framebuffer-handoff/RESULTS.md`.
-
-Offline tests/package pass. Fresh user-supplied return-policy JSON reports
-original Full/lab Permissive, both exit 0. M1 intake now PASS: archive/package,
-13-file receipt and 31 launcher + 5 framebuffer + 4 pinned-ADT cases. Ready
-for one reviewed attempt 3 after human lab boot; no USB opened during intake.
-Native display/kernel/PID 1 are still unobserved.
-Keep the framebuffer gate, single-core scope and original Full Security; no
-volume/security/default changes. Existing GPU/idle/SMP limitations are not
-resolved by this fix. Attempt 2's result remains preserved separately.
+Attempt 3 passed the corrected prepared-DT framebuffer gate and requested
+handoff. The target photo shows m1n1 SError in EL2 after PCIe setup messages;
+controller timed out awaiting kboot reply. Linux kernel/PID 1/one-CPU/liveness
+NOT OBSERVED. User confirms Macintosh HD return; fresh read-only return checks
+remain for M5. No retry or boot-setting changes. Investigate the matching-build
+exception and pinned pre-kernel setup offline, without inferring PCIe causality
+from adjacent messages. Preserve passing framebuffer/CPU/storage/version gates.
+See `native/boot/stage-b-2026-10-13-attempt3-result.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

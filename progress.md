@@ -5,6 +5,28 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: boot022 preflight PASS; m1n1 exception at handoff; return confirmed
+
+* One boot022 invocation at `c5f515c`: controller exit 1, **32.059 s**,
+  UTC 02:34:32.733054–02:35:04.792407 on 2026-10-14.
+* **All preflight checks passed**, including the corrected prepared framebuffer,
+  single-core DT and disabled storage/cpufreq. Live boot021 marker PASS.
+  Handoff requested at **02:34:42.905947 UTC**; `kboot_boot` reply timed out.
+* Human photo shows **m1n1 SError in EL2**, followed by `Unhandled exception,
+  rebooting...`, after DT preparation and PCIe messages. Safe relative code
+  offset and exact text are in the result; no raw addresses/register dump saved.
+  Message proximity does not establish PCIe as the cause.
+* **Linux kernel/PID 1/online_cpus=1/60-second liveness NOT OBSERVED.** Handoff
+  requested is distinct from kernel execution; this is not the earlier
+  preflight-only NOT RUN result. No native success or performance claim.
+* **User confirms usual Macintosh HD desktop return.** Fresh build/default/
+  protection checks remain for M5. No settings changes, reinstall or retry;
+  boot022, installed m1n1 and clean client pin unchanged.
+* M5: read `native/boot/stage-b-2026-10-13-attempt3-result.md`, perform read-only
+  return checks, then investigate matching-build symbols and pinned pre-kernel
+  hardware setup offline. Preserve the passing observation gate. This one
+  attempt is consumed; no new live session or boot-setting changes authorized.
+
 ## 2026-10-13 · M1: boot022 intake PASS; ready for authorized attempt 3
 
 * Pulled `3c7eae1` (descendant of `bf79263`) and read the current handoff.

@@ -2,15 +2,14 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest:** attempt 2 stopped before Linux handoff. Its missing framebuffer
-placeholder is confirmed and corrected in **boot022**, with actual pinned
-C/libfdt regression coverage. Kernel, initramfs and installed m1n1 remain
-unchanged. See [job 022](../../virtualization/jobs/022-framebuffer-handoff/RESULTS.md).
-M1 performs new-package intake while M5 stays in macOS, then one reviewed attempt
-3. The fresh user-supplied return-policy check passes: original Full/lab
-Permissive, both exit 0. No reinstall or Recovery work. Linux
-NOT RUN; native framebuffer correction NOT TESTED. Use the current
-[Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
+**Latest:** boot022 attempt 3 passed all preflight checks, including prepared
+framebuffer validation. Handoff requested; controller UartTimeout. Human photo
+shows m1n1 SError in EL2/unhandled-exception reboot output. No observed Linux
+kernel, PID 1, one-CPU count or 60-second liveness. User confirms Macintosh HD
+return; M5 read-only protection/default checks and offline exception diagnosis
+are next. Keep installed m1n1/boot021 marker and client pin unchanged. The one
+attempt is consumed; no retries or boot-setting changes authorized. See
+[attempt 3 result](../../native/boot/stage-b-2026-10-13-attempt3-result.md).
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received

@@ -86,16 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: M1 boot022 intake PASS after pulling `3c7eae1` (includes `bf79263`).
-Archive checked before extraction; offline package and 13-file receipt verified;
-31 launcher + 5 framebuffer + 4 pinned-ADT tests PASS. Only Stage-B DT differs
-from boot021; installed m1n1/boot021 marker and clean client pin unchanged.
-Policy prerequisite PASS from M5-reviewed user JSON: original Full/lab
-Permissive, both exit 0. Ready for one authorized attempt 3 after human lab boot
-and Running proxy confirmation. Attempt 3/Linux/current live checks NOT RUN;
-no USB opened during intake. No retries or boot-setting changes. Preserve
-previous evidence. See `coordination.md` and
-`tools/m1n1-client/stage-b-instructions.md` for the bounded test/return sequence.
+Latest: one boot022 Stage B attempt 3 at `c5f515c` passed every preflight gate,
+including the corrected framebuffer. Handoff requested; controller UartTimeout
+(exit 1, 32.059 s). Human photo shows m1n1 SError in EL2 during handoff preparation
+and `Unhandled exception, rebooting...`. No Linux kernel/PID 1/one-CPU/60-second
+liveness observed. User confirms Macintosh HD return; fresh protections/default
+checks remain for M5. Installed m1n1/boot021 marker and client pin unchanged,
+no boot-setting changes or retries. M5 owns offline matching-build exception
+investigation and read-only return checks. This attempt is consumed; no new
+live session authorized. See `native/boot/stage-b-2026-10-13-attempt3-result.md`
+and `coordination.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

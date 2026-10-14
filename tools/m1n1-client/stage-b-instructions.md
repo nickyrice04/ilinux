@@ -1,4 +1,13 @@
-# Stage B — boot022, one reviewed attempt 3
+# Stage B — attempt 3 completed with m1n1 exception; no retry
+
+**Current result:** attempt 3 ran once at `c5f515c`. All preflight gates passed;
+handoff requested, then controller UartTimeout. Human photo shows m1n1 SError
+in EL2/unhandled-exception reboot output. Linux kernel/PID 1/one-CPU/60-second
+liveness NOT OBSERVED. User confirms Macintosh HD return. No new live session
+or boot-setting change authorized. Read the
+[attempt 3 result](../../native/boot/stage-b-2026-10-13-attempt3-result.md).
+The preparation/command below is **consumed history; do not execute again**.
+Next is M5 offline exception diagnosis and read-only return checks.
 
 Attempt 2 at `993a6af` stopped after upload, before Linux handoff, because
 boot021 had no `/chosen/framebuffer` placeholder. Pinned m1n1 updates this
