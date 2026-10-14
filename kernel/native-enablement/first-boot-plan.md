@@ -2,13 +2,13 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Current state:** lab-only Recovery/policy/custom-boot installation is complete.
-The controlled Stage A boot reached `Running proxy...`, but discovery stopped
-before opening a port due to the P_01 filename assumption. User confirms return
-to Macintosh HD. The checker now identifies the primary using USB descriptor
-ancestry and passes 20 offline tests. Actual metadata selection/P_NOP remains
-unvalidated. See the revised Stage A checklist for the next user-started attempt.
-Live version verification and Stage B/Linux remain NOT RUN.
+**Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
+Checker `70ad452` identified one m1n1 primary CDC data interface and received
+one P_NOP reply in **0.158 seconds**, exit **0**. The port closed, without retry
+or memory/register/boot requests. User confirms return to the usual Macintosh
+HD desktop. Fresh post-attempt build/default/protection checks remain pending
+M5 review. **Linux and live target-version checks remain NOT RUN.** Boot021
+and client pin are unchanged. See `coordination.md` for timestamps/evidence.
 
 ## 1. Current state
 
@@ -18,7 +18,7 @@ exports the same bytes and adds a built, pinned m1n1 plus a conservative
 Stage-B DT/initramfs. See [package instructions](../../native/boot/README.md).
 
 The user reports a completed backup and a USB-connected M1 controller.
-Controller tools pass offline tests; the physical proxy is untested. Read-only
+Controller tools pass offline tests; Stage A now has a successful physical P_NOP. Read-only
 checks now confirm the original macOS and a separate installed lab System/Data
 group, both at 26.6.2 / 25G83. The user booted the lab and returned to Macintosh
 HD. M1 report `c6f2c6f` records successful m1n1 installation and an incidental
@@ -26,8 +26,9 @@ native startup reaching `Running proxy...`, followed by original return.
 B independently rechecked original FileVault/SIP/authenticated-root and build.
 The user's fresh post-return helper output reports original Full/lab Permissive,
 both exit 0. Staged m1n1 still matches package size/SHA-256; B did not read the
-installed object or verify the exact runtime version. No live P_NOP or Linux
-test has run. The next controlled boot uses the existing lab entry.
+installed object or verify the exact runtime version. P_NOP subsequently passed
+and user confirms return; new post-attempt protection checks are pending. Linux
+remains NOT RUN. Any later authorized boot uses the existing lab entry.
 M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 
 ## 2. Dedicated OS entry: separate installation gate
@@ -116,12 +117,12 @@ is a proposed session limit, not new launcher behavior or a hardware-tested
 boot-time allowance. Do not perform an automatic retry. A post-handoff USB
 disconnect is expected and does not itself establish either success or failure.
 
-## 4. Stage A: m1n1 only — next attempt uses corrected discovery
+## 4. Stage A: m1n1 only — handshake passed; return confirmed
 
-The first session ended at discovery without a handshake. The current request
-repairs the checker offline. When the user starts the next attempt, follow
-[the controller checklist](../../tools/m1n1-client/stage-a-instructions.md):
-one boot, one P_NOP, macOS return, and no automatic transition to Stage B.
+One P_NOP succeeded in 0.158 seconds, exit 0, followed by user-confirmed return.
+Fresh read-only return checks remain pending M5 review. The following procedure
+and [controller checklist](../../tools/m1n1-client/stage-a-instructions.md) are
+retained for reference; do not repeat or transition to Stage B automatically.
 
 Prerequisites: dedicated entry provisioned with the packaged m1n1; matching
 client; backup verified; both computers powered; direct cable; agreed macOS

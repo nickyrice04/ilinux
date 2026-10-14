@@ -842,3 +842,15 @@ callout paths and raw registry data only in memory. Preserve the single P_NOP,
 10-second deadline, no retry, client pin and boot021 package. Twenty offline
 tests pass; real metadata selection remains pending the next user-started
 Stage A session. Linux and live version verification stay NOT RUN.
+
+## 2026-10-13 · Accept Stage A proxy response separately from Linux readiness
+
+After the naming fix, the user started a new Stage A attempt. The corrected
+checker found one primary interface and received one P_NOP reply (exit 0,
+0.158 seconds, UTC 2026-10-14 01:13:02), then closed the port. No retry or
+memory/register/boot request occurred. User confirms Macintosh HD return.
+Record the USB result as PASS and the desktop return as user-observed; fresh
+post-attempt build/default/protection checks remain pending M5 review.
+Keep exact live target-version verification and Linux/Stage B NOT RUN.
+P_NOP confirms proxy response, not the running build or Linux compatibility.
+Boot021/client pin stay unchanged; this report authorizes no further boot.

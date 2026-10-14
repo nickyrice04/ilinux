@@ -3,11 +3,13 @@
 Prepared 2026-10-13 on the second macOS computer. This is client preparation,
 not authorization to install a boot entry, change security or boot the M5.
 
-**Current handoff:** follow [Stage A instructions](stage-a-instructions.md) and
-`../../coordination.md`. Lab m1n1 is installed; one controlled boot reached
-`Running proxy...`, but no USB handshake ran because of a filename assumption.
-The checker fix is offline-tested; another live attempt is not part of this
-repair. Linux and live target-version verification remain NOT RUN.
+**Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
+Checker `70ad452` identified one m1n1 primary CDC data interface and received
+one P_NOP reply in **0.158 seconds**, exit **0**. The port closed, without retry
+or memory/register/boot requests. User confirms return to the usual Macintosh
+HD desktop. Fresh post-attempt build/default/protection checks remain pending
+M5 review. **Linux and live target-version checks remain NOT RUN.** Boot021
+and client pin are unchanged. See `coordination.md` for timestamps/evidence.
 
 ## Installed locally
 
@@ -155,8 +157,9 @@ means handshake failure. Connection mode prints UTC start/end and elapsed time.
 The optional explicit `--connect PATH` form must still match the sole primary;
 prefer bare `--connect` to avoid putting serial-derived paths in shell history.
 Offline regressions use synthetic registry trees and a fake serial transport.
-Actual M5 metadata selection and USB response remain unvalidated until the next
-live attempt; a discovery stop must be investigated, not bypassed.
+Actual M5 metadata selection and one P_NOP response subsequently passed in the
+authorized Stage A session recorded above. Any future discovery stop must still
+be investigated, not bypassed. No automatic repeat is authorized.
 
 Use the bounded checker above for the first live test. The upstream shell
 is not a read-only handshake: `m1n1.setup` calls

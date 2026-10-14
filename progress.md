@@ -5,6 +5,35 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: Stage A P_NOP passed; Macintosh HD return confirmed
+
+* User started a new Stage A attempt after checker fix `70ad452`. On M1,
+  discovery and connection-time re-identification found **one primary** among
+  two modem interfaces: **VID/PID 1209:316d, CDC data interface 1**. No callout
+  names, serial numbers or raw registry output are retained in the handoff.
+* Actual command: `tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py --connect`.
+  **PASS, exit 0; one P_NOP replied in 0.158 seconds**, within the 10-second
+  deadline. UTC start **2026-10-14T01:13:02.764830+00:00**, end
+  **2026-10-14T01:13:02.922801+00:00** (2026-10-13 evening in America/New_York).
+  The port closed; no retries, feature negotiation, memory/register requests
+  or boot/launcher requests were sent by M1.
+* After the guided power-off/held-power picker return, the user confirmed:
+  **back at the usual Macintosh HD desktop**. This is user-observed return,
+  not remote M5 inspection. Current build, default selection and protection
+  states have not been freshly rechecked after this attempt. Earlier original
+  Full/lab Permissive and FileVault/SIP/authenticated-root results are baseline.
+* Local sanitized evidence: ignored
+  `build/native-intake/results/stage-a-20261014T011302Z.json`, now updated with
+  user-confirmed return. Boot021, original intake receipt and clean client pin
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba` are unchanged.
+* This validates descriptor-based primary selection and a responding m1n1
+  proxy on this setup. **Live target-version verification, Linux/Stage B and
+  native Omarchy remain NOT RUN.** No runtime-version or Linux compatibility
+  claim follows from P_NOP. No new test was run for this documentation update.
+* M5 agent next: review the evidence and perform the planned read-only return
+  checks. Stage A handshake and desktop return succeeded; do not repeat setup
+  or automatically start another boot. Stage B requires separate authorization.
+
 ## 2026-10-13 · M1: Stage A stopped before handshake; USB naming fixed offline
 
 * Controlled M5 m1n1 boot reached `Running proxy...` (user/screen observed).

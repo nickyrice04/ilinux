@@ -1,13 +1,12 @@
 # M5 dedicated boot entry: installed; original macOS return complete
 
-**Stage A update (2026-10-13):** the controlled boot reached `Running proxy...`,
-but the checker stopped at discovery because of a filename-suffix assumption.
-No port was opened; P_NOP is NOT RUN. User confirms Macintosh HD return.
-The local checker now identifies VID/PID and primary CDC interface via cached
-macOS metadata; 20 offline tests pass. Live mapping remains unverified. Follow
-[the revised checklist](../../tools/m1n1-client/stage-a-instructions.md) when
-the user starts the next attempt; this repair performs no new boot/connection.
-No Recovery/reinstallation. Linux and live target-version checks remain NOT RUN.
+**Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
+Checker `70ad452` identified one m1n1 primary CDC data interface and received
+one P_NOP reply in **0.158 seconds**, exit **0**. The port closed, without retry
+or memory/register/boot requests. User confirms return to the usual Macintosh
+HD desktop. Fresh post-attempt build/default/protection checks remain pending
+M5 review. **Linux and live target-version checks remain NOT RUN.** Boot021
+and client pin are unchanged. See the current `coordination.md` handoff for timestamps/evidence.
 
 **Earlier post-install return review by B (before the interrupted Stage A):** M1 report `c6f2c6f` is integrated. Original build
 26.6.2 / 25G83, FileVault, SIP and original authenticated-root are independently
@@ -15,7 +14,7 @@ checked; staged payload size/hash match. The user supplied a fresh policy read:
 original Full/lab Permissive, both exit 0. Return checks are complete. The
 csrutil OS list may reorder between queries; choose by name within the same
 live prompt. Use the installed entry for the next separately authorized Stage
-A test (now authorized above); do not repeat provisioning or change the default
+A test (historical preparation; current result above); do not repeat provisioning or change the default
 from Macintosh HD.
 
 ## 2026-10-13 · M1: lab m1n1 installation and original macOS return complete

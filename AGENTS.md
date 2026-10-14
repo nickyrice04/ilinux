@@ -102,7 +102,7 @@ See `progress.md`. As of 2026-10-13:
   separately authorized handoff. Generic diskless VM PID-1/60-second heartbeat
   succeeds; native hardware remains untested. `native/boot/README.md` is the
   current M1 handoff. Follow the updated lab-only authorization below;
-  the first controlled m1n1 session stopped at discovery; Linux remains on hold.
+  Stage A P_NOP and original-desktop return have succeeded; Linux remains on hold.
   M1's `dfdf8cf` offline report is reviewed (13 files verified, 26 tests pass).
   The matching macOS scaffold installer passes package trust/content checks;
   its outer-app resource-rule rejection remains unchanged. No security checks
@@ -116,19 +116,15 @@ See `progress.md`. As of 2026-10-13:
   complete by human command results: preflight exit 0, paired 1TR, lab
   Permissive/kernel CTRR disabled, kmutil exit 0 and final original Full/lab
   Permissive. User confirms return to Macintosh HD and restoration as default.
-  An accidental m1n1 startup reached the on-screen `Running proxy...` message
-  before the user powered off; this is incidental screen evidence, not a
-  completed Stage A handshake. Live USB/P_NOP, live version checking and Linux
-  remain **NOT RUN**. The controlled Stage A boot then reached `Running proxy...`,
-  but discovery stopped before opening because callouts lacked the assumed
-  P_01 suffix. User confirms original macOS return. The checker now uses cached
-  USB VID/PID/interface ancestry, redacts paths, and passes 20 offline tests.
-  Actual metadata selection/P_NOP remain unvalidated. Current task is offline
-  repair; wait for the user to start another Stage A session. Boot021/client
-  pin are unchanged. See `tools/m1n1-client/stage-a-instructions.md` and
-  `coordination.md`. Earlier B checks confirmed original build/FileVault/SIP/
-  authenticated-root and the user's original Full/lab Permissive result;
-  fresh checks after this latest return have not been reported.
+  After an initial discovery-only stop and offline naming fix `70ad452`, the
+  next user-started Stage A attempt identified one primary CDC interface via
+  USB metadata and received one P_NOP reply: exit 0, 0.158 seconds, port closed,
+  no retries or memory/register/boot requests. User confirms Macintosh HD
+  desktop return. Linux and live target-version checks remain **NOT RUN**.
+  Boot021/client pin are unchanged. No new live session is authorized by the
+  reporting task. M5 should review the result and perform read-only return
+  checks; fresh build/default/protection checks are not yet reported for this
+  attempt. See `coordination.md` and `tools/m1n1-client/stage-a-instructions.md`.
 * **Omarchy 4 runs today in a GPU-accelerated VM** (`virtualization/qemu/`):
   * Hyprland is accelerated through VirGL to Metal GL at Retina resolution;
   * GPU ALU is at 99.7% of macOS GL, and CPU at 99% single-thread;

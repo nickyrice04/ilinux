@@ -5,16 +5,15 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
 ## Latest Stage A status — 2026-10-13
 
-Installed m1n1 reached `Running proxy...` in the controlled session. Discovery
-found two modem callouts but stopped before opening because the old checker
-required a `P_01` suffix. P_NOP was NOT RUN; user confirms Macintosh HD return.
-The filename assumption is fixed offline using cached USB VID/PID/interface
-ancestry; 20 offline tests pass. No live proof of the new mapping or USB reply
-exists yet. Fresh post-attempt protection checks have not been reported.
-Boot021 and client pin are unchanged. Linux and live target-version checks
-remain NOT RUN. Prepare another Stage A session using the revised checklist;
-do not repeat Recovery installation or automatically boot/connect.
-This supersedes older provisioning-pending/m1n1-unobserved statements below.
+USB primary identification and P_NOP are now validated on this setup after
+checker fix `70ad452`: one primary CDC data interface 1, one successful reply,
+exit 0, 0.158 seconds, port closed. User confirms Macintosh HD desktop return.
+The earlier naming/discovery blocker is resolved. No fresh post-attempt build,
+default-selection or protection checks are reported yet; M5 can perform the
+planned read-only checks. Boot021/client pin are unchanged. Linux and live
+target-version checks remain NOT RUN; Stage B needs separate authorization.
+This supersedes older provisioning/USB-pending statements below; P_NOP does
+not resolve native Linux hardware-enablement blockers.
 
 ## Hardware enablement
 

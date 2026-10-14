@@ -1,14 +1,17 @@
-# Stage A controller instructions — naming fix tested offline
+# Stage A controller instructions — handshake passed; return confirmed
 
-The first authorized controlled boot reached `Running proxy...`. Discovery
-found two modem callouts but the old checker assumed a `P_01` suffix, so it
-stopped before opening a port. P_NOP was **NOT RUN**. The user confirms return
-to Macintosh HD. The current task fixes discovery offline; do not automatically
-boot again or connect. Use the checklist when the user starts the next Stage A
-attempt. Stage B/Linux and live target-version checks remain **NOT RUN**.
-Do not repeat Recovery or boot-object installation.
+**Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
+Checker `70ad452` identified one m1n1 primary CDC data interface and received
+one P_NOP reply in **0.158 seconds**, exit **0**. The port closed, without retry
+or memory/register/boot requests. User confirms return to the usual Macintosh
+HD desktop. Fresh post-attempt build/default/protection checks remain pending
+M5 review. **Linux and live target-version checks remain NOT RUN.** Boot021
+and client pin are unchanged. See `coordination.md` for timestamps/evidence.
 
-## Before the authorized session
+The checklist below is retained for reference, not an instruction to repeat
+the completed session. Stage B still needs separate authorization.
+
+## Pre-session checklist (historical procedure)
 
 * B's post-return review confirms original build/FileVault/SIP/authenticated-root.
   The user's fresh read-only policy result is original Full/lab Permissive,
@@ -23,7 +26,7 @@ Do not repeat Recovery or boot-object installation.
   `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Record actual session time and
   approval scope; reuse the offline receipt only while artifacts are unchanged.
 
-## Next Stage A attempt — handshake still NOT RUN
+## Stage A procedure (completed once; no automatic repeat)
 
 1. Save M5 work and shut down normally. Hold power continuously until startup
    options load, then select **iLinux Boot Lab → Continue** for this boot.
