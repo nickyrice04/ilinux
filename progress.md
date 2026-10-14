@@ -5,6 +5,36 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: boot032 attempt 13 offline readiness PASS
+
+* Pulled/read M5 handoff `f2b2c4d`, Stage-B attempt-13 checklist and reserved-GPIO
+  evidence/validation. Archive **16,723,345 bytes**, SHA-256
+  `001ef39cd64d8fef7c3779c5169c00726474d6ebc56cea90b9f6f5d9c9bd0500`,
+  verified against Git before safe extraction. **13-file intake and offline
+  launcher PASS**; source/controller/decoder hashes and clean client pin PASS.
+* **102 M1 offline cases PASS** (37+10+6+16+5+19+2+6+1), all exit 0; synthetic
+  transport only. Image SHA-256
+  `589c33577d1bc2ddeb2f96e544f87b9ead6bc52e774410567170a7235dd70bcb`;
+  Stage-B DT SHA-256
+  `4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce`.
+* Independently compared retained boot031: only Image, Stage-B DT and manifest
+  metadata differ. Semantic DT difference is exactly main GPIO reserved ranges;
+  node paths and 286 public IDs retained. Installed boot021 unchanged; client
+  pinned clean at `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
+* Fresh ignored receipt `build/native-intake/receipts/boot032-attempt13.json`
+  and result `build/native-intake/results/boot032-stage-b-attempt13.json`/`.md`
+  retain payload/source/procedure/receipt hashes. Sanitized one-shot wrapper
+  includes the new GPIO gate checkpoint and safe error-frame handling.
+* **Ready for the authorized Stage B attempt 13** after publication. Human
+  reports proxy running and recording; requested entire panel including I and
+  recording through stop. M5 post-attempt-12 protection prerequisite already
+  PASS. **Native boot032/live checks NOT RUN at readiness.**
+* Next: one documented RAM launch; capture P/S/W/H/D/I/B/C, actual GPIO
+  cache/IRQ counts and errors/returns, PID 1/one CPU/60-second userspace liveness;
+  stop at panic/rejection, userspace milestone or 120 seconds after handoff,
+  then Macintosh HD. No reconnect/retry/reinstall/settings/volume changes.
+
+
 ## 2026-10-14 · M5: boot032 / attempt 13 reserved-GPIO repair prepared
 
 * Consumed M1 attempt 12 (`f3218fd`): final P05/S09/W04/H02/D0059/B73/C0059

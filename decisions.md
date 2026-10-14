@@ -1381,3 +1381,13 @@ M1's offline readiness plus human start suffice for one filmed attempt 13, then
 return under the same bound. Preserve current boot021 entry and all previous
 results. Native userspace comes before Linux control/agent configuration,
 Omarchy, and separate GPU/SMP/efficiency validation.
+
+## 2026-10-14 · Accept boot032 readiness and retain the indexed GPIO evidence
+
+M1 independently verifies archive before extraction, 13-file intake, 102 cases,
+reviewed hashes, clean pin and the exact one-property DT change. Human confirms
+proxy and recording; post-attempt-12 protection prerequisite already PASS.
+Publish readiness then invoke the documented launcher once, preserving the new
+live GPIO gate. Capture literal I together with D/C/B and actual counts/errors;
+no inferred pin fault from a boundary. Keep recording through the stop criterion,
+then Macintosh HD. No extra approval loop, retry or settings/volume changes.

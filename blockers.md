@@ -19,7 +19,8 @@ whether this clears the stall, excluded-pin ownership/interrupt behavior, later
 controller dependencies, and all userspace/peripheral/performance milestones.
 
 Post-attempt-12 original Full/lab Permissive JSON and M5 read-only return checks
-PASS; host settings untouched. M1 verifies private boot032 and publishes
+PASS; host settings untouched. M1 boot032 archive/intake/offline launcher,
+102 cases, source/controller hashes, exact DT delta and clean pin PASS. Publish
 readiness, then one human-started filmed RAM boot and Macintosh HD return.
 Continue installed boot021; no repeated setup, new skip or policy/volume change.
 See `kernel/experiments/gpio-reserved/README.md` and current Stage-B instructions.

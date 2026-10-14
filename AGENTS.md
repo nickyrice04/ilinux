@@ -86,6 +86,12 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
+Latest M1 milestone: attempt 13 / boot032 offline readiness PASS on handoff
+`f2b2c4d`: archive before extraction, 13-file intake, 102 tests, source/controller
+hashes, exact single-property DT delta and clean pin verified. Proxy/recording
+confirmed by human. Publish readiness, then one documented filmed RAM attempt
+and bounded Macintosh HD return. Native/live NOT RUN at readiness.
+
 Latest: **boot032 / attempt 13 prepared** after M1 attempt 12 (`f3218fd`).
 Main GPIO stopped at B73/C0059 cache initialization; NUB handoff 61/7/1 returned 0.
 Fresh post-attempt-12 policies Full/Permissive and M5 original-root/FileVault/SIP/
