@@ -3,10 +3,11 @@
 Prepared 2026-10-13 on the second macOS computer. This is client preparation,
 not authorization to install a boot entry, change security or boot the M5.
 
-**Current handoff:** follow [`../../native/boot/README.md`](../../native/boot/README.md)
-for the checksummed job-021 package and offline-only launcher checks. The
-user authorized preparation/pushes only and explicitly stopped before boot
-settings. Do not run the live examples below during this preparation phase.
+**Current handoff:** follow [Stage A instructions](stage-a-instructions.md) and
+`../../coordination.md`. Lab m1n1 is installed; one controlled boot reached
+`Running proxy...`, but no USB handshake ran because of a filename assumption.
+The checker fix is offline-tested; another live attempt is not part of this
+repair. Linux and live target-version verification remain NOT RUN.
 
 ## Installed locally
 
@@ -62,11 +63,11 @@ tools/m1n1-client/run.sh tools/m1n1-client/check-toolchain.py
 tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py
 ```
 
-The USB checker defaults to device-path discovery only. After the backup
-and target boot-entry gates are complete, explicitly connect with:
+The USB checker defaults to read-only cached IORegistry discovery. In the
+agreed Stage A session, after successful primary-interface discovery, use:
 
 ```sh
-tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py --connect /dev/cu.usbmodemP_01
+tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py --connect
 ```
 
 Connection mode sends exactly one **proxy P_NOP** request and closes the port,
@@ -130,10 +131,32 @@ unobserved results explicitly marked. No automatic raw logging or upload.
 
 ## Connection check after the target gate is approved
 
-Run the offline checker again with the M5 booted into its approved m1n1
-proxy entry. On macOS the primary interface is normally
-`/dev/cu.usbmodemP_01`; `P_03` is the secondary virtual UART. Confirm actual
-device names rather than assuming them. No extra USB driver is installed.
+The checker reads macOS IORegistry USB subtrees into memory and correlates each
+serial callout with its nearest USB device and interface ancestors. It requires
+m1n1 VID/PID **1209:316d** and primary CDC **data interface 1 (class 0x0a)**;
+interface 3 is the secondary virtual UART. It refuses missing metadata, multiple
+primaries, mismatched explicit paths, stale paths, symlinks and ordinary files.
+No sorting or suffix guess is used. Discovery is bounded to 15 seconds; the
+single handshake has its separate 10-second deadline and no retry.
+
+The old `P_01` assumption came from upstream's default callout path. In the
+pinned `src/usb_dwc3.c`, `usb_build_serial()` uses the ADT serial when present,
+and `P-0` only as a fallback. Thus real callout names need not end in `P_01`.
+The descriptors assign interface pair 0/1 to the primary pipe and 2/3 to the
+virtual UART; `src/usb.c` assigns the primary pipe to the console/proxy.
+M5 screen labels USB0/USB1/USB2 identify controllers, not these CDC interfaces.
+The observed names are consistent with serial-derived naming, but the past
+session did not collect metadata proving either port's role.
+
+Device paths and raw registry data are never printed or saved by this checker.
+Exit 2 means discovery stopped without opening; discovery exit 0 means only
+one primary identified. With `--connect`, exit 0 means P_NOP replied and exit 1
+means handshake failure. Connection mode prints UTC start/end and elapsed time.
+The optional explicit `--connect PATH` form must still match the sole primary;
+prefer bare `--connect` to avoid putting serial-derived paths in shell history.
+Offline regressions use synthetic registry trees and a fake serial transport.
+Actual M5 metadata selection and USB response remain unvalidated until the next
+live attempt; a discovery stop must be investigated, not bypassed.
 
 Use the bounded checker above for the first live test. The upstream shell
 is not a read-only handshake: `m1n1.setup` calls

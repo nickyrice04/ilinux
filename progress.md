@@ -5,6 +5,42 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: Stage A stopped before handshake; USB naming fixed offline
+
+* Controlled M5 m1n1 boot reached `Running proxy...` (user/screen observed).
+  M1 discovery saw two modem callouts, but neither matched the checker's
+  hard-coded `P_01` suffix. No serial port was opened and no P_NOP was sent.
+  This was an identification stop, not a failed USB exchange. User confirms
+  subsequent return to Macintosh HD. No fresh post-attempt protection check
+  or default-selection check has been reported; the earlier checks are baseline.
+* Pinned m1n1 source explains the assumption: `usb_build_serial()` uses the
+  ADT serial when available; `P-0` is only the fallback. Descriptors identify
+  VID/PID 1209:316d, primary CDC control/data interfaces 0/1 and secondary
+  virtual UART 2/3. `usb.c` assigns the primary pipe to console/proxy. USB0,
+  USB1 and USB2 screen labels do not identify the host CDC callout role.
+  No actual callout names or photographs are retained in the repository.
+* Fixed the local checker to walk cached macOS IORegistry USB ancestry and
+  require exactly one matching primary data interface 1/class 0x0a. Missing
+  metadata, unrelated devices, secondary interfaces, ambiguity and stale or
+  linked/non-device paths stop before opening. There is no filename fallback.
+  Bare `--connect` re-identifies the sole primary; paths/serials/raw registry
+  stay in memory and are not printed or saved. Printed results include UTC
+  start/end and elapsed time for the eventual single handshake.
+* Validation: **20 offline tests pass**, including synthetic fallback and
+  serial-derived names, secondary/wrong/missing/ambiguous identity, stale paths,
+  privacy, no-open discovery and no retries. Fake transport verifies one
+  serialized P_NOP with zero arguments, the 10-second alarm and closure on
+  success, timeout and initialization error. M1's read-only discovery with
+  M5 back in macOS finds no primary and stops without opening any port.
+* Boot021, ignored intake receipt and clean client pin
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba` are unchanged. No target commands,
+  security changes, installations or boots were performed during this repair.
+* **NOT RUN:** live USB/P_NOP, live target-version verification, Linux and
+  native Omarchy. The new metadata mapping is offline-tested, not yet verified
+  with M5 in m1n1. This request prepares another Stage A attempt; do not start
+  one automatically. When the user starts the next session, use the revised
+  checklist, one bounded handshake without retries, then original-macOS return.
+
 ## 2026-10-13 · Agent B: Stage A authorized; M1/human execution handoff ready
 
 * User approved one m1n1 boot, one USB handshake and return to Macintosh HD,

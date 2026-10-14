@@ -827,3 +827,18 @@ picker, send only the bounded P_NOP and return after success or failure.
 No retries, policy/boot-object writes or Linux launch. Record actual evidence;
 authorization/preparation does not change NOT RUN to PASS. M1 guides the human
 while the M5 desktop agent is offline and publishes a sanitized result.
+
+## 2026-10-13 · Identify Stage A USB by descriptor ancestry, not callout suffix
+
+The first controlled m1n1 boot reached proxy, but the checker stopped before
+opening either discovered callout because its P_01 suffix assumption failed.
+User confirms Macintosh HD return and requests an offline fix. No P_NOP ran.
+
+Pinned source uses a real serial when present and P-0 only as fallback. Require
+m1n1 VID/PID 1209:316d and primary CDC data interface 1 through the cached
+macOS USB registry ancestry. Reject ambiguity or missing metadata; never guess
+from filename/order, loosen to every modem, or probe both interfaces. Keep
+callout paths and raw registry data only in memory. Preserve the single P_NOP,
+10-second deadline, no retry, client pin and boot021 package. Twenty offline
+tests pass; real metadata selection remains pending the next user-started
+Stage A session. Linux and live version verification stay NOT RUN.

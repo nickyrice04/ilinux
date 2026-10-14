@@ -1,12 +1,12 @@
-# Stage A controller instructions — authorized, execution pending
+# Stage A controller instructions — naming fix tested offline
 
-Updated after reviewed M1 handoff `c6f2c6f`. The custom boot object is installed;
-incidental m1n1 startup reached `Running proxy...`, and original-macOS return
-checks are complete. On 2026-10-13 the user explicitly authorized **one m1n1
-boot, one USB handshake, then return to Macintosh HD**, retaining Full Security.
-This supersedes the previous Stage A hold; no repeat approval is needed for
-this exact session. Stage B/Linux remains unauthorized. Do not repeat Recovery
-or boot-object installation. All actual Stage A results remain NOT RUN.
+The first authorized controlled boot reached `Running proxy...`. Discovery
+found two modem callouts but the old checker assumed a `P_01` suffix, so it
+stopped before opening a port. P_NOP was **NOT RUN**. The user confirms return
+to Macintosh HD. The current task fixes discovery offline; do not automatically
+boot again or connect. Use the checklist when the user starts the next Stage A
+attempt. Stage B/Linux and live target-version checks remain **NOT RUN**.
+Do not repeat Recovery or boot-object installation.
 
 ## Before the authorized session
 
@@ -16,14 +16,14 @@ or boot-object installation. All actual Stage A results remain NOT RUN.
 * The lab Recovery/pairing/policy/custom-boot procedure succeeded as recorded
   by M1. Use the installed entry; keep Macintosh HD as the default and use
   the held-power startup picker for the test. No policy command belongs in it.
-* Stage A authorization is recorded above. Backup completion is user-confirmed.
+* Confirm the user is starting the next Stage A attempt. Backup completion is user-confirmed.
   Keep both Macs powered, the direct USB data cable connected and the M5 screen
   visible. M1 pulls this handoff and confirms readiness before the M5 shuts down.
 * Preserve boot021 and clean client revision
   `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Record actual session time and
   approval scope; reuse the offline receipt only while artifacts are unchanged.
 
-## Stage A only — commands below are NOT RUN
+## Next Stage A attempt — handshake still NOT RUN
 
 1. Save M5 work and shut down normally. Hold power continuously until startup
    options load, then select **iLinux Boot Lab → Continue** for this boot.
@@ -31,23 +31,29 @@ or boot-object installation. All actual Stage A results remain NOT RUN.
    choose Options/Recovery. Record visible non-sensitive m1n1 text/version,
    or NOT OBSERVED. The M5 desktop agent is offline during the test; M1 guides
    the human. A missing entry or unexpected recovery/security prompt means stop.
-2. From the controller repository root, discover actual USB paths:
+2. From the controller repository root, identify the primary USB interface:
 
    ```sh
    tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py
    ```
 
-   Discovery opens no port. Choose the actual primary `P_01` path; `P_03`
-   is not the primary proxy. If none appears or identification is ambiguous,
-   stop and report it; do not infer a failed cable from absence alone.
-3. With the recorded authorization and verified actual path, run one handshake.
-   This example path must match the discovered device before use:
+   Discovery reads cached macOS IORegistry metadata without opening a port.
+   Require exactly one m1n1 **VID:PID 1209:316d, CDC data interface 1** and a
+   currently present character-device callout. Interface 3 is the secondary
+   virtual UART. Names may contain the device serial; they are kept in memory
+   and redacted from output. No suffix, sort-order or USB0/USB1 guess is used.
+   Missing metadata, no match or multiple primaries means stop; return code 2
+   is a discovery stop, not a failed handshake. Do not infer cable failure.
+3. During the agreed session, run one handshake. This re-reads metadata and
+   selects the sole verified primary without entering a device path:
 
    ```sh
-   tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py --connect /dev/cu.usbmodemP_01
+   tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py --connect
    ```
 
-   Record start/end timestamps, elapsed time, printed result and exit status.
+   Record the printed UTC start/end timestamps, elapsed time and command exit
+   status: 0 = P_NOP replied, 1 = handshake failed, 2 = discovery stopped before
+   opening. Discovery-mode exit 0 means identified only, not handshake success.
    The checker sends only P_NOP, has a 10-second handshake deadline and closes
    its port. Opening the serial device can interrupt m1n1 autoboot into proxy
    mode. No upstream shell, feature negotiation, register/memory query or
@@ -65,8 +71,9 @@ or boot-object installation. All actual Stage A results remain NOT RUN.
 6. Review Stage A before seeking separate Stage B authorization. Do not
    chain a Linux launch onto the handshake.
 
-M1 records observed start/end times, actual device path (local only), command
-exit/result, elapsed time, non-sensitive screen observations and return outcome.
+M1 records observed start/end times, interface number/VID/PID, command exit/result,
+elapsed time, non-sensitive screen observations and return outcome. Keep device
+paths and raw registry data in memory only; they may contain serial numbers.
 Commit/push sanitized summaries to `progress.md` and `coordination.md`; retain
 NOT RUN for the live target-version query and Stage B/Linux. No raw screen
 photos, identifiers or policy dumps in Git. If a failure prevents the handshake,

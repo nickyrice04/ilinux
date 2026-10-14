@@ -3,20 +3,18 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Latest boot-entry status — 2026-10-13
+## Latest Stage A status — 2026-10-13
 
-Lab Recovery provisioning is complete by user-reported commands: preflight
-exit 0, kmutil exit 0/Installed yes, original Full/lab Permissive, lab CTRR
-disabled. User confirms original desktop return and Macintosh HD default.
-An incidental m1n1 startup reached on-screen `Running proxy...` before power-off.
+Installed m1n1 reached `Running proxy...` in the controlled session. Discovery
+found two modem callouts but stopped before opening because the old checker
+required a `P_01` suffix. P_NOP was NOT RUN; user confirms Macintosh HD return.
+The filename assumption is fixed offline using cached USB VID/PID/interface
+ancestry; 20 offline tests pass. No live proof of the new mapping or USB reply
+exists yet. Fresh post-attempt protection checks have not been reported.
+Boot021 and client pin are unchanged. Linux and live target-version checks
+remain NOT RUN. Prepare another Stage A session using the revised checklist;
+do not repeat Recovery installation or automatically boot/connect.
 This supersedes older provisioning-pending/m1n1-unobserved statements below.
-Controlled USB/P_NOP, live version check and Linux tests remain **NOT RUN**;
-no native Linux blocker is resolved. B's post-return checks confirm original
-build/FileVault/SIP/authenticated-root; the user's fresh policy helper reports
-original Full/lab Permissive, both exit 0. Return checks are complete. Next is
-the now-authorized single controlled boot/USB handshake/macOS return session,
-not repeat provisioning. Execution is pending; Stage B/Linux remains on hold.
-See the current handoff in `coordination.md`.
 
 ## Hardware enablement
 

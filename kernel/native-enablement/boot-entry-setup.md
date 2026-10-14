@@ -1,12 +1,15 @@
 # M5 dedicated boot entry: installed; original macOS return complete
 
-**Stage A is now authorized (2026-10-13):** one m1n1 boot, one bounded USB
-P_NOP handshake on M1, then return to Macintosh HD. Use
-[the controller checklist](../../tools/m1n1-client/stage-a-instructions.md).
-Leave the default and security policies unchanged; no Recovery/reinstallation.
-Stage B/Linux remains on hold. Live Stage A execution is still pending.
+**Stage A update (2026-10-13):** the controlled boot reached `Running proxy...`,
+but the checker stopped at discovery because of a filename-suffix assumption.
+No port was opened; P_NOP is NOT RUN. User confirms Macintosh HD return.
+The local checker now identifies VID/PID and primary CDC interface via cached
+macOS metadata; 20 offline tests pass. Live mapping remains unverified. Follow
+[the revised checklist](../../tools/m1n1-client/stage-a-instructions.md) when
+the user starts the next attempt; this repair performs no new boot/connection.
+No Recovery/reinstallation. Linux and live target-version checks remain NOT RUN.
 
-**Post-return review by B:** M1 report `c6f2c6f` is integrated. Original build
+**Earlier post-install return review by B (before the interrupted Stage A):** M1 report `c6f2c6f` is integrated. Original build
 26.6.2 / 25G83, FileVault, SIP and original authenticated-root are independently
 checked; staged payload size/hash match. The user supplied a fresh policy read:
 original Full/lab Permissive, both exit 0. Return checks are complete. The
