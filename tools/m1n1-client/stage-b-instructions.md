@@ -1,6 +1,14 @@
 # Stage B — attempt 9 / boot028 scheduling-boundary diagnostics
 
-**Current handoff.** Pull latest main with `git pull --ff-only`; preserve local
+**Attempt 9 is consumed (2026-10-14).** Readiness `87a80dd`; controller exit 0.
+Reviewed video observes timer PASS/25 ticks, phases 1/10/11/12 and final
+`reschedule pending=1 strip=0`. Phase 13, literal strip lanes/heartbeat and
+userspace/liveness NOT OBSERVED. Macintosh HD return human-confirmed.
+See `native/boot/stage-b-2026-10-14-attempt9-result.md`.
+M5 read-only return checks and offline analysis next. **Do not rerun the launch
+below**; the procedure is retained as the record of the completed attempt.
+
+**Reviewed pre-attempt handoff.** Pull latest main with `git pull --ff-only`; preserve local
 work and stop on divergence. Read `coordination.md` and this file. Attempt 8
 is consumed: native counter/ticks passed, but phase 2 and diagnostic userspace
 were not observed. Result: `native/boot/stage-b-2026-10-14-attempt8-result.md`.

@@ -1222,3 +1222,13 @@ including bottom-left strip; protection prerequisite is already PASS. Publish
 readiness before one attempt 9. Capture literal hex strip sequence, timer and
 scheduler evidence, and review recording or report availability limits. Return
 within the bound; no retry, expanded skip, reinstall or settings change.
+
+## 2026-10-14 · Record phase-12 progress and unavailable strip without inferred lanes
+
+Attempt 9 passes controller gates and reviewed video observes timer PASS/25
+ticks, phases 1/10/11/12 and reschedule pending=1 strip=0. Do not invent P/S/W/H
+values or a scheduler stack from an unavailable strip. Phase 13/userspace and
+liveness remain unobserved. The source locates the next boundary around
+preempt_enable; the evidence does not prove that call or a particular lock
+is faulty. Human confirms Macintosh HD return. M5 owns read-only return
+checks and offline scheduling/visibility/strip analysis; no retry or new skip.

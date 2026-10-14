@@ -5,6 +5,33 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: attempt 9 phase 12/pending=1/strip=0; return confirmed
+
+* One boot028 attempt at readiness `87a80dd`, reviewed M5 handoff `3503bf1`.
+  **Controller exit 0, 10.530 s**, UTC 2026-10-14 14:11:02.041163–14:11:12.571778;
+  handoff 14:11:12.342802. Hardware DT, boot021 marker, both DAPF checkpoints,
+  96-byte correction/readback, 16-byte framebuffer descriptor/readback,
+  prepared args and kboot reply PASS. Installed m1n1/client pin unchanged.
+* **Video reviewed**: human supplied 21.598-second `IMG_2659.mov`; paused frames
+  and enlarged lower-screen crops inspected from start through 21.45 seconds.
+  Native Linux, clock blacklist, J716c/t6050 EL2/one CPU, counter PASS/25 ticks
+  and timer status **phys=1 virt=7 irq_masked=0 fiq_masked=0 OBSERVED**.
+* Printed phase sequence **1 → 10 → 11 → 12**; final visible line
+  **`reschedule pending=1 strip=0 (P/S/W/H hex)`**, unchanged in reviewed later
+  samples. Phase 13/2, heartbeat, scheduler summary/stack and worker/retry
+  **NOT OBSERVED**. Literal P/S/W/H lanes **NOT OBSERVED**, not inferred zeros.
+* Diagnostic PID 1/userspace `online_cpus=1`/60-second liveness **NOT OBSERVED**.
+  Kernel one-CPU checkpoint is observed separately. No explicit panic visible;
+  exact cause unknown. Sampling/clip duration do not cover every frame or the
+  whole 120-second observation window. Full media stays out of workspace/Git.
+* **Macintosh HD return CONFIRMED by human** after deadline/return guidance.
+  No later message reported; fresh protection/default checks **NOT CHECKED**.
+  No retry, reconnect, reinstall, wider skip or settings change.
+* **Attempt 9 consumed.** Result: `native/boot/stage-b-2026-10-14-attempt9-result.md`.
+  M5 next: read-only return checks and offline analysis after phase 12/before
+  phase 13, including scheduling/visibility and strip availability. No exact
+  blocking PC or confirmed root-cause repair claimed.
+
 ## 2026-10-14 · M1: boot028 attempt 9 offline readiness PASS
 
 * Pulled/read M5 handoff `3503bf1`, scheduling-boundary README and validation.

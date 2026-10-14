@@ -3,26 +3,22 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — post-tick scheduling boundary; boot028 next
+## Current Stage B blocker — phase 12/pending=1/strip=0; attempt 9 consumed
 
-Attempt 8 observes J716c/t6050 EL2, one CPU, counter PASS/25 ticks, then timer
-status. Phase 2/PID-1/liveness remain unobserved; video was not reviewed.
-REA and linked source prove boot027 arms its watchdog after possible rescheduling;
-that is a diagnostic gap, **not proof that scheduling is the hardware fault**.
-The idle NOP implementation is already present. Do not add a guessed skip.
+Boot028 passes controller/hardware/DAPF/descriptor checks. Reviewed video
+observes one CPU, counter PASS/25 ticks, phases 1/10/11/12 and final
+reschedule pending=1 strip=0. Phase 13 and later userspace/liveness remain
+unobserved; no readable P/S/W/H lanes, heartbeat or scheduler stack. Strip=0
+is an availability result, not zero lane values or a diagnosed display fault.
 
-Boot028 arms the watchdog first and records scheduler boundaries in a fixed
-framebuffer strip, plus a bounded stack/heartbeat. Full build, sanitizer tests,
-90 controller cases, 13-file intake and generic VM liveness pass. Native
-attempt 9 NOT RUN. M1 verifies the new Image package, publishes readiness,
-then one human-started filmed boot captures text/strip and reviewed video.
-Fresh post-attempt-8 policies PASS; preserve installed boot021 and current
-installation. No security/volume/default changes or automatic retry.
-M1 independently verifies boot028 intake/controller and all 90 tests PASS.
-Human confirms proxy and video including strip; native/live attempt 9 NOT RUN
-at readiness.
-Evidence: `kernel/experiments/schedule-boundary/README.md`, `validation.json`
-and the current `tools/m1n1-client/stage-b-instructions.md`.
+The same final line remains in reviewed later video samples; the 21.598-second
+clip and sampling do not cover the full observation window. Human confirms
+Macintosh HD return. M5 next performs read-only return checks and offline
+analysis after phase 12/before phase 13, including scheduling/visibility and
+why the strip was unavailable. No precise blocking PC is established.
+Preserve current setup and single skip; no retry or settings changes.
+Evidence: `native/boot/stage-b-2026-10-14-attempt9-result.md` and
+`kernel/experiments/schedule-boundary/README.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 
