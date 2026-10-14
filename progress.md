@@ -5,6 +5,41 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: boot033 attempt 14 offline readiness PASS; boot034 proposals
+
+* Pulled/read M5 handoff `b76ab6b`, the attempt-14 checklist and scheduler-RAM
+  evidence. Archive **16,723,317 bytes**, SHA-256
+  `6cbf5d1396ddd2b5f79255e65c6c776f8122921b06327271e1102f7b7f0d55cd`,
+  verified against Git before extraction; 14 regular members, no absolute or
+  parent paths. **13-file intake and offline launcher PASS.**
+* **102 M1 offline cases PASS** (37+10+6+16+5+19+2+6+1), all exit 0; synthetic
+  transport only. Image SHA-256
+  `250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15`;
+  Stage-B DT SHA-256 unchanged
+  `4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce`.
+* Versus retained boot032 only Image and package-manifest metadata differ.
+  Six reviewed controller digests match the checklist; client pinned clean at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Installed boot021 unchanged.
+* Fresh ignored receipt `build/native-intake/receipts/boot033-attempt14.json`,
+  record `build/native-intake/results/boot033-stage-b-attempt14.json`/`.md`
+  and one-shot wrapper `build/native-intake/run-attempt14.py` retain payload,
+  source, procedure and receipt hashes.
+* **Ready for Stage B attempt 14** after publication. Human reports the M5
+  proxy already running; recording starts before launch and continues through
+  the stop criterion. M5's post-attempt-13 protection prerequisite applies.
+  **Native boot033/live checks NOT RUN at readiness.**
+* Next: one documented RAM launch; capture all four panel rows (S is now
+  watchdog-sampled), GPIO counts/errors, PID 1/one CPU/60-second liveness;
+  stop at panic/rejection, userspace milestone or 120 seconds after handoff,
+  then Macintosh HD. No reconnect/retry/reinstall/settings/volume changes.
+* **For M5 (proposals, not authorization):** boot034 should turn on the kernel's
+  own stall reporting with panic output drawn straight to the screen, and load
+  the GPIO driver after PID 1. Details and evidence: `coordination.md` (M1
+  proposals). Hypervisor study:
+  `research/m1n1/hv-linux-guest-feasibility-2026-10-14.md`; not usable on
+  t6050 without m1n1 changes, not the next step.
+
+
 ## 2026-10-14 · M5: boot033 removes scheduler framebuffer rendering; attempt 14 prepared
 
 Boot033 / attempt 14 prepared after reviewing M1 attempt 13 (`9a045cf`).

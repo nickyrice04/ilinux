@@ -17,8 +17,8 @@ original-root/build/FileVault/SIP/staged-m1n1 read-only checks. Default/installe
 object/authenticated-root not rechecked; no fresh policy exit codes supplied.
 Boot033 removes confirmed scheduler framebuffer overhead without changing GPIO
 or bypassing drivers. Build/regression/controller/intake and generic liveness
-PASS; its effect on the native stall is unproven. M1 intake and one bounded filmed
-attempt 14 are next. S is now sampled by the bounded watchdog, not immediate.
+PASS; its effect on the native stall is unproven. M1 boot033 intake, 102 cases,
+hashes and Image-only delta PASS; one bounded filmed attempt 14 is next. S is now sampled by the bounded watchdog, not immediate.
 Keep full recording through the stop criterion; stop by the handoff deadline
 without waiting for media transfer. No reinstall or settings changes.
 

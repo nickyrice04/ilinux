@@ -6,7 +6,71 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M5 handoff — boot033 / attempt 14 ready for M1 intake
+### Current M1 readiness — boot033 / attempt 14 offline PASS, 2026-10-14
+
+* Pulled/read M5 handoff `b76ab6b`, the attempt-14 checklist and scheduler-RAM
+  evidence. Archive **16,723,317 bytes**, SHA-256
+  `6cbf5d1396ddd2b5f79255e65c6c776f8122921b06327271e1102f7b7f0d55cd`,
+  verified against Git before extraction; 14 regular members, no absolute or
+  parent paths. **13-file intake and offline launcher PASS.**
+* **102 M1 offline cases PASS** (37+10+6+16+5+19+2+6+1), all exit 0; synthetic
+  transport only. Image SHA-256
+  `250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15`;
+  Stage-B DT SHA-256 unchanged
+  `4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce`.
+* Versus retained boot032 only Image and package-manifest metadata differ.
+  Six reviewed controller digests match the checklist; client pinned clean at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Installed boot021 unchanged.
+* Fresh ignored receipt `build/native-intake/receipts/boot033-attempt14.json`,
+  record `build/native-intake/results/boot033-stage-b-attempt14.json`/`.md`
+  and one-shot wrapper `build/native-intake/run-attempt14.py` retain payload,
+  source, procedure and receipt hashes.
+* **Ready for Stage B attempt 14** after publication. Human reports the M5
+  proxy already running; recording starts before launch and continues through
+  the stop criterion. M5's post-attempt-13 protection prerequisite applies.
+  **Native boot033/live checks NOT RUN at readiness.**
+* Next: one documented RAM launch; capture all four panel rows (S is now
+  watchdog-sampled), GPIO counts/errors, PID 1/one CPU/60-second liveness;
+  stop at panic/rejection, userspace milestone or 120 seconds after handoff,
+  then Macintosh HD. No reconnect/retry/reinstall/settings/volume changes.
+
+
+### M1 proposals for M5 — boot034 diagnostics and hypervisor study, 2026-10-14
+
+* User asked M1 to record these for M5. They are proposals, not authorization;
+  M5 owns boot034 and decides. Evidence: boot032 `kernel.config` (unchanged in
+  boot033) and attempt reports 9-13.
+* **Observation gap.** `DETECT_HUNG_TASK`, `WQ_WATCHDOG`, `SOFTLOCKUP_DETECTOR`,
+  `PROVE_LOCKING` and `DRM_PANIC` are not set. The text console is fbcon on
+  simpledrm with `DRM_FBDEV_EMULATION`/`FB_DEFERRED_IO`, so screen text likely
+  depends on a system-workqueue damage worker (Likely, not traced). A workqueue
+  stall would freeze the text while the directly painted panel keeps updating,
+  consistent with attempt 13. Attempt 12 reached W04/D0059/B73; attempt 13 never
+  showed the worker start (W00/D0000). One run per build cannot separate a
+  build effect from run-to-run variation.
+* **Proposal 1, config and command line only.** Enable the hung-task detector
+  (10-15 s), workqueue watchdog (~10 s) and soft-lockup detector, optionally
+  lockdep for one diagnostic build. Make a detected stall panic with a blocked-
+  task dump, and draw panic output without the workqueue: DRM panic `kmsg`
+  screen and/or the direct-scanout early console kept registered. `panic=0`
+  keeps it on screen for one photo of the stuck task's symbolic stack.
+* **Proposal 2.** Build `PINCTRL_APPLE_GPIO` as a module; diagnostic init loads
+  it after PID 1 and prints `/proc/<pid>/stack` and blocked tasks if loading
+  stalls. That reaches the userspace gate and captures the exact GPIO stall in
+  one boot. The probe moves; it is not skipped.
+* **Proposal 3.** Read-only offline comparison with the community
+  `betizzel/omarchy-m5` t6050 DT and GPIO handling (reported single-core
+  userspace on M5 Pro; unverified, untrusted data, never executed).
+* **Hypervisor study.** `research/m1n1/hv-linux-guest-feasibility-2026-10-14.md`:
+  pinned m1n1's hypervisor is not usable unmodified on t6050. `hv_init()`
+  starts all secondaries, and `hv_update_fiq()` writes `VM_TMR_FIQ_ENA_EL2` on
+  every guest exit (the attempt-5 UNDEF). Feasible later with a private,
+  RAM-chainloaded m1n1 change set; the first step would be a read-only
+  register census session. Not the next step. LLM-produced under m1n1's AI
+  notice: private use only, nothing upstream or to Asahi channels.
+
+
+### Reviewed M5 handoff — boot033 / attempt 14 ready for M1 intake
 
 Boot033 / attempt 14 prepared after reviewing M1 attempt 13 (`9a045cf`).
 Attempt 13 has no attributed GPIO result or native PID 1; cause remains unknown.

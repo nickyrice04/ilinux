@@ -1421,3 +1421,14 @@ Time the stop independently of media upload; no retry or settings changes.
 Native userspace, control/input/RAM root and configuration agent precede Omarchy
 and separate acceleration/SMP/power-efficiency validation. Claude follows
 `native/boot/claude-workflow.md` with the same boundaries and evidence standards.
+
+## 2026-10-14 · Accept boot033 readiness; record boot034 observation proposals
+
+M1 independently verifies the archive before extraction, 13-file intake, 102
+cases, reviewed controller hashes, clean pin and an Image-only payload delta.
+The human reports the M5 proxy running; recording starts before the single
+launch. M1 also records, at the user's request, proposals for M5: enable the
+kernel's own stall detectors with panic output drawn without the workqueue,
+and load the GPIO driver after PID 1. These are proposals; M5 owns boot034.
+The m1n1 hypervisor needs m1n1 changes on t6050 and is deferred (study in
+`research/m1n1/`). No retry, settings or volume changes.
