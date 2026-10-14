@@ -86,16 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: M1 verified attempt-4 controller at `2773a73`: boot022 offline package
-PASS; 31 launcher + 16 DAPF guard + 2 pinned DAPF-parser + 4 root-ADT cases
-PASS (53 total). All 13 receipt files/archive/manifest and reviewed source
-hashes match; clean client pin and installed boot021 m1n1 unchanged. Policy
-prerequisite PASS from M5-reviewed user JSON. Separate attempt-4 evidence
-prepared, including both DAPF checkpoints. Offline ready; wait for explicit
-human start and Running proxy before one bounded invocation. Attempt 4/live
-correction NOT RUN; Linux execution historically NOT OBSERVED. No USB opened,
-reinstall, settings change or automatic retry. See `coordination.md` and
-`tools/m1n1-client/stage-b-instructions.md`.
+Latest: attempt 4 at `d4209d3` passed both DAPF checkpoints and every existing
+preflight gate; kboot request returned, controller exit 0 in 10.458 s. Human
+reports logo and unreadably fast text. Kernel/PID 1/one-CPU/60-second liveness
+NOT OBSERVED; controller success is not Linux success. The 120-second screen
+limit ended; user confirms Macintosh HD return. Fresh protection/default checks
+remain for M5. No retry,
+reinstall or settings change; installed m1n1/boot022/client pin unchanged.
+M5 should check return protections and establish early-boot observation offline
+before any separately authorized new attempt. See
+`native/boot/stage-b-2026-10-13-attempt4-result.md` and `coordination.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

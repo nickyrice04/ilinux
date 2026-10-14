@@ -1023,3 +1023,14 @@ the human explicitly starts the single experiment and reports Running proxy.
 Capture both DAPF checkpoints plus handoff/screen/return evidence. Prior policy
 PASS remains current; no reinstall, settings change or automatic retry. Native
 RAM correction remains untested and Linux execution remains unobserved.
+
+## 2026-10-13 · Separate accepted handoff/DAPF correction from observed Linux
+
+Attempt 4 passed live DAPF provenance/layout, the bounded RAM correction and
+readback, final DT gates and kboot request/reply. Controller exit 0 is not a
+kernel/PID 1/liveness result. Human saw logo and unreadably fast text; record
+milestones NOT OBSERVED and do not invent a panic or claim native success.
+Stop was instructed at the 120-second screen limit; the user confirms macOS
+return. M5 should improve
+early-boot observation offline before proposing another physical session.
+No reconnect/retry, reinstall, boot-setting change or new live diagnostics.

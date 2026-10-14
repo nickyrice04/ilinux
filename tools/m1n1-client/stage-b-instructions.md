@@ -1,4 +1,13 @@
-# Stage B — proposed attempt 4, boot022 plus DAPF RAM guard
+# Stage B — attempt 4 consumed; controller PASS, Linux not observed
+
+**Current result:** attempt 4 ran once at `d4209d3`: both DAPF checkpoints,
+all preflight gates and kboot request/reply passed, exit 0 in 10.458 s. Human
+reports logo/unreadably fast text; kernel/PID 1/one-CPU/60-second liveness
+NOT OBSERVED. Screen limit ended; user confirms Macintosh HD return.
+See [attempt 4 result](../../native/boot/stage-b-2026-10-13-attempt4-result.md).
+**No retry/new live session authorized.** The commands/readiness below are
+consumed history. Next: read-only return checks and offline
+work to establish readable early-boot evidence.
 
 Attempt 3 reached handoff with all gates passing, then m1n1 raised an SError.
 Read [the preserved result](../../native/boot/stage-b-2026-10-13-attempt3-result.md)

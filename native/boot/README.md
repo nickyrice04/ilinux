@@ -1,18 +1,18 @@
-# J716c native handoff — boot022 with reviewed DAPF RAM correction
+# J716c native handoff — attempt 4 controller PASS; Linux not observed
 
-Attempt 3 passed all preflight gates, including the actual framebuffer fix,
-then m1n1 raised an SError during DAPF setup. Linux execution is **NOT OBSERVED**.
-The wrong AOP register-region selection is corrected offline; see
-[findings/tests](../../kernel/experiments/dapf-handoff/README.md) and the preserved
-[attempt-3 result](stage-b-2026-10-13-attempt3-result.md).
+Attempt 4 passed both live DAPF checkpoints and all existing preflight gates.
+The kboot request returned; controller exited 0 in 10.458 seconds. Human
+reports logo and unreadably fast text; Linux kernel/PID 1/one-CPU/60-second
+liveness remain **NOT OBSERVED**. At the screen limit return was instructed;
+the user confirms the usual Macintosh HD desktop. See
+[attempt 4 result](stage-b-2026-10-13-attempt4-result.md). No retry/new live
+session is authorized. M5 should establish readable early-boot evidence offline.
 
-**Reuse boot022 and the installed boot021 m1n1.** The new controller validates
-the live code, table and ADT, then applies a narrow 96-byte RAM data correction
-before handoff. It leaves the persistent boot entry and filter registers
-unchanged. No new download, kernel rebuild, Recovery or reinstall is needed.
-Native correction NOT TESTED. M1 first verifies the updated code offline using
-[the current checklist](../../tools/m1n1-client/stage-b-instructions.md), then
-waits for the human to start the proposed attempt 4. No automatic retry.
+Boot022, installed boot021 m1n1 and clean client pin unchanged; no reinstall,
+Recovery, volume/security/default or persistent boot-object changes. The
+96-byte DAPF correction was RAM-only and readback-verified. Preserve previous
+attempts. The [checklist](../../tools/m1n1-client/stage-b-instructions.md) is
+consumed history until a new reviewed/user-authorized session.
 
 The completed M5 entry installation is documented in
 [boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).

@@ -5,6 +5,25 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: attempt 4 controller/DAPF PASS; screen milestones unobserved
+
+* One boot022 attempt at `d4209d3`: **controller exit 0, 10.458 s**, UTC
+  2026-10-14 03:13:05.896584–03:13:16.354836. All preflight gates passed.
+* **Both DAPF checkpoints PASS**: reviewed live layout/code/table matched;
+  one bounded 96-byte RAM correction applied and read back, other entries
+  retained. Handoff requested at 03:13:16.120938 UTC; kboot reply succeeded.
+* Human reports unchanged logo and text too fast to read/photograph.
+  **Linux kernel/PID 1/online_cpus=1/60-second liveness NOT OBSERVED**.
+  No identifiable failure reported; controller success is not Linux success.
+* At the 120-second limit, power-off/startup-picker return was instructed.
+  **User confirms successful return to the usual Macintosh HD desktop.**
+  Fresh protections/default checks NOT CHECKED. No reconnect, retry, reinstall
+  or settings changes.
+* Sanitized result: `native/boot/stage-b-2026-10-13-attempt4-result.md`.
+  M5 should perform read-only return checks and establish an observable early-boot path
+  offline before any separately authorized physical attempt. Keep passing
+  framebuffer/DAPF/CPU/storage/version gates. This attempt is consumed.
+
 ## 2026-10-13 · M1: attempt 4 offline readiness PASS; awaiting explicit human start
 
 * Pulled/read `2773a73` and the DAPF evidence/current checklist. Existing

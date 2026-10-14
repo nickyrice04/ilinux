@@ -3,23 +3,17 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B gate — DAPF mismatch corrected offline, native test pending
+## Current Stage B gate — attempt 4 handoff accepted; Linux evidence absent
 
-Attempt 3 passed framebuffer and other preflight, then m1n1 raised an EL2 SError
-before observed Linux output. Exact binary/source/REA analysis places the PC in
-DAPF setup. Sanitized AOP metadata exposes DART+GAPF, while the pinned table
-incorrectly chooses the GAPF region as DAPF. This confirmed mismatch is a likely
-cause; asynchronous SError does not prove the exact faulting write.
-
-Source guard: full m1n1 build plus 12 C scenarios with ASan/UBSan PASS. A narrower
-RAM-only controller correction avoids replacing the installed bootloader;
-regression and real-parser tests pass. M1 now independently passed 53 required
-offline cases plus existing boot022 package/receipt/source/pin checks. Offline
-ready for proposed attempt 4; wait for explicit human start and Running proxy.
-Policy check PASS (user-supplied original Full/lab Permissive, exit 0). No USB
-opened during readiness, host settings changes or automatic retry.
-Native correction NOT TESTED; Linux execution NOT OBSERVED. See
-`kernel/experiments/dapf-handoff/README.md` for evidence and remaining limits.
+Both DAPF layout/correction checkpoints passed on the target; all other gates
+passed and kboot replied successfully (controller exit 0, 10.458 s). User saw
+the logo and unreadably fast text, without identified kernel/PID 1/one-CPU/
+60-second milestones. Linux execution NOT OBSERVED. Screen limit ended; return
+confirmed by the user; fresh read-only checks pending. Establish observation
+of the earliest unconfirmed
+handoff/kernel step offline before another separately authorized attempt.
+Keep passing gates; no automatic retry, reinstall or boot-setting changes.
+See `native/boot/stage-b-2026-10-13-attempt4-result.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

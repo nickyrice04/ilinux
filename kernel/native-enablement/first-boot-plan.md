@@ -2,14 +2,14 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest:** attempt 3 passed all preflight, then m1n1 raised an SError during
-DAPF setup. Linux execution NOT OBSERVED. The confirmed AOP DAPF/GAPF layout
-mismatch is corrected offline with a source guard and a narrow RAM-only table
-workaround for the installed binary. [Evidence](../../kernel/experiments/dapf-handoff/README.md).
-Reuse boot022; no reinstall or Recovery. M1 verifies new controller code before
-the human starts proposed attempt 4. Post-attempt-3 policy check PASS from
-user-supplied JSON: original Full/lab Permissive, both exit 0. Native correction
-NOT TESTED. [Current checklist](../../tools/m1n1-client/stage-b-instructions.md).
+**Latest:** attempt 4 passed both DAPF checkpoints and all preflight gates;
+kboot replied, controller exit 0 in 10.458 seconds. User reports logo/unreadably
+fast text, with kernel/PID 1/one-CPU/60-second liveness NOT OBSERVED. At the
+screen limit return was instructed; user confirms Macintosh HD desktop.
+Keep boot022/installed m1n1/client pin and all passing gates. No retry,
+reinstall or settings changes. Next: M5 read-only return checks and offline
+early-boot observation work. See
+[attempt 4 result](../../native/boot/stage-b-2026-10-13-attempt4-result.md).
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received
