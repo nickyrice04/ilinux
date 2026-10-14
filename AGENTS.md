@@ -86,6 +86,11 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
+Latest M1: boot030 archive/13-file intake, offline launcher, 90 cases and
+reviewed controller/decoder hashes PASS; clean pin and installed boot021 unchanged.
+Human proxy/video ready. Attempt 11 native/live NOT RUN at readiness.
+One filmed launch after publication; capture all four rows and return.
+
 Current M5 handoff: **boot030 / attempt 11; native/live NOT RUN**. Attempt 10
 video reads P:05 S:09 W:04, locating the first deferred-work flush/probe entry
 by source; three native display lanes now work. Exact driver/fault unknown.

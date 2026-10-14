@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: boot030 attempt 11 offline readiness PASS
+
+* Pulled/read M5 handoff `1125c33`, probe-path README/evidence/validation and
+  public D/C/B decoder tables. Archive SHA-256
+  `260f57106007b654a522480e3c20fb2b3630338a5b90edaa64bd067fa0ec2c16`
+  and 16,724,043-byte size verified **before extraction**. All **13 intake
+  files**, offline launcher and reviewed controller/decoder digests PASS.
+  Image SHA-256 `190cd86d5f823326f5a44277f5efb96cc01c85b3a3f9ffbde16d9cb7abe35067`.
+* **90 M1 offline cases PASS:** 37 launcher + 6 entry + 16 DAPF + 5 framebuffer
+  + 19 hardware + 2 pinned ADT/DAPF + 4 root ADT + 1 real proxy serializer;
+  all exit 0, synthetic transport only. Clean client remains pinned at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`; installed boot021 unchanged.
+* Only Image/package manifest differ from retained boot029. Fresh ignored
+  receipt `build/native-intake/receipts/boot030-attempt11.json` and result
+  `build/native-intake/results/boot030-stage-b-attempt11.json`/`.md` prepared
+  with source/procedure/controller/payload/receipt/decoder hashes.
+* **Ready for the authorized Stage B attempt 11** after publication. Human
+  reports proxy running and video recording including all four panel rows.
+  Post-attempt-10 protection prerequisite already PASS per M5; no extra restart
+  or review loop. **Attempt 11 native/live checks NOT RUN at readiness.**
+* Next: one reviewed RAM launch, literal P/S/W/H/D/B/C and Linux milestones,
+  recording through the stop criterion with a close final frame. Decode public
+  IDs offline and review video before publishing, then Macintosh HD within the
+  existing bound. No retry, wider blacklist, reinstall or settings changes.
+
 ## 2026-10-14 · M5: boot030 identifies deferred-device and probe-operation boundaries
 
 * Reviewed M1 `9d04195`: attempt 10 controller PASS (10.496 s), and paused

@@ -1293,3 +1293,13 @@ for one filmed attempt 11; no additional M5 approval loop or setup restart.
 Record all readable lanes and video times through the stop criterion, decode
 IDs offline, then return. Native userspace remains the gate before Linux-side
 control/input and Omarchy configuration; no performance-parity claim.
+
+## 2026-10-14 · Accept boot030 readiness and capture public device/probe boundaries
+
+M1 independently verifies archive before extraction, 13-file intake, 90 cases,
+reviewed controller/decoder hashes and clean pin. Human confirms proxy/video
+including all four panel rows; post-attempt-10 policy prerequisite already PASS.
+Publish readiness before one filmed attempt 11. Record literal lanes before
+using the offline public-table decoder; preserve unreadable fields as unobserved.
+Review early and final video within the existing stop bound. Preserve installed
+boot021/gates/single skip; no retry, settings changes or inferred driver fault.

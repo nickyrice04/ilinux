@@ -19,6 +19,8 @@ generic VM liveness pass. Native panel/device/probe behavior remains untested.
 
 Post-attempt-10 original Full/lab Permissive JSON PASS. M1 verifies boot030 and
 publishes readiness before one filmed attempt 11, then Macintosh HD return.
+M1 independently verifies archive/intake/90 cases/controller/decoder hashes PASS;
+human proxy/video ready. Attempt 11 native/live NOT RUN at readiness.
 Preserve installed boot021/current entry/single skip/hardware gates; no new
 provisioning, settings change or automatic retry. The next driver change must
 follow the decoded device/operation evidence or a readable stack.
