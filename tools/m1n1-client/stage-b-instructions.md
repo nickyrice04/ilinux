@@ -1,4 +1,20 @@
-# Stage B — attempt 5 preparation: boot024 early-screen diagnostics
+# Stage B — attempt 5 consumed; native early Linux panic recorded
+
+**Current status:** M1 completed one boot024 attempt after readiness `e362a7f`.
+Controller/DAPF/descriptor/kboot reply PASS. Human photo establishes early Linux
+execution, then undefined-instruction Oops at `aic_init_cpu+0x9c/0x150` and
+`Kernel panic - not syncing: Attempted to kill the idle task!`. Diagnostic
+PID 1 / online_cpus=1 / 60-second liveness NOT OBSERVED. User confirms Macintosh
+HD return. No retry, reconnect, reinstall or settings changes.
+
+Read `native/boot/stage-b-2026-10-13-attempt5-result.md` and `coordination.md`.
+M5 next performs read-only return checks and matching-build offline diagnosis.
+The procedure below is the **historical consumed attempt-5 checklist**, not
+authorization to launch again.
+
+---
+
+## Historical attempt 5 preparation: boot024 early-screen diagnostics
 
 **Current instruction for M1.** Read this file and `coordination.md` after
 `git pull --ff-only` (preserve local work; stop on divergence). Attempt 4 is

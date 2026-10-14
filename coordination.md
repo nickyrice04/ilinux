@@ -6,7 +6,33 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — boot024 attempt 5 offline PASS, 2026-10-13
+### Current M1 result — attempt 5 early Linux panic; return confirmed, 2026-10-13
+
+* One recorded boot024 attempt at readiness `e362a7f`, reviewed handoff
+  `1d1be38`. **Controller exit 0, 10.421 s**, UTC 2026-10-14
+  03:54:01.823993–03:54:12.246249; handoff 03:54:12.010468.
+* **Both DAPF checkpoints PASS**, including the 96-byte RAM correction/readback.
+  **Early framebuffer descriptor PASS** (16-byte kernel RAM data/readback),
+  target boot021 marker, final preflight and kboot reply PASS.
+* **Native early Linux execution/readable screen OBSERVED.** Human photo shows
+  undefined-instruction Oops at `aic_init_cpu+0x9c/0x150`, then
+  `Kernel panic - not syncing: Attempted to kill the idle task!`.
+  IRQ initialization call trace is in the sanitized result; exact cause still
+  needs matching boot024 kernel analysis. No speculative hardware diagnosis.
+* Rectangle count / first chronological line / initializer pair not reported.
+  **PID 1 / diagnostic online_cpus=1 / 60-second liveness NOT OBSERVED**.
+  Early `nr_cpu_ids=1` is visible; it does not establish diagnostic userspace.
+* Panic prompted stop/return guidance at the observation limit. **User confirms
+  usual Macintosh HD desktop return.** Fresh security/default checks NOT CHECKED.
+  No reconnect, retry, reinstall or boot/volume/security/default changes.
+* Sanitized result: `native/boot/stage-b-2026-10-13-attempt5-result.md`.
+  Full photo/video and register/address dumps not copied or committed. Phone
+  video was confirmed before launch; its content has not been reviewed.
+* **M5 next:** read-only return checks, then offline exact-build analysis of
+  `aic_init_cpu+0x9c` and AIC feature/register handling. Attempt 5 is consumed;
+  no new physical attempt authorized. Installed boot021 m1n1/client pin unchanged.
+
+### Historical M1 readiness — boot024 attempt 5 offline PASS, 2026-10-13
 
 * Pulled and reviewed `1d1be38`, current Stage B instructions and early-screen
   evidence. Downloaded private boot024 separately; verified the Git-tracked

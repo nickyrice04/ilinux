@@ -86,18 +86,19 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: M1 independently verified boot024 from handoff `1d1be38`: archive
-before extraction, 13 receipt files, all five reviewed source hashes, clean
-client pin and 65 offline cases PASS. Only Image changes; installed boot021
-m1n1 remains. Attempt 5/current live checks NOT RUN at readiness. Human reports
-Running proxy and phone video recording; after readiness publication, one
-reviewed RAM launch may proceed under `tools/m1n1-client/stage-b-instructions.md`,
-with screen milestones and Macintosh HD return. Prior original Full/lab
-Permissive policy prerequisite PASS; no boot/settings changes or auto-retry.
-Historical Linux remains NOT OBSERVED. See `coordination.md`.
+Latest: boot024 attempt 5 reached native early Linux with readable screen
+output, then undefined-instruction Oops at `aic_init_cpu+0x9c/0x150` and idle-task
+kernel panic. Controller exit 0 (10.421 s); both DAPF checkpoints, kernel RAM
+framebuffer descriptor and kboot reply PASS. PID 1/online_cpus=1/60-second
+liveness NOT OBSERVED. Human confirms Macintosh HD return. M5 next performs
+read-only return checks and matching-build AIC analysis offline. Attempt 5 is
+consumed: no new live attempt, reinstall or settings changes. Installed boot021
+m1n1/client pin unchanged. See `native/boot/stage-b-2026-10-13-attempt5-result.md`
+and `coordination.md`.
 
-* Hardware fully inventoried. Native Linux is not boot-tested on this unit;
-  t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.
+* Hardware fully inventoried. Native early Linux execution is observed, but
+  AIC initialization panics before diagnostic userspace. Full native boot/SMP,
+  G17 graphics/display and idle/DVFS remain unresolved.
 * A draft native patch series exists in `kernel/patches/t6050`. Job 020 /
   F-056 built the full kernel Image, modules, DTBs and initramfs. DockChannel
   hardening was separately object-tested after the Image link; that extra

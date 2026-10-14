@@ -3,18 +3,18 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B gate — boot024 M1 intake PASS; one recorded attempt pending
+## Current Stage B blocker — native early Linux observed; AIC initialization panic
 
-M1 independently verifies boot024 archive before extraction, 13 receipt files,
-reviewed source hashes, clean client pin and all 65 documented offline cases.
-Only Image changes; installed boot021 m1n1 stays unchanged. Attempt 5/live
-checks/Linux NOT RUN at readiness. Human confirms Running proxy and phone
-video recording. Publish readiness, then one bounded launch under
-`tools/m1n1-client/stage-b-instructions.md`; record both DAPF checkpoints,
-kernel descriptor, highest rectangle count and kernel/userspace/liveness.
-Stop on failure/liveness/120-second limit and return to Macintosh HD.
-Original Full/lab Permissive prerequisite already PASS. No reinstall, settings
-changes or automatic retry. Historical Linux execution remains NOT OBSERVED.
+Attempt 5 boot024 passed both DAPF checkpoints, the 16-byte framebuffer RAM
+descriptor, final gates and kboot reply (controller exit 0, 10.421 s). Human
+photo establishes native early Linux text, undefined-instruction Oops at
+`aic_init_cpu+0x9c/0x150`, and idle-task kernel panic. PID 1 / diagnostic
+online_cpus=1 / 60-second liveness NOT OBSERVED. Rectangle count unknown.
+Human confirms Macintosh HD return. No retry, reconnect or settings changes.
+M5 should perform read-only return checks and analyze the exact boot024 AIC
+code offline; do not infer the exact bad register/instruction from message
+proximity. See `native/boot/stage-b-2026-10-13-attempt5-result.md`.
+Attempt 5 is consumed; no additional live test is authorized.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

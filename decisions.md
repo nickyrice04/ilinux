@@ -1062,3 +1062,15 @@ or duplicate policy query is required. Attempt 5/live checks remain NOT RUN at
 readiness. Capture both DAPF checkpoints, the new descriptor checkpoint and
 observed screen milestones without exposing target memory/identifiers. Respect
 the existing stop/return limits; no reinstall, boot changes or automatic retry.
+
+## 2026-10-13 · Treat attempt-5 Linux panic as observed kernel evidence
+
+Boot024 produced readable native early kernel text. Record Linux execution as
+OBSERVED, distinguish controller/DAPF/descriptor PASS from the undefined-
+instruction failure at aic_init_cpu+0x9c, and leave PID 1/diagnostic CPU count/
+60-second userspace liveness NOT OBSERVED. The still does not establish the
+rectangle count or exact faulting instruction cause; retain symbolic offsets
+and safe text only. User confirms Macintosh HD return. M5 owns read-only return
+checks and exact-build offline AIC diagnosis next. Preserve the successful
+observation path, existing guards and installed boot object; no retry, settings
+changes or new live session under this consumed attempt.
