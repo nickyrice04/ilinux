@@ -1316,3 +1316,23 @@ Keep obscured lower frames unconfirmed and kernel heartbeats separate from
 unobserved diagnostic userspace/liveness. Return was instructed at the bound;
 confirmation remains pending. No retry/settings changes; fresh M5 return checks
 and targeted offline analysis next. Preserve media locally and publish safe text.
+
+## 2026-10-14 · Repair identified GPIO handoff gaps without treating a boundary as a fault PC
+
+Attempt 11 identifies the main pinctrl platform callback, not an exact failing
+instruction. Use exact Linux source/compiled REA plus independent Apple byte
+observations to bound the hypothesis. Reject Apple's cross-boundary init
+pseudocode; retain verified in-body instructions only as corroboration of the
+public Linux register layout. Implement original t6050 cache geometry and
+init_hw sequencing, using Linux IRQ-off semantics and checking readback rather
+than overriding a locked pad. No blanket driver skip, new hardware routing or
+proprietary code. Include stages that distinguish cache initialization from
+registration and IRQ handoff if native still stalls. Tests cannot establish
+that the synthetic pending source existed on this unit.
+
+Post-attempt-11 protection/return PASS. Preserve boot021/current entry and all
+prior evidence. Boot031 is a RAM Image update only. M1 offline readiness and
+human start authorize one filmed attempt 12 under the unchanged stop/return
+bounds; no extra approval round trip or repeated setup. Record GPIO errors
+separately from userspace success. Native PID 1/liveness gates Linux control,
+input and the configuration-agent Omarchy work; efficient SMP/GPU remain later.

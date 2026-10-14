@@ -48,16 +48,16 @@ survey is not the next dependency. No proprietary code is copied into Linux.
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
 The dedicated lab entry and Stage A handshake/return are established.
-Attempt 10 exposes P:05 S:09 W:04, locating deferred-worker/probe progress;
-three diagnostic lanes now render natively. Exact driver/fault and userspace
-remain unresolved. Boot030 adds public device IDs, 56 probe boundaries and a
-compact panel. Full build/sanitizers/controller/intake/generic VM liveness pass.
-Native attempt 11 NOT RUN; post-attempt-10 original Full/lab Permissive PASS.
-Preserve the existing setup; select the next driver repair from actual evidence.
+Attempt 11 exposes main pinctrl@29c000000 at callback B63; native userspace
+remains unobserved. Boot031 bounds t6050 GPIO cache reads and initializes IRQ
+state before enabling parents, with 17 new diagnostic boundaries. Full build,
+sanitizers/controller/intake/generic VM liveness PASS. Native attempt 12 NOT RUN;
+post-attempt-11 original Full/lab Permissive and return checks PASS. Preserve the
+existing setup. The observed boundary does not yet prove the hang's cause.
 
 | Order | Next experiment | Evidence required before advancing |
 |---|---|---|
-| 1 | One human-started attempt 11 after M1 readiness, using boot030 deferred-device/probe-path diagnostics; installed m1n1 stays boot021, single core, NVMe/cpufreq disabled | Record video before launch; timer/tick, display state, four-row P/S/W/H/D/B/C panel, decoded root/current device and operation, stack/deferred phases, PID 1/one CPU/60-second liveness or first failure; review the recording; then original macOS return. Use the current Stage-B checklist. |
+| 1 | One human-started attempt 12 after M1 readiness, using boot031 GPIO handoff repair; installed m1n1 stays boot021, single core, NVMe/cpufreq disabled | Record video before launch; timer/tick, display state, four-row P/S/W/H/D/B/C panel, decoded root/current device and operation, stack/deferred phases, PID 1/one CPU/60-second liveness or first failure; review the recording; then original macOS return. Use the current Stage-B checklist. |
 | 2 | Diagnose the earliest actual failure, or improve logging if screen output is absent | A reproducible checkpoint and tested patch; no blind retry or guessed driver diagnosis |
 | 3 | Establish Linux-side USB/input and an observable control channel | Linux USB enumeration and tested input/network access. The working m1n1 USB proxy does not survive Linux handoff |
 | 4 | Separate bounded SMP/idle/DVFS experiments, informed by existing REA startup findings | Correct core identities/topology, stable incremental secondary startup, validated idle/wake and frequency transitions; no assumed masks or OPP values |

@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-14",
+  "status": "offline PASS; native attempt 12 NOT RUN",
+  "target": "Mac17,6 / J716c / t6050",
+  "base_package": "boot030",
+  "package": "ilinux-j716c-boot031",
+  "archive_bytes": 16724870,
+  "archive_sha256": "73ad67d17c78da9ef2eeec63122e52271e8a9521120add8d60588a6585ab9246",
+  "Image": {
+    "size": 44534272,
+    "sha256": "09d3cc302da20ef53c41bec3324d702b249a729a55e3799b5676618034bff37d"
+  },
+  "config": {
+    "size": 321615,
+    "sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169"
+  },
+  "build": {
+    "recipe": "virtualization/jobs/031-gpio-handoff/run.sh",
+    "work_tree": "/var/tmp/ilinux-boot031/linux",
+    "method": "incremental full Image link from preserved boot030 copy; not a clean rebuild",
+    "start_utc": "2026-10-14T15:56:45Z",
+    "end_utc": "2026-10-14T15:57:12Z",
+    "compiler": "GCC 16.1.1 20260430",
+    "binutils": "2.46.0",
+    "kernel": "7.1.9-g863199d8b4a3-dirty #9",
+    "page_size": 16384,
+    "config_unchanged": true,
+    "elf_binary_roundtrip": "PASS",
+    "diagnostics": "no build warnings/errors in retained log"
+  },
+  "tests": {
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "actual_irq_helper": "PASS: 8 pin geometries; exact old handler delivers 96 unmapped events over 3 invocations before repair, zero after; partial valid masks; field preservation; 4 error cases; 4 invalid geometries",
+    "actual_geometry_config": "PASS: target declared pin counts and 512 boundary, reproduced old over-read, legacy unchanged, zero/oversized/missing/short resources rejected",
+    "controller_cases": 90,
+    "intake_files": 13,
+    "member_extractor_cases": 13,
+    "evidence_gate_cases": 8,
+    "generic_vm": {
+      "cpus": 1,
+      "memory_gib": 4,
+      "disk": false,
+      "network": false,
+      "phase_sequence": [
+        1,
+        10,
+        11,
+        12,
+        13,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timer_ticks": 25,
+      "pending": 1,
+      "strip": 0,
+      "display": 1,
+      "PID1": "PASS",
+      "online_cpus": 1,
+      "liveness_seconds": 60.189741,
+      "termination": "owned VZ PID 2545 SIGTERM after >60s, exit143 expected"
+    }
+  },
+  "source_sha256": {
+    "kernel/experiments/gpio-handoff/apply.py": "8f044fb90c102b1ebb92c1e938150f5fc9a690e5f1a2dce3ae5c8c66c61fe5ef",
+    "kernel/experiments/gpio-handoff/irq-init.h": "95e3a842570f34e5bd905d9530e31af2f0c69c360b3452df4a791c74ee7982e6",
+    "kernel/experiments/gpio-handoff/test_irq.c": "f4b32632649493dec2fba6496f59e5945940cca6e2457433ecd7f8754374f07c",
+    "kernel/experiments/gpio-handoff/test_geometry.c": "4be6d8fec9e7fac45254d662c95825152709061b9179bb74ffad8065d498de6a",
+    "virtualization/jobs/031-gpio-handoff/run.sh": "4eabe94160c5d1b9e971290bf2c7c6e0c51ab744e06dbecd014ac4b191c52a24",
+    "native/boot/launch.py": "c2d2cd0b067b78ead957463e70f8c4694cdeee5dc5b7b54bd6ebf2b7f7fc0279",
+    "native/boot/entry_guard.py": "d1fa8ca84aa1c7032c50c8766c8571054047720df35cb7d518310167ec183713",
+    "native/boot/dapf_guard.py": "bb33d9bebcec3a6cd925ed9e7b28dbabe3c7375c445d7e9d68ace18f4eaa7047",
+    "native/boot/fdt.py": "d9522761837e78f7b444b936a7501fc9f847697d783b57de1f446a4b8da32b6b",
+    "tools/m1n1-client/usb_identity.py": "72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137"
+  },
+  "logs": {
+    "build/native-gpio-retry/out/run.log": "7030c2deb7cb0a7066409ec0acbe0e609e83d132d8ead7735f5d5e2489df471c",
+    "build/native-gpio-retry/out/build.log": "79592832dd1e6d60bf8fa06546947732f5d0a74c9e043416dcf80fc42d73d407",
+    "build/native-gpio-final-tests/out/run.log": "370f87d00699b73a233b86c1c906be08a8cebb1f9a4f2c996b0c325124fd5605",
+    "build/native-boot031-checks/out/run.log": "28cc94b621e102114db9fbc7c848df233980f0e37fdeb4d33722d387ba20aa1e",
+    "build/native-boot031-checks/out/intake.json": "66322b88251952172bb7be053c605a6a2cca347bba8adc77b3a2c4c643a6f34e",
+    "build/native-boot031/generic-vm.log": "905814ffb9e9298d3070349aec32c65fff9393ec66d0aabfd5fecc0126302f4a"
+  },
+  "recorded_repairs": [
+    "First source-export VM skipped non-executable job; stopped owned VM and corrected mode.",
+    "Initial test-only dev_info stub discarded changed argument, producing -Werror; corrected stub. Kernel helper unchanged.",
+    "Auxiliary evidence test used a sibling import incompatible with -I; reran with explicit reviewed local module path. Controller/intake and 13 extractor cases had already passed.",
+    "Added exact old-handler counterfactual after first helper pass; final actual helper/geometry suites and 8 evidence gate cases PASS. No later kernel changes."
+  ],
+  "limits": [
+    "No native attempt12 or GPIO MMIO/IRQ/readback result yet.",
+    "Generic VM does not present t6050 pin controllers; sanitizer MMIO is modeled.",
+    "Apple init whole-function pseudocode rejected for cross-boundary p-code; verified bounded instruction facts only.",
+    "No native throughput/energy benchmark or macOS performance-parity claim."
+  ]
+}

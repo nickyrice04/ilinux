@@ -1,0 +1,50 @@
+{
+  "image_sha256": "190cd86d5f823326f5a44277f5efb96cc01c85b3a3f9ffbde16d9cb7abe35067",
+  "functions": [
+    {
+      "object_sha256": "ea176a6d231201a80f558545631fcb489a2e3c2a8d0eb60faf18fa48607e0285",
+      "elf_symbol": "apple_gpio_pinctrl_probe",
+      "rea_function": "apple_gpio_pinctrl_probe",
+      "section": ".text",
+      "symbol_bytes": 1268,
+      "llvm_instruction_words": 317,
+      "llvm_unknown_instructions": 0,
+      "rea_omitted_instruction_words": 0,
+      "rea_body_bytes": 1268,
+      "image_relative_offset": "0x6a4764",
+      "linked_matching_nonrelocated_words": 257,
+      "relocation_words_reviewed_separately": 60,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_52cbe5310c5272dd1df3b4a58fb7b90b3305285457f49de8f1b84619d17f8632",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    },
+    {
+      "object_sha256": "ea176a6d231201a80f558545631fcb489a2e3c2a8d0eb60faf18fa48607e0285",
+      "elf_symbol": "apple_gpio_irq_handler",
+      "rea_function": "apple_gpio_irq_handler",
+      "section": ".text",
+      "symbol_bytes": 300,
+      "llvm_instruction_words": 75,
+      "llvm_unknown_instructions": 0,
+      "rea_omitted_instruction_words": 0,
+      "rea_body_bytes": 300,
+      "image_relative_offset": "0x6a4d20",
+      "linked_matching_nonrelocated_words": 74,
+      "relocation_words_reviewed_separately": 1,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_262fd352a337e71cf61cdb453dc21dce7c8d28480712ea9c7ae08ffb73ca7c71",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    }
+  ],
+  "limits": [
+    "Static source/REA/linked-byte consistency; no native blocked PC or hardware fix proven."
+  ]
+}

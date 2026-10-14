@@ -23,6 +23,8 @@ ALLOWED = {
     "com.apple.driver.AppleDockChannel", "com.apple.driver.AppleHIDTransportFIFO",
     "com.apple.driver.AppleHIDTransport", "com.apple.driver.RTBuddy",
     "com.apple.driver.AppleT8110DART",
+    # Attempt 11: identified GPIO probe boundary; static ordinary driver analysis.
+    "com.apple.driver.AppleGPIOICController",
 }
 
 

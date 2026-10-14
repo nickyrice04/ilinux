@@ -86,22 +86,19 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1: **attempt 11 consumed**, boot030 at readiness `3c0b051`.
-Controller exit 0/10.526 s; all hardware/DAPF/descriptor/kboot gates PASS.
-Video plus detailed photo observes EL2/one CPU, PASS/25 ticks, phase 13 and phases 2–5,
-pending=1/strip=1/display=6 and final **P05 S09 W04 H02 D0059 B63 C0059**.
-Public decode: pinctrl@29c000000 at platform driver callback boundary; earlier
-pinctrl@2881e4000 returned 0. First watchdog stack was current kdevtmpfs, later
-summary kworker/u4:1; do not conflate them. Exact fault and userspace/liveness
-remain unresolved. Return instructed; **desktop confirmation PENDING**.
-Fresh protection/default NOT CHECKED. Full report:
-`native/boot/stage-b-2026-10-14-attempt11-result.md`.
-
-M5 next: read-only return checks after confirmation and targeted offline
-pin-controller callback/dependency analysis. Preserve installed boot021/client
-pin and current entry/gates/single skip. No repeated setup, settings changes or
-automatic retry. Stable diagnostic userspace precedes Linux control/input and
-configuration-agent Omarchy work. No native performance-parity claim.
+Current: **boot031 / attempt 12 prepared**, following M1 attempt 11 (`f35efa5`).
+Final D=C=0059/B63 identifies main pinctrl callback; exact cause unresolved.
+Boot031 adds t6050 GPIO geometry/cache bounds and pre-parent IRQ handover with
+readback/locked-pin errors, plus 17 probe checkpoints. REA/independent bytes,
+full Image, sanitizer regressions, 90 controller cases/intake and exact-image
+VZ PID-1/60s liveness PASS. **Native boot031/live checks NOT RUN.**
+User post-attempt-11 policies Full/Permissive and independent original-root/
+FileVault/SIP/staged-m1n1 checks PASS; report's pending return is resolved.
+M1 follows current Stage-B instructions: verify release, publish readiness,
+then one filmed attempt 12 and return. Preserve installed boot021/current entry,
+all gates and single skip. No new provisioning/settings/volume changes or retry.
+See `kernel/experiments/gpio-handoff/README.md`. Native diagnostic userspace
+precedes Linux-side control/input and Omarchy configuration. No parity claim.
 
 Historical M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
 still unobserved. Boot027 keeps the working boot021 setup and changes only

@@ -3,26 +3,21 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — pin-controller callback boundary; return confirmation pending
+## Current Stage B blocker — native GPIO handoff validation pending
 
-Attempt 11's reviewed boot030 video/photo shows native EL2/one CPU, PASS/25 ticks,
-phase 13 and phases 2–5 and final **P05 S09 W04 H02 D0059 B63 C0059**. Public-table
-lookup maps final device to /soc/pinctrl@29c000000 and B63 to the platform driver
-callback boundary. Earlier /soc/pinctrl@2881e4000 returned 0 after 164043 usecs.
-The next offline investigation has an identified device/operation, not an
-exact blocked PC or proven driver/register fault.
+Attempt 11 identifies main pinctrl@29c000000 at platform callback B63, while
+NUB pinctrl returned 0. Native PID 1/60s liveness are unobserved; no exact blocked
+PC or measured IRQ storm. Boot031 repairs confirmed static GPIO cache/IRQ
+handover gaps on t6050 and adds callback stages. Full build, sanitizer/controller/
+intake and generic VM liveness PASS; **native attempt 12 NOT RUN**. It must show
+GPIO return or an explicit error, then userspace. A GPIO error with userspace
+is partial boot progress, not working peripherals.
 
-First watchdog/stack interrupted kdevtmpfs; later summary names kworker/u4:1.
-Two watchdog counts and 14 upper symbolic frames are observed; lower frames
-remain obscured. Do not treat the first dump as the final device's callback
-stack. Diagnostic PID 1/userspace one-CPU/60-second liveness remain unobserved.
-43.43-second video samples/photo do not cover the full 120-second window.
-
-Controller/hardware/DAPF/descriptor/kboot PASS. Return instructed at deadline;
-Macintosh HD confirmation PENDING, fresh protection/default NOT CHECKED.
-M5 performs read-only checks after return and targeted offline pin-controller
-analysis. Attempt 11 consumed; no retry, new skip, reinstall or settings changes.
-See `native/boot/stage-b-2026-10-14-attempt11-result.md`.
+Fresh original Full/lab Permissive JSON and independent original macOS return
+checks PASS. M1 verifies boot031 and publishes readiness before one filmed RAM
+attempt under the current checklist. Preserve installed setup and all gates;
+no new skip or automatic retry. REA findings and limits are in
+`kernel/experiments/gpio-handoff/README.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

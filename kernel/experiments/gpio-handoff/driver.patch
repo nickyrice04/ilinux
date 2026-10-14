@@ -1,0 +1,133 @@
+--- a/drivers/pinctrl/pinctrl-apple-gpio.c
++++ b/drivers/pinctrl/pinctrl-apple-gpio.c
+@@ -372,6 +372,8 @@
+ };
+ 
+ /* Probe & register */
++extern void ilinux_probe_path_mark(struct device *dev, unsigned int phase);
++#include "ilinux-gpio-irq-init.h"
+ 
+ static int apple_gpio_register(struct apple_gpio_pinctrl *pctl)
+ {
+@@ -396,6 +398,8 @@
+ 
+ 		gpio_irq_chip_set_chip(girq, &apple_gpio_irqchip);
+ 		girq->parent_handler = apple_gpio_irq_handler;
++		if (of_device_is_compatible(pctl->dev->of_node, "apple,t6050-pinctrl"))
++			girq->init_hw = apple_gpio_t6050_irq_init_hw;
+ 
+ 		girq->parents = kmalloc_array(girq->num_parents,
+ 					      sizeof(*girq->parents),
+@@ -406,6 +410,7 @@
+ 			goto out_free_irq_data;
+ 		}
+ 
++		ilinux_probe_path_mark(pctl->dev, 0x79);
+ 		for (i = 0; i < girq->num_parents; i++) {
+ 			ret = platform_get_irq(to_platform_device(pctl->dev), i);
+ 			if (ret < 0)
+@@ -422,7 +427,10 @@
+ 		girq->handler = handle_level_irq;
+ 	}
+ 
++	ilinux_probe_path_mark(pctl->dev, 0x7a);
+ 	ret = devm_gpiochip_add_data(pctl->dev, &pctl->gpio_chip, pctl);
++
++	ilinux_probe_path_mark(pctl->dev, 0x7b);
+ 
+ out_free_irq_data:
+ 	kfree(girq->parents);
+@@ -436,6 +444,8 @@
+ 	struct apple_gpio_pinctrl *pctl;
+ 	struct pinctrl_pin_desc *pins;
+ 	unsigned int npins;
++	struct regmap_config config = regmap_config;
++	bool t6050 = of_device_is_compatible(pdev->dev.of_node, "apple,t6050-pinctrl");
+ 	const char **pin_names;
+ 	unsigned int *pin_nums;
+ 	static const char *pinmux_functions[] = {
+@@ -444,12 +454,14 @@
+ 	unsigned int i, nirqs = 0;
+ 	int res;
+ 
++	ilinux_probe_path_mark(&pdev->dev, 0x70);
+ 	if (of_property_read_bool(pdev->dev.of_node, "interrupt-controller")) {
+ 		res = platform_irq_count(pdev);
+ 		if (res > 0)
+ 			nirqs = res;
+ 	}
+ 
++	ilinux_probe_path_mark(&pdev->dev, 0x71);
+ 	pctl = devm_kzalloc(&pdev->dev, struct_size(pctl, irqgrps, nirqs),
+ 			    GFP_KERNEL);
+ 	if (!pctl)
+@@ -461,6 +473,19 @@
+ 	if (of_property_read_u32(pdev->dev.of_node, "apple,npins", &npins))
+ 		return dev_err_probe(&pdev->dev, -EINVAL,
+ 				     "apple,npins property not found\n");
++
++	/* Validate before allocations and before any controller MMIO. */
++	if (t6050) {
++		struct resource *r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++
++		if (!npins || npins > 512 || nirqs > 7 || !r ||
++		    resource_size(r) < REG_GPIO(npins) ||
++		    (nirqs && resource_size(r) < REG_IRQ(nirqs - 1, npins - 1) + 4))
++			return dev_err_probe(&pdev->dev, -EINVAL, "invalid t6050 GPIO geometry\n");
++		/* Cache only DT-declared pins; do not read absent pin registers. */
++		config.max_register = REG_GPIO(npins - 1);
++		config.num_reg_defaults_raw = npins;
++	}
+ 
+ 	pins = devm_kmalloc_array(&pdev->dev, npins, sizeof(pins[0]),
+ 				  GFP_KERNEL);
+@@ -471,15 +496,18 @@
+ 	if (!pins || !pin_names || !pin_nums)
+ 		return -ENOMEM;
+ 
++	ilinux_probe_path_mark(&pdev->dev, 0x72);
+ 	pctl->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(pctl->base))
+ 		return PTR_ERR(pctl->base);
+ 
+-	pctl->map = devm_regmap_init_mmio(&pdev->dev, pctl->base, &regmap_config);
++	ilinux_probe_path_mark(&pdev->dev, 0x73);
++	pctl->map = devm_regmap_init_mmio(&pdev->dev, pctl->base, &config);
+ 	if (IS_ERR(pctl->map))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(pctl->map),
+ 				     "Failed to create regmap\n");
+ 
++	ilinux_probe_path_mark(&pdev->dev, 0x74);
+ 	for (i = 0; i < npins; i++) {
+ 		pins[i].number = i;
+ 		pins[i].name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "PIN%u", i);
+@@ -497,11 +525,13 @@
+ 	pctl->pinctrl_desc.pctlops = &apple_gpio_pinctrl_ops;
+ 	pctl->pinctrl_desc.pmxops = &apple_gpio_pinmux_ops;
+ 
++	ilinux_probe_path_mark(&pdev->dev, 0x75);
+ 	pctl->pctldev =	devm_pinctrl_register(&pdev->dev, &pctl->pinctrl_desc, pctl);
+ 	if (IS_ERR(pctl->pctldev))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(pctl->pctldev),
+ 				     "Failed to register pinctrl device.\n");
+ 
++	ilinux_probe_path_mark(&pdev->dev, 0x76);
+ 	for (i = 0; i < npins; i++) {
+ 		res = pinctrl_generic_add_group(pctl->pctldev, pins[i].name,
+ 						pin_nums + i, 1, pctl);
+@@ -510,6 +540,7 @@
+ 					     "Failed to register group");
+ 	}
+ 
++	ilinux_probe_path_mark(&pdev->dev, 0x77);
+ 	for (i = 0; i < ARRAY_SIZE(pinmux_functions); ++i) {
+ 		res = pinmux_generic_add_function(pctl->pctldev, pinmux_functions[i],
+ 						  pin_names, npins, pctl);
+@@ -518,6 +549,7 @@
+ 					     "Failed to register function.");
+ 	}
+ 
++	ilinux_probe_path_mark(&pdev->dev, 0x78);
+ 	return apple_gpio_register(pctl);
+ }
+ 

@@ -1,38 +1,34 @@
-# J716c native handoff — attempt 11 / boot030
+# J716c native handoff — attempt 12 / boot031
 
 **M1: follow [the current Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).**
-It includes package/tests/hashes, readiness, one filmed launch, decoding and
-Macintosh HD return. **Native attempt 11/live checks NOT RUN.** Preserve installed
-boot021/current lab entry; no provisioning, Recovery, Stage A or settings changes.
+Verify the private package, publish readiness, then one filmed human-started RAM
+boot and Macintosh HD return. **Native attempt 12/live checks NOT RUN.**
+Preserve installed boot021/current entry and all gates. No repeated setup or
+boot/security/volume changes.
 
-[Attempt 10](stage-b-2026-10-14-attempt10-result.md) directly reads P:05 S:09 W:04:
-source places that at the first deferred-work flush and before bus probing.
-Three lanes now render natively; H/small fields/userspace remain unobserved or
-unconfirmed. No exact driver/fault established. [Boot030](../../kernel/experiments/probe-path/README.md)
-adds 56 operation boundaries, 286 public DT device indexes and a four-row panel.
-D identifies the root retry; C the last marked device; B the operation. Decode
-literal values offline. REA/source/LLVM/linked-byte evidence supports the static
-call path, not a native root-cause diagnosis or working desktop.
+[Attempt 11](stage-b-2026-10-14-attempt11-result.md) identifies main GPIO/pinctrl
+callback entry at D=C=0059/B63. [Boot031](../../kernel/experiments/gpio-handoff/README.md)
+repairs t6050 cache bounds and inherited-IRQ handoff, adding 17 internal stages.
+This is a candidate fix; no exact native fault or performance improvement proven.
+REA evidence explicitly rejects cross-boundary Apple pseudocode and relies on
+independently verified instructions/public Linux source. No Apple code copied.
 
-Only Image changes from boot029. DT/config/initramfs/m1n1/args/hardware gates and
-the single clock-debug skip remain unchanged. Full Image/ELF roundtrip, actual
-helper/panel/identity/platform-probe/parser sanitizers, 90 controller cases and
-13-file intake PASS. Exact Image/initramfs in one-CPU/4 GiB diskless/networkless
-VZ reaches all phases/PID 1/one CPU and liveness at 60.190510 seconds. Generic
-strip=0/display=1 is expected; no native AIC/MMIO/scanout is exercised by VZ.
-Post-attempt-10 original Full/lab Permissive JSON already PASS.
+Only Image changes from boot030. Full link/ELF roundtrip, actual-code sanitizer
+regressions, 90 controller cases and 13-file intake PASS. Exact-image one-CPU/
+4 GiB diskless/networkless VM reaches PID 1 and 60s liveness at **60.189741 s**.
+Native GPIO/AIC/MMIO remain untested by VZ. User post-attempt-11 Full/Permissive
+policies and independent original macOS return checks PASS.
 
-Private prerelease `native-j716c-boot030` contains the 16.7 MB archive.
-`archive-sha256.txt`, `intake-manifest-sha256.txt` and `package-manifest.json`
-pin it. Prior manifests through boot029 preserve baselines. Release binaries
-remain outside Git history; no Apple binaries/raw host DT/personal data included.
-M1 publishes readiness before restart, films all four panel rows through the stop
-criterion and reviews early/final frames before reporting. Preserve prior results.
+Private prerelease `native-j716c-boot031` contains the 16.7 MB archive, pinned by
+`archive-sha256.txt`, `intake-manifest-sha256.txt`, `package-manifest.json`.
+Prior manifests through boot030 remain. No Apple binaries, raw host DT or
+personal data in Git/release. Record GPIO handoff counts/errors, probe return,
+all panel rows and userspace separately. Preserve previous attempts.
 
 Build foundation: kernel base `77cb8f24c2381a8abb7272d7bbdec548d6426a8a` plus
 t6050 patches 0001–0007, with job024's original instrumentation, job025's restricted AIC patch and
 job027's deferred-probe diagnostics, job028's scheduling-boundary instrumentation,
-job029's display/context instrumentation and job030's probe-path diagnostics.
+job029's display/context instrumentation and job030's probe-path diagnostics and job031's GPIO handoff repair.
 GCC 16.1.1, Linux 7.1.9, original 16-KiB config. The separate post-link DockChannel proof
 patch remains absent. m1n1 is still the unmodified pin
 `57a9339ffd1876e78297b17d34dece8cff8fa1ba`, marker

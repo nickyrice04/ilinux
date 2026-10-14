@@ -1,0 +1,18 @@
+{
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "targets": [
+    {
+      "id": "apple-init",
+      "artifact": "AppleGPIOICController.macho",
+      "sha256": "9bea66d76eca1795b0cbb785d572d47146b0ded869bcb604e6131a4560c7f894",
+      "address": "0xfffffe0008f50420"
+    },
+    {
+      "id": "apple-mask",
+      "artifact": "AppleGPIOICController.macho",
+      "sha256": "9bea66d76eca1795b0cbb785d572d47146b0ded869bcb604e6131a4560c7f894",
+      "address": "0xfffffe0008f51bc8"
+    }
+  ]
+}

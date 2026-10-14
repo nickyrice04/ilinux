@@ -54,5 +54,22 @@
   "62": "platform: dev_pm_domain_attach",
   "63": "platform: actual driver probe callback if present",
   "64": "platform callback/attach returned; deferral conversion",
-  "65": "platform_probe returning"
+  "65": "platform_probe returning",
+  "70": "GPIO probe: IRQ count",
+  "71": "GPIO probe: allocation and declared geometry",
+  "72": "GPIO probe: map resource",
+  "73": "GPIO probe: initialize bounded register cache",
+  "74": "GPIO probe: allocate pin names",
+  "75": "GPIO probe: register pinctrl",
+  "76": "GPIO probe: add pin groups",
+  "77": "GPIO probe: add mux functions",
+  "78": "GPIO probe: enter gpio registration",
+  "79": "GPIO registration: map parent IRQs",
+  "7A": "GPIO registration: devm_gpiochip_add_data",
+  "7B": "GPIO registration: returned from gpiochip add",
+  "80": "t6050 GPIO IRQ init: validate bounds",
+  "81": "t6050 GPIO IRQ init: read cached pin configuration",
+  "82": "t6050 GPIO IRQ init: mask inherited input IRQ and read back",
+  "83": "t6050 GPIO IRQ init: clear valid pending bits",
+  "84": "t6050 GPIO IRQ init: completed"
 }

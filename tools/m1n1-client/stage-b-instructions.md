@@ -1,77 +1,71 @@
-# Stage B — attempt 11 / boot030 deferred-device and probe-path diagnostics
+# Stage B — attempt 12 / boot031 GPIO handoff repair
 
-**Attempt 11 consumed — 2026-10-14.** One boot030 launch passed controller
-checks. Reviewed video/detailed photo shows phase 13 and phases 2–5 and final
-**P05 S09 W04 H02 D0059 B63 C0059**, decoded to the pin-controller platform
-probe callback boundary. Diagnostic userspace/liveness unobserved.
-Return instructed at deadline; **Macintosh HD confirmation pending**.
-No automatic retry. See `native/boot/stage-b-2026-10-14-attempt11-result.md`.
-The procedure below is retained as the reviewed pre-attempt checklist.
+**M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`, preserving
+local work and stopping on divergence. Read `coordination.md` and this file.
+Attempt 11 is consumed: final **P05 S09 W04 H02 D0059 B63 C0059** identifies
+`/soc/pinctrl@29c000000` at its platform callback. Earlier NUB pinctrl returned
+0. The exact blocked PC and native userspace remain unobserved. Report:
+`native/boot/stage-b-2026-10-14-attempt11-result.md`.
+**Native attempt 12 / boot031 / live checks NOT RUN at this handoff.**
 
-**Reviewed pre-attempt M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`;
-preserve local work and stop on divergence. Read `coordination.md` and this file.
-Attempt 10 is consumed. Its reviewed video observes **P:05 S:09 W:04**; the
-previous three strip lanes now work, but H/small fields/userspace are unconfirmed
-or unobserved. Source places that at the first flush and entry to device probing;
-no exact driver/fault is established. Macintosh HD return is confirmed.
-See `native/boot/stage-b-2026-10-14-attempt10-result.md`.
-**At this handoff: native attempt 11 / boot030 / live checks NOT RUN.**
-
-**Continue the existing installation.** Installed boot021 m1n1 and the clean
-client pin remain unchanged. Do not repeat provisioning, Stage A, Recovery,
-macOS installation, `bputil`, `kmutil`, partitioning or m1n1 installation. Keep
-Macintosh HD at Full Security and as the default. No volume/security changes.
+**Continue the existing installation.** Installed boot021 m1n1 and clean client
+pin remain unchanged. Do not repeat provisioning, Stage A, Recovery, macOS
+installation, `bputil`, `kmutil`, partitioning or m1n1 installation. Keep
+Macintosh HD at Full Security and as default. No volume/security changes.
 
 ## What changed and why
 
-Boot030 adds a readable public device index and 56 boundaries across device
-locks, runtime PM, DMA/pinctrl, clocks, power domains, driver callbacks and
-cleanup. The compact four-row panel moves H next to W and repaints saved values;
-heartbeat updates before printk. These changes address evidence lost in
-attempt 10; **the native hang remains unresolved**. Exact REA/Ghidra/source/
-LLVM/linked-byte evidence is in `kernel/experiments/probe-path/README.md`.
+Boot031 fixes two concrete GPIO handoff gaps on the t6050 compatible: it bounds
+register-cache reads to declared pins and initializes inherited IRQ state before
+gpiolib enables chained parents. It masks active interrupt inputs using existing
+Linux mode semantics, verifies hardware readback, then clears valid pending
+bits. Outputs/pin mux/pulls/group configuration are preserved. Locked active
+pins fail explicitly; no lock is overridden. This is a **candidate native hang
+fix**, not a proven cause. Additional GPIO B boundaries identify remaining stalls.
 
-Only **Image** changes from boot029. Full link/ELF roundtrip, actual diagnostic,
-identity, panel, platform-probe and parser/mapper sanitizer tests, 90 controller
-cases, 13-file intake and exact-image generic VM PID-1/60-second liveness PASS.
-VM success does not validate native hardware. DT/config/initramfs/m1n1, fixed
-args and all hardware gates remain unchanged. The only existing skip remains
-`initcall_blacklist=clk_debug_init`; no new skip or speculative register change.
+REA/Ghidra, original bytes/LLVM, exact Linux source and synthetic regressions
+support the change; Apple's cross-boundary pseudocode was rejected. See
+`kernel/experiments/gpio-handoff/README.md`, evidence and validation files.
+Only **Image** changes. Full link/ELF roundtrip, ASan/UBSan, 90 controller cases,
+13-file intake and exact-image generic VM PID-1/60-second liveness PASS.
+VM success does not validate native GPIO/MMIO/interrupts. DT/config/initramfs,
+fixed args, one CPU and hardware gates remain. The only existing skip is
+`initcall_blacklist=clk_debug_init`; no new skip.
 
 ## Return protection prerequisite — already PASS
 
-Fresh post-attempt-10 human JSON: original **Full**, lab **Permissive**, both
-exit 0. M5 independently read root Macintosh HD/build 25G83/FileVault=true/SIP
-on and unchanged staged m1n1 checksum. Default selection/installed object/
-authenticated-root were not independently re-queried. No settings changed.
-Do not request the same check again or add another M1↔M5 approval loop unless
-new evidence changes the state.
+Post-attempt-11 user JSON: original **Full**, lab **Permissive**, both exit 0.
+M5 independently read root Macintosh HD/build 25G83/FileVault=true/SIP enabled
+and the unchanged staged m1n1 SHA. This supersedes the report's pending return
+status. Default selection/installed boot object/authenticated-root were not
+independently re-queried. No settings changed. Do not ask for the same check
+again or add an M1↔M5 approval loop unless new evidence changes the state.
 
 ## Offline intake before the human restarts
 
-Download only private `native-j716c-boot030`; verify the archive against current
+Download only private `native-j716c-boot031`; verify the archive against current
 Git **before extraction**. Preserve every earlier package/receipt/result. Stop
 on a mismatch. The following performs no live USB action.
 
 ```sh
 (
 set -e
-mkdir -p build/native-boot030-download
-if [ ! -f build/native-boot030-download/ilinux-j716c-boot030.tar.gz ]; then
-  gh release download native-j716c-boot030 --repo nickyrice04/ilinux \
-    --pattern ilinux-j716c-boot030.tar.gz --dir build/native-boot030-download
+mkdir -p build/native-boot031-download
+if [ ! -f build/native-boot031-download/ilinux-j716c-boot031.tar.gz ]; then
+  gh release download native-j716c-boot031 --repo nickyrice04/ilinux \
+    --pattern ilinux-j716c-boot031.tar.gz --dir build/native-boot031-download
 fi
 (
-  cd build/native-boot030-download
+  cd build/native-boot031-download
   shasum -a 256 -c ../../native/boot/archive-sha256.txt
-  if [ ! -d ilinux-j716c-boot030 ]; then tar -xzf ilinux-j716c-boot030.tar.gz; fi
+  if [ ! -d ilinux-j716c-boot031 ]; then tar -xzf ilinux-j716c-boot031.tar.gz; fi
 )
 mkdir -p build/native-intake/receipts build/native-intake/results
 tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
-  build/native-boot030-download/ilinux-j716c-boot030 \
+  build/native-boot031-download/ilinux-j716c-boot031 \
   --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
-  > build/native-intake/receipts/boot030-attempt11.json
-python3 -I native/boot/launch.py --package build/native-boot030-download/ilinux-j716c-boot030
+  > build/native-intake/receipts/boot031-attempt12.json
+python3 -I native/boot/launch.py --package build/native-boot031-download/ilinux-j716c-boot031
 python3 -I native/boot/test_launcher.py
 python3 -I native/boot/test_entry_guard.py
 python3 -I native/boot/test_dapf_guard.py
@@ -87,12 +81,12 @@ Require **37 + 6 + 16 + 5 + 19 + 2 + 4 + 1 = 90 cases PASS**, package PASS,
 13 receipt files and the clean client pin `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
 No kernel/REA setup on M1. The receipt verifies files, not live authorization.
 
-Archive **16,724,043 bytes**, SHA-256:
-`260f57106007b654a522480e3c20fb2b3630338a5b90edaa64bd067fa0ec2c16`.
-Image **44,599,808 bytes**, SHA-256:
-`190cd86d5f823326f5a44277f5efb96cc01c85b3a3f9ffbde16d9cb7abe35067`.
+Archive **16,724,870 bytes**, SHA-256:
+`73ad67d17c78da9ef2eeec63122e52271e8a9521120add8d60588a6585ab9246`.
+Image **44,534,272 bytes**, SHA-256:
+`09d3cc302da20ef53c41bec3324d702b249a729a55e3799b5676618034bff37d`.
 SHA256SUMS digest:
-`8772c4585be4b646eec28873d203928d17ea1855d8177d9ca1d729c315afabad`.
+`f4b76d8750c5dceb99d03819f457942581540b8f8b6dd546f6153c36ae1de885`.
 Git manifests are authoritative; stop on disagreement.
 
 Reviewed controller digests (also record checked-out Git commit):
@@ -103,7 +97,7 @@ Reviewed controller digests (also record checked-out Git commit):
 * `native/boot/fdt.py`: `d9522761837e78f7b444b936a7501fc9f847697d783b57de1f446a4b8da32b6b`
 * `tools/m1n1-client/usb_identity.py`: `72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137`
 
-Prepare fresh ignored `boot030-stage-b-attempt11.json`/`.md` records with the
+Prepare fresh ignored `boot031-stage-b-attempt12.json`/`.md` records with the
 source/procedure/controller/payload/receipt hashes. Push sanitized readiness
 in `progress.md` and `coordination.md`, keeping native/live checks NOT RUN.
 Tell the human when ready. M1 readiness plus the human's start suffice; no
@@ -123,7 +117,7 @@ extra M5 review round trip for these unchanged verified instructions.
 
    ```sh
    tools/m1n1-client/run.sh native/boot/launch.py \
-     --package build/native-boot030-download/ilinux-j716c-boot030 \
+     --package build/native-boot031-download/ilinux-j716c-boot031 \
      --launch --device auto --confirm BOOT-J716C-RAM-DIAGNOSTIC
    ```
 
@@ -166,13 +160,19 @@ extra M5 review round trip for these unchanged verified instructions.
      names/offsets, retry-compatible begin/end and later initcalls, if readable.
      No inferred stack frames or unrelated identifiers. H now updates before
      printk, so a visible change can survive blocked text logging.
+   * GPIO probe messages, particularly `t6050 IRQ handoff: pins=N parents=N
+     masked=N`, each device's probe return/error, locked GPIO/mask-readback errors.
+     Record actual counts, not expected values. AOP=85/NUB=61/AP=221 are inventory
+     expectations only. B=73 is cache initialization; B=7A is GPIO registration;
+     B=80–84 covers the new handoff. B=84 means the helper completed, not that
+     the full driver returned or that peripherals work.
    * Diagnostic PID 1, `online_cpus=1`, and the 60-second liveness milestone.
 
    P order remains `01 → 0A → 0B → 0C → 0D → 02 ... 09`. P=05/07 marks the
    first/second work flush. W=04 precedes bus probing; W=05 follows its return.
    B=10 brackets device locking; 31–33 runtime PM/barrier; 42 pinctrl; 43 DMA;
    61 clock defaults; 62 power-domain attachment; 63 platform driver callback.
-   The complete **56-code** table is in `phases.json`. Correlate D/C/B with
+   The complete **73-code** table is in `phases.json`. Correlate D/C/B with
    P/W/S/H; these are last boundaries, not blocking PCs or proven faults.
    Task gating excludes unrelated asynchronous workers. Lanes are not an atomic
    snapshot, a camera may miss transitions and another console may overwrite
@@ -187,6 +187,8 @@ extra M5 review round trip for these unchanged verified instructions.
    | P=05/07 and W=04 | Record D/C/B to locate the deferred device and operation |
    | Readable B=62 | Inspect domain provider/dependencies for the decoded device |
    | Readable B=63 | Inspect the decoded device's actual platform driver |
+   | B=70–7B / 80–84 | Decode exact GPIO stage; record counts/errors and whether D=C=0059 changes |
+   | GPIO error followed by PID 1 | Report userspace plus failed GPIO; do not claim peripheral support |
    | W=05/07 or P=09 | Capture subsequent driver/initcall progress |
    | H changes / symbolic stack | Record time and actual frames; distinguish logging from worker progress |
    | Panel absent/unreadable | Report mapping text and visibility limit; no guessed values |
@@ -206,7 +208,7 @@ extra M5 review round trip for these unchanged verified instructions.
 7. Return: hold power to shut down if needed, hold power for startup options,
    choose **Macintosh HD → Continue**. Confirm the usual desktop return.
    Do not assert fresh policies until the next read-only check.
-8. Push sanitized attempt-11 report and progress/coordination updates. Separate
+8. Push sanitized attempt-12 report and progress/coordination updates. Separate
    controller, native kernel, strip/timer/scheduler, PID-1/liveness and return
    status. Preserve earlier reports; mark unobserved evidence honestly. Keep
    full media/raw data/proprietary binaries out of Git.
@@ -217,4 +219,4 @@ Do not restart installation. The immediate gate is stable native diagnostic
 userspace. Then M5 prepares Linux-side USB/input/control and a usable RAM root;
 the Linux-side agent can handle packages, configuration and desktop tests once
 that channel exists. GPU, SMP and efficient idle/DVFS need independent native
-validation. Boot030 alone cannot establish Omarchy or macOS performance parity.
+validation. Boot031 alone cannot establish Omarchy or macOS performance parity.

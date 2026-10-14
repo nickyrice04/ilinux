@@ -1,0 +1,74 @@
+{
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "results": [
+    {
+      "evidence_id": "ev_1bfe868e6df66e27898bd8de067886019d668cbff849aa2482d610ab5b0d4b9b",
+      "member": "com.apple.driver.AppleGPIOICController",
+      "function": "__ZN16AppleT8101GPIOIC17initPinsAndGroupsEjj",
+      "body_anchors": [
+        {
+          "start": "0xfffffe0008f50420",
+          "end_inclusive": "0xfffffe0008f50653",
+          "carrier_offset": 32818208,
+          "derived_offset": 20528,
+          "bytes": 564,
+          "sha256": "1d8255e9a83f0ae2dfc3af2e9c562ce5eab271c70a15fdb40efb0dd292699262"
+        }
+      ],
+      "assembly_instructions": 141,
+      "original_bytes_verified": true,
+      "pcode_operations": 236,
+      "pcode_outside_body": 9,
+      "outside_addresses": [
+        "0xfffffe0008f50658",
+        "0xfffffe0008f5065c",
+        "0xfffffe0008f50660"
+      ],
+      "pseudocode_gate": "rejected_cross_boundary",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "apple-init",
+      "llvm_instruction_words_verified": 141,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_e04a8a8352bce293ea0aa16f30697c460fdc0cb835350d31d9d8ee116456ccc9",
+      "member": "com.apple.driver.AppleGPIOICController",
+      "function": "__ZN16AppleT8101GPIOIC17disableVectorHardEiP17IOInterruptVector",
+      "body_anchors": [
+        {
+          "start": "0xfffffe0008f51bc8",
+          "end_inclusive": "0xfffffe0008f51d0b",
+          "carrier_offset": 32824264,
+          "derived_offset": 26584,
+          "bytes": 324,
+          "sha256": "1d73c7019773f935681a8c866dbf7ad1aec4a3e711adf8188bacce1b6c132d85"
+        }
+      ],
+      "assembly_instructions": 81,
+      "original_bytes_verified": true,
+      "pcode_operations": 127,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "apple-mask",
+      "llvm_instruction_words_verified": 81,
+      "llvm_unknown_instructions": []
+    }
+  ],
+  "limits": [
+    "Static consistency only, not semantic or runtime equivalence",
+    "Rejected pseudocode cannot guide implementation; manual gates are not passes"
+  ]
+}

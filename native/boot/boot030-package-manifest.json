@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "package": "ilinux-j716c-boot030",
+  "target": "Mac17,6 / J716c / t6050",
+  "native_tested": false,
+  "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030",
+  "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
+  "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
+  "m1n1_version_offset": 526824,
+  "m1n1_dt_pointer_offset": 1140024,
+  "files": {
+    "Image": {
+      "size": 44599808,
+      "sha256": "190cd86d5f823326f5a44277f5efb96cc01c85b3a3f9ffbde16d9cb7abe35067"
+    },
+    "t6050-j716c.dtb": {
+      "size": 61326,
+      "sha256": "5d6fe64812b05e8c5d42ce3b97e3ede4c675e7a9a59d8fcf85d6906ef8daac9e"
+    },
+    "initramfs.cpio.gz": {
+      "size": 302448,
+      "sha256": "15565c4bc7371dd40ce6387305af40391140fda5a871e9012aebd65e95162618"
+    },
+    "kernel.config": {
+      "size": 321615,
+      "sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169"
+    },
+    "t6050-j716c-stage-b.dtb": {
+      "size": 61510,
+      "sha256": "7adc1364687df9c358692489f2a574241e869cf03b67538eaaaaf0233b4365a7"
+    },
+    "initramfs-stage-b.cpio.gz": {
+      "size": 302464,
+      "sha256": "7778aa9002b6e57dfba53594365fbdac3a110cdc22484e6b568552fd8773fb0f"
+    },
+    "m1n1.bin": {
+      "size": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "m1n1-build-config.h": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "m1n1-LICENSE": {
+      "size": 17984,
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+    },
+    "m1n1-revision.txt": {
+      "size": 41,
+      "sha256": "e125d21d1ec9f861d9fd1d2908f2e7ecdf24379401fd08861ec1f64e4cea2985"
+    },
+    "diag-init.c": {
+      "size": 3558,
+      "sha256": "55b277100f7cc3ab890cd933525572bc8988ed9eaae69db40ee8a63370f3a3b9"
+    },
+    "toolchain.txt": {
+      "size": 246,
+      "sha256": "d7648113f762d0ee17624ea09e33faa44fc08aa4de1b81b14d834cb5779f2758"
+    }
+  },
+  "early_framebuffer_descriptor_offset": 35198864
+}

@@ -5,6 +5,44 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: boot031 GPIO cache/IRQ handoff repair; attempt 12 prepared
+
+* Reviewed M1 `f35efa5`: attempt 11 controller PASS and final **P05 S09 W04 H02
+  D0059 B63 C0059** identify `/soc/pinctrl@29c000000` at its callback. Earlier
+  NUB pinctrl returned 0. Exact blocked PC/IRQ storm/userspace remain unproven.
+* Exact Linux REA/source/ELF/LLVM covers **392 instruction words**, 331 linked
+  nonrelocated matches and 61 separately reviewed relocation words. Two Apple
+  GPIO routines add **222 original-byte/LLVM-checked words**. Initialization
+  pseudocode fails the cross-boundary gate; only bounded, independently verified
+  instructions support its status-clear observation. No proprietary code copied.
+* Implemented **t6050-only** geometry validation and cache length from declared
+  pins (AP 221 rather than 512), plus gpiolib `init_hw` masking of inherited input
+  IRQs, MMIO readback and valid-bit pending-status clears before parent enable.
+  Outputs/mux/pulls/group/data preserved. Locked active pins/errors fail visibly;
+  no lock override or new driver skip. Seventeen new B checkpoints distinguish
+  cache/pinctrl/GPIO/handoff stages. **Candidate hang fix, native NOT RUN.**
+* Full Image/ELF roundtrip and unchanged config PASS. Actual helper/geometry
+  ASan/UBSan regressions cover sizes/partial words/field preservation/error paths,
+  baseline over-read and pending-IRQ behavior. **90 controller cases**, 13-file
+  intake and exact one-CPU/4 GiB diskless/networkless VZ boot PASS: all phases,
+  PID 1, online_cpus=1 and 60s liveness at **60.189741 s**. VZ does not exercise
+  t6050 GPIO/AIC/MMIO or establish native efficiency/peripheral functionality.
+* Fresh post-attempt-11 user JSON original **Full** / lab **Permissive**, exits 0.
+  Independent root **Macintosh HD**, build **25G83**, FileVault/SIP enabled and
+  staged m1n1 checksum unchanged. This resolves the report's pending return.
+  Default/installed object/authenticated-root not independently re-queried.
+* Only RAM Image changes. Installed boot021/client pin, DT/config/initramfs,
+  args/single skip/hardware gates/current entry stay. No boot/security/volume/
+  default/firmware changes. Preserve all prior attempts and packages.
+* All owned build/REA/test VMs stopped; both shared quiet locks released.
+* Next: M1 verifies private **native-j716c-boot031**, publishes readiness, then
+  one human-started filmed **attempt 12**. Record GPIO handoff counts/errors,
+  literal panel and decoded D/C/B, probe return and PID-1/60s liveness, then
+  Macintosh HD within the existing bound. No provisioning/reinstall/automatic
+  retry or extra M5 approval loop. Native userspace precedes Linux control/input
+  and the configuration agent's Omarchy work. See the current Stage-B checklist
+  and `kernel/experiments/gpio-handoff/README.md`.
+
 ## 2026-10-14 · M1: attempt 11 panel/heartbeat/stack evidence; return pending
 
 * One boot030 RAM attempt at readiness `3c0b051`, reviewed handoff `1125c33`.
