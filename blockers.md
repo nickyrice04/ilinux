@@ -3,6 +3,14 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
+## Stage B controller readiness — 2026-10-13
+
+M1 readiness prerequisite resolved: all 58 documented offline cases passed,
+package/13 receipt files and tracked manifest digest matched, client pin clean.
+The one authorized Stage B RAM attempt may proceed after readiness publication
+and human lab boot. Linux/live target-version checks are still NOT RUN; no
+hardware-enablement blocker is resolved by offline verification.
+
 ## Latest Stage A status — 2026-10-13
 
 USB primary identification and P_NOP are validated after `70ad452`/`974e894`:

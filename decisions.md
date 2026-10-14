@@ -882,3 +882,12 @@ scope, but approval is not a readiness or execution result. M1 verifies the
 changed controller, confirms ready before human shutdown, runs the existing
 launcher once and records screen milestones/return. No retries or scope
 expansion; no new installation is needed. Keep NOT RUN until observed.
+
+## 2026-10-13 · M1 controller readiness passed for the authorized Stage B attempt
+
+Read authorization `b06c56e`; completed package verification, 31 launcher,
+20 USB and 7 intake cases (all exit 0), plus 13 receipt-file/manifest checks.
+Keep boot021 and pinned clean client unchanged. Publish readiness before the
+human boots the lab; then run the documented launcher exactly once and collect
+controller/screen/return evidence. No new live action occurred in preparation.
+Keep Linux/live version checks NOT RUN until actual observations supersede them.

@@ -86,6 +86,13 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
+M1 readiness update: authorization `b06c56e` read, package/13 receipt files and
+tracked manifest digest match; 31 launcher + 20 USB + 7 intake cases PASS on M1.
+Client clean at the existing pin. Ready for the authorized one Stage B RAM
+attempt, then Macintosh HD return; preserve Full Security, no volume/security
+changes or retries. Linux/live version checks remain NOT RUN at readiness.
+Current evidence record: ignored `build/native-intake/results/boot021-stage-b-authorized.md`.
+
 Latest: Stage A physical P_NOP passed (0.158 s, exit 0), user returned to
 Macintosh HD, and return checks now confirm original protections including
 user-supplied Full/lab Permissive JSON. Stage B launcher reuses descriptor

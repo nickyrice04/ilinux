@@ -5,6 +5,38 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: ready for the authorized Stage B attempt
+
+* Pulled/read authorization `b06c56e19a172771866c6e8c8c9a490db105cc84`
+  and the exact Stage B checklist. User authorizes one RAM Linux attempt after
+  this readiness report, then Macintosh HD return, preserving original Full
+  Security with no volume/security changes, retries or additional setup.
+* Documented offline launcher verification **PASS**. **31 launcher, 20 USB
+  (including four upstream fake-transport cases), and 7 intake tests PASS**:
+  58 cases total, each suite exit 0. No device was opened by these tests.
+* Rechecked all **13 received boot021 files** against the retained receipt and
+  SHA256SUMS against the tracked digest
+  `9d2b9ec1ae9dad601fb25a6536e838b57ab436160ab6ceddf208b764de41f581`.
+  Payload/receipt unchanged; client clean/pinned to
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
+* Launcher SHA-256:
+  `96af0a81b332376d5707a8e0d52aab6aca08959743d41f510b994772ed0f8364`.
+  Shared USB selector SHA-256:
+  `72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137`.
+* Prepared fresh ignored `build/native-intake/results/boot021-stage-b-authorized.md`
+  from the current template, plus a sanitized JSON record. They retain Git/code/
+  procedure/package provenance and prior Stage A PASS separately. Prior screen
+  preparation is historical; this authorized-session record is current.
+* **Ready for the authorized Stage B attempt.** M1 will guide one lab boot,
+  execute the documented `--launch --device auto` command once after the human
+  reports m1n1 running, observe checkpoints/screen milestones, then guide return.
+  No separate handshake, upstream shell/launcher or secondary startup.
+* At this readiness checkpoint **Stage B/Linux and live target-version checks
+  remain NOT RUN**. Runtime checks occur only during the authorized attempt.
+  The controller deadline is 180 seconds; screen observation ends at the
+  60-second liveness message, explicit failure or 120 seconds after handoff.
+  M5 read-only return verification follows the user's return report.
+
 ## 2026-10-13 · Agent B: one Stage B RAM boot authorized, awaiting M1 readiness
 
 * User approved one Linux RAM attempt after M1 confirms readiness, then
