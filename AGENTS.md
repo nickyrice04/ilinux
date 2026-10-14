@@ -86,19 +86,18 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest: M1 independently verifies boot025 from `f8e98ee`: archive before
-extraction, 13 receipt files, five reviewed controller hashes, clean client pin
-and all 65 offline cases PASS. Only Image differs from boot024; installed
-boot021 m1n1 stays unchanged. Attempt 6/current live checks NOT RUN at readiness.
-Human reports Running proxy and video recording; after readiness publication,
-one documented attempt may proceed with AIC/timer/kernel/userspace evidence
-and Macintosh HD return. Original Full/lab Permissive prerequisite already
-PASS. No retry, reinstall or settings changes. See `coordination.md` and
-`tools/m1n1-client/stage-b-instructions.md`.
-Older bullets below retain historical context; the latest summary governs.
+Latest: boot025 attempt 6 reached native late Linux initialization; screen
+ended at `calling clk_debug_init+0x0/0x120 @ 1` (1.360189 s), confirmed unchanged
+by the human until shutdown. Controller exit 0 (10.391 s), DAPF/descriptor/final
+gates PASS. No panic visible; diagnostic PID 1/online_cpus=1/60-second liveness
+NOT OBSERVED. Human confirms Macintosh HD return. M5 next performs read-only
+return checks and exact-build clock debug initialization analysis offline.
+Attempt 6 consumed; no retry/reinstall/settings changes. Installed boot021
+m1n1 and client pin unchanged. See `native/boot/stage-b-2026-10-14-attempt6-result.md`
+and `coordination.md`. Older bullets retain historical context.
 
-* Hardware fully inventoried. Native early Linux execution is observed, but
-  AIC initialization panics before diagnostic userspace. Full native boot/SMP,
+* Hardware fully inventoried. Native Linux now reaches late initialization,
+  but diagnostic userspace/liveness remains unobserved. Full native boot/SMP,
   G17 graphics/display and idle/DVFS remain unresolved.
 * A draft native patch series exists in `kernel/patches/t6050`. Job 020 /
   F-056 built the full kernel Image, modules, DTBs and initramfs. DockChannel

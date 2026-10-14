@@ -3,22 +3,18 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B gate — boot025 M1 intake PASS; attempt 6 pending
+## Current Stage B blocker — late Linux init; last visible clk_debug_init
 
-Attempt 5 established native Linux execution and a precise early AIC failure.
-Exact boot024 instruction at `aic_init_cpu+0x9c` is the legacy guest-timer enable
-write, not a fast-IPI write. The boot-state restriction mechanism is unknown.
-Boot025 implements a restricted t6050 path, validated with actual-driver tests,
-full Image build, controller/package checks and generic VM liveness. These do
-not validate M5 IRQ/timer delivery. **Native boot025 / attempt 6 NOT RUN.**
-
-M1 independently passes archive/package/13-file intake, source hashes, client
-pin and all 65 offline cases. Human reports proxy running and video recording.
-After readiness publication, one filmed attempt proceeds under the checklist. Keep installed m1n1 and all existing guards;
-no security, volume or default changes. Post-attempt-5 policy JSON passed
-original Full/lab Permissive. Evidence/limits: `kernel/experiments/aic-t6050/`.
-Remaining dependencies: diagnostic PID 1/liveness, usable native access,
-SMP/idle/DVFS, persistent environment and accelerated desktop/peripherals.
+Boot025 attempt 6 passed all controller/DAPF/descriptor gates and kboot reply.
+Native Linux advanced through late initcalls to 1.360189 s; last visible line
+`calling clk_debug_init+0x0/0x120 @ 1` remained until shutdown by human report.
+No panic/Oops shown; exact blocking instruction/cause not established. Diagnostic
+PID 1 / online_cpus=1 / 60-second liveness NOT OBSERVED. Exact AIC profile/final
+Initialized and arch_timer lines were not captured in the supplied still.
+Human confirms Macintosh HD return after the screen bound. M5 performs read-only
+return checks and matching-build clock/debug registration analysis offline.
+See `native/boot/stage-b-2026-10-14-attempt6-result.md`. Attempt 6 consumed;
+no reconnect, retry, reinstall or security/volume/default changes authorized.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

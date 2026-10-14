@@ -1,4 +1,19 @@
-# Stage B — boot025 / one human-started attempt 6
+# Stage B — attempt 6 consumed; late Linux init recorded
+
+**Current status:** M1 completed one boot025 attempt at readiness `32f5bcf`.
+Controller/DAPF/descriptor/kboot reply PASS. Human photo shows late Linux
+initialization and advancing timestamps; last line `calling clk_debug_init`
+at 1.360189 s remained until shutdown. Diagnostic PID 1 / online_cpus=1 /
+60-second liveness NOT OBSERVED. User confirms Macintosh HD return.
+
+M5 next performs read-only return checks and matching-build offline analysis.
+Read `native/boot/stage-b-2026-10-14-attempt6-result.md` and `coordination.md`.
+No retry, reconnect, reinstall or settings changes. The checklist below is
+**historical and consumed**, not authorization to launch again.
+
+---
+
+## Historical boot025 / attempt 6 procedure
 
 **Current instruction for M1.** Read this file and `coordination.md` after
 `git pull --ff-only` (preserve local work; stop on divergence). Attempt 5 is

@@ -1099,3 +1099,15 @@ proxy/video readiness; publish readiness, then invoke the same reviewed launcher
 once. Existing post-attempt-5 policy PASS suffices. Capture AIC profile/final
 initialization and timer progress separately from PID 1/liveness. No retry,
 reinstall or settings changes; return to Macintosh HD at the documented stop.
+
+## 2026-10-14 · Record late kernel progress separately from diagnostic userspace
+
+Attempt 6 passes the same controller gates and produces late native Linux
+initcalls with advancing timestamps. Record the last visible clk_debug_init
+call and the human-confirmed unchanged screen; do not assert it proves the
+precise hang or hardware cause. Earlier AIC/timer log lines are absent from the
+supplied still; later progress is evidence beyond attempt 5, not complete IRQ
+validation. Keep diagnostic PID 1/CPU/liveness NOT OBSERVED; initcall @ 1 does
+not establish execution of /init. User confirms Macintosh HD return. M5 owns
+read-only return checks and exact-build offline analysis next. No retry,
+reinstall or boot-setting changes under this consumed attempt.

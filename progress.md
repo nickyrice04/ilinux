@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: attempt 6 reaches late Linux initialization; return confirmed
+
+* One boot025 attempt at readiness `32f5bcf`, reviewed M5 handoff `f8e98ee`.
+  **Controller exit 0, 10.391 s**, UTC 2026-10-14
+  04:27:29.761928–04:27:40.153385; handoff 04:27:39.918074.
+* Both **DAPF checkpoints PASS**, 96-byte correction/readback; **framebuffer
+  descriptor PASS**, 16-byte data/readback. Target boot021 marker, final gates
+  and kboot reply PASS. No changed pin or installed boot object.
+* **Native late Linux initialization OBSERVED.** Photo shows advancing
+  timestamps through 1.360189 s. Last completed visible `bert_init` returns 0;
+  final line is `calling clk_debug_init+0x0/0x120 @ 1`. Human confirms screen
+  stayed there until shutdown. No panic/Oops visible; exact cause not established.
+* Earlier AIC profile/Initialized and `arch_timer` lines are NOT OBSERVED in
+  the supplied still. Later execution supports progress beyond the prior AIC
+  panic, not full interrupt/timer validation. Video was recorded but not reviewed.
+* **Diagnostic PID 1 / online_cpus=1 / 60-second liveness NOT OBSERVED**.
+  Initializer `@ 1` is not the diagnostic userspace milestone. Rectangle count
+  not reported. Full media and raw target data not copied or committed.
+* At the 120-second limit, return was instructed. **Human confirms usual
+  Macintosh HD desktop return.** Fresh security/default checks NOT CHECKED.
+  No reconnect, retry, reinstall or boot/volume/security/default changes.
+* Result: `native/boot/stage-b-2026-10-14-attempt6-result.md`. **M5 next:**
+  read-only return checks and offline exact-build clock debug initialization
+  analysis. Attempt 6 consumed; no new live attempt authorized.
+
 ## 2026-10-14 · M1: boot025 attempt 6 offline readiness PASS
 
 * Pulled/read `f8e98ee`, current checklist and AIC evidence. Private boot025
