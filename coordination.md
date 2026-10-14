@@ -6,6 +6,35 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — hv002 sessions offline PASS, 2026-10-14
+
+* Pulled/read M5 handoff `6e58ccd`, `native/hv/README.md` and
+  `tools/m1n1-client/hv-instructions.md`. README file hashes 8/8 match.
+* Release `native-j716c-hv002`: archive 2,134,659 bytes, SHA-256
+  `c79ffded48bebc580734918c1540fd589937d5440e2a385a65186c801f2c4254`, verified
+  before extraction. Four regular members; `m1n1-hv.bin`, `System.map` and the
+  symbol list match `hv-manifest.json`. Guest Image is unchanged boot033.
+* **Offline PASS:**
+  * 33 hv tests, none skipped; `TimerModelTests` compiled with cc
+    (ASan/UBSan) on M1, and four `PackageTests` ran on the real packages;
+  * 37 launcher tests;
+  * client-venv imports;
+  * offline `hv_launch.py`: Package PASS (boot033 guest + hv002 m1n1),
+    OFFLINE ONLY, exit 0.
+  * Client pin clean at `57a9339`.
+* **M1 independent review:**
+  * census v2 (`hv_regs.py`) does guarded reads only;
+  * the patch source-masks expired guest timers (`CNTx_CTL_EL02.IMASK`),
+    injects HCR_VF, and hides the mask from guest CTL reads; guest CTL writes
+    and CVAL/TVAL re-arms lift it;
+  * both guest timers are zeroed before entry;
+  * the UPMCR0/UPMSR block is gated on `uncore_version`.
+* Ignored record `build/native-intake/results/hv002-readiness.json`.
+* **Ready for Session 1 (census v2)** after publication. Session 2 (hv002)
+  only after a census PASS and a separate human start. **Live checks NOT RUN
+  at readiness.**
+
+
 ### Current M5 handoff — hv002 replaces hv001 (NOT RUN)
 
 * **Why:**
