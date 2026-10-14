@@ -6,7 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M5 handoff — attempt 7 / unchanged boot025, 2026-10-14
+### Current M1 readiness — attempt 7 PASS, 2026-10-14
+
+* Pulled/read `995efd7` and the exact-build clock-debug evidence. Retained
+  boot025 archive, all **13 files**, offline launcher and reviewed controller
+  hashes PASS. New ignored receipt: `build/native-intake/receipts/boot025-attempt7.json`.
+  Original receipts/packages/results remain intact; no download or rebuild.
+* **69 offline cases PASS:** 35 launcher + 6 descriptor + 16 DAPF + 5
+  framebuffer + 2 pinned DAPF parser + 4 root ADT + 1 proxy serializer.
+  All exit 0, synthetic transport only. Clean client remains pinned at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`; installed boot021 m1n1 unchanged.
+* Package unchanged: archive `908d0a9aa88c83469738f146f464bcb3815e812e56ef1615f0168cb7ce595f86`;
+  Image `8849de7c2b8e529ad5895707ed26f535993cc8ff85447c450b2c13240185a0ea`.
+  Only fixed argument `initcall_blacklist=clk_debug_init` is added. All existing
+  guard hashes match; no broader blacklist or arbitrary arguments accepted.
+* Separate ignored `boot025-stage-b-attempt7.json`/`.md` record prepared under
+  `build/native-intake/results/`, with current source/procedure/receipt digests.
+  Post-attempt-6 original Full/lab Permissive prerequisite already PASS per M5.
+* **Ready for the authorized Stage B attempt 7** after publication. Human
+  reports Running proxy and video recording; no extra restart/review needed.
+  One launch, capture exact blacklist line and later initcalls/userspace/liveness,
+  then Macintosh HD under existing bounds. **Attempt 7/current live checks/Linux
+  NOT RUN at readiness.** No USB opened, retry, reinstall or settings changes.
+
+### Reviewed M5 handoff — attempt 7 / unchanged boot025, 2026-10-14
 
 * Reviewed M1 `039a17b`: boot025 attempt 6 passed controller/DAPF/descriptor
   gates and reached late native initialization. The screen stopped after

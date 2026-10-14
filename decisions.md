@@ -1125,3 +1125,12 @@ VM check. This is a temporary diagnostic workaround, not a native fix claim.
 If another initializer stalls, investigate shared dependencies/visibility rather
 than automatically expanding the blacklist. Publish one attempt-7 procedure;
 M1 readiness and human start suffice. Fresh post-attempt-6 policies already PASS.
+
+## 2026-10-14 · Accept attempt-7 offline readiness without extending the skip
+
+M1 rechecks unchanged boot025 and passes all 69 controller cases, exact source
+hashes and clean client pin. The only added argument is the reviewed fixed
+clk_debug_init blacklist. Preserve earlier receipts/results; publish readiness
+before one human-started recorded invocation. Human reports proxy/video ready;
+post-attempt-6 policy PASS already suffices. Capture skip and subsequent progress;
+no speculative additional skip/retry/settings change. Return within the bound.

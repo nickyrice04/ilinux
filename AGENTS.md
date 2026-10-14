@@ -86,17 +86,14 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest: attempt 6 reached late native initcalls; the screen remained at
-`calling clk_debug_init` without a visible panic. Attempt 7 reuses unchanged
-boot025 with one fixed argument, `initcall_blacklist=clk_debug_init`, to isolate
-optional clock debug registration. Exact-build REA/source checks, 69 controller
-tests, 13-file intake and explicit skip/PID-1/one-CPU/60-second generic VM test
-PASS. Native attempt 7 NOT RUN; root cause unknown. M1 verifies offline and
-publishes readiness, then the human starts one filmed boot under
-`tools/m1n1-client/stage-b-instructions.md`. No reinstall, settings change,
-expanded blacklist or auto-retry. Post-attempt-6 original Full/lab Permissive
-JSON PASS. See `kernel/experiments/clock-debug/` and current coordination.md.
-Older bullets below retain historical context.
+Latest: M1 reverified unchanged boot025 and the one-argument clock-debug skip
+at `995efd7`: archive/13 files, reviewed controller hashes, clean client pin and
+69 offline cases PASS. Attempt 7/live checks NOT RUN at readiness. Human reports
+Running proxy and video recording; after readiness publication, one documented
+RAM attempt may proceed, then Macintosh HD return. Prior original Full/lab
+Permissive policy PASS. No reinstall, settings changes, expanded blacklist or
+retry. See `coordination.md` and current Stage B checklist. Older bullets retain
+historical context.
 
 * Hardware fully inventoried. Native Linux now reaches late initialization,
   but diagnostic userspace/liveness remains unobserved. Full native boot/SMP,

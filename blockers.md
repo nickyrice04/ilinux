@@ -13,8 +13,9 @@ boundary, not a hardware-clock failure. Attempt 7 adds exactly
 69 controller cases, 13-file intake and explicit skip/PID-1/one-CPU/60-second
 liveness in generic VZ. **Native attempt 7 NOT RUN; root cause unknown.**
 
-M1 next re-verifies the existing package and updated controller, then the human
-starts one filmed RAM boot. Preserve installed m1n1 and all guards. Record the
+M1 independently passes the retained archive/13-file checks, reviewed source
+hashes and all 69 offline cases. Human reports proxy/video ready; after readiness
+publication, one filmed attempt proceeds. Preserve installed m1n1 and all guards. Record the
 skip and subsequent boundary or userspace, then return to Macintosh HD. Do not
 chain speculative skips if another routine stalls. Post-attempt-6 original
 Full/lab Permissive policy JSON PASS. No settings or storage changes.
