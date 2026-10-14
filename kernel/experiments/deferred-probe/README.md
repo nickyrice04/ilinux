@@ -1,7 +1,10 @@
 # Attempt 8: identify the deferred-probe blocker without skipping driver work
 
 2026-10-14. Boot027 is an original diagnostic change on top of boot025.
-**Native attempt 8 NOT RUN. Root cause remains unknown.** The installed boot021
+**Historical handoff below.** Attempt 8 is now consumed: native counter/ticks
+PASS, phase 2/PID-1 unobserved. Follow the successor
+[boot028 scheduling-boundary experiment](../schedule-boundary/README.md).
+Root cause remains unknown. The installed boot021
 m1n1, lab entry, Stage-B DT, initramfs and boot policies stay unchanged.
 
 ## Evidence and decision

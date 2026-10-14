@@ -48,15 +48,15 @@ survey is not the next dependency. No proprietary code is copied into Linux.
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
 The dedicated lab entry and Stage A handshake/return are established.
-Attempt 7 reached later native initialization at `deferred_probe_initcall`.
-Boot027 preserves the installation and adds bounded timer/tick and driver-work
-observations. REA/source, full build, 11 sanitizer scenarios, 90 controller
-cases and generic VM timer/phases/PID-1/liveness PASS. Native attempt 8 NOT RUN;
-root cause remains unknown. Post-attempt-7 original Full/lab Permissive PASS.
+Attempt 8 proves native timer/tick progress but not diagnostic userspace.
+Boot028 pre-arms the watchdog and adds scheduler/stack/framebuffer checkpoints
+without changing the installed setup. REA/source, full build, sanitizer tests,
+90 controller cases and generic VM PID-1/liveness pass. Native attempt 9 NOT
+RUN; root cause remains unknown. Post-attempt-8 original Full/lab Permissive PASS.
 
 | Order | Next experiment | Evidence required before advancing |
 |---|---|---|
-| 1 | One human-started attempt 8 using boot027 and fixed probe diagnostics; installed m1n1 stays boot021, single core, NVMe/cpufreq disabled | Record video before launch; timer/tick, deferred phases, worker/retry class, PID 1/one CPU/60-second liveness or first failure; then original macOS return. Use the current Stage-B checklist. |
+| 1 | One human-started attempt 9 using boot028 and pre-armed scheduling diagnostics; installed m1n1 stays boot021, single core, NVMe/cpufreq disabled | Record video before launch; timer/tick, P/S/W/H strip, scheduler/stack/deferred phases, PID 1/one CPU/60-second liveness or first failure; review the recording; then original macOS return. Use the current Stage-B checklist. |
 | 2 | Diagnose the earliest actual failure, or improve logging if screen output is absent | A reproducible checkpoint and tested patch; no blind retry or guessed driver diagnosis |
 | 3 | Establish Linux-side USB/input and an observable control channel | Linux USB enumeration and tested input/network access. The working m1n1 USB proxy does not survive Linux handoff |
 | 4 | Separate bounded SMP/idle/DVFS experiments, informed by existing REA startup findings | Correct core identities/topology, stable incremental secondary startup, validated idle/wake and frequency transitions; no assumed masks or OPP values |

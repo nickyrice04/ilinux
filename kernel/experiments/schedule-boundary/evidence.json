@@ -1,0 +1,53 @@
+{
+  "image_sha256": "5a5ca64eaf2c3389e9fca226d7244150edbc8975738fe11a9304c0c996e29b64",
+  "basis": "boot027 ELF/Image roundtrip already passed in job 027",
+  "functions": [
+    {
+      "object_sha256": "e3b4099aaa275d3185180616b7cad492b0df44af7525f66a3b610c9d0ca1d1f9",
+      "elf_symbol": "cpu_do_idle",
+      "rea_function": "cpu_do_idle",
+      "section": ".cpuidle.text",
+      "symbol_bytes": 44,
+      "llvm_instruction_words": 11,
+      "image_relative_offset": "0x12c3e20",
+      "linked_matching_nonrelocated_words": 9,
+      "relocation_words_reviewed_separately": 2,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_3b9b1d3dcf311d2e76d3a8499b8a595bea9308e7c97eec5cfb730ac36aaaf055",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    },
+    {
+      "object_sha256": "3846cc330444d7443aeccd284195e8c519a9f680f679998e4e7fb50f951cdf22",
+      "elf_symbol": "deferred_probe_initcall",
+      "rea_function": "deferred_probe_initcall",
+      "section": ".text",
+      "symbol_bytes": 1000,
+      "llvm_instruction_words": 250,
+      "image_relative_offset": "0xa83d4c",
+      "linked_matching_nonrelocated_words": 154,
+      "relocation_words_reviewed_separately": 96,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_ea16257d5af571217254f815a11ae2a0f33eabcb35cc2b835a65669a09424f92",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    }
+  ],
+  "limits": [
+    "Idle NOP branch is present; no additional idle backport justified.",
+    "Boot027 can reschedule before watchdog setup. Native stop PC remains unknown.",
+    "Relocation-bearing instructions require linked-disassembly review. REA pseudocode is not authoritative source.",
+    "Static analysis does not prove the physical cause or success of the next boot."
+  ],
+  "linked_boundary_calls_in_order": [
+    "preempt_schedule",
+    "timer_init_key",
+    "mod_timer"
+  ]
+}

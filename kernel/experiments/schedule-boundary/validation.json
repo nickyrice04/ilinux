@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-14",
+  "native_attempt_9": "NOT RUN",
+  "native_cause": "UNRESOLVED",
+  "changed_payload_files": [
+    "Image"
+  ],
+  "package": "ilinux-j716c-boot028",
+  "image": {
+    "size": 44468736,
+    "sha256": "514dde0c48c17d77d1979fb98b13f5ecb45096839e8b10a72d24adcf9df0778f"
+  },
+  "archive": {
+    "bytes": 16722641,
+    "sha256": "689fce13b00c4e59af61e5a23666509579985b89920a0477e4b107c6cf5944e9"
+  },
+  "intake_manifest_sha256": "0120ed68ecf994204a94b2ac2ef3e57a66ea37b9db1e7f61becaf5f4482b87b2",
+  "intake_verified_files": 13,
+  "controller_cases": [
+    37,
+    6,
+    16,
+    5,
+    19,
+    2,
+    4,
+    1
+  ],
+  "controller_total": 90,
+  "build": {
+    "kernel": "Linux 7.1.9",
+    "compiler": "GCC 16.1.1 20260430",
+    "linker": "GNU binutils 2.46.0",
+    "page_size": 16384,
+    "config_unchanged": true,
+    "full_Image_and_ELF_roundtrip": "PASS",
+    "source_tree": "/var/tmp/ilinux-boot028/linux",
+    "vm_exit": 0
+  },
+  "sanitizers": {
+    "actual_helper": "PASS: pre-armed timer before reschedule, scheduler state, bounded heartbeat/one stack, inherited failure paths",
+    "actual_renderer": "PASS: fonts 8x16, 32x64, 1x1; four lanes; writes limited to strip, padding/canaries intact; invalid cases rejected",
+    "flags": "-O1 -g -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer"
+  },
+  "generic_vm": {
+    "cpus": 1,
+    "memory_GiB": 4,
+    "disk": false,
+    "network": false,
+    "timer_ticks_per_100ms": 25,
+    "reschedule_pending": 1,
+    "phases": [
+      1,
+      10,
+      11,
+      12,
+      13,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "PID_1": "PASS",
+    "online_cpus": 1,
+    "liveness_seconds": 60.191892,
+    "strip": 0,
+    "limits": "No native AIC or scanout. Five-second watchdog is shim-tested; successful VM init completes before it fires. Owned VM stopped after liveness."
+  },
+  "source_sha256": {
+    "kernel/experiments/schedule-boundary/test_strip.c": "606d9d761b67a4939437e4ec0cd93667fe95e2cc882d9d1d4c090dcfc5542fe3",
+    "kernel/experiments/schedule-boundary/audit.py": "87b005557979f7a8ebf76d5c6b5b6c4fe22c84ed0f00991b574711e939027dac",
+    "kernel/experiments/schedule-boundary/test_diag.c": "b1a3d5335b5134f0b7c6896a27bbb261db988aab574e19af509150b2884c3278",
+    "kernel/experiments/schedule-boundary/ilinux_probe_diag.h": "e1c2636a1b700dc23ea84a2e88af0de88adfbe6cef444be3f5e3ab80b2c6b041",
+    "kernel/experiments/schedule-boundary/status-strip.h": "6312ef02a1d2bbf551dbd85af1ac448b60add2dae9a60ca6c46d6513745a3247",
+    "kernel/experiments/schedule-boundary/apply.py": "0e30b4496406b4e58f5f77f874ec68785c34aee84c89868bce15f2ba812862cb",
+    "virtualization/jobs/028-schedule-boundary/run.sh": "7e8105b61341e10038393ab4d41c0c056729935b0733dd8f53f3823223015b8d"
+  },
+  "logs_sha256": {
+    "build/native-idle-inspect/boot028-generic-vm.log": "e7e69aeeae2a0c537c6a9e4e40f60970ad573b9f793bd1c9df27a97b4abb926d",
+    "build/native-boot028-checks/out/run.log": "49fba51828b48471d67b33a6fd04eae51a789aac2b34dcf25aff651bd0271028",
+    "virtualization/jobs/028-schedule-boundary/out/run.log": "ecb36d2948685c6ea24977d1554bc279c82ea28ea5f38ba634ce6d8313ef2086",
+    "virtualization/jobs/028-schedule-boundary/out/build.log": "42c085138cd84f0e17636d18656babb9fbc7fd66a7ead326947ae48cad98dfb9"
+  },
+  "post_attempt_8": {
+    "user_policy_json": {
+      "original": "Full",
+      "lab": "Permissive",
+      "exit_codes": [
+        0,
+        0
+      ]
+    },
+    "independent_read_only": {
+      "root_volume": "Macintosh HD",
+      "build": "25G83",
+      "FileVault": true,
+      "SIP": "enabled",
+      "staged_m1n1_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "not_requeried": [
+      "default selection",
+      "installed boot object",
+      "authenticated-root"
+    ]
+  }
+}

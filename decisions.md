@@ -1193,3 +1193,22 @@ successful hardware/DAPF/descriptor checks. Diagnostic userspace/liveness is
 unobserved, not a successful boot. Human confirms Macintosh HD return. The video
 was recorded but not reviewed; report this limit explicitly. M5 performs
 read-only return checks and offline analysis. No retry or wider blacklist.
+
+## 2026-10-14 · Close the scheduling observation gap before another native attempt
+
+Attempt 8 establishes native timer ticks but not a precise blocking PC. Exact
+REA/LLVM/source show idle=nop is implemented and the diagnostic can reschedule
+before its watchdog is armed. Do not redo the idle backport, add a blacklist,
+change timer routing or claim a root-cause repair. Pre-arm the finite watchdog;
+record scheduler boundaries without printk/locks using the existing framebuffer
+mapping, plus one bounded watchdog stack. Keep source/byte provenance and
+sanitizer/full-link/VM/controller/intake validation separate from native proof.
+
+Boot028 replaces only the RAM Image. Preserve installed boot021 and the working
+entry/controller/hardware checks. Post-attempt-8 original Full/lab Permissive
+JSON already passed. M1 offline readiness plus human start suffice for one
+filmed attempt 9; require literal strip/text evidence and a reviewed recording
+or an explicit availability limitation. Return at the existing deadline. No
+reinstall, security/volume/default change, repeated Stage A or automatic retry.
+Stable native userspace is the next gate toward a Linux control channel and
+Omarchy configuration, not a claim of desktop or efficiency parity.

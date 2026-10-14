@@ -3,22 +3,23 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — after timer status; attempt 8 consumed
+## Current Stage B blocker — post-tick scheduling boundary; boot028 next
 
-Boot027 attempt 8 passes controller/final hardware-DT/DAPF/descriptor checks.
-Fresh photo observes J716c/t6050 EL2, one CPU, phase 1, counter PASS/25 ticks
-and timer status phys=1 virt=7 irq_masked=0 fiq_masked=0. Phase 2 and diagnostic
-userspace/liveness remain unobserved. Tick progress during the sampled interval
-is established; subsequent scheduling/softirq/console progress is unresolved.
-No explicit panic is visible. Video remains unreviewed; do not assert an exact
-blocking PC or fault from the still. Macintosh HD return is human-confirmed.
+Attempt 8 observes J716c/t6050 EL2, one CPU, counter PASS/25 ticks, then timer
+status. Phase 2/PID-1/liveness remain unobserved; video was not reviewed.
+REA and linked source prove boot027 arms its watchdog after possible rescheduling;
+that is a diagnostic gap, **not proof that scheduling is the hardware fault**.
+The idle NOP implementation is already present. Do not add a guessed skip.
 
-M5 next: read-only return checks and exact-source offline analysis after timer
-status/before phase 2, incorporating video evidence if available. Preserve the
-installed boot021 setup and the single clock-debug skip. No automatic retry,
-new blacklist, reinstall or security/volume/default change.
-Evidence: `native/boot/stage-b-2026-10-14-attempt8-result.md` and
-`kernel/experiments/deferred-probe/README.md`.
+Boot028 arms the watchdog first and records scheduler boundaries in a fixed
+framebuffer strip, plus a bounded stack/heartbeat. Full build, sanitizer tests,
+90 controller cases, 13-file intake and generic VM liveness pass. Native
+attempt 9 NOT RUN. M1 verifies the new Image package, publishes readiness,
+then one human-started filmed boot captures text/strip and reviewed video.
+Fresh post-attempt-8 policies PASS; preserve installed boot021 and current
+installation. No security/volume/default changes or automatic retry.
+Evidence: `kernel/experiments/schedule-boundary/README.md`, `validation.json`
+and the current `tools/m1n1-client/stage-b-instructions.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

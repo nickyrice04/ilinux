@@ -86,12 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1: attempt 8 consumed. Controller/hardware/DAPF/descriptor PASS; native
-kernel reports J716c/t6050 EL2, one CPU, counter PASS and 25 ticks. Phase 1 and
-timer status last visible; phase 2 and diagnostic userspace/liveness NOT OBSERVED.
-Human confirms Macintosh HD return. Video not supplied/reviewed. M5 next performs
-read-only return checks and offline analysis after timer status/before phase 2.
-No retry, expanded skip, reinstall or settings changes. See current coordination.
+Current M5 handoff: boot028 / attempt 9. M1 attempt 8 proves 25 native timer
+ticks in 100 ms, but stops visibly before phase 2; native userspace remains
+unobserved. REA/source show boot027 could reschedule before watchdog setup.
+Boot028 pre-arms it and adds bounded scheduler/stack/framebuffer status. Full
+build, actual-code sanitizers, 90 controller cases, 13-file intake and generic
+VM PID-1/60-second liveness PASS. Native cause unknown; attempt 9 NOT RUN.
+Fresh post-attempt-8 original Full/lab Permissive PASS. M1 verifies/publishes
+readiness; human starts one filmed boot, captures strip and reviews recording,
+then Macintosh HD. No reinstall, wider skip or settings changes. See current
+coordination and Stage-B checklist; installed boot021 m1n1 remains unchanged.
 
 Historical M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
 still unobserved. Boot027 keeps the working boot021 setup and changes only

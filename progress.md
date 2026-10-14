@@ -5,6 +5,35 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: boot028 closes the preemption observation gap
+
+* Reviewed M1 `7da251d`: attempt 8 reached native J716c/t6050 EL2, one CPU,
+  counter PASS/25 ticks, then timer status. Phase 2 and diagnostic userspace
+  NOT OBSERVED. Video remains unreviewed; no exact hang PC or cause established.
+* REA/Ghidra plus exact source/LLVM/linked bytes confirm the idle NOP branch
+  already exists and boot027 can reschedule before arming its watchdog.
+  Two complete bodies, 261 instruction words/163 nonrelocated linked matches;
+  no new Apple binary extraction or speculative register change.
+* Boot028 corrects that observation gap: watchdog armed before preemption,
+  phases 10–13, bounded scheduler state/one stack and a lock-free bottom-left
+  P/S/W/H status strip in existing scanout RAM. Scheduler/driver operations
+  remain; only Image changes. Root cause still unknown; no wider blacklist.
+* Full Image/ELF roundtrip, actual helper/renderer ASan/UBSan, **90 controller
+  cases** and **13-file intake PASS**. Exact one-CPU/4-GiB diskless/networkless
+  VM reports pending=1, phase 13, all remaining phases, PID 1/one CPU and
+  liveness at **60.191892 s**. VM has no native AIC/framebuffer; strip visibility
+  and physical scheduling remain untested. No performance improvement claimed.
+* Fresh post-attempt-8 user JSON PASS: original Full/lab Permissive, both exit 0.
+  Independent original root/build 25G83/FileVault/SIP/staged m1n1 checksum PASS.
+  Default/installed boot object/authenticated-root not separately re-queried.
+  No boot/security/volume/default changes or installed m1n1 replacement.
+* Next: M1 verifies private `native-j716c-boot028`, publishes readiness, then
+  the human starts **one filmed attempt 9**. Capture the strip and review the
+  video; no additional M5 approval loop for unchanged verified instructions.
+  Native attempt 9 **NOT RUN**. Follow `tools/m1n1-client/stage-b-instructions.md`
+  and `kernel/experiments/schedule-boundary/README.md`. Preserve current setup.
+  Stable diagnostic userspace precedes Linux control/input and Omarchy setup.
+
 ## 2026-10-14 · M1: attempt 8 timer/ticks PASS; phase 1 last visible; return confirmed
 
 * One boot027 RAM attempt at readiness `174419e`, reviewed handoff `46ad887`.

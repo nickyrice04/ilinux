@@ -1,0 +1,5 @@
+{
+  "kernel/sched/core.c": "97f0a0f9aee6b5d3c5b7e9abcbe476bb096aee163d03562bfe7add230a7ebed0",
+  "drivers/base/ilinux_probe_diag.h": "b62efa6dedfe6929133419213d609f80856236b8986acc6f26982c2f3c1f87ff",
+  "drivers/firmware/efi/ilinux_earlycon.c": "e3077d93d8d8359c6aa1617057d3091985ab52920df430d8048dfe0589b2851f"
+}
