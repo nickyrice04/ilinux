@@ -1,4 +1,13 @@
-# Stage B — corrected attempt 2 ready; Linux NOT RUN
+# Stage B — attempt 2 stopped; authorization consumed; Linux NOT RUN
+
+**Current result:** attempt 2 ran once at `993a6af`, exited 1 in 10.202 s.
+Corrected ADT/board checks and RAM upload passed; prepared-DT framebuffer gate
+rejected `no enabled boot framebuffer; observation path absent`. No handoff;
+Linux NOT RUN. Macintosh HD return is pending confirmation. See
+[attempt 2 result](../../native/boot/stage-b-2026-10-13-attempt2-result.md).
+**Do not execute the historical command below again.** No retry or new live
+session is authorized; next work is return confirmation and offline review.
+The following readiness/authorization procedure is preserved as consumed history.
 
 Target: **this Mac17,6 / J716c / t6050 M5 Max**. The first Stage B attempt
 stopped before payload upload/handoff with KeyError; live chip, packaged

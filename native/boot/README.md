@@ -1,17 +1,15 @@
-# J716c Linux boot package — corrected Stage B attempt 2 ready
+# J716c Linux boot package — Stage B attempt 2 stopped; Linux NOT RUN
 
-Target: **this Mac17,6 / J716c / t6050 M5 Max**. This package is an experimental
-RAM diagnostic, not an Omarchy installer. Native m1n1 boot and USB P_NOP passed
-on this machine; **native Linux remains NOT RUN**. The dedicated entry is
-already installed. Do not repeat installation or security changes. The one
-Stage B attempt stopped with KeyError before upload/handoff; user confirms
-Macintosh HD return. Live packaged-marker verification passed. Read the
-[session result and offline fix](stage-b-2026-10-13-result.md). The user has now
-requested review and preparation for the next lab boot. B reviewed the fix,
-validated readiness and completed return-protection checks. One corrected
-attempt 2 is ready under the same protection constraints; follow the current
-[Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md). No reinstall
-or kernel/payload rebuild is needed. Preserve the first attempt's evidence.
+Target: **this Mac17,6 / J716c / t6050 M5 Max**. Boot021 is an experimental
+RAM diagnostic, not an Omarchy installer. Native m1n1 and USB P_NOP passed.
+Attempt 1 stopped at the ADT root API defect; corrected attempt 2 passed that
+check and uploaded payloads, then rejected the prepared DT for no enabled
+boot framebuffer. No Linux handoff occurred. The one corrected attempt is
+consumed; no retry or new live session is authorized. Macintosh HD return is
+pending confirmation. No volume/security/default/boot-object changes occurred.
+See [attempt 2 result](stage-b-2026-10-13-attempt2-result.md) and the preserved
+[first result](stage-b-2026-10-13-result.md). Keep boot021 and client pin unchanged;
+M5 should review the framebuffer gate offline after return.
 
 The completed M5 entry installation is documented in
 [boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).

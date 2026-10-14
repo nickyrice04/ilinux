@@ -2,17 +2,16 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest Stage B result:** preflight KeyError, exit 1, before payload upload or
-handoff; user confirms Macintosh HD return. Live packaged-marker check PASS;
-Linux NOT RUN. Local ADT root access corrected offline (31 launcher + 4 pinned
-ADT tests pass), not retested on hardware. See
-[the preserved result](../../native/boot/stage-b-2026-10-13-result.md). B reviewed
-that fix, reran 31 launcher tests/package verification and completed fresh
-return checks (original build/FileVault/SIP/authenticated-root; user-supplied
-original Full/lab Permissive JSON, both exit 0). The user now requests preparation
-for the next boot: one corrected attempt 2 is ready. M1 pulls the current
-Stage B checklist after human lab boot and verifies files/pin/package before
-one invocation. No new volume/security change or repeat permission needed.
+**Latest Stage B result:** corrected attempt 2 at `993a6af` passed ADT root/
+board checks and RAM upload, then stopped at the prepared-DT framebuffer gate:
+`no enabled boot framebuffer; observation path absent`, exit 1 in 10.202 s.
+No Linux handoff; Linux NOT RUN. Live packaged-marker check PASS. Macintosh HD
+return pending human confirmation; fresh return checks NOT CHECKED. Boot021/
+client pin unchanged; no volume/security/default/boot-object changes or retry.
+The corrected attempt authorization is consumed. Next work is original return
+confirmation and offline review of framebuffer setup, preserving the gate.
+See [attempt 2 result](../../native/boot/stage-b-2026-10-13-attempt2-result.md);
+[attempt 1](../../native/boot/stage-b-2026-10-13-result.md) remains preserved.
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received

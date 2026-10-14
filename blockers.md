@@ -3,7 +3,18 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Stage B preflight stop — 2026-10-13
+## Current Stage B blocker — attempt 2 framebuffer gate, 2026-10-13
+
+Corrected root ADT access and initial framebuffer checks passed, then payload
+upload completed. Prepared-DT validation stopped with `no enabled boot framebuffer;
+observation path absent`, exit 1 in 10.202 s, before Linux handoff. Linux NOT RUN;
+live packaged marker PASS. Missing versus disabled/mismatched framebuffer node
+is unresolved. Return to Macintosh HD pending human confirmation; fresh checks
+NOT CHECKED. No retries: M5 reviews source/package framebuffer setup offline,
+keeping the observation gate and all pins intact. See
+`native/boot/stage-b-2026-10-13-attempt2-result.md`.
+
+## Historical Stage B attempt 1 preflight stop — 2026-10-13
 
 The authorized attempt reached target chip/packaged-marker/secondary PASS, then
 KeyError before upload/handoff. Linux NOT RUN. User confirms Macintosh HD return;

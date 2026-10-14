@@ -918,3 +918,15 @@ Stage B attempt with existing scope, fresh evidence record, bounded stop and
 original macOS return. Preserve original Full Security and make no volume or
 security changes. Do not request already-given permission again or require
 another readiness-message loop for unchanged code M1 already tested.
+
+## 2026-10-13 · Stop corrected Stage B at the prepared-DT framebuffer gate
+
+Attempt 2 passed root compatibility and initial framebuffer checks, uploaded
+payloads, then rejected the prepared DT for lack of an enabled simple-framebuffer.
+Keep this observation gate; no Linux handoff occurred and Linux stays NOT RUN.
+Retain the exact fixed rejection and safe traceback metadata, separating this
+result from attempt 1's KeyError. The single corrected attempt is consumed.
+Guide original-desktop return and record confirmation only when received;
+no retries, security changes or new live diagnostics. Investigate the specific
+framebuffer preflight failure offline after return, without claiming a Linux
+kernel/display failure or changing boot021/client pin in this reporting task.

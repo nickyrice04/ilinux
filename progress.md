@@ -5,6 +5,26 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: Stage B attempt 2 stopped at prepared-DT framebuffer gate
+
+* One corrected attempt at `993a6af`: **exit 1, 10.202 s**, UTC
+  2026-10-14 01:58:58.489367–01:59:08.692220. Package/primary/target checks
+  passed; corrected ADT root access and initial board/framebuffer checks passed.
+* RAM payload upload completed. Prepared-DT validation stopped with exact
+  **`no enabled boot framebuffer; observation path absent`** at `fdt.py:90`,
+  called by `launch.py:113`. No Linux handoff or `kboot_boot`; **Linux NOT RUN**.
+  Live packaged-marker verification PASS. Missing versus disabled/mismatched
+  framebuffer node remains unresolved; no raw target DT was retained.
+* Human reports addresses on the M5 display, not a Linux milestone. Guided
+  power-off/startup-picker return; **Macintosh HD return PENDING confirmation**.
+  Fresh build/default/protection checks NOT CHECKED this attempt.
+* Boot021, launcher and clean client pin unchanged; no volume/security/default/
+  boot-object changes, no reconnect or retry. Existing offline tests remained
+  valid and post-pull package verification passed. Attempt 1 evidence preserved.
+* Separate sanitized result: `native/boot/stage-b-2026-10-13-attempt2-result.md`.
+  Next: confirm return; M5 read-only checks and offline framebuffer investigation.
+  The one corrected attempt is consumed; no further live session authorized.
+
 ## 2026-10-13 · Agent B: first Stage B stop reviewed; corrected attempt 2 ready
 
 * Reviewed/integrated M1 `fff8b95`/`1635ff0`: target checks passed, preflight

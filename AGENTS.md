@@ -86,18 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: the one Stage B attempt ended with preflight KeyError (exit 1, 1.135 s)
-after package/USB/chip/packaged-marker/secondary checks passed, before payload
-upload or Linux handoff. Live m1n1 marker verification PASS; Linux NOT RUN.
-User confirms Macintosh HD return; B independently checked build/FileVault/SIP/
-authenticated-root and reviewed fresh user-provided original Full/lab Permissive
-JSON (both exit 0). Offline ADT root-lookup defect is fixed; 31 launcher + 4
-pinned-parser cases PASS, and B reran 31 plus real package verification.
-Precise live throw site stays uncertain. User now requests next-boot preparation:
-one corrected attempt 2 is ready, with no volume/security change. M1 pulls the
-current Stage B checklist after human lab boot, verifies hashes/pin/package and
-runs once. No repeat permission/readiness-message loop. Boot021/pin unchanged; see
-`native/boot/stage-b-2026-10-13-result.md` and `coordination.md`.
+Latest: corrected Stage B attempt 2 at `993a6af` stopped with exit 1 in
+10.202 s after ADT root/board checks and payload upload to RAM. Prepared-DT
+validation rejected `no enabled boot framebuffer; observation path absent`
+(`fdt.py:90`, `launch.py:113`); no Linux handoff. Live packaged marker PASS;
+Linux NOT RUN. Macintosh HD return is pending human confirmation, and fresh
+return checks are NOT CHECKED. Boot021/client pin unchanged, no volume/security/
+default/boot-object changes. One corrected attempt consumed; no retries or
+further live session authorized. M5 should review the sanitized result and
+investigate framebuffer setup offline after return. See
+`native/boot/stage-b-2026-10-13-attempt2-result.md` and `coordination.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

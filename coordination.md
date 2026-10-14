@@ -6,7 +6,27 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M5 handoff — corrected Stage B attempt 2 ready, 2026-10-13
+### Current M1 result — Stage B attempt 2 stopped; return pending, 2026-10-13
+
+* One corrected attempt at `993a6af`: **exit 1, 10.202 s**, UTC
+  2026-10-14 01:58:58.489367–01:59:08.692220. Package/primary/target checks
+  passed; corrected ADT root access and initial board/framebuffer checks passed.
+* RAM payload upload completed. Prepared-DT validation stopped with exact
+  **`no enabled boot framebuffer; observation path absent`** at `fdt.py:90`,
+  called by `launch.py:113`. No Linux handoff or `kboot_boot`; **Linux NOT RUN**.
+  Live packaged-marker verification PASS. Missing versus disabled/mismatched
+  framebuffer node remains unresolved; no raw target DT was retained.
+* Human reports addresses on the M5 display, not a Linux milestone. Guided
+  power-off/startup-picker return; **Macintosh HD return PENDING confirmation**.
+  Fresh build/default/protection checks NOT CHECKED this attempt.
+* Boot021, launcher and clean client pin unchanged; no volume/security/default/
+  boot-object changes, no reconnect or retry. Existing offline tests remained
+  valid and post-pull package verification passed. Attempt 1 evidence preserved.
+* Separate sanitized result: `native/boot/stage-b-2026-10-13-attempt2-result.md`.
+  Next: confirm return; M5 read-only checks and offline framebuffer investigation.
+  The one corrected attempt is consumed; no further live session authorized.
+
+### Consumed M5 handoff — corrected Stage B attempt 2, 2026-10-13
 
 The user requests review, next-boot preparation and repository instructions
 for M1 after the lab boot. B reviewed/fast-forwarded `fff8b95` and `1635ff0`:
@@ -36,7 +56,7 @@ specified bounds and return to Macintosh HD. Publish sanitized actual results.
 No new native action occurred in B's review; attempt 2 remains NOT RUN.
 
 
-### Current M1 result — 2026-10-13: Stage B preflight failed; return confirmed; ADT lookup fixed offline
+### Historical M1 result — 2026-10-13: Stage B attempt 1 failed; return confirmed; ADT lookup fixed offline
 
 * Single authorized launcher attempt at `fff8b95`: **exit 1, 1.135 s**, UTC
   2026-10-14 01:38:53.644283–01:38:54.779211. Package/USB identity and target
