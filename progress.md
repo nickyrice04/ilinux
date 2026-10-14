@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: boot025 attempt 6 offline readiness PASS
+
+* Pulled/read `f8e98ee`, current checklist and AIC evidence. Private boot025
+  archive verified against Git **before extraction**; offline launcher and
+  **13 receipt files PASS**. Earlier packages and receipts retained.
+* **65 offline cases PASS:** 31 launcher + 6 descriptor + 16 DAPF guard +
+  5 framebuffer + 2 pinned DAPF parser + 4 root ADT + 1 proxy serializer.
+  All exit 0, synthetic transport only; no USB opened during readiness.
+* Archive (16,720,464 bytes):
+  `908d0a9aa88c83469738f146f464bcb3815e812e56ef1615f0168cb7ce595f86`.
+  Image: `8849de7c2b8e529ad5895707ed26f535993cc8ff85447c450b2c13240185a0ea`.
+  SHA256SUMS: `aae4c401ef45457cbd03687b4325ffd0bcbe1c15fcac9bf48a1167046c3c4d5d`.
+* All five reviewed controller digests match; clean client remains pinned at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Actual comparison confirms only
+  Image differs from boot024. Installed boot021 m1n1/marker remain unchanged.
+* New ignored `build/native-intake/receipts/boot025.json` and separate
+  `build/native-intake/results/boot025-stage-b-attempt6.json`/`.md` retain exact
+  source/procedure/payload digests and the one-attempt evidence plan.
+* Post-attempt-5 original Full/lab Permissive prerequisite already PASS per M5.
+  Human reports proxy running and video recording. **Ready for the authorized
+  Stage B attempt 6** after publication; no extra restart or M5 review needed.
+* Capture both DAPF checks, descriptor PASS, AIC profile/final Initialized line,
+  timer progress and kernel/PID 1/CPU/liveness or first failure; then return to
+  Macintosh HD within existing bounds. **Attempt 6/current live checks/Linux
+  NOT RUN at readiness.** No retry, reinstall or boot/settings changes.
+
 ## 2026-10-14 · M5: boot025 AIC correction ready for M1 intake
 
 * Reviewed M1 `fcf40c1`: attempt 5 reached native early Linux, then an

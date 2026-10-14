@@ -1089,3 +1089,13 @@ remains unvalidated despite 38 actual-driver scenarios, full link, 65 controller
 cases and generic VM liveness. Publish one human-started attempt-6 checklist;
 M1 offline readiness plus human start suffice, no redundant approval loop.
 Original Full/lab Permissive fresh user JSON already passed after attempt 5.
+
+## 2026-10-14 · Accept boot025 intake for one recorded attempt 6
+
+M1 independently verifies the Git-tracked archive before extraction, 13 files,
+reviewed controller hashes, unchanged clean client pin and all 65 offline cases.
+Only Image differs from boot024. Human has started this attempt and confirms
+proxy/video readiness; publish readiness, then invoke the same reviewed launcher
+once. Existing post-attempt-5 policy PASS suffices. Capture AIC profile/final
+initialization and timer progress separately from PID 1/liveness. No retry,
+reinstall or settings changes; return to Macintosh HD at the documented stop.

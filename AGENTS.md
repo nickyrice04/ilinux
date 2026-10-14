@@ -86,16 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest: attempt 5 reached native early Linux and panicked at the legacy guest-
-timer enable write in AIC CPU initialization. Boot025 provides a restricted
-t6050 AIC path; full build, 38 actual-driver scenarios, 65 controller tests,
-13-file intake and generic VM PID-1/one-CPU/60-second checks PASS. Native boot025
-and attempt 6 NOT RUN. M1 next verifies offline, publishes readiness, then the
-human starts one filmed RAM boot under `tools/m1n1-client/stage-b-instructions.md`.
-No m1n1 reinstall, settings changes or automatic retry. Post-attempt-5 policy
-JSON: original Full/lab Permissive. Evidence: `kernel/experiments/aic-t6050/`.
-Older bullets below retain historical milestone context; this summary and
-coordination.md govern the current test.
+Latest: M1 independently verifies boot025 from `f8e98ee`: archive before
+extraction, 13 receipt files, five reviewed controller hashes, clean client pin
+and all 65 offline cases PASS. Only Image differs from boot024; installed
+boot021 m1n1 stays unchanged. Attempt 6/current live checks NOT RUN at readiness.
+Human reports Running proxy and video recording; after readiness publication,
+one documented attempt may proceed with AIC/timer/kernel/userspace evidence
+and Macintosh HD return. Original Full/lab Permissive prerequisite already
+PASS. No retry, reinstall or settings changes. See `coordination.md` and
+`tools/m1n1-client/stage-b-instructions.md`.
+Older bullets below retain historical context; the latest summary governs.
 
 * Hardware fully inventoried. Native early Linux execution is observed, but
   AIC initialization panics before diagnostic userspace. Full native boot/SMP,

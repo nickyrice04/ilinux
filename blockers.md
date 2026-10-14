@@ -3,7 +3,7 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — native AIC write faults; boot025 awaits physical test
+## Current Stage B gate — boot025 M1 intake PASS; attempt 6 pending
 
 Attempt 5 established native Linux execution and a precise early AIC failure.
 Exact boot024 instruction at `aic_init_cpu+0x9c` is the legacy guest-timer enable
@@ -12,8 +12,9 @@ Boot025 implements a restricted t6050 path, validated with actual-driver tests,
 full Image build, controller/package checks and generic VM liveness. These do
 not validate M5 IRQ/timer delivery. **Native boot025 / attempt 6 NOT RUN.**
 
-M1 next performs offline intake/readiness, then one human-started filmed RAM
-boot under the current checklist. Keep installed m1n1 and all existing guards;
+M1 independently passes archive/package/13-file intake, source hashes, client
+pin and all 65 offline cases. Human reports proxy running and video recording.
+After readiness publication, one filmed attempt proceeds under the checklist. Keep installed m1n1 and all existing guards;
 no security, volume or default changes. Post-attempt-5 policy JSON passed
 original Full/lab Permissive. Evidence/limits: `kernel/experiments/aic-t6050/`.
 Remaining dependencies: diagnostic PID 1/liveness, usable native access,
