@@ -47,8 +47,13 @@ def prepared(cpu_count=1, storage=False, framebuffer=True, bootargs=None):
     children = [("nvme@1", {"compatible": b"apple,t6050-nvme-ans2\0", "status": b"okay\0" if storage else b"disabled\0"}, [])]
     children += [("perf@" + str(i), {"compatible": b"apple,t8112-cluster-cpufreq\0", "status": b"disabled\0"}, []) for i in range(3)]
     nodes = [("soc", {}, children), ("cpus", {}, [("cpu@" + str(i), {}, []) for i in range(cpu_count)])]
-    frame = [("framebuffer", {"compatible": b"simple-framebuffer\0"}, [])] if framebuffer else []
-    nodes.append(("chosen", {"bootargs": ((bootargs or launch.BOOTARGS) + "\0").encode()}, frame))
+    frame = [("framebuffer@10000000", {"compatible": b"simple-framebuffer\0",
+              "reg": struct.pack(">QQ", 0x10000000, 640 * 480 * 4),
+              "width": struct.pack(">I", 640), "height": struct.pack(">I", 480),
+              "stride": struct.pack(">I", 2560), "format": b"x8r8g8b8\0"}, [])] if framebuffer else []
+    nodes.append(("chosen", {"bootargs": ((bootargs or launch.BOOTARGS) + "\0").encode(),
+                  "#address-cells": struct.pack(">I", 2), "#size-cells": struct.pack(">I", 2),
+                  "ranges": b""}, frame))
     return fdt(nodes)
 
 

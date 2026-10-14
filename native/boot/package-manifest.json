@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot021",
+  "package": "ilinux-j716c-boot022",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
@@ -28,8 +28,8 @@
       "sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169"
     },
     "t6050-j716c-stage-b.dtb": {
-      "size": 61378,
-      "sha256": "20d103afb740a2bf0521406e156c57bd466dac887b4aab57759d3fbfb7347190"
+      "size": 61510,
+      "sha256": "7adc1364687df9c358692489f2a574241e869cf03b67538eaaaaf0233b4365a7"
     },
     "initramfs-stage-b.cpio.gz": {
       "size": 302464,

@@ -1,67 +1,36 @@
-# J716c Linux boot package — Stage B attempt 2 stopped; Linux NOT RUN
+# J716c Linux boot package — boot022 framebuffer correction
 
-Target: **this Mac17,6 / J716c / t6050 M5 Max**. Boot021 is an experimental
-RAM diagnostic, not an Omarchy installer. Native m1n1 and USB P_NOP passed.
-Attempt 1 stopped at the ADT root API defect; corrected attempt 2 passed that
-check and uploaded payloads, then rejected the prepared DT for no enabled
-boot framebuffer. No Linux handoff occurred. The one corrected attempt is
-consumed; no retry or new live session is authorized. The user confirms return
-to Macintosh HD; fresh protection/default checks remain pending. No volume/
-security/default/boot-object changes occurred.
-See [attempt 2 result](stage-b-2026-10-13-attempt2-result.md) and the preserved
-[first result](stage-b-2026-10-13-result.md). Keep boot021 and client pin unchanged;
-M5 should review the framebuffer gate offline after return.
+Target: **this Mac17,6 / J716c / t6050 M5 Max**. Latest physical result:
+attempt 2 uploaded the payloads but stopped at the framebuffer gate, before
+Linux handoff. **Native Linux remains NOT RUN.** The missing framebuffer
+placeholder is now confirmed in boot021 and corrected in boot022; six tests
+using pinned m1n1's actual C function reproduce the defect and validate the fix.
+See [job 022 results](../../virtualization/jobs/022-framebuffer-handoff/RESULTS.md).
+
+The next step is one reviewed Stage B attempt with **boot022**, after M1
+verifies the new archive and the post-return policy check is confirmed.
+Use [the current checklist](../../tools/m1n1-client/stage-b-instructions.md).
+Only the RAM-sent Stage-B DT changes. Kernel, initramfs and installed m1n1 are
+unchanged: its **boot021 version marker is still correct**. Do not reinstall
+m1n1, repeat Recovery setup, or change volumes/security/default startup.
+Preserve [attempt 1](stage-b-2026-10-13-result.md) and
+[attempt 2](stage-b-2026-10-13-attempt2-result.md).
 
 The completed M5 entry installation is documented in
 [boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).
 It is historical context; do not repeat those commands or run them on the M1.
 
-## M1 agent: do these offline steps now
+## M1 agent: offline intake first
 
-From the existing `~/Documents/ilinux` checkout, preserve any local changes
-and update with `git pull --ff-only`. Stop on divergence; do not reset/force.
-The user already authorized the prepared project-local client on this M1.
-
-```sh
-mkdir -p build/native-boot-download
-gh release download native-j716c-boot021 --repo nickyrice04/ilinux \
-  --pattern ilinux-j716c-boot021.tar.gz --dir build/native-boot-download
-(cd build/native-boot-download && shasum -a 256 -c ../../native/boot/archive-sha256.txt)
-tar -xzf build/native-boot-download/ilinux-j716c-boot021.tar.gz -C build/native-boot-download
-python3 -I native/boot/launch.py --package build/native-boot-download/ilinux-j716c-boot021
-python3 -I native/boot/test_launcher.py
-tools/m1n1-client/run.sh native/boot/test_launcher_adt.py
-python3 -I tools/m1n1-client/test_package.py
-mkdir -p build/native-intake/receipts
-tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
-  build/native-boot-download/ilinux-j716c-boot021 \
-  --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
-  > build/native-intake/receipts/boot021.json
-tools/m1n1-client/run.sh tools/m1n1-client/check-toolchain.py
-tools/m1n1-client/run.sh tools/m1n1-client/test_usb_check.py
-tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py
-```
-
-Do not extract if the archive checksum fails. If the download already exists,
-verify it instead of overwriting it. The trusted checksum and file manifest
-come from Git; do not substitute a manifest from an unverified download.
-`launch.py` without `--launch` uses only Python's standard library and local
-files. It neither imports m1n1 nor opens serial ports. The last command reads
-cached USB descriptors, reports counts with paths redacted, and opens no port;
-absence while the M5 runs macOS is not a failed cable test.
-
-Require exit 0 and a complete JSON receipt from the M1 agent's intake verifier;
-the separately tracked manifest digest and `m1n1-revision.txt` satisfy its
-existing format. A successful receipt still says `boot_authorized: false`.
-
-Report the Git commit, archive checksum, verifier result, test counts and
-client/toolchain pin. Keep the payload under ignored `build/`. Stop there.
-Do not execute `--connect`, `--launch`, `tools/linux.py`, `shell.py`, an
-installer, `kmutil`, `bputil`, `csrutil`, a disk command or a reboot.
+Follow the commands in [the current Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
+Download boot022 into its own directory, check the Git-tracked archive digest
+before extracting, and verify all files plus the new framebuffer regressions.
+Keep boot021 for historical evidence. The current launcher deliberately rejects
+its incomplete DT before USB opens. An intake receipt does not authorize a boot.
 
 ## Contents and provenance
 
-The private GitHub prerelease `native-j716c-boot021` holds the 16.7 MB archive.
+The private GitHub prerelease `native-j716c-boot022` holds the 16.7 MB archive.
 Binaries are release assets, not Git-history blobs. `package-manifest.json`
 records every file's exact size and SHA-256, base source and m1n1 offsets.
 
@@ -73,6 +42,10 @@ records every file's exact size and SHA-256, base source and m1n1 offsets.
   cpufreq controllers, reasserts the already-disabled NVMe node, and removes
   the inaccessible serial `stdout-path`. Original CPU enumeration is retained
   for m1n1 to prune by the actual boot CPU. It is not an SMP-enabled DT.
+  Boot022 additionally inserts a disabled, zero-address
+  `/chosen/framebuffer@0` placeholder. m1n1 fills it from the actual boot video
+  arguments; no physical address is hardcoded. Every other payload is byte-identical
+  to boot021.
 * **Stage B initramfs:** separately compiled static `diag-init.c`, mounts only
   proc/sys/devtmpfs, prints CPU/memory/DT diagnostics and five-second
   heartbeats. No disk mounts, shell, package manager, networking or agent.
@@ -82,10 +55,11 @@ records every file's exact size and SHA-256, base source and m1n1 offsets.
   `M1N1_VERSION_TAG=ilinux-57a9339-boot021 make -j6 ARCH= BUILDSTD=1`.
   Raw AArch64 image, entry offset `0x800`; no release/chainloading flags,
   local startup patch or appended Linux payload. Without a payload it enters
-  the proxy path. It must eventually belong to a separately approved OS entry.
+  the proxy path. This exact image is already installed on the approved lab entry.
 * Toolchain versions, m1n1 licence and the diagnostic source are included.
   Kernel source/patch recipe is job 020; packaging/build recipe is
-  `virtualization/jobs/021-native-boot-package/`. No Apple binary, firmware,
+  `virtualization/jobs/021-native-boot-package/`; the DT-only correction and
+  its reproducible regression are `virtualization/jobs/022-framebuffer-handoff/`. No Apple binary, firmware,
   raw ADT, machine identifier, credential or personal file is in this archive.
 
 **HID provenance correction:** job 020 compiled the hardened HID object
@@ -127,27 +101,12 @@ hardware, and its DT preparation/handoff runs additional hardware setup.
 Disabling a Linux DT node does not undo bootloader initialization. The test
 intentionally issues no filesystem writes to the internal SSD.
 
-## Live command — one corrected attempt 2 under the new user direction
+## Live command — one reviewed attempt 3
 
-The first session is consumed and preserved. The current user request directs
-preparation for another lab boot; M5 review accepts M1's existing corrected-code
-readiness. After human lab boot, M1 pulls the current checklist and confirms
-its listed code hashes, clean client pin and offline payload verification,
-then runs this command **once**, with a separate attempt-2 record. Keep original
-Full Security; no volume/security changes, additional setup or automatic retry.
-
-```sh
-tools/m1n1-client/run.sh native/boot/launch.py \
-  --package build/native-boot-download/ilinux-j716c-boot021 \
-  --launch --device auto --confirm BOOT-J716C-RAM-DIAGNOSTIC
-```
-
-The launcher includes its own P_NOP; do not add a separate handshake attempt.
-It discovers the actual primary immediately before opening it. The confirmation
-string is an accident-prevention control, not a substitute for user permission.
-Abort on mismatch or timeout; do not weaken a check or start cores to bypass it.
-After any failed live attempt, return to a fresh m1n1 session before another
-separately reviewed attempt; RAM allocations and hardware setup are not rolled back.
+Use the command and stop/return rules in
+[the current checklist](../../tools/m1n1-client/stage-b-instructions.md), once,
+after M1 offline intake and the human's lab boot. No separate handshake or
+automatic retry. Keep the original Macintosh HD at Full Security.
 
 ## Observation and stop points
 
@@ -159,7 +118,7 @@ and is not used by this native launcher.
 
 The initial observer is the human at the **M5 display**: kernel banner,
 `PID 1 reached`, `online_cpus=1`, and at least 60 seconds of heartbeats.
-Framebuffer *presence* is checked, but simpledrm/fbcon actually working on
+Framebuffer geometry, format and memory range are checked, but simpledrm/fbcon actually working on
 this M5 is still unvalidated. If nothing appears, record that exact result;
 do not claim a particular panic or promise to retrieve a log over USB.
 Return to macOS through the startup picker after stopping the test. A

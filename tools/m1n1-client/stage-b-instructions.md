@@ -1,86 +1,82 @@
-# Stage B — attempt 2 stopped; authorization consumed; Linux NOT RUN
+# Stage B — boot022, one reviewed attempt 3
 
-**Current result:** attempt 2 ran once at `993a6af`, exited 1 in 10.202 s.
-Corrected ADT/board checks and RAM upload passed; prepared-DT framebuffer gate
-rejected `no enabled boot framebuffer; observation path absent`. No handoff;
-Linux NOT RUN. User confirms Macintosh HD return; fresh checks pending. See
-[attempt 2 result](../../native/boot/stage-b-2026-10-13-attempt2-result.md).
-**Do not execute the historical command below again.** No retry or new live
-session is authorized; next work is read-only return checks and offline review.
-The following readiness/authorization procedure is preserved as consumed history.
+Attempt 2 at `993a6af` stopped after upload, before Linux handoff, because
+boot021 had no `/chosen/framebuffer` placeholder. Pinned m1n1 updates this
+node but does not create it. **Linux remains NOT RUN.** Preserve both previous
+attempt records. [Job 022](../../virtualization/jobs/022-framebuffer-handoff/RESULTS.md)
+reproduces the defect with actual pinned C code and tests the minimal correction.
 
-Target: **this Mac17,6 / J716c / t6050 M5 Max**. The first Stage B attempt
-stopped before payload upload/handoff with KeyError; live chip, packaged
-m1n1 marker and secondary-state checks passed. M1 fixed the confirmed ADT
-root-lookup API defect offline in `1635ff0`. Read the preserved
-[first result](../../native/boot/stage-b-2026-10-13-result.md). The likely
-cause is fixed; only a physical attempt can validate that explanation.
+## Scope and readiness
 
-## Current authorization and readiness — 2026-10-13
+The user's next-boot direction is carried into one reviewed corrected RAM
+attempt, after the checks below and a human-selected lab boot. It does not
+permit repeated attempts or changed boot settings. Original Macintosh HD stays
+at Full Security. No volume, security, default-startup or boot-object changes;
+no m1n1 reinstall, SMP start, storage enablement or installation.
 
-The user has now requested review of M1's result, preparation for the next boot,
-and a repository handoff they can give M1 after booting the lab. This is one
-new, reviewed Stage B attempt using the corrected launcher, **not an automatic
-retry under the consumed first-session approval**. No repeat permission question
-is needed. Preserve Macintosh HD at Full Security; no volume, security, default
-startup or boot-object changes, no installation, and no expansion to SMP/storage.
+**M5 offline work: complete. M1 boot022 intake: pending. Post-attempt-2 policy
+check: pending user Terminal result. Attempt 3: NOT RUN.** Do intake while M5
+is still in macOS so download/testing does not waste a restart. Once intake
+passes and the policy result is original Full/lab Permissive (exit 0 for both),
+M1 can confirm ready directly to the human. No extra M5/M1 agent approval round
+trip is needed. The human then saves work and boots the existing lab entry once.
 
-M5 reviewed `1635ff0`, independently checked the pinned ADT API, reran all 31
-launcher tests and verified the real boot021 package. M1 already passed 31
-launcher plus four actual pinned-parser regressions with synthetic bytes after
-the fix; the unchanged 20 USB and seven intake cases passed at prior readiness.
-No execution code or payload was changed in the M5 review. These results satisfy
-offline readiness; **no new readiness-message round trip is required**.
+M5 independently verified original root/build 26.6.2/25G83, System/Data FileVault,
+SIP/authenticated-root, AC power and the unchanged staged m1n1 hash. Default
+startup and installed boot object were not independently queried. Original
+Full/lab Permissive is the preceding policy result, not a new measurement.
 
-Read-only M5 return checks confirm original Macintosh HD, build 25G83, original
-System/Data FileVault, SIP/authenticated-root, AC power, no project VM processes,
-and staged m1n1 matching boot021. The user's fresh helper JSON reports original
-Full/lab Permissive, both exit 0. B reviewed that supplied policy output; the
-installed boot object and default selection were not independently queried.
+## M1 preparation — offline only
 
-The human may now save work and shut down M5, hold power to startup options,
-and select **iLinux Boot Lab → Continue** once. M1 must pull/read this handoff
-and confirm the files/payload/pin below before opening USB. If preparation fails
-while M5 waits at proxy, stop and return to Macintosh HD; do not improvise.
-All attempt-2 runtime results remain **NOT RUN** until actually observed.
+Preserve local changes; `git pull --ff-only` in the existing checkout. Stop on
+divergence; no reset/force. Use the existing clean pinned client
+`57a9339ffd1876e78297b17d34dece8cff8fa1ba`. The **boot021 m1n1 marker remains
+correct** in boot022 because the bootloader binary did not change.
 
-## M1 preparation now — offline only
-
-From `~/Documents/ilinux`, preserve local changes; pull with `git pull --ff-only`.
-If Git diverges, stop and reconcile without reset/force. Keep boot021 and the
-clean client pinned to `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
-Use the already downloaded payload; no rebuild/redownload is required.
+Download once into a new directory (if it already exists, verify rather than
+overwrite). Do not extract until the checksum succeeds:
 
 ```sh
-tools/m1n1-client/run.sh native/boot/launch.py \
-  --package build/native-boot-download/ilinux-j716c-boot021
-tools/m1n1-client/run.sh native/boot/test_launcher.py
-tools/m1n1-client/run.sh native/boot/test_launcher_adt.py
-tools/m1n1-client/run.sh tools/m1n1-client/test_usb_check.py
-tools/m1n1-client/run.sh tools/m1n1-client/test_package.py
+(
+set -e
+mkdir -p build/native-boot022-download
+gh release download native-j716c-boot022 --repo nickyrice04/ilinux \
+  --pattern ilinux-j716c-boot022.tar.gz --dir build/native-boot022-download
+(cd build/native-boot022-download && shasum -a 256 -c ../../native/boot/archive-sha256.txt)
+tar -xzf build/native-boot022-download/ilinux-j716c-boot022.tar.gz -C build/native-boot022-download
+python3 -I native/boot/launch.py --package build/native-boot022-download/ilinux-j716c-boot022
+python3 -I native/boot/test_launcher.py
+python3 -I native/boot/test_framebuffer.py
+mkdir -p build/native-intake/receipts
+tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
+  build/native-boot022-download/ilinux-j716c-boot022 \
+  --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
+  > build/native-intake/receipts/boot022.json
+)
 ```
 
-Existing validated suites (rerun only if code/environment differs): package PASS, **31 launcher + 4
-pinned-ADT, 20 USB and 7 intake** cases. The pinned-ADT suite uses synthetic
-binary ADT bytes, the actual pinned upstream parser and fake transport. No
-target-dependent check runs in offline mode. The fix run passed 31+4 and
-package verification; the unchanged USB/intake suites last passed at readiness.
+Require package PASS, **31 launcher + 5 framebuffer tests**, and a complete
+13-file intake receipt. M5 has also run six actual pinned C-function cases with
+ASan/UBSan, one real serializer case and seven intake tests. Prior M1 four ADT
+and 20 USB tests remain applicable if client/code/environment are unchanged;
+rerun those only if changed. No kernel rebuild or C compiler setup on M1.
+The receipt's generic `next` field is historical first-intake wording; this
+checklist controls the current sequence. `boot_authorized: false` correctly
+means checksum verification itself grants no permission.
 
-Preserve attempt 1's record and hashes. Create a separate ignored attempt-2
-record before USB access. Pull this handoff with `git pull --ff-only`; confirm
-that the local files match these reviewed hashes and the existing client pin:
+Record the Git commit, archive/manifest digest and these source hashes:
 
 * `native/boot/launch.py`: `d3dcebceaaab2716cf7e4dc51dfaac10be8cb01eca308409f7574311b69b821f`
+* `native/boot/fdt.py`: `98ff4d58a0ca5b5abb68689b901aef526726704fa70925e96db6f1bbf836a591`
 * `tools/m1n1-client/usb_identity.py`: `72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137`
-* m1n1 pin: `57a9339ffd1876e78297b17d34dece8cff8fa1ba`, clean tracked files.
+* Archive SHA-256: `b59db87bee50f5a2b57f65ea54e9ecd9fc07d410251bb38175001ac056ee6862`
+* Intake manifest SHA-256: `862391dd99ee93d07c196e502196cefc869b2549274d6139d781f564b4bc50a0`
 
-Run the ordinary offline package verification once after pulling. If code and
-environment are unchanged, the recorded passing suites need not be repeated.
-Record the actual handoff Git revision and both source hashes; don't reuse the
-old pre-fix launcher hash from `fff8b95`. Then proceed with this authorized
-single attempt when the human reports m1n1 running on the lab entry.
+Create a new ignored attempt-3 record using `boot-result-template.md`; keep all
+previous results. Confirm readiness to the user before they leave macOS. If any
+check fails, stop offline and report. Do not open USB to diagnose an intake error.
 
-## Attempt 2 — execute once after the human reports m1n1 running
+## Attempt 3 — execute once after the human reports m1n1 running
 
 1. Both Macs on power, direct USB data cable, M5 display visible. If the human
    already booted the lab to `Running proxy...` for this attempt, do not reboot
@@ -91,7 +87,7 @@ single attempt when the human reports m1n1 running on the lab entry.
 
    ```sh
    tools/m1n1-client/run.sh native/boot/launch.py \
-     --package build/native-boot-download/ilinux-j716c-boot021 \
+     --package build/native-boot022-download/ilinux-j716c-boot022 \
      --launch --device auto --confirm BOOT-J716C-RAM-DIAGNOSTIC
    ```
 

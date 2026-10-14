@@ -26,8 +26,9 @@ NAME = "ilinux-j716c-boot021"
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--out", type=Path, required=True, help="job-021 out directory")
+    parser.add_argument("--out", type=Path, required=True, help="VM job out directory containing export/")
     parser.add_argument("--destination", type=Path, required=True)
+    parser.add_argument("--name", choices=(NAME, "ilinux-j716c-boot022"), default=NAME)
     args = parser.parse_args()
     data = {name: (args.out / "export" / name).read_bytes() for name in FILES}
     checks = {n: {"size": len(b), "sha256": hashlib.sha256(b).hexdigest()} for n, b in data.items()}
@@ -41,10 +42,18 @@ def main():
         if any(forbidden.intersection(node) for node in properties(data[name]).values()):
             raise ValueError("identifying properties in package DT")
     symbols = {}
-    for line in (args.out / "m1n1-symbols.txt").read_text().splitlines():
-        fields = line.split()
-        if len(fields) == 3 and fields[2] in ("_base", "version_tag", "dt"):
-            symbols[fields[2]] = int(fields[0], 16)
+    if args.name == "ilinux-j716c-boot022":
+        baseline = json.loads((HERE / "boot021-package-manifest.json").read_text())
+        for name, info in baseline["files"].items():
+            if name != "t6050-j716c-stage-b.dtb" and checks[name] != info:
+                raise ValueError("boot022 may only change the Stage-B DT: " + name)
+        symbols = {"_base": 0, "version_tag": baseline["m1n1_version_offset"],
+                   "dt": baseline["m1n1_dt_pointer_offset"]}
+    else:
+        for line in (args.out / "m1n1-symbols.txt").read_text().splitlines():
+            fields = line.split()
+            if len(fields) == 3 and fields[2] in ("_base", "version_tag", "dt"):
+                symbols[fields[2]] = int(fields[0], 16)
     if symbols.get("_base") != 0:
         raise ValueError("unexpected m1n1 ELF base")
     marker = "##m1n1_ver##ilinux-57a9339-boot021"
@@ -52,7 +61,7 @@ def main():
     if data["m1n1.bin"][start:start + len(marker) + 1] != marker.encode() + b"\0":
         raise ValueError("m1n1 version offset does not match binary")
     manifest = {
-        "schema": 1, "package": NAME, "target": "Mac17,6 / J716c / t6050",
+        "schema": 1, "package": args.name, "target": "Mac17,6 / J716c / t6050",
         "native_tested": False,
         "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
         "linux_patches": "kernel/patches/t6050/0001-0007; job-020 Image unchanged",
@@ -69,11 +78,11 @@ def main():
     data["SHA256SUMS"] = "".join(f"{hashlib.sha256(b).hexdigest()}  {n}\n" for n, b in sorted(data.items())).encode()
     (HERE / "intake-manifest-sha256.txt").write_text(hashlib.sha256(data["SHA256SUMS"]).hexdigest() + "\n")
     args.destination.mkdir(parents=True, exist_ok=True)
-    archive = args.destination / (NAME + ".tar.gz")
-    with archive.open("wb") as raw, gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as zipped:
+    archive = args.destination / (args.name + ".tar.gz")
+    with archive.open("xb") as raw, gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as zipped:
         with tarfile.open(fileobj=zipped, mode="w") as tar:
             for name, content in sorted(data.items()):
-                entry = tarfile.TarInfo(NAME + "/" + name)
+                entry = tarfile.TarInfo(args.name + "/" + name)
                 entry.size = len(content)
                 entry.mode = 0o644
                 tar.addfile(entry, io.BytesIO(content))

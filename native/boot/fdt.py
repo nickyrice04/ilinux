@@ -65,6 +65,39 @@ def strings(value):
     return value[:-1].decode("ascii").split("\0")
 
 
+def check_framebuffer(tree, prepared=False):
+    chosen = tree.get("/chosen", {})
+    two = struct.pack(">I", 2)
+    if any(chosen.get(k) != two for k in ("#address-cells", "#size-cells")) or chosen.get("ranges") != b"":
+        raise ValueError("boot framebuffer needs chosen 64-bit cells and identity ranges")
+    frames = [(p, n) for p, n in tree.items() if "simple-framebuffer" in
+              (strings(n["compatible"]) if "compatible" in n else [])]
+    if len(frames) != 1 or frames[0][0].rsplit("/", 1)[0] != "/chosen":
+        raise ValueError("expected one boot framebuffer under chosen")
+    path, node = frames[0]
+    if not prepared:
+        if path not in ("/chosen/framebuffer", "/chosen/framebuffer@0"):
+            raise ValueError("m1n1 framebuffer placeholder has unexpected name")
+        if node.get("status") != b"disabled\0" or node.get("reg") != bytes(16):
+            raise ValueError("framebuffer placeholder must be disabled with zero reg")
+        return
+    if node.get("status", b"okay\0") not in (b"okay\0", b"ok\0"):
+        raise ValueError("boot framebuffer still disabled after m1n1 fixup")
+    if len(node.get("reg", b"")) != 16:
+        raise ValueError("boot framebuffer reg must contain one 64-bit range")
+    base, size = struct.unpack(">QQ", node["reg"])
+    dims = []
+    for key in ("width", "height", "stride"):
+        value = node.get(key, b"")
+        if len(value) != 4:
+            raise ValueError("boot framebuffer geometry missing or malformed")
+        dims.append(struct.unpack(">I", value)[0])
+    width, height, stride = dims
+    bpp = {b"x8r8g8b8\0": 4, b"x2r10g10b10\0": 4, b"r5g6b5\0": 2}.get(node.get("format"))
+    if not bpp or not all((base, size, width, height, stride)) or stride < width * bpp or size < stride * height or base + size > 1 << 64:
+        raise ValueError("boot framebuffer geometry/format/range invalid")
+
+
 def check_stage_b(blob, prepared=False):
     tree = properties(blob)
     if "apple,j716c" not in strings(tree["/"].get("compatible", b"")):
@@ -78,14 +111,10 @@ def check_stage_b(blob, prepared=False):
             disabled.append(path)
     if len(disabled) != 4:
         raise ValueError("expected NVMe plus three disabled cpufreq controllers")
+    check_framebuffer(tree, prepared=prepared)
     if prepared:
         cpus = [n for p, n in tree.items() if p.startswith("/cpus/cpu@")
                 and n.get("status", b"okay\0") in (b"okay\0", b"ok\0")]
         if len(cpus) != 1:
             raise ValueError("prepared DT must expose exactly one CPU")
-        frames = [n for n in tree.values() if b"simple-framebuffer\0" in
-                  n.get("compatible", b"") and n.get("status", b"okay\0") in
-                  (b"okay\0", b"ok\0")]
-        if not frames:
-            raise ValueError("no enabled boot framebuffer; observation path absent")
     return tree

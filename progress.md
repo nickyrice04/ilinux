@@ -5,6 +5,30 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: boot022 removes confirmed framebuffer packaging blocker
+
+* Reviewed M1 `9516e0c`: attempt 2 uploaded RAM payloads, but no Linux handoff.
+  Actual boot021 DT lacks the node pinned m1n1 expects; its C function returns
+  success without creating that node. This is a confirmed package defect.
+* Implemented a DT-only correction, plus offline/prepared framebuffer validation.
+  Kernel/initramfs/m1n1 unchanged. No rebuild, Recovery or reinstall required.
+* Six actual pinned C/libfdt cases PASS with ASan/UBSan in the isolated ARM64
+  VM; old-package failure reproduced. 31 launcher + one real serializer case
+  PASS in VM; five framebuffer and seven intake cases PASS on host. Real
+  archive round trip, 13-file intake and offline launch verification PASS.
+* Boot022 archive: 16,717,590 bytes, hash and toolchain recorded in
+  `virtualization/jobs/022-framebuffer-handoff/RESULTS.md`. VM stopped; quiet
+  locks released. No physical performance benchmark or native Linux execution.
+* Fresh independent return checks: original Macintosh HD/build 25G83,
+  System/Data FileVault, SIP/authenticated-root, AC and staged m1n1 hash PASS.
+  Fresh policy JSON requested, pending; default/installed object not queried.
+* Next: M1 verifies new boot022 while M5 remains in macOS; after policy check,
+  one reviewed attempt 3, visible PID 1/one CPU/60 seconds and Macintosh HD
+  return. Native fix NOT TESTED; Linux NOT RUN. Instructions updated for M1.
+* Fastest Omarchy path: visible native liveness → interactive access/rootfs →
+  ARM64 desktop, then measured GPU/SMP/power enablement. Driver research follows
+  the actual next failure rather than delaying this concrete handoff repair.
+
 ## 2026-10-13 · M1: Stage B attempt 2 stopped at prepared-DT framebuffer gate
 
 * One corrected attempt at `993a6af`: **exit 1, 10.202 s**, UTC

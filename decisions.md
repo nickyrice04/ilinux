@@ -939,3 +939,24 @@ Record the display/reserved-memory/GPU warnings as observations, without inferri
 a freeze or Linux failure. Linux remains NOT RUN; the controller never handed off.
 Fresh default/build/security checks remain for M5. No reconnect or retry, and no
 image, target addresses or raw diagnostic data are copied into the repository.
+
+## 2026-10-13 · Fix the DT contract before rebuilding or broadening native scope
+
+Attempt 2 reached m1n1 DT preparation; its packaged DT omitted the framebuffer
+placeholder required by `dt_set_fb()`. Reproduce this using the exact pinned
+public C function in an isolated VM, then insert only that placeholder. Keep
+all other payload bytes unchanged and publish a new boot022 artifact rather
+than overwrite boot021. Retain/strengthen the observation gate; do not paper
+over the rejection or modify unrelated display/GPU nodes without evidence.
+
+Use public source for this known interface; REA is reserved for missing behavior
+that source cannot explain. Package/validate before reboot. The user's next-boot
+direction carries into one reviewed corrected RAM attempt once M1 intake and
+return-policy checks pass, with a new evidence record and no automatic retry.
+M1 can confirm readiness directly to the human; no redundant inter-agent
+approval loop is required. Prior default/security/boot-object settings are
+unchanged; no new installation or host policy work is involved.
+
+For reaching Omarchy sooner, prioritize native liveness and an interactive
+Linux access/rootfs path before unrelated peripheral research. A first desktop
+may precede accelerated graphics; it cannot establish macOS-class efficiency.

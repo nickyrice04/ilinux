@@ -86,16 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: corrected Stage B attempt 2 at `993a6af` stopped with exit 1 in
-10.202 s after ADT root/board checks and payload upload to RAM. Prepared-DT
-validation rejected `no enabled boot framebuffer; observation path absent`
-(`fdt.py:90`, `launch.py:113`); no Linux handoff. Live packaged marker PASS;
-Linux NOT RUN. User confirms Macintosh HD return; photo ends at m1n1
-`FDT prepared`, not Linux execution. Fresh return checks are NOT CHECKED. Boot021/client pin unchanged, no volume/security/
-default/boot-object changes. One corrected attempt consumed; no retries or
-further live session authorized. M5 should review the sanitized result and
-investigate framebuffer setup offline after return. See
-`native/boot/stage-b-2026-10-13-attempt2-result.md` and `coordination.md`.
+Latest: Stage B attempt 2 never handed off to Linux. Boot021 lacked m1n1's
+required framebuffer placeholder. Job 022 reproduces this with the actual
+pinned C function and corrects only the Stage-B DT; boot022 is verified offline.
+Kernel/initramfs/installed m1n1 unchanged; the boot021 marker remains correct.
+M1 must intake boot022 before one reviewed attempt 3; post-return policy JSON
+is pending. Native correction NOT TESTED, Linux NOT RUN. Original root/build,
+FileVault/SIP/authenticated-root and staged m1n1 were independently rechecked.
+No volume/security/default/boot-object changes. Current instructions:
+`tools/m1n1-client/stage-b-instructions.md`; evidence:
+`virtualization/jobs/022-framebuffer-handoff/RESULTS.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

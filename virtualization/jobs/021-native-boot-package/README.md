@@ -1,5 +1,10 @@
 # Job 021: export, package and test the first native RAM payload
 
+**Historical recipe:** boot021 lacks the framebuffer placeholder. Current launches
+require the DT-only [job 022 correction](../022-framebuffer-handoff/README.md);
+the strengthened current verifier intentionally rejects the original Stage-B DT.
+Do not rebuild or republish boot021 to prepare the next attempt.
+
 Runs in the existing ARM64 job VM, never as a native M5 boot. All VM disks and
 build outputs stay ignored. Hold the shared `quiet` lock; verify the VM disk
 is not attached to another running VM before starting it.

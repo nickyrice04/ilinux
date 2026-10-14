@@ -3,16 +3,18 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — attempt 2 framebuffer gate, 2026-10-13
+## Current Stage B gate — boot022 prepared, native validation pending
 
-Corrected root ADT access and initial framebuffer checks passed, then payload
-upload completed. Prepared-DT validation stopped with `no enabled boot framebuffer;
-observation path absent`, exit 1 in 10.202 s, before Linux handoff. Linux NOT RUN;
-live packaged marker PASS. Missing versus disabled/mismatched framebuffer node
-is unresolved. User confirms Macintosh HD return; photo shows m1n1 reached
-`FDT prepared`. Fresh build/default/protection checks remain NOT CHECKED. No retries: M5 reviews source/package framebuffer setup offline,
-keeping the observation gate and all pins intact. See
-`native/boot/stage-b-2026-10-13-attempt2-result.md`.
+The missing framebuffer template in boot021 is confirmed and corrected in a
+DT-only successor. Actual pinned m1n1 C/libfdt reproduces the old failure and
+passes three supported pixel formats with the new node. No kernel or m1n1
+rebuild/reinstall needed. See `virtualization/jobs/022-framebuffer-handoff/RESULTS.md`.
+
+Offline tests/package pass; M1 boot022 intake and fresh return-policy JSON remain
+before one reviewed attempt 3. Native display/kernel/PID 1 are still unobserved.
+Keep the framebuffer gate, single-core scope and original Full Security; no
+volume/security/default changes. Existing GPU/idle/SMP limitations are not
+resolved by this fix. Attempt 2's result remains preserved separately.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

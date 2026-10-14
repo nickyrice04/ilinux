@@ -6,7 +6,28 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 result — Stage B attempt 2 stopped; return confirmed, 2026-10-13
+### Current handoff — boot022 / reviewed Stage B attempt 3, 2026-10-13
+
+Latest: Stage B attempt 2 never handed off to Linux. Boot021 lacked m1n1's
+required framebuffer placeholder. Job 022 reproduces this with the actual
+pinned C function and corrects only the Stage-B DT; boot022 is verified offline.
+Kernel/initramfs/installed m1n1 unchanged; the boot021 marker remains correct.
+M1 must intake boot022 before one reviewed attempt 3; post-return policy JSON
+is pending. Native correction NOT TESTED, Linux NOT RUN. Original root/build,
+FileVault/SIP/authenticated-root and staged m1n1 were independently rechecked.
+No volume/security/default/boot-object changes. Current instructions:
+`tools/m1n1-client/stage-b-instructions.md`; evidence:
+`virtualization/jobs/022-framebuffer-handoff/RESULTS.md`.
+
+M5 owns the completed DT-only package and regression. M1 owns offline intake,
+one bounded live controller invocation after readiness and human lab selection,
+sanitized screen/checkpoint evidence and original-macOS return. Do not reinstall
+m1n1 or repeat Recovery. Download/verify before restart; no extra readiness
+round trip through the M5 agent is required once intake and policy checks pass.
+Use a separate attempt-3 record; preserve prior failures. Keep original Full
+Security and the existing single-core RAM scope. No automatic retry.
+
+### Historical M1 result — Stage B attempt 2 stopped; return confirmed, 2026-10-13
 
 * One corrected attempt at `993a6af`: **exit 1, 10.202 s**, UTC
   2026-10-14 01:58:58.489367–01:59:08.692220. Package/primary/target checks

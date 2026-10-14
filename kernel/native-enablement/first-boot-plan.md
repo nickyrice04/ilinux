@@ -2,16 +2,14 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest Stage B result:** corrected attempt 2 at `993a6af` passed ADT root/
-board checks and RAM upload, then stopped at the prepared-DT framebuffer gate:
-`no enabled boot framebuffer; observation path absent`, exit 1 in 10.202 s.
-No Linux handoff; Linux NOT RUN. Live packaged-marker check PASS. Macintosh HD
-return confirmed by the user; fresh return checks NOT CHECKED. Boot021/
-client pin unchanged; no volume/security/default/boot-object changes or retry.
-The corrected attempt authorization is consumed. Next work is read-only return
-checks and offline review of framebuffer setup, preserving the gate.
-See [attempt 2 result](../../native/boot/stage-b-2026-10-13-attempt2-result.md);
-[attempt 1](../../native/boot/stage-b-2026-10-13-result.md) remains preserved.
+**Latest:** attempt 2 stopped before Linux handoff. Its missing framebuffer
+placeholder is confirmed and corrected in **boot022**, with actual pinned
+C/libfdt regression coverage. Kernel, initramfs and installed m1n1 remain
+unchanged. See [job 022](../../virtualization/jobs/022-framebuffer-handoff/RESULTS.md).
+M1 performs new-package intake while M5 stays in macOS, then one reviewed attempt
+3 after the fresh return-policy check. No reinstall or Recovery work. Linux
+NOT RUN; native framebuffer correction NOT TESTED. Use the current
+[Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received
@@ -145,13 +143,13 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: corrected attempt 2 ready
+## 5. Stage B: boot022 / reviewed attempt 3
 
-The first attempt stopped before Linux upload. The current user direction
-requests another lab boot after review; the corrected-code readiness is accepted.
-M1 follows the checklist once with a separate record, then returns the human
-to Macintosh HD. Preserve original Full Security; no volume/security changes.
-Linux remains NOT RUN pending actual evidence.
+Prepare the new DT-only package on M1 before restart; do not use boot021's old
+Stage-B DT. Once M1 intake and return-policy checks pass, follow the checklist
+once with a new attempt-3 record, then return to Macintosh HD. Keep original
+Full Security; no volume/security/default/boot-object changes. This is a new
+reviewed continuation, not an automatic retry. Linux remains NOT RUN.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.
