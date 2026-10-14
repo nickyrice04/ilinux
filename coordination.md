@@ -6,6 +6,43 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — hv002 replaces hv001 (NOT RUN)
+
+* **Why:**
+  * The H1 census correctly blocked hv001. `VM_TMR_FIQ_ENA_EL2` has both
+    guest-timer FIQ enables set and cannot be written at EL2, while hv001 only
+    polled guest timers.
+  * An M5 review also found that the HV FIQ handler read the uncore PMU
+    registers `UPMCR0`/`UPMSR` unconditionally. m1n1's own code skips them on
+    M4/M5, so the census could not cover them.
+* **hv002** (patch `native/hv/0001-ilinux-hv-t6050-hv002.patch`, +155/−7,
+  pin `57a9339`, VM job 035):
+  * guest timers are masked at their source (`CNTx_CTL_EL02.IMASK`) and
+    delivered as virtual FIQs;
+  * the mask is hidden from the guest through the ECV timer traps;
+  * the HV refuses to start only without ECV;
+  * both guest timers are turned off before entry;
+  * uncore reads are gated on `cpu_features->uncore_version`.
+* **Verified offline:**
+  * disassembly of `hv_exc.o` and of `hv_init`/`hv_start` in the final binary;
+  * a timer model test that compiles the exact patch code with ASan/UBSan
+    against simulated stuck-on FIQ enables (8 scenarios, and 3 deliberate
+    mutations are caught);
+  * 33 hv tests PASS.
+* **Census v2:** 19 registers; set enables no longer block, while missing
+  ECV or a trapped `PMCR0`/`IPI_SR` does. `hv_launch.py` repeats it in-boot
+  before the chainload.
+* **Release:** `native-j716c-hv002`, archive
+  `c79ffded48bebc580734918c1540fd589937d5440e2a385a65186c801f2c4254`.
+  hv001 is superseded; do not run it.
+* **M1 next:** `tools/m1n1-client/hv-instructions.md`.
+  1. Offline readiness.
+  2. **Session 1:** census v2.
+  3. **Session 2:** hv002, only after a census PASS and a separate human
+     start.
+  * RAM-only; no retries; no security, volume or installed-m1n1 change.
+  * Never contribute any of it upstream.
+
 ### Current M1 result — H1 census BLOCKED for hv001, 2026-10-14
 
 * One read-only census at readiness `8267222`, 22:24:14 UTC: exit 2, under

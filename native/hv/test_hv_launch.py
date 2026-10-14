@@ -21,6 +21,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "boot"))
 import hv_launch  # noqa: E402
 import census  # noqa: E402
+import hv_regs  # noqa: E402
 import vuart_log  # noqa: E402
 import test_launcher as tl  # noqa: E402
 
@@ -38,8 +39,8 @@ def first_dir(*candidates, need):
 # M5 build tree, or the M1's verified release downloads.
 BOOT033 = first_dir(ROOT / "build/native-boot033/verified",
                     ROOT / "build/native-boot033-download/ilinux-j716c-boot033", need=("Image",))
-HV001 = first_dir(ROOT / "build/native-hv001",
-                  ROOT / "build/native-hv001-download/native-hv001", need=("m1n1-hv.bin",))
+HV002 = first_dir(ROOT / "build/native-hv002",
+                  ROOT / "build/native-hv002-download/native-hv002", need=("m1n1-hv.bin",))
 
 
 def prepared_hv(memory=(RAM, 0x200000000), extra=(), **kw):
@@ -335,6 +336,9 @@ class GuestTests(unittest.TestCase):
         self.assertNotIn("dapf", [c[0] for c in self.calls])
 
 
+ECV1 = {(3, 0, 0, 7, 0): 1 << 60}
+
+
 class CensusTests(unittest.TestCase):
     def fake(self, values, trap=()):
         class Utils:
@@ -344,30 +348,54 @@ class CensusTests(unittest.TestCase):
                 return values.get(enc, 0)
         return Utils()
 
-    def test_reads_only_and_classifies(self):
-        rows = census.census(self.fake({(3, 0, 0, 7, 0): 1 << 60}), (RuntimeError,))
-        self.assertEqual(len(rows), len(census.REGS))
+    def rows(self, values=None, trap=()):
+        merged = dict(ECV1)
+        merged.update(values or {})
+        return census.census(self.fake(merged, trap), (RuntimeError,))
+
+    def test_reads_every_hv_path_register(self):
+        rows = self.rows()
+        names = [r[0] for r in rows]
+        self.assertEqual(len(rows), len(hv_regs.REGS))
+        for name in ("ACTLR_EL2", "PMCR0", "IPI_SR_EL1", "UPMCR0", "UPMSR"):
+            self.assertIn(name, names)
         self.assertIn(("ID_AA64MMFR0_EL1", "readable", "ECV=1"), rows)
-        self.assertIn("ACTLR_EL2", [r[0] for r in rows])
         self.assertEqual(census.verdict(rows), [])
 
-    def test_enabled_timer_fiq_blocks(self):
-        rows = census.census(self.fake({(3, 5, 15, 1, 3): 2}), (RuntimeError,))
-        self.assertTrue(census.verdict(rows))
+    def test_enabled_guest_timer_fiqs_no_longer_block(self):
+        rows = self.rows({(3, 5, 15, 1, 3): 3})
+        self.assertIn(("VM_TMR_FIQ_ENA_EL2", "readable", "ENA_V=1 ENA_P=1"), rows)
+        self.assertEqual(census.verdict(rows), [])
+
+    def test_missing_ecv_blocks(self):
+        rows = census.census(self.fake({}), (RuntimeError,))
+        self.assertTrue(any("no ECV" in b for b in census.verdict(rows)))
 
     def test_trap_is_reported_not_raised(self):
-        rows = census.census(self.fake({}, trap=[(3, 4, 15, 4, 7)]), (RuntimeError,))
+        rows = self.rows(trap=[(3, 4, 15, 4, 7)])
         self.assertIn(("AMX_CTL_EL2", "trapped", "RuntimeError"), rows)
         self.assertIn("AMX_CTL_EL2", census.verdict(rows))
 
-    def test_unused_pre_spec_actlr_is_informational(self):
-        rows = census.census(self.fake({}, trap=[(3, 6, 15, 14, 6)]), (RuntimeError,))
-        self.assertIn(("IMP_APL_ACTLR_EL12", "trapped", "RuntimeError"), rows)
+    def test_hot_path_registers_block_when_trapped(self):
+        for enc, name in (((3, 1, 15, 0, 0), "PMCR0"), ((3, 5, 15, 1, 1), "IPI_SR_EL1")):
+            self.assertIn(name, census.verdict(self.rows(trap=[enc])))
+
+    def test_unused_registers_are_informational(self):
+        rows = self.rows(trap=[(3, 6, 15, 14, 6), (3, 7, 15, 0, 4), (3, 7, 15, 6, 4)])
+        self.assertEqual(sum(r[1] == "trapped" for r in rows), 3)
         self.assertEqual(census.verdict(rows), [])
 
     def test_no_raw_values_printed(self):
-        rows = census.census(self.fake({(3, 4, 14, 1, 0): 0xDEADBEEF}), (RuntimeError,))
+        rows = self.rows({(3, 4, 14, 1, 0): 0xDEADBEEF})
         self.assertNotIn("deadbeef", repr(rows).lower())
+
+    def test_launcher_preflight_uses_the_same_rules(self):
+        self.assertEqual(len(hv_launch.register_preflight(self.fake(ECV1), (RuntimeError,))),
+                         len(hv_regs.REGS))
+        with self.assertRaisesRegex(ValueError, "preflight BLOCKED: .*PMCR0"):
+            hv_launch.register_preflight(self.fake(ECV1, trap=[(3, 1, 15, 0, 0)]), (RuntimeError,))
+        with self.assertRaisesRegex(ValueError, "no ECV"):
+            hv_launch.register_preflight(self.fake({}), (RuntimeError,))
 
 
 class VuartTests(unittest.TestCase):
@@ -406,17 +434,56 @@ class VuartTests(unittest.TestCase):
         self.assertEqual(sum("disconnected" in n for n in notes), 1)
 
 
-@unittest.skipUnless(BOOT033 and HV001, "local build packages not present")
+def extract_timer_block(patch_text):
+    """The exact source-masked timer code added to src/hv/hv_exc.c by the patch,
+    taken from the post-patch side of its hunk (context lines included)."""
+    in_file, hunks = False, []
+    for line in patch_text.splitlines():
+        if line.startswith("diff --git"):
+            in_file = line.endswith("src/hv/hv_exc.c")
+        elif in_file and line.startswith("@@"):
+            hunks.append([])
+        elif in_file and hunks and line[:1] in (" ", "+"):
+            hunks[-1].append(line[1:])
+    for hunk in hunks:
+        text = "\n".join(hunk) + "\n"
+        if "#define ILINUX_TMR_V " in text:
+            start = text.index("#define ILINUX_TMR_V ")
+            fn = text.index("void hv_ilinux_timers_reset(void)")
+            return text[start:text.index("\n}\n", fn) + 3]
+    raise AssertionError("timer block not found in patch")
+
+
+@unittest.skipUnless(shutil.which("cc"), "no C compiler")
+class TimerModelTests(unittest.TestCase):
+    def test_source_masked_guest_timers(self):
+        patch_file = HERE / Path(hv_launch.manifest()["m1n1_patch"]).name
+        block = extract_timer_block(patch_file.read_text())
+        self.assertIn("static bool hv_ilinux_update_timers(void)", block)
+        self.assertIn("static bool hv_ilinux_timer_access(u64 reg, bool is_read, u64 *val)", block)
+        self.assertNotIn("VM_TMR_FIQ_ENA", block.split("*/", 1)[1])  # never written by hv002
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / "timer_block.inc").write_text(block)
+            shutil.copy(HERE / "test_timer_model.c", Path(d) / "model.c")
+            subprocess.run(["cc", "-std=c11", "-g", "-O1", "-Wall", "-Wextra", "-Werror",
+                            "-fsanitize=address,undefined", "-fno-sanitize-recover=all",
+                            "-I", d, "model.c", "-o", "model"], cwd=d, check=True)
+            out = subprocess.run([str(Path(d) / "model")], capture_output=True, text=True)
+        self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
+        self.assertIn("timer model PASS", out.stdout)
+
+
+@unittest.skipUnless(BOOT033 and HV002, "local build packages not present")
 class PackageTests(unittest.TestCase):
     def test_real_packages_verify_offline(self):
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            self.assertEqual(hv_launch.main(["--package", str(BOOT033), "--hv-package", str(HV001)]), 0)
+            self.assertEqual(hv_launch.main(["--package", str(BOOT033), "--hv-package", str(HV002)]), 0)
         self.assertIn("OFFLINE ONLY", out.getvalue())
 
     def test_tampered_hv_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             for name in ("m1n1-hv.bin", "System.map", "m1n1-hv-symbols.txt"):
-                shutil.copy(HV001 / name, Path(d) / name)
+                shutil.copy(HV002 / name, Path(d) / name)
             data = bytearray((Path(d) / "m1n1-hv.bin").read_bytes())
             data[-1] ^= 1
             (Path(d) / "m1n1-hv.bin").write_bytes(bytes(data))
@@ -424,12 +491,27 @@ class PackageTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "checksum"):
                 hv_launch.verify_hv_package(Path(d), img)
 
+    def test_non_hv002_build_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            for name in ("m1n1-hv.bin", "System.map"):
+                shutil.copy(HV002 / name, Path(d) / name)
+            syms = (HV002 / "m1n1-hv-symbols.txt").read_text().splitlines(keepends=True)
+            stripped = "".join(l for l in syms if not l.rstrip().endswith(" hv_ilinux_timers_reset"))
+            self.assertNotEqual(len(stripped), sum(map(len, syms)))
+            (Path(d) / "m1n1-hv-symbols.txt").write_text(stripped)
+            m = hv_launch.manifest()
+            m["files"]["m1n1-hv-symbols.txt"] = {
+                "size": len(stripped.encode()), "sha256": hashlib.sha256(stripped.encode()).hexdigest()}
+            with patch.object(hv_launch, "manifest", return_value=m):
+                with self.assertRaisesRegex(ValueError, "hv_ilinux_timers_reset"):
+                    hv_launch.verify_hv_package(Path(d), (BOOT033 / "Image").read_bytes())
+
     def test_symbol_offsets_must_match_build(self):
         m = hv_launch.manifest()
         m["hv_init_failed_offset"] += 8
         with patch.object(hv_launch, "manifest", return_value=m):
             with self.assertRaisesRegex(ValueError, "hv_ilinux_init_failed"):
-                hv_launch.verify_hv_package(HV001, (BOOT033 / "Image").read_bytes())
+                hv_launch.verify_hv_package(HV002, (BOOT033 / "Image").read_bytes())
 
 
 if __name__ == "__main__":

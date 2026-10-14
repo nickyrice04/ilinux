@@ -4,9 +4,10 @@
 Private iLinux tooling (never for upstream). Default execution is offline:
 it verifies both packages and opens no USB port. A live run:
 
-1. checks the installed boot021 m1n1 exactly like native/boot/launch.py;
-2. chainloads the private hv001 m1n1 into RAM (no RVBAR writes, no disk);
-3. re-verifies the target, gates on hv001's single-CPU/timer flags, and
+1. checks the installed boot021 m1n1 exactly like native/boot/launch.py, then
+   repeats the guarded register census (hv_regs.py) in the same boot;
+2. chainloads the private hv002 m1n1 into RAM (no RVBAR writes, no disk);
+3. re-verifies the target, gates on hv002's single-CPU/ECV flags, and
    prepares the effective DT with the same checks as the native launcher;
 4. starts Linux as a single-CPU EL1 guest. The kernel log is mirrored to the
    HV virtual UART (USB interface 3); Ctrl-C enters the HV shell.
@@ -32,6 +33,8 @@ import dapf_guard  # noqa: E402
 import entry_guard  # noqa: E402
 import gpio_guard  # noqa: E402
 from fdt import check_stage_b  # noqa: E402
+sys.path.insert(0, str(HERE))
+import hv_regs  # noqa: E402
 sys.path.insert(0, str(HERE.parents[1] / "tools/m1n1-client"))
 import usb_identity  # noqa: E402
 
@@ -110,8 +113,9 @@ def verify_hv_package(directory, image):
     for symbol, key in HV_SYMBOLS.items():
         if syms.get(symbol) != m[key]:
             raise ValueError("hv symbol offset differs from the build: " + symbol)
-    if "kboot_prepare_hv_guest" not in syms:
-        raise ValueError("hv build lacks the private guest-preparation op")
+    for required in ("kboot_prepare_hv_guest", "hv_ilinux_timers_reset"):
+        if required not in syms:
+            raise ValueError("hv build lacks " + required + " (not an hv002 build)")
     if not all(m[key] < len(hv) for key in HV_SYMBOLS.values()):
         raise ValueError("hv symbol outside the loaded image")
     with hv_dapf_pin(hv):
@@ -239,14 +243,23 @@ def check_target(iface, proxy, base, marker, offset):
     launch.ensure_no_secondaries(proxy)
 
 
+def register_preflight(utils, errors):
+    """Guarded register census in this boot, before anything is chainloaded."""
+    rows = hv_regs.census(utils, errors)
+    blockers = hv_regs.verdict(rows)
+    if blockers:
+        raise ValueError("register preflight BLOCKED: " + "; ".join(blockers))
+    return rows
+
+
 def check_hv_flags(proxy, base, m):
-    """hv001 must have taken its single-CPU path and accepted the timer state."""
+    """The HV must have taken its single-CPU path and found the ECV timer traps."""
     single = proxy.read8(base + m["hv_single_cpu_offset"])
     failed = proxy.read8(base + m["hv_init_failed_offset"])
     if single != 1:
-        raise ValueError("hv001 did not enter single-CPU mode")
+        raise ValueError("hv m1n1 did not enter single-CPU mode")
     if failed != 0:
-        raise ValueError("hv001 refused: guest timer FIQs already enabled; power off")
+        raise ValueError("hv m1n1 refused to start: no ECV timer traps; power off")
 
 
 def chainload(iface, proxy, utils, hv_image, blob_api, bootargs_types):
@@ -284,7 +297,7 @@ def chainload(iface, proxy, utils, hv_image, blob_api, bootargs_types):
 
 
 def prepare_guest(iface, proxy, utils, files, hv_files, m):
-    """Gates and DT preparation on the running hv001 m1n1; returns the layout."""
+    """Gates and DT preparation on the running hv m1n1; returns the layout."""
     try:
         compatible = utils.adt.compatible
     except (KeyError, AttributeError):
@@ -419,7 +432,7 @@ def reconnect(device, make_proxy, wait=30.0, opener=None, sleep=time.sleep, cloc
                 with contextlib.suppress(Exception):
                     transport.close()
             if clock() > deadline:
-                raise ValueError("hv001 m1n1 did not answer after chainload; power off") from None
+                raise ValueError("hv m1n1 did not answer after chainload; power off") from None
             sleep(0.5)
 
 
@@ -430,7 +443,7 @@ def connect_and_run(device, m1n1, files, hv_files, m, logfile, symbols):
     if pin != launch.M1N1_COMMIT or dirty:
         raise ValueError("client must be the clean pinned m1n1 checkout")
     sys.path.insert(0, str(m1n1 / "proxyclient"))
-    from m1n1.proxy import M1N1Proxy, IODEV
+    from m1n1.proxy import M1N1Proxy, IODEV, ProxyError
     from m1n1.proxyutils import ProxyUtils
     from m1n1.bootmem import BOOT_BLOBS, find_boot_blobs, copy_boot_blobs
     from m1n1.tgtypes import BootArgs_r1, BootArgs_r2, BootArgs_r3
@@ -453,22 +466,27 @@ def connect_and_run(device, m1n1, files, hv_files, m, logfile, symbols):
                      boot_m["m1n1_version_offset"])
         print("Target PASS: t6050, installed boot021, no started secondaries.", flush=True)
         utils = ProxyUtils(proxy)
+        register_preflight(utils, (ProxyError,))
+        print("Register preflight PASS: ECV present; HV start/exception/FIQ registers readable.",
+              flush=True)
         blob_type = (Array(2, Int64ul), False)
         chainload(iface, proxy, utils, hv_files["m1n1-hv.bin"],
                   (BOOT_BLOBS, find_boot_blobs, copy_boot_blobs, blob_type),
                   {0: BootArgs_r1, 1: BootArgs_r1, 2: BootArgs_r2, 3: BootArgs_r3})
-        print("Chainloaded hv001 into RAM; re-verifying the port.", flush=True)
+        label = m["hv_version_marker"].rsplit("-", 1)[-1]
+        print("Chainloaded %s into RAM; re-verifying the port." % label, flush=True)
         transport.close()
         transport, iface, proxy = reconnect(device, M1N1Proxy)
         check_target(iface, proxy, proxy.get_base(), m["hv_version_marker"],
                      m["hv_version_offset"])
-        print("Target PASS: hv001 running, no started secondaries.", flush=True)
+        print("Target PASS: %s running, no started secondaries." % label, flush=True)
         utils = ProxyUtils(proxy, heap_size=128 * MIB, m1n1_heap=128 * MIB)
         hv = HV(iface, proxy, utils)
         hv.emulate_sprr = False
         hv.init()
         check_hv_flags(proxy, utils.base, m)
-        print("HV PASS: single-CPU mode, guest timer FIQs disabled (polled).", flush=True)
+        print("HV PASS: single-CPU mode, ECV timer traps on; guest timers masked at source.",
+              flush=True)
         if logfile:
             hv.set_logfile(logfile.open("w"))
         hv.load_system_map(str(symbols))
@@ -490,7 +508,7 @@ def connect_and_run(device, m1n1, files, hv_files, m, logfile, symbols):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--package", type=Path, required=True, help="boot033 package")
-    parser.add_argument("--hv-package", type=Path, required=True, help="hv001 package")
+    parser.add_argument("--hv-package", type=Path, required=True, help="hv m1n1 package (hv002)")
     parser.add_argument("--launch", action="store_true",
                         help="LIVE RAM boot under the HV; requires separate user authorization")
     parser.add_argument("--device", help="auto, or the exact descriptor-verified primary callout")
@@ -504,7 +522,8 @@ def main(argv=None):
         parser.error("offline mode does not accept device/confirmation arguments")
     _, files = launch.verify_package(args.package)
     m, hv_files = verify_hv_package(args.hv_package, files["Image"])
-    print("Package PASS: boot033 guest and hv001 m1n1 match their manifests.")
+    print("Package PASS: boot033 guest and %s m1n1 match their manifests."
+          % m["hv_version_marker"].rsplit("-", 1)[-1])
     print("Mode:", "LIVE HV RAM LAUNCH" if args.launch else "OFFLINE ONLY; USB not opened")
     print("Boot arguments:", HV_BOOTARGS)
     if args.launch:

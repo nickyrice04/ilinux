@@ -5,6 +5,35 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: hv002 replaces hv001 (source-masked guest timers, ECV gate, uncore gate)
+
+* **Discovered:**
+  * The hv001 census block is genuine: guest-timer FIQ enables are set and
+    write-locked, and polling cannot stop the physical FIQ.
+  * Review also found an unvalidated uncore PMU read in the HV FIQ path
+    (m1n1 gates it on `uncore_version`; M5 has none).
+  * With ECV the pinned HV already traps every guest timer access and re-runs
+    `hv_update_fiq()` after each, which is where a shadowed `CTL` fits. This
+    is the M1's suggested direction, verified against the code.
+* **Implemented:**
+  * the hv002 m1n1 patch (+155/−7), built by job 035 with no C warnings;
+  * census v2 rules in `hv_regs.py`, shared by `census.py` and a new in-boot
+    launcher preflight;
+  * a launcher flag gate for ECV;
+  * the package check requires the hv002 symbol.
+* **Tested:**
+  * machine-code review of the timer, trap, gate and uncore paths;
+  * the timer model test (exact patch code, ASan/UBSan, 8 scenarios, 3
+    mutations caught);
+  * 33 hv tests PASS; pure `native/boot` suites PASS (unchanged).
+* **Released:** `native-j716c-hv002`, archive `c79ffded…4254`.
+* **Not verified:**
+  * live behavior, including whether Apple's ECV traps EL1 timer accesses as
+    specified;
+  * M1 client-venv imports.
+  * No performance claim.
+* **Next:** M1 readiness, then census v2, then (if PASS) one hv002 session.
+
 ## 2026-10-14 · M1: H1 register census BLOCKED for hv001 (guest-timer FIQ enables set)
 
 * One read-only census at readiness `8267222`, 22:24:14 UTC: exit 2, under

@@ -3,7 +3,7 @@
 
 Start this before hv_launch.py. It never touches the primary proxy port.
 Interface 3 already exists under boot021 and may disappear briefly when the
-launcher chainloads hv001, so the logger reopens it whenever it returns.
+launcher chainloads the hv m1n1, so the logger reopens it whenever it returns.
 With --interactive, typed lines are sent to the guest serial port.
 Logs may contain target identifiers: keep them under ignored build/ paths,
 never commit them.
