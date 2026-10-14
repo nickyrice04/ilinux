@@ -1,11 +1,18 @@
 # Stage B — attempt 8 / boot027 deferred-probe diagnostics
 
-**Current instructions for M1.** Pull latest main with `git pull --ff-only`;
+**Attempt 8 is consumed (2026-10-14).** M1 readiness `174419e`; controller exit
+0 and native counter PASS/25 ticks observed. Phase 1/timer status last visible;
+phase 2 and diagnostic userspace/liveness NOT OBSERVED. Macintosh HD return
+human-confirmed. See `native/boot/stage-b-2026-10-14-attempt8-result.md`.
+M5 read-only return checks and offline analysis next. **Do not rerun the launch
+below**; it is retained as the reviewed procedure for the completed attempt.
+
+**Reviewed pre-attempt instructions for M1.** Pull latest main with `git pull --ff-only`;
 preserve local work and stop on divergence. Read `coordination.md` and this
 file. Attempt 7 is consumed: it reached `deferred_probe_initcall` after the
 previous clock boundary, with no diagnostic userspace observed. Boot027 keeps
 that progress and adds bounded phase/timer diagnostics; it does not establish
-the root cause. **Attempt 8 / native boot027 / live checks NOT RUN.**
+the root cause. **At publication: attempt 8 / native boot027 / live checks NOT RUN.**
 
 **Continue the existing installation.** The lab entry, original Macintosh HD,
 installed boot021 m1n1 and clean client pin remain correct. Do not repeat Stage

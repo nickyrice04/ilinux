@@ -1183,3 +1183,13 @@ video ready; post-attempt-7 protection prerequisite is already PASS. Publish
 readiness before one attempt 8. Capture new hardware/timer/deferred-work
 checkpoints without inferring a root cause from a last line. No additional
 blacklist, retry, reconnect or settings changes. Native/live NOT RUN at readiness.
+
+## 2026-10-14 · Separate passing tick evidence from the next scheduling boundary
+
+Attempt 8 directly observes counter PASS/25 ticks, J716c/t6050 EL2 and one CPU.
+Final visible phase 1/timer status narrows the next investigation to before
+phase 2, without proving preemption, watchdog or console failure. Preserve the
+successful hardware/DAPF/descriptor checks. Diagnostic userspace/liveness is
+unobserved, not a successful boot. Human confirms Macintosh HD return. The video
+was recorded but not reviewed; report this limit explicitly. M5 performs
+read-only return checks and offline analysis. No retry or wider blacklist.

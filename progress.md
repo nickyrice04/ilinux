@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: attempt 8 timer/ticks PASS; phase 1 last visible; return confirmed
+
+* One boot027 RAM attempt at readiness `174419e`, reviewed handoff `46ad887`.
+  **Controller exit 0, 10.492 s**; UTC 2026-10-14
+  13:38:30.894614–13:38:41.387312; handoff 13:38:41.148275.
+* Target boot021 marker, final hardware DT/arguments, both DAPF checkpoints,
+  96-byte correction/readback, 16-byte framebuffer descriptor/readback and
+  kboot request/reply PASS. Installed m1n1/client pin unchanged.
+* Fresh `IMG_2658.jpeg` **OBSERVES** native Linux, exact clock blacklist message,
+  `target=j716c-t6050 mode=EL2 cpus=1`, `phase=1 device=0`,
+  **`timer counter=PASS ticks=25`**, and final visible
+  `timer phys=1 virt=7 irq_masked=0 fiq_masked=0`.
+* Phase 2+, worker/retry/heartbeat and diagnostic PID 1/userspace
+  `online_cpus=1`/60-second liveness **NOT OBSERVED**. One CPU is independently
+  visible in the kernel checkpoint. No explicit panic visible; root cause unknown.
+* Video recording confirmed, but video not supplied/reviewed. Human was asked
+  to review its ending; no video-review result received. Full media not copied
+  or committed; the still does not exclude transient later messages.
+* Return instructed under the 120-second bound; **Macintosh HD desktop return
+  CONFIRMED by human**. No later message reported. Fresh security/default checks
+  **NOT CHECKED**. No retry, reconnect, reinstall or settings changes.
+* Result: `native/boot/stage-b-2026-10-14-attempt8-result.md`. **Attempt 8 consumed.**
+  M5 next performs read-only return checks and offline investigation after timer
+  status/before phase 2 (preemption/watchdog setup/visibility); no proven fault
+  yet. Keep passing tick evidence separate from later scheduling progress.
+
 ## 2026-10-14 · M1: boot027 attempt 8 offline readiness PASS
 
 * Read handoff `46ad887` and deferred-probe evidence. Downloaded private boot027;

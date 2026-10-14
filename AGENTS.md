@@ -86,17 +86,19 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1: boot027 attempt-8 archive/13-file intake, offline launcher, all 90
-cases, reviewed controller digests and clean client pin PASS. Readiness
-published; human reports proxy/video ready. Native/live attempt 8 NOT RUN at
-readiness. Follow the current checklist once, then return; no retry/settings changes.
+Latest M1: attempt 8 consumed. Controller/hardware/DAPF/descriptor PASS; native
+kernel reports J716c/t6050 EL2, one CPU, counter PASS and 25 ticks. Phase 1 and
+timer status last visible; phase 2 and diagnostic userspace/liveness NOT OBSERVED.
+Human confirms Macintosh HD return. Video not supplied/reviewed. M5 next performs
+read-only return checks and offline analysis after timer status/before phase 2.
+No retry, expanded skip, reinstall or settings changes. See current coordination.
 
-M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
+Historical M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
 still unobserved. Boot027 keeps the working boot021 setup and changes only
 Image, adding bounded timer/tick/deferred-work diagnostics. Hardware detection
 now validates the t6050 AIC/timer routes and observed CPU topology. Full link,
 11 sanitizer scenarios, 90 controller cases, 13-file intake and generic VM
-phases/PID-1/60-second liveness PASS; **native attempt 8 NOT RUN**. M1 verifies
+phases/PID-1/60-second liveness PASS; **native attempt 8 NOT RUN at that handoff**. M1 verifies
 private boot027, publishes readiness, then the human starts one filmed boot.
 No repeated provisioning/Stage A, Recovery, new blacklist or automatic retry.
 Post-attempt-7 original Full/lab Permissive JSON PASS. Root cause unknown.

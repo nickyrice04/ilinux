@@ -3,25 +3,22 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — deferred-probe boundary; boot027 diagnostics ready
+## Current Stage B blocker — after timer status; attempt 8 consumed
 
-Attempt 7 advanced beyond clock debug initialization to `deferred_probe_initcall`
-at 1.371769 s, without observed diagnostic userspace. Exact REA/source identify
-both debugfs creation and worker flushes here; a precise hang cause is unknown.
-Boot027 keeps both waits and adds bounded timer/tick, main/worker phase and
-retry-class diagnostics. The current controller validates this board's CPU
-MPIDR/family, AIC3 and host/guest timer descriptions in addition to prior guards.
+Boot027 attempt 8 passes controller/final hardware-DT/DAPF/descriptor checks.
+Fresh photo observes J716c/t6050 EL2, one CPU, phase 1, counter PASS/25 ticks
+and timer status phys=1 virt=7 irq_masked=0 fiq_masked=0. Phase 2 and diagnostic
+userspace/liveness remain unobserved. Tick progress during the sampled interval
+is established; subsequent scheduling/softirq/console progress is unresolved.
+No explicit panic is visible. Video remains unreviewed; do not assert an exact
+blocking PC or fault from the still. Macintosh HD return is human-confirmed.
 
-Full Image link, 11 actual-helper sanitizer scenarios, 90 controller cases,
-13-file intake and exact-image generic VM timer/phases/PID-1/60-second liveness
-PASS. **Native attempt 8 NOT RUN.** Only Image differs from boot025; installed
-m1n1/DT/initramfs/config remain. No extra initcall skip or hardware-driver change
-is justified yet. M1 follows the current Stage-B checklist for one filmed boot,
-then Macintosh HD return. Fresh post-attempt-7 original Full/lab Permissive
-JSON PASS. Continue the established installation; do not repeat provisioning.
-M1 independently verifies archive/intake/controller and all 90 cases PASS;
-human reports proxy/video ready. Attempt 8 native/live NOT RUN at readiness.
-Evidence: `kernel/experiments/deferred-probe/README.md`.
+M5 next: read-only return checks and exact-source offline analysis after timer
+status/before phase 2, incorporating video evidence if available. Preserve the
+installed boot021 setup and the single clock-debug skip. No automatic retry,
+new blacklist, reinstall or security/volume/default change.
+Evidence: `native/boot/stage-b-2026-10-14-attempt8-result.md` and
+`kernel/experiments/deferred-probe/README.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 
