@@ -5,6 +5,28 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: Stage B preflight failed; return confirmed; ADT lookup fixed offline
+
+* Single authorized launcher attempt at `fff8b95`: **exit 1, 1.135 s**, UTC
+  2026-10-14 01:38:53.644283–01:38:54.779211. Package/USB identity and target
+  chip/packaged-marker/secondary checks passed; **KeyError** before board/
+  framebuffer confirmation, payload upload or Linux handoff. No retry.
+* Live packaged m1n1 marker check is now **PASS**. **Linux remains NOT RUN**;
+  kernel/PID 1/one-CPU/60-second screen milestones were not reached.
+* User reported “heap limit” (normal utility setup output in pinned source)
+  and confirms return to Macintosh HD. New post-attempt build/default/security
+  checks are not reported. No volume/security change, no reconnect during diagnosis.
+* Offline: confirmed `utils.adt["/"].compatible` misuses the pinned ADT API;
+  root access is `utils.adt.compatible`. Corrected locally, retained board/CPU/
+  DT gates and added real pinned-parser regressions with synthetic data.
+  **31 launcher + 4 new ADT tests PASS; real package offline verification PASS**.
+* The defect matches the live checkpoint/type, but the raw exception argument/
+  traceback was not retained, so the precise live throw site remains uncertain.
+  Boot021/client pin unchanged; fix has not been tried on hardware.
+* Full sanitized result/investigation: `native/boot/stage-b-2026-10-13-result.md`.
+  M5 should review and perform read-only return checks. **No retries**; current
+  task is offline diagnosis/reporting, not a new boot authorization.
+
 ## 2026-10-13 · M1: ready for the authorized Stage B attempt
 
 * Pulled/read authorization `b06c56e19a172771866c6e8c8c9a490db105cc84`

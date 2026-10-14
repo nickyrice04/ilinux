@@ -1,4 +1,4 @@
-# Stage B — one native Linux RAM boot authorized; execution NOT RUN
+# Stage B — preflight failed; Linux NOT RUN; no retries
 
 Target: **this Mac17,6 / J716c / t6050 M5 Max**. Stage A passed (M1 report
 `974e894`): one P_NOP, 0.158 seconds, exit 0, then user-confirmed Macintosh HD
@@ -7,13 +7,15 @@ SIP/authenticated-root and the unchanged staged m1n1 hash. The user's fresh
 read-only policy JSON reports **original Full / lab Permissive, both exit 0**.
 Default startup selection has not been independently queried this review.
 
-The user explicitly authorized **one Stage B Linux RAM boot after M1 confirms
-readiness, then return to Macintosh HD**, on 2026-10-13. Keep Macintosh HD at
-Full Security; make no volume or security changes. This supersedes earlier
-Stage B approval holds for this exact attempt; no repeat permission is needed.
-**Execution remains NOT RUN.** Do not restart until M1 confirms the offline
-checks below and has this authorization handoff. Do not repeat Stage A or
-Recovery setup. Existing backup is user-confirmed.
+The one authorized attempt was used: preflight stopped with **KeyError**, exit 1,
+1.135 seconds, after target chip/packaged-marker/secondary checks passed. No
+payload upload or handoff occurred; **Linux NOT RUN**. User confirms Macintosh
+HD return. Live packaged-marker verification is now **PASS**. Read the
+[result and offline diagnosis](../../native/boot/stage-b-2026-10-13-result.md).
+Current instruction is **no retries**. The local root-lookup fix is tested only
+offline; boot021/client pin remain unchanged. Fresh return protection checks
+are pending M5 review. The remaining session procedure is historical reference,
+not a new authorization or instruction to reboot.
 
 ## M1 preparation now — offline only
 
@@ -26,25 +28,22 @@ Use the already downloaded payload; no rebuild/redownload is required.
 tools/m1n1-client/run.sh native/boot/launch.py \
   --package build/native-boot-download/ilinux-j716c-boot021
 tools/m1n1-client/run.sh native/boot/test_launcher.py
+tools/m1n1-client/run.sh native/boot/test_launcher_adt.py
 tools/m1n1-client/run.sh tools/m1n1-client/test_usb_check.py
 tools/m1n1-client/run.sh tools/m1n1-client/test_package.py
 ```
 
-Expected: payload verification PASS; **31 launcher, 20 USB, 7 intake** cases
-pass. The M5 review ran the 31 launcher, 16 stdlib USB identity/CLI, and 7
-intake cases; the 4 real upstream serializer USB cases are for M1's prepared
-client environment. All tests use synthetic transports and open no devices.
-No target-dependent version/board/framebuffer check runs in offline mode.
+Expected for future offline verification: package PASS, **31 launcher + 4
+pinned-ADT, 20 USB and 7 intake** cases. The pinned-ADT suite uses synthetic
+binary ADT bytes, the actual pinned upstream parser and fake transport. No
+target-dependent check runs in offline mode. The fix run passed 31+4 and
+package verification; the unchanged USB/intake suites last passed at readiness.
 
-Copy `boot-result-template.md` to the ignored results directory. Record
-actual Git revision, launcher/shared-selector hashes, package digests and
-client pin. Retain completed Stage A as prior-session evidence; leave all
-new native-Linux observations NOT RUN/NOT OBSERVED. Publish the offline results
-and clearly tell the human **ready for the authorized Stage B attempt** only
-when these checks pass and this handoff is read. Authorization is already given;
-readiness remains a prerequisite. Do not open USB before the human boots the lab.
+Preserve the completed attempt record and its original code/procedure hashes.
+Do not overwrite it with new preparation or reuse the consumed authorization.
+Any future user-directed session needs its own evidence record and readiness.
 
-## Authorized session — only after M1 confirms readiness
+## Historical session procedure — no retry authorized
 
 1. Both Macs on power, direct USB data cable, M5 display visible. Save M5 work.
    Human shuts down, holds power continuously to startup options and selects

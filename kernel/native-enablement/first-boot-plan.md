@@ -2,6 +2,13 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
+**Latest Stage B result:** preflight KeyError, exit 1, before payload upload or
+handoff; user confirms Macintosh HD return. Live packaged-marker check PASS;
+Linux NOT RUN. Local ADT root access corrected offline (31 launcher + 4 pinned
+ADT tests pass), not retested on hardware. **No retries.** See
+[the result](../../native/boot/stage-b-2026-10-13-result.md). The Stage A and
+protection results below are historical baseline; new return checks are pending.
+
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received
 one P_NOP reply in **0.158 seconds**, exit **0**. The port closed, without retry
@@ -134,11 +141,11 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: one-core RAM diagnostic, one attempt authorized after M1 readiness
+## 5. Stage B: one-core RAM diagnostic, attempt ended; no retries
 
-The user approved this one RAM attempt on 2026-10-13, followed by original
-macOS return with no volume/security changes. M1 readiness must precede M5
-shutdown; Linux remains NOT RUN.
+The user-approved attempt stopped before Linux handoff and the user returned.
+The following design is retained for reference. No new attempt is authorized;
+Linux remains NOT RUN. Preserve Full Security and make no volume/security changes.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.

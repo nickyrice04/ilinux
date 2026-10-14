@@ -84,7 +84,7 @@ class FakeProxy:
 
 class FakeUtils:
     def __init__(self, proxy):
-        self.adt = {"/": SimpleNamespace(compatible=["J716cAP"])}
+        self.adt = SimpleNamespace(compatible=["J716cAP"])
         self.ba = SimpleNamespace(video=SimpleNamespace(base=1, width=1, height=1))
         self.next = 0x200000
 
@@ -147,13 +147,14 @@ class LauncherTests(unittest.TestCase):
         self.assertFalse(self.iface.writes)
 
     def test_wrong_board(self):
-        def wrong(p):
-            u = FakeUtils(p)
-            u.adt["/"].compatible = ["J714cAP"]
-            return u
-        with self.assertRaisesRegex(ValueError, "board"):
-            self.run_launch(wrong)
-        self.assertFalse(self.iface.writes)
+        for compatible in (["J714cAP"], [], "prefix-J716cAP-suffix"):
+            def wrong(p):
+                u = FakeUtils(p)
+                u.adt.compatible = compatible
+                return u
+            with self.subTest(compatible=compatible), self.assertRaisesRegex(ValueError, "board"):
+                self.run_launch(wrong)
+            self.assertFalse(self.iface.writes)
 
     def test_prepare_failure(self):
         self.proxy.dt_result = -1

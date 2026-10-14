@@ -1,12 +1,15 @@
-# J716c Linux boot package — Stage A passed; Stage B prepared
+# J716c Linux boot package — Stage B preflight stopped; Linux NOT RUN
 
 Target: **this Mac17,6 / J716c / t6050 M5 Max**. This package is an experimental
 RAM diagnostic, not an Omarchy installer. Native m1n1 boot and USB P_NOP passed
 on this machine; **native Linux remains NOT RUN**. The dedicated entry is
-already installed. Do not repeat installation or security changes. The next
-experiment is the [Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md),
-one separately authorized RAM Linux boot, followed by original macOS return.
-Neither downloading nor verifying this package authorizes a physical boot.
+already installed. Do not repeat installation or security changes. The one
+Stage B attempt stopped with KeyError before upload/handoff; user confirms
+Macintosh HD return. Live packaged-marker verification passed. Read the
+[session result and offline fix](stage-b-2026-10-13-result.md). Current user
+direction is **no retries**. The [Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md)
+is reference for offline review; neither package verification nor the local
+fix authorizes another physical attempt.
 
 The completed M5 entry installation is documented in
 [boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).
@@ -26,6 +29,7 @@ gh release download native-j716c-boot021 --repo nickyrice04/ilinux \
 tar -xzf build/native-boot-download/ilinux-j716c-boot021.tar.gz -C build/native-boot-download
 python3 -I native/boot/launch.py --package build/native-boot-download/ilinux-j716c-boot021
 python3 -I native/boot/test_launcher.py
+tools/m1n1-client/run.sh native/boot/test_launcher_adt.py
 python3 -I tools/m1n1-client/test_package.py
 mkdir -p build/native-intake/receipts
 tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
@@ -122,13 +126,13 @@ hardware, and its DT preparation/handoff runs additional hardware setup.
 Disabling a Linux DT node does not undo bootloader initialization. The test
 intentionally issues no filesystem writes to the internal SSD.
 
-## Live command — one user-authorized attempt after M1 readiness
+## Historical live command — consumed attempt; no retry authorized
 
-The user authorized one Stage B RAM boot on 2026-10-13 after M1 confirms
-readiness, followed by Macintosh HD return. Keep original Full Security and
-make no volume/security changes. No repeat approval is needed for this scope.
-Read the current checklist, confirm offline readiness, then use the already
-installed dedicated entry with matching m1n1 running and the M5 screen visible:
+The one user-authorized Stage B attempt has ended with preflight failure and
+user-confirmed return. Keep original Full Security and make no volume/security
+changes. The command below records the procedure; **do not execute it again**
+under that consumed authorization. Any later user-directed attempt requires
+fresh readiness and a separate record.
 
 ```sh
 tools/m1n1-client/run.sh native/boot/launch.py \

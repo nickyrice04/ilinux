@@ -67,8 +67,17 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
     print("Target PASS: t6050, packaged m1n1 marker, no started secondaries.", flush=True)
     # No m1n1.setup, bootstrap_port, PMU reset, shell, cpufreq_init or SMP start.
     # ProxyUtils sets up a RAM heap and reads boot arguments; it is not read-only.
+    print("Initializing controller RAM utilities.", flush=True)
     utils = utils_factory(proxy)
-    if "J716cAP" not in utils.adt["/"].compatible:
+    print("Reading target ADT root compatibility.", flush=True)
+    # LazyADT already represents the root. In the pinned API, ["/"] looks
+    # for an empty-named child and raises KeyError; it does not return root.
+    try:
+        compatible = utils.adt.compatible
+    except (KeyError, AttributeError) as exc:
+        raise ValueError("target ADT root compatibility unavailable (%s)" %
+                         type(exc).__name__) from None
+    if not isinstance(compatible, (list, tuple)) or "J716cAP" not in compatible:
         raise ValueError("target board is not J716c")
     if not utils.ba.video.base or not utils.ba.video.width or not utils.ba.video.height:
         raise ValueError("m1n1 has no boot framebuffer")

@@ -86,21 +86,15 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-M1 readiness update: authorization `b06c56e` read, package/13 receipt files and
-tracked manifest digest match; 31 launcher + 20 USB + 7 intake cases PASS on M1.
-Client clean at the existing pin. Ready for the authorized one Stage B RAM
-attempt, then Macintosh HD return; preserve Full Security, no volume/security
-changes or retries. Linux/live version checks remain NOT RUN at readiness.
-Current evidence record: ignored `build/native-intake/results/boot021-stage-b-authorized.md`.
-
-Latest: Stage A physical P_NOP passed (0.158 s, exit 0), user returned to
-Macintosh HD, and return checks now confirm original protections including
-user-supplied Full/lab Permissive JSON. Stage B launcher reuses descriptor
-identity (`--device auto`), with 54 offline cases passing on M5. Payloads/pin
-unchanged. Follow `tools/m1n1-client/stage-b-instructions.md`; M1 verifies its
-controller environment next. User now authorizes one Stage B RAM attempt after
-M1 confirms readiness, then Macintosh HD return. Native Linux remains NOT RUN.
-Keep original Full Security; no volume/security changes or repeat setup.
+Latest: the one Stage B attempt ended with preflight KeyError (exit 1, 1.135 s)
+after package/USB/chip/packaged-marker/secondary checks passed, before payload
+upload or Linux handoff. Live m1n1 marker verification PASS; Linux NOT RUN.
+User confirms Macintosh HD return; fresh post-attempt protection checks pending.
+Offline ADT root-lookup defect corrected in local launcher, confirmed with actual
+pinned parser/synthetic data: 31 launcher + 4 ADT tests and package verify PASS.
+Precise live throw site is uncertain because only exception type was retained.
+No retries or new live authorization. Boot021/upstream pin unchanged; see
+`native/boot/stage-b-2026-10-13-result.md` and `coordination.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

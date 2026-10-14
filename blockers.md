@@ -3,13 +3,15 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Stage B controller readiness — 2026-10-13
+## Stage B preflight stop — 2026-10-13
 
-M1 readiness prerequisite resolved: all 58 documented offline cases passed,
-package/13 receipt files and tracked manifest digest matched, client pin clean.
-The one authorized Stage B RAM attempt may proceed after readiness publication
-and human lab boot. Linux/live target-version checks are still NOT RUN; no
-hardware-enablement blocker is resolved by offline verification.
+The authorized attempt reached target chip/packaged-marker/secondary PASS, then
+KeyError before upload/handoff. Linux NOT RUN. User confirms Macintosh HD return;
+new read-only return protection checks are pending. A root-lookup API defect is
+reproduced and fixed offline; 35 launcher/ADT tests pass. Live throw-site detail
+was not retained, so this likely explanation is not a hardware-verified fix.
+No retries. See `native/boot/stage-b-2026-10-13-result.md`. Earlier readiness and
+live-version-pending statements below are historical; packaged marker now PASS.
 
 ## Latest Stage A status — 2026-10-13
 

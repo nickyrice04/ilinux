@@ -891,3 +891,18 @@ Keep boot021 and pinned clean client unchanged. Publish readiness before the
 human boots the lab; then run the documented launcher exactly once and collect
 controller/screen/return evidence. No new live action occurred in preparation.
 Keep Linux/live version checks NOT RUN until actual observations supersede them.
+
+## 2026-10-13 · Stop Stage B at KeyError; correct the ADT API use offline
+
+One authorized attempt stopped before upload/handoff after target checks passed.
+User confirms Macintosh HD return and explicitly requests no retries. Preserve
+Linux NOT RUN, but update live packaged-marker verification to observed PASS.
+Do not infer heap exhaustion from normal heap-limit output or relabel the failed
+controller preflight as a Linux boot failure. No new policy/volume work.
+
+Real pinned-parser/synthetic-data regressions prove the launcher's root lookup
+was wrong; read root compatibility directly and keep wrong/missing-board rejection.
+Original fake dictionary hid the mismatch. Fix only local launcher/tests; keep
+upstream pin and boot021 intact. 31 launcher + 4 ADT cases and offline package
+verification pass. Precise live throw site is uncertain without raw traceback;
+fix is not hardware-tested. M5 reviews result and read-only return checks next.
