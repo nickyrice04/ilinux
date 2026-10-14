@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "package": "ilinux-j716c-hv001",
+  "guest_package": "ilinux-j716c-boot033",
+  "guest_image_sha256": "250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15",
+  "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "m1n1_patch": "native/hv/0001-ilinux-hv-t6050-single-cpu.patch",
+  "m1n1_patch_sha256": "35e3cbe974d442b7f9af90bc6584167a61d437a2844159419371c3a4aa10ae82",
+  "m1n1_build": "virtualization/jobs/034-m1n1-hv: make -j6 ARCH= BUILDSTD=1, M1N1_VERSION_TAG=ilinux-57a9339-hv001",
+  "hv_version_marker": "##m1n1_ver##ilinux-57a9339-hv001",
+  "hv_version_offset": 527000,
+  "hv_dt_pointer_offset": 1140024,
+  "hv_private_opcode": 2032,
+  "native_tested": false,
+  "files": {
+    "m1n1-hv.bin": {
+      "size": 3932160,
+      "sha256": "6d03166161c7ea30fae95000a0444facb475aa1ea83e8087c03d6f8f3ff785ac"
+    },
+    "System.map": {
+      "size": 10020136,
+      "sha256": "e6035b526c74dfaac45d2020d38f9a1f191d58432f1d8e4049d66eb14a576bbf"
+    }
+  }
+}

@@ -1,0 +1,159 @@
+diff --git a/src/hv/hv.c b/src/hv/hv.c
+index 063bb2c..2545bff 100644
+--- a/src/hv/hv.c
++++ b/src/hv/hv.c
+@@ -13,6 +13,7 @@
+ #include "smp.h"
+ #include "string.h"
+ #include "usb.h"
++#include "soc.h"
+ #include "utils.h"
+ 
+ #define HV_TICK_RATE      1000
+@@ -125,6 +126,9 @@ static void hv_enable_sme_zt0(void)
+     reg_set(SYS_SMCR_EL2, SMCR_EZT0);
+ }
+ 
++bool hv_ilinux_single_cpu;
++bool hv_ilinux_init_failed;
++
+ void hv_init(void)
+ {
+     pcie_shutdown();
+@@ -133,7 +137,23 @@ void hv_init(void)
+         display_shutdown(DCP_QUIESCED);
+     // reenable hpm interrupts for the guest for unused iodevs
+     usb_hpm_restore_irqs(0);
+-    smp_start_secondaries();
++    /*
++     * iLinux private (not for upstream): t6050 secondaries cannot be started
++     * yet, and the guest-timer FIQ enable register traps at EL2. Run a
++     * single-CPU hypervisor and poll guest timers from the hypervisor tick.
++     */
++    hv_ilinux_single_cpu = chip_id == T6050;
++    hv_ilinux_init_failed = false;
++    if (hv_ilinux_single_cpu) {
++        u64 ena = mrs(SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2);
++        printf("HV: iLinux single-CPU mode; VM_TMR_FIQ_ENA=0x%lx\n", ena);
++        if (ena & (VM_TMR_FIQ_ENA_ENA_V | VM_TMR_FIQ_ENA_ENA_P)) {
++            printf("HV: guest timer FIQs already enabled; refusing to start\n");
++            hv_ilinux_init_failed = true;
++        }
++    } else {
++        smp_start_secondaries();
++    }
+     smp_set_wfe_mode(true);
+     hv_wdt_init();
+ 
+@@ -194,6 +214,11 @@ void hv_start(void *entry, u64 regs[4])
+         return;
+     }
+ 
++    if (hv_ilinux_init_failed) {
++        printf("HV: iLinux init gate failed, can't start hypervisor\n");
++        return;
++    }
++
+     if (!hv_cpu_state_setup_hook()) {
+         printf("CPU state hook setup failed, can't start the hypervisor\n");
+         return;
+diff --git a/src/hv/hv.h b/src/hv/hv.h
+index 2681626..c17d7f2 100644
+--- a/src/hv/hv.h
++++ b/src/hv/hv.h
+@@ -112,6 +112,9 @@ u64 hv_get_afsr1(void);
+ void hv_set_elr(u64 val);
+ 
+ /* HV main */
++extern bool hv_ilinux_single_cpu;
++extern bool hv_ilinux_init_failed;
++
+ void hv_init(void);
+ void hv_start(void *entry, u64 regs[4]);
+ void hv_start_secondary(int cpu, void *entry, u64 regs[4]);
+diff --git a/src/hv/hv_exc.c b/src/hv/hv_exc.c
+index 3a399eb..87036d2 100644
+--- a/src/hv/hv_exc.c
++++ b/src/hv/hv_exc.c
+@@ -154,6 +154,13 @@ static void hv_update_fiq(void)
+     u64 hcr = mrs(HCR_EL2);
+     bool fiq_pending = false;
+ 
++    if (hv_ilinux_single_cpu) {
++        /* iLinux private: level-evaluate guest timers on every exit/tick. */
++        fiq_pending = mrs(CNTP_CTL_EL02) == (CNTx_CTL_ISTATUS | CNTx_CTL_ENABLE) ||
++                      mrs(CNTV_CTL_EL02) == (CNTx_CTL_ISTATUS | CNTx_CTL_ENABLE);
++        goto ilinux_timers_done;
++    }
++
+     if (mrs(CNTP_CTL_EL02) == (CNTx_CTL_ISTATUS | CNTx_CTL_ENABLE)) {
+         fiq_pending = true;
+         reg_clr(SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2, VM_TMR_FIQ_ENA_ENA_P);
+@@ -168,6 +175,7 @@ static void hv_update_fiq(void)
+         reg_set(SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2, VM_TMR_FIQ_ENA_ENA_V);
+     }
+ 
++ilinux_timers_done:
+     fiq_pending |= PERCPU(ipi_pending) || PERCPU(pmc_pending);
+ 
+     sysop("isb");
+diff --git a/src/kboot.c b/src/kboot.c
+index 9bb9548..b0b6d47 100644
+--- a/src/kboot.c
++++ b/src/kboot.c
+@@ -2932,6 +2932,16 @@ int kboot_prepare_dt(void *fdt)
+     return 0;
+ }
+ 
++/* iLinux private: kboot_boot's hardware steps for an EL1 guest under the HV. */
++int kboot_prepare_hv_guest(void)
++{
++    mcc_enable_cache();
++    tunables_apply_static();
++    clk_init();
++    dapf_init_all();
++    return 0;
++}
++
+ int kboot_boot(void *kernel)
+ {
+     mcc_enable_cache();
+diff --git a/src/kboot.h b/src/kboot.h
+index 61deacc..48f82b7 100644
+--- a/src/kboot.h
++++ b/src/kboot.h
+@@ -25,6 +25,7 @@ int kboot_set_chosen(const char *name, const char *value);
+ int kboot_set_uboot(const char *name, const char *value);
+ int kboot_prepare_dt(void *fdt);
+ int kboot_boot(void *kernel);
++int kboot_prepare_hv_guest(void);
+ 
+ // from rust/usb4.rs
+ u64 rust_usb4_router_uuid(void);
+diff --git a/src/proxy.c b/src/proxy.c
+index 8c59167..50c5a54 100644
+--- a/src/proxy.c
++++ b/src/proxy.c
+@@ -408,6 +408,9 @@ int proxy_process(ProxyRequest *request, ProxyReply *reply)
+             if (kboot_boot((void *)request->args[0]) == 0)
+                 return 1;
+             break;
++        case P_ILINUX_KBOOT_PREPARE_HV_GUEST:
++            reply->retval = kboot_prepare_hv_guest();
++            break;
+         case P_KBOOT_SET_CHOSEN:
+             reply->retval = kboot_set_chosen((void *)request->args[0], (void *)request->args[1]);
+             break;
+diff --git a/src/proxy.h b/src/proxy.h
+index ceca945..4ca0840 100644
+--- a/src/proxy.h
++++ b/src/proxy.h
+@@ -106,6 +106,8 @@ typedef enum {
+     P_KBOOT_PREPARE_DT,
+     P_KBOOT_SET_UBOOT,
+ 
++    P_ILINUX_KBOOT_PREPARE_HV_GUEST = 0x7f0, // iLinux private
++
+     P_PMGR_POWER_ENABLE = 0x800, // power/clock management ops
+     P_PMGR_POWER_DISABLE,
+     P_PMGR_ADT_POWER_ENABLE,
