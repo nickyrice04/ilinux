@@ -90,8 +90,8 @@ Latest: corrected Stage B attempt 2 at `993a6af` stopped with exit 1 in
 10.202 s after ADT root/board checks and payload upload to RAM. Prepared-DT
 validation rejected `no enabled boot framebuffer; observation path absent`
 (`fdt.py:90`, `launch.py:113`); no Linux handoff. Live packaged marker PASS;
-Linux NOT RUN. Macintosh HD return is pending human confirmation, and fresh
-return checks are NOT CHECKED. Boot021/client pin unchanged, no volume/security/
+Linux NOT RUN. User confirms Macintosh HD return; photo ends at m1n1
+`FDT prepared`, not Linux execution. Fresh return checks are NOT CHECKED. Boot021/client pin unchanged, no volume/security/
 default/boot-object changes. One corrected attempt consumed; no retries or
 further live session authorized. M5 should review the sanitized result and
 investigate framebuffer setup offline after return. See

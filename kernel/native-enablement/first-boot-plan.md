@@ -6,10 +6,10 @@ single-core, APFS-stub, persistent-console and power-cycle guarantees.
 board checks and RAM upload, then stopped at the prepared-DT framebuffer gate:
 `no enabled boot framebuffer; observation path absent`, exit 1 in 10.202 s.
 No Linux handoff; Linux NOT RUN. Live packaged-marker check PASS. Macintosh HD
-return pending human confirmation; fresh return checks NOT CHECKED. Boot021/
+return confirmed by the user; fresh return checks NOT CHECKED. Boot021/
 client pin unchanged; no volume/security/default/boot-object changes or retry.
-The corrected attempt authorization is consumed. Next work is original return
-confirmation and offline review of framebuffer setup, preserving the gate.
+The corrected attempt authorization is consumed. Next work is read-only return
+checks and offline review of framebuffer setup, preserving the gate.
 See [attempt 2 result](../../native/boot/stage-b-2026-10-13-attempt2-result.md);
 [attempt 1](../../native/boot/stage-b-2026-10-13-result.md) remains preserved.
 

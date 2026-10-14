@@ -930,3 +930,12 @@ Guide original-desktop return and record confirmation only when received;
 no retries, security changes or new live diagnostics. Investigate the specific
 framebuffer preflight failure offline after return, without claiming a Linux
 kernel/display failure or changing boot021/client pin in this reporting task.
+
+## 2026-10-13 · Accept user-confirmed attempt-2 return; retain screen evidence limits
+
+User confirms the usual Macintosh HD desktop. Photo ends at m1n1 `FDT prepared`
+(address omitted), consistent with controller rejection after DT preparation.
+Record the display/reserved-memory/GPU warnings as observations, without inferring
+a freeze or Linux failure. Linux remains NOT RUN; the controller never handed off.
+Fresh default/build/security checks remain for M5. No reconnect or retry, and no
+image, target addresses or raw diagnostic data are copied into the repository.

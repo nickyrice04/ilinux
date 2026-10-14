@@ -6,7 +6,7 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 result — Stage B attempt 2 stopped; return pending, 2026-10-13
+### Current M1 result — Stage B attempt 2 stopped; return confirmed, 2026-10-13
 
 * One corrected attempt at `993a6af`: **exit 1, 10.202 s**, UTC
   2026-10-14 01:58:58.489367–01:59:08.692220. Package/primary/target checks
@@ -16,14 +16,15 @@ older plan disagree, this file wins for ownership and order of work.
   called by `launch.py:113`. No Linux handoff or `kboot_boot`; **Linux NOT RUN**.
   Live packaged-marker verification PASS. Missing versus disabled/mismatched
   framebuffer node remains unresolved; no raw target DT was retained.
-* Human reports addresses on the M5 display, not a Linux milestone. Guided
-  power-off/startup-picker return; **Macintosh HD return PENDING confirmation**.
-  Fresh build/default/protection checks NOT CHECKED this attempt.
+* Human confirms return to the usual **Macintosh HD desktop**. Photo shows
+  m1n1 DT preparation ending at `FDT prepared` (address omitted), consistent
+  with the controller's subsequent rejection. A freeze is not established.
+  Linux NOT RUN; fresh build/default/protection checks NOT CHECKED this attempt.
 * Boot021, launcher and clean client pin unchanged; no volume/security/default/
   boot-object changes, no reconnect or retry. Existing offline tests remained
   valid and post-pull package verification passed. Attempt 1 evidence preserved.
 * Separate sanitized result: `native/boot/stage-b-2026-10-13-attempt2-result.md`.
-  Next: confirm return; M5 read-only checks and offline framebuffer investigation.
+  Next: M5 read-only return checks and offline framebuffer investigation.
   The one corrected attempt is consumed; no further live session authorized.
 
 ### Consumed M5 handoff — corrected Stage B attempt 2, 2026-10-13

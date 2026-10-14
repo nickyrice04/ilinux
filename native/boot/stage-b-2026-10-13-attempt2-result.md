@@ -27,10 +27,19 @@ Attempt 1's report and ignored evidence remain unchanged.
 * **No handoff checkpoint or `kboot_boot` call was reached. Linux NOT RUN.**
   Kernel/PID 1/online-CPU/liveness screen milestones were not reached. The
   120-second post-handoff observation window did not start.
-* Human reports memory locations/addresses on the M5 screen after the stop.
-  This is not evidence of Linux execution. Human was guided to power off and
-  select Macintosh HD. **Return is pending human confirmation.** Fresh
-  post-return build/default/security checks remain NOT CHECKED.
+* Human subsequently supplied a photo and confirms return to the usual
+  **Macintosh HD desktop**. Fresh post-return build/default/security checks
+  remain NOT CHECKED. Successful desktop return does not independently prove
+  the current policy or default selection.
+* Photo shows m1n1 CPU disabling/topology pruning and DT warnings, ending at
+  **`FDT prepared`** (address omitted). Visible non-sensitive messages include
+  `FDT: unknown compatible, skip display reserved-memory setup`,
+  `ADT: GPU: unsupported chip!`, and `FDT: '/reserved-memory' not found`.
+  These are m1n1 preparation output, not Linux kernel/PID 1 milestones.
+* User thought the screen froze. The still image does not establish a hang;
+  it is consistent with completed m1n1 DT preparation followed by the controller
+  framebuffer rejection. These warnings alone do not establish which condition
+  caused the missing enabled framebuffer; keep the recorded rejection precise.
 * No volume, boot-policy, boot-object or default-startup changes were issued
   by M1. Target RAM writes and DT preparation did occur; this was not read-only.
   The transport cleanup path ran and no close error was reported. No reconnect.
@@ -56,8 +65,8 @@ Attempt 1's report and ignored evidence remain unchanged.
 
 ## Next action
 
-Complete/confirm Macintosh HD return and let M5 perform read-only protection
-checks. Investigate framebuffer setup in the packaged DT and pinned m1n1
+Macintosh HD return is user-confirmed. M5 should perform read-only protection
+and default-startup checks. Investigate framebuffer setup in the packaged DT and pinned m1n1
 source offline; do not remove the observation gate or infer Linux/display
 hardware failure from a controller preflight rejection. No rebuild, reinstall,
 security change, retry or additional native session was performed by this task.

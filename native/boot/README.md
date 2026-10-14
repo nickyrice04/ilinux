@@ -5,8 +5,9 @@ RAM diagnostic, not an Omarchy installer. Native m1n1 and USB P_NOP passed.
 Attempt 1 stopped at the ADT root API defect; corrected attempt 2 passed that
 check and uploaded payloads, then rejected the prepared DT for no enabled
 boot framebuffer. No Linux handoff occurred. The one corrected attempt is
-consumed; no retry or new live session is authorized. Macintosh HD return is
-pending confirmation. No volume/security/default/boot-object changes occurred.
+consumed; no retry or new live session is authorized. The user confirms return
+to Macintosh HD; fresh protection/default checks remain pending. No volume/
+security/default/boot-object changes occurred.
 See [attempt 2 result](stage-b-2026-10-13-attempt2-result.md) and the preserved
 [first result](stage-b-2026-10-13-result.md). Keep boot021 and client pin unchanged;
 M5 should review the framebuffer gate offline after return.
