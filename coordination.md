@@ -6,7 +6,40 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M5 handoff — hv001 private hypervisor sessions (NOT RUN)
+### Current M1 readiness — hv001 sessions offline PASS, 2026-10-14
+
+* Pulled/read M5 handoff `4814b6f` (hv001 prepared in `ee5b824`), `native/hv/README.md`
+  and `tools/m1n1-client/hv-instructions.md`. All six README file hashes match.
+* Release `native-j716c-hv001`: archive 2,134,653 bytes, SHA-256
+  `c659462c77df8a56979aff5f5f5596cbbdb49a6bbe0eaef5d2ecfd9bd6f4ebb1`, verified
+  before extraction. Four regular members; `m1n1-hv.bin` `6d031661…85ac`,
+  `System.map` and the symbol list match `hv-manifest.json`. Guest Image is the
+  unchanged boot033 `250d9ff5…eb15`.
+* **Offline PASS:**
+  * 28 hv tests; PackageTests ran against the real packages, not skipped;
+  * 37 launcher tests;
+  * client-venv imports (m1n1.hv, bootmem, tgtypes, proxyutils, construct,
+    serial);
+  * offline `hv_launch.py`: Package PASS, OFFLINE ONLY, exit 0, with bootargs
+    `console=ttySAC0,115200` before `console=tty0` and
+    `earlycon=s5l,0x505200000`.
+  * Client pin clean at `57a9339`.
+* **M1 independent review:**
+  * `census.py` does reads only: 15 `ProxyUtils.mrs` calls under the
+    exception guard, no `msr`, a 120 s alarm, and chip/marker/no-secondaries
+    gates.
+  * The m1n1 patch is limited to: no secondary start on T6050; a read-only
+    `VM_TMR_FIQ_ENA_EL2` gate that refuses to start if it is enabled; polled
+    guest timers in `hv_update_fiq`; and private op `0x7f0` (cache, tunables,
+    clock and DAPF without USB/PCIe).
+* Ignored record `build/native-intake/results/hv001-readiness.json` holds the
+  hashes and results.
+* **Ready for Session 1 (read-only register census)** after publication.
+  Session 2 (hv001) only after a census PASS and a separate human start.
+  **Census and hv001 live checks NOT RUN at readiness.**
+
+
+### Reviewed M5 handoff — hv001 private hypervisor sessions (NOT RUN)
 
 * **What:** a private m1n1 hypervisor runs the **unchanged boot033** payloads
   at EL1. The kernel log streams to the M1 on the vUART (USB interface 3), and
