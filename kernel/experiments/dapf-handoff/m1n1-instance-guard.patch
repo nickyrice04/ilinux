@@ -1,0 +1,40 @@
+--- a/src/dapf.c
++++ b/src/dapf.c
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+
+ #include "dapf.h"
++#include "ilinux_dapf_layout.h"
+ #include "adt.h"
+ #include "assert.h"
+ #include "malloc.h"
+@@ -133,6 +134,29 @@
+         return -1;
+     }
+
++    /* Newer DARTs can expose GAPF where older layouts had a DAPF.
++     * Validate instance metadata before any power or register access. */
++    u32 instance_len, reg_len;
++    const unsigned char *instances = adt_getprop(adt, node, "instance", &instance_len);
++    if (instances) {
++        unsigned selected;
++        const void *regs = adt_getprop(adt, node, "reg", &reg_len);
++        if (!regs || reg_len % 16) {
++            printf("dapf: Invalid register layout for %s\n", path);
++            return -1;
++        }
++        int found = ilinux_dapf_index(instances, instance_len, reg_len / 16, &selected);
++        if (found < 0) {
++            printf("dapf: Invalid instance layout for %s\n", path);
++            return -1;
++        }
++        if (!found) {
++            printf("dapf: No DAPF instance zero for %s; leaving other filters unchanged\n", path);
++            return 0;
++        }
++        index = selected;
++    }
++
+     u32 pwr;
+     if (!adt_getprop(adt, node, "clock-gates", &pwr))
+         pwr = 0;

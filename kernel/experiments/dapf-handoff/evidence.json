@@ -1,0 +1,65 @@
+{
+  "installed_raw_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "matching_elf_sha256": "a29b312896e75468c367b146a1c677b00cbc47687637b5536e95d19bc3b40ca8",
+  "elf_roundtrip_matches": true,
+  "table_relocations_verified": 5,
+  "exception_relative_pc": "0x16458",
+  "function": "dapf_init_t8110a (inlined in dapf_init)",
+  "instruction_at_pc": "ldrb w5, [x0, #4]",
+  "preceding_mmio_store": "0x16438: str w3, [x5]",
+  "rea_provider": {
+    "id": "ghidra",
+    "name": "Ghidra",
+    "version": "12.1.4"
+  },
+  "rea_evidence_id": "ev_f95237d740436cc240376a724996d595f63bacb7889c154ded08176d9e0170cb",
+  "ghidra_load_bias": "0x100000",
+  "instructions_checked_each_decoder": 300,
+  "pcode_operations": 319,
+  "pcode_outside_body": 0,
+  "rea_boundary_gate": "PASS; manual source/assembly review performed",
+  "adt_facts": [
+    {
+      "node": "dart-isp0",
+      "register_count": 7,
+      "instance_types": [
+        "0x44415254",
+        "0x44415254",
+        "0x44415254",
+        "0x534d4d55",
+        "0x534d4d55",
+        "0x44415046",
+        "0x47415046"
+      ],
+      "dapf_indexes": [
+        5
+      ]
+    },
+    {
+      "node": "dart-mtp",
+      "register_count": 3,
+      "instance_types": [
+        "0x44415254",
+        "0x44415046",
+        "0x47415046"
+      ],
+      "dapf_indexes": [
+        1
+      ]
+    },
+    {
+      "node": "dart-aop",
+      "register_count": 2,
+      "instance_types": [
+        "0x44415254",
+        "0x47415046"
+      ],
+      "dapf_indexes": []
+    }
+  ],
+  "limits": [
+    "SError is asynchronous; exact original faulting write not established",
+    "ADT snapshot is macOS inventory; next live attempt must recheck layout",
+    "No native correction test or Linux execution observed"
+  ]
+}

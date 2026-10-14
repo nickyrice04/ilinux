@@ -5,6 +5,37 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: m1n1 handoff error traced; DAPF guard implemented
+
+* Integrated M1 `f889133`. Boot022 framebuffer/preflight passed on hardware;
+  handoff raised SError at relative PC 0x16458. Linux execution NOT OBSERVED.
+* Retained ELF reproduces exact installed image. PC maps into inlined
+  `dapf_init_t8110a` after an MMIO store. REA/Ghidra decompilation, GNU and LLVM
+  cover 300 matching instruction words; all 319 pcode operations stay in body.
+  Five table-pointer relocations verified. SError's exact triggering write is
+  not established; fixed-index DAPF/GAPF mismatch is confirmed in the inventory.
+* AOP has DART+GAPF, no DAPF. Original m1n1 selects its region 1 as DAPF.
+  New original source guard selects DAPF metadata before any register/power
+  access; full m1n1 build and 12 synthetic C scenarios with sanitizers PASS.
+* Avoided a reinstall: updated controller validates live code/table/ADT and
+  omits only that absent AOP entry through a readback-verified 96-byte RAM data
+  write. No instruction/filter/security/persistent-file patch. Other DAPF work
+  and existing board/CPU/storage/framebuffer/version gates remain active.
+* Linux VM: 31 launcher + 14 guard + 2 pinned-parser + 4 root-ADT + 1 serializer
+  + 5 framebuffer cases PASS. Real parser caught raw-reg length handling;
+  corrected before native testing. Host guard suite expanded to 16 PASS with
+  two final ordering/abort tests. Real boot022 offline verification PASS.
+* All VMs stopped; quiet locks released. Code/test/provenance details are in
+  `kernel/experiments/dapf-handoff/README.md` and `evidence.json`; raw REA/ELF/
+  generated binaries remain ignored. No physical benchmark or native attempt.
+* User's fresh post-attempt-3 read-only policy result is original Full/lab
+  Permissive, both exit 0; reviewed, not independently rerun. Independent
+  Macintosh HD/build 25G83, System/Data FileVault, SIP/authenticated-root and
+  staged m1n1 hash checks PASS. Default/installed object not independently read.
+* Next: M1 verifies new controller code against existing boot022 while M5 stays
+  in macOS; human then starts one proposed attempt 4. No re-download, Recovery,
+  security change or automatic retry. Native correction remains NOT TESTED.
+
 ## 2026-10-13 · M1: boot022 preflight PASS; m1n1 exception at handoff; return confirmed
 
 * One boot022 invocation at `c5f515c`: controller exit 1, **32.059 s**,

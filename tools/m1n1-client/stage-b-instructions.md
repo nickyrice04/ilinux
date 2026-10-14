@@ -1,99 +1,64 @@
-# Stage B — attempt 3 completed with m1n1 exception; no retry
+# Stage B — proposed attempt 4, boot022 plus DAPF RAM guard
 
-**Current result:** attempt 3 ran once at `c5f515c`. All preflight gates passed;
-handoff requested, then controller UartTimeout. Human photo shows m1n1 SError
-in EL2/unhandled-exception reboot output. Linux kernel/PID 1/one-CPU/60-second
-liveness NOT OBSERVED. User confirms Macintosh HD return. No new live session
-or boot-setting change authorized. Read the
-[attempt 3 result](../../native/boot/stage-b-2026-10-13-attempt3-result.md).
-The preparation/command below is **consumed history; do not execute again**.
-Next is M5 offline exception diagnosis and read-only return checks.
+Attempt 3 reached handoff with all gates passing, then m1n1 raised an SError.
+Read [the preserved result](../../native/boot/stage-b-2026-10-13-attempt3-result.md)
+and [the correction/evidence](../../kernel/experiments/dapf-handoff/README.md).
+**Native correction NOT TESTED; Linux execution NOT OBSERVED.** Earlier attempts
+are consumed. This task prepares a reviewed correction; do not launch or retry
+until the human starts the next documented attempt after this verification.
 
-Attempt 2 at `993a6af` stopped after upload, before Linux handoff, because
-boot021 had no `/chosen/framebuffer` placeholder. Pinned m1n1 updates this
-node but does not create it. **Linux remains NOT RUN.** Preserve both previous
-attempt records. [Job 022](../../virtualization/jobs/022-framebuffer-handoff/RESULTS.md)
-reproduces the defect with actual pinned C code and tests the minimal correction.
+## What changes
 
-## Scope and readiness
+The existing **boot022 payload and installed boot021 m1n1 remain unchanged**.
+No download, m1n1 reinstall, Recovery, volume/security/default/boot-object change.
+Original Macintosh HD stays Full Security. The new controller checks the live
+DAPF work-list and ADT layout, then changes exactly 96 bytes of m1n1 RAM data
+immediately before handoff to omit an absent AOP DAPF. It verifies readback.
+It does not change code, GAPF registers, firmware filter policy or other entries.
+Single-core/NVMe/cpufreq/framebuffer/version/board gates and time bounds remain.
 
-The user's next-boot direction is carried into one reviewed corrected RAM
-attempt, after the checks below and a human-selected lab boot. It does not
-permit repeated attempts or changed boot settings. Original Macintosh HD stays
-at Full Security. No volume, security, default-startup or boot-object changes;
-no m1n1 reinstall, SMP start, storage enablement or installation.
+Post-attempt-3 policy prerequisite **PASS**: user-supplied read-only JSON reports
+original Full/lab Permissive, both exit 0; M5 reviewed it, not independently rerun.
+Independent original root/build 25G83, System/Data FileVault, SIP/authenticated-root
+and staged m1n1 hash checks PASS. Default/installed object not independently read.
+Do not repeat this policy check before the proposed attempt unless state changes.
 
-**M5 offline work: complete. M1 boot022 intake: PASS. Post-attempt-2 policy
-check: PASS (user-supplied JSON, original Full/lab Permissive, both exit 0).
-Attempt 3: NOT RUN.** Do intake while M5 is still in macOS so download/testing
-does not waste a restart. Once intake passes, M1 can confirm ready directly
-to the human. No extra M5/M1 agent approval round
-trip is needed. The human then saves work and boots the existing lab entry once.
+## M1 preparation — offline only, while M5 stays in macOS
 
-M5 independently verified original root/build 26.6.2/25G83, System/Data FileVault,
-SIP/authenticated-root, AC power and the unchanged staged m1n1 hash. Default
-startup and installed boot object were not independently queried. The fresh
-post-return policy JSON was supplied by the user and reviewed by M5; the
-privileged query was not independently rerun. Do not request it again before
-this attempt unless the relevant state changes.
-
-M1 intake completed after pulling `3c7eae1`: archive checked before extraction,
-offline package/13-file receipt PASS, 31 launcher + 5 framebuffer + 4 pinned-ADT
-cases PASS. Receipt retained separately; source hashes and clean client pin
-match. Ready for the authorized attempt 3; USB/current live checks NOT RUN.
-Do not redownload or overwrite the verified package/receipt below.
-
-## M1 preparation — offline only
-
-Preserve local changes; `git pull --ff-only` in the existing checkout. Stop on
-divergence; no reset/force. Use the existing clean pinned client
-`57a9339ffd1876e78297b17d34dece8cff8fa1ba`. The **boot021 m1n1 marker remains
-correct** in boot022 because the bootloader binary did not change.
-
-Download once into a new directory (if it already exists, verify rather than
-overwrite). Do not extract until the checksum succeeds:
+Preserve local changes and `git pull --ff-only`. Stop on divergence; no reset or
+force. Reuse the existing verified directory and clean m1n1 pin
+`57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Marker **boot021** is still correct.
 
 ```sh
 (
 set -e
-mkdir -p build/native-boot022-download
-gh release download native-j716c-boot022 --repo nickyrice04/ilinux \
-  --pattern ilinux-j716c-boot022.tar.gz --dir build/native-boot022-download
-(cd build/native-boot022-download && shasum -a 256 -c ../../native/boot/archive-sha256.txt)
-tar -xzf build/native-boot022-download/ilinux-j716c-boot022.tar.gz -C build/native-boot022-download
 python3 -I native/boot/launch.py --package build/native-boot022-download/ilinux-j716c-boot022
 python3 -I native/boot/test_launcher.py
-python3 -I native/boot/test_framebuffer.py
-mkdir -p build/native-intake/receipts
-tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
-  build/native-boot022-download/ilinux-j716c-boot022 \
-  --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
-  > build/native-intake/receipts/boot022.json
+python3 -I native/boot/test_dapf_guard.py
+tools/m1n1-client/run.sh native/boot/test_dapf_guard_adt.py
+tools/m1n1-client/run.sh native/boot/test_launcher_adt.py
 )
 ```
 
-Require package PASS, **31 launcher + 5 framebuffer tests**, and a complete
-13-file intake receipt. M5 has also run six actual pinned C-function cases with
-ASan/UBSan, one real serializer case and seven intake tests. Prior M1 four ADT
-and 20 USB tests remain applicable if client/code/environment are unchanged;
-rerun those only if changed. No kernel rebuild or C compiler setup on M1.
-The receipt's generic `next` field is historical first-intake wording; this
-checklist controls the current sequence. `boot_authorized: false` correctly
-means checksum verification itself grants no permission.
+Require package PASS and **31 launcher + 16 RAM-guard + 2 real-parser + 4 root-ADT
+cases PASS**. Previously tested USB selector/framebuffer/intake code is unchanged.
+No C compiler or decompiler setup on M1 is needed. Existing boot022 intake
+receipt remains valid if payload bytes are unchanged. Preserve all prior results;
+create a new ignored attempt-4 record with actual Git/source/payload digests.
 
-Record the Git commit, archive/manifest digest and these source hashes:
+Reviewed source hashes:
 
-* `native/boot/launch.py`: `d3dcebceaaab2716cf7e4dc51dfaac10be8cb01eca308409f7574311b69b821f`
+* `native/boot/launch.py`: `a9d14ec1019de2c728c81779472b84a90265620969f0d8d23f1b411e924ece89`
+* `native/boot/dapf_guard.py`: `bb33d9bebcec3a6cd925ed9e7b28dbabe3c7375c445d7e9d68ace18f4eaa7047`
 * `native/boot/fdt.py`: `98ff4d58a0ca5b5abb68689b901aef526726704fa70925e96db6f1bbf836a591`
 * `tools/m1n1-client/usb_identity.py`: `72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137`
-* Archive SHA-256: `b59db87bee50f5a2b57f65ea54e9ecd9fc07d410251bb38175001ac056ee6862`
-* Intake manifest SHA-256: `862391dd99ee93d07c196e502196cefc869b2549274d6139d781f564b4bc50a0`
 
-Create a new ignored attempt-3 record using `boot-result-template.md`; keep all
-previous results. Confirm readiness to the user before they leave macOS. If any
-check fails, stop offline and report. Do not open USB to diagnose an intake error.
+Report readiness to the human. **Stop offline** until they choose to begin one
+new attempt with the described RAM correction. Their explicit start can proceed
+directly under this checklist; no additional M5-agent review round trip is needed
+for unchanged verified code. Do not interpret a test/receipt as authorization.
 
-## Attempt 3 — execute once after the human reports m1n1 running
+## Attempt 4 — after the human starts it and reports m1n1 running
 
 1. Both Macs on power, direct USB data cable, M5 display visible. If the human
    already booted the lab to `Running proxy...` for this attempt, do not reboot
@@ -110,14 +75,16 @@ check fails, stop offline and report. Do not open USB to diagnose an intake erro
 
    The launcher selects exactly one descriptor-verified primary, sends its
    own P_NOP, checks the chip/build marker/secondary flags/board/framebuffer,
-   uploads to RAM and checks m1n1's effective DT before handoff. It never
+   validates the DAPF layout, uploads to RAM and checks m1n1's effective DT.
+   It then applies and reads back the bounded DAPF table correction before handoff. It never
    requests secondary startup or cpufreq initialization. Internal NVMe is
    disabled in the Linux DT; initramfs mounts only proc/sys/devtmpfs. Hardware
    setup and RAM/register writes occur; this is not a read-only P_NOP session.
 3. Record start/end times, command exit and the last printed checkpoint:
    package, primary, target marker/secondary flags, **Initializing controller
    RAM utilities**, **Reading target ADT root compatibility**, board/framebuffer,
-   RAM upload, DT preparation, then preflight/handoff. Preserve these exact
+   RAM upload, DT preparation, then **DAPF RAM table corrected** and
+   preflight/handoff. Also capture **DAPF layout PASS** before upload. Preserve these exact
    non-sensitive checkpoint messages and any reviewed fixed STOP explanation;
    do not reduce all diagnostic output to just an exception type. For unexpected
    errors record only safe module/function/line metadata without locals or
@@ -143,7 +110,7 @@ check fails, stop offline and report. Do not open USB to diagnose an intake erro
    timed liveness and return. A pass requires all screen milestones and return;
    a controller PASS alone is insufficient. Do not claim hardware/performance parity.
 
-## Decision after the result
+## Decision after attempt 4
 
 * **Preflight rejection:** fix the specific validated mismatch offline. A
   marker mismatch requires investigating provenance, not removing the check.

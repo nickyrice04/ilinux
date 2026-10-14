@@ -992,3 +992,24 @@ Macintosh HD return. Record safe code offset/log text only, omit raw register/
 address data, and distinguish nearby PCIe warnings from a proven cause. M5
 reviews the exact pinned handoff path/build symbols offline and checks return
 protections; no retry, reinstall or boot-setting changes are authorized.
+
+## 2026-10-13 · Honor DAPF instance metadata; use a bounded RAM workaround first
+
+The matching shipped binary, public source, REA and instruction cross-check
+place the handoff exception in DAPF initialization. The AOP register index used
+by m1n1 is GAPF according to this Mac's sanitized instance table. Correct the
+layout handling before attempting another boot; do not infer that PCIe warnings
+caused the exception or broadly bypass hardware initialization.
+
+Keep a tested source fix for future builds. For the next experiment, leave the
+installed boot object unchanged: verify the exact live table/code and current
+ADT layout, then remove only the absent AOP DAPF entry from its RAM work-list.
+One 96-byte data write, readback checked, is the entire correction; no firmware
+filter register or protection control is written by it. Preserve all other
+entries and existing launch gates. Unknown layouts/readback failures stop.
+
+The user requested fixing the error; this prepares a proposed next experiment,
+not an automatic retry under consumed attempt-3 authorization. M1 verifies
+offline and waits for the human to start that single experiment. No repeated
+policy query is needed: fresh original Full/lab Permissive JSON already passed.
+Actual native correction and Linux execution remain unverified.

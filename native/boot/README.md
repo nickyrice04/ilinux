@@ -1,20 +1,18 @@
-# J716c Linux boot package — boot022 framebuffer correction
+# J716c native handoff — boot022 with reviewed DAPF RAM correction
 
-Target: **this Mac17,6 / J716c / t6050 M5 Max**. Boot022's corrected framebuffer
-passed physical preflight in attempt 3. The launcher requested kernel handoff,
-then timed out; the target photo shows **m1n1 SError in EL2** and unhandled-
-exception reboot output. Linux kernel/PID 1/one-CPU/60-second liveness are
-**NOT OBSERVED**. User confirms Macintosh HD return. See
-[attempt 3 result](stage-b-2026-10-13-attempt3-result.md) for sanitized evidence
-and M5 offline investigation steps. No retry or new live session authorized.
+Attempt 3 passed all preflight gates, including the actual framebuffer fix,
+then m1n1 raised an SError during DAPF setup. Linux execution is **NOT OBSERVED**.
+The wrong AOP register-region selection is corrected offline; see
+[findings/tests](../../kernel/experiments/dapf-handoff/README.md) and the preserved
+[attempt-3 result](stage-b-2026-10-13-attempt3-result.md).
 
-Kernel, initramfs and installed m1n1 remain unchanged from boot021; its version
-marker is still correct and passed the live check. Keep client pin/boot022
-intact during diagnosis. No reinstall, Recovery or volume/security/default
-changes. Preserve [attempt 1](stage-b-2026-10-13-result.md) and
-[attempt 2](stage-b-2026-10-13-attempt2-result.md). The
-[Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md) is consumed
-history until a new reviewed/user-authorized session.
+**Reuse boot022 and the installed boot021 m1n1.** The new controller validates
+the live code, table and ADT, then applies a narrow 96-byte RAM data correction
+before handoff. It leaves the persistent boot entry and filter registers
+unchanged. No new download, kernel rebuild, Recovery or reinstall is needed.
+Native correction NOT TESTED. M1 first verifies the updated code offline using
+[the current checklist](../../tools/m1n1-client/stage-b-instructions.md), then
+waits for the human to start the proposed attempt 4. No automatic retry.
 
 The completed M5 entry installation is documented in
 [boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).
@@ -88,7 +86,8 @@ For a later explicitly approved session it:
    **in memory only**. Aborts unless it exposes exactly one CPU, an enabled
    boot framebuffer, disabled NVMe/cpufreq and the expected arguments.
 5. Rechecks secondary state, performs cache maintenance/DAIF setup, and
-   requests the kernel handoff. No automatic retry. A 180-second deadline
+   applies the verified DAPF RAM work-list correction, then requests the kernel
+   handoff. No automatic retry. A 180-second deadline
    bounds the controller operation; the serial port closes on exit.
 
 The state flags describe cores started by m1n1, not an independent probe of

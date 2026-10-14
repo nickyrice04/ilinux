@@ -15,6 +15,7 @@ import sys
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from fdt import check_stage_b
+import dapf_guard
 sys.path.insert(0, str(HERE.parents[1] / "tools/m1n1-client"))
 import usb_identity
 
@@ -44,6 +45,7 @@ def verify_package(directory):
     if image[56:60] != b"ARM\x64" or len(image) < 64:
         raise ValueError("not an uncompressed ARM64 Image")
     check_stage_b(loaded["t6050-j716c-stage-b.dtb"])
+    dapf_guard.verify_image(loaded["m1n1.bin"])
     return manifest, loaded
 
 
@@ -82,6 +84,8 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
     if not utils.ba.video.base or not utils.ba.video.width or not utils.ba.video.height:
         raise ValueError("m1n1 has no boot framebuffer")
     print("Board/framebuffer PASS; allocating RAM for diagnostic payloads.", flush=True)
+    dapf_plan = dapf_guard.prepare(iface, base, files["m1n1.bin"], utils.adt)
+    print("DAPF layout PASS: AOP has DART/GAPF only; RAM correction planned.", flush=True)
     image = files["Image"]
     # Respect ARM64 Image.text_offset instead of assuming it is always zero.
     text_offset, image_size = struct.unpack_from("<QQ", image, 8)
@@ -117,6 +121,8 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
     if any(a not in ("idle=nop", "arm64.nowfxt") for a in args[len(BOOTARGS.split()):]):
         raise ValueError("unexpected appended bootargs")
     ensure_no_secondaries(proxy)
+    dapf_guard.apply(iface, dapf_plan)
+    print("DAPF RAM table corrected: omitted absent AOP DAPF; other entries retained.", flush=True)
     proxy.dc_cvau(kernel, len(image))
     proxy.ic_ivau(kernel, len(image))
     utils.msr("DAIF", 0xC0)

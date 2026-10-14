@@ -5,15 +5,17 @@ Run with tools/m1n1-client/run.sh in the prepared controller environment.
 """
 import contextlib
 import io
+import os
 from pathlib import Path
 import struct
 import sys
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-sys.path.insert(0, str(HERE.parents[1] / "third_party/m1n1/proxyclient"))
+sys.path.insert(0, str(Path(os.environ.get("M1N1_SOURCE", HERE.parents[1] / "third_party/m1n1")) / "proxyclient"))
 from m1n1.adt import PMGRDevices
 from m1n1.proxyutils import LazyADT
 import launch
@@ -56,14 +58,16 @@ class PinnedADTTests(unittest.TestCase):
         image = bytearray(64)
         struct.pack_into("<QQ", image, 8, 0, 4096)
         files = {"Image": bytes(image), "t6050-j716c-stage-b.dtb": prepared(),
-                 "initramfs-stage-b.cpio.gz": b"synthetic-initrd"}
+                 "initramfs-stage-b.cpio.gz": b"synthetic-initrd", "m1n1.bin": b"fixture"}
 
         def factory(proxy):
             utils = FakeUtils(proxy)
             utils.adt = self.lazy(compatible)
             return utils
 
-        with contextlib.redirect_stdout(io.StringIO()):
+        with contextlib.redirect_stdout(io.StringIO()), \
+             patch.object(launch.dapf_guard, "prepare", return_value="test-plan"), \
+             patch.object(launch.dapf_guard, "apply"):
             launch.launch_session(self.iface, self.proxy, factory, manifest, files)
 
     def test_old_root_lookup_reproduces_keyerror(self):

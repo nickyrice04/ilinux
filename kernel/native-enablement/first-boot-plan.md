@@ -2,14 +2,14 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest:** boot022 attempt 3 passed all preflight checks, including prepared
-framebuffer validation. Handoff requested; controller UartTimeout. Human photo
-shows m1n1 SError in EL2/unhandled-exception reboot output. No observed Linux
-kernel, PID 1, one-CPU count or 60-second liveness. User confirms Macintosh HD
-return; M5 read-only protection/default checks and offline exception diagnosis
-are next. Keep installed m1n1/boot021 marker and client pin unchanged. The one
-attempt is consumed; no retries or boot-setting changes authorized. See
-[attempt 3 result](../../native/boot/stage-b-2026-10-13-attempt3-result.md).
+**Latest:** attempt 3 passed all preflight, then m1n1 raised an SError during
+DAPF setup. Linux execution NOT OBSERVED. The confirmed AOP DAPF/GAPF layout
+mismatch is corrected offline with a source guard and a narrow RAM-only table
+workaround for the installed binary. [Evidence](../../kernel/experiments/dapf-handoff/README.md).
+Reuse boot022; no reinstall or Recovery. M1 verifies new controller code before
+the human starts proposed attempt 4. Post-attempt-3 policy check PASS from
+user-supplied JSON: original Full/lab Permissive, both exit 0. Native correction
+NOT TESTED. [Current checklist](../../tools/m1n1-client/stage-b-instructions.md).
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received
@@ -143,13 +143,14 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: boot022 / reviewed attempt 3
+## 5. Stage B: proposed attempt 4, boot022 with DAPF RAM guard
 
-Prepare the new DT-only package on M1 before restart; do not use boot021's old
-Stage-B DT. Once M1 intake and return-policy checks pass, follow the checklist
-once with a new attempt-3 record, then return to Macintosh HD. Keep original
-Full Security; no volume/security/default/boot-object changes. This is a new
-reviewed continuation, not an automatic retry. Linux remains NOT RUN.
+M1 verifies the updated launcher/guard against existing boot022 before restart.
+The human can then start one reviewed experiment. All fixed boot arguments and
+observation/return bounds remain. The new 96-byte RAM-only data correction
+omits only the AOP's absent DAPF entry after verifying the current metadata and
+passing every original preflight gate. No installed boot object or security
+change. Record attempt 4 separately; no automatic retries.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.

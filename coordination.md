@@ -6,7 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 result — attempt 3 m1n1 exception; return confirmed, 2026-10-13
+### Current M5 handoff — DAPF correction prepared for M1 verification, 2026-10-13
+
+Latest: attempt 3 passed all boot022 preflight gates, then m1n1 raised an
+SError during DAPF setup; Linux execution NOT OBSERVED. Exact-image ELF/REA/
+GNU/LLVM analysis and the sanitized ADT expose a fixed-index DAPF/GAPF mismatch.
+An original source guard builds/tests, and the current launcher implements a
+narrow verified 96-byte RAM work-list correction for the unchanged installed
+m1n1. Boot022 payload unchanged. Native correction NOT TESTED. M1 must verify
+updated controller code offline before the human starts one proposed attempt 4.
+Fresh user-supplied policy JSON: original Full/lab Permissive, both exit 0.
+Independent original build/FileVault/SIP/authenticated-root and staged m1n1
+checks pass. No host boot/settings changes. Current instructions:
+`tools/m1n1-client/stage-b-instructions.md`; evidence and limits:
+`kernel/experiments/dapf-handoff/README.md`.
+
+M5 completed offline analysis/implementation; all test VMs are stopped and both
+quiet locks released. M1 owns the new offline verification and sanitized result
+record. Reuse boot022; no download/reinstall/Recovery. The native change is a
+RAM-only data-table correction, not a new persistent boot object. Previous
+attempt 3 is consumed. Do not reconnect or launch merely to verify the code;
+wait for the human to start the proposed single attempt after readiness.
+Preserve original Full Security, all existing gates/time bounds and macOS return.
+The supplied post-attempt-3 policy result is current; no duplicate query needed.
+
+### Historical M1 result — attempt 3 m1n1 exception; return confirmed, 2026-10-13
 
 * One boot022 invocation at `c5f515c`: controller exit 1, **32.059 s**,
   UTC 02:34:32.733054–02:35:04.792407 on 2026-10-14.

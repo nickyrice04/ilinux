@@ -86,16 +86,18 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: one boot022 Stage B attempt 3 at `c5f515c` passed every preflight gate,
-including the corrected framebuffer. Handoff requested; controller UartTimeout
-(exit 1, 32.059 s). Human photo shows m1n1 SError in EL2 during handoff preparation
-and `Unhandled exception, rebooting...`. No Linux kernel/PID 1/one-CPU/60-second
-liveness observed. User confirms Macintosh HD return; fresh protections/default
-checks remain for M5. Installed m1n1/boot021 marker and client pin unchanged,
-no boot-setting changes or retries. M5 owns offline matching-build exception
-investigation and read-only return checks. This attempt is consumed; no new
-live session authorized. See `native/boot/stage-b-2026-10-13-attempt3-result.md`
-and `coordination.md`.
+Latest: attempt 3 passed all boot022 preflight gates, then m1n1 raised an
+SError during DAPF setup; Linux execution NOT OBSERVED. Exact-image ELF/REA/
+GNU/LLVM analysis and the sanitized ADT expose a fixed-index DAPF/GAPF mismatch.
+An original source guard builds/tests, and the current launcher implements a
+narrow verified 96-byte RAM work-list correction for the unchanged installed
+m1n1. Boot022 payload unchanged. Native correction NOT TESTED. M1 must verify
+updated controller code offline before the human starts one proposed attempt 4.
+Fresh user-supplied policy JSON: original Full/lab Permissive, both exit 0.
+Independent original build/FileVault/SIP/authenticated-root and staged m1n1
+checks pass. No host boot/settings changes. Current instructions:
+`tools/m1n1-client/stage-b-instructions.md`; evidence and limits:
+`kernel/experiments/dapf-handoff/README.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

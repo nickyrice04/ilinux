@@ -3,16 +3,21 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — m1n1 SError after boot022 preflight PASS
+## Current Stage B gate — DAPF mismatch corrected offline, native test pending
 
-Attempt 3 passed the corrected prepared-DT framebuffer gate and requested
-handoff. The target photo shows m1n1 SError in EL2 after PCIe setup messages;
-controller timed out awaiting kboot reply. Linux kernel/PID 1/one-CPU/liveness
-NOT OBSERVED. User confirms Macintosh HD return; fresh read-only return checks
-remain for M5. No retry or boot-setting changes. Investigate the matching-build
-exception and pinned pre-kernel setup offline, without inferring PCIe causality
-from adjacent messages. Preserve passing framebuffer/CPU/storage/version gates.
-See `native/boot/stage-b-2026-10-13-attempt3-result.md`.
+Attempt 3 passed framebuffer and other preflight, then m1n1 raised an EL2 SError
+before observed Linux output. Exact binary/source/REA analysis places the PC in
+DAPF setup. Sanitized AOP metadata exposes DART+GAPF, while the pinned table
+incorrectly chooses the GAPF region as DAPF. This confirmed mismatch is a likely
+cause; asynchronous SError does not prove the exact faulting write.
+
+Source guard: full m1n1 build plus 12 C scenarios with ASan/UBSan PASS. A narrower
+RAM-only controller correction avoids replacing the installed bootloader;
+regression and real-parser tests pass. Boot022 unchanged. M1 verifies updated
+code before a human-started proposed attempt 4. Policy check PASS (user-supplied
+original Full/lab Permissive, exit 0). No host settings changes or automatic retry.
+Native correction NOT TESTED; Linux execution NOT OBSERVED. See
+`kernel/experiments/dapf-handoff/README.md` for evidence and remaining limits.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 
