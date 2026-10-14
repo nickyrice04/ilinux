@@ -86,16 +86,15 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: attempt 4 passed the DAPF correction/kboot reply but Linux was not
-observed. Boot024 adds original early framebuffer logging and three kernel
-entry rectangles; only Image changes, installed m1n1 stays boot021. Build,
-sanitizer C/ARM64 tests, 65 offline cases and exact-Image generic VM PID 1 /
-60-second liveness PASS. Native boot024 NOT RUN. M1 now verifies the new release
-offline, then the human can start one recorded RAM boot under
-`tools/m1n1-client/stage-b-instructions.md`. Fresh user policy JSON reports
-original Full/lab Permissive (exit 0); independent root/build/FileVault/SIP and
-staged m1n1 checks pass. No host boot/settings changes. See
-`kernel/experiments/early-framebuffer/README.md` and `coordination.md`.
+Latest: M1 independently verified boot024 from handoff `1d1be38`: archive
+before extraction, 13 receipt files, all five reviewed source hashes, clean
+client pin and 65 offline cases PASS. Only Image changes; installed boot021
+m1n1 remains. Attempt 5/current live checks NOT RUN at readiness. Human reports
+Running proxy and phone video recording; after readiness publication, one
+reviewed RAM launch may proceed under `tools/m1n1-client/stage-b-instructions.md`,
+with screen milestones and Macintosh HD return. Prior original Full/lab
+Permissive policy prerequisite PASS; no boot/settings changes or auto-retry.
+Historical Linux remains NOT OBSERVED. See `coordination.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

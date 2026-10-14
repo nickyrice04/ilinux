@@ -5,6 +5,35 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: boot024 attempt 5 offline readiness PASS
+
+* Pulled and reviewed `1d1be38`, current Stage B instructions and early-screen
+  evidence. Downloaded private boot024 separately; verified the Git-tracked
+  archive SHA-256 **before extraction**, then all **13 receipt files** and
+  offline launcher verification PASS. Earlier packages/receipts/results retained.
+* Archive (16,720,911 bytes):
+  `f7cb69153adc832cae3a66fd6159e7fd41fccc2a113d3550962a7f959edd9636`.
+  Image: `6b683a2f52e769d1a23474b6807d009da8ad2e19d2168e62caba6cbbae240f7d`.
+  SHA256SUMS: `c9b132f08ea093667c9abb3798315e77cc6347d28897bdfa87654d14e20a2219`.
+* **65 offline cases PASS:** launcher 31, entry descriptor 6, DAPF guard 16,
+  framebuffer 5, real pinned DAPF parser 2, root ADT 4, proxy serializer 1.
+  All exit 0; synthetic transport only. The serializer test explicitly uses
+  `M1N1_SOURCE` pointing to the existing pinned checkout; no USB opened.
+* All five reviewed controller digests match. Client is clean at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Actual file comparison confirms
+  **only Image differs from boot022**; installed boot021 m1n1/marker unchanged.
+* New ignored receipt `build/native-intake/receipts/boot024.json` and separate
+  `build/native-intake/results/boot024-stage-b-attempt5.json`/`.md` retain exact
+  provenance, procedure/controller hashes and the one-invocation evidence plan.
+* M5-reviewed post-attempt-4 policy prerequisite already PASS: original Full,
+  lab Permissive, both exit 0. No duplicate query or changes to boot/settings.
+* **Ready for the authorized Stage B attempt 5.** Human has started the lab and
+  confirms Running proxy plus phone video recording. After publishing readiness,
+  run the documented launcher once, capture both DAPF checkpoints, descriptor
+  PASS and rectangle/kernel/PID 1/CPU/liveness observations, then Macintosh HD.
+* **Attempt 5/current live checks/Linux NOT RUN at readiness.** Historical Linux
+  remains NOT OBSERVED. No reinstall, settings changes or automatic retry.
+
 ## 2026-10-13 · M5: boot024 early observation ready for M1 intake
 
 * Reviewed M1 `4b1a5b9`: attempt 4 passed DAPF/preflight/kboot reply but no

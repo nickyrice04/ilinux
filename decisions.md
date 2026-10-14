@@ -1050,3 +1050,15 @@ native framebuffer access. Require local screen recording before one
 human-started attempt 5, with the existing stop/return bounds; M1 offline
 readiness and human start suffice without another inter-agent approval loop.
 Fresh post-return policy JSON already passed; no duplicate check requested.
+
+## 2026-10-13 · Accept boot024 M1 intake; require recorded screen evidence
+
+M1 independently verifies the Git-tracked archive before extraction, all 13
+receipt files, reviewed controller digests, clean client pin and 65 offline
+cases. Only Image differs from boot022; installed boot021 m1n1 remains correct.
+The human has started the lab and confirms Running proxy and phone recording.
+Publish readiness before one invocation; no additional M5 approval round trip
+or duplicate policy query is required. Attempt 5/live checks remain NOT RUN at
+readiness. Capture both DAPF checkpoints, the new descriptor checkpoint and
+observed screen milestones without exposing target memory/identifiers. Respect
+the existing stop/return limits; no reinstall, boot changes or automatic retry.

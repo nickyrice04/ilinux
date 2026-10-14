@@ -3,17 +3,18 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B gate — boot024 observation test ready for M1 intake
+## Current Stage B gate — boot024 M1 intake PASS; one recorded attempt pending
 
-Attempt 4 accepted the handoff; Linux was not observed. REA/source confirms
-m1n1 clears its console before jumping. Boot024 adds kernel entry rectangles,
-a flat-DT early framebuffer console and initializer tracing. Offline build,
-C/ARM64 tests and generic diskless VM liveness pass; **native NOT RUN**.
-Next: M1 verifies the new release, then one human-started RAM boot with video
-of the screen already recording. Follow `tools/m1n1-client/stage-b-instructions.md`.
-Original Full/lab Permissive post-return JSON PASS. No volume/security/default
-changes, reinstall, secondary CPU starts or automatic retry. The goal is the
-first identified Linux checkpoint, not an unsupported driver diagnosis.
+M1 independently verifies boot024 archive before extraction, 13 receipt files,
+reviewed source hashes, clean client pin and all 65 documented offline cases.
+Only Image changes; installed boot021 m1n1 stays unchanged. Attempt 5/live
+checks/Linux NOT RUN at readiness. Human confirms Running proxy and phone
+video recording. Publish readiness, then one bounded launch under
+`tools/m1n1-client/stage-b-instructions.md`; record both DAPF checkpoints,
+kernel descriptor, highest rectangle count and kernel/userspace/liveness.
+Stop on failure/liveness/120-second limit and return to Macintosh HD.
+Original Full/lab Permissive prerequisite already PASS. No reinstall, settings
+changes or automatic retry. Historical Linux execution remains NOT OBSERVED.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 
