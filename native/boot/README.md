@@ -1,4 +1,4 @@
-# J716c Linux boot package — Stage B preflight stopped; Linux NOT RUN
+# J716c Linux boot package — corrected Stage B attempt 2 ready
 
 Target: **this Mac17,6 / J716c / t6050 M5 Max**. This package is an experimental
 RAM diagnostic, not an Omarchy installer. Native m1n1 boot and USB P_NOP passed
@@ -6,10 +6,12 @@ on this machine; **native Linux remains NOT RUN**. The dedicated entry is
 already installed. Do not repeat installation or security changes. The one
 Stage B attempt stopped with KeyError before upload/handoff; user confirms
 Macintosh HD return. Live packaged-marker verification passed. Read the
-[session result and offline fix](stage-b-2026-10-13-result.md). Current user
-direction is **no retries**. The [Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md)
-is reference for offline review; neither package verification nor the local
-fix authorizes another physical attempt.
+[session result and offline fix](stage-b-2026-10-13-result.md). The user has now
+requested review and preparation for the next lab boot. B reviewed the fix,
+validated readiness and completed return-protection checks. One corrected
+attempt 2 is ready under the same protection constraints; follow the current
+[Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md). No reinstall
+or kernel/payload rebuild is needed. Preserve the first attempt's evidence.
 
 The completed M5 entry installation is documented in
 [boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).
@@ -126,13 +128,14 @@ hardware, and its DT preparation/handoff runs additional hardware setup.
 Disabling a Linux DT node does not undo bootloader initialization. The test
 intentionally issues no filesystem writes to the internal SSD.
 
-## Historical live command — consumed attempt; no retry authorized
+## Live command — one corrected attempt 2 under the new user direction
 
-The one user-authorized Stage B attempt has ended with preflight failure and
-user-confirmed return. Keep original Full Security and make no volume/security
-changes. The command below records the procedure; **do not execute it again**
-under that consumed authorization. Any later user-directed attempt requires
-fresh readiness and a separate record.
+The first session is consumed and preserved. The current user request directs
+preparation for another lab boot; M5 review accepts M1's existing corrected-code
+readiness. After human lab boot, M1 pulls the current checklist and confirms
+its listed code hashes, clean client pin and offline payload verification,
+then runs this command **once**, with a separate attempt-2 record. Keep original
+Full Security; no volume/security changes, additional setup or automatic retry.
 
 ```sh
 tools/m1n1-client/run.sh native/boot/launch.py \

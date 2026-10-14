@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: first Stage B stop reviewed; corrected attempt 2 ready
+
+* Reviewed/integrated M1 `fff8b95`/`1635ff0`: target checks passed, preflight
+  KeyError before upload/handoff, return confirmed, root-lookup defect fixed
+  offline. Verified LazyADT/root semantics against local clean-pinned source.
+  The defect fits the recorded checkpoint; exact live throw site stays uncertain.
+* Reran all 31 corrected launcher tests and real boot021 offline verification:
+  PASS. Reviewed M1's four pinned-parser synthetic tests and passing report;
+  did not claim an independent rerun of those dependency-based tests. No new
+  launcher, kernel, DT, initramfs, selector or m1n1 changes.
+* Independent read-only return checks: original root/build 25G83, original
+  System/Data FileVault, SIP/authenticated-root, AC, no project VM processes,
+  and staged m1n1 hash/size match. User supplied fresh original Full/lab
+  Permissive JSON, both exit 0; default selection/installed object not queried.
+* User requests next-boot preparation and M1 repository handoff. Prepared one
+  corrected Stage B attempt 2, using existing readiness without another
+  permission/readiness-message loop. Preserve attempt-1 evidence. M1 must pull,
+  confirm exact source hashes/pin/package, and make a new evidence record
+  before one live launcher invocation. No code or payload rebuild needed.
+* Refined checkpoint collection to distinguish utility setup, ADT root access,
+  framebuffer, upload and handoff, retaining safe explanations. Same bounded
+  one-core RAM diagnostic, no Linux NVMe/cpufreq, no new volume/security change.
+* Ready for human lab boot, one M1-controlled attempt, then Macintosh HD return.
+  No reboot/USB/native Linux action or benchmark in this review. Linux remains
+  NOT RUN; attempt-2 outcomes must be recorded from actual observations.
+
 ## 2026-10-13 · M1: Stage B preflight failed; return confirmed; ADT lookup fixed offline
 
 * Single authorized launcher attempt at `fff8b95`: **exit 1, 1.135 s**, UTC

@@ -7,10 +7,13 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
 The authorized attempt reached target chip/packaged-marker/secondary PASS, then
 KeyError before upload/handoff. Linux NOT RUN. User confirms Macintosh HD return;
-new read-only return protection checks are pending. A root-lookup API defect is
-reproduced and fixed offline; 35 launcher/ADT tests pass. Live throw-site detail
-was not retained, so this likely explanation is not a hardware-verified fix.
-No retries. See `native/boot/stage-b-2026-10-13-result.md`. Earlier readiness and
+new read-only return checks now confirm build/FileVault/SIP/authenticated-root
+and user-supplied original Full/lab Permissive JSON. The root-lookup API defect
+is fixed offline; 35 launcher/ADT tests pass, B reran 31 and package verification.
+Live throw-site detail was not retained; the fix is not hardware-verified.
+User now requests next-boot preparation: one corrected Stage B attempt 2 is
+ready under the same protection constraints. Follow the updated checklist;
+no automatic retries after that attempt. See `native/boot/stage-b-2026-10-13-result.md`. Earlier readiness and
 live-version-pending statements below are historical; packaged marker now PASS.
 
 ## Latest Stage A status — 2026-10-13

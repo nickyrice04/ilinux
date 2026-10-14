@@ -5,9 +5,14 @@ single-core, APFS-stub, persistent-console and power-cycle guarantees.
 **Latest Stage B result:** preflight KeyError, exit 1, before payload upload or
 handoff; user confirms Macintosh HD return. Live packaged-marker check PASS;
 Linux NOT RUN. Local ADT root access corrected offline (31 launcher + 4 pinned
-ADT tests pass), not retested on hardware. **No retries.** See
-[the result](../../native/boot/stage-b-2026-10-13-result.md). The Stage A and
-protection results below are historical baseline; new return checks are pending.
+ADT tests pass), not retested on hardware. See
+[the preserved result](../../native/boot/stage-b-2026-10-13-result.md). B reviewed
+that fix, reran 31 launcher tests/package verification and completed fresh
+return checks (original build/FileVault/SIP/authenticated-root; user-supplied
+original Full/lab Permissive JSON, both exit 0). The user now requests preparation
+for the next boot: one corrected attempt 2 is ready. M1 pulls the current
+Stage B checklist after human lab boot and verifies files/pin/package before
+one invocation. No new volume/security change or repeat permission needed.
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received
@@ -141,11 +146,13 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: one-core RAM diagnostic, attempt ended; no retries
+## 5. Stage B: corrected attempt 2 ready
 
-The user-approved attempt stopped before Linux handoff and the user returned.
-The following design is retained for reference. No new attempt is authorized;
-Linux remains NOT RUN. Preserve Full Security and make no volume/security changes.
+The first attempt stopped before Linux upload. The current user direction
+requests another lab boot after review; the corrected-code readiness is accepted.
+M1 follows the checklist once with a separate record, then returns the human
+to Macintosh HD. Preserve original Full Security; no volume/security changes.
+Linux remains NOT RUN pending actual evidence.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.

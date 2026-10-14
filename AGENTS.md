@@ -89,11 +89,14 @@ See `progress.md`. As of 2026-10-13:
 Latest: the one Stage B attempt ended with preflight KeyError (exit 1, 1.135 s)
 after package/USB/chip/packaged-marker/secondary checks passed, before payload
 upload or Linux handoff. Live m1n1 marker verification PASS; Linux NOT RUN.
-User confirms Macintosh HD return; fresh post-attempt protection checks pending.
-Offline ADT root-lookup defect corrected in local launcher, confirmed with actual
-pinned parser/synthetic data: 31 launcher + 4 ADT tests and package verify PASS.
-Precise live throw site is uncertain because only exception type was retained.
-No retries or new live authorization. Boot021/upstream pin unchanged; see
+User confirms Macintosh HD return; B independently checked build/FileVault/SIP/
+authenticated-root and reviewed fresh user-provided original Full/lab Permissive
+JSON (both exit 0). Offline ADT root-lookup defect is fixed; 31 launcher + 4
+pinned-parser cases PASS, and B reran 31 plus real package verification.
+Precise live throw site stays uncertain. User now requests next-boot preparation:
+one corrected attempt 2 is ready, with no volume/security change. M1 pulls the
+current Stage B checklist after human lab boot, verifies hashes/pin/package and
+runs once. No repeat permission/readiness-message loop. Boot021/pin unchanged; see
 `native/boot/stage-b-2026-10-13-result.md` and `coordination.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;

@@ -6,6 +6,36 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — corrected Stage B attempt 2 ready, 2026-10-13
+
+The user requests review, next-boot preparation and repository instructions
+for M1 after the lab boot. B reviewed/fast-forwarded `fff8b95` and `1635ff0`:
+attempt 1 failed before upload/handoff; the ADT root-lookup defect is confirmed
+against the pinned source. Keep its original evidence immutable. Linux NOT RUN.
+
+The next step is one fresh Stage B attempt with M1's corrected launcher. This
+current user direction authorizes that reviewed continuation, not an automatic
+retry of the consumed attempt. Original Full Security, no volume/security/
+boot-object/default changes, no SMP or storage expansion. No repeat approval
+or redundant readiness-message round trip is needed for this exact scope.
+
+M1's 31+4 corrected-code tests and unchanged USB/intake readiness remain valid;
+B independently reran 31 launcher cases, checked the ADT API, and verified the
+real package. Launcher/payload/pin unchanged by B. Read-only M5 checks: original
+Macintosh HD/build 25G83, original System/Data FileVault, SIP/authenticated-root,
+AC, no project VMs, staged m1n1 hash match. The user supplied fresh read-only
+original Full/lab Permissive JSON, both exit 0. Default/installed-object checks
+were not rerun and are not inferred from this policy result.
+
+Human may shut down and pick iLinux Boot Lab once. M1 then pulls/reads
+`tools/m1n1-client/stage-b-instructions.md`, confirms listed source hashes/pin
+and offline package verification, creates a distinct attempt-2 evidence record,
+and executes the launcher once after the human reports proxy ready. Record the
+new RAM-utility/ADT checkpoints as well as screen milestones, stop at the
+specified bounds and return to Macintosh HD. Publish sanitized actual results.
+No new native action occurred in B's review; attempt 2 remains NOT RUN.
+
+
 ### Current M1 result — 2026-10-13: Stage B preflight failed; return confirmed; ADT lookup fixed offline
 
 * Single authorized launcher attempt at `fff8b95`: **exit 1, 1.135 s**, UTC

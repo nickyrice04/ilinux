@@ -906,3 +906,15 @@ Original fake dictionary hid the mismatch. Fix only local launcher/tests; keep
 upstream pin and boot021 intact. 31 launcher + 4 ADT cases and offline package
 verification pass. Precise live throw site is uncertain without raw traceback;
 fix is not hardware-tested. M5 reviews result and read-only return checks next.
+
+## 2026-10-13 · Review the launcher API fix and proceed with one corrected attempt
+
+M1's first Stage B stopped before upload/handoff; a confirmed pinned-ADT API
+mismatch explains its checkpoint/type, with exact live throw site still uncertain.
+Review accepts the narrow root-property fix and actual-parser regression; no
+kernel rebuild or reinstall follows from a controller API error. User now asks
+to prepare the next boot and M1 handoff. Carry that direction into one corrected
+Stage B attempt with existing scope, fresh evidence record, bounded stop and
+original macOS return. Preserve original Full Security and make no volume or
+security changes. Do not request already-given permission again or require
+another readiness-message loop for unchanged code M1 already tested.
