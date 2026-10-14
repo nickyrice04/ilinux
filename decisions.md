@@ -1403,3 +1403,21 @@ fields and absence of readable stack or GPIO counts. The 40.13s clip is partial
 coverage; the still photo adds no duration. Return instructed; confirmation
 pending, fresh policy/default not checked. Attempt consumed, no retry/settings
 changes. Native userspace remains the gate for Linux control and Omarchy.
+
+## 2026-10-14 · Remove scheduler rendering before adding more hardware changes
+
+Attempt 13 shows changing kernel heartbeats but no attributed GPIO operation or
+userspace. Exact source reveals full-panel repainting at scheduler checkpoints,
+including locked/IRQ-disabled paths. Keep phase/PID/counters in RAM and sample
+S from the existing watchdog. Verify actual hook state and linked instructions;
+do not claim the unmeasured native stall is fixed. Preserve boot032 GPIO repair
+and all hardware gates; only Image changes. Exact source answers this question,
+so no additional proprietary decompilation or broad REA sweep is justified.
+
+Post-return user policies and M5 read-only checks supersede pending return status.
+No fresh policy exits supplied; default/installed object/authenticated-root not
+rechecked. M1 readiness plus human start suffice for one filmed attempt 14.
+Time the stop independently of media upload; no retry or settings changes.
+Native userspace, control/input/RAM root and configuration agent precede Omarchy
+and separate acceleration/SMP/power-efficiency validation. Claude follows
+`native/boot/claude-workflow.md` with the same boundaries and evidence standards.

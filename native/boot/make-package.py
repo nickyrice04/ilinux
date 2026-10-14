@@ -28,13 +28,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True, help="VM job out directory containing export/")
     parser.add_argument("--destination", type=Path, required=True)
-    parser.add_argument("--name", choices=(NAME, "ilinux-j716c-boot022", "ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"), default=NAME)
+    parser.add_argument("--name", choices=(NAME, "ilinux-j716c-boot022", "ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"), default=NAME)
     parser.add_argument("--previous-package", type=Path, help="boot032: verified boot031 directory for exact DT-delta check")
     args = parser.parse_args()
     data = {name: (args.out / "export" / name).read_bytes() for name in FILES}
     checks = {n: {"size": len(b), "sha256": hashlib.sha256(b).hexdigest()} for n, b in data.items()}
     for name, digest in ORIGINAL.items():
-        if name == "Image" and args.name in ("ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+        if name == "Image" and args.name in ("ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
             continue
         if checks[name]["sha256"] != digest:
             raise ValueError("original job-020 artifact changed: " + name)
@@ -45,9 +45,9 @@ def main():
         if any(forbidden.intersection(node) for node in properties(data[name]).values()):
             raise ValueError("identifying properties in package DT")
     symbols = {}
-    if args.name in ("ilinux-j716c-boot022", "ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+    if args.name in ("ilinux-j716c-boot022", "ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
         previous = {"ilinux-j716c-boot022": "boot021", "ilinux-j716c-boot024": "boot022",
-                    "ilinux-j716c-boot025": "boot024", "ilinux-j716c-boot027": "boot025", "ilinux-j716c-boot028": "boot027", "ilinux-j716c-boot029": "boot028", "ilinux-j716c-boot030": "boot029", "ilinux-j716c-boot031": "boot030", "ilinux-j716c-boot032": "boot031"}[args.name]
+                    "ilinux-j716c-boot025": "boot024", "ilinux-j716c-boot027": "boot025", "ilinux-j716c-boot028": "boot027", "ilinux-j716c-boot029": "boot028", "ilinux-j716c-boot030": "boot029", "ilinux-j716c-boot031": "boot030", "ilinux-j716c-boot032": "boot031", "ilinux-j716c-boot033": "boot032"}[args.name]
         allowed_changes = {"t6050-j716c-stage-b.dtb"} if previous == "boot021" else {"Image"}
         if args.name == "ilinux-j716c-boot032":
             allowed_changes.add("t6050-j716c-stage-b.dtb")
@@ -94,25 +94,27 @@ def main():
         "m1n1_dt_pointer_offset": symbols["dt"],
         "files": checks,
     }
-    if args.name in ("ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+    if args.name in ("ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
         from entry_guard import descriptor_offset
         manifest["linux_patches"] = ("kernel/patches/t6050/0001-0007 plus "
                                      "kernel/experiments/early-framebuffer/apply.py; job-024")
         manifest["early_framebuffer_descriptor_offset"] = descriptor_offset(data["Image"])
-        if args.name in ("ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+        if args.name in ("ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
             manifest["linux_patches"] += "; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025"
-    if args.name in ("ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+    if args.name in ("ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
         manifest["linux_patches"] += "; kernel/experiments/deferred-probe/apply.py; job-027"
-    if args.name in ("ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+    if args.name in ("ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
         manifest["linux_patches"] += "; kernel/experiments/schedule-boundary/apply.py; job-028"
-    if args.name in ("ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+    if args.name in ("ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
         manifest["linux_patches"] += "; kernel/experiments/context-display/apply.py; job-029"
-    if args.name in ("ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+    if args.name in ("ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
         manifest["linux_patches"] += "; kernel/experiments/probe-path/apply.py; job-030"
-    if args.name in ("ilinux-j716c-boot031", "ilinux-j716c-boot032"):
+    if args.name in ("ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033"):
         manifest["linux_patches"] += "; kernel/experiments/gpio-handoff/apply.py; job-031"
-    if args.name == "ilinux-j716c-boot032":
+    if args.name in ("ilinux-j716c-boot032", "ilinux-j716c-boot033"):
         manifest["linux_patches"] += "; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges"
+    if args.name == "ilinux-j716c-boot033":
+        manifest["linux_patches"] += "; kernel/experiments/scheduler-ram-only/apply.py; job-033"
     encoded = (json.dumps(manifest, indent=2) + "\n").encode()
     (HERE / "package-manifest.json").write_bytes(encoded)
     data["package-manifest.json"] = encoded

@@ -86,13 +86,27 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1 result: **attempt 13 consumed**, controller/GPIO gates PASS (10.589 s).
-Native Linux panel reaches **P05 W00 H06 D0000 I000 B00 C0000**; final S unclear.
-Heartbeat advances but no attributed GPIO probe, counts/return, PID 1 or userspace
-liveness observed. Exact cause unknown. Stop/return instructed; **Macintosh HD
-return PENDING HUMAN CONFIRMATION**, fresh policy/default NOT CHECKED. M5 next:
-read-only return review then offline worker/scheduler/console analysis. No retry
-or settings changes. See `native/boot/stage-b-2026-10-14-attempt13-result.md`.
+Boot033 / attempt 14 prepared after reviewing M1 attempt 13 (`9a045cf`).
+Attempt 13 has no attributed GPIO result or native PID 1; cause remains unknown.
+Confirmed own-code overhead: scheduler hooks repaint all eight diagnostic lanes.
+Boot033 keeps scheduler state in RAM and samples S from the bounded watchdog;
+S is no longer an immediate checkpoint display. Only Image changes. Preserve
+boot032 GPIO exclusions, installed boot021, all gates and the current lab entry.
+Full Image/ELF roundtrip, actual-hook ASan/UBSan, 102 controller cases, 13-file
+intake and 13+8 intake/evidence cases PASS. Linked hook: 14 instructions, no
+calls. Exact Image/initramfs generic VM reaches PID 1/one CPU/60s liveness at
+60.192455 kernel seconds (60.368s wall); native boot033/live checks NOT RUN.
+User reports post-attempt-13 Full/Permissive; fresh exit codes not supplied.
+M5 read-only original-root/build/FileVault/SIP/staged-m1n1 checks PASS, superseding
+pending return status below; default/installed object/authenticated-root were
+not rechecked. No boot/security/volume changes. M1 next: current Stage-B checklist,
+offline readiness, one human-started filmed attempt 14, stop by milestone/error/
+120s from handoff and return to Macintosh HD. No setup/retry or extra M5 approval
+loop. Claude workflow: `native/boot/claude-workflow.md`. Evidence/code:
+`kernel/experiments/scheduler-ram-only/`. Native userspace still gates Linux
+control/RAM root/configuration-agent work, then Omarchy and hardware performance.
+
+Historical M1 attempt-13 record: `native/boot/stage-b-2026-10-14-attempt13-result.md`.
 
 Historical M5 preparation: **boot032 / attempt 13 prepared** after M1 attempt 12 (`f3218fd`).
 Main GPIO stopped at B73/C0059 cache initialization; NUB handoff 61/7/1 returned 0.

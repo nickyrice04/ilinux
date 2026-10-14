@@ -1,19 +1,12 @@
-# Stage B — attempt 13 / boot032 reserved GPIO pins
-
-**Attempt 13 consumed (M1 result, 2026-10-14):** readiness `8f2c908`, one
-controller PASS including GPIO gates (10.589 s). Photo P05/W00/H06/D0000/I000/
-B00/C0000; S unclear. No attributed GPIO result or diagnostic userspace/liveness.
-Return instructed, **Macintosh HD confirmation pending**, fresh policies/default
-NOT CHECKED. See `native/boot/stage-b-2026-10-14-attempt13-result.md`.
-**Do not replay the launch below.** Retained reviewed procedure, not a new attempt.
+# Stage B — attempt 14 / boot033 scheduler diagnostics in RAM
 
 **M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`, preserving
 local work and stopping on divergence. Read `coordination.md` and this file.
-Attempt 12 is consumed: final **P05 S09 W04 H02 D0059 B73 C0059** identifies
-main GPIO register-cache initialization; NUB IRQ handoff 61/7/1 and return 0
-were observed. No main-controller completion or PID 1 was observed. See
-`native/boot/stage-b-2026-10-14-attempt12-result.md`.
-**Native attempt 13 / boot032 / live checks NOT RUN at this handoff.**
+Attempt 13 is consumed: controller/GPIO gates PASS, final photo
+**P05/W00/H06/D0000/I000/B00/C0000**, S unclear. No attributed GPIO result or
+PID 1 was observed. I000 is not evidence of a pin-0 read.
+See `native/boot/stage-b-2026-10-14-attempt13-result.md`.
+**Native attempt 14 / boot033 / live checks NOT RUN at this handoff.**
 
 **Continue the existing installation.** Installed boot021 m1n1 and clean client
 pin remain unchanged. Do not repeat provisioning, Stage A, Recovery, macOS
@@ -22,63 +15,67 @@ Macintosh HD at Full Security and as default. No volume/security changes.
 
 ## What changed and why
 
-The observed macOS ADT excludes main GPIO pins **5,6,7,112,141** during Apple's
-initialization. REA plus independent byte/disassembly checks connect the property
-to the skipped reads; whole-function Apple pseudocode is not accepted as source.
-Boot031's cache initialization still reads these pins. Boot032 uses the standard
-Linux `gpio-reserved-ranges` property, strictly validates it and creates explicit
-cache defaults only from permitted pins. GPIO/pinmux/IRQ paths also exclude them.
-A pending excluded IRQ at initialization produces an explicit controller error
-before parent registration. It never overrides a pad lock or touches those pins.
-This is a **candidate repair**, not a proven explanation of the native stall.
+Our scheduler checkpoints repaint the entire diagnostic panel in sensitive
+scheduler/context-switch paths. Boot033 removes those calls and retains phase,
+PID and selection counters in RAM. The existing bounded five-second watchdog
+samples S before H and before printk. **S is now a sampled last checkpoint, not
+an immediately painted boundary.** Zero before the first watchdog or a stable
+S afterwards does not prove a stall; the six-sample watchdog remains bounded.
+Other marks repaint the saved S value without resampling it. P/W/H/D/I/B/C keep
+their meanings. This repairs confirmed instrumentation overhead; whether that
+explains native progress is a hypothesis, not a successful hardware fix yet.
 
-The launcher now checks live GPIO geometry/exclusions before uploads and checks
-the same property in the effective DT. Only **Image and Stage-B DT** change among
-payloads; the DT delta is exactly one GPIO exclusion property. All 286 public
-D/C node IDs remain unchanged. The panel adds **I:xxx** for the current GPIO pin.
-See `kernel/experiments/gpio-reserved/README.md`, `dt-delta.json` and validation.
+Only **Image** changes among payloads. Retain boot032's reserved pins
+**5,6,7,112,141**, sparse permitted cache defaults, guarded GPIO/IRQ paths,
+live-ADT/effective-DT checks, indexed diagnostics and all 286 D/C node IDs.
+No driver bypass or extra initcall skip is added. DT/config/initramfs/m1n1,
+fixed arguments, one CPU and DAPF/framebuffer corrections remain unchanged.
 
-Full Image/ELF roundtrip, ASan/UBSan helpers/renderer, GPIO binding/DT schema,
-102 controller cases, 13-file intake and source-recipe reproduction PASS.
-Exact-image generic VM liveness is recorded in `validation.json`; it cannot
-validate native GPIO/MMIO/interrupts. Config/initramfs, fixed arguments, one CPU,
-DAPF/framebuffer corrections and hardware gates remain. The only existing skip
-is `initcall_blacklist=clk_debug_init`; no new skip or alternate install path.
+Full Image/ELF roundtrip and actual-hook ASan/UBSan regression PASS: 30,000 new
+checkpoints cause zero renderer calls while preserving state, compared with
+10,000 renderer calls from 10,000 old checkpoints. Linked code has 14 instructions
+and zero calls, verified against packaged Image. 102 controller cases,
+13-file intake, 13 intake-adversarial and 8 evidence cases PASS. Exact Image/
+initramfs reaches PID 1, one CPU and 60s liveness in an isolated diskless,
+networkless VM; this does not validate native GPIO/MMIO/interrupts or efficiency.
+See `kernel/experiments/scheduler-ram-only/README.md` and `validation.json`.
+Own source/linked disassembly answered this question; no new proprietary REA
+analysis was needed. Prior GPIO REA evidence and limitations remain intact.
 
-## Return protection prerequisite — already PASS
+## Return protection prerequisite — confirmed after attempt 13
 
-Post-attempt-12 user JSON: original **Full**, lab **Permissive**, both exit 0.
-M5 independently read root Macintosh HD/build 25G83/FileVault=true/SIP enabled
-and the unchanged staged m1n1 SHA. This supersedes the report's pending return
-status. Default selection/installed boot object/authenticated-root were not
-independently re-queried. No settings changed. Do not ask for the same check
-again or add an M1↔M5 approval loop unless new evidence changes the state.
+User reports original **Full**, lab **Permissive**; no fresh exit-code JSON was
+supplied this turn. M5 independently read root Macintosh HD/build 25G83/
+FileVault=true/SIP enabled and unchanged staged m1n1 SHA. This supersedes the
+report's pending return status. Default selection/installed boot object/
+authenticated-root were not independently re-queried. No settings changed.
+Do not repeat the same check or add an M1↔M5 approval loop without new evidence.
 
 ## Offline intake before the human restarts
 
-Download only private `native-j716c-boot032`; verify the archive against current
+Download only private `native-j716c-boot033`; verify the archive against current
 Git **before extraction**. Preserve every earlier package/receipt/result. Stop
 on a mismatch. The following performs no live USB action.
 
 ```sh
 (
 set -e
-mkdir -p build/native-boot032-download
-if [ ! -f build/native-boot032-download/ilinux-j716c-boot032.tar.gz ]; then
-  gh release download native-j716c-boot032 --repo nickyrice04/ilinux \
-    --pattern ilinux-j716c-boot032.tar.gz --dir build/native-boot032-download
+mkdir -p build/native-boot033-download
+if [ ! -f build/native-boot033-download/ilinux-j716c-boot033.tar.gz ]; then
+  gh release download native-j716c-boot033 --repo nickyrice04/ilinux \
+    --pattern ilinux-j716c-boot033.tar.gz --dir build/native-boot033-download
 fi
 (
-  cd build/native-boot032-download
+  cd build/native-boot033-download
   shasum -a 256 -c ../../native/boot/archive-sha256.txt
-  if [ ! -d ilinux-j716c-boot032 ]; then tar -xzf ilinux-j716c-boot032.tar.gz; fi
+  if [ ! -d ilinux-j716c-boot033 ]; then tar -xzf ilinux-j716c-boot033.tar.gz; fi
 )
 mkdir -p build/native-intake/receipts build/native-intake/results
 tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
-  build/native-boot032-download/ilinux-j716c-boot032 \
+  build/native-boot033-download/ilinux-j716c-boot033 \
   --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
-  > build/native-intake/receipts/boot032-attempt13.json
-python3 -I native/boot/launch.py --package build/native-boot032-download/ilinux-j716c-boot032
+  > build/native-intake/receipts/boot033-attempt14.json
+python3 -I native/boot/launch.py --package build/native-boot033-download/ilinux-j716c-boot033
 python3 -I native/boot/test_launcher.py
 python3 -I native/boot/test_gpio_guard.py
 python3 -I native/boot/test_entry_guard.py
@@ -95,14 +92,14 @@ Require **37 + 10 + 6 + 16 + 5 + 19 + 2 + 6 + 1 = 102 cases PASS**, package PASS
 13 receipt files and the clean client pin `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
 No kernel/REA setup on M1. The receipt verifies files, not live authorization.
 
-Archive **16,723,345 bytes**, SHA-256:
-`001ef39cd64d8fef7c3779c5169c00726474d6ebc56cea90b9f6f5d9c9bd0500`.
+Archive **16,723,317 bytes**, SHA-256:
+`6cbf5d1396ddd2b5f79255e65c6c776f8122921b06327271e1102f7b7f0d55cd`.
 Image **44,534,272 bytes**, SHA-256:
-`589c33577d1bc2ddeb2f96e544f87b9ead6bc52e774410567170a7235dd70bcb`.
+`250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15`.
 Stage-B DT SHA-256:
 `4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce`.
 SHA256SUMS digest:
-`0f0a1a65d793d4d0a5f0238efbc9f371532a8c7c1927ceff417d1b78418c060e`.
+`817035e6934111ed742398aec31be3f9b7cc9354e03254bd339fa1ea218f4d9b`.
 Git manifests are authoritative; stop on disagreement.
 
 Reviewed controller digests (also record checked-out Git commit):
@@ -114,7 +111,7 @@ Reviewed controller digests (also record checked-out Git commit):
 * `native/boot/fdt.py`: `ee577a08bb48242e84dbc50cd1f40a8d1f47a4d4481ca6dd6503829f53615ad3`
 * `tools/m1n1-client/usb_identity.py`: `72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137`
 
-Prepare fresh ignored `boot032-stage-b-attempt13.json`/`.md` records with the
+Prepare fresh ignored `boot033-stage-b-attempt14.json`/`.md` records with the
 source/procedure/controller/payload/receipt hashes. Push sanitized readiness
 in `progress.md` and `coordination.md`, keeping native/live checks NOT RUN.
 Tell the human when ready. M1 readiness plus the human's start suffice; no
@@ -124,7 +121,7 @@ extra M5 review round trip for these unchanged verified instructions.
 
 1. Both Macs on power, same direct cable/primary USB interface. Film the M5
    built-in screen **before launching**, 60 fps if available. Include the bottom
-   left corner where the new **four-row panel** should appear. Keep recording
+   left corner where the **four-row panel** should appear. Keep recording
    through the stop criterion, including a close final frame. Stop at readiness
    if recording cannot be arranged. Full media stays local.
 2. Human saves work, shuts down, holds power for startup options and selects
@@ -134,14 +131,14 @@ extra M5 review round trip for these unchanged verified instructions.
 
    ```sh
    tools/m1n1-client/run.sh native/boot/launch.py \
-     --package build/native-boot032-download/ilinux-j716c-boot032 \
+     --package build/native-boot033-download/ilinux-j716c-boot033 \
      --launch --device auto --confirm BOOT-J716C-RAM-DIAGNOSTIC
    ```
 
    The existing sanitized wrapper may call the same `main(argv)` once. No
    `m1n1.setup`, shell, separate handshake, reconnect or automatic retry.
 4. Record times/elapsed/exit, all preflight and final Hardware DT checks,
-   new GPIO ADT exclusion check, both DAPF checks/readback, framebuffer descriptor/readback and kboot reply.
+   retained GPIO ADT exclusion check, both DAPF checks/readback, framebuffer descriptor/readback and kboot reply.
    Preserve all gates. No raw target output/ADT/memory/register dumps or
    serial-bearing paths. Unexpected error: safe function/line/type and reviewed
    fixed message only; no locals, no weakening detection.
@@ -164,7 +161,8 @@ extra M5 review round trip for these unchanged verified instructions.
      B:xx C:xxxx
      ```
 
-     P/S/W/H retain their meanings. **D** is the root deferred device;
+     P/W/H retain their meanings; S is the watchdog-sampled last scheduler
+     phase. **D** is the root deferred device;
      **C** is the device supplied to the last marked operation; **B** is that
      operation's boundary. D/C are public table indexes, not hardware IDs.
      **I** is a hexadecimal GPIO pin index, 000–1FF; **FFF** means inactive.
@@ -223,14 +221,17 @@ extra M5 review round trip for these unchanged verified instructions.
    agent cannot access it, have the human pause/transcribe the relevant frames.
    If it remains unavailable, explicitly report that limitation. Avoid spending
    another restart with only an unreviewed recording and ambiguous last line.
-6. Stop on controller rejection/kernel panic, the 60-second userspace milestone,
+6. Set a visible timer/deadline immediately at handoff. Do not wait for media
+   transfer or review before stopping the target. Keep filming through the stop
+   criterion (up to 120 seconds); earlier 40-second clips missed the later window.
+   Stop on controller rejection/kernel panic, the 60-second userspace milestone,
    or **120 seconds from handoff**, whichever applies first. Calculate/report
    the deadline. The controller retains 180-second total/15-second transport
    limits. No retry, extra blacklist, new cores/storage or settings change.
 7. Return: hold power to shut down if needed, hold power for startup options,
    choose **Macintosh HD → Continue**. Confirm the usual desktop return.
    Do not assert fresh policies until the next read-only check.
-8. Push sanitized attempt-13 report and progress/coordination updates. Separate
+8. Push sanitized attempt-14 report and progress/coordination updates. Separate
    controller, native kernel, strip/timer/scheduler, PID-1/liveness and return
    status. Preserve earlier reports; mark unobserved evidence honestly. Keep
    full media/raw data/proprietary binaries out of Git.
@@ -241,4 +242,4 @@ Do not restart installation. The immediate gate is stable native diagnostic
 userspace. Then M5 prepares Linux-side USB/input/control and a usable RAM root;
 the Linux-side agent can handle packages, configuration and desktop tests once
 that channel exists. GPU, SMP and efficient idle/DVFS need independent native
-validation. Boot032 alone cannot establish Omarchy or macOS performance parity.
+validation. Boot033 alone cannot establish Omarchy or macOS performance parity.

@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-14",
+  "target": "Mac17,6 / J716c / t6050",
+  "package": "ilinux-j716c-boot033",
+  "native_attempt": 14,
+  "native_tested": false,
+  "consumed_report": "native/boot/stage-b-2026-10-14-attempt13-result.md",
+  "Image": {
+    "size": 44534272,
+    "sha256": "250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15"
+  },
+  "archive": {
+    "size": 16723317,
+    "sha256": "6cbf5d1396ddd2b5f79255e65c6c776f8122921b06327271e1102f7b7f0d55cd"
+  },
+  "intake_manifest_sha256": "817035e6934111ed742398aec31be3f9b7cc9354e03254bd339fa1ea218f4d9b",
+  "changed_payloads": [
+    "Image"
+  ],
+  "linux": "7.1.9-g863199d8b4a3-dirty #12",
+  "compiler": "GCC 16.1.1 20260430",
+  "linker": "GNU ld 2.46.0",
+  "config": "identical to boot032; 16 KiB pages",
+  "build": {
+    "status": "PASS",
+    "start_utc": "2026-10-14T18:41:39Z",
+    "end_utc": "2026-10-14T18:42:11Z",
+    "exit": 0,
+    "parallel_jobs": 2,
+    "ELF_Image_roundtrip": "PASS",
+    "log": "build/native-scheduler-ram/out/run.log"
+  },
+  "regression": {
+    "status": "PASS",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "actual_source_bodies": true,
+    "old_checkpoints": 10000,
+    "old_renderer_calls": 10000,
+    "new_checkpoints": 30000,
+    "new_renderer_calls": 0,
+    "phase_pid_count_inactive_gate": "PASS",
+    "watchdog_S_then_H_before_printk": "PASS"
+  },
+  "linked_hook": {
+    "Image_sha256": "250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15",
+    "symbol": "ilinux_probe_sched_mark",
+    "instruction_words_verified_against_Image": 14,
+    "bytes": 56,
+    "calls": 0,
+    "source_hook_test": "30000 checkpoints with zero renderer calls; active gating and phase/PID/count retained",
+    "limit": "No proof of native progress or timing; source and linked instructions establish removal of rendering only."
+  },
+  "controller": {
+    "status": "PASS",
+    "cases": 102,
+    "package_files": 13,
+    "intake_adversarial_cases": 13,
+    "evidence_schema_cases": 8,
+    "exit": 0,
+    "log": "build/native-boot033-checks/out/run.log"
+  },
+  "generic_vm": {
+    "status": "PASS",
+    "exact_packaged_Image_initramfs": true,
+    "cpus": 1,
+    "memory_GiB": 4,
+    "disk": false,
+    "network": false,
+    "shared_directories": false,
+    "extra_cmdline": "console=hvc0",
+    "PID1": true,
+    "online_cpus": 1,
+    "liveness_kernel_seconds": 60.192455,
+    "elapsed_wall_seconds": 60.368,
+    "termination": "Owned VZ process SIGTERM after milestone; exit -15 expected",
+    "log": "build/native-boot033/generic-vm.log"
+  },
+  "post_attempt13_return": {
+    "user_reports_original": "Full",
+    "user_reports_lab": "Permissive",
+    "fresh_policy_exit_codes": "not supplied this turn",
+    "root_volume": "Macintosh HD",
+    "macOS_build": "25G83",
+    "FileVault": true,
+    "SIP": "enabled",
+    "staged_m1n1_unchanged": true,
+    "default_installed_object_authenticated_root": "not independently rechecked"
+  },
+  "limits": [
+    "No new REA decompilation: own source and linked instructions answer this question.",
+    "Rendering work count is not a latency benchmark.",
+    "VM does not validate native GPIO, interrupts, scheduler progress, GPU or efficiency.",
+    "No native boot033 results; cause of attempt13 stall remains unknown.",
+    "Diagnostic init has no shell, SSH, network or resident agent."
+  ]
+}

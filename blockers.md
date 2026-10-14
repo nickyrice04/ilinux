@@ -12,12 +12,15 @@ counts, return/error, PID 1 or userspace 60s milestone observed. P05 locates the
 first work-flush boundary by source; exact blocked task/PC/cause unknown.
 I000 with unbound D/C and B00 is not a pin 0 fault. GPIO repair remains unvalidated.
 
-Return instructed after the communicated 1:59:02 p.m. Eastern deadline;
-Macintosh HD confirmation PENDING, fresh policy/default NOT CHECKED. M5 next:
-read-only return review after confirmation and offline worker/scheduler/console
-analysis. Full media remains local; 40.13s video does not cover full 120s window.
-See `native/boot/stage-b-2026-10-14-attempt13-result.md`. No retry, new skip,
-settings/volume changes or reinstall; preserve installed boot021 and all gates.
+Post-attempt-13 return is now confirmed by user Full/Permissive report plus M5
+original-root/build/FileVault/SIP/staged-m1n1 read-only checks. Default/installed
+object/authenticated-root not rechecked; no fresh policy exit codes supplied.
+Boot033 removes confirmed scheduler framebuffer overhead without changing GPIO
+or bypassing drivers. Build/regression/controller/intake and generic liveness
+PASS; its effect on the native stall is unproven. M1 intake and one bounded filmed
+attempt 14 are next. S is now sampled by the bounded watchdog, not immediate.
+Keep full recording through the stop criterion; stop by the handoff deadline
+without waiting for media transfer. No reinstall or settings changes.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

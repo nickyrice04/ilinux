@@ -1,0 +1,9 @@
+{
+  "Image_sha256": "250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15",
+  "symbol": "ilinux_probe_sched_mark",
+  "instruction_words_verified_against_Image": 14,
+  "bytes": 56,
+  "calls": 0,
+  "source_hook_test": "30000 checkpoints with zero renderer calls; active gating and phase/PID/count retained",
+  "limit": "No proof of native progress or timing; source and linked instructions establish removal of rendering only."
+}

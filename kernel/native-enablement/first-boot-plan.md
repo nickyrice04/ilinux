@@ -2,14 +2,26 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest (2026-10-14):** boot032 / attempt 13 prepared after main-GPIO cache
-boundary B73/C0059 in attempt 12. Reserved-pin exclusions, explicit cache
-initialization and indexed GPIO diagnostics are built/tested; native userspace
-is still unobserved. Full build/schema/sanitizer/controller/intake checks and
-generic VM PID 1/60s liveness PASS; **native boot032/live checks NOT RUN**.
-Post-attempt-12 Full/Permissive policies and read-only macOS return checks PASS.
-Continue installed boot021/current entry. M1 offline readiness and human start
-precede one filmed RAM boot, then Macintosh HD; no setup or settings changes.
+**Latest (2026-10-14):** Boot033 / attempt 14 prepared after reviewing M1 attempt 13 (`9a045cf`).
+Attempt 13 has no attributed GPIO result or native PID 1; cause remains unknown.
+Confirmed own-code overhead: scheduler hooks repaint all eight diagnostic lanes.
+Boot033 keeps scheduler state in RAM and samples S from the bounded watchdog;
+S is no longer an immediate checkpoint display. Only Image changes. Preserve
+boot032 GPIO exclusions, installed boot021, all gates and the current lab entry.
+Full Image/ELF roundtrip, actual-hook ASan/UBSan, 102 controller cases, 13-file
+intake and 13+8 intake/evidence cases PASS. Linked hook: 14 instructions, no
+calls. Exact Image/initramfs generic VM reaches PID 1/one CPU/60s liveness at
+60.192455 kernel seconds (60.368s wall); native boot033/live checks NOT RUN.
+User reports post-attempt-13 Full/Permissive; fresh exit codes not supplied.
+M5 read-only original-root/build/FileVault/SIP/staged-m1n1 checks PASS, superseding
+pending return status below; default/installed object/authenticated-root were
+not rechecked. No boot/security/volume changes. M1 next: current Stage-B checklist,
+offline readiness, one human-started filmed attempt 14, stop by milestone/error/
+120s from handoff and return to Macintosh HD. No setup/retry or extra M5 approval
+loop. Claude workflow: `native/boot/claude-workflow.md`. Evidence/code:
+`kernel/experiments/scheduler-ram-only/`. Native userspace still gates Linux
+control/RAM root/configuration-agent work, then Omarchy and hardware performance.
+
 Authoritative procedure: [Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 After stable native userspace, develop Linux-side control/input and a usable
 RAM root for the configuration agent, then Omarchy and native performance tests.
