@@ -1,0 +1,53 @@
+{
+  "image_sha256": "53f5f2c5a7a2d9d0d2ae92961222090c97f0c266bb4066408acd577660e7cc32",
+  "vmlinux_sha256": "57ea0d3e5d7d2d8c863f02ff3eae7b42354bdeb5b9258a07d7352ecd20faa29f",
+  "functions": [
+    {
+      "object_sha256": "f033a88feb28376bab829e1525399ad1bdefb3ae41fd8fca09089330cc921336",
+      "elf_symbol": "bus_probe_device",
+      "rea_function": "bus_probe_device",
+      "section": ".text",
+      "symbol_bytes": 152,
+      "llvm_instruction_words": 38,
+      "llvm_unknown_instructions": 0,
+      "rea_omitted_instruction_words": 0,
+      "rea_body_bytes": 152,
+      "image_relative_offset": "0xa82cd0",
+      "linked_matching_nonrelocated_words": 33,
+      "relocation_words_reviewed_separately": 5,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_3954dbc62c34321e9aed2d7aee88b5fb6a34f6cca802200d0ee1c0b023c2757d",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    },
+    {
+      "object_sha256": "1425d3d87efbac9f4a77ec81cff3537e9dd399d631fb2e6ea8ede6c2025ea647",
+      "elf_symbol": "platform_probe",
+      "rea_function": "platform_probe",
+      "section": ".text",
+      "symbol_bytes": 172,
+      "llvm_instruction_words": 43,
+      "llvm_unknown_instructions": 0,
+      "rea_omitted_instruction_words": 0,
+      "rea_body_bytes": 172,
+      "image_relative_offset": "0xa87ba8",
+      "linked_matching_nonrelocated_words": 36,
+      "relocation_words_reviewed_separately": 7,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_60c306b36cd36f1323ac3d353d74e7d0976b878cf31e34221b2113c4b703600d",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    }
+  ],
+  "limits": [
+    "bus_probe_device performs initial attach before taking the bus interface mutex and invoking callbacks; the observed W=04 does not distinguish these operations.",
+    "platform_probe applies clock defaults and attaches power domains before a driver callback; a last bus-probe boundary does not identify the driver as the cause.",
+    "Decompilation plus source/linked bytes establishes static call ordering only, not the native device, blocking PC or a root-cause repair."
+  ]
+}

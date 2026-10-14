@@ -1,0 +1,2564 @@
+{
+  "dt_sha256": "7adc1364687df9c358692489f2a574241e869cf03b67538eaaaaf0233b4365a7",
+  "unknown_id": "0000",
+  "nodes": [
+    {
+      "id": 1,
+      "hex": "0001",
+      "path": "/",
+      "compatible": [
+        "apple,j716c",
+        "apple,t6050",
+        "apple,arm-platform"
+      ]
+    },
+    {
+      "id": 2,
+      "hex": "0002",
+      "path": "/chosen/framebuffer@0",
+      "compatible": [
+        "apple,simple-framebuffer",
+        "simple-framebuffer"
+      ]
+    },
+    {
+      "id": 3,
+      "hex": "0003",
+      "path": "/clock-ref",
+      "compatible": [
+        "fixed-clock"
+      ]
+    },
+    {
+      "id": 4,
+      "hex": "0004",
+      "path": "/cpus/cpu@10200",
+      "compatible": [
+        "apple,sotra-p"
+      ]
+    },
+    {
+      "id": 5,
+      "hex": "0005",
+      "path": "/cpus/cpu@10201",
+      "compatible": [
+        "apple,sotra-p"
+      ]
+    },
+    {
+      "id": 6,
+      "hex": "0006",
+      "path": "/cpus/cpu@10202",
+      "compatible": [
+        "apple,sotra-p"
+      ]
+    },
+    {
+      "id": 7,
+      "hex": "0007",
+      "path": "/cpus/cpu@10203",
+      "compatible": [
+        "apple,sotra-p"
+      ]
+    },
+    {
+      "id": 8,
+      "hex": "0008",
+      "path": "/cpus/cpu@10204",
+      "compatible": [
+        "apple,sotra-p"
+      ]
+    },
+    {
+      "id": 9,
+      "hex": "0009",
+      "path": "/cpus/cpu@10205",
+      "compatible": [
+        "apple,sotra-p"
+      ]
+    },
+    {
+      "id": 10,
+      "hex": "000A",
+      "path": "/cpus/cpu@40000",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 11,
+      "hex": "000B",
+      "path": "/cpus/cpu@40001",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 12,
+      "hex": "000C",
+      "path": "/cpus/cpu@40002",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 13,
+      "hex": "000D",
+      "path": "/cpus/cpu@40003",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 14,
+      "hex": "000E",
+      "path": "/cpus/cpu@40004",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 15,
+      "hex": "000F",
+      "path": "/cpus/cpu@40005",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 16,
+      "hex": "0010",
+      "path": "/cpus/cpu@40100",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 17,
+      "hex": "0011",
+      "path": "/cpus/cpu@40101",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 18,
+      "hex": "0012",
+      "path": "/cpus/cpu@40102",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 19,
+      "hex": "0013",
+      "path": "/cpus/cpu@40103",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 20,
+      "hex": "0014",
+      "path": "/cpus/cpu@40104",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 21,
+      "hex": "0015",
+      "path": "/cpus/cpu@40105",
+      "compatible": [
+        "apple,sotra-m"
+      ]
+    },
+    {
+      "id": 22,
+      "hex": "0016",
+      "path": "/cpus/l2-cache-0",
+      "compatible": [
+        "cache"
+      ]
+    },
+    {
+      "id": 23,
+      "hex": "0017",
+      "path": "/cpus/l2-cache-1",
+      "compatible": [
+        "cache"
+      ]
+    },
+    {
+      "id": 24,
+      "hex": "0018",
+      "path": "/cpus/l2-cache-2",
+      "compatible": [
+        "cache"
+      ]
+    },
+    {
+      "id": 25,
+      "hex": "0019",
+      "path": "/opp-table-0",
+      "compatible": [
+        "operating-points-v2"
+      ]
+    },
+    {
+      "id": 26,
+      "hex": "001A",
+      "path": "/opp-table-1",
+      "compatible": [
+        "operating-points-v2"
+      ]
+    },
+    {
+      "id": 27,
+      "hex": "001B",
+      "path": "/opp-table-2",
+      "compatible": [
+        "operating-points-v2"
+      ]
+    },
+    {
+      "id": 28,
+      "hex": "001C",
+      "path": "/soc",
+      "compatible": [
+        "simple-bus"
+      ]
+    },
+    {
+      "id": 29,
+      "hex": "001D",
+      "path": "/soc/i2c@505010000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 30,
+      "hex": "001E",
+      "path": "/soc/i2c@505014000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 31,
+      "hex": "001F",
+      "path": "/soc/i2c@505018000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 32,
+      "hex": "0020",
+      "path": "/soc/i2c@50501c000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 33,
+      "hex": "0021",
+      "path": "/soc/i2c@505020000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 34,
+      "hex": "0022",
+      "path": "/soc/i2c@505024000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 35,
+      "hex": "0023",
+      "path": "/soc/i2c@505028000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 36,
+      "hex": "0024",
+      "path": "/soc/i2c@50502c000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 37,
+      "hex": "0025",
+      "path": "/soc/i2c@505030000",
+      "compatible": [
+        "apple,t6050-i2c",
+        "apple,t8103-i2c"
+      ]
+    },
+    {
+      "id": 38,
+      "hex": "0026",
+      "path": "/soc/interrupt-controller@280400000",
+      "compatible": [
+        "apple,t6050-aic3",
+        "apple,t8122-aic3"
+      ]
+    },
+    {
+      "id": 39,
+      "hex": "0027",
+      "path": "/soc/iommu@2281020000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 40,
+      "hex": "0028",
+      "path": "/soc/iommu@2283080000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 41,
+      "hex": "0029",
+      "path": "/soc/iommu@22830a0000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 42,
+      "hex": "002A",
+      "path": "/soc/iommu@2285260000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 43,
+      "hex": "002B",
+      "path": "/soc/iommu@2309020000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 44,
+      "hex": "002C",
+      "path": "/soc/iommu@230b020000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 45,
+      "hex": "002D",
+      "path": "/soc/iommu@23a1260000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 46,
+      "hex": "002E",
+      "path": "/soc/iommu@23a3080000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 47,
+      "hex": "002F",
+      "path": "/soc/iommu@23a30a0000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 48,
+      "hex": "0030",
+      "path": "/soc/iommu@294800000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 49,
+      "hex": "0031",
+      "path": "/soc/iommu@2a1a80000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 50,
+      "hex": "0032",
+      "path": "/soc/iommu@2a2f00000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 51,
+      "hex": "0033",
+      "path": "/soc/iommu@2a2f80000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 52,
+      "hex": "0034",
+      "path": "/soc/iommu@2a4000000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 53,
+      "hex": "0035",
+      "path": "/soc/iommu@2a9a80000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 54,
+      "hex": "0036",
+      "path": "/soc/iommu@2aaf00000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 55,
+      "hex": "0037",
+      "path": "/soc/iommu@2aaf80000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 56,
+      "hex": "0038",
+      "path": "/soc/iommu@2ac000000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 57,
+      "hex": "0039",
+      "path": "/soc/iommu@2b2180000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 58,
+      "hex": "003A",
+      "path": "/soc/iommu@2b2300000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 59,
+      "hex": "003B",
+      "path": "/soc/iommu@2b2340000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 60,
+      "hex": "003C",
+      "path": "/soc/iommu@302180000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 61,
+      "hex": "003D",
+      "path": "/soc/iommu@302300000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 62,
+      "hex": "003E",
+      "path": "/soc/iommu@302340000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 63,
+      "hex": "003F",
+      "path": "/soc/iommu@306180000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 64,
+      "hex": "0040",
+      "path": "/soc/iommu@306300000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 65,
+      "hex": "0041",
+      "path": "/soc/iommu@306340000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 66,
+      "hex": "0042",
+      "path": "/soc/iommu@381a80000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 67,
+      "hex": "0043",
+      "path": "/soc/iommu@382f00000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 68,
+      "hex": "0044",
+      "path": "/soc/iommu@382f80000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 69,
+      "hex": "0045",
+      "path": "/soc/iommu@384000000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 70,
+      "hex": "0046",
+      "path": "/soc/iommu@392180000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 71,
+      "hex": "0047",
+      "path": "/soc/iommu@392300000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 72,
+      "hex": "0048",
+      "path": "/soc/iommu@392340000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 73,
+      "hex": "0049",
+      "path": "/soc/iommu@395d60000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 74,
+      "hex": "004A",
+      "path": "/soc/iommu@410000000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 75,
+      "hex": "004B",
+      "path": "/soc/iommu@411000000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 76,
+      "hex": "004C",
+      "path": "/soc/iommu@41dc50000",
+      "compatible": [
+        "apple,t6050-sart"
+      ]
+    },
+    {
+      "id": 77,
+      "hex": "004D",
+      "path": "/soc/iommu@48a180000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 78,
+      "hex": "004E",
+      "path": "/soc/iommu@48a300000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 79,
+      "hex": "004F",
+      "path": "/soc/iommu@48a340000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 80,
+      "hex": "0050",
+      "path": "/soc/iommu@48d020000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 81,
+      "hex": "0051",
+      "path": "/soc/iommu@505060000",
+      "compatible": [
+        "apple,t6050-dart",
+        "apple,t8110-dart"
+      ]
+    },
+    {
+      "id": 82,
+      "hex": "0052",
+      "path": "/soc/mbox@419608000",
+      "compatible": [
+        "apple,t6050-asc-mailbox",
+        "apple,asc-mailbox-v4"
+      ]
+    },
+    {
+      "id": 83,
+      "hex": "0053",
+      "path": "/soc/nvme@45dcc0000",
+      "compatible": [
+        "apple,t6050-nvme-ans2",
+        "apple,t8132-nvme-ans2"
+      ]
+    },
+    {
+      "id": 84,
+      "hex": "0054",
+      "path": "/soc/performance-controller@210e20000",
+      "compatible": [
+        "apple,t6050-cluster-cpufreq",
+        "apple,t8112-cluster-cpufreq"
+      ]
+    },
+    {
+      "id": 85,
+      "hex": "0055",
+      "path": "/soc/performance-controller@211e20000",
+      "compatible": [
+        "apple,t6050-cluster-cpufreq",
+        "apple,t8112-cluster-cpufreq"
+      ]
+    },
+    {
+      "id": 86,
+      "hex": "0056",
+      "path": "/soc/performance-controller@212e20000",
+      "compatible": [
+        "apple,t6050-cluster-cpufreq",
+        "apple,t8112-cluster-cpufreq"
+      ]
+    },
+    {
+      "id": 87,
+      "hex": "0057",
+      "path": "/soc/pinctrl@2881e4000",
+      "compatible": [
+        "apple,t6050-pinctrl",
+        "apple,t8103-pinctrl"
+      ]
+    },
+    {
+      "id": 88,
+      "hex": "0058",
+      "path": "/soc/pinctrl@290824000",
+      "compatible": [
+        "apple,t6050-pinctrl",
+        "apple,t8103-pinctrl"
+      ]
+    },
+    {
+      "id": 89,
+      "hex": "0059",
+      "path": "/soc/pinctrl@29c000000",
+      "compatible": [
+        "apple,t6050-pinctrl",
+        "apple,t8103-pinctrl"
+      ]
+    },
+    {
+      "id": 90,
+      "hex": "005A",
+      "path": "/soc/power-management@2300e80000",
+      "compatible": [
+        "apple,t6050-pmgr",
+        "apple,t8103-pmgr",
+        "syscon",
+        "simple-mfd"
+      ]
+    },
+    {
+      "id": 91,
+      "hex": "005B",
+      "path": "/soc/power-management@2300e80000/power-controller@0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 92,
+      "hex": "005C",
+      "path": "/soc/power-management@2300e80000/power-controller@100",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 93,
+      "hex": "005D",
+      "path": "/soc/power-management@2300e80000/power-controller@108",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 94,
+      "hex": "005E",
+      "path": "/soc/power-management@2300e80000/power-controller@110",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 95,
+      "hex": "005F",
+      "path": "/soc/power-management@2380600000",
+      "compatible": [
+        "apple,t6050-pmgr",
+        "apple,t8103-pmgr",
+        "syscon",
+        "simple-mfd"
+      ]
+    },
+    {
+      "id": 96,
+      "hex": "0060",
+      "path": "/soc/power-management@2380600000/power-controller@108",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 97,
+      "hex": "0061",
+      "path": "/soc/power-management@2380600000/power-controller@110",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 98,
+      "hex": "0062",
+      "path": "/soc/power-management@2380600000/power-controller@118",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 99,
+      "hex": "0063",
+      "path": "/soc/power-management@2380600000/power-controller@1c0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 100,
+      "hex": "0064",
+      "path": "/soc/power-management@2380600000/power-controller@1c8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 101,
+      "hex": "0065",
+      "path": "/soc/power-management@2380600000/power-controller@1d0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 102,
+      "hex": "0066",
+      "path": "/soc/power-management@2380600000/power-controller@1d8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 103,
+      "hex": "0067",
+      "path": "/soc/power-management@2380600000/power-controller@1e0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 104,
+      "hex": "0068",
+      "path": "/soc/power-management@2380600000/power-controller@1f0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 105,
+      "hex": "0069",
+      "path": "/soc/power-management@2380600000/power-controller@1f8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 106,
+      "hex": "006A",
+      "path": "/soc/power-management@2380600000/power-controller@200",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 107,
+      "hex": "006B",
+      "path": "/soc/power-management@2380600000/power-controller@208",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 108,
+      "hex": "006C",
+      "path": "/soc/power-management@2380600000/power-controller@8000",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 109,
+      "hex": "006D",
+      "path": "/soc/power-management@2380600000/power-controller@8008",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 110,
+      "hex": "006E",
+      "path": "/soc/power-management@2380600000/power-controller@8010",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 111,
+      "hex": "006F",
+      "path": "/soc/power-management@2380600000/power-controller@8018",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 112,
+      "hex": "0070",
+      "path": "/soc/power-management@2380600000/power-controller@8020",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 113,
+      "hex": "0071",
+      "path": "/soc/power-management@2380600000/power-controller@8028",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 114,
+      "hex": "0072",
+      "path": "/soc/power-management@2380600000/power-controller@8030",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 115,
+      "hex": "0073",
+      "path": "/soc/power-management@2380600000/power-controller@8038",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 116,
+      "hex": "0074",
+      "path": "/soc/power-management@2380600000/power-controller@8040",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 117,
+      "hex": "0075",
+      "path": "/soc/power-management@2380600000/power-controller@8048",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 118,
+      "hex": "0076",
+      "path": "/soc/power-management@2388300000",
+      "compatible": [
+        "apple,t6050-pmgr",
+        "apple,t8103-pmgr",
+        "syscon",
+        "simple-mfd"
+      ]
+    },
+    {
+      "id": 119,
+      "hex": "0077",
+      "path": "/soc/power-management@2388300000/power-controller@58",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 120,
+      "hex": "0078",
+      "path": "/soc/power-management@2388300000/power-controller@68",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 121,
+      "hex": "0079",
+      "path": "/soc/power-management@280600000",
+      "compatible": [
+        "apple,t6050-pmgr",
+        "apple,t8103-pmgr",
+        "syscon",
+        "simple-mfd"
+      ]
+    },
+    {
+      "id": 122,
+      "hex": "007A",
+      "path": "/soc/power-management@280600000/power-controller@108",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 123,
+      "hex": "007B",
+      "path": "/soc/power-management@280600000/power-controller@110",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 124,
+      "hex": "007C",
+      "path": "/soc/power-management@280600000/power-controller@118",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 125,
+      "hex": "007D",
+      "path": "/soc/power-management@280600000/power-controller@120",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 126,
+      "hex": "007E",
+      "path": "/soc/power-management@280600000/power-controller@128",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 127,
+      "hex": "007F",
+      "path": "/soc/power-management@280600000/power-controller@130",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 128,
+      "hex": "0080",
+      "path": "/soc/power-management@280600000/power-controller@200",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 129,
+      "hex": "0081",
+      "path": "/soc/power-management@280600000/power-controller@208",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 130,
+      "hex": "0082",
+      "path": "/soc/power-management@280600000/power-controller@210",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 131,
+      "hex": "0083",
+      "path": "/soc/power-management@280600000/power-controller@220",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 132,
+      "hex": "0084",
+      "path": "/soc/power-management@280600000/power-controller@228",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 133,
+      "hex": "0085",
+      "path": "/soc/power-management@280600000/power-controller@230",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 134,
+      "hex": "0086",
+      "path": "/soc/power-management@280600000/power-controller@238",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 135,
+      "hex": "0087",
+      "path": "/soc/power-management@280600000/power-controller@240",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 136,
+      "hex": "0088",
+      "path": "/soc/power-management@280600000/power-controller@248",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 137,
+      "hex": "0089",
+      "path": "/soc/power-management@280600000/power-controller@250",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 138,
+      "hex": "008A",
+      "path": "/soc/power-management@280600000/power-controller@258",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 139,
+      "hex": "008B",
+      "path": "/soc/power-management@280600000/power-controller@260",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 140,
+      "hex": "008C",
+      "path": "/soc/power-management@280600000/power-controller@268",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 141,
+      "hex": "008D",
+      "path": "/soc/power-management@280600000/power-controller@270",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 142,
+      "hex": "008E",
+      "path": "/soc/power-management@280600000/power-controller@278",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 143,
+      "hex": "008F",
+      "path": "/soc/power-management@280600000/power-controller@280",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 144,
+      "hex": "0090",
+      "path": "/soc/power-management@280600000/power-controller@288",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 145,
+      "hex": "0091",
+      "path": "/soc/power-management@280600000/power-controller@290",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 146,
+      "hex": "0092",
+      "path": "/soc/power-management@280600000/power-controller@298",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 147,
+      "hex": "0093",
+      "path": "/soc/power-management@280600000/power-controller@2a0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 148,
+      "hex": "0094",
+      "path": "/soc/power-management@280600000/power-controller@2a8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 149,
+      "hex": "0095",
+      "path": "/soc/power-management@280600000/power-controller@2b0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 150,
+      "hex": "0096",
+      "path": "/soc/power-management@280600000/power-controller@2b8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 151,
+      "hex": "0097",
+      "path": "/soc/power-management@280600000/power-controller@2c0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 152,
+      "hex": "0098",
+      "path": "/soc/power-management@280600000/power-controller@2c8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 153,
+      "hex": "0099",
+      "path": "/soc/power-management@280600000/power-controller@2d0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 154,
+      "hex": "009A",
+      "path": "/soc/power-management@280600000/power-controller@2d8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 155,
+      "hex": "009B",
+      "path": "/soc/power-management@280600000/power-controller@2e0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 156,
+      "hex": "009C",
+      "path": "/soc/power-management@280600000/power-controller@2e8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 157,
+      "hex": "009D",
+      "path": "/soc/power-management@280600000/power-controller@2f0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 158,
+      "hex": "009E",
+      "path": "/soc/power-management@280600000/power-controller@2f8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 159,
+      "hex": "009F",
+      "path": "/soc/power-management@280600000/power-controller@300",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 160,
+      "hex": "00A0",
+      "path": "/soc/power-management@280600000/power-controller@338",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 161,
+      "hex": "00A1",
+      "path": "/soc/power-management@280600000/power-controller@340",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 162,
+      "hex": "00A2",
+      "path": "/soc/power-management@280600000/power-controller@348",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 163,
+      "hex": "00A3",
+      "path": "/soc/power-management@280600000/power-controller@350",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 164,
+      "hex": "00A4",
+      "path": "/soc/power-management@280600000/power-controller@358",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 165,
+      "hex": "00A5",
+      "path": "/soc/power-management@280600000/power-controller@360",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 166,
+      "hex": "00A6",
+      "path": "/soc/power-management@280600000/power-controller@3f8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 167,
+      "hex": "00A7",
+      "path": "/soc/power-management@280600000/power-controller@400",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 168,
+      "hex": "00A8",
+      "path": "/soc/power-management@280600000/power-controller@408",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 169,
+      "hex": "00A9",
+      "path": "/soc/power-management@280600000/power-controller@410",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 170,
+      "hex": "00AA",
+      "path": "/soc/power-management@280600000/power-controller@418",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 171,
+      "hex": "00AB",
+      "path": "/soc/power-management@280600000/power-controller@420",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 172,
+      "hex": "00AC",
+      "path": "/soc/power-management@280900000",
+      "compatible": [
+        "apple,t6050-pmgr",
+        "apple,t8103-pmgr",
+        "syscon",
+        "simple-mfd"
+      ]
+    },
+    {
+      "id": 173,
+      "hex": "00AD",
+      "path": "/soc/power-management@280900000/power-controller@100",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 174,
+      "hex": "00AE",
+      "path": "/soc/power-management@280900000/power-controller@108",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 175,
+      "hex": "00AF",
+      "path": "/soc/power-management@280900000/power-controller@110",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 176,
+      "hex": "00B0",
+      "path": "/soc/power-management@280900000/power-controller@118",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 177,
+      "hex": "00B1",
+      "path": "/soc/power-management@280900000/power-controller@128",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 178,
+      "hex": "00B2",
+      "path": "/soc/power-management@280900000/power-controller@130",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 179,
+      "hex": "00B3",
+      "path": "/soc/power-management@280900000/power-controller@140",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 180,
+      "hex": "00B4",
+      "path": "/soc/power-management@280900000/power-controller@148",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 181,
+      "hex": "00B5",
+      "path": "/soc/power-management@280900000/power-controller@150",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 182,
+      "hex": "00B6",
+      "path": "/soc/power-management@280900000/power-controller@158",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 183,
+      "hex": "00B7",
+      "path": "/soc/power-management@280900000/power-controller@160",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 184,
+      "hex": "00B8",
+      "path": "/soc/power-management@280900000/power-controller@168",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 185,
+      "hex": "00B9",
+      "path": "/soc/power-management@280900000/power-controller@170",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 186,
+      "hex": "00BA",
+      "path": "/soc/power-management@280900000/power-controller@180",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 187,
+      "hex": "00BB",
+      "path": "/soc/power-management@280900000/power-controller@190",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 188,
+      "hex": "00BC",
+      "path": "/soc/power-management@280900000/power-controller@198",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 189,
+      "hex": "00BD",
+      "path": "/soc/power-management@280900000/power-controller@1a0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 190,
+      "hex": "00BE",
+      "path": "/soc/power-management@280900000/power-controller@1a8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 191,
+      "hex": "00BF",
+      "path": "/soc/power-management@280900000/power-controller@1b0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 192,
+      "hex": "00C0",
+      "path": "/soc/power-management@280900000/power-controller@1c0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 193,
+      "hex": "00C1",
+      "path": "/soc/power-management@280900000/power-controller@240",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 194,
+      "hex": "00C2",
+      "path": "/soc/power-management@280900000/power-controller@248",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 195,
+      "hex": "00C3",
+      "path": "/soc/power-management@280900000/power-controller@258",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 196,
+      "hex": "00C4",
+      "path": "/soc/power-management@280900000/power-controller@268",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 197,
+      "hex": "00C5",
+      "path": "/soc/power-management@280900000/power-controller@270",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 198,
+      "hex": "00C6",
+      "path": "/soc/power-management@280900000/power-controller@280",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 199,
+      "hex": "00C7",
+      "path": "/soc/power-management@280900000/power-controller@290",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 200,
+      "hex": "00C8",
+      "path": "/soc/power-management@280900000/power-controller@298",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 201,
+      "hex": "00C9",
+      "path": "/soc/power-management@280900000/power-controller@2a0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 202,
+      "hex": "00CA",
+      "path": "/soc/power-management@280900000/power-controller@2a8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 203,
+      "hex": "00CB",
+      "path": "/soc/power-management@280900000/power-controller@2b8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 204,
+      "hex": "00CC",
+      "path": "/soc/power-management@280900000/power-controller@2c0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 205,
+      "hex": "00CD",
+      "path": "/soc/power-management@280900000/power-controller@2c8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 206,
+      "hex": "00CE",
+      "path": "/soc/power-management@280900000/power-controller@2d0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 207,
+      "hex": "00CF",
+      "path": "/soc/power-management@280900000/power-controller@2d8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 208,
+      "hex": "00D0",
+      "path": "/soc/power-management@280900000/power-controller@2e0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 209,
+      "hex": "00D1",
+      "path": "/soc/power-management@280900000/power-controller@2e8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 210,
+      "hex": "00D2",
+      "path": "/soc/power-management@280900000/power-controller@2f0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 211,
+      "hex": "00D3",
+      "path": "/soc/power-management@280900000/power-controller@2f8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 212,
+      "hex": "00D4",
+      "path": "/soc/power-management@280900000/power-controller@300",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 213,
+      "hex": "00D5",
+      "path": "/soc/power-management@280900000/power-controller@308",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 214,
+      "hex": "00D6",
+      "path": "/soc/power-management@280900000/power-controller@310",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 215,
+      "hex": "00D7",
+      "path": "/soc/power-management@280900000/power-controller@318",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 216,
+      "hex": "00D8",
+      "path": "/soc/power-management@280900000/power-controller@320",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 217,
+      "hex": "00D9",
+      "path": "/soc/power-management@280900000/power-controller@328",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 218,
+      "hex": "00DA",
+      "path": "/soc/power-management@280900000/power-controller@330",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 219,
+      "hex": "00DB",
+      "path": "/soc/power-management@280900000/power-controller@338",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 220,
+      "hex": "00DC",
+      "path": "/soc/power-management@280900000/power-controller@340",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 221,
+      "hex": "00DD",
+      "path": "/soc/power-management@280900000/power-controller@348",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 222,
+      "hex": "00DE",
+      "path": "/soc/power-management@280900000/power-controller@350",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 223,
+      "hex": "00DF",
+      "path": "/soc/power-management@280900000/power-controller@358",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 224,
+      "hex": "00E0",
+      "path": "/soc/power-management@280900000/power-controller@360",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 225,
+      "hex": "00E1",
+      "path": "/soc/power-management@280900000/power-controller@368",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 226,
+      "hex": "00E2",
+      "path": "/soc/power-management@280900000/power-controller@370",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 227,
+      "hex": "00E3",
+      "path": "/soc/power-management@280900000/power-controller@378",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 228,
+      "hex": "00E4",
+      "path": "/soc/power-management@280900000/power-controller@380",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 229,
+      "hex": "00E5",
+      "path": "/soc/power-management@280900000/power-controller@388",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 230,
+      "hex": "00E6",
+      "path": "/soc/power-management@280900000/power-controller@390",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 231,
+      "hex": "00E7",
+      "path": "/soc/power-management@280900000/power-controller@3a0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 232,
+      "hex": "00E8",
+      "path": "/soc/power-management@280900000/power-controller@3a8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 233,
+      "hex": "00E9",
+      "path": "/soc/power-management@280900000/power-controller@3c0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 234,
+      "hex": "00EA",
+      "path": "/soc/power-management@280900000/power-controller@3c8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 235,
+      "hex": "00EB",
+      "path": "/soc/power-management@280900000/power-controller@3d0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 236,
+      "hex": "00EC",
+      "path": "/soc/power-management@288300000",
+      "compatible": [
+        "apple,t6050-pmgr",
+        "apple,t8103-pmgr",
+        "syscon",
+        "simple-mfd"
+      ]
+    },
+    {
+      "id": 237,
+      "hex": "00ED",
+      "path": "/soc/power-management@288300000/power-controller@100",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 238,
+      "hex": "00EE",
+      "path": "/soc/power-management@288300000/power-controller@108",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 239,
+      "hex": "00EF",
+      "path": "/soc/power-management@288300000/power-controller@110",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 240,
+      "hex": "00F0",
+      "path": "/soc/power-management@288300000/power-controller@118",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 241,
+      "hex": "00F1",
+      "path": "/soc/power-management@288300000/power-controller@120",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 242,
+      "hex": "00F2",
+      "path": "/soc/power-management@288300000/power-controller@128",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 243,
+      "hex": "00F3",
+      "path": "/soc/power-management@288300000/power-controller@130",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 244,
+      "hex": "00F4",
+      "path": "/soc/power-management@288300000/power-controller@138",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 245,
+      "hex": "00F5",
+      "path": "/soc/power-management@288300000/power-controller@140",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 246,
+      "hex": "00F6",
+      "path": "/soc/power-management@288300000/power-controller@148",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 247,
+      "hex": "00F7",
+      "path": "/soc/power-management@288300000/power-controller@150",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 248,
+      "hex": "00F8",
+      "path": "/soc/power-management@288300000/power-controller@158",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 249,
+      "hex": "00F9",
+      "path": "/soc/power-management@288300000/power-controller@160",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 250,
+      "hex": "00FA",
+      "path": "/soc/power-management@288300000/power-controller@168",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 251,
+      "hex": "00FB",
+      "path": "/soc/power-management@288300000/power-controller@170",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 252,
+      "hex": "00FC",
+      "path": "/soc/power-management@288300000/power-controller@178",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 253,
+      "hex": "00FD",
+      "path": "/soc/power-management@288300000/power-controller@180",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 254,
+      "hex": "00FE",
+      "path": "/soc/power-management@288300000/power-controller@188",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 255,
+      "hex": "00FF",
+      "path": "/soc/power-management@288300000/power-controller@190",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 256,
+      "hex": "0100",
+      "path": "/soc/power-management@288300000/power-controller@198",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 257,
+      "hex": "0101",
+      "path": "/soc/power-management@288300000/power-controller@1a0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 258,
+      "hex": "0102",
+      "path": "/soc/power-management@288300000/power-controller@58",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 259,
+      "hex": "0103",
+      "path": "/soc/power-management@288300000/power-controller@60",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 260,
+      "hex": "0104",
+      "path": "/soc/power-management@288300000/power-controller@68",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 261,
+      "hex": "0105",
+      "path": "/soc/power-management@288300000/power-controller@70",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 262,
+      "hex": "0106",
+      "path": "/soc/power-management@288300000/power-controller@80",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 263,
+      "hex": "0107",
+      "path": "/soc/power-management@288300000/power-controller@8028",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 264,
+      "hex": "0108",
+      "path": "/soc/power-management@288300000/power-controller@8030",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 265,
+      "hex": "0109",
+      "path": "/soc/power-management@288300000/power-controller@8038",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 266,
+      "hex": "010A",
+      "path": "/soc/power-management@288300000/power-controller@8040",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 267,
+      "hex": "010B",
+      "path": "/soc/power-management@288300000/power-controller@8048",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 268,
+      "hex": "010C",
+      "path": "/soc/power-management@288300000/power-controller@8050",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 269,
+      "hex": "010D",
+      "path": "/soc/power-management@288300000/power-controller@8058",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 270,
+      "hex": "010E",
+      "path": "/soc/power-management@288300000/power-controller@88",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 271,
+      "hex": "010F",
+      "path": "/soc/power-management@288300000/power-controller@98",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 272,
+      "hex": "0110",
+      "path": "/soc/power-management@288300000/power-controller@a0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 273,
+      "hex": "0111",
+      "path": "/soc/power-management@288300000/power-controller@a8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 274,
+      "hex": "0112",
+      "path": "/soc/power-management@288300000/power-controller@b0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 275,
+      "hex": "0113",
+      "path": "/soc/power-management@288300000/power-controller@b8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 276,
+      "hex": "0114",
+      "path": "/soc/power-management@288300000/power-controller@c0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 277,
+      "hex": "0115",
+      "path": "/soc/power-management@288300000/power-controller@c8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 278,
+      "hex": "0116",
+      "path": "/soc/power-management@288300000/power-controller@d0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 279,
+      "hex": "0117",
+      "path": "/soc/power-management@288300000/power-controller@d8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 280,
+      "hex": "0118",
+      "path": "/soc/power-management@288300000/power-controller@e0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 281,
+      "hex": "0119",
+      "path": "/soc/power-management@288300000/power-controller@e8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 282,
+      "hex": "011A",
+      "path": "/soc/power-management@288300000/power-controller@f0",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 283,
+      "hex": "011B",
+      "path": "/soc/power-management@288300000/power-controller@f8",
+      "compatible": [
+        "apple,t6050-pmgr-pwrstate",
+        "apple,t8103-pmgr-pwrstate"
+      ]
+    },
+    {
+      "id": 284,
+      "hex": "011C",
+      "path": "/soc/serial@505200000",
+      "compatible": [
+        "apple,s5l-uart"
+      ]
+    },
+    {
+      "id": 285,
+      "hex": "011D",
+      "path": "/soc/watchdog@28836c000",
+      "compatible": [
+        "apple,t6050-wdt",
+        "apple,t8103-wdt"
+      ]
+    },
+    {
+      "id": 286,
+      "hex": "011E",
+      "path": "/timer",
+      "compatible": [
+        "arm,armv8-timer"
+      ]
+    }
+  ]
+}

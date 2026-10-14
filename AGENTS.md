@@ -86,20 +86,19 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1: **attempt 10 consumed**, boot029 at readiness `8c96579`.
-Controller exit 0/10.496 s; hardware/DAPF/descriptor/kboot checks PASS.
-Reviewed video observes native Linux and literal **P:05 S:09 W:04** in later
-samples. H and full sequence unobserved; small diagnostic fields not confirmed.
-Source places this at the first deferred-work flush and worker probe entry;
-no exact fault established. PID 1/userspace one-CPU/60-second liveness unobserved.
-Human confirms Macintosh HD return. Fresh protection/default checks NOT CHECKED.
-
-Current M5 next: review `native/boot/stage-b-2026-10-14-attempt10-result.md`,
-perform read-only return checks, and investigate deferred-worker/probe progress
-and diagnostic visibility offline. Preserve installed boot021/client pin,
-working entry and existing gates/single skip. No retry, reinstall, settings
-changes or new live session from this report. Stable native diagnostic userspace
-precedes Linux control/input and the configuration agent's Omarchy handoff.
+Current M5 handoff: **boot030 / attempt 11; native/live NOT RUN**. Attempt 10
+video reads P:05 S:09 W:04, locating the first deferred-work flush/probe entry
+by source; three native display lanes now work. Exact driver/fault unknown.
+REA/source/LLVM/linked-byte audit informs 56 probe checkpoints and public
+root/current device IDs in a compact four-row panel. Only Image changes.
+Full link, actual helper/panel/identity/platform/parser sanitizers, 90 controller
+cases, 13-file intake and generic VM PID-1/60-second liveness PASS.
+Post-attempt-10 original Full/lab Permissive JSON PASS. M1 verifies/publishes
+readiness, then one human-started filmed attempt 11. Follow the current Stage-B
+checklist; preserve installed boot021 and the working entry/gates/single skip.
+No repeated provisioning/Recovery, settings changes or automatic retry.
+Native diagnostic userspace remains the gate before Linux control/input and
+configuration-agent Omarchy setup. No native performance parity claim.
 
 Historical M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
 still unobserved. Boot027 keeps the working boot021 setup and changes only

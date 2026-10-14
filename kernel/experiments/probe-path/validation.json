@@ -1,0 +1,150 @@
+{
+  "date": "2026-10-14",
+  "package": "ilinux-j716c-boot030",
+  "native_attempt_11": "NOT RUN",
+  "native_cause": "UNRESOLVED",
+  "changed_payload_files": [
+    "Image"
+  ],
+  "image": {
+    "size": 44599808,
+    "sha256": "190cd86d5f823326f5a44277f5efb96cc01c85b3a3f9ffbde16d9cb7abe35067"
+  },
+  "archive": {
+    "bytes": 16724043,
+    "sha256": "260f57106007b654a522480e3c20fb2b3630338a5b90edaa64bd067fa0ec2c16"
+  },
+  "intake_manifest_sha256": "8772c4585be4b646eec28873d203928d17ea1855d8177d9ca1d729c315afabad",
+  "intake_verified_files": 13,
+  "controller_cases": [
+    37,
+    6,
+    16,
+    5,
+    19,
+    2,
+    4,
+    1
+  ],
+  "controller_total": 90,
+  "build": {
+    "kernel": "Linux 7.1.9",
+    "compiler": "GCC 16.1.1 20260430",
+    "linker": "GNU binutils 2.46.0",
+    "page_size": 16384,
+    "config_unchanged": true,
+    "full_Image_and_ELF_roundtrip": "PASS",
+    "source_tree": "/var/tmp/ilinux-boot030/linux",
+    "vm_exit": 0,
+    "started_utc": "2026-10-14T15:09:42Z",
+    "ended_utc": "2026-10-14T15:10:11Z",
+    "method": "Guarded fresh apply, then verified-source resume after fixing renderer signedness warning; fresh-copy job uses final code."
+  },
+  "sanitizers": {
+    "actual_helper": "PASS: watchdog, scheduler/stack/log bounds and error paths",
+    "actual_panel": "PASS: three font geometries, seven lanes, exact glyph pixels, bounds/canaries/padding, overwrite repaint and rejected inputs",
+    "actual_identity": "PASS: 286 referenced public nodes, unknown/non-OF nodes, target/task gating, nested attribution and balanced cleanup",
+    "actual_platform_probe": "PASS: eight success/error/absent-callback/deferral flows with controlled API shims",
+    "actual_parser_mapper": "PASS: 15 console lifecycle, generic/null/disabled DT, geometry/format/font/mapping scenarios",
+    "flags": "-std=gnu11 -O1 -g -Wall -Wextra -Werror -Wno-unused-function -fsanitize=address,undefined -fno-omit-frame-pointer"
+  },
+  "generic_vm": {
+    "cpus": 1,
+    "memory_GiB": 4,
+    "disk": false,
+    "network": false,
+    "timer_ticks_per_100ms": 25,
+    "reschedule_pending": 1,
+    "phases": [
+      1,
+      10,
+      11,
+      12,
+      13,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "PID_1": "PASS",
+    "online_cpus": 1,
+    "liveness_seconds": 60.19051,
+    "strip": 0,
+    "display_state": 1,
+    "limits": "No native AIC or scanout; generic strip=0/display=1 expected. No native driver MMIO tested. Successful init finishes before watchdog fires; callbacks are shim-tested. Owned VM stopped after liveness."
+  },
+  "source_sha256": {
+    "kernel/experiments/probe-path/apply.py": "c3b703f72bf972cb758890b8a9439d4877496e61dc48eafd46a29496dc6a6a77",
+    "kernel/experiments/probe-path/audit.py": "ec50e724bfda4d3b9fe2c073e6bf36c104846138bd7220542a9ba5b446e48fd1",
+    "kernel/experiments/probe-path/decode.py": "61c51b18de1c9a1eb6b617fcbaad0d9e6ac39fbe316c3c9fabcd81d3417e0c1e",
+    "kernel/experiments/probe-path/device-identities.h": "3fc6e7fc351772d441c2370486602bb66c6e2906014dddb16025a499a6da7b66",
+    "kernel/experiments/probe-path/make-identities.py": "285200cfd6f40539f16ef5bef0c222ad12c99107db4d26f24dd20b6cacc3091a",
+    "kernel/experiments/probe-path/path-state.h": "608ad89d2d08f8eabae52ef3fc3546ae37783e6139fa8fa25f4176b1e986eb20",
+    "kernel/experiments/probe-path/status-panel.h": "b768e708fda0151d333d6072bedffe09319c574778878d785f039f111240930a",
+    "kernel/experiments/probe-path/test_diag.c": "5c29c0cc96fe9d0ebf5e629cee0e57e3261ac66f4c5bd306bf95e1253c0dde13",
+    "kernel/experiments/probe-path/test_map.c": "97c5b8df88341b4e476075a183c4b0d7921df6da4db44573bbd1e328b8ef0d01",
+    "kernel/experiments/probe-path/test_panel.c": "56cbcfe7bd2448bdeee63a3e606abb9b8c2c5104fde39fa1e218c4e7e754da47",
+    "kernel/experiments/probe-path/test_path.c": "1049d463a7aa8bd7d053bb523fd341c99e9676c45bae0e5c76154a08eebcfd12",
+    "kernel/experiments/probe-path/test_platform.c": "0fc1fac816c842b8e80086773c1aa872fb74a8fd394516121d87a189d9f3d780",
+    "virtualization/jobs/030-probe-path/run.sh": "65554489f8005bc5b1ed34161d108e80027542866b11a1249ff4a64f0ccd1239"
+  },
+  "logs_sha256": {
+    "build/native-probe-inspect/boot030-generic-vm.log": "0f61fef80592b2c5d950d7aea7ee7be2b686d363721946563ef0102cb6d47919",
+    "build/native-boot030-checks/out/run.log": "c747ef4969a75be89330096ba08900aa69a71597cee4e55235d65ccc9ce1dc87",
+    "build/native-probe-retry/out/run.log": "17393ee7bca2dcaaa133d57eab1f89ba18ea4d1a3850f2b5dafd782aea9d9b24",
+    "build/native-probe-retry/out/build.log": "c1984a91b189704a82319f56ef0478955a0f8b06ccfc85d5956397a40b2c134a",
+    "build/native-probe-retry/run.sh": "18c55a8132f7f11f4bc6eb79872f5105f6be3d7a43de407c1238b80d5cc9a2f9",
+    "build/native-boot030-checks/out/final-header-sha256.txt": "3eaf84643292ec6b82e8d29c4c5cff30afc055ec7d8f8a44fd8109edb65f3a90"
+  },
+  "rea": {
+    "version": "6.4.0",
+    "backend": "Ghidra 12.1.4",
+    "input": "exact boot029 Linux bus.o/platform.o; no Apple extraction",
+    "evidence_sha256": "55d0e968c597b76933a0f034b527c3e8b9845703a79d3d0fd0b629746a9a5b47",
+    "complete_instruction_words": 81,
+    "nonrelocated_linked_word_matches": 69,
+    "relocation_words_reviewed": 12,
+    "rea_omitted_words": 0
+  },
+  "decoders": {
+    "device_count": 286,
+    "probe_boundaries": 56,
+    "identities_sha256": "4bb4f3d0a1cf7fcd79a99729af1c342c63bc16e2e397cca2f15aa566be490e2e",
+    "phases_sha256": "6d90fa6150edb71ff42acd879a73639d9dcd1931f9a4f499bc634ef638cf15ce",
+    "unknown": "0000",
+    "source": "Pinned public Stage-B DT; table indexes, not unique hardware identifiers"
+  },
+  "post_attempt_10": {
+    "user_policy_json": {
+      "original": "Full",
+      "lab": "Permissive",
+      "exit_codes": [
+        0,
+        0
+      ]
+    },
+    "independent_read_only": {
+      "root_volume": "Macintosh HD",
+      "build": "25G83",
+      "FileVault": true,
+      "SIP": "enabled",
+      "staged_m1n1_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "not_requeried": [
+      "default selection",
+      "installed boot object",
+      "authenticated-root"
+    ]
+  },
+  "resolved_test_setup_failures": [
+    "Source export removed an unused moved kernel path before successful export.",
+    "Initial renderer -Werror signedness warning corrected to unsigned bound; all final tests/build passed.",
+    "Intake initially lacked the controller directory layout; unchanged verifier/pin checker passed in VM with tool copies and retained clean checkout."
+  ],
+  "native_panel_and_probe_path": "NOT VALIDATED; attempt 10 proves prior three lanes only",
+  "native_performance": "NOT MEASURED; instrumentation adds overhead"
+}

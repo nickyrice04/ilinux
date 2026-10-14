@@ -1,5 +1,9 @@
 # Attempt 10: independent diagnostic framebuffer and context-switch checkpoints
 
+**Historical boot029 handoff:** attempt 10 is now consumed and directly observes
+three panel lanes. Follow [boot030 probe-path](../probe-path/README.md) for current
+analysis and attempt 11. Validation below records the earlier handoff state.
+
 2026-10-14. Boot029 is based on boot028. **Native attempt 10 NOT RUN; the
 native hang is unresolved.** The implemented fix is to our diagnostic display
 initialization, not a demonstrated scheduling/hardware fix or Omarchy boot.

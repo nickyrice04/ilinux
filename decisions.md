@@ -1274,3 +1274,22 @@ small timer/display fields remain unconfirmed, with no values inherited from
 prior attempts. Userspace/liveness remain unobserved. Human confirms Macintosh
 HD return. M5 performs read-only return checks and offline probe/visibility
 analysis next. Preserve the installed setup and all gates; no retry or new skip.
+
+## 2026-10-14 · Identify the deferred device and operation before changing drivers
+
+Attempt 10 exposes P:05 S:09 W:04, but no readable retry identity or heartbeat.
+Use exact bus/platform REA plus source/linked bytes to separate framework work
+from driver callbacks. Boot030 adds bounded operation markers and static public
+DT indexes, with task gating and separate root/nested identity. Preserve all
+original callbacks, locks, errors, work flushes and hardware checks; add no skip.
+A compact four-row panel repaints saved lanes and marks heartbeat before printk.
+It remains diagnostic overhead and non-atomic display evidence, not a fault PC.
+
+Full build, actual helper/renderer/identity/platform/parser sanitizer tests,
+90 controller cases/intake and exact-image generic VM liveness pass. Original
+macOS policy remains Full and lab Permissive by fresh user JSON. Installed
+boot021 and current entry remain. M1 offline readiness plus human start suffice
+for one filmed attempt 11; no additional M5 approval loop or setup restart.
+Record all readable lanes and video times through the stop criterion, decode
+IDs offline, then return. Native userspace remains the gate before Linux-side
+control/input and Omarchy configuration; no performance-parity claim.

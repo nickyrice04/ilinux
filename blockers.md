@@ -3,28 +3,27 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — native deferred-worker/probe progress; userspace unobserved
+## Current Stage B blocker — deferred-device/probe boundary; boot030 ready offline
 
-Attempt 10's reviewed boot029 video shows native Linux and readable
-**P:05 S:09 W:04**, unchanged across later samples from 11 to 27.05 seconds.
-Three strip lanes now visibly render. Source places P=05 at the first flush,
-S=09 at scheduler exit and W=04 before bus_probe_device in deferred work.
-This supports investigating that boundary, not an exact blocked PC/driver or
-register-fault diagnosis. Progress beyond phase 13 is inferred from P=05's
-source path; phase-13 text was not directly read.
+Attempt 10 directly observes P:05 S:09 W:04 in video samples through 27.05 s.
+Three native lanes render; source places this at the first deferred-work flush
+and before bus_probe_device. H and small fields are unobserved/unconfirmed;
+PID 1/liveness remains unobserved. No exact driver/PC/deadlock is established.
 
-H/full transition sequence, watchdog stack and diagnostic PID 1/one-CPU/
-60-second liveness are unobserved. Small timer/display/pending fields cannot
-be confirmed from the blurred/overlapping text. Clip duration is 27.197 seconds,
-with paused samples rather than exhaustive coverage of the 120-second window.
+REA/source shows the wrapper includes locks, runtime PM, setup and callbacks.
+Boot030 adds 56 operation boundaries and 286 public DT device indexes with
+root/nested-device attribution, plus a four-row panel with heartbeat before
+printk and saved-lane repaint. This addresses the missing evidence; it does
+not prove a root-cause repair. Full link/sanitizers/90 controller cases/intake/
+generic VM liveness pass. Native panel/device/probe behavior remains untested.
 
-Controller exit 0/10.496 s; hardware/DAPF/descriptor/kboot gates PASS. Human
-confirms Macintosh HD return. Fresh post-attempt-10 protection/default checks
-NOT CHECKED; post-attempt-9 policies are historical. M5 owns read-only return
-checks and offline worker/probe/visibility analysis. Attempt 10 consumed;
-no automatic retry, wider blacklist, reinstall or settings changes.
-See `native/boot/stage-b-2026-10-14-attempt10-result.md` and
-`kernel/experiments/context-display/README.md`.
+Post-attempt-10 original Full/lab Permissive JSON PASS. M1 verifies boot030 and
+publishes readiness before one filmed attempt 11, then Macintosh HD return.
+Preserve installed boot021/current entry/single skip/hardware gates; no new
+provisioning, settings change or automatic retry. The next driver change must
+follow the decoded device/operation evidence or a readable stack.
+See `kernel/experiments/probe-path/README.md`, current Stage-B instructions,
+and `native/boot/stage-b-2026-10-14-attempt10-result.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

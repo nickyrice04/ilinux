@@ -1,0 +1,7 @@
+{
+  "drivers/base/dd.c": "81980e0872c0445ea2b0806b1b610a92e921992d203a6f591df22b83c6b70451",
+  "drivers/base/bus.c": "ca5c7869054b603b64c21df45279decf32f540c2f29c801e851e94fe2f788a4a",
+  "drivers/base/platform.c": "c1967f53f66da20c515d32ca3242bd6f365b31f2678f7125bf71cc16ed56a258",
+  "drivers/base/ilinux_probe_diag.h": "2107b952f4db86d4d6ecc2a92dfd997af5986834c06e1bd7b631217874e9fcc8",
+  "drivers/firmware/efi/ilinux-fb-map.h": "4a1bb47ccf4f9501bb83473bcd013189940966e36cda39e4e6d0b3f23fa5daf3"
+}

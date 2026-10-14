@@ -5,6 +5,41 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: boot030 identifies deferred-device and probe-operation boundaries
+
+* Reviewed M1 `9d04195`: attempt 10 controller PASS (10.496 s), and paused
+  video directly reads **P:05 S:09 W:04**. Three native strip lanes render;
+  H/small fields/full transitions/userspace remain unobserved or unconfirmed.
+  P=05 places progress at the first deferred-work flush by source inference.
+  No exact driver, blocking PC or cause established. Macintosh HD return confirmed.
+* Exact boot029 REA/Ghidra plus source/LLVM/linked bytes cover bus/platform
+  wrappers: **81 instruction words, 69 nonrelocated matches**, 12 relocation
+  words reviewed separately. Bus attach includes interface locking/callbacks;
+  platform probe includes clocks/domain attachment before the driver callback.
+* Boot030 adds **56 probe boundaries**, root/current device table IDs from
+  286 public DT nodes, task attribution and a compact **four-row panel**.
+  It repaints saved lanes and marks H before printk. The next native run can
+  distinguish device locking/runtime PM/DMA/clocks/domains/driver entry.
+  This improves diagnosis; **native hang unresolved, no new driver skip**.
+* Only **Image** changes. Installed boot021, DT/config/initramfs/args and
+  controller/hardware gates remain unchanged. Full Image/ELF roundtrip,
+  actual helper/panel/identity/platform/parser sanitizer tests, **90 controller
+  cases** and **13-file intake PASS**. Exact one-CPU/4 GiB diskless/networkless
+  VZ reaches all phases/PID 1/one CPU and liveness at **60.190510 s**. Native
+  AIC/MMIO/scanout and performance are not validated by these tests.
+* Post-attempt-10 user policy JSON PASS: original Full/lab Permissive, exits 0.
+  Independent root Macintosh HD/build 25G83/FileVault/SIP/staged m1n1 SHA PASS.
+  Default/installed boot object/authenticated-root not re-queried. No host
+  settings, volume, default, firmware or installed m1n1 changes.
+* All test/REA VMs stopped; both shared quiet locks released.
+* Next: M1 verifies private `native-j716c-boot030`, publishes offline readiness,
+  then the human starts **one filmed attempt 11**. Record literal P/S/W/H/D/B/C,
+  decode D/C/B offline and review early/final video through the stop criterion.
+  **Native attempt 11/live checks NOT RUN.** Follow the current Stage-B checklist
+  and `kernel/experiments/probe-path/`. No reinstall, automatic retry or extra
+  M5 approval loop. Native PID 1/liveness precedes Linux control/input and the
+  configuration agent's Omarchy handoff; GPU/SMP/idle/DVFS remain separate work.
+
 ## 2026-10-14 · M1: attempt 10 readable strip; return confirmed
 
 * One boot029 RAM attempt at readiness `8c96579`, reviewed M5 handoff `73c5e0d`.
