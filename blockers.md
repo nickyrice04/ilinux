@@ -5,15 +5,20 @@ upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
 ## Latest Stage A status — 2026-10-13
 
-USB primary identification and P_NOP are now validated on this setup after
-checker fix `70ad452`: one primary CDC data interface 1, one successful reply,
-exit 0, 0.158 seconds, port closed. User confirms Macintosh HD desktop return.
-The earlier naming/discovery blocker is resolved. No fresh post-attempt build,
-default-selection or protection checks are reported yet; M5 can perform the
-planned read-only checks. Boot021/client pin are unchanged. Linux and live
-target-version checks remain NOT RUN; Stage B needs separate authorization.
-This supersedes older provisioning/USB-pending statements below; P_NOP does
-not resolve native Linux hardware-enablement blockers.
+USB primary identification and P_NOP are validated after `70ad452`/`974e894`:
+one primary interface, one reply, exit 0, 0.158 seconds, followed by Macintosh
+HD return. M5 read-only review confirms build/FileVault/SIP/authenticated-root
+and staged m1n1 hash. The user's fresh JSON reports original Full/lab
+Permissive, both exit 0. Default selection was not independently rechecked.
+
+The next launcher's stale P_01 suffix gate is now fixed with the same shared
+USB descriptor selector and tested `--device auto` path. Local offline payload
+verification and 54 regression cases pass; M1's full controller suite is next.
+Boot021/client pin unchanged. **Native Linux and live build-marker verification
+remain NOT RUN.** Stage B is prepared and separately gated; P_NOP does not
+resolve CPU, power, display/GPU or Linux peripheral enablement. The historical
+provisioning-pending statements below are superseded by completed installation
+and this status. Current checklist: `tools/m1n1-client/stage-b-instructions.md`.
 
 ## Hardware enablement
 

@@ -1,5 +1,11 @@
 # Second-machine m1n1 client
 
+Current next handoff: [Stage B instructions](stage-b-instructions.md).
+Stage A P_NOP and macOS return passed. The Linux launcher now uses the same
+shared `usb_identity.py` selector with `--device auto`; pull all controller
+files together. Linux has not booted. Prepare/check offline, then await the
+user's Stage B approval before any live launch.
+
 Prepared 2026-10-13 on the second macOS computer. This is client preparation,
 not authorization to install a boot entry, change security or boot the M5.
 

@@ -6,9 +6,10 @@ single-core, APFS-stub, persistent-console and power-cycle guarantees.
 Checker `70ad452` identified one m1n1 primary CDC data interface and received
 one P_NOP reply in **0.158 seconds**, exit **0**. The port closed, without retry
 or memory/register/boot requests. User confirms return to the usual Macintosh
-HD desktop. Fresh post-attempt build/default/protection checks remain pending
-M5 review. **Linux and live target-version checks remain NOT RUN.** Boot021
-and client pin are unchanged. See `coordination.md` for timestamps/evidence.
+HD desktop. M5 has now checked original build/FileVault/SIP/authenticated-root
+and staged m1n1; user supplied fresh original Full/lab Permissive JSON (both exit 0).
+Default startup selection has not been independently rechecked. **Linux and
+live target-version checks remain NOT RUN.** Boot021 and client pin are unchanged. See `coordination.md` for timestamps/evidence.
 
 ## 1. Current state
 
@@ -27,8 +28,8 @@ B independently rechecked original FileVault/SIP/authenticated-root and build.
 The user's fresh post-return helper output reports original Full/lab Permissive,
 both exit 0. Staged m1n1 still matches package size/SHA-256; B did not read the
 installed object or verify the exact runtime version. P_NOP subsequently passed
-and user confirms return; new post-attempt protection checks are pending. Linux
-remains NOT RUN. Any later authorized boot uses the existing lab entry.
+and user confirms return; post-attempt protection checks are now complete as
+recorded above. Linux remains NOT RUN. Any later authorized boot uses the existing lab entry.
 M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 
 ## 2. Dedicated OS entry: separate installation gate
@@ -36,8 +37,8 @@ M5 Pro boot/SMP reports are hypotheses for this M5 Max, not local results.
 The current concrete proposal, observed disk capacity, matching Apple installer,
 recovery preflight and gated commands are in
 [boot-entry-setup.md](boot-entry-setup.md). Lab macOS installation is complete;
-custom boot/security work is also complete. USB/native Linux validation remains
-pending. The alternatives below explain the provisioning choice, not work to repeat.
+custom boot/security work is also complete. m1n1 USB validation passed; native
+Linux validation remains pending. The alternatives below explain the provisioning choice, not work to repeat.
 
 An empty APFS volume alone is not a bootable m1n1 stub. It needs an OS volume
 group, Apple boot components, paired recovery and an owner-authorized custom
@@ -120,7 +121,7 @@ disconnect is expected and does not itself establish either success or failure.
 ## 4. Stage A: m1n1 only — handshake passed; return confirmed
 
 One P_NOP succeeded in 0.158 seconds, exit 0, followed by user-confirmed return.
-Fresh read-only return checks remain pending M5 review. The following procedure
+Read-only return checks are complete as recorded above. The following procedure
 and [controller checklist](../../tools/m1n1-client/stage-a-instructions.md) are
 retained for reference; do not repeat or transition to Stage B automatically.
 
@@ -135,8 +136,10 @@ its setup resets the PMU panic counter and writes home-directory history.
 
 ## 5. Stage B: one-core RAM diagnostic, after separate approval
 
-Use only `native/boot/launch.py` as documented in its README. Upstream
-`tools/linux.py` unconditionally starts secondary cores before Linux sees
+Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
+Use only `native/boot/launch.py` with `--device auto` as documented in its README.
+It shares the descriptor selector validated by Stage A; no P_01 suffix is
+required. Upstream `tools/linux.py` unconditionally starts secondary cores before Linux sees
 `maxcpus=1`. The replacement never issues that request, rejects already-started
 secondaries reported by m1n1, and skips `cpufreq_init()` and `m1n1.setup`.
 

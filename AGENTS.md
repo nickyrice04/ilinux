@@ -86,6 +86,14 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
+Latest: Stage A physical P_NOP passed (0.158 s, exit 0), user returned to
+Macintosh HD, and return checks now confirm original protections including
+user-supplied Full/lab Permissive JSON. Stage B launcher reuses descriptor
+identity (`--device auto`), with 54 offline cases passing on M5. Payloads/pin
+unchanged. Follow `tools/m1n1-client/stage-b-instructions.md`; M1 verifies its
+controller environment next. Stage B/native Linux remains NOT RUN and needs
+explicit approval. No repeat Recovery/setup/security change is required.
+
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.
 * A draft native patch series exists in `kernel/patches/t6050`. Job 020 /

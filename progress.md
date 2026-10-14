@@ -5,6 +5,41 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: Stage A reviewed; Linux launcher USB blocker fixed offline
+
+* Fast-forwarded M1 commits `70ad452`/`974e894`. One physical P_NOP succeeded
+  in 0.158 seconds (exit 0); user confirmed Macintosh HD return. This is proxy
+  evidence, not native Linux or live build-marker verification.
+* Independent read-only return checks: original Macintosh HD, 26.6.2/25G83,
+  original System/Data FileVault on, SIP enabled, original authenticated-root
+  enabled (selected by name in the same live csrutil prompt). Staged m1n1 is
+  still 3,932,160 bytes with the expected boot021 SHA-256. Installed object
+  and default startup selection were not independently queried.
+* The user supplied fresh read-only policy JSON after this Stage A return:
+  original Full and lab Permissive, both exit 0. Privileged noninteractive
+  execution required a password, so this evidence is the user's output, not
+  a separate agent rerun. No policy, volume, payload or default-setting writes.
+* Found the same P_01 filename assumption in Stage B's launcher. Moved M1's
+  validated descriptor selector into `usb_identity.py`, reused it at live
+  connection time and added `--device auto`. Missing/ambiguous/wrong/stale
+  interfaces stop before opening. Paths/raw registry remain private in memory.
+* The launcher owns/closes the serial transport even on interface-init failure,
+  restores its deadline handler, redacts transport errors and reports safe
+  preflight/upload milestones. Existing chip/build/secondary/effective-DT gates
+  and fixed arguments remain. Boot021 binaries/manifest/client pin unchanged.
+* Validation: **31 launcher + 16 stdlib USB identity/CLI + 7 intake tests pass**;
+  real local boot021 verifies offline. Tests cover wrong pin/device, ambiguity,
+  no offline discovery, timeout/interruption/cleanup and existing DT/CPU gates.
+  The unchanged four upstream serializer handshake cases remain for M1's
+  configured environment (the combined M1 USB suite still has 20 cases).
+* Prepared `tools/m1n1-client/stage-b-instructions.md`: exact offline checks,
+  proposed one-attempt RAM launch, controller/screen time bounds, no automatic
+  retry, native PID-1/one-CPU/60-second milestones and macOS return evidence.
+* Next: M1 verifies the changed controller; user approves one Stage B session.
+  No USB port was opened, Linux launched or M5 restarted in this review.
+  Native Linux/Omarchy, efficient idle/DVFS, SMP and G17 acceleration remain
+  unvalidated. Asahi's current M5 table still lists these hardware blocks TBA.
+
 ## 2026-10-13 · M1: Stage A P_NOP passed; Macintosh HD return confirmed
 
 * User started a new Stage A attempt after checker fix `70ad452`. On M1,

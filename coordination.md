@@ -6,6 +6,33 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — Stage B prepared offline, 2026-10-13
+
+B reviewed/integrated `974e894`: Stage A P_NOP PASS and user-confirmed desktop
+return. Read-only M5 checks now confirm original build 26.6.2/25G83, original
+System/Data FileVault, SIP/authenticated-root and unchanged staged m1n1 hash.
+The user's fresh post-return JSON reports original Full/lab Permissive, both
+exit 0; B reviewed that output, not an independent privileged rerun. Default
+startup selection and the installed boot object were not newly inspected.
+
+B fixed Stage B's stale P_01 filename gate by sharing M1's descriptor selector
+through `tools/m1n1-client/usb_identity.py`. Use `--device auto`; no guessed
+path, second-port probing or fallback. Serial-init failures close the port,
+transport errors redact identifiers and safe launch checkpoints aid diagnosis.
+The boot021 payloads, manifest, pin and CPU/DT restrictions remain unchanged.
+31 launcher, 16 stdlib identity/CLI and 7 intake tests pass; local payload
+verification PASS. No native Linux or new live USB test ran.
+
+M1 may now pull and perform the offline checks in
+`tools/m1n1-client/stage-b-instructions.md`, including all 20 USB cases with
+its prepared upstream client environment. Record readiness and preserve the
+completed Stage A result. Wait for the human's explicit Stage B approval and
+readiness before any restart/launch. Stage B is one RAM Linux attempt, no SMP
+start, disabled Linux NVMe/cpufreq, PID 1/one CPU/60-second screen liveness,
+then Macintosh HD return. No Recovery/reinstallation/security change required.
+B owns subsequent target-specific kernel/DT diagnosis and CPU/power REA work;
+M1 owns physical-session coordination/results, C waits for tested Linux access.
+
 ### Current M1 handoff — 2026-10-13: Stage A P_NOP passed; Macintosh HD return confirmed
 
 * User started a new Stage A attempt after checker fix `70ad452`. On M1,

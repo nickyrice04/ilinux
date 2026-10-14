@@ -854,3 +854,21 @@ post-attempt build/default/protection checks remain pending M5 review.
 Keep exact live target-version verification and Linux/Stage B NOT RUN.
 P_NOP confirms proxy response, not the running build or Linux compatibility.
 Boot021/client pin stay unchanged; this report authorizes no further boot.
+
+## 2026-10-13 · Carry observed USB identity into the native Linux launcher
+
+Stage A's real failure/success established that the filename suffix is not
+reliable but descriptor ancestry works for this M1/M5 pair. The Stage B
+launcher still used the rejected suffix rule. Share the selector rather than
+maintaining a second implementation or weakening it to arbitrary modem paths.
+The live launcher rechecks the sole primary just before opening; `auto` avoids
+serial-bearing command arguments. It closes transport on initialization failure
+and reports non-sensitive progress checkpoints. No boot artifact rebuild needed.
+
+Stage A return protection checks are complete: independent original build,
+FileVault/SIP/authenticated-root and user-supplied original Full/lab Permissive
+JSON. The next physical experiment is one separately approved Linux RAM boot.
+Keep `idle=nop`, disabled cpufreq and single-core limits for initial diagnosis;
+these workarounds cannot substantiate macOS-class performance/efficiency. Once
+kernel liveness is observed, use that result to target REA and driver changes,
+then validate SMP/idle/DVFS and GPU/display independently on this exact machine.

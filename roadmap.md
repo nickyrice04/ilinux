@@ -40,16 +40,53 @@ approval · ⬜ not started.
 | 2.5 | ANE: document the exclave-mediated design (`ane,t8132exclave`) and what Linux would need | Likely the hardest block |
 | 2.6 | 🔄 User-authorized local REA/binary analysis for focused implementation questions; artifact identity, confidence and independent experiments recorded | Metadata and supplemental LLVM ARM64 analysis completed; REA decompilation backend unavailable. Original local implementations; no proprietary code copied |
 
+Update, 2026-10-13: REA/Ghidra is operational in the isolated Linux lab
+(F-070–F-077). CPU startup/idle and driver-interface findings already exist.
+Use them against a specific observed native failure; broad repeated binary
+survey is not the next dependency. No proprietary code is copied into Linux.
+
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
-Only after the independently maintained boot chain and kernel patches pass
-the required pre-boot checks; upstream acceptance is not a prerequisite.
-A deployment plan covering backup, APFS resize, stub
-macOS, boot policy, recovery and rollback will be written first. **Nothing
-here proceeds without explicit user approval.**
+The dedicated lab entry is installed and Stage A's m1n1/P_NOP/return passed.
+The original remains Full Security by the user's fresh read-only policy check.
+This is bootloader progress; no native Linux result exists yet. The kernel,
+DT and RAM diagnostic are built, and the controller naming blocker is fixed.
+
+| Order | Next experiment | Evidence required before advancing |
+|---|---|---|
+| 1 | One separately approved Stage B RAM boot; existing boot021, single core, Linux NVMe/cpufreq disabled | M5 screen: kernel, PID 1, one CPU, 60-second liveness, then original macOS return. Use `tools/m1n1-client/stage-b-instructions.md` |
+| 2 | Diagnose the earliest actual failure, or improve logging if screen output is absent | A reproducible checkpoint and tested patch; no blind retry or guessed driver diagnosis |
+| 3 | Establish Linux-side USB/input and an observable control channel | Linux USB enumeration and tested input/network access. The working m1n1 USB proxy does not survive Linux handoff |
+| 4 | Separate bounded SMP/idle/DVFS experiments, informed by existing REA startup findings | Correct core identities/topology, stable incremental secondary startup, validated idle/wake and frequency transitions; no assumed masks or OPP values |
+| 5 | Storage access and persistent Linux environment under a separately approved storage plan | Read-only identification first; stable storage/input/access and preservation of macOS volumes. Only then configure native Omarchy via `native/handoff/` |
+| 6 | G17 GPU/DCP, media, N1 wireless, audio/camera/ANE enablement | Per-device transport/firmware evidence and isolated driver tests, followed by measured physical behavior |
+
+Orders 3–4 can share offline research while physical tests remain separate.
+Stage A approval covered only that completed session; Stage B and later
+experiments require their own scope. No new boot-policy change is needed for
+the proposed Stage B test. The configuration agent can prepare packages now,
+but cannot run inside the current shell-less/network-less RAM diagnostic.
 
 ## Phase 4 — Performance engineering on native Linux
 
 Iterate per subsystem with the Observe → Investigate → Compare → Design →
 Implement → Test → Benchmark → Iterate loop, scored in
 `reports/performance-parity.md`.
+
+For this exact M5, the largest remaining native gaps are (1) observed Linux
+execution and usable access, (2) all-core operation plus safe idle/DVFS and
+thermal control, and (3) native G17 graphics/display/media acceleration.
+Stage B deliberately uses `idle=nop`, one CPU and no cpufreq: it tests liveness,
+not efficiency. Removing those restrictions requires independent evidence.
+The [current Asahi M5 table](https://asahilinux.org/docs/platform/feature-support/m5/)
+still lists t6050 GPU, cpufreq, cpuidle, DCP and USB support TBA (checked
+2026-10-13); our private prototypes need physical validation, not an installer toggle.
+
+Before claiming parity, repeat matched macOS/native Linux workloads on the
+same machine, with recorded build/compiler/kernel/DT, power mode/source,
+brightness/resolution, thermal starting state and run count. Report throughput
+and latency together with energy per completed task, idle watts and sustained
+thermal behavior. Keep measurement boundaries comparable (whole-machine power
+versus modeled component counters are different quantities). Record uncertainty
+and missing devices explicitly. VM results and a successful boot cannot stand
+in for native performance or battery-life results.

@@ -15,6 +15,8 @@ import sys
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from fdt import check_stage_b
+sys.path.insert(0, str(HERE.parents[1] / "tools/m1n1-client"))
+import usb_identity
 
 M1N1_COMMIT = "57a9339ffd1876e78297b17d34dece8cff8fa1ba"
 BOOTARGS = ("console=tty0 fbcon=nodefer rdinit=/init ro maxcpus=1 nr_cpus=1 "
@@ -62,6 +64,7 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
     if iface.readmem(base + manifest["m1n1_version_offset"], len(marker)) != marker:
         raise ValueError("target m1n1 does not match packaged build")
     ensure_no_secondaries(proxy)
+    print("Target PASS: t6050, packaged m1n1 marker, no started secondaries.", flush=True)
     # No m1n1.setup, bootstrap_port, PMU reset, shell, cpufreq_init or SMP start.
     # ProxyUtils sets up a RAM heap and reads boot arguments; it is not read-only.
     utils = utils_factory(proxy)
@@ -69,6 +72,7 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
         raise ValueError("target board is not J716c")
     if not utils.ba.video.base or not utils.ba.video.width or not utils.ba.video.height:
         raise ValueError("m1n1 has no boot framebuffer")
+    print("Board/framebuffer PASS; allocating RAM for diagnostic payloads.", flush=True)
     image = files["Image"]
     # Respect ARM64 Image.text_offset instead of assuming it is always zero.
     text_offset, image_size = struct.unpack_from("<QQ", image, 8)
@@ -79,9 +83,11 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
     dt_addr = utils.memalign(65536, len(dtb))
     initrd = files["initramfs-stage-b.cpio.gz"]
     initrd_addr = utils.memalign(65536, len(initrd))
+    print("Uploading DT, initramfs and kernel to RAM.", flush=True)
     iface.writemem(dt_addr, dtb)
     iface.writemem(initrd_addr, initrd)
     iface.writemem(kernel, image)
+    print("RAM upload complete; preparing effective DT and hardware handoff.", flush=True)
     proxy.kboot_set_chosen("bootargs", BOOTARGS)
     proxy.kboot_set_initrd(initrd_addr, len(initrd))
     if proxy.kboot_prepare_dt(dt_addr) != 0:
@@ -117,9 +123,17 @@ def connect_and_launch(device, m1n1, manifest, files):
         raise ValueError("client must be the clean pinned m1n1 checkout")
     # Imports occur only after the explicit live-launch gates and pin checks.
     sys.path.insert(0, str(m1n1 / "proxyclient"))
-    from m1n1.proxy import UartInterface, M1N1Proxy
+    # Repeat descriptor discovery immediately before opening the transport.
+    # Never infer identity from a serial-containing filename or choose a fallback.
+    try:
+        selected = usb_identity.select_primary(usb_identity.discover(), device)
+    except Exception as exc:
+        raise ValueError("USB identity check failed (%s); no port opened" %
+                         type(exc).__name__) from None
+    print("Primary verified: VID:PID 1209:316d, CDC data interface 1; path redacted.")
+    from m1n1.proxy import UartInterface, M1N1Proxy, Serial
     from m1n1.proxyutils import ProxyUtils
-    iface = None
+    transport = None
 
     def timeout(*_):
         raise TimeoutError("launch exceeded 180 seconds; do not automatically retry")
@@ -127,22 +141,33 @@ def connect_and_launch(device, m1n1, manifest, files):
     old = signal.signal(signal.SIGALRM, timeout)
     signal.alarm(180)
     try:
-        iface = UartInterface(device=device)
+        transport = Serial(selected, UartInterface.DEFAULT_BAUD_RATE)
+        iface = UartInterface(device=transport)
         iface.tty_enable = False
         iface.dev.timeout = 15
         launch_session(iface, M1N1Proxy(iface), ProxyUtils, manifest, files)
+    except OSError as exc:
+        # Serial errors may embed target identifiers in the callout path.
+        raise RuntimeError("USB transport failed (%s); do not automatically retry" %
+                           type(exc).__name__) from None
     finally:
-        if iface is not None:
-            iface.dev.close()
-        signal.alarm(0)
-        signal.signal(signal.SIGALRM, old)
+        try:
+            if transport is not None:
+                try:
+                    transport.close()
+                except OSError as exc:
+                    raise RuntimeError("USB close failed (%s); do not automatically retry" %
+                                       type(exc).__name__) from None
+        finally:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, old)
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--package", type=Path, required=True)
     parser.add_argument("--launch", action="store_true", help="LIVE RAM boot; requires separate user authorization")
-    parser.add_argument("--device", type=Path)
+    parser.add_argument("--device", help="auto, or the exact descriptor-verified primary callout")
     parser.add_argument("--confirm", default="")
     parser.add_argument("--m1n1", type=Path, default=HERE.parents[1] / "third_party/m1n1")
     args = parser.parse_args(argv)
@@ -155,9 +180,7 @@ def main(argv=None):
     print("Mode:", "LIVE RAM LAUNCH" if args.launch else "OFFLINE ONLY; USB not opened")
     print("Boot arguments:", BOOTARGS)
     if args.launch:
-        if not str(args.device).startswith("/dev/cu.usbmodem") or not str(args.device).endswith("P_01") or not args.device.exists():
-            parser.error("choose an existing primary /dev/cu.usbmodem*P_01 device")
-        connect_and_launch(str(args.device), args.m1n1, manifest, files)
+        connect_and_launch(args.device, args.m1n1, manifest, files)
     return 0
 
 

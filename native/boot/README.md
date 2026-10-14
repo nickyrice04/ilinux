@@ -1,14 +1,16 @@
-# J716c first-boot package — preparation only
+# J716c Linux boot package — Stage A passed; Stage B prepared
 
 Target: **this Mac17,6 / J716c / t6050 M5 Max**. This package is an experimental
-RAM diagnostic, not an Omarchy installer. **No native boot has been tested.**
-The user authorized package preparation, launcher corrections and the private
-GitHub handoff on 2026-10-13, and explicitly said to stop before boot changes.
+RAM diagnostic, not an Omarchy installer. Native m1n1 boot and USB P_NOP passed
+on this machine; **native Linux remains NOT RUN**. The dedicated entry is
+already installed. Do not repeat installation or security changes. The next
+experiment is the [Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md),
+one separately authorized RAM Linux boot, followed by original macOS return.
 Neither downloading nor verifying this package authorizes a physical boot.
 
-The proposed M5 entry installation is documented in
+The completed M5 entry installation is documented in
 [boot-entry-setup.md](../../kernel/native-enablement/boot-entry-setup.md).
-It is preparation only; do not execute those M5 commands on the M1.
+It is historical context; do not repeat those commands or run them on the M1.
 
 ## M1 agent: do these offline steps now
 
@@ -39,8 +41,9 @@ Do not extract if the archive checksum fails. If the download already exists,
 verify it instead of overwriting it. The trusted checksum and file manifest
 come from Git; do not substitute a manifest from an unverified download.
 `launch.py` without `--launch` uses only Python's standard library and local
-files. It neither imports m1n1 nor opens serial ports. The last command only
-lists device paths; absence while the M5 runs macOS is not a failed cable test.
+files. It neither imports m1n1 nor opens serial ports. The last command reads
+cached USB descriptors, reports counts with paths redacted, and opens no port;
+absence while the M5 runs macOS is not a failed cable test.
 
 Require exit 0 and a complete JSON receipt from the M1 agent's intake verifier;
 the separately tracked manifest digest and `m1n1-revision.txt` satisfy its
@@ -94,6 +97,10 @@ launcher does not call those paths or open an interactive shell.
 For a later explicitly approved session it:
 
 1. Verifies all payload hashes and the clean pinned controller checkout.
+   Re-identifies exactly one macOS primary CDC data interface by VID/PID
+   1209:316d and interface 1. The Stage-A-tested selector is shared; there is
+   no filename-suffix fallback. `--device auto` avoids putting identifiers in
+   command history. Explicit paths must match that same sole primary.
 2. Checks chip `0x6050`, the packaged m1n1 version marker, all 32 m1n1
    secondary-state slots, J716c board compatibility and boot framebuffer.
 3. Allocates RAM, uploads the uncompressed Image, Stage-B DT and initramfs,
@@ -117,17 +124,17 @@ intentionally issues no filesystem writes to the internal SSD.
 
 ## Later live commands — NOT authorized by this handoff
 
-Only after approval and creation of the dedicated boot entry, with the
+Only after Stage B approval, with the already installed dedicated entry's
 matching m1n1 binary running on the M5 and its screen visible:
 
 ```sh
-tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py --connect /dev/cu.usbmodemP_01
 tools/m1n1-client/run.sh native/boot/launch.py \
   --package build/native-boot-download/ilinux-j716c-boot021 \
-  --launch --device /dev/cu.usbmodemP_01 --confirm BOOT-J716C-RAM-DIAGNOSTIC
+  --launch --device auto --confirm BOOT-J716C-RAM-DIAGNOSTIC
 ```
 
-Use the actually observed primary port, not an assumed name. The confirmation
+The launcher includes its own P_NOP; do not add a separate handshake attempt.
+It discovers the actual primary immediately before opening it. The confirmation
 string is an accident-prevention control, not a substitute for user permission.
 Abort on mismatch or timeout; do not weaken a check or start cores to bypass it.
 After any failed live attempt, return to a fresh m1n1 session before another

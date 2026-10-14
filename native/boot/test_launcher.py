@@ -4,6 +4,7 @@ import io
 import json
 from pathlib import Path
 import struct
+import stat
 import sys
 import tempfile
 from types import SimpleNamespace
@@ -185,6 +186,7 @@ class LauncherTests(unittest.TestCase):
 
     def test_offline_does_not_connect(self):
         with patch.object(launch, "verify_package", return_value=(self.manifest, self.files)), \
+             patch.object(launch.usb_identity, "discover", side_effect=AssertionError("discovery ran")), \
              patch.object(launch, "connect_and_launch", side_effect=AssertionError("USB opened")), \
              contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(launch.main(["--package", "/fake"]), 0)
@@ -211,6 +213,156 @@ class LauncherTests(unittest.TestCase):
         for length in (0, 12, 39, len(blob) - 1):
             with self.subTest(length=length), self.assertRaises(ValueError):
                 properties(blob[:length])
+
+
+class ControllerTests(unittest.TestCase):
+    """Exercise identity/pin gates and transport ownership with fake modules."""
+
+    def setUp(self):
+        self.port = launch.usb_identity.Port("/dev/cu.usbmodemSYNTHETIC1", 0x1209, 0x316d, 1, 10)
+        self.transport = SimpleNamespace(closed=False)
+        self.opens = []
+
+        def close():
+            self.transport.closed = True
+
+        def serial(device, baud):
+            self.opens.append((device, baud))
+            return self.transport
+
+        self.transport.close = close
+        class Interface:
+            DEFAULT_BAUD_RATE = 115200
+
+            def __init__(iface, device):
+                iface.dev = device
+
+        self.proxy_module = SimpleNamespace(Serial=serial, UartInterface=Interface,
+                                            M1N1Proxy=lambda iface: object())
+        modules = {"m1n1": SimpleNamespace(), "m1n1.proxy": self.proxy_module,
+                   "m1n1.proxyutils": SimpleNamespace(ProxyUtils=object)}
+        patches = [
+            patch.dict(sys.modules, modules),
+            patch.object(launch.subprocess, "check_output", side_effect=[launch.M1N1_COMMIT, ""]),
+            patch.object(launch.usb_identity, "discover", return_value=[self.port]),
+            patch.object(Path, "lstat", return_value=SimpleNamespace(st_mode=stat.S_IFCHR)),
+            patch.object(launch.signal, "signal", return_value="old-handler"),
+            patch.object(launch.signal, "alarm"),
+            patch.object(launch, "launch_session"),
+        ]
+        self.mocks = [p.start() for p in patches]
+        for p in patches:
+            self.addCleanup(p.stop)
+        (_, self.git, self.discovery, self.lstat, self.signal, self.alarm, self.session) = self.mocks
+
+    def connect(self, requested="auto"):
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            launch.connect_and_launch(requested, Path("/fake-client"), {}, {})
+        self.assertNotIn("SYNTHETIC", output.getvalue())
+
+    def test_auto_selects_non_suffix_primary_and_closes(self):
+        self.connect()
+        self.assertEqual(self.opens, [(self.port.path, 115200)])
+        self.assertTrue(self.transport.closed)
+        self.session.assert_called_once()
+        self.assertEqual([call.args for call in self.alarm.call_args_list], [(180,), (0,)])
+        self.signal.assert_called_with(launch.signal.SIGALRM, "old-handler")
+
+    def test_explicit_verified_primary_works(self):
+        self.connect(self.port.path)
+        self.session.assert_called_once()
+
+    def test_wrong_explicit_port_stops_before_open(self):
+        with self.assertRaisesRegex(ValueError, "USB identity"):
+            self.connect("/dev/cu.usbmodemSYNTHETIC3")
+        self.assertEqual(self.opens, [])
+        self.session.assert_not_called()
+
+    def test_missing_primary_stops_before_open(self):
+        self.discovery.return_value = []
+        with self.assertRaisesRegex(ValueError, "no port opened"):
+            self.connect()
+        self.assertEqual(self.opens, [])
+
+    def test_two_primaries_stop_before_open(self):
+        self.discovery.return_value = [self.port, self.port._replace(path="/dev/cu.usbmodemOTHER1")]
+        with self.assertRaisesRegex(ValueError, "no port opened"):
+            self.connect()
+        self.assertEqual(self.opens, [])
+
+    def test_registry_failure_redacts_identifiers(self):
+        self.discovery.side_effect = OSError("SYNTHETIC private data")
+        with self.assertRaises(ValueError) as error:
+            self.connect()
+        self.assertNotIn("SYNTHETIC", str(error.exception))
+        self.assertEqual(self.opens, [])
+
+    def test_wrong_pin_stops_before_discovery(self):
+        self.git.side_effect = ["wrong-pin", ""]
+        with self.assertRaisesRegex(ValueError, "clean pinned"):
+            self.connect()
+        self.discovery.assert_not_called()
+        self.assertEqual(self.opens, [])
+
+    def test_dirty_client_stops_before_discovery(self):
+        self.git.side_effect = [launch.M1N1_COMMIT, " M tracked.py"]
+        with self.assertRaisesRegex(ValueError, "clean pinned"):
+            self.connect()
+        self.discovery.assert_not_called()
+        self.assertEqual(self.opens, [])
+
+    def test_interface_init_failure_closes_and_redacts(self):
+        with patch.object(self.proxy_module.UartInterface, "__init__",
+                          side_effect=OSError("SYNTHETIC private callout")):
+            with self.assertRaises(RuntimeError) as error:
+                self.connect()
+        self.assertNotIn("SYNTHETIC", str(error.exception))
+        self.assertTrue(self.transport.closed)
+        self.session.assert_not_called()
+
+    def test_preflight_failure_closes_without_retry(self):
+        self.session.side_effect = ValueError("target mismatch")
+        with self.assertRaisesRegex(ValueError, "target mismatch"):
+            self.connect()
+        self.assertTrue(self.transport.closed)
+        self.assertEqual(len(self.opens), 1)
+        self.session.assert_called_once()
+
+    def test_alarm_closes_without_retry(self):
+        def deadline(*_):
+            handler = self.signal.call_args_list[0].args[1]
+            handler()
+        self.session.side_effect = deadline
+        with self.assertRaisesRegex(RuntimeError, "TimeoutError"):
+            self.connect()
+        self.assertTrue(self.transport.closed)
+        self.assertEqual(len(self.opens), 1)
+        self.alarm.assert_called_with(0)
+
+    def test_interruption_closes_transport(self):
+        self.session.side_effect = KeyboardInterrupt()
+        with self.assertRaises(KeyboardInterrupt):
+            self.connect()
+        self.assertTrue(self.transport.closed)
+        self.signal.assert_called_with(launch.signal.SIGALRM, "old-handler")
+
+    def test_close_failure_still_cancels_alarm_and_redacts(self):
+        def fail_close():
+            raise OSError("SYNTHETIC private callout")
+        self.transport.close = fail_close
+        with self.assertRaises(RuntimeError) as error:
+            self.connect()
+        self.assertNotIn("SYNTHETIC", str(error.exception))
+        self.alarm.assert_called_with(0)
+        self.signal.assert_called_with(launch.signal.SIGALRM, "old-handler")
+
+    def test_cli_accepts_explicit_auto_only_after_gates(self):
+        with patch.object(launch, "verify_package", return_value=({}, {})), \
+             patch.object(launch, "connect_and_launch") as connect, \
+             contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(launch.main(["--package", "/fake", "--launch", "--device", "auto",
+                                          "--confirm", launch.CONFIRM]), 0)
+        self.assertEqual(connect.call_args.args[0], "auto")
 
 
 if __name__ == "__main__":
