@@ -19,6 +19,8 @@ m1n1/DT/initramfs/config remain. No extra initcall skip or hardware-driver chang
 is justified yet. M1 follows the current Stage-B checklist for one filmed boot,
 then Macintosh HD return. Fresh post-attempt-7 original Full/lab Permissive
 JSON PASS. Continue the established installation; do not repeat provisioning.
+M1 independently verifies archive/intake/controller and all 90 cases PASS;
+human reports proxy/video ready. Attempt 8 native/live NOT RUN at readiness.
 Evidence: `kernel/experiments/deferred-probe/README.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13

@@ -1173,3 +1173,13 @@ human start authorize one filmed attempt 8 under the unchanged scope; no extra
 M5 round trip, Recovery, volume/security/default change or automatic retry.
 Post-attempt-7 policy JSON is already PASS. Use the new observations for a
 root-cause fix, or advance to Linux control/input if userspace becomes stable.
+
+## 2026-10-14 · Accept boot027 readiness with bounded diagnostic evidence
+
+M1 independently passes archive-before-extraction, 13-file intake, reviewed
+controller digests, all 90 cases and the unchanged clean client pin. Preserve
+installed boot021 and earlier packages/results. Human reports proxy and phone
+video ready; post-attempt-7 protection prerequisite is already PASS. Publish
+readiness before one attempt 8. Capture new hardware/timer/deferred-work
+checkpoints without inferring a root cause from a last line. No additional
+blacklist, retry, reconnect or settings changes. Native/live NOT RUN at readiness.

@@ -86,7 +86,12 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
+Latest M1: boot027 attempt-8 archive/13-file intake, offline launcher, all 90
+cases, reviewed controller digests and clean client pin PASS. Readiness
+published; human reports proxy/video ready. Native/live attempt 8 NOT RUN at
+readiness. Follow the current checklist once, then return; no retry/settings changes.
+
+M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
 still unobserved. Boot027 keeps the working boot021 setup and changes only
 Image, adding bounded timer/tick/deferred-work diagnostics. Hardware detection
 now validates the t6050 AIC/timer routes and observed CPU topology. Full link,

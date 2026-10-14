@@ -5,6 +5,30 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: boot027 attempt 8 offline readiness PASS
+
+* Read handoff `46ad887` and deferred-probe evidence. Downloaded private boot027;
+  archive SHA-256 **33c7ff4d1f8e93c929a5024ebb19b7dee825cb14e1c7bf93f7df8c5526bf6a8c**
+  and 16,721,223-byte size PASS **before extraction**. All **13 intake files**,
+  offline launcher and reviewed controller digests PASS. Image SHA-256
+  **5a5ca64eaf2c3389e9fca226d7244150edbc8975738fe11a9304c0c996e29b64**.
+* **90 M1 offline cases PASS:** 37 launcher, 6 entry descriptor, 16 DAPF,
+  5 framebuffer, 19 hardware binding, 2 pinned ADT/DAPF, 4 root ADT and
+  1 real proxy serializer. All exit 0; synthetic transport only.
+* Clean client remains pinned at `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
+  Installed boot021 m1n1 unchanged. Only Image and package manifest differ
+  from retained boot025; DT/initramfs/config/m1n1 remain byte-identical.
+* Fresh ignored receipt `build/native-intake/receipts/boot027-attempt8.json`
+  and `build/native-intake/results/boot027-stage-b-attempt8.json`/`.md` retain
+  source/procedure/payload/receipt hashes. Previous packages/results preserved.
+* **Ready for the authorized Stage B attempt 8** after this publication.
+  Human reports Running proxy and video recording. M5 post-attempt-7 protection
+  prerequisite already PASS. No extra restart or M5 review needed.
+* **Attempt 8 native/live checks NOT RUN at readiness.** One reviewed launch;
+  capture Hardware DT, both DAPF checkpoints, timer/tick/main/worker phases and
+  diagnostic userspace/liveness. Review video; stop on failure or the existing
+  time limit, then Macintosh HD. No retry, reinstall or settings changes.
+
 ## 2026-10-14 · M5: boot027 attempt 8 diagnoses deferred work and validates hardware binding
 
 * Reviewed M1 `a2239f9` / attempt 7: native Linux progressed to
