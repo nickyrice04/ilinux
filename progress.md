@@ -5,6 +5,30 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: boot028 attempt 9 offline readiness PASS
+
+* Pulled/read M5 handoff `3503bf1`, scheduling-boundary README and validation.
+  Boot028 archive SHA-256
+  `689fce13b00c4e59af61e5a23666509579985b89920a0477e4b107c6cf5944e9`
+  and 16,722,641-byte size verified **before extraction**. All **13 intake
+  files**, offline launcher and reviewed controller hashes PASS. Image SHA-256
+  `514dde0c48c17d77d1979fb98b13f5ecb45096839e8b10a72d24adcf9df0778f`.
+* **90 M1 offline cases PASS:** 37 launcher + 6 entry + 16 DAPF + 5 framebuffer
+  + 19 hardware + 2 pinned ADT/DAPF + 4 root ADT + 1 real proxy serializer;
+  all exit 0, synthetic transport only. Clean client remains pinned at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`; installed boot021 unchanged.
+* Only Image/package manifest differ from retained boot027. Fresh ignored
+  receipt `build/native-intake/receipts/boot028-attempt9.json` and result
+  `build/native-intake/results/boot028-stage-b-attempt9.json`/`.md` prepared
+  with source/procedure/controller/payload/receipt hashes; prior artifacts kept.
+* **Ready for the authorized Stage B attempt 9** after publication. Human
+  confirms Running proxy and video recording including the bottom-left edge.
+  Post-attempt-8 protection prerequisite already PASS per M5; no extra restart
+  or M5 review needed. **Attempt 9 native/live checks NOT RUN at readiness.**
+* Next: one reviewed RAM launch, capture literal P/S/W/H sequence and kernel
+  timer/scheduler/stack/userspace milestones, review recording, then Macintosh HD
+  under existing limits. No retry, wider blacklist, reinstall or settings change.
+
 ## 2026-10-14 · M5: boot028 closes the preemption observation gap
 
 * Reviewed M1 `7da251d`: attempt 8 reached native J716c/t6050 EL2, one CPU,

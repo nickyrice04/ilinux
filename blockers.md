@@ -18,6 +18,9 @@ attempt 9 NOT RUN. M1 verifies the new Image package, publishes readiness,
 then one human-started filmed boot captures text/strip and reviewed video.
 Fresh post-attempt-8 policies PASS; preserve installed boot021 and current
 installation. No security/volume/default changes or automatic retry.
+M1 independently verifies boot028 intake/controller and all 90 tests PASS.
+Human confirms proxy and video including strip; native/live attempt 9 NOT RUN
+at readiness.
 Evidence: `kernel/experiments/schedule-boundary/README.md`, `validation.json`
 and the current `tools/m1n1-client/stage-b-instructions.md`.
 

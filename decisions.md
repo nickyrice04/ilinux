@@ -1212,3 +1212,13 @@ or an explicit availability limitation. Return at the existing deadline. No
 reinstall, security/volume/default change, repeated Stage A or automatic retry.
 Stable native userspace is the next gate toward a Linux control channel and
 Omarchy configuration, not a claim of desktop or efficiency parity.
+
+## 2026-10-14 · Accept attempt-9 readiness and capture the scheduler strip
+
+M1 independently verifies boot028 archive before extraction, all 13 files,
+90 controller cases, reviewed source hashes and unchanged clean client pin.
+Preserve prior packages and installed boot021. Human reports proxy and video
+including bottom-left strip; protection prerequisite is already PASS. Publish
+readiness before one attempt 9. Capture literal hex strip sequence, timer and
+scheduler evidence, and review recording or report availability limits. Return
+within the bound; no retry, expanded skip, reinstall or settings change.

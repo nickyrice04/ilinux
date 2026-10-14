@@ -86,6 +86,11 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
+Latest M1: boot028 archive/13-file intake, offline launcher, 90 tests, reviewed
+controller hashes and clean client pin PASS. Readiness published; human reports
+proxy/video ready including bottom-left strip. Attempt 9 native/live NOT RUN at
+readiness. One filmed launch, review evidence, then Macintosh HD; no retry.
+
 Current M5 handoff: boot028 / attempt 9. M1 attempt 8 proves 25 native timer
 ticks in 100 ms, but stops visibly before phase 2; native userspace remains
 unobserved. REA/source show boot027 could reschedule before watchdog setup.
