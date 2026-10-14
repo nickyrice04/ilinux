@@ -5,6 +5,26 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: hv002 census v2 PASS; Session 2 never got past the chainload
+
+* Census v2 PASS for hv002 at 22:58:05 UTC: all 19 registers readable, ECV=1,
+  `VM_TMR_FIQ_ENA_EL2` ENA_V=1 ENA_P=1 (expected), PMCR0/IPI_SR readable.
+  Returned to Macintosh HD.
+* **Session 2 (hv002) stopped at the chainload.** Package, target, register
+  preflight, ADT/boot-blob copy and `Preparing to run next stage` all passed.
+  Then `Waiting for reconnection...` for about 80 s and
+  **`STOP: UartTimeout Reconnection timed out`**.
+* No m1n1 USB device on the M1 afterwards; the vUART never returned (log
+  empty). The M5 sat at a black screen with the Apple logo (the restored iBoot
+  logo) until powered off.
+* **Hypervisor and guest NOT STARTED.** hv002 likely stopped before its
+  framebuffer init, in early m1n1 re-initialization; cause unknown. Report and
+  suggestions (stock boot021 chainload as a discriminating test, early
+  on-screen progress codes): `native/hv/hv002-session2-2026-10-14-result.md`.
+* User confirms return to Macintosh HD; fresh policy/default NOT CHECKED.
+  No retry.
+
+
 ## 2026-10-14 · M1: hv002 sessions offline readiness PASS
 
 * Pulled/read M5 handoff `6e58ccd`, `native/hv/README.md` and
