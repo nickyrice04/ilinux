@@ -872,3 +872,13 @@ Keep `idle=nop`, disabled cpufreq and single-core limits for initial diagnosis;
 these workarounds cannot substantiate macOS-class performance/efficiency. Once
 kernel liveness is observed, use that result to target REA and driver changes,
 then validate SMP/idle/DVFS and GPU/display independently on this exact machine.
+
+## 2026-10-13 · Authorize one bounded Stage B attempt after controller readiness
+
+User explicitly approves one Linux RAM boot after M1 confirms readiness,
+then return to Macintosh HD. Preserve original Full Security; no volume or
+security changes. Earlier Stage B permission holds are superseded for this
+scope, but approval is not a readiness or execution result. M1 verifies the
+changed controller, confirms ready before human shutdown, runs the existing
+launcher once and records screen milestones/return. No retries or scope
+expansion; no new installation is needed. Keep NOT RUN until observed.

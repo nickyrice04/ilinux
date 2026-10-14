@@ -91,8 +91,9 @@ Macintosh HD, and return checks now confirm original protections including
 user-supplied Full/lab Permissive JSON. Stage B launcher reuses descriptor
 identity (`--device auto`), with 54 offline cases passing on M5. Payloads/pin
 unchanged. Follow `tools/m1n1-client/stage-b-instructions.md`; M1 verifies its
-controller environment next. Stage B/native Linux remains NOT RUN and needs
-explicit approval. No repeat Recovery/setup/security change is required.
+controller environment next. User now authorizes one Stage B RAM attempt after
+M1 confirms readiness, then Macintosh HD return. Native Linux remains NOT RUN.
+Keep original Full Security; no volume/security changes or repeat setup.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

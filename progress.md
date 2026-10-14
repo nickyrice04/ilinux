@@ -5,6 +5,22 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: one Stage B RAM boot authorized, awaiting M1 readiness
+
+* User approved one Linux RAM attempt after M1 confirms readiness, then
+  Macintosh HD return, with original Full Security and no volume/security
+  changes. Updated the checklist and coordination handoff; no repeat approval
+  is needed for this scope.
+* Rechecked original root/build/FileVault, AC power, no project VM processes
+  and staged m1n1 hash/size against boot021. The prior-turn fresh user-supplied
+  Full/Permissive JSON remains the current policy baseline.
+* No M1 readiness report after `e2c0cc7` was visible at this preparation
+  checkpoint. M1 pulls this authorization, verifies its offline controller
+  suite/package and confirms ready before human shutdown.
+* Documentation only: launcher, selector, payloads and client pin unchanged.
+  Existing tests apply; no reboot, live USB, kernel handoff or new benchmark.
+  Linux/Stage B stays NOT RUN until actual screen/controller evidence arrives.
+
 ## 2026-10-13 · Agent B: Stage A reviewed; Linux launcher USB blocker fixed offline
 
 * Fast-forwarded M1 commits `70ad452`/`974e894`. One physical P_NOP succeeded

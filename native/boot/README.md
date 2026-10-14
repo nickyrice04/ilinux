@@ -122,10 +122,13 @@ hardware, and its DT preparation/handoff runs additional hardware setup.
 Disabling a Linux DT node does not undo bootloader initialization. The test
 intentionally issues no filesystem writes to the internal SSD.
 
-## Later live commands — NOT authorized by this handoff
+## Live command — one user-authorized attempt after M1 readiness
 
-Only after Stage B approval, with the already installed dedicated entry's
-matching m1n1 binary running on the M5 and its screen visible:
+The user authorized one Stage B RAM boot on 2026-10-13 after M1 confirms
+readiness, followed by Macintosh HD return. Keep original Full Security and
+make no volume/security changes. No repeat approval is needed for this scope.
+Read the current checklist, confirm offline readiness, then use the already
+installed dedicated entry with matching m1n1 running and the M5 screen visible:
 
 ```sh
 tools/m1n1-client/run.sh native/boot/launch.py \

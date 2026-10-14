@@ -15,7 +15,8 @@ The next launcher's stale P_01 suffix gate is now fixed with the same shared
 USB descriptor selector and tested `--device auto` path. Local offline payload
 verification and 54 regression cases pass; M1's full controller suite is next.
 Boot021/client pin unchanged. **Native Linux and live build-marker verification
-remain NOT RUN.** Stage B is prepared and separately gated; P_NOP does not
+remain NOT RUN.** User now authorizes one Stage B attempt after M1 confirms
+readiness, then Macintosh HD return. M1 readiness is pending; P_NOP does not
 resolve CPU, power, display/GPU or Linux peripheral enablement. The historical
 provisioning-pending statements below are superseded by completed installation
 and this status. Current checklist: `tools/m1n1-client/stage-b-instructions.md`.

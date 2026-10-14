@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current authorization — one Stage B attempt after M1 readiness, 2026-10-13
+
+The user explicitly approves one Stage B Linux RAM boot after M1 confirms
+readiness, then return to Macintosh HD. Keep Macintosh HD at Full Security;
+no volume/security changes. This supersedes earlier Stage B permission holds
+for this exact session. No repeat permission question is needed.
+
+M5 preparation: current root Macintosh HD, original System/Data FileVault on,
+build 25G83, AC power, no project VM processes, staged m1n1 matches boot021.
+The user's fresh original Full/lab Permissive result from the preceding turn
+remains the policy baseline. No code/payload changed since `e2c0cc7`; the
+existing M5 test results apply, with no redundant run.
+
+At this preparation checkpoint no M1 readiness commit after `e2c0cc7` is
+visible on GitHub. M1 must pull this authorization, complete/report 31 launcher,
+20 USB and 7 intake cases plus package verification, and confirm ready before
+the human shuts down M5. Use `tools/m1n1-client/stage-b-instructions.md` for
+one `--device auto` launcher attempt with the existing boot021/client pin.
+No separate P_NOP, retry, shell, SMP start, installation or Recovery operation.
+Stop at success/failure/time bound, return via the held-power picker to
+Macintosh HD, and publish sanitized actual results. Linux remains NOT RUN
+until observed; the M5 agent has not restarted or opened USB during preparation.
+
+
 ### Current M5 handoff — Stage B prepared offline, 2026-10-13
 
 B reviewed/integrated `974e894`: Stage A P_NOP PASS and user-confirmed desktop

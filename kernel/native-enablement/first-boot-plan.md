@@ -134,7 +134,11 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: one-core RAM diagnostic, after separate approval
+## 5. Stage B: one-core RAM diagnostic, one attempt authorized after M1 readiness
+
+The user approved this one RAM attempt on 2026-10-13, followed by original
+macOS return with no volume/security changes. M1 readiness must precede M5
+shutdown; Linux remains NOT RUN.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.

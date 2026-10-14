@@ -1,4 +1,4 @@
-# Stage B — one native Linux RAM boot, prepared but NOT RUN
+# Stage B — one native Linux RAM boot authorized; execution NOT RUN
 
 Target: **this Mac17,6 / J716c / t6050 M5 Max**. Stage A passed (M1 report
 `974e894`): one P_NOP, 0.158 seconds, exit 0, then user-confirmed Macintosh HD
@@ -7,9 +7,13 @@ SIP/authenticated-root and the unchanged staged m1n1 hash. The user's fresh
 read-only policy JSON reports **original Full / lab Permissive, both exit 0**.
 Default startup selection has not been independently queried this review.
 
-This is the next proposed physical experiment, **not yet authorized or run**.
-Current preparation needs no restart, new installer, security change or new
-volume. Do not repeat Stage A or Recovery setup. Existing backup is user-confirmed.
+The user explicitly authorized **one Stage B Linux RAM boot after M1 confirms
+readiness, then return to Macintosh HD**, on 2026-10-13. Keep Macintosh HD at
+Full Security; make no volume or security changes. This supersedes earlier
+Stage B approval holds for this exact attempt; no repeat permission is needed.
+**Execution remains NOT RUN.** Do not restart until M1 confirms the offline
+checks below and has this authorization handoff. Do not repeat Stage A or
+Recovery setup. Existing backup is user-confirmed.
 
 ## M1 preparation now — offline only
 
@@ -35,10 +39,12 @@ No target-dependent version/board/framebuffer check runs in offline mode.
 Copy `boot-result-template.md` to the ignored results directory. Record
 actual Git revision, launcher/shared-selector hashes, package digests and
 client pin. Retain completed Stage A as prior-session evidence; leave all
-new native-Linux observations NOT RUN/NOT OBSERVED. Confirm offline readiness
-and wait for the human's explicit approval of this Stage B session.
+new native-Linux observations NOT RUN/NOT OBSERVED. Publish the offline results
+and clearly tell the human **ready for the authorized Stage B attempt** only
+when these checks pass and this handoff is read. Authorization is already given;
+readiness remains a prerequisite. Do not open USB before the human boots the lab.
 
-## Exact proposed session after approval
+## Authorized session — only after M1 confirms readiness
 
 1. Both Macs on power, direct USB data cable, M5 display visible. Save M5 work.
    Human shuts down, holds power continuously to startup options and selects
