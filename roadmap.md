@@ -49,12 +49,14 @@ survey is not the next dependency. No proprietary code is copied into Linux.
 
 The dedicated lab entry is installed and Stage A's m1n1/P_NOP/return passed.
 The original remains Full Security by the user's fresh read-only policy check.
-This is bootloader progress; no native Linux result exists yet. The kernel,
-DT and RAM diagnostic are built, and the controller naming blocker is fixed.
+This is bootloader progress; no native Linux result exists yet. Attempt 4 passed the DAPF correction and handoff request, but Linux execution
+was not observed. Boot024 now adds entry rectangles, early framebuffer text
+and initializer tracing; M1 offline intake is next. Build/tests and generic
+VM liveness pass. Native boot024 remains NOT RUN.
 
 | Order | Next experiment | Evidence required before advancing |
 |---|---|---|
-| 1 | One separately approved Stage B RAM boot; existing boot021, single core, Linux NVMe/cpufreq disabled | M5 screen: kernel, PID 1, one CPU, 60-second liveness, then original macOS return. Use `tools/m1n1-client/stage-b-instructions.md` |
+| 1 | One human-started attempt 5 with boot024 early-screen diagnostics; installed m1n1 stays boot021, single core, Linux NVMe/cpufreq disabled | Record the screen before launch: entry rectangles/early text, kernel, PID 1, one CPU, 60-second liveness, then original macOS return. Use `tools/m1n1-client/stage-b-instructions.md` |
 | 2 | Diagnose the earliest actual failure, or improve logging if screen output is absent | A reproducible checkpoint and tested patch; no blind retry or guessed driver diagnosis |
 | 3 | Establish Linux-side USB/input and an observable control channel | Linux USB enumeration and tested input/network access. The working m1n1 USB proxy does not survive Linux handoff |
 | 4 | Separate bounded SMP/idle/DVFS experiments, informed by existing REA startup findings | Correct core identities/topology, stable incremental secondary startup, validated idle/wake and frequency transitions; no assumed masks or OPP values |

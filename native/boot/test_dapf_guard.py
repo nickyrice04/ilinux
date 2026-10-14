@@ -40,6 +40,9 @@ class Memory(FakeInterface):
     def readmem(self, address, size):
         if address == 0x1100 or address == 0x9000:
             return super().readmem(address, size)
+        for start, data in reversed(self.writes):
+            if start >= 0x200000 and start <= address and address + size <= start + len(data):
+                return data[address - start:address - start + size]
         offset = address - self.base
         assert 0 <= offset and offset + size <= len(self.image)
         return bytes(self.image[offset:offset + size])
@@ -149,8 +152,9 @@ class GuardTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             launch.launch_session(self.iface, f.proxy, factory, f.manifest, f.files)
         self.assertEqual(len(f.proxy.boots), 1)
-        self.assertEqual(len(self.iface.writes), 4)
-        self.assertEqual(self.iface.writes[-1][0], self.iface.base + guard.TABLE_OFFSET)
+        self.assertEqual(len(self.iface.writes), 5)
+        self.assertEqual(self.iface.writes[-2][0], self.iface.base + guard.TABLE_OFFSET)
+        self.assertEqual(self.iface.writes[-1][0], 0x200050)
 
     def test_full_launcher_failure_does_not_handoff(self):
         f = LauncherTests(); f.setUp(); f.files['m1n1.bin'] = self.image

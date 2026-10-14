@@ -1,1 +1,1 @@
-b59db87bee50f5a2b57f65ea54e9ecd9fc07d410251bb38175001ac056ee6862  ilinux-j716c-boot022.tar.gz
+f7cb69153adc832cae3a66fd6159e7fd41fccc2a113d3550962a7f959edd9636  ilinux-j716c-boot024.tar.gz

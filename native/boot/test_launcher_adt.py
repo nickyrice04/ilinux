@@ -57,6 +57,7 @@ class PinnedADTTests(unittest.TestCase):
                     "m1n1_dt_pointer_offset": 0x200}
         image = bytearray(64)
         struct.pack_into("<QQ", image, 8, 0, 4096)
+        image.extend(launch.entry_guard.MAGIC + bytes(16))
         files = {"Image": bytes(image), "t6050-j716c-stage-b.dtb": prepared(),
                  "initramfs-stage-b.cpio.gz": b"synthetic-initrd", "m1n1.bin": b"fixture"}
 
@@ -67,7 +68,8 @@ class PinnedADTTests(unittest.TestCase):
 
         with contextlib.redirect_stdout(io.StringIO()), \
              patch.object(launch.dapf_guard, "prepare", return_value="test-plan"), \
-             patch.object(launch.dapf_guard, "apply"):
+             patch.object(launch.dapf_guard, "apply"), \
+             patch.object(launch.entry_guard, "apply"):
             launch.launch_session(self.iface, self.proxy, factory, manifest, files)
 
     def test_old_root_lookup_reproduces_keyerror(self):

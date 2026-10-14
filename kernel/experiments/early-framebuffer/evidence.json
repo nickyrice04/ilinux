@@ -1,0 +1,38 @@
+{
+  "installed_m1n1_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "matching_elf_sha256": "a29b312896e75468c367b146a1c677b00cbc47687637b5536e95d19bc3b40ca8",
+  "functions": [
+    {
+      "function": "fb_shutdown",
+      "relative_start": "0x1bf80",
+      "relative_end_exclusive": "0x1c02c",
+      "instructions": 43,
+      "rea_evidence_id": "ev_2ae36b99e05de3fb73728bb77acb0d36259e09d8ca465e9054af9a90820f4adf",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pcode_outside_body": 0
+    },
+    {
+      "function": "m1n1_main",
+      "relative_start": "0x25620",
+      "relative_end_exclusive": "0x257b4",
+      "instructions": 101,
+      "rea_evidence_id": "ev_8cbe2af4dc93e3b061b5ad18c115c575c10d54ae4303679e4dea8dfee8695ab0",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pcode_outside_body": 0
+    }
+  ],
+  "kernel_sha256": "6b683a2f52e769d1a23474b6807d009da8ad2e19d2168e62caba6cbbae240f7d",
+  "descriptor_relative_offset": "0x217d790",
+  "limits": [
+    "Static teardown analysis does not identify the attempt-4 stop location",
+    "Diagnostic framebuffer writes and early console are not native-tested"
+  ]
+}

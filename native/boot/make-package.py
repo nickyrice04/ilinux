@@ -28,11 +28,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True, help="VM job out directory containing export/")
     parser.add_argument("--destination", type=Path, required=True)
-    parser.add_argument("--name", choices=(NAME, "ilinux-j716c-boot022"), default=NAME)
+    parser.add_argument("--name", choices=(NAME, "ilinux-j716c-boot022", "ilinux-j716c-boot024"), default=NAME)
     args = parser.parse_args()
     data = {name: (args.out / "export" / name).read_bytes() for name in FILES}
     checks = {n: {"size": len(b), "sha256": hashlib.sha256(b).hexdigest()} for n, b in data.items()}
     for name, digest in ORIGINAL.items():
+        if name == "Image" and args.name == "ilinux-j716c-boot024":
+            continue
         if checks[name]["sha256"] != digest:
             raise ValueError("original job-020 artifact changed: " + name)
     check_stage_b(data["t6050-j716c-stage-b.dtb"])
@@ -42,11 +44,13 @@ def main():
         if any(forbidden.intersection(node) for node in properties(data[name]).values()):
             raise ValueError("identifying properties in package DT")
     symbols = {}
-    if args.name == "ilinux-j716c-boot022":
-        baseline = json.loads((HERE / "boot021-package-manifest.json").read_text())
+    if args.name in ("ilinux-j716c-boot022", "ilinux-j716c-boot024"):
+        previous = "boot022" if args.name == "ilinux-j716c-boot024" else "boot021"
+        allowed_change = "Image" if previous == "boot022" else "t6050-j716c-stage-b.dtb"
+        baseline = json.loads((HERE / (previous + "-package-manifest.json")).read_text())
         for name, info in baseline["files"].items():
-            if name != "t6050-j716c-stage-b.dtb" and checks[name] != info:
-                raise ValueError("boot022 may only change the Stage-B DT: " + name)
+            if name != allowed_change and checks[name] != info:
+                raise ValueError("unexpected payload change: " + name)
         symbols = {"_base": 0, "version_tag": baseline["m1n1_version_offset"],
                    "dt": baseline["m1n1_dt_pointer_offset"]}
     else:
@@ -72,6 +76,11 @@ def main():
         "m1n1_dt_pointer_offset": symbols["dt"],
         "files": checks,
     }
+    if args.name == "ilinux-j716c-boot024":
+        from entry_guard import descriptor_offset
+        manifest["linux_patches"] = ("kernel/patches/t6050/0001-0007 plus "
+                                     "kernel/experiments/early-framebuffer/apply.py; job-024")
+        manifest["early_framebuffer_descriptor_offset"] = descriptor_offset(data["Image"])
     encoded = (json.dumps(manifest, indent=2) + "\n").encode()
     (HERE / "package-manifest.json").write_bytes(encoded)
     data["package-manifest.json"] = encoded

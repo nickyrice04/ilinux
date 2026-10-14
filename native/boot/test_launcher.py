@@ -112,13 +112,15 @@ class LauncherTests(unittest.TestCase):
         image = bytearray(64)
         struct.pack_into("<QQ", image, 8, 0, 4096)
         image[56:60] = b"ARM\x64"
+        image.extend(launch.entry_guard.MAGIC + bytes(16))
         self.files = {"Image": bytes(image), "t6050-j716c-stage-b.dtb": prepared(),
                       "initramfs-stage-b.cpio.gz": b"initrd", "m1n1.bin": b"fixture"}
 
     def run_launch(self, factory=FakeUtils):
         with contextlib.redirect_stdout(io.StringIO()), \
              patch.object(launch.dapf_guard, "prepare", return_value="test-plan"), \
-             patch.object(launch.dapf_guard, "apply"):
+             patch.object(launch.dapf_guard, "apply"), \
+             patch.object(launch.entry_guard, "apply"):
             launch.launch_session(self.iface, self.proxy, factory, self.manifest, self.files)
 
     def reject(self, message):

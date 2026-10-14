@@ -2,14 +2,13 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest:** attempt 4 passed both DAPF checkpoints and all preflight gates;
-kboot replied, controller exit 0 in 10.458 seconds. User reports logo/unreadably
-fast text, with kernel/PID 1/one-CPU/60-second liveness NOT OBSERVED. At the
-screen limit return was instructed; user confirms Macintosh HD desktop.
-Keep boot022/installed m1n1/client pin and all passing gates. No retry,
-reinstall or settings changes. Next: M5 read-only return checks and offline
-early-boot observation work. See
-[attempt 4 result](../../native/boot/stage-b-2026-10-13-attempt4-result.md).
+**Latest:** attempt 4 passed DAPF/preflight/kboot reply; Linux remains NOT
+OBSERVED. Boot024 now adds a tested diagnostic Image with entry rectangles and
+early framebuffer text. M1 verifies its new release offline, then the human
+can start one filmed attempt 5 through the existing lab entry. No boot/security/
+volume changes or m1n1 reinstall. Post-attempt-4 original Full/lab Permissive
+JSON PASS. The authoritative current procedure is
+[the Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received
@@ -143,14 +142,15 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: proposed attempt 4, boot022 with DAPF RAM guard
+## 5. Stage B: attempt 5, boot024 early-screen diagnostics
 
-M1 verifies the updated launcher/guard against existing boot022 before restart.
-The human can then start one reviewed experiment. All fixed boot arguments and
-observation/return bounds remain. The new 96-byte RAM-only data correction
-omits only the AOP's absent DAPF entry after verifying the current metadata and
-passing every original preflight gate. No installed boot object or security
-change. Record attempt 4 separately; no automatic retries.
+M1 downloads/verifies boot024 before restart. It changes only the diagnostic
+Image and fixed observation arguments. The launcher preserves the tested DAPF
+RAM correction and fills a verified 16-byte kernel data descriptor using the
+validated prepared framebuffer. Three early entry rectangles plus early text
+narrow the first unconfirmed checkpoint. Record locally on video before
+handoff; follow the current 120-second observation and Macintosh HD return
+bounds. Native boot024 NOT RUN. No automatic retries.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.
@@ -161,7 +161,8 @@ secondaries reported by m1n1, and skips `cpufreq_init()` and `m1n1.setup`.
 
 Fixed arguments select `console=tty0 fbcon=nodefer`, limit Linux to one CPU,
 disable cpufreq and retain M4+ idle/unused-clock/domain workarounds. There is
-no `earlycon=...` placeholder or arbitrary argument override. Those idle
+now a concrete `earlycon=ilinuxfb initcall_debug` diagnostic path, with no
+arbitrary argument override. Those idle
 workarounds do not establish efficient native idle.
 
 The Stage-B DT keeps NVMe disabled despite its built-in driver. The initramfs

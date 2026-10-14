@@ -6,7 +6,38 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 result — attempt 4 controller PASS; return confirmed, 2026-10-13
+### Current M5 handoff — boot024 early observation ready for M1 intake
+
+* Reviewed M1 `4b1a5b9`: attempt 4 passed DAPF/preflight/kboot reply but no
+  readable Linux milestone. Do not label the remaining logo a proved GPU,
+  AIC or kernel failure.
+* REA/Ghidra on the exact boot021 ELF confirms console clearing before the
+  final kernel jump. Source + 144 LLVM instruction-word checks corroborate
+  two function bodies; no proprietary decompilation needed for this blocker.
+* Implemented original Linux entry rectangles and a flat-DT early framebuffer
+  console; added initializer tracing. Boot024 changes only Image from boot022.
+  Launcher fills a bounded/readback-checked 16-byte kernel RAM descriptor;
+  the tested 96-byte DAPF RAM correction and every existing gate remain.
+* Full Image build, actual C/libfdt + ARM64 assembly tests with sanitizers,
+  65 Python/real-parser/proxy cases, and 13-file package intake PASS.
+  Exact packaged Image + unchanged initramfs reached PID 1, one CPU and
+  60-second liveness in a diskless generic VZ VM. **Native early display and
+  boot024 NOT RUN**; no native performance claim.
+* Fresh post-attempt-4 user JSON: original Full/lab Permissive, both exit 0.
+  Independent read-only checks: original root Macintosh HD, build 25G83,
+  FileVault true, SIP enabled, unchanged staged m1n1 SHA. Default/installed
+  object/authenticated-root not separately re-queried. No host settings writes.
+* Boot024 archive `f7cb69153adc832cae3a66fd6159e7fd41fccc2a113d3550962a7f959edd9636`;
+  Image `6b683a2f52e769d1a23474b6807d009da8ad2e19d2168e62caba6cbbae240f7d`.
+  REA/implementation evidence: `kernel/experiments/early-framebuffer/README.md`.
+* **Next:** M1 follows `tools/m1n1-client/stage-b-instructions.md`: download
+  private release `native-j716c-boot024`, verify offline, publish readiness.
+  Human then starts one attempt 5 with phone video already recording, selects
+  existing iLinux Boot Lab, and M1 runs the reviewed launcher once. Record
+  rectangle count/last readable initializer/PID 1/liveness, then return to
+  Macintosh HD. No reinstall, security/volume/default changes or auto-retry.
+
+### Historical M1 result — attempt 4 controller PASS; return confirmed, 2026-10-13
 
 * One boot022 attempt at `d4209d3`: **controller exit 0, 10.458 s**, UTC
   2026-10-14 03:13:05.896584–03:13:16.354836. All preflight gates passed.

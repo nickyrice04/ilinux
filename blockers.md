@@ -3,17 +3,17 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B gate — attempt 4 handoff accepted; Linux evidence absent
+## Current Stage B gate — boot024 observation test ready for M1 intake
 
-Both DAPF layout/correction checkpoints passed on the target; all other gates
-passed and kboot replied successfully (controller exit 0, 10.458 s). User saw
-the logo and unreadably fast text, without identified kernel/PID 1/one-CPU/
-60-second milestones. Linux execution NOT OBSERVED. Screen limit ended; return
-confirmed by the user; fresh read-only checks pending. Establish observation
-of the earliest unconfirmed
-handoff/kernel step offline before another separately authorized attempt.
-Keep passing gates; no automatic retry, reinstall or boot-setting changes.
-See `native/boot/stage-b-2026-10-13-attempt4-result.md`.
+Attempt 4 accepted the handoff; Linux was not observed. REA/source confirms
+m1n1 clears its console before jumping. Boot024 adds kernel entry rectangles,
+a flat-DT early framebuffer console and initializer tracing. Offline build,
+C/ARM64 tests and generic diskless VM liveness pass; **native NOT RUN**.
+Next: M1 verifies the new release, then one human-started RAM boot with video
+of the screen already recording. Follow `tools/m1n1-client/stage-b-instructions.md`.
+Original Full/lab Permissive post-return JSON PASS. No volume/security/default
+changes, reinstall, secondary CPU starts or automatic retry. The goal is the
+first identified Linux checkpoint, not an unsupported driver diagnosis.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

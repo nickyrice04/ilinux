@@ -16,13 +16,15 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from fdt import check_stage_b
 import dapf_guard
+import entry_guard
 sys.path.insert(0, str(HERE.parents[1] / "tools/m1n1-client"))
 import usb_identity
 
 M1N1_COMMIT = "57a9339ffd1876e78297b17d34dece8cff8fa1ba"
 BOOTARGS = ("console=tty0 fbcon=nodefer rdinit=/init ro maxcpus=1 nr_cpus=1 "
             "cpufreq.off=1 idle=nop arm64.nowfxt pd_ignore_unused "
-            "clk_ignore_unused loglevel=8 ignore_loglevel printk.time=1 panic=0")
+            "clk_ignore_unused loglevel=8 ignore_loglevel printk.time=1 panic=0 "
+            "earlycon=ilinuxfb initcall_debug")
 CONFIRM = "BOOT-J716C-RAM-DIAGNOSTIC"
 
 
@@ -46,6 +48,7 @@ def verify_package(directory):
         raise ValueError("not an uncompressed ARM64 Image")
     check_stage_b(loaded["t6050-j716c-stage-b.dtb"])
     dapf_guard.verify_image(loaded["m1n1.bin"])
+    entry_guard.descriptor_offset(image)
     return manifest, loaded
 
 
@@ -120,9 +123,12 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
         raise ValueError("prepared DT bootargs differ from fixed diagnostic arguments")
     if any(a not in ("idle=nop", "arm64.nowfxt") for a in args[len(BOOTARGS.split()):]):
         raise ValueError("unexpected appended bootargs")
+    descriptor = entry_guard.plan(image, tree)
     ensure_no_secondaries(proxy)
     dapf_guard.apply(iface, dapf_plan)
     print("DAPF RAM table corrected: omitted absent AOP DAPF; other entries retained.", flush=True)
+    entry_guard.apply(iface, kernel, descriptor)
+    print("Early framebuffer PASS: kernel RAM descriptor checked and populated.", flush=True)
     proxy.dc_cvau(kernel, len(image))
     proxy.ic_ivau(kernel, len(image))
     utils.msr("DAIF", 0xC0)

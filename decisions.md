@@ -1034,3 +1034,19 @@ Stop was instructed at the 120-second screen limit; the user confirms macOS
 return. M5 should improve
 early-boot observation offline before proposing another physical session.
 No reconnect/retry, reinstall, boot-setting change or new live diagnostics.
+
+## 2026-10-13 · Instrument the silent handoff before another native attempt
+
+Attempt 4 proves the DAPF RAM correction and kboot reply, not Linux execution.
+Exact-binary REA plus public source confirms that m1n1 clears its console before
+its final jump. Select bounded original kernel instrumentation rather than
+speculative register/driver changes: three pre-MMU rectangles, a flat-DT early
+framebuffer console and initcall tracing. Use the already validated scanout
+range through a verified 16-byte RAM descriptor; no physical address is baked
+in or exported. Only Image changes in boot024; boot022 DT/initramfs and the
+installed boot021 m1n1 stay unchanged. This diagnostic overhead is not a
+performance result. Generic VM and synthetic renderer success do not validate
+native framebuffer access. Require local screen recording before one
+human-started attempt 5, with the existing stop/return bounds; M1 offline
+readiness and human start suffice without another inter-agent approval loop.
+Fresh post-return policy JSON already passed; no duplicate check requested.

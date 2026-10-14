@@ -86,16 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: attempt 4 at `d4209d3` passed both DAPF checkpoints and every existing
-preflight gate; kboot request returned, controller exit 0 in 10.458 s. Human
-reports logo and unreadably fast text. Kernel/PID 1/one-CPU/60-second liveness
-NOT OBSERVED; controller success is not Linux success. The 120-second screen
-limit ended; user confirms Macintosh HD return. Fresh protection/default checks
-remain for M5. No retry,
-reinstall or settings change; installed m1n1/boot022/client pin unchanged.
-M5 should check return protections and establish early-boot observation offline
-before any separately authorized new attempt. See
-`native/boot/stage-b-2026-10-13-attempt4-result.md` and `coordination.md`.
+Latest: attempt 4 passed the DAPF correction/kboot reply but Linux was not
+observed. Boot024 adds original early framebuffer logging and three kernel
+entry rectangles; only Image changes, installed m1n1 stays boot021. Build,
+sanitizer C/ARM64 tests, 65 offline cases and exact-Image generic VM PID 1 /
+60-second liveness PASS. Native boot024 NOT RUN. M1 now verifies the new release
+offline, then the human can start one recorded RAM boot under
+`tools/m1n1-client/stage-b-instructions.md`. Fresh user policy JSON reports
+original Full/lab Permissive (exit 0); independent root/build/FileVault/SIP and
+staged m1n1 checks pass. No host boot/settings changes. See
+`kernel/experiments/early-framebuffer/README.md` and `coordination.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

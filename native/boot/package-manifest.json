@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot022",
+  "package": "ilinux-j716c-boot024",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
-  "linux_patches": "kernel/patches/t6050/0001-0007; job-020 Image unchanged",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024",
   "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
   "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
   "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
@@ -13,7 +13,7 @@
   "files": {
     "Image": {
       "size": 44468736,
-      "sha256": "f9cf7c0046712cdf60e686e7a13d998b3e4d1b55a1d64de5dba997aa9a77f704"
+      "sha256": "6b683a2f52e769d1a23474b6807d009da8ad2e19d2168e62caba6cbbae240f7d"
     },
     "t6050-j716c.dtb": {
       "size": 61326,
@@ -59,5 +59,6 @@
       "size": 246,
       "sha256": "d7648113f762d0ee17624ea09e33faa44fc08aa4de1b81b14d834cb5779f2758"
     }
-  }
+  },
+  "early_framebuffer_descriptor_offset": 35116944
 }
