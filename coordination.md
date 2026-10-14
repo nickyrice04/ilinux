@@ -8,6 +8,10 @@ older plan disagree, this file wins for ownership and order of work.
 
 ### Current handoff — boot022 / reviewed Stage B attempt 3, 2026-10-13
 
+Code and checklist: `0bea8f2` or later. Download:
+https://github.com/nickyrice04/ilinux/releases/tag/native-j716c-boot022
+Both assets published; remote archive digest and size verified against local.
+
 Latest: Stage B attempt 2 never handed off to Linux. Boot021 lacked m1n1's
 required framebuffer placeholder. Job 022 reproduces this with the actual
 pinned C function and corrects only the Stage-B DT; boot022 is verified offline.

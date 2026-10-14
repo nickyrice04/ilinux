@@ -7,6 +7,9 @@ measured, still unsupported, and next.
 
 ## 2026-10-13 · Agent B: boot022 removes confirmed framebuffer packaging blocker
 
+* Code/instructions pushed as `0bea8f2`; private prerelease
+  `native-j716c-boot022` published. GitHub reports both assets uploaded and
+  the archive digest/size exactly match the local verified artifact.
 * Reviewed M1 `9516e0c`: attempt 2 uploaded RAM payloads, but no Linux handoff.
   Actual boot021 DT lacks the node pinned m1n1 expects; its C function returns
   success without creating that node. This is a confirmed package defect.
