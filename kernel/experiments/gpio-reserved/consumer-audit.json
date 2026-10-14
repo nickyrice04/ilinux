@@ -1,0 +1,5 @@
+{
+  "scope": "Packaged DT properties ending in gpios and main pinctrl child pinmux references; not firmware/dynamic/interrupt consumers",
+  "references": [],
+  "reserved_pin_consumers_in_scope": 0
+}

@@ -12,7 +12,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dapf_guard as guard
 import launch
-from test_launcher import FakeInterface, FakeProxy, FakeUtils, LauncherTests, prepared
+from test_launcher import FakeADT, FakeInterface, FakeProxy, FakeUtils, LauncherTests, prepared
 
 
 def node(types):
@@ -58,6 +58,7 @@ class GuardTests(unittest.TestCase):
         self.image = fake_image()
         self.iface = Memory(self.image)
         self.adt = {
+            '/arm-io/gpio0': FakeADT()['/arm-io/gpio0'],
             '/arm-io/dart-aop': node([(guard.DART, 0), (guard.GAPF, 0)]),
             '/arm-io/dart-mtp': node([(guard.DART, 0), (guard.DAPF, 0), (guard.GAPF, 0)]),
             '/arm-io/dart-isp0': node([(guard.DART, n) for n in range(5)] + [(guard.DAPF, 0), (guard.GAPF, 0)])}

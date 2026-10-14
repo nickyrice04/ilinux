@@ -1,0 +1,19 @@
+{
+  "boot031_dt_sha256": "7adc1364687df9c358692489f2a574241e869cf03b67538eaaaaf0233b4365a7",
+  "boot032_dt_sha256": "4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce",
+  "only_property_change": {
+    "path": "/soc/pinctrl@29c000000",
+    "property": "gpio-reserved-ranges",
+    "u32_be_cells": [
+      5,
+      3,
+      112,
+      1,
+      141,
+      1
+    ]
+  },
+  "stable_public_node_ids": 286,
+  "main_controller_id": "0059",
+  "nub_controller_id": "0057"
+}

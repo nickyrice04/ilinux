@@ -1,0 +1,29 @@
+{
+  "image_sha256": "09d3cc302da20ef53c41bec3324d702b249a729a55e3799b5676618034bff37d",
+  "functions": [
+    {
+      "object_sha256": "1fb833a80113d04a29aff3286ff0f17e6d9a35f2f6f9914fff0b9c2114d4e8c4",
+      "elf_symbol": "regcache_init",
+      "rea_function": "regcache_init",
+      "section": ".text",
+      "symbol_bytes": 1344,
+      "llvm_instruction_words": 336,
+      "llvm_unknown_instructions": 0,
+      "rea_omitted_instruction_words": 0,
+      "rea_body_bytes": 1344,
+      "image_relative_offset": "0xaaca84",
+      "linked_matching_nonrelocated_words": 299,
+      "relocation_words_reviewed_separately": 37,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_15e99b8025ddf63c1b72b2abf7160541e3f3f0e7d67aa7415791f16e0994043d",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    }
+  ],
+  "limits": [
+    "Static source/REA/linked-byte consistency; no native blocked PC or hardware fix proven."
+  ]
+}

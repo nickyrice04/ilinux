@@ -8,6 +8,7 @@ repo=here.parents[2]
 p=Path(sys.argv[1])
 blob=p.read_bytes()
 assert hashlib.sha256(blob).hexdigest()=='7adc1364687df9c358692489f2a574241e869cf03b67538eaaaaf0233b4365a7'
+sys.path.insert(0,str(repo/'native/boot'))
 s=importlib.util.spec_from_file_location('fdt',repo/'native/boot/fdt.py')
 f=importlib.util.module_from_spec(s);s.loader.exec_module(f)
 nodes=f.properties(blob)

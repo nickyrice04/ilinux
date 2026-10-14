@@ -3,21 +3,26 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — main GPIO register-cache initialization
+## Current Stage B blocker — native validation of reserved-GPIO cache repair
 
-Attempt 12 boot031 controller PASS and native Linux diagnostics observed. Final
-**P05 S09 W04 H02 D0059 B73 C0059** identifies `/soc/pinctrl@29c000000` at bounded
-register-cache initialization. First `/soc/pinctrl@2881e4000` reports GPIO IRQ
-handoff **pins=61/parents=7/masked=1**, return 0. Main controller completion/error
-and diagnostic PID 1/60s liveness NOT OBSERVED. Exact blocked PC/register/cause
-remain unknown; no measured IRQ storm or general peripheral success.
+Attempt 12 stopped at main GPIO cache initialization B73/C0059; NUB completed
+handoff 61/7/1 and returned 0. Native PID 1/60-second liveness remain unobserved.
+The Mac's GPIO metadata excludes pins 5,6,7,112,141; REA/independent instruction
+checks show Apple skips their initialization reads. Boot031 does not. This is
+an evidence-backed hypothesis, not an exact native exception address.
 
-Human confirms Macintosh HD return; fresh attempt-12 policy/default NOT CHECKED.
-M5 next: read-only return review and targeted offline inspection of cache reads.
-Video/photo reviewed with explicit 40.163333s coverage limit; report:
-`native/boot/stage-b-2026-10-14-attempt12-result.md`. Attempt consumed, no retries,
-new blacklist, setup repetition or settings changes. Preserve installed boot021,
-clean client pin and gates. Native userspace still gates Linux control/Omarchy.
+**Boot032 / attempt 13 prepared:** explicit permitted cache defaults and standard
+DT exclusions, guarded GPIO/IRQ paths and indexed diagnostics. Full build,
+sanitizers, GPIO schema, 102 controller cases/intake, source reproduction and
+exact-image generic 60s liveness PASS. **Native/live checks NOT RUN.** Unknowns:
+whether this clears the stall, excluded-pin ownership/interrupt behavior, later
+controller dependencies, and all userspace/peripheral/performance milestones.
+
+Post-attempt-12 original Full/lab Permissive JSON and M5 read-only return checks
+PASS; host settings untouched. M1 verifies private boot032 and publishes
+readiness, then one human-started filmed RAM boot and Macintosh HD return.
+Continue installed boot021; no repeated setup, new skip or policy/volume change.
+See `kernel/experiments/gpio-reserved/README.md` and current Stage-B instructions.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

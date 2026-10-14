@@ -50,6 +50,11 @@ def prepared(cpu_count=1, storage=False, framebuffer=True, bootargs=None):
         "compatible": b"apple,t6050-aic3\0apple,t8122-aic3\0", "phandle": struct.pack(">I", 99),
         "#interrupt-cells": struct.pack(">I", 3), "interrupt-controller": b"",
         "reg": struct.pack(">4Q", 0x280400000, 0x1cc000, 0x280440000, 0x4000)}, []))
+    children.append(("pinctrl@29c000000", {
+        "compatible": b"apple,t6050-pinctrl\0apple,t8103-pinctrl\0",
+        "reg": struct.pack(">QQ", 0x29c000000, 0x44000),
+        "apple,npins": struct.pack(">I", 221),
+        "gpio-reserved-ranges": launch.gpio_guard.RANGES}, []))
     nodes = [("soc", {"#address-cells": struct.pack(">I", 2), "#size-cells": struct.pack(">I", 2), "ranges": b""}, children),
              ("cpus", {"#address-cells": struct.pack(">I", 2), "#size-cells": bytes(4)},
               [("cpu@%x" % (0x40000+i), {"device_type": b"cpu\0", "compatible": b"apple,sotra-m\0",
@@ -97,9 +102,23 @@ class FakeProxy:
     # No SMP-start, cpufreq-init, PMU or shell method exists; any call fails.
 
 
+class FakeADT:
+    compatible = ["J716cAP"]
+
+    def __init__(self):
+        self.gpio = {"compatible": ["gpio,t8101"], "#gpio-pins": 221,
+                     "#gpio-int-groups": 7,
+                     "no-restore-gpio-pins": struct.pack("<5I", 6, 7, 5, 141, 112)}
+
+    def __getitem__(self, path):
+        if path != "/arm-io/gpio0":
+            raise KeyError(path)
+        return SimpleNamespace(getprop=self.gpio.get)
+
+
 class FakeUtils:
     def __init__(self, proxy):
-        self.adt = SimpleNamespace(compatible=["J716cAP"])
+        self.adt = FakeADT()
         self.ba = SimpleNamespace(video=SimpleNamespace(base=1, width=1, height=1))
         self.next = 0x200000
 

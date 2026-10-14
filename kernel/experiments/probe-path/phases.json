@@ -71,5 +71,9 @@
   "81": "t6050 GPIO IRQ init: read cached pin configuration",
   "82": "t6050 GPIO IRQ init: mask inherited input IRQ and read back",
   "83": "t6050 GPIO IRQ init: clear valid pending bits",
-  "84": "t6050 GPIO IRQ init: completed"
+  "84": "t6050 GPIO IRQ init: completed",
+  "90": "t6050 GPIO: validate reserved ranges before MMIO",
+  "91": "t6050 GPIO: read permitted pin register identified by I (hex)",
+  "92": "t6050 GPIO: explicit permitted defaults complete; I=FFF",
+  "93": "t6050 GPIO IRQ init: reject pending reserved sources before parent enable"
 }

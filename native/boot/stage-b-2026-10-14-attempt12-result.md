@@ -236,3 +236,13 @@ hashes at invocation:
 | `kernel/experiments/gpio-handoff/apple-evidence.json` | `978608fa20e3d74ccbd0d795568cc043abd839e6533e678aadbb0a3aa612d27d` |
 
 Sanitized local wrapper SHA-256: `97fda6825830c6cbd4de6d430b1c62a476cf22e47830338f3ab080766faca3eb`.
+
+## M5 follow-up after this report — 2026-10-14
+
+The user supplied fresh read-only policy JSON: original Full/lab Permissive,
+both exit 0. M5 independently checked original root/build/FileVault/SIP and
+unchanged staged m1n1. This supersedes the pending policy/return check above;
+default/installed boot object/authenticated-root were not independently
+re-queried. No host settings changed. Boot032 candidate work and attempt-13
+handoff are in `kernel/experiments/gpio-reserved/README.md` and the current
+Stage-B checklist. Attempt 12 remains consumed; do not replay its command.

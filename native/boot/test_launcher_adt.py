@@ -38,7 +38,11 @@ def synthetic_adt(compatible=b"J716cAP\0"):
     assert [d.id1 for d in PMGRDevices.parse(bytes(devices))] == [1, 2]
     pmgr = node({"name": b"pmgr\0", "compatible": b"pmgr,synthetic\0",
                  "devices": bytes(devices)})
-    arm_io = node({"name": b"arm-io\0"}, (pmgr,))
+    gpio = node({"name": b"gpio0\0", "compatible": b"gpio,t8101\0",
+                 "#gpio-pins": struct.pack("<I", 221),
+                 "#gpio-int-groups": struct.pack("<I", 7),
+                 "no-restore-gpio-pins": struct.pack("<5I", 6, 7, 5, 141, 112)})
+    arm_io = node({"name": b"arm-io\0"}, (pmgr, gpio))
     root = {"name": b"device-tree\0"}
     if compatible is not None:
         root["compatible"] = compatible
@@ -50,7 +54,7 @@ class PinnedADTTests(unittest.TestCase):
         blob = synthetic_adt(compatible)
         return LazyADT(SimpleNamespace(get_adt=lambda: blob))
 
-    def run_session(self, compatible=b"J716cAP\0"):
+    def run_session(self, compatible=b"J716cAP\0", gpio_pins=None):
         self.proxy = FakeProxy()
         self.iface = FakeInterface(prepared())
         manifest = {"m1n1_version_marker": "version", "m1n1_version_offset": 0x100,
@@ -64,6 +68,8 @@ class PinnedADTTests(unittest.TestCase):
         def factory(proxy):
             utils = FakeUtils(proxy)
             utils.adt = self.lazy(compatible)
+            if gpio_pins is not None:
+                utils.adt['/arm-io/gpio0'].no_restore_gpio_pins = gpio_pins
             return utils
 
         with contextlib.redirect_stdout(io.StringIO()), \
@@ -92,6 +98,18 @@ class PinnedADTTests(unittest.TestCase):
     def test_missing_compatible_stops_before_upload(self):
         with self.assertRaisesRegex(ValueError, "compatibility unavailable"):
             self.run_session(None)
+        self.assertEqual(self.iface.writes, [])
+        self.assertEqual(self.proxy.boots, [])
+
+    def test_changed_pins_stop_before_upload(self):
+        with self.assertRaisesRegex(ValueError, "GPIO"):
+            self.run_session(gpio_pins=struct.pack('<5I', 5, 6, 8, 112, 141))
+        self.assertEqual(self.iface.writes, [])
+        self.assertEqual(self.proxy.boots, [])
+
+    def test_truncated_pins_stop_before_upload(self):
+        with self.assertRaisesRegex(ValueError, "GPIO"):
+            self.run_session(gpio_pins=bytes(16))
         self.assertEqual(self.iface.writes, [])
         self.assertEqual(self.proxy.boots, [])
 

@@ -1,5 +1,6 @@
 """Small, bounded read-only flattened-device-tree decoder (no dependencies)."""
 import struct
+import gpio_guard
 
 
 def properties(blob):
@@ -118,6 +119,7 @@ def check_stage_b(blob, prepared=False):
         if len(cpus) != 1:
             raise ValueError("prepared DT must expose exactly one CPU")
     check_hardware(tree)
+    gpio_guard.check_tree(tree)
     return tree
 
 

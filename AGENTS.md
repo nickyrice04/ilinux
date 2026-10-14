@@ -86,13 +86,21 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1 result: **attempt 12 consumed**, controller PASS (10.545 s), Macintosh
-HD return human-confirmed. Video/photo final **P05 S09 W04 H02 D0059 B73 C0059**
-identifies main pinctrl bounded register-cache initialization. First pinctrl
-reports IRQ handoff 61/7/1 and return 0. PID 1/userspace liveness NOT OBSERVED;
-exact fault unknown. M5 read-only return checks and targeted offline analysis
-next. Fresh policy/default NOT CHECKED; no retry or settings changes. See
-`native/boot/stage-b-2026-10-14-attempt12-result.md`.
+Latest: **boot032 / attempt 13 prepared** after M1 attempt 12 (`f3218fd`).
+Main GPIO stopped at B73/C0059 cache initialization; NUB handoff 61/7/1 returned 0.
+Fresh post-attempt-12 policies Full/Permissive and M5 original-root/FileVault/SIP/
+staged-m1n1 checks PASS. Native userspace remains unobserved.
+
+REA/independent bytes + current GPIO metadata identify five excluded pins.
+Boot032 respects standard reserved ranges, initializes only permitted cache
+entries, guards GPIO/IRQ access and adds I pin-index/B90–93 diagnostics.
+Full Image, sanitizer/schema checks, 102 controller cases/13-file intake,
+recipe reproduction and exact-image generic 60s liveness PASS. **Native boot032
+and live checks NOT RUN.** See `kernel/experiments/gpio-reserved/README.md`.
+M1 verifies private boot032 and publishes readiness, then one filmed human-started
+attempt 13 and Macintosh HD return. Preserve boot021/current entry, all gates,
+fixed args and single skip. No new provisioning, security/volume changes or retry.
+Native userspace precedes Linux control/input/configuration agent and Omarchy.
 
 Historical M5 preparation: **boot031 / attempt 12 prepared**, following M1 attempt 11 (`f35efa5`).
 Final D=C=0059/B63 identifies main pinctrl callback; exact cause unresolved.

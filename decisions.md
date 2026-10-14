@@ -1361,3 +1361,23 @@ Video/photo are reviewed, with literal final lanes and actual GPIO counts/return
 recorded; the 40.163333s clip cannot establish full 120s coverage. Native userspace
 and 60s liveness remain unobserved. Human confirms Macintosh HD return; M5's
 fresh read-only policy/default review is pending. No retry/settings changes.
+
+## 2026-10-14 · Respect firmware-excluded pins instead of scanning every declared register
+
+Attempt 12 and independent REA/source evidence justify a narrow GPIO exclusion
+repair. Translate the observed non-identifying pin list into the standard Linux
+gpio-reserved-ranges property, not proprietary code. Validate geometry/list on
+the live ADT before uploads and preserve exact packaged/effective DT checks.
+Use explicit permitted defaults and a sparse cache; a readable predicate alone
+is insufficient justification for retaining a contiguous raw-default scan.
+Preserve GPIO numbers and reject forbidden GPIO/pinmux/IRQ operations. Refuse an
+initially pending reserved IRQ before enabling parents; do not override pads.
+Add a pin-index panel to make another stopped read actionable. Retain rejected
+pseudocode limits; physical cause and successful repair remain unproven.
+
+Full build/tests and generic liveness pass. Only Image and one Stage-B DT
+property change. Post-attempt-12 return/policies PASS; no host settings changed.
+M1's offline readiness plus human start suffice for one filmed attempt 13, then
+return under the same bound. Preserve current boot021 entry and all previous
+results. Native userspace comes before Linux control/agent configuration,
+Omarchy, and separate GPU/SMP/efficiency validation.

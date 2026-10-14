@@ -1,0 +1,42 @@
+{
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "results": [
+    {
+      "evidence_id": "ev_eb7f6255d47a01ed02615138f8f34474a974554b04a71b66e4329b401e444b9d",
+      "member": "com.apple.driver.AppleGPIOICController",
+      "function": "__ZN21AppleGPIOICController5startEP9IOService",
+      "body_anchors": [
+        {
+          "start": "0xfffffe0008f52fe8",
+          "end_inclusive": "0xfffffe0008f53ff7",
+          "carrier_offset": 32829416,
+          "derived_offset": 31736,
+          "bytes": 4112,
+          "sha256": "d04a6da47de313470fad7b96e0a466e28991813e7ef01ffbab158a9779fcb9e8"
+        }
+      ],
+      "assembly_instructions": 1028,
+      "original_bytes_verified": true,
+      "pcode_operations": 2342,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "apple-start",
+      "llvm_instruction_words_verified": 1028,
+      "llvm_unknown_instructions": []
+    }
+  ],
+  "limits": [
+    "Static consistency only, not semantic or runtime equivalence",
+    "Rejected pseudocode cannot guide implementation; manual gates are not passes"
+  ]
+}

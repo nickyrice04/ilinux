@@ -2,17 +2,18 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest (2026-10-14):** attempt 7 reached `deferred_probe_initcall`; no
-diagnostic userspace/liveness observed. Boot027 adds bounded timer/tick and
-deferred-work diagnostics without bypassing probing. Only Image changes;
-hardware description checks are stronger. Full build, 11 sanitizer scenarios,
-90 controller cases, 13-file intake and generic VM timer/phases/60-second
-liveness PASS. **Native attempt 8 NOT RUN.** M1 verifies offline and publishes
-readiness, then the human starts one filmed boot and returns to Macintosh HD.
-Continue the installed Boot Lab entry/boot021 m1n1: no Recovery, provisioning,
-Stage A repeat, reinstall or settings change. Post-attempt-7 original Full/lab
-Permissive JSON already PASS. Authoritative procedure:
-[the Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
+**Latest (2026-10-14):** boot032 / attempt 13 prepared after main-GPIO cache
+boundary B73/C0059 in attempt 12. Reserved-pin exclusions, explicit cache
+initialization and indexed GPIO diagnostics are built/tested; native userspace
+is still unobserved. Full build/schema/sanitizer/controller/intake checks and
+generic VM PID 1/60s liveness PASS; **native boot032/live checks NOT RUN**.
+Post-attempt-12 Full/Permissive policies and read-only macOS return checks PASS.
+Continue installed boot021/current entry. M1 offline readiness and human start
+precede one filmed RAM boot, then Macintosh HD; no setup or settings changes.
+Authoritative procedure: [Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
+After stable native userspace, develop Linux-side control/input and a usable
+RAM root for the configuration agent, then Omarchy and native performance tests.
+The older provisioning/status descriptions below are historical context.
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
 Checker `70ad452` identified one m1n1 primary CDC data interface and received

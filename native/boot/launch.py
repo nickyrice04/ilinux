@@ -17,6 +17,7 @@ sys.path.insert(0, str(HERE))
 from fdt import check_stage_b
 import dapf_guard
 import entry_guard
+import gpio_guard
 sys.path.insert(0, str(HERE.parents[1] / "tools/m1n1-client"))
 import usb_identity
 
@@ -87,6 +88,8 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
         raise ValueError("target board is not J716c")
     if not utils.ba.video.base or not utils.ba.video.width or not utils.ba.video.height:
         raise ValueError("m1n1 has no boot framebuffer")
+    gpio_guard.check_adt(utils.adt)
+    print("GPIO ADT PASS: main controller 221 pins/7 groups; exclusions 5,6,7,112,141 match.", flush=True)
     print("Board/framebuffer PASS; allocating RAM for diagnostic payloads.", flush=True)
     dapf_plan = dapf_guard.prepare(iface, base, files["m1n1.bin"], utils.adt)
     print("DAPF layout PASS: AOP has DART/GAPF only; RAM correction planned.", flush=True)

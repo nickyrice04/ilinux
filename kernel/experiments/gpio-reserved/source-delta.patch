@@ -1,0 +1,289 @@
+--- a/drivers/pinctrl/pinctrl-apple-gpio.c
++++ b/drivers/pinctrl/pinctrl-apple-gpio.c
+@@ -39,6 +39,9 @@
+ 
+ 	struct pinctrl_desc pinctrl_desc;
+ 	struct gpio_chip gpio_chip;
++	unsigned int npins;
++	bool filter_reserved;
++	u32 valid_pins[16];
+ 	u8 irqgrps[];
+ };
+ 
+@@ -77,10 +80,17 @@
+ 	.use_raw_spinlock = true,
+ };
+ 
++extern void ilinux_probe_path_mark(struct device *dev, unsigned int phase);
++extern void ilinux_probe_pin_mark(struct device *dev, unsigned int pin);
++#include "ilinux-gpio-reserved.h"
++#include "ilinux-gpio-cache.h"
++
+ /* No locking needed to mask/unmask IRQs as the interrupt mode is per pin-register. */
+ static void apple_gpio_set_reg(struct apple_gpio_pinctrl *pctl,
+ 			       unsigned int pin, u32 mask, u32 value)
+ {
++	if (!apple_gpio_pin_available(pctl, pin))
++		return;
+ 	regmap_update_bits(pctl->map, REG_GPIO(pin), mask, value);
+ }
+ 
+@@ -90,6 +100,8 @@
+ 	int ret;
+ 	u32 val;
+ 
++	if (!apple_gpio_pin_available(pctl, pin))
++		return 0;
+ 	ret = regmap_read(pctl->map, REG_GPIO(pin), &val);
+ 	if (ret)
+ 		return 0;
+@@ -139,7 +151,8 @@
+ 		pin = APPLE_PIN(pinfunc);
+ 		func = APPLE_FUNC(pinfunc);
+ 
+-		if (func >= pinmux_generic_get_function_count(pctldev)) {
++		if (!apple_gpio_pin_available(pctl, pin) ||
++		    func >= pinmux_generic_get_function_count(pctldev)) {
+ 			ret = -EINVAL;
+ 			goto free_map;
+ 		}
+@@ -182,6 +195,9 @@
+ {
+ 	struct apple_gpio_pinctrl *pctl = pinctrl_dev_get_drvdata(pctldev);
+ 
++	if (!apple_gpio_pin_available(pctl, group))
++		return -EINVAL;
++
+ 	apple_gpio_set_reg(
+ 		pctl, group, REG_GPIOx_PERIPH | REG_GPIOx_INPUT_ENABLE,
+ 		FIELD_PREP(REG_GPIOx_PERIPH, func) | REG_GPIOx_INPUT_ENABLE);
+@@ -205,6 +221,9 @@
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(chip);
+ 	unsigned int reg = apple_gpio_get_reg(pctl, offset);
+ 
++	if (!apple_gpio_pin_available(pctl, offset))
++		return -EINVAL;
++
+ 	if (FIELD_GET(REG_GPIOx_MODE, reg) == REG_GPIOx_OUT)
+ 		return GPIO_LINE_DIRECTION_OUT;
+ 	return GPIO_LINE_DIRECTION_IN;
+@@ -215,6 +234,9 @@
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(chip);
+ 	unsigned int reg = apple_gpio_get_reg(pctl, offset);
+ 
++	if (!apple_gpio_pin_available(pctl, offset))
++		return -EINVAL;
++
+ 	/*
+ 	 * If this is an input GPIO, read the actual value (not the
+ 	 * cached regmap value)
+@@ -229,6 +251,9 @@
+ {
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(chip);
+ 
++	if (!apple_gpio_pin_available(pctl, offset))
++		return -EINVAL;
++
+ 	apple_gpio_set_reg(pctl, offset, REG_GPIOx_DATA, value ? REG_GPIOx_DATA : 0);
+ 
+ 	return 0;
+@@ -238,6 +263,9 @@
+ {
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(chip);
+ 
++	if (!apple_gpio_pin_available(pctl, offset))
++		return -EINVAL;
++
+ 	apple_gpio_set_reg(pctl, offset,
+ 			   REG_GPIOx_PERIPH | REG_GPIOx_MODE | REG_GPIOx_DATA |
+ 				   REG_GPIOx_INPUT_ENABLE,
+@@ -251,6 +279,9 @@
+ {
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(chip);
+ 
++	if (!apple_gpio_pin_available(pctl, offset))
++		return -EINVAL;
++
+ 	apple_gpio_set_reg(pctl, offset,
+ 			   REG_GPIOx_PERIPH | REG_GPIOx_MODE | REG_GPIOx_DATA,
+ 			   FIELD_PREP(REG_GPIOx_MODE, REG_GPIOx_OUT) |
+@@ -265,6 +296,9 @@
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(irq_data_get_irq_chip_data(data));
+ 	unsigned int irqgrp = FIELD_GET(REG_GPIOx_GRP, apple_gpio_get_reg(pctl, data->hwirq));
+ 
++	if (!apple_gpio_pin_available(pctl, data->hwirq))
++		return;
++
+ 	writel(BIT(data->hwirq % 32), pctl->base + REG_IRQ(irqgrp, data->hwirq));
+ }
+ 
+@@ -291,6 +325,9 @@
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(data);
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(gc);
+ 
++	if (!apple_gpio_pin_available(pctl, data->hwirq))
++		return;
++
+ 	apple_gpio_set_reg(pctl, data->hwirq, REG_GPIOx_MODE,
+ 			   FIELD_PREP(REG_GPIOx_MODE, REG_GPIOx_IN_IRQ_OFF));
+ 	gpiochip_disable_irq(gc, data->hwirq);
+@@ -302,6 +339,9 @@
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(gc);
+ 	unsigned int irqtype = apple_gpio_irq_type(irqd_get_trigger_type(data));
+ 
++	if (!apple_gpio_pin_available(pctl, data->hwirq))
++		return;
++
+ 	gpiochip_enable_irq(gc, data->hwirq);
+ 	apple_gpio_set_reg(pctl, data->hwirq, REG_GPIOx_MODE,
+ 			   FIELD_PREP(REG_GPIOx_MODE, irqtype));
+@@ -312,6 +352,9 @@
+ 	struct gpio_chip *chip = irq_data_get_irq_chip_data(data);
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(chip);
+ 
++	if (!apple_gpio_pin_available(pctl, data->hwirq))
++		return 0;
++
+ 	apple_gpio_set_reg(pctl, data->hwirq, REG_GPIOx_GRP,
+ 			   FIELD_PREP(REG_GPIOx_GRP, 0));
+ 
+@@ -326,6 +369,9 @@
+ 	struct apple_gpio_pinctrl *pctl = gpiochip_get_data(irq_data_get_irq_chip_data(data));
+ 	unsigned int irqtype = apple_gpio_irq_type(type);
+ 
++	if (!apple_gpio_pin_available(pctl, data->hwirq))
++		return -EINVAL;
++
+ 	if (irqtype == REG_GPIOx_IN_IRQ_OFF)
+ 		return -EINVAL;
+ 
+@@ -354,6 +400,7 @@
+ 	chained_irq_enter(chip, desc);
+ 	for (pinh = 0; pinh < gc->ngpio; pinh += 32) {
+ 		pending = readl_relaxed(pctl->base + REG_IRQ(*grpp, pinh));
++		pending &= apple_gpio_valid_word(pctl, pinh);
+ 		for_each_set_bit(pinl, &pending, 32)
+ 			generic_handle_domain_irq(gc->irq.domain, pinh + pinl);
+ 	}
+@@ -482,11 +529,36 @@
+ 		    resource_size(r) < REG_GPIO(npins) ||
+ 		    (nirqs && resource_size(r) < REG_IRQ(nirqs - 1, npins - 1) + 4))
+ 			return dev_err_probe(&pdev->dev, -EINVAL, "invalid t6050 GPIO geometry\n");
++		/* Validate exclusions before any controller MMIO. */
++		pctl->npins = npins;
++		pctl->filter_reserved = true;
++		for (i = 0; i < npins; i++)
++			pctl->valid_pins[i / 32] |= BIT(i % 32);
++		ilinux_probe_path_mark(&pdev->dev, 0x90);
++		if (of_property_present(pdev->dev.of_node, "gpio-reserved-ranges")) {
++			int n = of_property_count_u32_elems(pdev->dev.of_node, "gpio-reserved-ranges");
++			u32 first, count;
++
++			if (n <= 0 || n > 1024 || n % 2)
++				return -EINVAL;
++			for (i = 0; i < n; i += 2) {
++				if (of_property_read_u32_index(pdev->dev.of_node,
++				    "gpio-reserved-ranges", i, &first) ||
++				    of_property_read_u32_index(pdev->dev.of_node,
++				    "gpio-reserved-ranges", i + 1, &count))
++					return -EINVAL;
++				res = apple_gpio_reserve_range(pctl, first, count);
++				if (res)
++					return res;
++			}
++		}
+ 		/* Cache only DT-declared pins; do not read absent pin registers. */
+ 		config.max_register = REG_GPIO(npins - 1);
++		config.max_register_is_0 = npins == 1;
+ 		config.num_reg_defaults_raw = npins;
+ 	}
+ 
++	pctl->npins = npins;
+ 	pins = devm_kmalloc_array(&pdev->dev, npins, sizeof(pins[0]),
+ 				  GFP_KERNEL);
+ 	pin_names = devm_kmalloc_array(&pdev->dev, npins, sizeof(pin_names[0]),
+@@ -501,6 +573,16 @@
+ 	if (IS_ERR(pctl->base))
+ 		return PTR_ERR(pctl->base);
+ 
++	if (t6050) {
++		struct reg_default *defaults;
++
++		defaults = devm_kcalloc(&pdev->dev, npins, sizeof(*defaults), GFP_KERNEL);
++		if (!defaults)
++			return -ENOMEM;
++		res = apple_gpio_cache_defaults(pctl, defaults, &config);
++		if (res)
++			return res;
++	}
+ 	ilinux_probe_path_mark(&pdev->dev, 0x73);
+ 	pctl->map = devm_regmap_init_mmio(&pdev->dev, pctl->base, &config);
+ 	if (IS_ERR(pctl->map))
+--- a/drivers/pinctrl/ilinux-gpio-irq-init.h
++++ b/drivers/pinctrl/ilinux-gpio-irq-init.h
+@@ -13,7 +13,26 @@
+ 	    gc->irq.num_parents > 7)
+ 		return -EINVAL;
+ 
++	/* A pending excluded source cannot be masked through its pad register.
++	 * Refuse this controller before enabling parents; leave that source alone.
++	 */
++	ilinux_probe_path_mark(pctl->dev, 0x93);
++	for (group = 0; group < gc->irq.num_parents; group++) {
++		for (pin = 0; pin < gc->ngpio; pin += 32) {
++			unsigned int count = gc->ngpio - pin;
++			u32 declared = count >= 32 ? ~0U : BIT(count) - 1;
++			u32 excluded = declared & ~apple_gpio_valid_word(pctl, pin);
++
++			if (excluded && (readl_relaxed(pctl->base + REG_IRQ(group, pin)) & excluded))
++				return dev_err_probe(pctl->dev, -EBUSY,
++					"pending reserved GPIO IRQ in group %u word %u\n", group, pin / 32);
++		}
++	}
++
+ 	for (pin = 0; pin < gc->ngpio; pin++) {
++		if (!apple_gpio_pin_available(pctl, pin))
++			continue;
++		ilinux_probe_pin_mark(pctl->dev, pin);
+ 		ilinux_probe_path_mark(pctl->dev, 0x81);
+ 		ret = regmap_read(pctl->map, REG_GPIO(pin), &value);
+ 		if (ret)
+@@ -41,12 +60,13 @@
+ 	ilinux_probe_path_mark(pctl->dev, 0x83);
+ 	for (group = 0; group < gc->irq.num_parents; group++) {
+ 		for (pin = 0; pin < gc->ngpio; pin += 32) {
+-			unsigned int count = min_t(unsigned int, 32, gc->ngpio - pin);
+-			u32 mask = GENMASK(count - 1, 0);
++			u32 mask = apple_gpio_valid_word(pctl, pin);
+ 
+-			writel(mask, pctl->base + REG_IRQ(group, pin));
++			if (mask)
++				writel(mask, pctl->base + REG_IRQ(group, pin));
+ 		}
+ 	}
++	ilinux_probe_pin_mark(pctl->dev, 0xfff);
+ 	ilinux_probe_path_mark(pctl->dev, 0x84);
+ 	dev_info(pctl->dev, "t6050 IRQ handoff: pins=%u parents=%u masked=%u\n",
+ 		 gc->ngpio, gc->irq.num_parents, changed);
+--- a/drivers/firmware/efi/ilinux-fb-map.h
++++ b/drivers/firmware/efi/ilinux-fb-map.h
+@@ -44,7 +44,7 @@
+ 	if (fb_mapping && ilinux_probe_diag) {
+ 		fb_text_height = fb_height - ILINUX_PANEL_ROWS * fb_font->height * ILINUX_STRIP_SCALE;
+ 		cx = 0; cy = 0;
+-		for (unsigned int lane = 0; lane < 7; lane++)
++		for (unsigned int lane = 0; lane < 8; lane++)
+ 			ilinux_probe_fb_mark(lane, 0);
+ 	}
+ 	if (ilinux_probe_diag)
+--- a/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml
+@@ -47,6 +47,8 @@
+ 
+   gpio-controller: true
+ 
++  gpio-reserved-ranges: true
++
+   '#gpio-cells':
+     const: 2
+ 

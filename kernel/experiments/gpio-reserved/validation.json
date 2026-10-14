@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-14",
+  "status": "offline PASS; native attempt 13 NOT RUN",
+  "target": "Mac17,6 / J716c / t6050",
+  "base_package": "boot031",
+  "package": "ilinux-j716c-boot032",
+  "archive_bytes": 16723345,
+  "archive_sha256": "001ef39cd64d8fef7c3779c5169c00726474d6ebc56cea90b9f6f5d9c9bd0500",
+  "Image": {
+    "size": 44534272,
+    "sha256": "589c33577d1bc2ddeb2f96e544f87b9ead6bc52e774410567170a7235dd70bcb"
+  },
+  "config": {
+    "size": 321615,
+    "sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169"
+  },
+  "stage_b_dt": {
+    "size": 61567,
+    "sha256": "4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce"
+  },
+  "build": {
+    "recipe": "virtualization/jobs/032-gpio-reserved/run.sh",
+    "work_tree": "/var/tmp/ilinux-boot032/linux",
+    "method": "incremental full Image link from preserved boot031 copy, not a clean rebuild",
+    "start_utc": "2026-10-14T16:53:20Z",
+    "end_utc": "2026-10-14T16:54:10Z",
+    "compiler": "GCC 16.1.1 20260430",
+    "binutils": "2.46.0",
+    "kernel": "7.1.9-g863199d8b4a3-dirty #11",
+    "page_size": 16384,
+    "config_unchanged": true,
+    "elf_binary_roundtrip": "PASS",
+    "diagnostics": "no warnings/errors in retained final build log",
+    "GPIO_binding_and_stage_b_schema": "PASS; selected GPIO schema, no diagnostics",
+    "exact_source_recipe_reproduction": "PASS against compiled source/header contents"
+  },
+  "tests": {
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "actual_gpio_helpers_and_callbacks": "PASS: 216 permitted defaults, zero forbidden MMIO; 8 geometries; range/overlap/overflow rejection; reserved-pending EBUSY before writes; ACK/dispatch tail/exclusion masks; locked/read/write/readback failure; legacy gate",
+    "actual_renderer": "PASS: 8 lanes, 3 fonts, exact pixels, bounds/canaries, overwrite recovery",
+    "controller_cases": 102,
+    "controller_breakdown": [
+      37,
+      10,
+      6,
+      16,
+      5,
+      19,
+      2,
+      6,
+      1
+    ],
+    "intake_files": 13,
+    "member_extractor_cases": 13,
+    "evidence_gate_cases": 8,
+    "generic_vm": {
+      "cpus": 1,
+      "memory_gib": 4,
+      "disk": false,
+      "network": false,
+      "shares": false,
+      "phase_sequence": [
+        1,
+        10,
+        11,
+        12,
+        13,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timer_ticks": 25,
+      "pending": 1,
+      "strip": 0,
+      "display": 1,
+      "PID1": "PASS",
+      "online_cpus": 1,
+      "liveness_seconds": 60.19289,
+      "termination": "owned VZ PID 2682 SIGTERM after milestone; exit -15 expected"
+    }
+  },
+  "source_sha256": {
+    "kernel/experiments/gpio-reserved/cache-init.h": "4b0867f1be0a364e2d1f7ae159bf43a04951c5d516e938648b47be06eec76b33",
+    "kernel/experiments/gpio-reserved/test_panel.c": "e9398804bcd5cb75dfeae2e4153e861b43312f378d9c501eee46b44699faf58a",
+    "kernel/experiments/gpio-reserved/reserved-pins.h": "27242b1e0aa6bb22892f425222c82008e3a9d63bd5de0ced88b9581aac7deb04",
+    "kernel/experiments/gpio-reserved/irq-init.h": "6a7e69814558113fcaf3a531c4786b33588c04bbc2437ca7e3d9024f6bb7edf7",
+    "kernel/experiments/gpio-reserved/test_gpio.c": "d6a54b3fd501ed25e641f54b3edef993fb087e167a5f063d538e0da34916f0f4",
+    "kernel/experiments/gpio-reserved/audit-linux.py": "4f510c3a0dd45fc7b4982f4e3efe4869c5673440391acb7cac1fad60b312ffaf",
+    "kernel/experiments/gpio-reserved/path-state.h": "237c7ee34fd9f18103f620f440fa77052f9bf3997f12baf0fc363b02b17c87f7",
+    "kernel/experiments/gpio-reserved/status-panel.h": "f527ab56c80f87a342518aaf892c2d472a5cfc49c268d8e72894e317d7edf4ad",
+    "kernel/experiments/gpio-reserved/apply.py": "44632a128a0ce005729793abc09d2003b2f047864e2e713aebc196e580ca24c2",
+    "virtualization/jobs/032-gpio-reserved/run.sh": "8e7fac761aaac746412b150fbe669322bf2349c4639ac302741734b6ff812f48",
+    "native/boot/launch.py": "65ece2537fdb9ece0ed54dc234f8ee253bc2f3c44aac8c012014079b6366cfe0",
+    "native/boot/gpio_guard.py": "a3c038d036e2bc97679bd29d78d16e42b3db06d96775918abaeb01a53434a755",
+    "native/boot/fdt.py": "ee577a08bb48242e84dbc50cd1f40a8d1f47a4d4481ca6dd6503829f53615ad3",
+    "native/boot/dapf_guard.py": "bb33d9bebcec3a6cd925ed9e7b28dbabe3c7375c445d7e9d68ace18f4eaa7047",
+    "native/boot/entry_guard.py": "d1fa8ca84aa1c7032c50c8766c8571054047720df35cb7d518310167ec183713",
+    "tools/m1n1-client/usb_identity.py": "72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137"
+  },
+  "logs": {
+    "build/native-gpio-reserved/out/run.log": "8211f11566104b6129d4983fb537bdb9039a5c5b7858861b3c37b7932c275acd",
+    "build/native-gpio-reserved/out/build.log": "77be86a8778316565bf928a94c1e58af82f44746c5e86614881c02177b70716d",
+    "build/native-gpio-reserved/out/binding-check.log": "6cbef209dd55fc91d6e105fb456c0ccf0c6f4d0c317df0575878c9f3e03b2846",
+    "build/native-gpio-reserved/out/dt-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/native-boot032-checks/out/run.log": "657114d800c59ac750d2069183582ed3f0d74a7a075399363ddadaf8cd6c9c44",
+    "build/native-boot032-checks/out/intake.json": "bd894effe408c83eab27f433f0c381ca50a8e2658f8050c3d21a660034234706",
+    "build/native-boot032/generic-vm.log": "467e7e529546ad3a538fe374648abb4badff57d662b74a0f34211abb9a1bac19"
+  },
+  "recorded_repairs": [
+    "Initial sanitizer compile failed because a test logging macro discarded its changed argument; replaced with a function stub.",
+    "Controller cross-tests initially lacked GPIO metadata in the DAPF synthetic fixture; extended the fixture and reran all 102 cases, including real-parser mismatch stops.",
+    "Added pending-excluded-IRQ rejection after initial build; final Image rebuilt and tests/schema repeated. Recipe reproduction verifies final sources.",
+    "REA static regcache_hw_init symbol was inlined; targeted actual regcache_init instead."
+  ],
+  "limits": [
+    "No native boot032/PID1/physical GPIO result yet.",
+    "Generic VZ does not expose t6050 GPIO; hardware accesses are modeled in sanitizer tests.",
+    "Apple start pseudocode requires manual review; prior init whole pseudocode rejected. Only bounded independently checked instruction observations used.",
+    "Exclusion-caused hang is a hypothesis; reason for firmware exclusions and future reserved IRQ ownership remain unknown.",
+    "No native performance or energy benchmark; no macOS parity claim."
+  ]
+}

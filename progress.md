@@ -5,6 +5,46 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: boot032 / attempt 13 reserved-GPIO repair prepared
+
+* Consumed M1 attempt 12 (`f3218fd`): final P05/S09/W04/H02/D0059/B73/C0059
+  places the main GPIO controller at cache initialization. NUB IRQ handoff
+  61/7/1 and return 0 observed; main return and native PID 1 remain unobserved.
+* Fresh user post-attempt-12 JSON PASS: original **Full**, lab **Permissive**,
+  both exits 0. Independent M5 read-only root Macintosh HD/build 25G83/
+  FileVault/SIP and unchanged staged m1n1 checks PASS. No host settings changed;
+  default/installed boot object/authenticated-root were not independently
+  re-queried. The report's pending policy check is superseded.
+* Read-only GPIO metadata gives excluded pins **5,6,7,112,141**, 221 pins,
+  7 groups. REA + original bytes/LLVM confirm Apple's in-body skip behavior.
+  Exact boot031 Linux source/REA/linked bytes show its cache scans declared
+  pins without exclusions. This is a supported **candidate cause**, not a
+  native fault PC. Start pseudocode remains manual-review; prior init pcode
+  remains rejected. No proprietary code or binary published.
+* Boot032 adds validated DT reserved ranges, explicit permitted cache defaults,
+  sparse-cache/access checks, GPIO/pinmux/IRQ exclusions, and rejection of
+  initially pending excluded IRQs before parent installation. New I lane
+  records pin index; B90–93 refine progress. Main expected cache is 221/216/5.
+  All 286 public D/C IDs remain. Only Image and one Stage-B DT property change
+  among payloads; installed boot021/config/initramfs/fixed args/gates remain.
+* Full Image/ELF roundtrip and exact source-recipe reproduction PASS. Actual
+  helper/callback ASan+UBSan tests: 216 allowed reads, zero forbidden MMIO,
+  errors/IRQ masks/8 geometries; 8-lane renderer/3 fonts PASS. GPIO binding and
+  selected Stage-B schema PASS. **102 controller tests**, **13 intake files**,
+  **13 member + 8 evidence tests PASS**. Exact Image/initramfs diskless,
+  networkless, one-CPU VZ reaches PID 1 and 60s liveness at **60.192890 s**.
+  Native GPIO/MMIO is not exposed by VZ; no native performance/energy claim.
+* **Native boot032 / attempt 13 / live checks NOT RUN.** M1 follows
+  `tools/m1n1-client/stage-b-instructions.md`: verify private release
+  `native-j716c-boot032`, publish offline readiness, then one filmed human-started
+  attempt and Macintosh HD return. No extra approval round trip, provisioning,
+  Recovery, new skip, retry or settings/volume/security changes.
+* Record all panel lanes including I, actual cache/IRQ counts, errors/probe
+  return and PID-1/one-CPU/60-second liveness separately. Native userspace is
+  the next gate before Linux-side control/input/RAM root and the configuration
+  agent's Omarchy work. Evidence: `kernel/experiments/gpio-reserved/README.md`
+  and `validation.json`. All test VMs stopped before handoff.
+
 ## 2026-10-14 · M1: attempt 12 GPIO cache checkpoint; macOS return PASS
 
 * One boot031 RAM attempt at readiness `83f0f20`, reviewed M5 handoff `cd9ac3f`.
