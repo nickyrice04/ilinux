@@ -6,6 +6,38 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — hv001 private hypervisor sessions (NOT RUN)
+
+* **What:** a private m1n1 hypervisor runs the **unchanged boot033** payloads
+  at EL1. The kernel log streams to the M1 on the vUART (USB interface 3), and
+  Ctrl-C gives an HV shell with `System.map` backtraces and optional PMGR
+  MMIO tracing. It answers attempt 14's silent reset with live evidence
+  instead of photos.
+* **m1n1 patch** `native/hv/0001-ilinux-hv-t6050-single-cpu.patch` (+53/−1,
+  7 files, pin `57a9339`):
+  * the HV starts no secondaries on t6050;
+  * `VM_TMR_FIQ_ENA_EL2` is only read (the HV refuses to start if it is
+    enabled), and guest timers are polled;
+  * private op `0x7f0` runs kboot's clock/tunable/cache/DAPF steps without
+    USB/PCIe init.
+* **Build and release:** VM job 034. Release `native-j716c-hv001`, archive
+  SHA-256 `c659462c77df8a56979aff5f5f5596cbbdb49a6bbe0eaef5d2ecfd9bd6f4ebb1`.
+* **Validation:** reviewed twice. 28 offline hv tests PASS on M5, and
+  `native/boot` is unchanged. Design, review fixes and risks:
+  `native/hv/README.md`.
+* **M1 next:** `tools/m1n1-client/hv-instructions.md`.
+  1. Offline readiness, including the client-venv import check (not
+     verifiable on M5).
+  2. **Session 1:** read-only register census, one human-started boot.
+  3. **Session 2:** only after a census PASS and a separate human start, one
+     hv001 RAM session.
+  * Each session ends with power off and return to Macintosh HD.
+  * No retries; no security, volume or installed-m1n1 change.
+* **Never contribute any of it upstream:** m1n1/Asahi forbid LLM-derived
+  work. Private use is user-authorized.
+* Attempt-14 follow-ups stay open in parallel: M5 read-only return checks,
+  then boot034.
+
 ### Current M1 result — attempt 14 reaches native PID 1, then silent SoC reset
 
 * One boot033 RAM attempt at readiness `994b62f`, M5 handoff `b76ab6b`.

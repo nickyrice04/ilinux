@@ -5,6 +5,37 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: hv001 private hypervisor path prepared (census, then boot033 at EL1)
+
+* **Discovered (offline, pinned m1n1 source + M5 sanitized ADT):**
+  * The upstream HV cannot run on t6050 as is: it starts all secondaries and
+    writes `VM_TMR_FIQ_ENA_EL2`.
+  * kboot's memory map would hand the HV's own RAM to Linux.
+  * The boot033 DT has no USB/PCIe/SPMI nodes, so Linux cannot touch the HV
+    link.
+  * Upstream `map_essential` keeps the link's PMGR domains powered. The
+    devices decode correctly: 661 records of 48 bytes; for a USB0 link, UART0
+    `0x280900360` and ATC0_USB `0x288300150`.
+* **Implemented:**
+  * `native/hv/` m1n1 patch (+53/−1), built by VM job 034 (no C warnings).
+  * `hv_launch.py`: RVBAR-free chainload, NOP-verified reconnect, HV flag gate,
+    boot033 DT gates, Linux RAM above the HV with overlap checks, RESERVED
+    CPU_START hook, vUART console with `tty0` still `/dev/console`.
+  * `census.py`: read-only register census.
+  * `vuart_log.py`: reconnecting logger.
+  * M1 instructions.
+* **Tested:** 28 offline tests PASS, in script and unittest modes. Real
+  packages verify offline; tampered packages and wrong symbol offsets are
+  rejected. Pure `native/boot` suites PASS and those files are unchanged.
+* **Released:** `native-j716c-hv001`, archive `c659462c…ebb1`.
+* **Not verified / unsupported:**
+  * the M1 client-venv imports;
+  * every live behavior (census, chainload re-enumeration, HV start,
+    unguarded register reads in `hv_start`, vUART IRQs, EL1 guest);
+  * no performance claim (never benchmark under the HV).
+* **Next:** M1 offline readiness, then census session, then (if PASS) one
+  hv001 session. See `tools/m1n1-client/hv-instructions.md`.
+
 ## 2026-10-14 · M1: attempt 14 reaches native PID 1; silent SoC reset ~5.6 s later
 
 * One boot033 RAM attempt at readiness `994b62f`, M5 handoff `b76ab6b`.

@@ -6,9 +6,10 @@ it verifies both packages and opens no USB port. A live run:
 
 1. checks the installed boot021 m1n1 exactly like native/boot/launch.py;
 2. chainloads the private hv001 m1n1 into RAM (no RVBAR writes, no disk);
-3. re-verifies the target, prepares the effective DT with the same gates;
-4. starts Linux as a single-CPU EL1 guest, with kernel output on the HV
-   virtual UART (USB interface 3) and Ctrl-C into the HV shell.
+3. re-verifies the target, gates on hv001's single-CPU/timer flags, and
+   prepares the effective DT with the same checks as the native launcher;
+4. starts Linux as a single-CPU EL1 guest. The kernel log is mirrored to the
+   HV virtual UART (USB interface 3); Ctrl-C enters the HV shell.
 
 Nothing is installed; power off returns the machine to Macintosh HD.
 """
@@ -41,11 +42,14 @@ UART0 = 0x505200000
 CPU_START_T6050 = 0x88000  # smp.c uses the T6031 offset for T6050
 MIB = 1024 * 1024
 
-# boot033's fixed arguments with the console moved to the HV virtual UART.
-# The framebuffer console and diagnostic panel stay (console=tty0); the last
-# console= is /dev/console, so init output also reaches the serial port.
+# boot033's fixed arguments with an extra console on the HV virtual UART.
+# console=tty0 stays last, so /dev/console (diag init's direct writes) is the
+# framebuffer exactly as in native boots. Kernel printk, including diag
+# init's /dev/kmsg copies, goes to both consoles; serial console writes are
+# polled, so they do not depend on vUART interrupts. Only one earlycon is
+# possible: the serial one replaces earlycon=ilinuxfb.
 HV_BOOTARGS = launch.BOOTARGS.replace(
-    "console=tty0", "console=tty0 console=ttySAC0,115200").replace(
+    "console=tty0", "console=ttySAC0,115200 console=tty0").replace(
     "earlycon=ilinuxfb", "earlycon=s5l,0x%x" % UART0)
 
 # Chainload stub (as upstream chainload.py), pre-assembled and checked
@@ -54,6 +58,12 @@ STUB = bytes.fromhex("2414c1a8" "441400a9" "227b0bd5" "22750bd5"
                      "42400091" "634000d1" "43ffffb5" "41000058"
                      "20001fd6")
 
+# Symbols of the private patch that the launcher reads or calls; their
+# offsets are recorded in hv-manifest.json and checked against the build.
+HV_SYMBOLS = {"dt": "hv_dt_pointer_offset",
+              "hv_ilinux_single_cpu": "hv_single_cpu_offset",
+              "hv_ilinux_init_failed": "hv_init_failed_offset"}
+
 
 def manifest():
     return json.loads((HERE / "hv-manifest.json").read_text())
@@ -61,6 +71,16 @@ def manifest():
 
 def stub(entry):
     return STUB + struct.pack("<Q", entry)
+
+
+def parse_nm(text):
+    """`nm -an` output: offset, type, name. m1n1 links at 0 = its RAM base."""
+    out = {}
+    for line in text.splitlines():
+        parts = line.split()
+        if len(parts) == 3:
+            out.setdefault(parts[2], int(parts[0], 16))
+    return out
 
 
 def verify_hv_package(directory, image):
@@ -86,24 +106,23 @@ def verify_hv_package(directory, image):
     off = m["hv_version_offset"]
     if hv[off:off + len(marker)] != marker:
         raise ValueError("hv version marker not at the recorded offset")
+    syms = parse_nm(loaded["m1n1-hv-symbols.txt"].decode("ascii"))
+    for symbol, key in HV_SYMBOLS.items():
+        if syms.get(symbol) != m[key]:
+            raise ValueError("hv symbol offset differs from the build: " + symbol)
+    if "kboot_prepare_hv_guest" not in syms:
+        raise ValueError("hv build lacks the private guest-preparation op")
+    if not all(m[key] < len(hv) for key in HV_SYMBOLS.values()):
+        raise ValueError("hv symbol outside the loaded image")
     with hv_dapf_pin(hv):
         dapf_guard.verify_image(hv)
     check_system_map(loaded["System.map"].decode("ascii"), image)
     return m, loaded
 
 
-def parse_system_map(text):
-    symbols = {}
-    for line in text.splitlines():
-        parts = line.split()
-        if len(parts) == 3:
-            symbols.setdefault(parts[2], int(parts[0], 16))
-    return symbols
-
-
 def check_system_map(text, image):
     """The map must describe this exact Image (Image starts at _text)."""
-    syms = parse_system_map(text)
+    syms = parse_nm(text)
     for name in ("_text", "_end", "ilinux_fb_descriptor", "deferred_probe_initcall"):
         if name not in syms:
             raise ValueError("System.map lacks " + name)
@@ -198,6 +217,18 @@ def restrict_memory(blob, guest_base):
     return bytes(out)
 
 
+def check_payload_overlap(tree, layout):
+    """Kernel/initramfs/DT must not land on reserved memory or the framebuffer."""
+    for path, node in tree.items():
+        if not (path.startswith("/reserved-memory/") or path.startswith("/chosen/framebuffer")):
+            continue
+        reg = node.get("reg", b"")
+        for i in range(0, len(reg) - len(reg) % 16, 16):
+            start, size = struct.unpack_from(">QQ", reg, i)
+            if start < layout["end"] and layout["base"] < start + size:
+                raise ValueError("guest payloads overlap " + path)
+
+
 def check_target(iface, proxy, base, marker, offset):
     proxy.nop()
     if proxy.get_chipid() != CHIP_T6050:
@@ -208,8 +239,20 @@ def check_target(iface, proxy, base, marker, offset):
     launch.ensure_no_secondaries(proxy)
 
 
+def check_hv_flags(proxy, base, m):
+    """hv001 must have taken its single-CPU path and accepted the timer state."""
+    single = proxy.read8(base + m["hv_single_cpu_offset"])
+    failed = proxy.read8(base + m["hv_init_failed_offset"])
+    if single != 1:
+        raise ValueError("hv001 did not enter single-CPU mode")
+    if failed != 0:
+        raise ValueError("hv001 refused: guest timer FIQs already enabled; power off")
+
+
 def chainload(iface, proxy, utils, hv_image, blob_api, bootargs_types):
-    """upstream chainload.py -r, minus RVBAR writes (locked on t6050)."""
+    """upstream chainload.py -r. RVBARs are never written; upstream also
+    skips them here, because a raw image entering at base + 0x800 keeps
+    the current page-aligned base."""
     image = hv_image + b"\0\0\0\0"
     new_base = utils.base
     entry = new_base + 0x800
@@ -236,11 +279,12 @@ def chainload(iface, proxy, utils, hv_image, blob_api, bootargs_types):
     iface.writemem(stub_addr, code)
     proxy.dc_cvau(stub_addr, len(code))
     proxy.ic_ivau(stub_addr, len(code))
+    # reload() waits for the new m1n1 and reopens the port if USB re-enumerates.
     proxy.reload(stub_addr, new_base + bootargs_off, image_addr, new_base, image_size)
 
 
-def prepare_guest(iface, proxy, utils, hv, files, hv_files, m):
-    """Gates and DT preparation on the running hv001 m1n1; returns (entry, dt)."""
+def prepare_guest(iface, proxy, utils, files, hv_files, m):
+    """Gates and DT preparation on the running hv001 m1n1; returns the layout."""
     try:
         compatible = utils.adt.compatible
     except (KeyError, AttributeError):
@@ -264,7 +308,6 @@ def prepare_guest(iface, proxy, utils, hv, files, hv_files, m):
     iface.writemem(layout["initrd"], initrd)
     iface.writemem(layout["kernel"], image)
     proxy.kboot_set_chosen("bootargs", HV_BOOTARGS)
-    proxy.kboot_set_chosen("stdout-path", "serial0")
     proxy.kboot_set_initrd(layout["initrd"], len(initrd))
     if proxy.kboot_prepare_dt(dt_src) != 0:
         raise ValueError("m1n1 DT preparation failed")
@@ -281,6 +324,7 @@ def prepare_guest(iface, proxy, utils, hv, files, hv_files, m):
         raise ValueError("prepared DT bootargs differ from fixed hv arguments")
     if any(a not in ("idle=nop", "arm64.nowfxt") for a in args[len(HV_BOOTARGS.split()):]):
         raise ValueError("unexpected appended bootargs")
+    check_payload_overlap(tree, layout)
     print("Hardware DT PASS; Linux RAM starts above the hypervisor.", flush=True)
     descriptor = entry_guard.plan(image, tree)
     iface.writemem(layout["dt"], blob)
@@ -310,14 +354,19 @@ def map_guest(hv, utils, layout, irange, trace_off):
         raise ValueError("guest base overlaps the hypervisor")
 
 
-def hook_cpu_start(hv):
-    """Drop guest CPU_START writes: t6050 secondaries must not start."""
-    pmgr = hv.adt["/arm-io/pmgr"].get_reg(0)[0]
+def hook_cpu_start(hv, irange, reserved):
+    """Drop guest CPU_START writes: t6050 secondaries must not start.
+
+    The RESERVED tracer (as upstream) keeps pt_update() from replacing the
+    hook with plain passthrough of the surrounding PMGR range.
+    """
+    addr = hv.adt["/arm-io/pmgr"].get_reg(0)[0] + CPU_START_T6050
 
     def write(base, off, data, width):
         hv.log(f"CPU_START write dropped: +{off:#x} = {data:#x}")
 
-    hv.map_hook(pmgr + CPU_START_T6050, 0x20, write=write)
+    hv.map_hook(addr, 0x20, write=write)
+    hv.add_tracer(irange(addr, 0x20), "CPU_START", reserved)
 
 
 def start_guest(hv, proxy, iface, entry, dt, iodev_cls):
@@ -352,16 +401,26 @@ def open_primary(device):
     return transport, iface
 
 
-def reconnect(device, wait=20.0):
-    """After chainload m1n1 restarts USB; reopen the descriptor-checked port."""
-    deadline = time.monotonic() + wait
+def reconnect(device, make_proxy, wait=30.0, opener=None, sleep=time.sleep, clock=time.monotonic):
+    """Reopen the descriptor-checked primary port and prove it with a NOP."""
+    opener = opener or open_primary
+    deadline = clock() + wait
     while True:
+        transport = None
         try:
-            return open_primary(device)
+            transport, iface = opener(device)
+            proxy = make_proxy(iface)
+            proxy.nop()
+            return transport, iface, proxy
+        except TimeoutError:
+            raise
         except Exception:
-            if time.monotonic() > deadline:
-                raise ValueError("hv001 m1n1 did not re-enumerate; power off") from None
-            time.sleep(0.5)
+            if transport is not None:
+                with contextlib.suppress(Exception):
+                    transport.close()
+            if clock() > deadline:
+                raise ValueError("hv001 m1n1 did not answer after chainload; power off") from None
+            sleep(0.5)
 
 
 def connect_and_run(device, m1n1, files, hv_files, m, logfile, symbols):
@@ -398,10 +457,9 @@ def connect_and_run(device, m1n1, files, hv_files, m, logfile, symbols):
         chainload(iface, proxy, utils, hv_files["m1n1-hv.bin"],
                   (BOOT_BLOBS, find_boot_blobs, copy_boot_blobs, blob_type),
                   {0: BootArgs_r1, 1: BootArgs_r1, 2: BootArgs_r2, 3: BootArgs_r3})
-        print("Chainloaded hv001 into RAM; reconnecting.", flush=True)
+        print("Chainloaded hv001 into RAM; re-verifying the port.", flush=True)
         transport.close()
-        transport, iface = reconnect(device)
-        proxy = M1N1Proxy(iface)
+        transport, iface, proxy = reconnect(device, M1N1Proxy)
         check_target(iface, proxy, proxy.get_base(), m["hv_version_marker"],
                      m["hv_version_offset"])
         print("Target PASS: hv001 running, no started secondaries.", flush=True)
@@ -409,12 +467,14 @@ def connect_and_run(device, m1n1, files, hv_files, m, logfile, symbols):
         hv = HV(iface, proxy, utils)
         hv.emulate_sprr = False
         hv.init()
+        check_hv_flags(proxy, utils.base, m)
+        print("HV PASS: single-CPU mode, guest timer FIQs disabled (polled).", flush=True)
         if logfile:
             hv.set_logfile(logfile.open("w"))
         hv.load_system_map(str(symbols))
-        layout = prepare_guest(iface, proxy, utils, hv, files, hv_files, m)
+        layout = prepare_guest(iface, proxy, utils, files, hv_files, m)
         map_guest(hv, utils, layout, irange, TraceMode.OFF)
-        hook_cpu_start(hv)
+        hook_cpu_start(hv, irange, TraceMode.RESERVED)
         signal.alarm(0)
         start_guest(hv, proxy, iface, layout["kernel"], layout["dt"], IODEV)
         print("STOP: hv_start returned (HV refused start or guest exited).", flush=True)

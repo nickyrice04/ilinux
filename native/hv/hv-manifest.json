@@ -20,6 +20,12 @@
     "System.map": {
       "size": 10020136,
       "sha256": "e6035b526c74dfaac45d2020d38f9a1f191d58432f1d8e4049d66eb14a576bbf"
+    },
+    "m1n1-hv-symbols.txt": {
+      "size": 59803,
+      "sha256": "1c8f12bc60af088a9d944c061987cd21829c4b8d76991fbb2345481e51b4b92a"
     }
-  }
+  },
+  "hv_single_cpu_offset": 3515737,
+  "hv_init_failed_offset": 3515736
 }
