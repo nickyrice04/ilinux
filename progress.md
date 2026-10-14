@@ -5,6 +5,23 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: H1 register census BLOCKED for hv001 (guest-timer FIQ enables set)
+
+* One read-only census at readiness `8267222`, 22:24:14 UTC: exit 2, under
+  one second. Chip, marker and no-secondaries gates passed; 15 guarded reads,
+  no writes, no retry.
+* **All 15 registers readable.** That includes the unguarded `hv_start()`
+  reads (AMX/APVMKEY/APSTS/ACTLR/SPRR/GXF/CNTHCTL); ECV=1.
+* **BLOCKED:** `VM_TMR_FIQ_ENA_EL2` reads **ENA_V=1 ENA_P=1**. The enable bits
+  are already on and the register traps on write at EL2 (attempt 5), so hv001
+  refuses to start. Guest timers `CNTV/CNTP_CTL_EL02` read ctl=7 (enabled,
+  masked, expired).
+* **hv001 Session 2 NOT RUN.** User confirms return to Macintosh HD; fresh
+  policy/default checks NOT CHECKED. Report and revision direction (mask guest timers at
+  the architectural source with a shadowed CTL via the ECV traps):
+  `native/hv/census-2026-10-14-result.md`.
+
+
 ## 2026-10-14 · M1: hv001 sessions offline readiness PASS
 
 * Pulled/read M5 handoff `4814b6f` (hv001 prepared in `ee5b824`), `native/hv/README.md`

@@ -86,7 +86,11 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1 result: **attempt 14 reached native diagnostic PID 1** (3.152 s, one
+Latest M1 HV result: **H1 census BLOCKED**. All 15 registers are readable, but
+`VM_TMR_FIQ_ENA_EL2` enable bits are set (write traps at EL2), so hv001 refuses;
+Session 2 NOT RUN. See `native/hv/census-2026-10-14-result.md`.
+
+Latest M1 native result: **attempt 14 reached native diagnostic PID 1** (3.152 s, one
 CPU, heartbeats at 3.23/8.23 s). The boot032 GPIO repair works: main cache
 221/216/5. The SoC then **silently reset at kernel ~8.77 s** and rebooted to
 Macintosh HD. 60-second liveness NOT reached; cause unknown; fresh policy checks
