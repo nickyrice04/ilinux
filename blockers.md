@@ -13,9 +13,11 @@ cause; asynchronous SError does not prove the exact faulting write.
 
 Source guard: full m1n1 build plus 12 C scenarios with ASan/UBSan PASS. A narrower
 RAM-only controller correction avoids replacing the installed bootloader;
-regression and real-parser tests pass. Boot022 unchanged. M1 verifies updated
-code before a human-started proposed attempt 4. Policy check PASS (user-supplied
-original Full/lab Permissive, exit 0). No host settings changes or automatic retry.
+regression and real-parser tests pass. M1 now independently passed 53 required
+offline cases plus existing boot022 package/receipt/source/pin checks. Offline
+ready for proposed attempt 4; wait for explicit human start and Running proxy.
+Policy check PASS (user-supplied original Full/lab Permissive, exit 0). No USB
+opened during readiness, host settings changes or automatic retry.
 Native correction NOT TESTED; Linux execution NOT OBSERVED. See
 `kernel/experiments/dapf-handoff/README.md` for evidence and remaining limits.
 

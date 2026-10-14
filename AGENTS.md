@@ -86,18 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: attempt 3 passed all boot022 preflight gates, then m1n1 raised an
-SError during DAPF setup; Linux execution NOT OBSERVED. Exact-image ELF/REA/
-GNU/LLVM analysis and the sanitized ADT expose a fixed-index DAPF/GAPF mismatch.
-An original source guard builds/tests, and the current launcher implements a
-narrow verified 96-byte RAM work-list correction for the unchanged installed
-m1n1. Boot022 payload unchanged. Native correction NOT TESTED. M1 must verify
-updated controller code offline before the human starts one proposed attempt 4.
-Fresh user-supplied policy JSON: original Full/lab Permissive, both exit 0.
-Independent original build/FileVault/SIP/authenticated-root and staged m1n1
-checks pass. No host boot/settings changes. Current instructions:
-`tools/m1n1-client/stage-b-instructions.md`; evidence and limits:
-`kernel/experiments/dapf-handoff/README.md`.
+Latest: M1 verified attempt-4 controller at `2773a73`: boot022 offline package
+PASS; 31 launcher + 16 DAPF guard + 2 pinned DAPF-parser + 4 root-ADT cases
+PASS (53 total). All 13 receipt files/archive/manifest and reviewed source
+hashes match; clean client pin and installed boot021 m1n1 unchanged. Policy
+prerequisite PASS from M5-reviewed user JSON. Separate attempt-4 evidence
+prepared, including both DAPF checkpoints. Offline ready; wait for explicit
+human start and Running proxy before one bounded invocation. Attempt 4/live
+correction NOT RUN; Linux execution historically NOT OBSERVED. No USB opened,
+reinstall, settings change or automatic retry. See `coordination.md` and
+`tools/m1n1-client/stage-b-instructions.md`.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

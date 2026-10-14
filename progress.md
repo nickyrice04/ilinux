@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: attempt 4 offline readiness PASS; awaiting explicit human start
+
+* Pulled/read `2773a73` and the DAPF evidence/current checklist. Existing
+  boot022 offline launcher verification **PASS**. All **13 receipt files**,
+  retained archive and Git-tracked intake manifest still match; receipt unchanged.
+* **53 offline cases PASS:** 31 launcher + 16 DAPF RAM-guard + 2 real pinned
+  DAPF-parser + 4 root-ADT. All suites exit 0; fake transport/synthetic memory
+  only. Prior unchanged USB/framebuffer/intake results remain applicable.
+* Reviewed launcher/guard/FDT/USB-selector hashes match the handoff. Client
+  clean at `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Reuse boot022 and the
+  installed boot021 m1n1/marker; no download, rebuild or reinstall.
+* Proposed attempt adds a verified 96-byte RAM data-table correction after
+  existing final gates. Both `DAPF layout PASS` and `DAPF RAM table corrected`
+  checkpoints are required in the new evidence record; real correction NOT TESTED.
+* Post-attempt-3 policy prerequisite PASS per M5-reviewed user JSON: original
+  Full/lab Permissive, both exit 0. No repeat query or inter-agent approval loop.
+* Separate ignored `build/native-intake/results/boot022-stage-b-attempt4.json`
+  and `.md` prepared with source/procedure/payload digests and checkpoint plan.
+  Prior attempts/receipts retained. **Offline ready for attempt 4; wait for the
+  human's explicit start and Running proxy report before one invocation.**
+* **Attempt 4 and all its live checks NOT RUN.** Linux execution remains
+  NOT OBSERVED historically. No USB opened, target command or settings change
+  during readiness; no automatic retry. Same bounded screen observation and
+  Macintosh HD return procedure after the eventual single attempt.
+
 ## 2026-10-13 · Agent B: m1n1 handoff error traced; DAPF guard implemented
 
 * Integrated M1 `f889133`. Boot022 framebuffer/preflight passed on hardware;

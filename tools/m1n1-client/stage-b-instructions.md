@@ -7,6 +7,16 @@ and [the correction/evidence](../../kernel/experiments/dapf-handoff/README.md).
 are consumed. This task prepares a reviewed correction; do not launch or retry
 until the human starts the next documented attempt after this verification.
 
+## M1 readiness — PASS, awaiting explicit human start
+
+M1 pulled `2773a73`: existing boot022 package verification and all 13 retained
+receipt-file hashes PASS; archive/manifest/source hashes and clean client pin
+match. **31 launcher + 16 RAM-guard + 2 pinned DAPF-parser + 4 root-ADT cases
+PASS**. New ignored attempt-4 evidence is prepared, including both DAPF
+checkpoints. No USB opened; no correction applied to the target. Attempt 4
+NOT RUN. The human explicitly starts the attempt after this readiness report;
+no duplicate policy check or M5-agent round trip is required.
+
 ## What changes
 
 The existing **boot022 payload and installed boot021 m1n1 remain unchanged**.

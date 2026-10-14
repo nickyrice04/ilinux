@@ -1013,3 +1013,13 @@ not an automatic retry under consumed attempt-3 authorization. M1 verifies
 offline and waits for the human to start that single experiment. No repeated
 policy query is needed: fresh original Full/lab Permissive JSON already passed.
 Actual native correction and Linux execution remain unverified.
+
+## 2026-10-13 · Accept attempt-4 offline checks; preserve the explicit-start boundary
+
+M1 independently passes the 53 required launcher/DAPF/parser cases and verifies
+unchanged boot022, its retained receipt, exact reviewed source hashes and clean
+client pin. Record readiness before the human restarts; do not open USB until
+the human explicitly starts the single experiment and reports Running proxy.
+Capture both DAPF checkpoints plus handoff/screen/return evidence. Prior policy
+PASS remains current; no reinstall, settings change or automatic retry. Native
+RAM correction remains untested and Linux execution remains unobserved.
