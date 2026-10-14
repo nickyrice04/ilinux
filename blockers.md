@@ -3,7 +3,19 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — no attributed GPIO/worker progress in attempt 13
+## Current Stage B blocker — silent SoC reset ~5.6 s after native PID 1 (attempt 14)
+
+Boot033 reaches native diagnostic PID 1 (3.152 s) with one CPU and two
+heartbeats. Both GPIO controllers probe (main cache 221/216/5). The SoC then
+resets at kernel ~8.77 s with no message and reboots to Macintosh HD. The
+60-second liveness milestone is not reached, and the trigger is unknown.
+Attempt 14 is the first to run past the GPIO controllers: ASC mailbox and SART
+probes, late initcalls including sync_state, userspace and idle. M5 next:
+read-only return checks and offline review of PMGR sync_state power-off, ANS
+mailbox/SART side effects and the idle path. See
+`native/boot/stage-b-2026-10-14-attempt14-result.md`. No retry or settings changes.
+
+## Historical Stage B blocker — no attributed GPIO/worker progress in attempt 13
 
 Boot032 controller including live GPIO exclusions and final DT PASS. Native
 Linux is observed; final photo P05/W00/H06/D0000/I000/B00/C0000, S unclear.

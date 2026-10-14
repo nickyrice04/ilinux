@@ -1432,3 +1432,13 @@ kernel's own stall detectors with panic output drawn without the workqueue,
 and load the GPIO driver after PID 1. These are proposals; M5 owns boot034.
 The m1n1 hypervisor needs m1n1 changes on t6050 and is deferred (study in
 `research/m1n1/`). No retry, settings or volume changes.
+
+## 2026-10-14 · Record attempt-14 native PID 1 and the silent reset; no retry
+
+Attempt 14 proves native diagnostic userspace and the boot032 GPIO repair on
+hardware, but the SoC resets about 5.6 s after PID 1 with no message. Record
+the observed times, panel decode and GPIO counts literally. Treat the reset
+trigger as unknown, with ranked hypotheses (PMGR sync_state power-off, ANS
+mailbox/SART, idle path). The next native test should change one variable and
+print genpd state and per-second heartbeats. Attempt consumed; no retry or
+settings changes before M5 review and fresh instructions.

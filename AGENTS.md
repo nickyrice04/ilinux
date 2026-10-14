@@ -86,12 +86,13 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1 milestone: boot033 / attempt 14 offline readiness PASS on handoff
-`b76ab6b`: archive before extraction, 13-file intake, 102 tests, controller
-hashes, Image-only delta and clean pin verified. Proxy running per human.
-Publish readiness, then one filmed RAM attempt and Macintosh HD return.
-Native/live NOT RUN at readiness. M1 boot034 proposals and hypervisor study:
-`coordination.md`, `research/m1n1/hv-linux-guest-feasibility-2026-10-14.md`.
+Latest M1 result: **attempt 14 reached native diagnostic PID 1** (3.152 s, one
+CPU, heartbeats at 3.23/8.23 s). The boot032 GPIO repair works: main cache
+221/216/5. The SoC then **silently reset at kernel ~8.77 s** and rebooted to
+Macintosh HD. 60-second liveness NOT reached; cause unknown; fresh policy checks
+NOT CHECKED. See `native/boot/stage-b-2026-10-14-attempt14-result.md`. M1 boot034
+proposals and hypervisor study: `coordination.md`,
+`research/m1n1/hv-linux-guest-feasibility-2026-10-14.md`.
 
 Boot033 / attempt 14 prepared after reviewing M1 attempt 13 (`9a045cf`).
 Attempt 13 has no attributed GPIO result or native PID 1; cause remains unknown.

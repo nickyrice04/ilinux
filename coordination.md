@@ -6,7 +6,40 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — boot033 / attempt 14 offline PASS, 2026-10-14
+### Current M1 result — attempt 14 reaches native PID 1, then silent SoC reset
+
+* One boot033 RAM attempt at readiness `994b62f`, M5 handoff `b76ab6b`.
+  **Controller exit 0, 10.74 s**; handoff 2026-10-14T19:50:04.394670Z. Target,
+  marker, no-secondaries, GPIO ADT, final hardware DT, DAPF layout/correction,
+  framebuffer descriptor and kboot reply PASS.
+* **Native diagnostic PID 1 reached for the first time.** `Run /init` at
+  3.152165 s; `PID 1 reached` at 3.166444 s. DT model `Apple MacBook Pro
+  (16-inch, M5 Max)`, MemTotal 132456096 kB, CPU online mask `0`.
+  `[diag] heartbeat 000/001 online_cpus=1` at 3.230083 and 8.233382 s.
+* **GPIO repair works on hardware.** `pinctrl@2881e4000`: cache 61/61/0, IRQ
+  handoff 61/7 masked=1, returned 0 after 103600 us. Main `pinctrl@29c000000`:
+  cache **221/216/5**, IRQ handoff 221/7 masked=0, returned 0 after 264934 us.
+  ASC mailbox probe returned 0 after 4570 us. Panel D 0052 decodes to
+  `mbox@419608000` and D 004C to `iommu@41dc50000` (SART); both use PMGR
+  `power-controller@140`.
+* Late init: `clk: Not disabling unused clocks`, `PM: genpd: Not disabling
+  unused power domains`, `of_platform_sync_state_init` returned 0 after 5017 us.
+* **Silent SoC reset at kernel ~8.77 s**, about 0.5 s into the second 5 s sleep.
+  The screen went to black within one video frame with no kernel, panic,
+  watchdog or reboot text. Apple logo about 3.4 s later, then macOS login at
+  3:50 PM; the user reports the default OS. **60-second liveness NOT REACHED.**
+  Cause unknown. m1n1 had disabled both watchdogs before handoff (on screen).
+* Media: `IMG_2669.mov`, 34.297 s at 30 fps, reviewed locally (AVFoundation
+  frames, brightness traces, upscaled crops). It stays in ignored
+  `build/native-intake/inbox/`; no still photo; review images deleted.
+* **Attempt 14 consumed.** Report: `native/boot/stage-b-2026-10-14-attempt14-result.md`.
+  M5 next: read-only return checks, then the reset trigger. Ranked hypotheses
+  in the report: PMGR power-off at sync_state despite `pd_ignore_unused`,
+  ANS mailbox/SART side effects, and the second idle period. Fresh policy/
+  default NOT CHECKED. No retry or settings changes.
+
+
+### Historical M1 readiness — boot033 / attempt 14 offline PASS, 2026-10-14
 
 * Pulled/read M5 handoff `b76ab6b`, the attempt-14 checklist and scheduler-RAM
   evidence. Archive **16,723,317 bytes**, SHA-256
