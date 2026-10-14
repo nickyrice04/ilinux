@@ -86,17 +86,16 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-13:
 
-Latest: Stage B attempt 2 never handed off to Linux. Boot021 lacked m1n1's
-required framebuffer placeholder. Job 022 reproduces this with the actual
-pinned C function and corrects only the Stage-B DT; boot022 is verified offline.
-Kernel/initramfs/installed m1n1 unchanged; the boot021 marker remains correct.
-M1 must intake boot022 before one reviewed attempt 3. The user's fresh read-only
-post-return JSON reports original Full/lab Permissive, both exit 0; reviewed,
-not independently rerun. Native correction NOT TESTED, Linux NOT RUN. Original root/build,
-FileVault/SIP/authenticated-root and staged m1n1 were independently rechecked.
-No volume/security/default/boot-object changes. Current instructions:
-`tools/m1n1-client/stage-b-instructions.md`; evidence:
-`virtualization/jobs/022-framebuffer-handoff/RESULTS.md`.
+Latest: M1 boot022 intake PASS after pulling `3c7eae1` (includes `bf79263`).
+Archive checked before extraction; offline package and 13-file receipt verified;
+31 launcher + 5 framebuffer + 4 pinned-ADT tests PASS. Only Stage-B DT differs
+from boot021; installed m1n1/boot021 marker and clean client pin unchanged.
+Policy prerequisite PASS from M5-reviewed user JSON: original Full/lab
+Permissive, both exit 0. Ready for one authorized attempt 3 after human lab boot
+and Running proxy confirmation. Attempt 3/Linux/current live checks NOT RUN;
+no USB opened during intake. No retries or boot-setting changes. Preserve
+previous evidence. See `coordination.md` and
+`tools/m1n1-client/stage-b-instructions.md` for the bounded test/return sequence.
 
 * Hardware fully inventoried. Native Linux is not boot-tested on this unit;
   t6050 boot/SMP, G17 graphics/display and idle/DVFS remain unresolved.

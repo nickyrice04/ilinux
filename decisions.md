@@ -970,3 +970,14 @@ boot022 intake is the remaining preparation step; after it passes, the human
 can start the already reviewed single attempt. Do not repeat the policy check
 or add another approval round trip for unchanged scope. No code or payload
 changes require tests to be rerun for this documentation update.
+
+## 2026-10-13 · Accept M1 boot022 intake; wait for human lab selection
+
+M1 independently verifies the Git-tracked archive before extraction, the new
+13-file receipt, source hashes/pin and 31+5+4 offline tests. Actual payload
+comparison confirms only the Stage-B DT differs; retain installed m1n1 and its
+boot021 marker. Existing M5-reviewed policy JSON satisfies the prerequisite.
+Confirm ready directly to the human and wait for Running proxy; one documented
+attempt 3 only, then screen milestones and Macintosh HD return. No USB opened
+at readiness; Linux/current live checks remain NOT RUN. Preserve both earlier
+attempts and all receipts; no retry, reinstall or boot-setting changes.

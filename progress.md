@@ -5,6 +5,35 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · M1: boot022 intake PASS; ready for authorized attempt 3
+
+* Pulled `3c7eae1` (descendant of `bf79263`) and read the current handoff.
+  Downloaded private boot022 to its own ignored directory; verified the
+  Git-tracked archive checksum **before extraction**, then offline launcher
+  verification and all **13 intake-file hashes/declared revision PASS**.
+* Archive (16,717,590 bytes):
+  `b59db87bee50f5a2b57f65ea54e9ecd9fc07d410251bb38175001ac056ee6862`.
+  Intake manifest:
+  `862391dd99ee93d07c196e502196cefc869b2549274d6139d781f564b4bc50a0`.
+  New receipt: ignored `build/native-intake/receipts/boot022.json`.
+* **31 launcher + 5 framebuffer + 4 actual pinned-ADT tests PASS** locally,
+  all offline. Reran ADT cases because the changed FDT gate/test fixture is
+  in that path. Prior 20 USB tests remain applicable to unchanged selector/
+  client. M5's C/serializer/intake tests are separate reported evidence.
+* Reviewed source hashes match the checklist. Clean client stays pinned at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`. Compared actual package files:
+  only the Stage-B DT differs; kernel/initramfs/m1n1 and other payloads match
+  boot021. The installed **boot021 m1n1 marker is correct**; no reinstall.
+* M5 policy prerequisite is already PASS per `3c7eae1`: user-supplied original
+  Full/lab Permissive JSON, both exit 0, reviewed by M5. No duplicate check.
+* Separate ignored `boot022-stage-b-attempt3.json`/`.md` evidence prepared;
+  earlier receipts and attempts preserved. **Ready for the authorized Stage B
+  attempt 3**, after the human selects the existing lab and reports proxy ready.
+* **Attempt 3/Linux NOT RUN; current live checks NOT RUN.** No USB opened,
+  settings changed or target commands sent during intake. One invocation only,
+  then observe kernel/PID 1/online_cpus=1/60-second liveness within the documented
+  limits and return to Macintosh HD. No retries or boot-setting changes.
+
 ## 2026-10-13 · Agent B: post-attempt-2 policy check received and accepted
 
 * User supplied the requested read-only helper JSON: original **Full**, lab

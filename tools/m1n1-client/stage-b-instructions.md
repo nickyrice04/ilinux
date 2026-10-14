@@ -14,7 +14,7 @@ permit repeated attempts or changed boot settings. Original Macintosh HD stays
 at Full Security. No volume, security, default-startup or boot-object changes;
 no m1n1 reinstall, SMP start, storage enablement or installation.
 
-**M5 offline work: complete. M1 boot022 intake: pending. Post-attempt-2 policy
+**M5 offline work: complete. M1 boot022 intake: PASS. Post-attempt-2 policy
 check: PASS (user-supplied JSON, original Full/lab Permissive, both exit 0).
 Attempt 3: NOT RUN.** Do intake while M5 is still in macOS so download/testing
 does not waste a restart. Once intake passes, M1 can confirm ready directly
@@ -27,6 +27,12 @@ startup and installed boot object were not independently queried. The fresh
 post-return policy JSON was supplied by the user and reviewed by M5; the
 privileged query was not independently rerun. Do not request it again before
 this attempt unless the relevant state changes.
+
+M1 intake completed after pulling `3c7eae1`: archive checked before extraction,
+offline package/13-file receipt PASS, 31 launcher + 5 framebuffer + 4 pinned-ADT
+cases PASS. Receipt retained separately; source hashes and clean client pin
+match. Ready for the authorized attempt 3; USB/current live checks NOT RUN.
+Do not redownload or overwrite the verified package/receipt below.
 
 ## M1 preparation — offline only
 
