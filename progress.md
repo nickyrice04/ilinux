@@ -5,6 +5,42 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: attempt 12 GPIO cache checkpoint; macOS return PASS
+
+* One boot031 RAM attempt at readiness `83f0f20`, reviewed M5 handoff `cd9ac3f`.
+  **Controller exit 0, 10.545 s**; UTC 16:19:37.850798–16:19:48.396252,
+  handoff 16:19:48.168614. Boot021 marker, final hardware DT, both DAPF
+  checks/96-byte correction/readback, 16-byte framebuffer descriptor/readback
+  and kboot reply PASS. USB closed; no retry/reconnect/settings changes.
+* Reviewed **40.163333-second video** and detailed **IMG_2664.jpeg**. Native Linux
+  reports **J716c/t6050 EL2 cpus=1**, timer **PASS/25 ticks**, phys=1/virt=7,
+  irq_masked=0/fiq_masked=0, pending=1/strip=1/display=6 and printed phases
+  **1→10→11→12→13→2→3→4→5**. Four panel rows visibly render.
+* Final literal **P:05 S:09 / W:04 H:02 / D:0059 / B:73 C:0059**, at video
+  25/30/40.013333 s and photo. Offline decode: **/soc/pinctrl@29c000000**,
+  **GPIO bounded register-cache initialization**. This narrows the boundary
+  beyond prior B63; no exact blocked instruction/register/cause established.
+* Earlier **/soc/pinctrl@2881e4000** reports **pins=61 parents=7 masked=1**
+  for t6050 IRQ handoff, then **returned 0 after 1918983 usecs**, retry 1 end.
+  Main-controller return/counts/errors NOT OBSERVED. First GPIO success does
+  not establish all GPIO/peripheral support or validate the proposed hang cause.
+* Watchdog 1: phase5/worker4/device1/**ticks=1285**; scheduler7/selections1337/
+  prev10/next12/current12/**kworker/u4:0**, events_power_efficient. Photo provides
+  14 symbolic frames/offsets through timer softirq/IRQ exit. Later device2/
+  **ticks=2565**, selections2620/prev10/next38/current38/**kworker/u4:1**.
+  Lower stack/prefixes obscured; first watchdog stack is not a proven B73 stack.
+* **PID 1/userspace online_cpus=1/60-second liveness NOT OBSERVED**; no explicit
+  panic seen. Clip sampled at 0/5/10/15/18/20/22/25/30/40.013333 s; no 60/90s
+  or full 120s coverage. Photo adds detail, not elapsed coverage. Early S digits
+  remain unconfirmed. Human confirms **Macintosh HD desktop return PASS**;
+  later screen changes not separately reported, fresh policy/default NOT CHECKED.
+* **Attempt 12 consumed.** Stop/return instructed at **12:21:48 p.m. Eastern**.
+  Detailed evidence: `native/boot/stage-b-2026-10-14-attempt12-result.md`.
+  M5 next: read-only return checks and offline analysis of the exact main-GPIO
+  cache path. Preserve installed boot021, client pin, gates and fixed arguments.
+  No new live attempt until updated instructions and human start.
+
+
 ## 2026-10-14 · M1: boot031 attempt 12 offline readiness PASS
 
 * Pulled/read M5 handoff `cd9ac3f`, Stage-B attempt-12 instructions and GPIO

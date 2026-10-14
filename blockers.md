@@ -3,22 +3,21 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — native GPIO handoff validation pending
+## Current Stage B blocker — main GPIO register-cache initialization
 
-Attempt 11 identifies main pinctrl@29c000000 at platform callback B63, while
-NUB pinctrl returned 0. Native PID 1/60s liveness are unobserved; no exact blocked
-PC or measured IRQ storm. Boot031 repairs confirmed static GPIO cache/IRQ
-handover gaps on t6050 and adds callback stages. Full build, sanitizer/controller/
-intake and generic VM liveness PASS; **native attempt 12 NOT RUN**. It must show
-GPIO return or an explicit error, then userspace. A GPIO error with userspace
-is partial boot progress, not working peripherals.
+Attempt 12 boot031 controller PASS and native Linux diagnostics observed. Final
+**P05 S09 W04 H02 D0059 B73 C0059** identifies `/soc/pinctrl@29c000000` at bounded
+register-cache initialization. First `/soc/pinctrl@2881e4000` reports GPIO IRQ
+handoff **pins=61/parents=7/masked=1**, return 0. Main controller completion/error
+and diagnostic PID 1/60s liveness NOT OBSERVED. Exact blocked PC/register/cause
+remain unknown; no measured IRQ storm or general peripheral success.
 
-Fresh original Full/lab Permissive JSON and independent original macOS return
-checks PASS. M1 boot031 archive/intake/offline launcher, 90 cases, source/controller hashes
-and clean pin PASS; readiness published before one human-started filmed RAM
-attempt under the current checklist. Preserve installed setup and all gates;
-no new skip or automatic retry. REA findings and limits are in
-`kernel/experiments/gpio-handoff/README.md`.
+Human confirms Macintosh HD return; fresh attempt-12 policy/default NOT CHECKED.
+M5 next: read-only return review and targeted offline inspection of cache reads.
+Video/photo reviewed with explicit 40.163333s coverage limit; report:
+`native/boot/stage-b-2026-10-14-attempt12-result.md`. Attempt consumed, no retries,
+new blacklist, setup repetition or settings changes. Preserve installed boot021,
+clean client pin and gates. Native userspace still gates Linux control/Omarchy.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

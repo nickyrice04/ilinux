@@ -1346,3 +1346,18 @@ Publish readiness, then the reviewed launcher once. Record GPIO counts/errors
 and public boundary values as observed, without treating an earlier boundary as
 a proven fault. Stop at the existing bound and return. Installed boot021, gates
 and fixed arguments remain; no retries, new blacklist or settings changes.
+
+## 2026-10-14 · Narrow attempt 12 follow-up to the observed GPIO cache boundary
+
+Boot031's first pin controller reports IRQ handoff 61/7/1 and successful return.
+The final main-controller marker advances from prior B63 to B73 bounded cache
+initialization. Investigate that exact operation offline; the marker is not a
+blocked PC, proof of an IRQ storm, or evidence of an arbitrary driver to skip.
+Preserve watchdog task context: the first dump is PID12/kworker/u4:0/device1,
+while later device2 scheduling names PID38/kworker/u4:1. Do not assign the first
+stack to the final main-controller cache operation.
+
+Video/photo are reviewed, with literal final lanes and actual GPIO counts/return
+recorded; the 40.163333s clip cannot establish full 120s coverage. Native userspace
+and 60s liveness remain unobserved. Human confirms Macintosh HD return; M5's
+fresh read-only policy/default review is pending. No retry/settings changes.

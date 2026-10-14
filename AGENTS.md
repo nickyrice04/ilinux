@@ -86,13 +86,15 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1 milestone: boot031 / attempt 12 offline readiness PASS on M5 handoff
-`cd9ac3f`: archive-before-extraction, 13-file intake, 90 cases, reviewed hashes
-and clean pinned client. Human confirms proxy and recording. Publish readiness,
-then one documented RAM launch and bounded return. Native/live NOT RUN at this
-readiness milestone; no retry, reinstall or settings changes.
+Latest M1 result: **attempt 12 consumed**, controller PASS (10.545 s), Macintosh
+HD return human-confirmed. Video/photo final **P05 S09 W04 H02 D0059 B73 C0059**
+identifies main pinctrl bounded register-cache initialization. First pinctrl
+reports IRQ handoff 61/7/1 and return 0. PID 1/userspace liveness NOT OBSERVED;
+exact fault unknown. M5 read-only return checks and targeted offline analysis
+next. Fresh policy/default NOT CHECKED; no retry or settings changes. See
+`native/boot/stage-b-2026-10-14-attempt12-result.md`.
 
-Current: **boot031 / attempt 12 prepared**, following M1 attempt 11 (`f35efa5`).
+Historical M5 preparation: **boot031 / attempt 12 prepared**, following M1 attempt 11 (`f35efa5`).
 Final D=C=0059/B63 identifies main pinctrl callback; exact cause unresolved.
 Boot031 adds t6050 GPIO geometry/cache bounds and pre-parent IRQ handover with
 readback/locked-pin errors, plus 17 probe checkpoints. REA/independent bytes,

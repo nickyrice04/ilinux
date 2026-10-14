@@ -1,5 +1,13 @@
 # Stage B — attempt 12 / boot031 GPIO handoff repair
 
+**Attempt 12 consumed (M1 result, 2026-10-14):** readiness `83f0f20`, one
+controller PASS (10.545 s), final P05/S09/W04/H02/D0059/B73/C0059. First GPIO
+IRQ handoff 61/7/1 and return 0 observed; main-controller cache boundary remains.
+Diagnostic PID 1/60s liveness NOT OBSERVED. Macintosh HD return human-confirmed;
+fresh policies/default NOT CHECKED. See
+`native/boot/stage-b-2026-10-14-attempt12-result.md`. **Do not replay the launch
+below.** The following is the retained reviewed procedure, not a new attempt.
+
 **M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`, preserving
 local work and stopping on divergence. Read `coordination.md` and this file.
 Attempt 11 is consumed: final **P05 S09 W04 H02 D0059 B63 C0059** identifies
