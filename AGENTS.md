@@ -86,6 +86,23 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
+Latest M5 result: Boot034 / attempt 15 prepared after reviewing M1 attempt 14 (`a4269bb`) and the
+hv002 chainload stop (`fd473b1`). The hypervisor is blocked at the chainload, so
+this attempt does not use it. Exact source shows genpd **sync_state powers off
+every unclaimed boot-on PMGR domain without honoring `pd_ignore_unused`** (the
+flag guards only the later sweep that attempt 14 printed). In the Stage-B DT,
+152 of 188 domains are unclaimed and not always-on; `of_platform_sync_state_init`
+did 5 ms of work 5.6 s before the reset. Boot034 makes sync_state honor the flag,
+logs every real power-off, and after ≈ 20 s kernel time releases the unclaimed
+domains one per 500 ms, naming each first, so any reset is attributable.
+Only Image changes. Exact-source ASan/UBSan model (5 mutations caught), VM build
+with identical config and ELF/Image roundtrip, linked-code review and exact-image
+generic one-CPU PID1/60s liveness PASS. **Native boot034/live checks NOT RUN.**
+No launcher or reviewed-digest change. M1 next: `tools/m1n1-client/stage-b-instructions.md`,
+offline readiness, one human-started filmed attempt 15 (keep filming past 60 s:
+stop on reset, `ladder complete` or 120 s) and return to Macintosh HD.
+Evidence/code: `kernel/experiments/genpd-sync-state/`.
+
 Latest M1 HV result: hv002 census v2 **PASS**, but Session 2 **stopped at the
 chainload**: hv002 never came back on USB (M5 frozen at the restored Apple logo).
 Hypervisor/guest NOT STARTED; cause unknown. See

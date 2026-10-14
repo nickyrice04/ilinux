@@ -1,12 +1,13 @@
-# Stage B — attempt 14 / boot033 scheduler diagnostics in RAM
+# Stage B — attempt 15 / boot034 genpd sync_state experiment
 
 **M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`, preserving
 local work and stopping on divergence. Read `coordination.md` and this file.
-Attempt 13 is consumed: controller/GPIO gates PASS, final photo
-**P05/W00/H06/D0000/I000/B00/C0000**, S unclear. No attributed GPIO result or
-PID 1 was observed. I000 is not evidence of a pin-0 read.
-See `native/boot/stage-b-2026-10-14-attempt13-result.md`.
-**Native attempt 14 / boot033 / live checks NOT RUN at this handoff.**
+Attempt 14 is consumed: **first native diagnostic PID 1** (3.15 s, one CPU,
+heartbeats 3.23/8.23 s), then a **silent SoC reset at kernel ≈ 8.77 s**.
+See `native/boot/stage-b-2026-10-14-attempt14-result.md`.
+The hypervisor path is blocked at the chainload (`native/hv/hv002-session2-2026-10-14-result.md`);
+this attempt does not use it.
+**Native attempt 15 / boot034 / live checks NOT RUN at this handoff.**
 
 **Continue the existing installation.** Installed boot021 m1n1 and clean client
 pin remain unchanged. Do not repeat provisioning, Stage A, Recovery, macOS
@@ -15,32 +16,35 @@ Macintosh HD at Full Security and as default. No volume/security changes.
 
 ## What changed and why
 
-Our scheduler checkpoints repaint the entire diagnostic panel in sensitive
-scheduler/context-switch paths. Boot033 removes those calls and retains phase,
-PID and selection counters in RAM. The existing bounded five-second watchdog
-samples S before H and before printk. **S is now a sampled last checkpoint, not
-an immediately painted boundary.** Zero before the first watchdog or a stable
-S afterwards does not prove a stall; the six-sample watchdog remains bounded.
-Other marks repaint the saved S value without resampling it. P/W/H/D/I/B/C keep
-their meanings. This repairs confirmed instrumentation overhead; whether that
-explains native progress is a hypothesis, not a successful hardware fix yet.
+Exact source (`drivers/pmdomain/core.c`) shows that genpd **sync_state powers
+off every unclaimed boot-on PMGR domain and does not honor `pd_ignore_unused`**.
+That flag only guards the later sweep, whose message attempt 14 printed. In the
+Stage-B DT, **152 of 188** domains are neither always-on nor claimed by an
+enabled device, and `of_platform_sync_state_init` did **5 ms** of work at
+3.15 s. The reset came ≈ 5.6 s later. Boot034 tests that one variable:
 
-Only **Image** changes among payloads. Retain boot032's reserved pins
-**5,6,7,112,141**, sparse permitted cache defaults, guarded GPIO/IRQ paths,
-live-ADT/effective-DT checks, indexed diagnostics and all 286 D/C node IDs.
-No driver bypass or extra initcall skip is added. DT/config/initramfs/m1n1,
-fixed arguments, one CPU and DAPF/framebuffer corrections remain unchanged.
+1. **Fix:** both sync_state paths return early under `pd_ignore_unused`,
+   which the cmdline already sets. Linux powers off nothing at 3.15 s.
+2. **Trace:** every real genpd power-off logs
+   `PM: ilinux-genpd: power off NAME` before the PMGR write.
+3. **Release ladder:** 17 s after `late_initcall` (≈ **20 s kernel time**),
+   release the remaining unclaimed boot-on domains **one every 500 ms**, each
+   logged first as `ilinux-genpd: ladder N: release NAME`, then
+   `ladder complete: N domains released` (≈ 76 s later, ≈ 96 s kernel).
 
-Full Image/ELF roundtrip and actual-hook ASan/UBSan regression PASS: 30,000 new
-checkpoints cause zero renderer calls while preserving state, compared with
-10,000 renderer calls from 10,000 old checkpoints. Linked code has 14 instructions
-and zero calls, verified against packaged Image. 102 controller cases,
-13-file intake, 13 intake-adversarial and 8 evidence cases PASS. Exact Image/
-initramfs reaches PID 1, one CPU and 60s liveness in an isolated diskless,
-networkless VM; this does not validate native GPIO/MMIO/interrupts or efficiency.
-See `kernel/experiments/scheduler-ram-only/README.md` and `validation.json`.
-Own source/linked disassembly answered this question; no new proprietary REA
-analysis was needed. Prior GPIO REA evidence and limitations remain intact.
+Only **Image** changes (+65,536 bytes). DT, initramfs, m1n1, config, fixed
+arguments, one CPU, GPIO exclusions and all hardware gates are byte-identical
+to boot033. Nothing in the launcher changed, and its reviewed digests below are
+the same.
+
+Offline: the exact ladder under ASan/UBSan with 5 mutations caught; patch
+applied to the real `core.c`; VM build with identical config and ELF/Image
+roundtrip; disassembly shows both sync_state paths testing the flag first. The
+exact Image/initramfs reaches PID 1, one CPU and 60 s liveness in an isolated
+diskless, networkless VM (60.19 kernel seconds); there the ladder arms and
+finishes with 0 domains. This does not establish any native effect.
+See `kernel/experiments/genpd-sync-state/README.md` for evidence and limits.
+No proprietary analysis was used or needed for this question.
 
 ## Return protection prerequisite — confirmed after attempt 13
 
@@ -53,29 +57,29 @@ Do not repeat the same check or add an M1↔M5 approval loop without new evidenc
 
 ## Offline intake before the human restarts
 
-Download only private `native-j716c-boot033`; verify the archive against current
+Download only private `native-j716c-boot034`; verify the archive against current
 Git **before extraction**. Preserve every earlier package/receipt/result. Stop
 on a mismatch. The following performs no live USB action.
 
 ```sh
 (
 set -e
-mkdir -p build/native-boot033-download
-if [ ! -f build/native-boot033-download/ilinux-j716c-boot033.tar.gz ]; then
-  gh release download native-j716c-boot033 --repo nickyrice04/ilinux \
-    --pattern ilinux-j716c-boot033.tar.gz --dir build/native-boot033-download
+mkdir -p build/native-boot034-download
+if [ ! -f build/native-boot034-download/ilinux-j716c-boot034.tar.gz ]; then
+  gh release download native-j716c-boot034 --repo nickyrice04/ilinux \
+    --pattern ilinux-j716c-boot034.tar.gz --dir build/native-boot034-download
 fi
 (
-  cd build/native-boot033-download
+  cd build/native-boot034-download
   shasum -a 256 -c ../../native/boot/archive-sha256.txt
-  if [ ! -d ilinux-j716c-boot033 ]; then tar -xzf ilinux-j716c-boot033.tar.gz; fi
+  if [ ! -d ilinux-j716c-boot034 ]; then tar -xzf ilinux-j716c-boot034.tar.gz; fi
 )
 mkdir -p build/native-intake/receipts build/native-intake/results
 tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
-  build/native-boot033-download/ilinux-j716c-boot033 \
+  build/native-boot034-download/ilinux-j716c-boot034 \
   --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
-  > build/native-intake/receipts/boot033-attempt14.json
-python3 -I native/boot/launch.py --package build/native-boot033-download/ilinux-j716c-boot033
+  > build/native-intake/receipts/boot034-attempt15.json
+python3 -I native/boot/launch.py --package build/native-boot034-download/ilinux-j716c-boot034
 python3 -I native/boot/test_launcher.py
 python3 -I native/boot/test_gpio_guard.py
 python3 -I native/boot/test_entry_guard.py
@@ -92,14 +96,14 @@ Require **37 + 10 + 6 + 16 + 5 + 19 + 2 + 6 + 1 = 102 cases PASS**, package PASS
 13 receipt files and the clean client pin `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
 No kernel/REA setup on M1. The receipt verifies files, not live authorization.
 
-Archive **16,723,317 bytes**, SHA-256:
-`6cbf5d1396ddd2b5f79255e65c6c776f8122921b06327271e1102f7b7f0d55cd`.
-Image **44,534,272 bytes**, SHA-256:
-`250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15`.
+Archive **16,723,189 bytes**, SHA-256:
+`a856a9b8c6b7fdafeeb68da8dddbc9c82f7e9b5cddf1dc691512f63c0803f5ff`.
+Image **44,599,808 bytes**, SHA-256:
+`1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579`.
 Stage-B DT SHA-256:
 `4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce`.
 SHA256SUMS digest:
-`817035e6934111ed742398aec31be3f9b7cc9354e03254bd339fa1ea218f4d9b`.
+`a4e06c26ee8dad7acfc4defe754d8c1933ef1f3bafbc54fb03aeaad4566ad4ff`.
 Git manifests are authoritative; stop on disagreement.
 
 Reviewed controller digests (also record checked-out Git commit):
@@ -111,7 +115,7 @@ Reviewed controller digests (also record checked-out Git commit):
 * `native/boot/fdt.py`: `ee577a08bb48242e84dbc50cd1f40a8d1f47a4d4481ca6dd6503829f53615ad3`
 * `tools/m1n1-client/usb_identity.py`: `72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137`
 
-Prepare fresh ignored `boot033-stage-b-attempt14.json`/`.md` records with the
+Prepare fresh ignored `boot034-stage-b-attempt15.json`/`.md` records with the
 source/procedure/controller/payload/receipt hashes. Push sanitized readiness
 in `progress.md` and `coordination.md`, keeping native/live checks NOT RUN.
 Tell the human when ready. M1 readiness plus the human's start suffice; no
@@ -131,7 +135,7 @@ extra M5 review round trip for these unchanged verified instructions.
 
    ```sh
    tools/m1n1-client/run.sh native/boot/launch.py \
-     --package build/native-boot033-download/ilinux-j716c-boot033 \
+     --package build/native-boot034-download/ilinux-j716c-boot034 \
      --launch --device auto --confirm BOOT-J716C-RAM-DIAGNOSTIC
    ```
 
@@ -187,6 +191,19 @@ extra M5 review round trip for these unchanged verified instructions.
      sources before parent enable; B80–84 covers the retained IRQ handoff.
      Completion of a helper does not establish full peripheral support.
    * Diagnostic PID 1, `online_cpus=1`, and the 60-second liveness milestone.
+   * **genpd lines (boot034).** Copy literally, with their `printk.time` stamps:
+     * `PM: ilinux-genpd: sync_state keeps unused power domains on (pd_ignore_unused)`
+       (expected once, at ≈ 3.15 s);
+     * `PM: ilinux-genpd: ladder armed: first release in 17000 ms, then one
+       domain per 500 ms`;
+     * every `PM: ilinux-genpd: power off NAME` line, including any **before**
+       ≈ 20 s, which would be a runtime-PM power-off the fix does not cover;
+     * `ilinux-genpd: ladder N: release NAME` and `ladder complete: N domains
+       released`;
+     * **the last genpd line visible before the screen goes black**, with the
+       **time of the black frame** (video time − the heartbeat anchor). Attempt
+       14's reset followed its power-offs by ≈ 5.6 s, so report both the last
+       line and the release that preceded the black frame by ≈ 5.6 s.
 
    P order remains `01 → 0A → 0B → 0C → 0D → 02 ... 09`. P=05/07 marks the
    first/second work flush. W=04 precedes bus probing; W=05 follows its return.
@@ -212,7 +229,11 @@ extra M5 review round trip for these unchanged verified instructions.
    | W=05/07 or P=09 | Capture subsequent driver/initcall progress |
    | H changes / symbolic stack | Record time and actual frames; distinguish logging from worker progress |
    | Panel absent/unreadable | Report mapping text and visibility limit; no guessed values |
-   | PID 1 + one CPU + 60-second liveness | Diagnostic RAM userspace success; return, no install |
+   | Alive past ≈ 20 s kernel with the `keeps unused power domains on` line | **Linux domain power-off at sync_state was the trigger** (attempt 14 reset at 8.77 s). Keep watching the ladder. |
+| Reset before ≈ 20 s, no `power off` line | Not a Linux domain power-off. Report the last lines and time; M5 moves to ANS/SART/mailbox, then idle. |
+| Reset during the ladder | Culprit = the release ≈ 5.6 s before the black frame (±2 steps). Report that line and its neighbours. |
+| `ladder complete` and still alive | Powering off every unclaimed domain, one at a time, is **not** the trigger. Report the full count. |
+| PID 1 + one CPU + 60-second liveness | Diagnostic RAM userspace success; return, no install |
 
    Review the recording by pausing it **before publishing the result**. Include
    early progress and the final stopped screen; sample around 30/60/90 seconds
@@ -222,16 +243,17 @@ extra M5 review round trip for these unchanged verified instructions.
    If it remains unavailable, explicitly report that limitation. Avoid spending
    another restart with only an unreviewed recording and ambiguous last line.
 6. Set a visible timer/deadline immediately at handoff. Do not wait for media
-   transfer or review before stopping the target. Keep filming through the stop
-   criterion (up to 120 seconds); earlier 40-second clips missed the later window.
-   Stop on controller rejection/kernel panic, the 60-second userspace milestone,
-   or **120 seconds from handoff**, whichever applies first. Calculate/report
-   the deadline. The controller retains 180-second total/15-second transport
-   limits. No retry, extra blacklist, new cores/storage or settings change.
+   transfer or review before stopping the target. **Keep filming until the
+   target resets, `ladder complete` appears, or 120 seconds from handoff.
+   The 60-second milestone no longer ends the attempt:** the ladder runs from
+   ≈ 20 s to ≈ 96 s of kernel time. Also stop on controller rejection or
+   kernel panic. Calculate/report the deadline. The controller retains
+   180-second total/15-second transport limits. No retry, extra blacklist, new
+   cores/storage or settings change.
 7. Return: hold power to shut down if needed, hold power for startup options,
    choose **Macintosh HD → Continue**. Confirm the usual desktop return.
    Do not assert fresh policies until the next read-only check.
-8. Push sanitized attempt-14 report and progress/coordination updates. Separate
+8. Push sanitized attempt-15 report and progress/coordination updates. Separate
    controller, native kernel, strip/timer/scheduler, PID-1/liveness and return
    status. Preserve earlier reports; mark unobserved evidence honestly. Keep
    full media/raw data/proprietary binaries out of Git.
@@ -242,4 +264,4 @@ Do not restart installation. The immediate gate is stable native diagnostic
 userspace. Then M5 prepares Linux-side USB/input/control and a usable RAM root;
 the Linux-side agent can handle packages, configuration and desktop tests once
 that channel exists. GPU, SMP and efficient idle/DVFS need independent native
-validation. Boot033 alone cannot establish Omarchy or macOS performance parity.
+validation. Boot034 alone cannot establish Omarchy or macOS performance parity.

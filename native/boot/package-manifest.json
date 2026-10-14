@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot033",
+  "package": "ilinux-j716c-boot034",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
-  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036",
   "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
   "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
   "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
@@ -12,8 +12,8 @@
   "m1n1_dt_pointer_offset": 1140024,
   "files": {
     "Image": {
-      "size": 44534272,
-      "sha256": "250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15"
+      "size": 44599808,
+      "sha256": "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579"
     },
     "t6050-j716c.dtb": {
       "size": 61326,
@@ -60,5 +60,5 @@
       "sha256": "d7648113f762d0ee17624ea09e33faa44fc08aa4de1b81b14d834cb5779f2758"
     }
   },
-  "early_framebuffer_descriptor_offset": 35133328
+  "early_framebuffer_descriptor_offset": 35198864
 }

@@ -26,7 +26,8 @@ request to evade a tool's safety restrictions. If blocked, report the restrictio
 and continue with allowed source/observation work. More decompilation is useful
 only when it resolves a current engineering uncertainty.
 
-At this handoff attempt 13 did not observe an attributed GPIO probe or userspace.
-Boot033 removes full-panel rendering from scheduler hooks while retaining RAM
-state and sampling it from the watchdog. Keep boot032's five GPIO exclusions.
-Native attempt 14 remains NOT RUN until M1 readiness and the human's start.
+At this handoff attempt 14 reached native diagnostic PID 1 and then reset
+silently. Boot034 tests genpd sync_state as the trigger (Image only; the cmdline
+already carries `pd_ignore_unused`). Keep boot032's five GPIO exclusions.
+Native attempt 15 remains NOT RUN until M1 readiness and the human's start.
+The hypervisor track is separate and currently blocked at the chainload.

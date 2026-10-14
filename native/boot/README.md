@@ -1,30 +1,21 @@
-# J716c native handoff — attempt 14 / boot033
+# J716c native handoff — attempt 15 / boot034
 
 **M1: follow [the current Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).**
-Verify private boot033, publish readiness, then one filmed human-started RAM
-boot and Macintosh HD return. **Native attempt 14/live checks NOT RUN.**
+Verify private boot034, publish readiness, then one filmed human-started RAM
+boot and Macintosh HD return. **Native attempt 15/live checks NOT RUN.**
 Preserve installed boot021/current entry; no repeated setup or settings changes.
 
-[Attempt 13](stage-b-2026-10-14-attempt13-result.md) passed controller GPIO gates
-but showed no attributed GPIO operation or native userspace. [Boot033](../../kernel/experiments/scheduler-ram-only/README.md)
-removes full-panel rendering from scheduler checkpoints, retaining RAM state
-and watchdog-sampled S. This fixes instrumentation overhead; the native effect
-remains unproven. Boot032's five GPIO exclusions and all hardware gates remain.
+[Attempt 14](stage-b-2026-10-14-attempt14-result.md) reached native diagnostic
+PID 1, then reset silently. [Boot034](../../kernel/experiments/genpd-sync-state/README.md)
+makes genpd sync_state honor `pd_ignore_unused`, logs real power-offs and releases
+unclaimed domains one at a time after ≈ 20 s. Only Image changes; boot033's
+GPIO exclusions and all hardware gates remain. This tests one hypothesis; the
+native effect is unproven.
 
-Only Image changes. Full Image/ELF roundtrip, actual-hook sanitizer regression,
-102 controller cases, 13-file intake and 13+8 intake/evidence cases PASS. Linked
-hook has 14 instructions and no calls, verified against packaged Image.
-Exact-image one-CPU/4-GiB diskless/networkless VZ reaches PID 1 and 60s liveness
-at 60.192455 kernel seconds. This does not validate physical GPIO/IRQs or parity.
-User reports post-attempt-13 Full/Permissive; original-root/build/FileVault/SIP/
-staged-m1n1 read-only checks PASS. No fresh policy exit codes supplied, no settings
-changed, default/installed object/authenticated-root not rechecked.
-
-Private prerelease `native-j716c-boot033` carries the archive pinned by
+Private prerelease `native-j716c-boot034` carries the archive pinned by
 `archive-sha256.txt`, `intake-manifest-sha256.txt`, `package-manifest.json`.
-Prior manifests through boot032 remain. No Apple artifacts or raw data published.
+Prior manifests through boot033 remain. No Apple artifacts or raw data published.
 [Claude handoff](claude-workflow.md) explains roles and targeted REA workflow.
-Native userspace/control remain prerequisites for a Linux-side agent and Omarchy.
 
 Build foundation: kernel base `77cb8f24c2381a8abb7272d7bbdec548d6426a8a` plus
 t6050 patches 0001–0007, with job024's original instrumentation, job025's restricted AIC patch and

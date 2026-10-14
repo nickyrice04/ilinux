@@ -72,6 +72,49 @@ def manifest():
     return json.loads((HERE / "hv-manifest.json").read_text())
 
 
+def guest_manifest_for(directory):
+    """The repository manifest that matches this guest package, by name and content.
+
+    native/boot/package-manifest.json always describes the *newest* package, so a
+    guest from an earlier release (boot033) is checked against its retained
+    bootNNN-package-manifest.json instead. launch.py itself stays unchanged.
+    """
+    own = json.loads((directory / "package-manifest.json").read_text())
+    candidates = [BOOT / "package-manifest.json"] + sorted(BOOT.glob("boot*-package-manifest.json"))
+    for path in candidates:
+        repo = json.loads(path.read_text())
+        if repo.get("package") == own.get("package"):
+            if repo != own:
+                raise ValueError("package manifest differs from the repository's " + path.name)
+            return repo
+    raise ValueError("no repository manifest for package " + str(own.get("package")))
+
+
+def verify_guest_package(directory):
+    """launch.verify_package() with the matching manifest; same file and DT gates."""
+    manifest = guest_manifest_for(directory)
+    if manifest["m1n1_commit"] != launch.M1N1_COMMIT:
+        raise ValueError("unexpected m1n1 pin")
+    loaded = {}
+    for name, info in manifest["files"].items():
+        if Path(name).name != name:
+            raise ValueError("invalid package filename")
+        path = directory / name
+        if path.is_symlink() or not path.is_file() or path.stat().st_size != info["size"]:
+            raise ValueError("missing file or size mismatch: " + name)
+        data = path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != info["sha256"]:
+            raise ValueError("checksum mismatch: " + name)
+        loaded[name] = data
+    image = loaded["Image"]
+    if image[56:60] != b"ARM\x64" or len(image) < 64:
+        raise ValueError("not an uncompressed ARM64 Image")
+    check_stage_b(loaded["t6050-j716c-stage-b.dtb"])
+    dapf_guard.verify_image(loaded["m1n1.bin"])
+    entry_guard.descriptor_offset(image)
+    return manifest, loaded
+
+
 def stub(entry):
     return STUB + struct.pack("<Q", entry)
 
@@ -520,7 +563,7 @@ def main(argv=None):
         parser.error("live launch requires --device and --confirm " + CONFIRM)
     if not args.launch and (args.device is not None or args.confirm):
         parser.error("offline mode does not accept device/confirmation arguments")
-    _, files = launch.verify_package(args.package)
+    _, files = verify_guest_package(args.package)
     m, hv_files = verify_hv_package(args.hv_package, files["Image"])
     print("Package PASS: boot033 guest and %s m1n1 match their manifests."
           % m["hv_version_marker"].rsplit("-", 1)[-1])

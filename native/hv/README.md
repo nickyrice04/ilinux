@@ -107,7 +107,7 @@ benchmark under the HV.
 
 ## Validation
 
-* `python3 -I native/hv/test_hv_launch.py`: **33 PASS** (also via
+* `python3 -I native/hv/test_hv_launch.py`: **34 PASS** (also via
   `python3 -m unittest`). Covers:
   * the timer model above;
   * census v2 rules: set FIQ enables pass; missing ECV or a trapped
@@ -118,6 +118,12 @@ benchmark under the HV.
     `System.map`, flags, CPU_START tracer, reconnect, chainload, gate order,
     package tamper/offsets, vUART.
 * Pure `native/boot` suites PASS; reviewed boot files unchanged.
+* After boot034, `native/boot/package-manifest.json` describes the newest
+  package, so the launcher now selects the repository manifest that matches
+  the guest package's own name and contents (`boot033-package-manifest.json`
+  for the boot033 guest). `launch.py` and its reviewed digest are unchanged.
+* Chainload analysis and the planned hardening (hv003):
+  `hv002-chainload-analysis-2026-10-14.md`.
 * **Not verified on M5:** M1 client-venv imports (M1 readiness).
 
 ## Known risks / unknowns
@@ -142,11 +148,11 @@ benchmark under the HV.
 |---|---|
 | `0001-ilinux-hv-t6050-hv002.patch` | `ecde6b2b9342c91d55b0254217bd940adde234837d23927dee381eea3ad9b11e` |
 | `hv-manifest.json` | `89e7112da29c89e36c104761d27d8825dffbfad80803284ee96dcddeba6c8cdd` |
-| `hv_launch.py` | `652df4eeffd756959b725fa67c709d42a1f58034c92d6dff0bfd17abec010cc5` |
+| `hv_launch.py` | `b4b3656e7a6bbd88f20fc00a22632ec66e5778054c320ad2514d76bd405d7584` |
 | `hv_regs.py` | `3545bfcaa17b8187be65a2051c36afadcdc384906174f425884a4f8330bc1456` |
 | `census.py` | `3a7f9f7dd320ecb12f19fca804a641e82bfdbfb3334660290ebf571978f8a6bf` |
 | `vuart_log.py` | `08d4d6510f960a0b1d653ec80160ffa6ced359a7cea056b4f3c7d635cc4c9d6a` |
-| `test_hv_launch.py` | `6df1d9ea0878ca0b8414adc11f38546b313375b019879c050c47c43d14e8afda` |
+| `test_hv_launch.py` | `fa5c1360ae1535f58f88fafa006b02b962a16e1293010480d385a680c21d33f2` |
 | `test_timer_model.c` | `ad3bad419aef1ef2929ffadd74ef7f55390122ffcbb141f0cbd0356f2d5e4f3d` |
 | Release `native-j716c-hv002`, `ilinux-j716c-hv002.tar.gz` | `c79ffded48bebc580734918c1540fd589937d5440e2a385a65186c801f2c4254` |
 

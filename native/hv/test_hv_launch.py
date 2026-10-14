@@ -6,6 +6,7 @@ with python3 -m unittest from native/hv.
 import contextlib
 import hashlib
 import io
+import json
 from pathlib import Path
 import shutil
 import struct
@@ -479,6 +480,20 @@ class PackageTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()) as out:
             self.assertEqual(hv_launch.main(["--package", str(BOOT033), "--hv-package", str(HV002)]), 0)
         self.assertIn("OFFLINE ONLY", out.getvalue())
+
+    def test_guest_manifest_follows_package_name(self):
+        m = hv_launch.guest_manifest_for(BOOT033)
+        self.assertEqual(m["package"], "ilinux-j716c-boot033")
+        with tempfile.TemporaryDirectory() as d:
+            own = json.loads((BOOT033 / "package-manifest.json").read_text())
+            own["files"]["Image"]["size"] += 1
+            (Path(d) / "package-manifest.json").write_text(json.dumps(own))
+            with self.assertRaisesRegex(ValueError, "differs from the repository"):
+                hv_launch.guest_manifest_for(Path(d))
+            own["package"] = "ilinux-j716c-boot999"
+            (Path(d) / "package-manifest.json").write_text(json.dumps(own))
+            with self.assertRaisesRegex(ValueError, "no repository manifest"):
+                hv_launch.guest_manifest_for(Path(d))
 
     def test_tampered_hv_rejected(self):
         with tempfile.TemporaryDirectory() as d:

@@ -1442,3 +1442,14 @@ trigger as unknown, with ranked hypotheses (PMGR sync_state power-off, ANS
 mailbox/SART, idle path). The next native test should change one variable and
 print genpd state and per-second heartbeats. Attempt consumed; no retry or
 settings changes before M5 review and fresh instructions.
+
+## 2026-10-14 · Attack the reset trigger natively before more hypervisor work
+
+The hv002 session never got past the m1n1→m1n1 chainload, and the chainload is
+not on the critical path for the reset question. Exact source answers the first
+open attempt-14 hypothesis: genpd sync_state ignores `pd_ignore_unused` and
+releases every unclaimed boot-on domain (152 of 188 here), which matches the one
+5 ms late-init step and the 5.6 s delay. Test that single variable on the proven
+native path (Image only), with a bounded one-domain-per-500 ms ladder after a
+long stable window so a reset still names its domain. Do not claim the cause
+until the native run; keep the hypervisor work as a parallel track.

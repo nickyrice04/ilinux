@@ -3,6 +3,15 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
+## Current Stage B blocker — silent SoC reset ≈ 5.6 s after sync_state (attempt 14)
+
+Attempt 14 reached native diagnostic PID 1 and reset silently at kernel ≈ 8.77 s.
+Boot034 (attempt 15, **NOT RUN**) tests whether genpd sync_state powering off the
+152 unclaimed boot-on PMGR domains is the trigger. The hypervisor route is blocked
+at the m1n1→m1n1 chainload (hv002 session 2); see
+`native/hv/hv002-chainload-analysis-2026-10-14.md`. Neither establishes native
+Linux, SMP, graphics or efficiency.
+
 ## Current Stage B blocker — silent SoC reset ~5.6 s after native PID 1 (attempt 14)
 
 Boot033 reaches native diagnostic PID 1 (3.152 s) with one CPU and two

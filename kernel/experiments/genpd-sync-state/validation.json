@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-14",
+  "target": "Mac17,6 / J716c / t6050",
+  "package": "ilinux-j716c-boot034",
+  "native_attempt": 15,
+  "native_tested": false,
+  "consumed_report": "native/boot/stage-b-2026-10-14-attempt14-result.md",
+  "question": "Does Linux powering off PMGR domains at genpd sync_state trigger the attempt-14 silent reset?",
+  "Image": {
+    "size": 44599808,
+    "sha256": "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579"
+  },
+  "archive": {
+    "size": 16723189,
+    "sha256": "a856a9b8c6b7fdafeeb68da8dddbc9c82f7e9b5cddf1dc691512f63c0803f5ff"
+  },
+  "intake_manifest_sha256": "a4e06c26ee8dad7acfc4defe754d8c1933ef1f3bafbc54fb03aeaad4566ad4ff",
+  "changed_payloads": [
+    "Image"
+  ],
+  "config": "identical to boot033; 16 KiB pages",
+  "patch": {
+    "file": "drivers/pmdomain/core.c",
+    "digest_gated": true,
+    "ladder_start_ms": 17000,
+    "ladder_step_ms": 500
+  },
+  "domain_audit": {
+    "pwrstate_nodes": 188,
+    "always_on": 34,
+    "claimed_by_enabled_device": 2,
+    "unclaimed": 152,
+    "unclaimed_notify_pmp": 27,
+    "adt_on_flag_set": 0
+  },
+  "offline": {
+    "model_tests": 5,
+    "mutations_caught": 5,
+    "vm_job": "virtualization/jobs/036-genpd-sync-state",
+    "apply_against_boot033_core_c": "PASS",
+    "build_seconds": 36,
+    "ELF_Image_roundtrip": "PASS",
+    "config_identical": true,
+    "linked_symbols": [
+      "of_genpd_sync_state",
+      "genpd_provider_sync_state",
+      "ilinux_genpd_ladder_fn",
+      "ilinux_genpd_ladder_init"
+    ]
+  },
+  "generic_vm": {
+    "status": "PASS",
+    "exact_packaged_Image_initramfs": true,
+    "cpus": 1,
+    "memory_GiB": 4,
+    "disk": false,
+    "network": false,
+    "PID1": true,
+    "liveness_kernel_seconds": 60.192622,
+    "ladder_armed": true,
+    "ladder_complete_domains": 0,
+    "power_off_lines": 0,
+    "elapsed_wall_seconds": 60.376,
+    "log": "build/native-boot034/generic-vm.log"
+  },
+  "limits": [
+    "VM has no PMGR: it validates code paths, not the native effect.",
+    "Culprit attribution window is about +-2 ladder steps if the firmware delay is not fixed.",
+    "Diagnostic build; not a final power configuration. No parity claim.",
+    "Diagnostic init still has no shell, SSH, network or resident agent."
+  ]
+}
