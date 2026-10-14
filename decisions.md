@@ -1336,3 +1336,13 @@ human start authorize one filmed attempt 12 under the unchanged stop/return
 bounds; no extra approval round trip or repeated setup. Record GPIO errors
 separately from userspace success. Native PID 1/liveness gates Linux control,
 input and the configuration-agent Omarchy work; efficient SMP/GPU remain later.
+
+## 2026-10-14 · Accept boot031 intake and bound attempt 12 to one filmed RAM launch
+
+M1 independently verifies the archive before safe extraction, all 13 files,
+90 offline cases, source/controller hashes and clean client pin. Human confirms
+proxy running and recording; M5's return/protection prerequisite already PASS.
+Publish readiness, then the reviewed launcher once. Record GPIO counts/errors
+and public boundary values as observed, without treating an earlier boundary as
+a proven fault. Stop at the existing bound and return. Installed boot021, gates
+and fixed arguments remain; no retries, new blacklist or settings changes.

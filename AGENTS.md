@@ -86,6 +86,12 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
+Latest M1 milestone: boot031 / attempt 12 offline readiness PASS on M5 handoff
+`cd9ac3f`: archive-before-extraction, 13-file intake, 90 cases, reviewed hashes
+and clean pinned client. Human confirms proxy and recording. Publish readiness,
+then one documented RAM launch and bounded return. Native/live NOT RUN at this
+readiness milestone; no retry, reinstall or settings changes.
+
 Current: **boot031 / attempt 12 prepared**, following M1 attempt 11 (`f35efa5`).
 Final D=C=0059/B63 identifies main pinctrl callback; exact cause unresolved.
 Boot031 adds t6050 GPIO geometry/cache bounds and pre-parent IRQ handover with

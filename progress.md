@@ -5,6 +5,33 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M1: boot031 attempt 12 offline readiness PASS
+
+* Pulled/read M5 handoff `cd9ac3f`, Stage-B attempt-12 instructions and GPIO
+  handoff evidence/validation. Archive **16,724,870 bytes**, SHA-256
+  `73ad67d17c78da9ef2eeec63122e52271e8a9521120add8d60588a6585ab9246`,
+  verified before extraction. **13 intake files**, offline launcher, reviewed
+  controller/source hashes and public decoder tables PASS. Image SHA-256
+  `09d3cc302da20ef53c41bec3324d702b249a729a55e3799b5676618034bff37d`.
+* **90 M1 offline tests PASS** (37+6+16+5+19+2+4+1), all exit 0; synthetic
+  transport only. Clean m1n1 client remains pinned at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`; installed boot021 unchanged.
+  Only Image/package manifest differ from retained boot030. System Python's
+  unsupported tar filter option stopped initial extraction; revalidated archive
+  and safe regular-file/directory paths, then extraction/intake succeeded.
+* Fresh ignored receipt `build/native-intake/receipts/boot031-attempt12.json`
+  and result `build/native-intake/results/boot031-stage-b-attempt12.json`/`.md`
+  retain source/procedure/controller/payload/receipt hashes. Sanitized wrapper
+  prepared with a zero-attempt guard and unchanged documented launcher arguments.
+* **Ready for the authorized Stage B attempt 12** after publication. Human
+  reports proxy running and recording. M5 post-attempt-11 return/protection
+  prerequisite already PASS; no repeat approval or setup. **Native boot031 and
+  live checks NOT RUN at readiness.** Generic VM results do not validate GPIO.
+* Next: one filmed RAM launch; capture literal four-row panel, GPIO stages and
+  actual counts/errors/returns, Linux PID 1/one CPU/60-second liveness. Stop on
+  rejection/panic, userspace liveness milestone or 120 seconds from handoff;
+  return to Macintosh HD. No retry/reconnect/reinstall/settings change.
+
 ## 2026-10-14 · M5: boot031 GPIO cache/IRQ handoff repair; attempt 12 prepared
 
 * Reviewed M1 `f35efa5`: attempt 11 controller PASS and final **P05 S09 W04 H02

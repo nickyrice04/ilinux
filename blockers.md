@@ -14,7 +14,8 @@ GPIO return or an explicit error, then userspace. A GPIO error with userspace
 is partial boot progress, not working peripherals.
 
 Fresh original Full/lab Permissive JSON and independent original macOS return
-checks PASS. M1 verifies boot031 and publishes readiness before one filmed RAM
+checks PASS. M1 boot031 archive/intake/offline launcher, 90 cases, source/controller hashes
+and clean pin PASS; readiness published before one human-started filmed RAM
 attempt under the current checklist. Preserve installed setup and all gates;
 no new skip or automatic retry. REA findings and limits are in
 `kernel/experiments/gpio-handoff/README.md`.
