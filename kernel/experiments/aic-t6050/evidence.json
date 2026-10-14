@@ -1,0 +1,52 @@
+{
+  "boot024_image_sha256": "6b683a2f52e769d1a23474b6807d009da8ad2e19d2168e62caba6cbbae240f7d",
+  "object_sha256": "99913e7dd3cf041271635cc902720617c5eb17ee7694db0b314d47334803c79a",
+  "vmlinux_sha256": "70cfefa993df92eba8d81ec50708377253d3db20e8245095f15ee31ae436ef53",
+  "fault": {
+    "symbol": "aic_init_cpu",
+    "offset": "0x9c",
+    "instruction_word": "d51df160",
+    "instruction": "msr s3_5_c15_c1_3, x0",
+    "register": "SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2"
+  },
+  "functions": [
+    {
+      "function": "aic_init_cpu",
+      "object_section": ".text",
+      "object_offset": "0x7b0",
+      "elf_symbol_bytes": 312,
+      "rea_body_bytes": 264,
+      "llvm_instruction_words": 78,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_03cac42abfa049e9468c09821b738b578b8922f2f79e47fb13528eec028adf75",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "rea_full_symbol_coverage": false
+    },
+    {
+      "function": "aic_handle_fiq",
+      "object_section": ".irqentry.text",
+      "object_offset": "0x160",
+      "elf_symbol_bytes": 380,
+      "rea_body_bytes": 380,
+      "llvm_instruction_words": 95,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_fd565e4161ee47f7c38a9a42597d99bb27d3091e316397ad8ff1aade4a1c2eb4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "rea_full_symbol_coverage": true
+    }
+  ],
+  "limits": [
+    "Object relocations and static-key runtime patching require source/linked-binary cross-checks.",
+    "Ghidra omits 48 bytes of aic_init_cpu: alternate static-key and post-WARN continuation paths. Its pseudocode is not a complete function model.",
+    "The write traps in the observed boot state; register absence or its restriction mechanism is not established.",
+    "No native boot025 or performance result is established by these static checks."
+  ]
+}

@@ -1,36 +1,39 @@
-# J716c native handoff — boot024 early-screen diagnostics
+# J716c native handoff — boot025 restricted AIC bring-up
 
 **M1: follow [the current Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).**
 It contains download/checksum/test commands, readiness reporting, the one-shot
 launch command, screen-recording requirements and the Macintosh HD return plan.
-Complete offline readiness before the human restarts. Native attempt 5 is
+Complete offline readiness before the human restarts. Native attempt 6 is
 **NOT RUN**. No installation, Recovery, volume/security/default changes or
 m1n1 reinstall are part of this handoff.
 
-Attempt 4 passed both DAPF checkpoints, all preflight gates and the kboot reply,
-with controller exit 0 in 10.458 seconds. The human saw a logo and fast text;
-Linux/PID 1/liveness were not observed. See the preserved
-[attempt-4 report](stage-b-2026-10-13-attempt4-result.md). REA on the exact
-installed bootloader confirms it clears its console before its final kernel
-jump, so the remaining logo alone cannot locate a failure.
+Attempt 5 reached readable native Linux, then an undefined instruction at
+`aic_init_cpu+0x9c`. Exact boot024 disassembly identifies the legacy guest-timer
+FIQ enable write. See the [attempt-5 report](stage-b-2026-10-13-attempt5-result.md)
+and [REA evidence, implementation and tests](../../kernel/experiments/aic-t6050/README.md).
 
-Boot024 adds original Linux entry rectangles and a flat-DT early framebuffer
-console. See [implementation/evidence/tests](../../kernel/experiments/early-framebuffer/README.md).
-Only `Image` differs from boot022. Every other payload, the installed boot021
-m1n1, and clean client pin remain unchanged. The controller retains its verified
-96-byte DAPF RAM correction and additionally fills a readback-checked 16-byte
-kernel RAM descriptor from the validated framebuffer. No kernel instructions
-or installed boot files are patched.
+Boot025 adds an exact t6050 AIC profile: preserve host timers/fast IPIs, mask
+unused guest timers through architectural registers, withhold unsupported
+legacy guest IRQ/KVM handling and avoid unvalidated legacy uncore accesses.
+Only `Image` differs from boot024. Every other payload and installed boot021
+m1n1/client pin remain unchanged. The early framebuffer console/rectangles,
+96-byte DAPF RAM correction, verified 16-byte framebuffer descriptor and all
+controller gates remain. No installed boot files are patched.
 
-The private prerelease `native-j716c-boot024` carries the 16.7 MB archive.
+The full Image build, 38 actual-driver scenarios with ASan/UBSan, 65 controller
+cases, 13-file intake and exact packaged generic VM PID-1/one-CPU/60-second
+liveness check pass. Native AIC/timer behavior remains unvalidated.
+
+The private prerelease `native-j716c-boot025` carries the 16.7 MB archive.
 `archive-sha256.txt`, `intake-manifest-sha256.txt` and `package-manifest.json`
 pin its bytes. Keep prior packages/receipts; `boot021-package-manifest.json`
-and `boot022-package-manifest.json` preserve payload baselines. Binaries are
+`boot022-package-manifest.json` and `boot024-package-manifest.json` preserve
+payload baselines. Binaries are
 release assets, never Git history. No Apple binary, raw device tree, serial,
 credential or personal file is in the package.
 
 Build foundation: kernel base `77cb8f24c2381a8abb7272d7bbdec548d6426a8a` plus
-t6050 patches 0001–0007, with job024's original instrumentation. GCC 16.1.1,
+t6050 patches 0001–0007, with job024's original instrumentation and job025's restricted AIC patch. GCC 16.1.1,
 Linux 7.1.9, original 16-KiB config. The separate post-link DockChannel proof
 patch remains absent. m1n1 is still the unmodified pin
 `57a9339ffd1876e78297b17d34dece8cff8fa1ba`, marker

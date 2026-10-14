@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot024",
+  "package": "ilinux-j716c-boot025",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
-  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025",
   "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
   "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
   "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
@@ -13,7 +13,7 @@
   "files": {
     "Image": {
       "size": 44468736,
-      "sha256": "6b683a2f52e769d1a23474b6807d009da8ad2e19d2168e62caba6cbbae240f7d"
+      "sha256": "8849de7c2b8e529ad5895707ed26f535993cc8ff85447c450b2c13240185a0ea"
     },
     "t6050-j716c.dtb": {
       "size": 61326,

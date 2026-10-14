@@ -3,18 +3,21 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — native early Linux observed; AIC initialization panic
+## Current Stage B blocker — native AIC write faults; boot025 awaits physical test
 
-Attempt 5 boot024 passed both DAPF checkpoints, the 16-byte framebuffer RAM
-descriptor, final gates and kboot reply (controller exit 0, 10.421 s). Human
-photo establishes native early Linux text, undefined-instruction Oops at
-`aic_init_cpu+0x9c/0x150`, and idle-task kernel panic. PID 1 / diagnostic
-online_cpus=1 / 60-second liveness NOT OBSERVED. Rectangle count unknown.
-Human confirms Macintosh HD return. No retry, reconnect or settings changes.
-M5 should perform read-only return checks and analyze the exact boot024 AIC
-code offline; do not infer the exact bad register/instruction from message
-proximity. See `native/boot/stage-b-2026-10-13-attempt5-result.md`.
-Attempt 5 is consumed; no additional live test is authorized.
+Attempt 5 established native Linux execution and a precise early AIC failure.
+Exact boot024 instruction at `aic_init_cpu+0x9c` is the legacy guest-timer enable
+write, not a fast-IPI write. The boot-state restriction mechanism is unknown.
+Boot025 implements a restricted t6050 path, validated with actual-driver tests,
+full Image build, controller/package checks and generic VM liveness. These do
+not validate M5 IRQ/timer delivery. **Native boot025 / attempt 6 NOT RUN.**
+
+M1 next performs offline intake/readiness, then one human-started filmed RAM
+boot under the current checklist. Keep installed m1n1 and all existing guards;
+no security, volume or default changes. Post-attempt-5 policy JSON passed
+original Full/lab Permissive. Evidence/limits: `kernel/experiments/aic-t6050/`.
+Remaining dependencies: diagnostic PID 1/liveness, usable native access,
+SMP/idle/DVFS, persistent environment and accelerated desktop/peripherals.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

@@ -84,17 +84,18 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-See `progress.md`. As of 2026-10-13:
+See `progress.md`. As of 2026-10-14:
 
-Latest: boot024 attempt 5 reached native early Linux with readable screen
-output, then undefined-instruction Oops at `aic_init_cpu+0x9c/0x150` and idle-task
-kernel panic. Controller exit 0 (10.421 s); both DAPF checkpoints, kernel RAM
-framebuffer descriptor and kboot reply PASS. PID 1/online_cpus=1/60-second
-liveness NOT OBSERVED. Human confirms Macintosh HD return. M5 next performs
-read-only return checks and matching-build AIC analysis offline. Attempt 5 is
-consumed: no new live attempt, reinstall or settings changes. Installed boot021
-m1n1/client pin unchanged. See `native/boot/stage-b-2026-10-13-attempt5-result.md`
-and `coordination.md`.
+Latest: attempt 5 reached native early Linux and panicked at the legacy guest-
+timer enable write in AIC CPU initialization. Boot025 provides a restricted
+t6050 AIC path; full build, 38 actual-driver scenarios, 65 controller tests,
+13-file intake and generic VM PID-1/one-CPU/60-second checks PASS. Native boot025
+and attempt 6 NOT RUN. M1 next verifies offline, publishes readiness, then the
+human starts one filmed RAM boot under `tools/m1n1-client/stage-b-instructions.md`.
+No m1n1 reinstall, settings changes or automatic retry. Post-attempt-5 policy
+JSON: original Full/lab Permissive. Evidence: `kernel/experiments/aic-t6050/`.
+Older bullets below retain historical milestone context; this summary and
+coordination.md govern the current test.
 
 * Hardware fully inventoried. Native early Linux execution is observed, but
   AIC initialization panics before diagnostic userspace. Full native boot/SMP,

@@ -1,0 +1,210 @@
+--- a/drivers/irqchip/irq-apple-aic.c
++++ b/drivers/irqchip/irq-apple-aic.c
+@@ -238,7 +238,7 @@
+ 	AIC_NR_FIQ
+ };
+ 
+-/* True if UNCORE/UNCORE2 and Sn_... IPI registers are present and used (A11+) */
++/* True if Sn_... IPI registers are present and used (A11+) */
+ static DEFINE_STATIC_KEY_TRUE(use_fast_ipi);
+ /* True if SYS_IMP_APL_IPI_RR_LOCAL_EL1 exists for local fast IPIs (M1+) */
+ static DEFINE_STATIC_KEY_TRUE(use_local_fast_ipi);
+@@ -260,6 +260,8 @@
+ 	/* Features */
+ 	bool fast_ipi;
+ 	bool local_fast_ipi;
++	bool guest_timer_fiq;
++	bool uncore_pmu;
+ };
+ 
+ static const struct aic_info aic1_info __initconst = {
+@@ -267,6 +269,7 @@
+ 
+ 	.event		= AIC_EVENT,
+ 	.target_cpu	= AIC_TARGET_CPU,
++	.guest_timer_fiq = true,
+ };
+ 
+ static const struct aic_info aic1_fipi_info __initconst = {
+@@ -276,6 +279,8 @@
+ 	.target_cpu	= AIC_TARGET_CPU,
+ 
+ 	.fast_ipi	= true,
++	.guest_timer_fiq = true,
++	.uncore_pmu	= true,
+ };
+ 
+ static const struct aic_info aic1_local_fipi_info __initconst = {
+@@ -286,6 +291,8 @@
+ 
+ 	.fast_ipi	= true,
+ 	.local_fast_ipi = true,
++	.guest_timer_fiq = true,
++	.uncore_pmu	= true,
+ };
+ 
+ static const struct aic_info aic2_info __initconst = {
+@@ -295,6 +302,8 @@
+ 
+ 	.fast_ipi	= true,
+ 	.local_fast_ipi = true,
++	.guest_timer_fiq = true,
++	.uncore_pmu	= true,
+ };
+ 
+ static const struct aic_info aic3_info __initconst = {
+@@ -304,9 +313,30 @@
+ 
+ 	.fast_ipi	= true,
+ 	.local_fast_ipi = true,
++	.guest_timer_fiq = true,
++	.uncore_pmu	= true,
++};
++
++/*
++ * t6050 single-CPU bring-up: the legacy guest-timer enable write faults in
++ * the observed EL2 boot state. Keep guest timers masked at their sources and
++ * do not expose guest IRQs/KVM until their routing is validated. The pinned
++ * m1n1 CPU table also leaves the M5 uncore interface unimplemented; do not
++ * infer that old uncore registers are usable just because fast IPIs are.
++ * This is a restricted bring-up profile, not full M5 virtualization support.
++ */
++static const struct aic_info aic3_t6050_info __initconst = {
++	.version	= 3,
++	.irq_cfg	= AIC3_IRQ_CFG,
++	.fast_ipi	= true,
++	.local_fast_ipi = true,
+ };
+ 
+ static const struct of_device_id aic_info_match[] = {
++	{
++		.compatible = "apple,t6050-aic3",
++		.data = &aic3_t6050_info,
++	},
+ 	{
+ 		.compatible = "apple,t8103-aic",
+ 		.data = &aic1_local_fipi_info,
+@@ -425,7 +455,7 @@
+ 	 * for them separately. It should however only trigger when NV is
+ 	 * in use, and be cleared when coming back from the handler.
+ 	 */
+-	if (is_kernel_in_hyp_mode() &&
++	if (is_kernel_in_hyp_mode() && aic_irqc->info.guest_timer_fiq &&
+ 	    (read_sysreg_s(SYS_ICH_HCR_EL2) & ICH_HCR_EL2_En) &&
+ 	    read_sysreg_s(SYS_ICH_MISR_EL2) != 0) {
+ 		u64 val;
+@@ -499,6 +529,9 @@
+ 
+ static void aic_fiq_set_mask(struct irq_data *d)
+ {
++	if (!aic_irqc->info.guest_timer_fiq)
++		return;
++
+ 	/* Only the guest timers have real mask bits, unfortunately. */
+ 	switch (aic_fiq_get_idx(d)) {
+ 	case AIC_TMR_EL02_PHYS:
+@@ -516,6 +549,9 @@
+ 
+ static void aic_fiq_clear_mask(struct irq_data *d)
+ {
++	if (!aic_irqc->info.guest_timer_fiq)
++		return;
++
+ 	switch (aic_fiq_get_idx(d)) {
+ 	case AIC_TMR_EL02_PHYS:
+ 		sysreg_clear_set_s(SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2, 0, VM_TMR_FIQ_ENABLE_P);
+@@ -583,7 +619,7 @@
+ 		generic_handle_domain_irq(aic_irqc->hw_domain,
+ 					  AIC_FIQ_HWIRQ(AIC_TMR_EL0_VIRT));
+ 
+-	if (is_kernel_in_hyp_mode()) {
++	if (is_kernel_in_hyp_mode() && aic_irqc->info.guest_timer_fiq) {
+ 		uint64_t enabled = read_sysreg_s(SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2);
+ 
+ 		if ((enabled & VM_TMR_FIQ_ENABLE_P) &&
+@@ -602,7 +638,7 @@
+ 		generic_handle_domain_irq(aic_irqc->hw_domain,
+ 					  AIC_FIQ_HWIRQ(AIC_CPU_PMU_P));
+ 
+-	if (static_branch_likely(&use_fast_ipi) &&
++	if (aic_irqc->info.uncore_pmu &&
+ 	    (FIELD_GET(UPMCR0_IMODE, read_sysreg_s(SYS_IMP_APL_UPMCR0_EL1)) == UPMCR0_IMODE_FIQ) &&
+ 	    (read_sysreg_s(SYS_IMP_APL_UPMSR_EL1) & UPMSR_IACT)) {
+ 		/* Same story with uncore PMCs */
+@@ -713,6 +749,13 @@
+ 			return -EINVAL;
+ 		if (args[0] >= AIC_NR_FIQ)
+ 			return -EINVAL;
++		/* Do not hand KVM an IRQ whose mask/routing is unimplemented. */
++		if (!ic->info.guest_timer_fiq &&
++		    (args[0] == AIC_VGIC_MI ||
++		     (is_kernel_in_hyp_mode() &&
++		      (args[0] == AIC_TMR_GUEST_PHYS ||
++		       args[0] == AIC_TMR_GUEST_VIRT))))
++			return -ENOENT;
+ 		*hwirq = AIC_FIQ_HWIRQ(args[0]);
+ 
+ 		/*
+@@ -870,12 +913,16 @@
+ 
+ 	/* EL2-only (VHE mode) IRQ sources */
+ 	if (is_kernel_in_hyp_mode()) {
+-		/* Guest timers */
+-		sysreg_clear_set_s(SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2,
+-				   VM_TMR_FIQ_ENABLE_V | VM_TMR_FIQ_ENABLE_P, 0);
+-
+-		/* vGIC maintenance IRQ */
+-		sysreg_clear_set_s(SYS_ICH_HCR_EL2, ICH_HCR_EL2_En, 0);
++		if (aic_irqc->info.guest_timer_fiq) {
++			/* Guest timers and vGIC maintenance IRQ */
++			sysreg_clear_set_s(SYS_IMP_APL_VM_TMR_FIQ_ENA_EL2,
++					   VM_TMR_FIQ_ENABLE_V | VM_TMR_FIQ_ENABLE_P, 0);
++			sysreg_clear_set_s(SYS_ICH_HCR_EL2, ICH_HCR_EL2_En, 0);
++		} else {
++			/* Architectural source masks, also used by m1n1 on M5. */
++			sysreg_clear_set_s(SYS_CNTP_CTL_EL02, 0, ARCH_TIMER_CTRL_IT_MASK);
++			sysreg_clear_set_s(SYS_CNTV_CTL_EL02, 0, ARCH_TIMER_CTRL_IT_MASK);
++		}
+ 	}
+ 
+ 	/* PMC FIQ */
+@@ -883,7 +930,7 @@
+ 			   FIELD_PREP(PMCR0_IMODE, PMCR0_IMODE_OFF));
+ 
+ 	/* Uncore PMC FIQ */
+-	if (static_branch_likely(&use_fast_ipi)) {
++	if (aic_irqc->info.uncore_pmu) {
+ 		sysreg_clear_set_s(SYS_IMP_APL_UPMCR0_EL1, UPMCR0_IMODE,
+ 				   FIELD_PREP(UPMCR0_IMODE, UPMCR0_IMODE_OFF));
+ 	}
+@@ -1095,11 +1142,14 @@
+ 	if (static_branch_likely(&use_fast_ipi))
+ 		pr_info("Using Fast IPIs");
+ 
++	if (!irqc->info.guest_timer_fiq)
++		pr_info("t6050 bring-up: guest FIQ/KVM and legacy uncore disabled\n");
++
+ 	cpuhp_setup_state(CPUHP_AP_IRQ_APPLE_AIC_STARTING,
+ 			  "irqchip/apple-aic/ipi:starting",
+ 			  aic_init_cpu, NULL);
+ 
+-	if (is_kernel_in_hyp_mode()) {
++	if (is_kernel_in_hyp_mode() && irqc->info.guest_timer_fiq) {
+ 		struct irq_fwspec mi = {
+ 			.fwnode		= of_fwnode_handle(node),
+ 			.param_count	= 3,
+@@ -1114,7 +1164,8 @@
+ 		WARN_ON(!vgic_info.maint_irq);
+ 	}
+ 
+-	vgic_set_kvm_info(&vgic_info);
++	if (irqc->info.guest_timer_fiq)
++		vgic_set_kvm_info(&vgic_info);
+ 
+ 	pr_info("Initialized with %d/%d IRQs * %d/%d die(s), %d FIQs, %d vIPIs",
+ 		irqc->nr_irq, irqc->max_irq, irqc->nr_die, irqc->max_die, AIC_NR_FIQ, AIC_NR_SWIPI);
+@@ -1134,3 +1185,4 @@
+ IRQCHIP_DECLARE(apple_aic, "apple,aic", aic_of_ic_init);
+ IRQCHIP_DECLARE(apple_aic2, "apple,aic2", aic_of_ic_init);
+ IRQCHIP_DECLARE(apple_aic3, "apple,t8122-aic3", aic_of_ic_init);
++IRQCHIP_DECLARE(apple_aic3_t6050, "apple,t6050-aic3", aic_of_ic_init);

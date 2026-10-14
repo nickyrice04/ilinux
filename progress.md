@@ -5,6 +5,37 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: boot025 AIC correction ready for M1 intake
+
+* Reviewed M1 `fcf40c1`: attempt 5 reached native early Linux, then an
+  undefined instruction in `aic_init_cpu+0x9c`. Exact boot024 ELF/Image mapping
+  identifies `msr s3_5_c15_c1_3, x0`, the legacy guest-timer FIQ enable write.
+  The fast-IPI write is not the reported fault; restriction mechanism unknown.
+* Two REA/Ghidra queries, matching linked bytes, 173 LLVM instruction-word
+  checks and public m1n1/Linux source support an original restricted t6050 AIC
+  profile. It preserves host timers/fast IPIs, masks guest timer sources through
+  architectural registers, rejects unsupported guest IRQ/KVM paths and separates
+  legacy uncore handling. Older profiles retain their capabilities.
+* Full Image link and 38 actual-driver scenarios with ASan/UBSan PASS. All 65
+  controller cases and 13-file package intake PASS. Exact packaged Image plus
+  unchanged initramfs reaches PID 1, one CPU and 60-second liveness in diskless,
+  networkless generic VZ. That VM has no M5 AIC; **native boot025 NOT RUN**.
+* Boot025 changes only Image from boot024. Installed boot021 m1n1, client pin,
+  DT/initramfs/config, DAPF/descriptor guards and fixed arguments stay unchanged.
+  Archive `908d0a9aa88c83469738f146f464bcb3815e812e56ef1615f0168cb7ce595f86`;
+  Image `8849de7c2b8e529ad5895707ed26f535993cc8ff85447c450b2c13240185a0ea`.
+* Fresh post-attempt-5 human JSON PASS: original Full/lab Permissive, both exit 0.
+  Independent read-only root Macintosh HD, build 25G83, FileVault=true, SIP
+  enabled and staged m1n1 SHA unchanged. Default/installed object/authenticated-
+  root not separately queried. No boot/volume/security/default changes.
+* **Next:** M1 verifies private `native-j716c-boot025` offline and publishes
+  readiness. The human then starts one filmed attempt 6 under the current
+  `tools/m1n1-client/stage-b-instructions.md`; no additional M5 round trip is
+  needed for unchanged verified code. Record AIC profile/final Initialized,
+  timer progress, PID 1/one CPU/60-second heartbeat or first failure, then return
+  to Macintosh HD. No retry/reinstall. Research and limits are in
+  `kernel/experiments/aic-t6050/README.md`. No native performance claim.
+
 ## 2026-10-13 · M1: attempt 5 reaches early Linux; AIC panic; return confirmed
 
 * One recorded boot024 attempt at readiness `e362a7f`, reviewed handoff

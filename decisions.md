@@ -1074,3 +1074,18 @@ and safe text only. User confirms Macintosh HD return. M5 owns read-only return
 checks and exact-build offline AIC diagnosis next. Preserve the successful
 observation path, existing guards and installed boot object; no retry, settings
 changes or new live session under this consumed attempt.
+
+## 2026-10-14 · Restrict t6050 AIC guest/uncore features for the next RAM boot
+
+Attempt-5's exact linked PC identifies a faulting legacy guest-timer enable
+write. REA supports the register-update path but its init-function pseudocode
+omits static-key/WARN paths; source and linked instructions remain authoritative.
+Do not infer register absence, alter security controls, or patch only one PC.
+Use architectural guest-timer source masking, reject unsupported guest IRQ/KVM
+mappings, and separate unvalidated uncore access from fast IPI support in an
+exact t6050 profile. Preserve previous AIC profiles, tested boot guards and
+installed bootloader. Boot025 changes only Image. Physical IRQ/timer delivery
+remains unvalidated despite 38 actual-driver scenarios, full link, 65 controller
+cases and generic VM liveness. Publish one human-started attempt-6 checklist;
+M1 offline readiness plus human start suffice, no redundant approval loop.
+Original Full/lab Permissive fresh user JSON already passed after attempt 5.

@@ -2,12 +2,12 @@
 
 Updated 2026-10-13 by B at the user's request. Supersedes the earlier draft's
 single-core, APFS-stub, persistent-console and power-cycle guarantees.
-**Latest:** attempt 4 passed DAPF/preflight/kboot reply; Linux remains NOT
-OBSERVED. Boot024 now adds a tested diagnostic Image with entry rectangles and
-early framebuffer text. M1 verifies its new release offline, then the human
-can start one filmed attempt 5 through the existing lab entry. No boot/security/
-volume changes or m1n1 reinstall. Post-attempt-4 original Full/lab Permissive
-JSON PASS. The authoritative current procedure is
+**Latest (2026-10-14):** attempt 5 established native early Linux and an AIC
+legacy guest-timer write panic. Boot025 adds a tested restricted t6050 AIC
+profile. M1 verifies the new release offline, then the human can start one
+filmed attempt 6 through the existing lab entry. Native boot025 NOT RUN.
+No boot/security/volume changes or m1n1 reinstall. Post-attempt-5 original
+Full/lab Permissive JSON PASS. The authoritative current procedure is
 [the Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 
 **Stage A result (2026-10-13 local / 2026-10-14 01:13:02 UTC): PASS.**
@@ -16,13 +16,13 @@ one P_NOP reply in **0.158 seconds**, exit **0**. The port closed, without retry
 or memory/register/boot requests. User confirms return to the usual Macintosh
 HD desktop. M5 has now checked original build/FileVault/SIP/authenticated-root
 and staged m1n1; user supplied fresh original Full/lab Permissive JSON (both exit 0).
-Default startup selection has not been independently rechecked. **Linux and
-live target-version checks remain NOT RUN.** Boot021 and client pin are unchanged. See `coordination.md` for timestamps/evidence.
+Default startup selection has not been independently rechecked. At that historical Stage A milestone Linux/live target-version checks had
+not run; attempt 5 now establishes early Linux and the boot021 marker. Boot021 and client pin are unchanged. See `coordination.md` for timestamps/evidence.
 
 ## 1. Current state
 
-This Mac is Mac17,6 / J716c / t6050 M5 Max. No native Linux boot has been
-observed. Job 020 built the kernel, DT and diagnostic initramfs. Job 021
+This Mac is Mac17,6 / J716c / t6050 M5 Max. Native early Linux is observed;
+diagnostic userspace/liveness and native boot025 remain unvalidated. Job 020 built the kernel, DT and diagnostic initramfs. Job 021
 exports the same bytes and adds a built, pinned m1n1 plus a conservative
 Stage-B DT/initramfs. See [package instructions](../../native/boot/README.md).
 
@@ -142,15 +142,16 @@ then perform the bounded P_NOP-only check. Success proves a responding proxy,
 not Linux support. Stop on timeout/mismatch. Do not open the upstream shell:
 its setup resets the PMU panic counter and writes home-directory history.
 
-## 5. Stage B: attempt 5, boot024 early-screen diagnostics
+## 5. Stage B: attempt 6, boot025 restricted AIC profile
 
-M1 downloads/verifies boot024 before restart. It changes only the diagnostic
-Image and fixed observation arguments. The launcher preserves the tested DAPF
-RAM correction and fills a verified 16-byte kernel data descriptor using the
-validated prepared framebuffer. Three early entry rectangles plus early text
-narrow the first unconfirmed checkpoint. Record locally on video before
-handoff; follow the current 120-second observation and Macintosh HD return
-bounds. Native boot024 NOT RUN. No automatic retries.
+M1 downloads/verifies boot025 before restart. Only Image changes from boot024;
+legacy guest-timer enable accesses are excluded in the exact t6050 profile,
+unused guest timers are source-masked, unsupported guest IRQ/KVM interfaces
+are withheld and legacy uncore access is separated from fast IPIs. Existing
+DT/config/initramfs/arguments and DAPF/descriptor guards remain. Record video
+before launch and capture the new profile, AIC Initialized, timer progress,
+PID 1/CPU/liveness or earliest failure. Keep the 120-second observation and
+Macintosh HD return bounds. Native boot025 NOT RUN. No automatic retries.
 
 Follow [the concrete Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 Use only `native/boot/launch.py` with `--device auto` as documented in its README.

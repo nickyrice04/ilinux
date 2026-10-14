@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-14",
+  "hardware": "Mac17,6 / J716c / t6050 M5 Max (VM host)",
+  "kernel": "Linux 7.1.9-g863199d8b4a3-dirty #4 SMP PREEMPT",
+  "build_guest": "Linux 7.1.6-vzrun2 aarch64",
+  "compiler": "GCC 16.1.1 20260430",
+  "linker": "GNU ld 2.46.0",
+  "config_sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169",
+  "image_sha256": "8849de7c2b8e529ad5895707ed26f535993cc8ff85447c450b2c13240185a0ea",
+  "driver_tests": {
+    "scenarios": 38,
+    "source": "actual extracted driver functions and six feature profiles",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "result": "PASS"
+  },
+  "controller_tests": {
+    "cases": 65,
+    "result": "PASS"
+  },
+  "package_files_verified": 13,
+  "generic_vm": {
+    "cpus": 1,
+    "memory_gib": 4,
+    "disk": false,
+    "network": false,
+    "console": "hvc0",
+    "pid1": true,
+    "online_cpus": 1,
+    "liveness_message_timestamp_seconds": 60.086276,
+    "termination": "Host SIGTERM after success; no disk attached. Diagnostic PID 1 has no exit path."
+  },
+  "native_boot025": "NOT RUN",
+  "performance": "NOT MEASURED",
+  "limits": [
+    "Generic VZ uses a different interrupt controller; it does not exercise the M5 AIC.",
+    "Restricted guest IRQ/KVM and uncore support is intentionally unavailable on t6050.",
+    "SMP, idle/DVFS, storage and Omarchy desktop are not validated by this job."
+  ]
+}

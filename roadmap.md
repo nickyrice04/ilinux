@@ -47,16 +47,15 @@ survey is not the next dependency. No proprietary code is copied into Linux.
 
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
-The dedicated lab entry is installed and Stage A's m1n1/P_NOP/return passed.
-The original remains Full Security by the user's fresh read-only policy check.
-This is bootloader progress; no native Linux result exists yet. Attempt 4 passed the DAPF correction and handoff request, but Linux execution
-was not observed. Boot024 now adds entry rectangles, early framebuffer text
-and initializer tracing; M1 offline intake is next. Build/tests and generic
-VM liveness pass. Native boot024 remains NOT RUN.
+The dedicated lab entry and Stage A handshake/return are established.
+Attempt 5 reached native early Linux and identified an AIC guest-timer register
+write failure. Boot025 implements a restricted t6050 path, with full build,
+actual-driver tests and generic VM liveness passed. Native boot025 remains
+NOT RUN. Fresh post-attempt-5 policy JSON keeps original Full/lab Permissive.
 
 | Order | Next experiment | Evidence required before advancing |
 |---|---|---|
-| 1 | One human-started attempt 5 with boot024 early-screen diagnostics; installed m1n1 stays boot021, single core, Linux NVMe/cpufreq disabled | Record the screen before launch: entry rectangles/early text, kernel, PID 1, one CPU, 60-second liveness, then original macOS return. Use `tools/m1n1-client/stage-b-instructions.md` |
+| 1 | One human-started attempt 6 with boot025 restricted AIC handling; installed m1n1 stays boot021, single core, Linux NVMe/cpufreq disabled | Record the screen before launch: AIC profile/final Initialized, timer progress, PID 1, one CPU, 60-second liveness, then original macOS return. Use `tools/m1n1-client/stage-b-instructions.md` |
 | 2 | Diagnose the earliest actual failure, or improve logging if screen output is absent | A reproducible checkpoint and tested patch; no blind retry or guessed driver diagnosis |
 | 3 | Establish Linux-side USB/input and an observable control channel | Linux USB enumeration and tested input/network access. The working m1n1 USB proxy does not survive Linux handoff |
 | 4 | Separate bounded SMP/idle/DVFS experiments, informed by existing REA startup findings | Correct core identities/topology, stable incremental secondary startup, validated idle/wake and frequency transitions; no assumed masks or OPP values |
@@ -75,8 +74,8 @@ Iterate per subsystem with the Observe → Investigate → Compare → Design �
 Implement → Test → Benchmark → Iterate loop, scored in
 `reports/performance-parity.md`.
 
-For this exact M5, the largest remaining native gaps are (1) observed Linux
-execution and usable access, (2) all-core operation plus safe idle/DVFS and
+For this exact M5, the largest remaining native gaps are (1) stable Linux
+userspace and usable access, (2) all-core operation plus safe idle/DVFS and
 thermal control, and (3) native G17 graphics/display/media acceleration.
 Stage B deliberately uses `idle=nop`, one CPU and no cpufreq: it tests liveness,
 not efficiency. Removing those restrictions requires independent evidence.
