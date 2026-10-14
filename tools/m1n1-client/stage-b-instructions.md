@@ -1,5 +1,12 @@
 # Stage B — attempt 13 / boot032 reserved GPIO pins
 
+**Attempt 13 consumed (M1 result, 2026-10-14):** readiness `8f2c908`, one
+controller PASS including GPIO gates (10.589 s). Photo P05/W00/H06/D0000/I000/
+B00/C0000; S unclear. No attributed GPIO result or diagnostic userspace/liveness.
+Return instructed, **Macintosh HD confirmation pending**, fresh policies/default
+NOT CHECKED. See `native/boot/stage-b-2026-10-14-attempt13-result.md`.
+**Do not replay the launch below.** Retained reviewed procedure, not a new attempt.
+
 **M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`, preserving
 local work and stopping on divergence. Read `coordination.md` and this file.
 Attempt 12 is consumed: final **P05 S09 W04 H02 D0059 B73 C0059** identifies

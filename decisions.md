@@ -1391,3 +1391,15 @@ Publish readiness then invoke the documented launcher once, preserving the new
 live GPIO gate. Capture literal I together with D/C/B and actual counts/errors;
 no inferred pin fault from a boundary. Keep recording through the stop criterion,
 then Macintosh HD. No extra approval loop, retry or settings/volume changes.
+
+## 2026-10-14 · Separate attempt 13 heartbeat from GPIO and userspace progress
+
+Boot032's controller GPIO contract passes, but native samples have W00 and
+D/C0000/B00/I000 while P05 and H00 through H06 appear. Do not treat I000 as a
+pin 0 failure, carry over prior GPIO success, or infer userspace from watchdog
+updates. P05 narrows a source boundary, not an exact blocking PC; inspect
+worker/scheduler/console progress offline. Preserve unreadable S/timer/phase
+fields and absence of readable stack or GPIO counts. The 40.13s clip is partial
+coverage; the still photo adds no duration. Return instructed; confirmation
+pending, fresh policy/default not checked. Attempt consumed, no retry/settings
+changes. Native userspace remains the gate for Linux control and Omarchy.

@@ -6,7 +6,41 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — boot032 / attempt 13 offline PASS, 2026-10-14
+### Current M1 result — attempt 13 dynamic heartbeat, un-attributed probe; return pending
+
+* One boot032 RAM attempt at published readiness `8f2c908`, M5 handoff `f2b2c4d`.
+  **Controller exit 0, 10.589 s**; UTC 17:56:51.492019–17:57:02.081153,
+  handoff 17:57:01.852238. Boot021 marker, live GPIO ADT exclusions, final
+  hardware/GPIO DT, both DAPF checks/readback, framebuffer/readback and kboot
+  PASS. USB closed; no extra handshake, reconnect, retry or settings change.
+* Reviewed **40.13-second IMG_2665.mov** and detailed **IMG_2666.jpeg**.
+  Native Linux/Tux, J716c/t6050 **EL2 cpus=1**, **ticks=25**, IRQ/FIQ masks0,
+  pending=1/strip=1/display=6 are readable. Timer PASS/phys/virt text, printed
+  phase digits and console_setup are covered/unobserved, not copied from prior boots.
+* Literal final photo: **P05 / W00 H06 / D0000 I000 / B00 C0000**;
+  S mixed/repainting and **NOT CONFIRMED**. Video shows P0D at 10s then P05;
+  H00/01/02/04/05 sampled at 10/15/20/30/39.98s, photo H06. W/D/I/B/C remain
+  zero in these samples. S06 clearly sampled at 30s; no stable final S assigned.
+* Offline decoder returns unknown device/no marked operation. I000 is numeric 0,
+  not evidence of a pin 0 read without attributed D/C and B91. P05 is the first
+  work-flush boundary by source; no nonzero device or GPIO checkpoint observed.
+  The six-heartbeat watchdog is bounded; H06 is not userspace liveness or proof
+  of a later timer failure. Exact blocked PC/task/cause remain unknown.
+* GPIO cache/IRQ counts, retries/returns/errors, readable watchdog stack and
+  scheduler summary **NOT OBSERVED**. Do not import attempt12 NUB success.
+  **PID 1/userspace online_cpus=1/60-second liveness NOT OBSERVED**; no explicit
+  panic seen. Console stays at partly covered reschedule text while panel changes.
+* Reviewed video times 0/5/6/7/8/9/10/15/20/30/39.98s; no 60/90s or full 120s
+  coverage. Photo adds H06/detail, not duration. Stop deadline communicated as
+  **1:59:02 p.m. Eastern**, return instructed after deadline. **Macintosh HD
+  return PENDING HUMAN CONFIRMATION**; fresh policy/default NOT CHECKED.
+* **Attempt 13 consumed.** Detailed report:
+  `native/boot/stage-b-2026-10-14-attempt13-result.md`. M5 next: read-only review
+  after confirmed return and offline worker/scheduler/console analysis. No
+  GPIO repair or pin-fault claim. Preserve installed boot021, pin and gates.
+
+
+### Historical M1 readiness — boot032 / attempt 13 offline PASS, 2026-10-14
 
 * Pulled/read M5 handoff `f2b2c4d`, Stage-B attempt-13 checklist and reserved-GPIO
   evidence/validation. Archive **16,723,345 bytes**, SHA-256

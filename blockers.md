@@ -3,27 +3,21 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — native validation of reserved-GPIO cache repair
+## Current Stage B blocker — no attributed GPIO/worker progress in attempt 13
 
-Attempt 12 stopped at main GPIO cache initialization B73/C0059; NUB completed
-handoff 61/7/1 and returned 0. Native PID 1/60-second liveness remain unobserved.
-The Mac's GPIO metadata excludes pins 5,6,7,112,141; REA/independent instruction
-checks show Apple skips their initialization reads. Boot031 does not. This is
-an evidence-backed hypothesis, not an exact native exception address.
+Boot032 controller including live GPIO exclusions and final DT PASS. Native
+Linux is observed; final photo P05/W00/H06/D0000/I000/B00/C0000, S unclear.
+Kernel heartbeat advances but no nonzero device/GPIO boundary, actual cache/IRQ
+counts, return/error, PID 1 or userspace 60s milestone observed. P05 locates the
+first work-flush boundary by source; exact blocked task/PC/cause unknown.
+I000 with unbound D/C and B00 is not a pin 0 fault. GPIO repair remains unvalidated.
 
-**Boot032 / attempt 13 prepared:** explicit permitted cache defaults and standard
-DT exclusions, guarded GPIO/IRQ paths and indexed diagnostics. Full build,
-sanitizers, GPIO schema, 102 controller cases/intake, source reproduction and
-exact-image generic 60s liveness PASS. **Native/live checks NOT RUN.** Unknowns:
-whether this clears the stall, excluded-pin ownership/interrupt behavior, later
-controller dependencies, and all userspace/peripheral/performance milestones.
-
-Post-attempt-12 original Full/lab Permissive JSON and M5 read-only return checks
-PASS; host settings untouched. M1 boot032 archive/intake/offline launcher,
-102 cases, source/controller hashes, exact DT delta and clean pin PASS. Publish
-readiness, then one human-started filmed RAM boot and Macintosh HD return.
-Continue installed boot021; no repeated setup, new skip or policy/volume change.
-See `kernel/experiments/gpio-reserved/README.md` and current Stage-B instructions.
+Return instructed after the communicated 1:59:02 p.m. Eastern deadline;
+Macintosh HD confirmation PENDING, fresh policy/default NOT CHECKED. M5 next:
+read-only return review after confirmation and offline worker/scheduler/console
+analysis. Full media remains local; 40.13s video does not cover full 120s window.
+See `native/boot/stage-b-2026-10-14-attempt13-result.md`. No retry, new skip,
+settings/volume changes or reinstall; preserve installed boot021 and all gates.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 
