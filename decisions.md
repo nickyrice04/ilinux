@@ -1232,3 +1232,23 @@ liveness remain unobserved. The source locates the next boundary around
 preempt_enable; the evidence does not prove that call or a particular lock
 is faulty. Human confirms Macintosh HD return. M5 owns read-only return
 checks and offline scheduling/visibility/strip analysis; no retry or new skip.
+
+## 2026-10-14 · Repair diagnostic lifecycle before interpreting a native scheduler stall
+
+Attempt 9 has reviewed phase-12/pending=1/strip=0 evidence, not a blocking PC.
+The actual old mapper reproduces a console-retirement skip. Make the diagnostic
+mapping independent of console registration using only the validated DT range,
+report preparation/mapping state, enlarge bounded glyphs and instrument actual
+context-switch source boundaries. Keep all normal operations and gates. REA's
+partial __switch_to output is explicitly incomplete; use full source/LLVM and
+linked bytes to account for CPU-alternative paths. No guessed feature/register
+changes or new driver blacklist. Map success requires native screen confirmation.
+
+Boot029 changes only the RAM Image. Preserve installed boot021 and current lab
+entry. Post-attempt-9 policies already PASS; do not ask for the same check again.
+Full link/sanitizers/90-case controller/intake/VM tests pass; M1 independently
+verifies private release and publishes readiness before one human-started filmed
+attempt 10. No settings/volume changes, repeated Stage A, automatic retry or
+extra M5 approval loop. Record literal strip/state/video evidence, return within
+the bound, then select the next repair from observations. Native userspace and
+Linux control/input remain prerequisites for the Omarchy configuration agent.

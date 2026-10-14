@@ -1,5 +1,9 @@
 # Attempt 9: observe the reschedule boundary without losing the watchdog
 
+**Historical boot028 handoff:** attempt 9 is now consumed; the reviewed result
+and successor are in [boot029 context/display](../context-display/README.md).
+The original validation below records what was known before attempt 9.
+
 2026-10-14. Original diagnostic improvement in boot028, based on boot027.
 **Native cause unresolved; attempt 9 NOT RUN.** This is not a confirmed hang
 repair or an Omarchy desktop boot. It preserves the installed boot021 setup.

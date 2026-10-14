@@ -48,15 +48,16 @@ survey is not the next dependency. No proprietary code is copied into Linux.
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
 The dedicated lab entry and Stage A handshake/return are established.
-Attempt 8 proves native timer/tick progress but not diagnostic userspace.
-Boot028 pre-arms the watchdog and adds scheduler/stack/framebuffer checkpoints
-without changing the installed setup. REA/source, full build, sanitizer tests,
-90 controller cases and generic VM PID-1/liveness pass. Native attempt 9 NOT
-RUN; root cause remains unknown. Post-attempt-8 original Full/lab Permissive PASS.
+Attempt 9 proves native timer/tick progress through phase 12/pending=1, but the
+strip and diagnostic userspace are unobserved. Boot029 repairs independently
+reproduced diagnostic mapping lifecycle behavior and adds enlarged strip plus
+context-switch checkpoints. Full build, sanitizers, 90 controller cases and
+generic VM PID-1/liveness pass. Native attempt 10 NOT RUN; root cause unresolved.
+Post-attempt-9 original Full/lab Permissive PASS. Preserve the existing setup.
 
 | Order | Next experiment | Evidence required before advancing |
 |---|---|---|
-| 1 | One human-started attempt 9 using boot028 and pre-armed scheduling diagnostics; installed m1n1 stays boot021, single core, NVMe/cpufreq disabled | Record video before launch; timer/tick, P/S/W/H strip, scheduler/stack/deferred phases, PID 1/one CPU/60-second liveness or first failure; review the recording; then original macOS return. Use the current Stage-B checklist. |
+| 1 | One human-started attempt 10 after M1 readiness, using boot029 independent display/context-switch diagnostics; installed m1n1 stays boot021, single core, NVMe/cpufreq disabled | Record video before launch; timer/tick, display state, enlarged P/S/W/H strip, context-switch/stack/deferred phases, PID 1/one CPU/60-second liveness or first failure; review the recording; then original macOS return. Use the current Stage-B checklist. |
 | 2 | Diagnose the earliest actual failure, or improve logging if screen output is absent | A reproducible checkpoint and tested patch; no blind retry or guessed driver diagnosis |
 | 3 | Establish Linux-side USB/input and an observable control channel | Linux USB enumeration and tested input/network access. The working m1n1 USB proxy does not survive Linux handoff |
 | 4 | Separate bounded SMP/idle/DVFS experiments, informed by existing REA startup findings | Correct core identities/topology, stable incremental secondary startup, validated idle/wake and frequency transitions; no assumed masks or OPP values |

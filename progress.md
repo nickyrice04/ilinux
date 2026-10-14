@@ -5,6 +5,41 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: boot029 fixes diagnostic mapping; narrows context-switch observation
+
+* Reviewed M1 `29f0f8e`: attempt 9 controller PASS; paused video observes
+  native J716c/t6050 EL2/one CPU, counter PASS/25 ticks, phases 1/10/11/12,
+  then `reschedule pending=1 strip=0`. No literal lanes, phase 13, watchdog
+  stack or diagnostic userspace/liveness observed. Macintosh HD return confirmed.
+* REA/Ghidra plus exact source and an actual-function regression test confirm
+  the old diagnostic mapper skips absent/retired consoles. The exact native
+  strip=0 prerequisite is still unknown. REA omits 31 instruction words from
+  `__switch_to`; full source/LLVM/linked-byte review accounts for those paths.
+  Evidence covers 152 instruction words, 126 nonrelocated linked matches.
+* Boot029 fixes independent validated-DT framebuffer initialization, adds
+  display-state reporting, 4× strip glyphs and context-switch subphases. It
+  changes only **Image**, with no guessed register changes or expanded skip.
+  Installed boot021, DT/config/initramfs/args/hardware gates remain unchanged.
+  **Native hang unresolved; this is a tested diagnostic repair.**
+* Full Image/ELF roundtrip, helper/renderer/parser/mapper ASan/UBSan, **15 map
+  scenarios**, old-defect reproduction, **90 controller cases** and **13-file
+  intake PASS**. One-CPU/4 GiB diskless/networkless VZ reaches pending=1,
+  phase 13/all later phases, PID 1/one CPU and liveness at **60.192201 s**.
+  Generic strip=0/display=1 is expected. No native AIC/scanout/performance proof.
+* Fresh post-attempt-9 user JSON PASS: original Full/lab Permissive, both exit 0.
+  Independent root Macintosh HD/build 25G83/FileVault/SIP/staged m1n1 SHA PASS.
+  Default/installed boot object/authenticated-root not separately re-queried.
+  No settings, volume, default or installed m1n1 changes.
+* All test/analysis VMs stopped; both shared quiet locks released.
+* Next: M1 verifies private `native-j716c-boot029`, publishes offline readiness,
+  then the human starts **one filmed attempt 10**. Capture display state and
+  literal enlarged P/S/W/H strip; review video before reporting, then return
+  within the existing bound. No extra M5 approval loop or installation restart.
+  **Native attempt 10/live checks NOT RUN.** Current procedure:
+  `tools/m1n1-client/stage-b-instructions.md`; engineering/provenance/tests:
+  `kernel/experiments/context-display/`. Stable native diagnostic userspace
+  precedes Linux control/input and the configuration agent's Omarchy work.
+
 ## 2026-10-14 · M1: attempt 9 phase 12/pending=1/strip=0; return confirmed
 
 * One boot028 attempt at readiness `87a80dd`, reviewed M5 handoff `3503bf1`.

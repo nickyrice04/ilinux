@@ -1,38 +1,43 @@
-# J716c native handoff — attempt 9 / boot028
+# J716c native handoff — attempt 10 / boot029
 
 **M1: follow [the current Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).**
-It has exact package/tests/hashes, readiness, one filmed launch and Macintosh HD
-return. **Native attempt 9 NOT RUN.** Keep the established lab entry and installed
-boot021 m1n1. No repeated provisioning/Recovery/Stage A or settings changes.
+It contains exact package/tests/hashes, offline readiness, one filmed launch and
+Macintosh HD return. **Native attempt 10/live checks NOT RUN.** Keep the existing
+lab entry and installed boot021; no repeated provisioning, Recovery or Stage A.
 
-[Attempt 8](stage-b-2026-10-14-attempt8-result.md) proves native timer progress
-(25 ticks/100 ms) but stops visibly before diagnostic phase 2. Exact REA/source
-identify a gap: boot027 can reschedule before its watchdog is armed. The idle
-NOP branch already exists. The native cause remains unknown.
+[Attempt 9](stage-b-2026-10-14-attempt9-result.md) observes native timer progress,
+phases 1/10/11/12 and pending=1/strip=0. Phase 13 and diagnostic userspace are
+unobserved. REA/source and an actual-function regression test confirm that the
+old diagnostic mapper skips absent/retired consoles. The native strip failure's
+specific prerequisite and the native hang cause remain unknown.
 
-[Boot028](../../kernel/experiments/schedule-boundary/README.md) pre-arms the
-watchdog, adds scheduler checkpoints and one bounded stack, and writes a small
-P/S/W/H status strip in existing framebuffer RAM without printk or timer IRQs.
-It is a diagnostic correction, not a claimed fix of the native hang. Only Image
-differs from boot027. DT/config/initramfs/m1n1, arguments and hardware guards
-are unchanged; the sole clock-debug skip remains. No device work is bypassed.
+[Boot029](../../kernel/experiments/context-display/README.md) initializes the
+strip independently from validated DT, reports preparation/mapping status,
+enlarges its glyphs and adds context-switch checkpoints. Only Image changes
+from boot028. It repairs a diagnostic lifecycle defect, not a demonstrated
+native scheduler fault. Full source/LLVM/linked-byte review supplements REA's
+incomplete context-switch output; no Apple binary extraction was needed.
+DT/config/initramfs/m1n1, args and hardware gates remain unchanged. No new skip.
 
-Full Image/ELF link, actual-helper/renderer ASan/UBSan, 90 controller cases and
-13-file intake PASS. Exact Image/initramfs in one-CPU diskless/networkless VZ
-reports timer PASS, pending reschedule, phase 13, all later phases, PID 1/one CPU
-and 60-second liveness. No native AIC or framebuffer is tested by that VM.
-Fresh post-attempt-8 original Full/lab Permissive policy JSON already PASS.
+Full Image/ELF roundtrip, actual-helper/renderer/parser/mapper ASan/UBSan,
+old-defect reproduction, 90 controller cases and 13-file intake PASS. Exact
+Image/initramfs in one-CPU/4 GiB diskless/networkless VZ report pending=1,
+phase 13/all later phases, PID 1/one CPU and liveness at 60.192201 seconds.
+Generic strip=0/display=1 is expected; no native AIC/scanout is tested in VZ.
+Fresh post-attempt-9 original Full/lab Permissive policy JSON already PASS.
 
-Private prerelease `native-j716c-boot028` carries the 16.7 MB archive.
+Private prerelease `native-j716c-boot029` carries the 16.7 MB archive.
 `archive-sha256.txt`, `intake-manifest-sha256.txt` and `package-manifest.json`
-pin its bytes. Prior boot021/022/024/025/027 manifests preserve baselines.
-Release binaries stay outside Git history. No Apple binary/raw DT/personal data
-is included. Keep previous receipts/results. M1 must review the video and
-capture the small bottom-left status strip before reporting observations.
+pin its bytes. Prior manifests through boot028 preserve baselines. Release
+binaries stay outside Git history. No Apple binary/raw DT/personal data is
+included. M1 verifies/publishes readiness before the human restarts, then
+captures display state and literal enlarged P/S/W/H values. Review the video
+before reporting; preserve prior receipts/results and report visibility limits.
 
 Build foundation: kernel base `77cb8f24c2381a8abb7272d7bbdec548d6426a8a` plus
 t6050 patches 0001–0007, with job024's original instrumentation, job025's restricted AIC patch and
-job027's deferred-probe diagnostics and job028's scheduling-boundary instrumentation. GCC 16.1.1,
+job027's deferred-probe diagnostics, job028's scheduling-boundary instrumentation
+and job029's display/context instrumentation. GCC 16.1.1,
 Linux 7.1.9, original 16-KiB config. The separate post-link DockChannel proof
 patch remains absent. m1n1 is still the unmodified pin
 `57a9339ffd1876e78297b17d34dece8cff8fa1ba`, marker

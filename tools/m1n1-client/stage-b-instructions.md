@@ -1,18 +1,12 @@
-# Stage B — attempt 9 / boot028 scheduling-boundary diagnostics
+# Stage B — attempt 10 / boot029 display and context-switch checkpoints
 
-**Attempt 9 is consumed (2026-10-14).** Readiness `87a80dd`; controller exit 0.
-Reviewed video observes timer PASS/25 ticks, phases 1/10/11/12 and final
-`reschedule pending=1 strip=0`. Phase 13, literal strip lanes/heartbeat and
-userspace/liveness NOT OBSERVED. Macintosh HD return human-confirmed.
-See `native/boot/stage-b-2026-10-14-attempt9-result.md`.
-M5 read-only return checks and offline analysis next. **Do not rerun the launch
-below**; the procedure is retained as the record of the completed attempt.
-
-**Reviewed pre-attempt handoff.** Pull latest main with `git pull --ff-only`; preserve local
-work and stop on divergence. Read `coordination.md` and this file. Attempt 8
-is consumed: native counter/ticks passed, but phase 2 and diagnostic userspace
-were not observed. Result: `native/boot/stage-b-2026-10-14-attempt8-result.md`.
-**At this handoff: attempt 9 / native boot028 / live checks NOT RUN.**
+**Current M5 handoff, 2026-10-14.** Pull latest main with `git pull --ff-only`;
+preserve local work and stop on divergence. Read `coordination.md` and this
+file. Attempt 9 is consumed: reviewed video shows timer PASS/25 ticks, phases
+1/10/11/12, then `reschedule pending=1 strip=0`. Phase 13, literal strip lanes
+and diagnostic userspace/liveness were not observed. Macintosh HD return is
+confirmed. See `native/boot/stage-b-2026-10-14-attempt9-result.md`.
+**At this handoff: attempt 10 / native boot029 / live checks NOT RUN.**
 
 **Continue the existing installation.** Installed boot021 m1n1 and the clean
 client pin remain unchanged. Do not repeat provisioning, Stage A, Recovery,
@@ -21,17 +15,21 @@ Macintosh HD at Full Security and as the default. No volume/security changes.
 
 ## What changed and why
 
-REA and linked instructions show that boot027 could reschedule before arming
-its watchdog. Boot028 fixes that diagnostic gap, adds scheduler checkpoints
-and a small bottom-left `P:xx S:xx W:xx H:xx` status strip. It can report a
-boundary without printk/timer interrupts, if the existing scanout remains
-visible. **Root cause remains unknown; this is not a confirmed hang repair.**
+REA, exact source and a regression test confirm that the previous diagnostic
+mapper skips initialization if the early console is absent or retired. Boot029
+initializes independently from the validated DT, reports mapping/failure state,
+enlarges the bottom-left `P:xx S:xx W:xx H:xx` strip to 4× glyphs and adds
+context-switch subphases. The exact native `strip=0` prerequisite remains
+unknown; native screen visibility must be checked.
+**This repairs a confirmed diagnostic defect, not a proven native hang cause.**
 
-Only **Image** changes from boot027. The full kernel build, helper/renderer
-ASan/UBSan checks, 90 controller cases, 13-file intake and exact-image generic
-VM PID-1/one-CPU/60-second liveness PASS. The VM has no J716c framebuffer or
-AIC and does not validate native behavior. See
-`kernel/experiments/schedule-boundary/README.md` and `validation.json`.
+Only **Image** changes from boot028. Full kernel build/ELF roundtrip, actual
+helper/renderer/parser/mapper ASan/UBSan checks, old-defect reproduction,
+90 controller cases, 13-file intake and exact-image generic VM PID-1/one-CPU/
+60-second liveness PASS. The VM has no J716c framebuffer or AIC and does not
+validate native behavior. See `kernel/experiments/context-display/README.md`
+and its `evidence.json` / `validation.json`. REA omitted some context-switch
+alternative paths; the full source/LLVM audit accounts for them.
 
 DT/config/initramfs/m1n1 and all fixed args/hardware gates stay unchanged.
 Retain the single `initcall_blacklist=clk_debug_init`; no wider skip. The compiled
@@ -39,7 +37,7 @@ idle NOP branch is already present. No new CPU, frequency or storage experiment.
 
 ## Return protection prerequisite — already PASS
 
-Fresh post-attempt-8 human JSON: original **Full**, lab **Permissive**, both
+Fresh post-attempt-9 human JSON: original **Full**, lab **Permissive**, both
 exit 0. M5 independently read root Macintosh HD/build 25G83/FileVault=true/SIP
 on and unchanged staged m1n1 checksum. Default selection/installed object/
 authenticated-root were not independently re-queried. No settings changed.
@@ -48,29 +46,29 @@ new evidence changes the state.
 
 ## Offline intake before the human restarts
 
-Download only private `native-j716c-boot028`; verify the archive against current
+Download only private `native-j716c-boot029`; verify the archive against current
 Git **before extraction**. Preserve every earlier package/receipt/result. Stop
 on a mismatch. The following performs no live USB action.
 
 ```sh
 (
 set -e
-mkdir -p build/native-boot028-download
-if [ ! -f build/native-boot028-download/ilinux-j716c-boot028.tar.gz ]; then
-  gh release download native-j716c-boot028 --repo nickyrice04/ilinux \
-    --pattern ilinux-j716c-boot028.tar.gz --dir build/native-boot028-download
+mkdir -p build/native-boot029-download
+if [ ! -f build/native-boot029-download/ilinux-j716c-boot029.tar.gz ]; then
+  gh release download native-j716c-boot029 --repo nickyrice04/ilinux \
+    --pattern ilinux-j716c-boot029.tar.gz --dir build/native-boot029-download
 fi
 (
-  cd build/native-boot028-download
+  cd build/native-boot029-download
   shasum -a 256 -c ../../native/boot/archive-sha256.txt
-  if [ ! -d ilinux-j716c-boot028 ]; then tar -xzf ilinux-j716c-boot028.tar.gz; fi
+  if [ ! -d ilinux-j716c-boot029 ]; then tar -xzf ilinux-j716c-boot029.tar.gz; fi
 )
 mkdir -p build/native-intake/receipts build/native-intake/results
 tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
-  build/native-boot028-download/ilinux-j716c-boot028 \
+  build/native-boot029-download/ilinux-j716c-boot029 \
   --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
-  > build/native-intake/receipts/boot028-attempt9.json
-python3 -I native/boot/launch.py --package build/native-boot028-download/ilinux-j716c-boot028
+  > build/native-intake/receipts/boot029-attempt10.json
+python3 -I native/boot/launch.py --package build/native-boot029-download/ilinux-j716c-boot029
 python3 -I native/boot/test_launcher.py
 python3 -I native/boot/test_entry_guard.py
 python3 -I native/boot/test_dapf_guard.py
@@ -86,12 +84,12 @@ Require **37 + 6 + 16 + 5 + 19 + 2 + 4 + 1 = 90 cases PASS**, package PASS,
 13 receipt files and the clean client pin `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
 No kernel/REA setup on M1. The receipt verifies files, not live authorization.
 
-Archive **16,722,641 bytes**, SHA-256:
-`689fce13b00c4e59af61e5a23666509579985b89920a0477e4b107c6cf5944e9`.
+Archive **16,722,976 bytes**, SHA-256:
+`ebed9be8b34c3684aaf01ef06b8fc108e0c548960c1f83a25ed411c5ef42ce16`.
 Image **44,468,736 bytes**, SHA-256:
-`514dde0c48c17d77d1979fb98b13f5ecb45096839e8b10a72d24adcf9df0778f`.
+`53f5f2c5a7a2d9d0d2ae92961222090c97f0c266bb4066408acd577660e7cc32`.
 SHA256SUMS digest:
-`0120ed68ecf994204a94b2ac2ef3e57a66ea37b9db1e7f61becaf5f4482b87b2`.
+`1eeef3e32ef45f6ed1266da2c3888066c49bc3b1a70e61dc6328bee52c0bdccc`.
 Git manifests are authoritative; stop on disagreement.
 
 Reviewed controller digests (also record checked-out Git commit):
@@ -102,7 +100,7 @@ Reviewed controller digests (also record checked-out Git commit):
 * `native/boot/fdt.py`: `d9522761837e78f7b444b936a7501fc9f847697d783b57de1f446a4b8da32b6b`
 * `tools/m1n1-client/usb_identity.py`: `72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137`
 
-Prepare fresh ignored `boot028-stage-b-attempt9.json`/`.md` records with the
+Prepare fresh ignored `boot029-stage-b-attempt10.json`/`.md` records with the
 source/procedure/controller/payload/receipt hashes. Push sanitized readiness
 in `progress.md` and `coordination.md`, keeping native/live checks NOT RUN.
 Tell the human when ready. M1 readiness plus the human's start suffice; no
@@ -112,7 +110,7 @@ extra M5 review round trip for these unchanged verified instructions.
 
 1. Both Macs on power, same direct cable/primary USB interface. Film the M5
    built-in screen **before launching**, 60 fps if available. Include the bottom
-   left edge where the new small status strip appears. Stop at readiness if
+   left edge where the enlarged status strip should appear. Stop at readiness if
    recording cannot be arranged. Full media stays local.
 2. Human saves work, shuts down, holds power for startup options and selects
    **iLinux Boot Lab → Continue**. Keep Macintosh HD as default. If already at
@@ -121,7 +119,7 @@ extra M5 review round trip for these unchanged verified instructions.
 
    ```sh
    tools/m1n1-client/run.sh native/boot/launch.py \
-     --package build/native-boot028-download/ilinux-j716c-boot028 \
+     --package build/native-boot029-download/ilinux-j716c-boot029 \
      --launch --device auto --confirm BOOT-J716C-RAM-DIAGNOSTIC
    ```
 
@@ -136,8 +134,12 @@ extra M5 review round trip for these unchanged verified instructions.
 
    * Kernel `target=j716c-t6050 mode=EL2 cpus=1` (or actual reported EL),
      `timer counter=PASS ticks=N` and timer/mask status. N must be positive.
-   * Phases 10, 11, 12; `reschedule pending=N strip=N`; phase 13 if it returns.
-     `strip=1` means a mapping was available, not that every mark was visible.
+   * `ilinux-display: state=N console_setup=N`, if visible. Console setup
+     does not mean it is still registered. Record this without inferring it.
+   * Phases 10, 11, 12; `reschedule pending=N strip=N display=N`; phase 13
+     if it returns. `strip=1` / `display=6` mean a mapping was available,
+     not that every mark was visible. The repeated display state helps if the
+     earlier mapping log has scrolled away.
    * **A close photo/paused frame of `P:xx S:xx W:xx H:xx`** at the bottom left.
      Values are hexadecimal; copy literally. Record changes over time, not just
      a final value. If absent/overwritten/unreadable, mark NOT OBSERVED.
@@ -150,16 +152,25 @@ extra M5 review round trip for these unchanged verified instructions.
    phase and sequence**, not the largest number. Printed decimal phases 10–13
    correspond to P=0A–0D. P=0C is before preempt_enable, P=0D after it.
    P=03 debugfs entry, 04 trigger, 05/07 worker flushes, 09 complete.
-   S=01 scheduler entry, 02 before runqueue lock, 03 lock held, 04 task
-   selection, 05 selected, 06 context-switch entry, 07 finish_task_switch,
-   08 context_switch returned, 09 scheduler exit. S=07 can be normal for a
-   newly created thread. W retains worker phases 0–7; H counts heartbeats 1–6.
-   These are last boundaries, **not exact blocking PCs or diagnoses**.
+   S=01–09 retain the scheduler entry/lock/selection/finish/exit meanings.
+   New **hex S=10–17** bracket generic `context_switch`; **S=20–31** bracket
+   ARM64 `__switch_to`, including feature-dependent operations and DSB.
+   The complete value-to-operation table is in
+   `kernel/experiments/context-display/README.md`; copy literal values first.
+   S=07 can be normal for a new thread; S=31 is not required on its first start.
+   W retains worker phases 0–7; H counts heartbeats 1–6. These are last
+   boundaries, **not exact blocking PCs or register-fault diagnoses**.
+   Diagnostic rendering adds overhead and another console could overwrite it.
+
+   Display state is decimal: 0 no outcome, 1 target/active framebuffer absent,
+   2 rejected DT properties, 3 invalid font, 4 strip too wide, 5 mapping failed,
+   6 mapping exists. Report any failure code; do not alter DT or addresses live.
 
    | Observation | M5 follow-up |
    |---|---|
    | P=0A/0B persists | Investigate watchdog initialization/arming and visibility |
-   | P=0C persists | Use S and any heartbeat/stack to locate the scheduling boundary |
+   | Display 1–5 or strip absent | Report exact state/text and reviewed screen evidence; investigate that prerequisite offline |
+   | P=0C persists | Use new S subphase and any heartbeat/stack to locate the scheduling boundary |
    | P=0D then P=03+ | Rescheduling returned; follow deferred-probe checkpoints |
    | Heartbeat with stack | Analyze interrupted task and symbolic frames |
    | No heartbeat but readable strip | Record frozen/changing P/S/W/H; no guessed interrupt fault |
@@ -177,7 +188,7 @@ extra M5 review round trip for these unchanged verified instructions.
 7. Return: hold power to shut down if needed, hold power for startup options,
    choose **Macintosh HD → Continue**. Confirm the usual desktop return.
    Do not assert fresh policies until the next read-only check.
-8. Push sanitized attempt-9 report and progress/coordination updates. Separate
+8. Push sanitized attempt-10 report and progress/coordination updates. Separate
    controller, native kernel, strip/timer/scheduler, PID-1/liveness and return
    status. Preserve earlier reports; mark unobserved evidence honestly. Keep
    full media/raw data/proprietary binaries out of Git.

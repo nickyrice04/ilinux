@@ -1,0 +1,54 @@
+{
+  "image_sha256": "514dde0c48c17d77d1979fb98b13f5ecb45096839e8b10a72d24adcf9df0778f",
+  "vmlinux_sha256": "68d723c4dcbe4915caf85b55e3f85e1f6d1afe8c2943cbcd3c2a52137d93decc",
+  "functions": [
+    {
+      "object_sha256": "c33e2b814fb8a9920f789d82c713378d27dae7fd4ba9e9887531b21fb4cdfd84",
+      "elf_symbol": "fb_remap",
+      "rea_function": "fb_remap",
+      "section": ".init.text",
+      "symbol_bytes": 188,
+      "llvm_instruction_words": 47,
+      "llvm_unknown_instructions": 0,
+      "rea_omitted_instruction_words": 0,
+      "rea_body_bytes": 188,
+      "image_relative_offset": "0x2205e38",
+      "linked_matching_nonrelocated_words": 38,
+      "relocation_words_reviewed_separately": 9,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_9604672c8a0557057b98716cd1123e7b244af5c34551aec2dc47fc3323e59dc9",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    },
+    {
+      "object_sha256": "a125c9227c20b616a91fb8f0c8592f0b17d2f29fa71c8a582a5cb424bac587dc",
+      "elf_symbol": "__switch_to",
+      "rea_function": "__switch_to",
+      "section": ".sched.text",
+      "symbol_bytes": 420,
+      "llvm_instruction_words": 105,
+      "llvm_unknown_instructions": 0,
+      "rea_omitted_instruction_words": 31,
+      "rea_body_bytes": 296,
+      "image_relative_offset": "0x12c8680",
+      "linked_matching_nonrelocated_words": 88,
+      "relocation_words_reviewed_separately": 17,
+      "high_pcode_outside_body": 0,
+      "rea_evidence_id": "ev_2742c2f7e0fd436856c15309cdd29243b55669949dc7e3fed9e32f0001316d52",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      }
+    }
+  ],
+  "limits": [
+    "fb_remap exits before mapping if the boot console is absent or retired; this lifecycle bug is reproduced, but the exact native strip=0 prerequisite remains unknown.",
+    "__switch_to REA body omits alternative/WARN-related paths; source plus full linked disassembly are authoritative.",
+    "Static NOPs can be patched by CPU alternatives at boot; this audit does not establish native capability selection or a failing register.",
+    "New framebuffer/context diagnostics do not establish the root cause or native boot success."
+  ]
+}

@@ -86,13 +86,17 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
-Latest M1: attempt 9 consumed. Boot028 controller/hardware/DAPF/descriptor
-PASS. Reviewed video observes native one CPU, 25 ticks, phases 1/10/11/12,
-then reschedule pending=1 strip=0. Phase 13, literal strip lanes, heartbeat and
-diagnostic userspace/liveness NOT OBSERVED. Macintosh HD return human-confirmed.
-M5 next: read-only return checks and offline scheduling/strip-availability
-analysis. Preserve boot021 setup; no retry, wider skip or settings changes.
-See current coordination and attempt-9 result; exact root cause unknown.
+Current M5 handoff: **boot029 / attempt 10, native/live NOT RUN**. M1 attempt 9
+video shows timer PASS/25 ticks, phases 1/10/11/12, pending=1/strip=0; no phase 13
+or userspace. REA/source/regression tests confirm a diagnostic mapper lifecycle
+bug; boot029 fixes it and adds enlarged strip/context-switch subphases. Exact
+native hang cause remains unknown. Full link, sanitizers, 90 controller cases,
+13-file intake and generic VM PID-1/60-second liveness PASS. Post-attempt-9
+original Full/lab Permissive JSON PASS. M1 verifies/publishes readiness, then
+one human-started filmed attempt 10 under the current Stage-B checklist.
+Preserve installed boot021 and established entry; no provisioning/Recovery,
+settings changes, wider skip or automatic retry. Next after native liveness:
+Linux control/input, usable root and configuration-agent Omarchy handoff.
 
 Historical M5 review: attempt 7 reached `deferred_probe_initcall`; diagnostic userspace is
 still unobserved. Boot027 keeps the working boot021 setup and changes only

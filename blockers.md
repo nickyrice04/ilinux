@@ -3,22 +3,28 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — phase 12/pending=1/strip=0; attempt 9 consumed
+## Current Stage B blocker — native reschedule progress unobserved; boot029 ready offline
 
-Boot028 passes controller/hardware/DAPF/descriptor checks. Reviewed video
-observes one CPU, counter PASS/25 ticks, phases 1/10/11/12 and final
-reschedule pending=1 strip=0. Phase 13 and later userspace/liveness remain
-unobserved; no readable P/S/W/H lanes, heartbeat or scheduler stack. Strip=0
-is an availability result, not zero lane values or a diagnosed display fault.
+Attempt 9's reviewed video observes native J716c/t6050 EL2/one CPU, 25 ticks,
+phases 1/10/11/12 and pending=1/strip=0. Phase 13, readable lanes, watchdog stack
+and userspace/liveness remain unobserved. This locates a boundary, not an exact
+blocking PC. Video samples cover 21.598 seconds, not the full observation window.
 
-The same final line remains in reviewed later video samples; the 21.598-second
-clip and sampling do not cover the full observation window. Human confirms
-Macintosh HD return. M5 next performs read-only return checks and offline
-analysis after phase 12/before phase 13, including scheduling/visibility and
-why the strip was unavailable. No precise blocking PC is established.
-Preserve current setup and single skip; no retry or settings changes.
-Evidence: `native/boot/stage-b-2026-10-14-attempt9-result.md` and
-`kernel/experiments/schedule-boundary/README.md`.
+REA/source and the old-function regression test confirm that boot028's mapper
+can skip the independent strip when its early console is absent/retired. The
+specific native prerequisite causing strip=0 is unknown. Boot029 initializes
+from validated DT independently, reports failure state, enlarges the strip and
+adds generic/ARM64 context-switch subphases. No native hang fix is claimed.
+Full build/sanitizers/90 controller cases/intake/generic VM liveness PASS;
+physical display and scheduling are the next validation gate.
+
+Post-attempt-9 original Full/lab Permissive JSON PASS; no settings changed.
+M1 verifies boot029 and publishes readiness before one human-started attempt 10.
+Native/live NOT RUN. Preserve installed boot021, single skip and hardware gates;
+no installation restart or automatic retry. Evidence and exact procedure:
+`kernel/experiments/context-display/README.md`,
+`native/boot/stage-b-2026-10-14-attempt9-result.md`,
+`tools/m1n1-client/stage-b-instructions.md`.
 
 ## Historical Stage B attempt 1 preflight stop — 2026-10-13
 

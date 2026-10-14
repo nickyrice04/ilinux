@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-14",
+  "native_cause": "UNRESOLVED",
+  "changed_payload_files": [
+    "Image"
+  ],
+  "package": "ilinux-j716c-boot029",
+  "image": {
+    "size": 44468736,
+    "sha256": "53f5f2c5a7a2d9d0d2ae92961222090c97f0c266bb4066408acd577660e7cc32"
+  },
+  "archive": {
+    "bytes": 16722976,
+    "sha256": "ebed9be8b34c3684aaf01ef06b8fc108e0c548960c1f83a25ed411c5ef42ce16"
+  },
+  "intake_manifest_sha256": "1eeef3e32ef45f6ed1266da2c3888066c49bc3b1a70e61dc6328bee52c0bdccc",
+  "intake_verified_files": 13,
+  "controller_cases": [
+    37,
+    6,
+    16,
+    5,
+    19,
+    2,
+    4,
+    1
+  ],
+  "controller_total": 90,
+  "build": {
+    "kernel": "Linux 7.1.9",
+    "compiler": "GCC 16.1.1 20260430",
+    "linker": "GNU binutils 2.46.0",
+    "page_size": 16384,
+    "config_unchanged": true,
+    "full_Image_and_ELF_roundtrip": "PASS",
+    "source_tree": "/var/tmp/ilinux-boot029/linux",
+    "vm_exit": 0,
+    "started_utc": "2026-10-14T14:27:23Z",
+    "ended_utc": "2026-10-14T14:27:58Z"
+  },
+  "sanitizers": {
+    "actual_helper": "PASS: pre-armed timer before reschedule, scheduler state, bounded heartbeat/one stack, inherited failure paths",
+    "actual_renderer": "PASS: 4x glyphs, fonts 8x16/32x64/1x1, four lanes, padding/canary/write bounds and rejected inputs",
+    "flags": "-std=gnu11 -O1 -g -Wall -Wextra -Werror -Wno-unused-function -fsanitize=address,undefined -fno-omit-frame-pointer",
+    "actual_parser_mapper": "PASS: 15 scenarios with retained kernel libfdt and controlled mapping/font/console fixtures; absent/retired/active console, inert/generic/null DT, disabled framebuffer, invalid stride/format/font/geometry and mapping failure",
+    "old_mapper_regression": "REPRODUCED: actual boot028 mapper skips independent diagnostics when console is unregistered"
+  },
+  "generic_vm": {
+    "cpus": 1,
+    "memory_GiB": 4,
+    "disk": false,
+    "network": false,
+    "timer_ticks_per_100ms": 25,
+    "reschedule_pending": 1,
+    "phases": [
+      1,
+      10,
+      11,
+      12,
+      13,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "PID_1": "PASS",
+    "online_cpus": 1,
+    "liveness_seconds": 60.192201,
+    "strip": 0,
+    "limits": "No native AIC or scanout; strip=0 display=1 expected on generic VZ. Five-second watchdog is shim-tested; successful VM init completes before it fires. Owned diskless VM stopped after liveness.",
+    "display_state": 1
+  },
+  "source_sha256": {
+    "kernel/experiments/context-display/apply.py": "920b04f1c60481e71eb704d7598ec5614f19dab2aa3be8f62357222fce6ca904",
+    "kernel/experiments/context-display/audit.py": "5d03f8d1e74cdef07b96206e9a945dda2077e8971503ce54a8fe6d4c9126b228",
+    "kernel/experiments/context-display/fb-map.h": "4a1bb47ccf4f9501bb83473bcd013189940966e36cda39e4e6d0b3f23fa5daf3",
+    "kernel/experiments/context-display/ilinux_probe_diag.h": "2107b952f4db86d4d6ecc2a92dfd997af5986834c06e1bd7b631217874e9fcc8",
+    "kernel/experiments/context-display/status-strip.h": "d3c1742f33f21f2f7e5ef067f5b9af42150576ccef31a47900ab614ab457ede1",
+    "kernel/experiments/context-display/test_diag.c": "e5fcef4e27363cda7a524f4524b9b972c1ae1c2612a5827796d84c3874958760",
+    "kernel/experiments/context-display/test_map.c": "77ceeb26edfa174afccadec47a7d68fa589bc79f6aa665e2b60e5978f893dc70",
+    "kernel/experiments/context-display/test_strip.c": "e56f5ed1c13195600bed747b0fcf841f721e174ee9366994dff522695a8dfe12",
+    "virtualization/jobs/029-context-display/run.sh": "8acd85ae051734a7d46c6777ac6b2d8ddbc5bf06e61229cdacf18eb3c4ff88f7"
+  },
+  "logs_sha256": {
+    "build/native-context-inspect/boot029-generic-vm.log": "0b898a629787e45cecffd62d2665216b584193540ba66e40f0142c2d810a7e31",
+    "build/native-boot029-checks/out/run.log": "efafade6a93e976dc4dbbe6b06d095ec85262450db84ae88d0ca6b08a2d3a114",
+    "virtualization/jobs/029-context-display/out/run.log": "73df6e547049f1e85301a87a14e01dde9cb3b9aab437d773c2a1455776735bed",
+    "virtualization/jobs/029-context-display/out/build.log": "c12c329077ef4e7e341d5b3c10d335e945785e32b57f1dfd0404cf056e16011c"
+  },
+  "native_attempt_10": "NOT RUN",
+  "post_attempt_9": {
+    "user_policy_json": {
+      "original": "Full",
+      "lab": "Permissive",
+      "exit_codes": [
+        0,
+        0
+      ]
+    },
+    "independent_read_only": {
+      "root_volume": "Macintosh HD",
+      "build": "25G83",
+      "FileVault": true,
+      "SIP": "enabled",
+      "staged_m1n1_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "not_requeried": [
+      "default selection",
+      "installed boot object",
+      "authenticated-root"
+    ]
+  },
+  "rea": {
+    "version": "6.4.0",
+    "backend": "Ghidra 12.1.4",
+    "input": "exact boot028 Linux objects; no Apple extraction needed",
+    "evidence_sha256": "7b2f79dc105b12b6341a7ba91253759a41a50683a079eabb3d2c72b848f26136",
+    "complete_llvm_instruction_words": 152,
+    "nonrelocated_linked_word_matches": 126,
+    "relocation_words_reviewed": 26,
+    "switch_to_rea_omitted_words": 31,
+    "native_capability_selection": "UNKNOWN"
+  },
+  "native_display_fix": "NOT VALIDATED: lifecycle defect independently reproduced; precise native strip=0 prerequisite unknown",
+  "native_performance": "NOT MEASURED; instrumentation has overhead"
+}
