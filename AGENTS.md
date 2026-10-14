@@ -86,6 +86,11 @@ that reads it with `-I`.
 
 See `progress.md`. As of 2026-10-14:
 
+Latest M1: boot029 archive/13-file intake, offline launcher, all 90 tests,
+reviewed controller hashes and clean client pin PASS. Readiness published;
+human reports proxy and video ready. Attempt 10 native/live NOT RUN at readiness.
+One filmed launch with display/strip evidence, then return; no retry.
+
 Current M5 handoff: **boot029 / attempt 10, native/live NOT RUN**. M1 attempt 9
 video shows timer PASS/25 ticks, phases 1/10/11/12, pending=1/strip=0; no phase 13
 or userspace. REA/source/regression tests confirm a diagnostic mapper lifecycle

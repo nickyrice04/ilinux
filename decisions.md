@@ -1252,3 +1252,13 @@ attempt 10. No settings/volume changes, repeated Stage A, automatic retry or
 extra M5 approval loop. Record literal strip/state/video evidence, return within
 the bound, then select the next repair from observations. Native userspace and
 Linux control/input remain prerequisites for the Omarchy configuration agent.
+
+## 2026-10-14 · Accept boot029 readiness with independent display-state evidence
+
+M1 verifies archive-before-extraction, 13-file intake, 90 controller cases,
+reviewed hashes and unchanged clean pin. Human reports proxy and recording
+including bottom-left edge; post-attempt-9 protection prerequisite already PASS.
+Publish readiness before one attempt 10. Capture actual display-state and
+literal enlarged strip values, review recording, and separate mapping from
+visibility and diagnostic progress from boot success. Preserve installed setup
+and earlier results; no retry, wider skip, reinstall or settings changes.

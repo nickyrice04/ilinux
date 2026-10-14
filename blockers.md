@@ -20,7 +20,8 @@ physical display and scheduling are the next validation gate.
 
 Post-attempt-9 original Full/lab Permissive JSON PASS; no settings changed.
 M1 verifies boot029 and publishes readiness before one human-started attempt 10.
-Native/live NOT RUN. Preserve installed boot021, single skip and hardware gates;
+M1 independently verifies archive/intake/controller and all 90 tests PASS.
+Human confirms proxy/video ready. Native/live NOT RUN at readiness. Preserve installed boot021, single skip and hardware gates;
 no installation restart or automatic retry. Evidence and exact procedure:
 `kernel/experiments/context-display/README.md`,
 `native/boot/stage-b-2026-10-14-attempt9-result.md`,

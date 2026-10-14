@@ -6,6 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 10 PASS, 2026-10-14
+
+* Pulled/read M5 handoff `73c5e0d`, context-display README/evidence/validation.
+  Boot029 archive SHA-256
+  `ebed9be8b34c3684aaf01ef06b8fc108e0c548960c1f83a25ed411c5ef42ce16`
+  and 16,722,976-byte size verified **before extraction**. All **13 intake
+  files**, offline launcher and reviewed controller digests PASS. Image SHA-256
+  `53f5f2c5a7a2d9d0d2ae92961222090c97f0c266bb4066408acd577660e7cc32`.
+* **90 M1 offline cases PASS:** 37 launcher + 6 entry + 16 DAPF + 5 framebuffer
+  + 19 hardware + 2 pinned ADT/DAPF + 4 root ADT + 1 real proxy serializer;
+  all exit 0, synthetic transport only. Clean client remains pinned at
+  `57a9339ffd1876e78297b17d34dece8cff8fa1ba`; installed boot021 unchanged.
+* Only Image/package manifest differ from retained boot028. Fresh ignored
+  receipt `build/native-intake/receipts/boot029-attempt10.json` and result
+  `build/native-intake/results/boot029-stage-b-attempt10.json`/`.md` prepared
+  with source/procedure/controller/payload/receipt hashes; prior artifacts kept.
+* **Ready for the authorized Stage B attempt 10** after publication. Human
+  reports proxy running and video recording including bottom-left edge.
+  Post-attempt-9 protection prerequisite already PASS per M5; no extra restart
+  or review round trip. **Attempt 10 native/live checks NOT RUN at readiness.**
+* Next: one reviewed RAM launch; capture display state/console_setup, literal
+  enlarged P/S/W/H strip and context-switch/stack/timer/userspace evidence.
+  Review recording, then Macintosh HD within existing bounds. No retry, wider
+  blacklist, reinstall or settings change. Mapping success alone is not visibility.
+
 ### Current M5 handoff — boot029 / attempt 10, 2026-10-14
 
 * Reviewed M1 `29f0f8e`: attempt 9 controller PASS; paused video observes
