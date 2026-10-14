@@ -10,8 +10,9 @@ DT-only successor. Actual pinned m1n1 C/libfdt reproduces the old failure and
 passes three supported pixel formats with the new node. No kernel or m1n1
 rebuild/reinstall needed. See `virtualization/jobs/022-framebuffer-handoff/RESULTS.md`.
 
-Offline tests/package pass; M1 boot022 intake and fresh return-policy JSON remain
-before one reviewed attempt 3. Native display/kernel/PID 1 are still unobserved.
+Offline tests/package pass. Fresh user-supplied return-policy JSON reports
+original Full/lab Permissive, both exit 0; M1 boot022 intake remains before one
+reviewed attempt 3. Native display/kernel/PID 1 are still unobserved.
 Keep the framebuffer gate, single-core scope and original Full Security; no
 volume/security/default changes. Existing GPU/idle/SMP limitations are not
 resolved by this fix. Attempt 2's result remains preserved separately.

@@ -15,16 +15,18 @@ at Full Security. No volume, security, default-startup or boot-object changes;
 no m1n1 reinstall, SMP start, storage enablement or installation.
 
 **M5 offline work: complete. M1 boot022 intake: pending. Post-attempt-2 policy
-check: pending user Terminal result. Attempt 3: NOT RUN.** Do intake while M5
-is still in macOS so download/testing does not waste a restart. Once intake
-passes and the policy result is original Full/lab Permissive (exit 0 for both),
-M1 can confirm ready directly to the human. No extra M5/M1 agent approval round
+check: PASS (user-supplied JSON, original Full/lab Permissive, both exit 0).
+Attempt 3: NOT RUN.** Do intake while M5 is still in macOS so download/testing
+does not waste a restart. Once intake passes, M1 can confirm ready directly
+to the human. No extra M5/M1 agent approval round
 trip is needed. The human then saves work and boots the existing lab entry once.
 
 M5 independently verified original root/build 26.6.2/25G83, System/Data FileVault,
 SIP/authenticated-root, AC power and the unchanged staged m1n1 hash. Default
-startup and installed boot object were not independently queried. Original
-Full/lab Permissive is the preceding policy result, not a new measurement.
+startup and installed boot object were not independently queried. The fresh
+post-return policy JSON was supplied by the user and reviewed by M5; the
+privileged query was not independently rerun. Do not request it again before
+this attempt unless the relevant state changes.
 
 ## M1 preparation — offline only
 

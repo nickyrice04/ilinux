@@ -16,8 +16,9 @@ Latest: Stage B attempt 2 never handed off to Linux. Boot021 lacked m1n1's
 required framebuffer placeholder. Job 022 reproduces this with the actual
 pinned C function and corrects only the Stage-B DT; boot022 is verified offline.
 Kernel/initramfs/installed m1n1 unchanged; the boot021 marker remains correct.
-M1 must intake boot022 before one reviewed attempt 3; post-return policy JSON
-is pending. Native correction NOT TESTED, Linux NOT RUN. Original root/build,
+M1 must intake boot022 before one reviewed attempt 3. The user's fresh read-only
+post-return JSON reports original Full/lab Permissive, both exit 0; reviewed,
+not independently rerun. Native correction NOT TESTED, Linux NOT RUN. Original root/build,
 FileVault/SIP/authenticated-root and staged m1n1 were independently rechecked.
 No volume/security/default/boot-object changes. Current instructions:
 `tools/m1n1-client/stage-b-instructions.md`; evidence:
@@ -30,6 +31,12 @@ m1n1 or repeat Recovery. Download/verify before restart; no extra readiness
 round trip through the M5 agent is required once intake and policy checks pass.
 Use a separate attempt-3 record; preserve prior failures. Keep original Full
 Security and the existing single-core RAM scope. No automatic retry.
+
+Policy prerequisite is now satisfied. At this update, GitHub main still ends at
+`bf79263`, with no M1 boot022 intake report visible. M1 can complete intake and
+confirm readiness directly to the human; do not request the same M5 policy
+check again before this attempt. No new boot or settings change was performed
+while recording the supplied result.
 
 ### Historical M1 result — Stage B attempt 2 stopped; return confirmed, 2026-10-13
 

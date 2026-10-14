@@ -90,8 +90,9 @@ Latest: Stage B attempt 2 never handed off to Linux. Boot021 lacked m1n1's
 required framebuffer placeholder. Job 022 reproduces this with the actual
 pinned C function and corrects only the Stage-B DT; boot022 is verified offline.
 Kernel/initramfs/installed m1n1 unchanged; the boot021 marker remains correct.
-M1 must intake boot022 before one reviewed attempt 3; post-return policy JSON
-is pending. Native correction NOT TESTED, Linux NOT RUN. Original root/build,
+M1 must intake boot022 before one reviewed attempt 3. The user's fresh read-only
+post-return JSON reports original Full/lab Permissive, both exit 0; reviewed,
+not independently rerun. Native correction NOT TESTED, Linux NOT RUN. Original root/build,
 FileVault/SIP/authenticated-root and staged m1n1 were independently rechecked.
 No volume/security/default/boot-object changes. Current instructions:
 `tools/m1n1-client/stage-b-instructions.md`; evidence:

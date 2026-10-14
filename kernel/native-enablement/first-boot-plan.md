@@ -7,7 +7,8 @@ placeholder is confirmed and corrected in **boot022**, with actual pinned
 C/libfdt regression coverage. Kernel, initramfs and installed m1n1 remain
 unchanged. See [job 022](../../virtualization/jobs/022-framebuffer-handoff/RESULTS.md).
 M1 performs new-package intake while M5 stays in macOS, then one reviewed attempt
-3 after the fresh return-policy check. No reinstall or Recovery work. Linux
+3. The fresh user-supplied return-policy check passes: original Full/lab
+Permissive, both exit 0. No reinstall or Recovery work. Linux
 NOT RUN; native framebuffer correction NOT TESTED. Use the current
 [Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md).
 

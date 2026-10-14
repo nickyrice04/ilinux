@@ -960,3 +960,13 @@ unchanged; no new installation or host policy work is involved.
 For reaching Omarchy sooner, prioritize native liveness and an interactive
 Linux access/rootfs path before unrelated peripheral research. A first desktop
 may precede accelerated graphics; it cannot establish macOS-class efficiency.
+
+## 2026-10-13 · Accept supplied return-policy check; wait only for new-package intake
+
+The user's requested read-only helper result reports original Full/lab
+Permissive, both exit 0. Record the policy prerequisite as complete, identifying
+this as reviewed user-supplied output rather than an independent query. M1
+boot022 intake is the remaining preparation step; after it passes, the human
+can start the already reviewed single attempt. Do not repeat the policy check
+or add another approval round trip for unchanged scope. No code or payload
+changes require tests to be rerun for this documentation update.

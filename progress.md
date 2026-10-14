@@ -5,6 +5,17 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-13 · Agent B: post-attempt-2 policy check received and accepted
+
+* User supplied the requested read-only helper JSON: original **Full**, lab
+  **Permissive**, both exit 0. B reviewed this output, not an independent rerun.
+  This completes the outstanding M5 policy prerequisite for attempt 3.
+* Remote reviewed through `bf79263`; no new M1 boot022 intake report visible.
+  M1 verifies boot022 and confirms ready directly to the human before restart;
+  no repeat policy check or additional M5-agent approval loop is needed.
+* Documentation only; no code/payload, security, volume, default or boot-object
+  changes. Existing offline tests apply. Attempt 3 NOT RUN; native Linux NOT RUN.
+
 ## 2026-10-13 · Agent B: boot022 removes confirmed framebuffer packaging blocker
 
 * Code/instructions pushed as `0bea8f2`; private prerelease
