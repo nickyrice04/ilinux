@@ -89,7 +89,7 @@ def main():
                       'high_pcode_outside_body':0,'rea_evidence_id':d['evidence_id'],
                       'provider':d['provider']})
     a.out.write_text(json.dumps({'image_sha256':sha(image),
-        
+
         'functions':facts,'limits':['Static source/REA/linked-byte consistency; no native blocked PC or hardware fix proven.']},indent=2)+'\n')
     print('PASS: bounded REA coverage measured; full ELF/LLVM/linked bytes audited')
 
