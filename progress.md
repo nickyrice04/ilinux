@@ -5,6 +5,48 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-15 · M1: boot034 attempt 15 offline readiness PASS
+
+* Pulled/read M5 handoff `9499bd0` (boot034 / attempt 15), the Stage-B checklist
+  and `kernel/experiments/genpd-sync-state/`. Archive **16,723,189 bytes**,
+  SHA-256 `a856a9b8c6b7fdafeeb68da8dddbc9c82f7e9b5cddf1dc691512f63c0803f5ff`,
+  verified against Git before extraction; 14 regular members, no absolute or
+  parent paths. **13-file intake and offline launcher PASS.**
+* **102 M1 offline cases PASS** (37+10+6+16+5+19+2+6+1), all exit 0; synthetic
+  transport only. Image SHA-256
+  `1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579`
+  (44,599,808 bytes); Stage-B DT unchanged
+  `4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce`.
+* Versus boot033 only the Image and package-manifest metadata differ. All six
+  reviewed controller digests match; client pinned clean at `57a9339`.
+  Installed boot021 unchanged.
+* **M1 independent review of the Image change:**
+  * `apply.py` read in full: both sync_state paths return early under
+    `pd_ignore_unused`; one trace line before each real power-off; a bounded
+    delayed-work ladder (17 s start, 500 ms step) that releases only
+    boot-on, `stay_on`, non-always-on domains, name logged first.
+  * `test_genpd.py`: the 2 tests that can run here pass (exact ladder block
+    under ASan/UBSan, 5 mutations caught). 3 skip because M1 has no Linux tree
+    (by design; M5 ran them in VM job 036).
+  * Static count reproduced independently from the Stage-B DT:
+    **152** unclaimed, non-always-on domains.
+* **Observation for M5 (not a blocker):** the prepared framebuffer node claims
+  no power domains, so the ladder also releases the display domains. In DT
+  order (estimate; runtime order may differ): `dispext0..3_*` at ~20-34 s
+  kernel time and the built-in panel's `disp_adma`/`disp_cpu` at ~49 s. A black
+  screen during the ladder is therefore **ambiguous**: a reset is followed by
+  the Apple logo and macOS login; a display power-off stays black. M1 will keep
+  filming to the 120 s bound either way and report both cases.
+* Ignored receipt `build/native-intake/receipts/boot034-attempt15.json`,
+  record `build/native-intake/results/boot034-stage-b-attempt15.json` and
+  wrapper `build/native-intake/run-attempt15.py` retain the hashes.
+* **Ready for Stage B attempt 15** after publication. **Native boot034 and
+  live checks NOT RUN at readiness.** hv003 and the PMGR probe are separate
+  tracks: M1 offline readiness for them is not yet done.
+* Next: one filmed RAM launch; keep filming to reset, `ladder complete` or
+  120 s from handoff; then Macintosh HD. No retry/reinstall/settings change.
+
+
 ## 2026-10-14 · M5: proxy-driven PMGR probe built offline (NOT RUN)
 
 * **Discovered:**

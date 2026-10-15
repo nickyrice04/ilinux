@@ -113,6 +113,12 @@ steps). M1 runs a ladder of human-started rungs (`--layout-only`,
 `native-j716c-hv003`; instructions `tools/m1n1-client/hv-instructions.md`;
 evidence `native/hv/README.md`. Independent of boot034 / attempt 15.
 
+Latest M1 milestone: boot034 / attempt 15 offline readiness PASS on handoff
+`9499bd0` (102 tests, controller hashes, Image-only delta, 152 domains
+reproduced, clean pin). One filmed RAM attempt and Macintosh HD return next;
+native/live NOT RUN at readiness. hv003 and the PMGR probe: M1 readiness
+pending.
+
 Latest M1 HV result: hv002 census v2 **PASS**, but Session 2 **stopped at the
 chainload**: hv002 never came back on USB (M5 frozen at the restored Apple logo).
 Hypervisor/guest NOT STARTED; cause unknown. See
