@@ -5,6 +5,36 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-15 · M1: attempt 15 outlives the 8.8 s reset, resets at ~27.7 s; M1 panicked at handoff
+
+* One boot034 RAM attempt at readiness `a57837b`, M5 handoff `9499bd0`, started
+  2026-10-15T15:08:37.154Z. **The M1 host kernel-panicked at 15:08:47Z, within
+  ~0.5 s of the expected handoff** (NULL dereference in Apple's `usb.cdc` driver,
+  reached from the launcher's Python process through IOSerialFamily/usb.serial/
+  cdc.acm). The controller record stops at "Uploading DT, initramfs and kernel";
+  later checkpoints and the exit status are **NOT RECORDED**. The M5 nevertheless
+  booted Linux from the handoff with the expected GPIO counts.
+* `Take15.mov` (49.9 s) reviewed. Kernel `ladder armed` 1.370 s; **sync_state
+  kept domains on** at 3.236/3.237 s (call 1.4 ms vs 5.0 ms in attempt 14);
+  PID 1 at 3.254 s; heartbeats 000-004 to 23.34 s. Ladder from 19.42 s, one
+  release per 0.512 s; **17 releases visible** (six `smc_i2cm*`, then `atc*`
+  usb_aon/phymxwrap/usb, then `atc?_common_dp_3` at 27.614 s).
+* **Confirmed (single variable):** attempt 14's reset at ~8.77 s did **not**
+  recur; Linux ran >= 27.6 s with the sync_state bulk power-off removed.
+* **Silent reset at kernel ~27.7-27.85 s**, 0.07-0.24 s after the 17th
+  power-off line; no message of any kind; Apple logo, then macOS login (11:09).
+  `ladder complete` not reached.
+* **Confounded:** candidates are ladder step 6 (`smc_i2cm?`, 21.98 s, +~5.7 s,
+  matches attempt 14's 5.55-5.69 s latency but is a weak fit among 17 steps),
+  step 17 (immediate), or the **M1's own post-panic hard reset**, which fell in
+  the same seconds. Display domains were **not** reached (earlier DT-order
+  estimate retracted; the ladder is newest-registered first).
+* Video was rotated 90 deg after ~19 s: domain-name digits unreadable.
+* Both machines restarted; fresh policy/default NOT CHECKED. No retry or
+  settings change. Report: `native/boot/stage-b-2026-10-15-attempt15-result.md`.
+  Recommend one clean rerun of unchanged boot034 on a freshly restarted M1.
+
+
 ## 2026-10-15 · M1: boot034 attempt 15 offline readiness PASS
 
 * Pulled/read M5 handoff `9499bd0` (boot034 / attempt 15), the Stage-B checklist

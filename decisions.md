@@ -1472,3 +1472,16 @@ Label the misaligned-literal explanation Likely, not confirmed; claim no
 chainload or hypervisor progress until a rung passes on hardware. Close the
 launcher's terminal echo of non-protocol target output (it carried the device
 serial) in the same change.
+
+## 2026-10-15 · Record attempt 15 as informative but confounded; recommend one clean rerun
+
+Boot034 changed one variable and the attempt-14 reset at ~8.8 s did not recur, so
+genpd's bulk sync_state power-off was the trigger of that reset. A second silent
+reset at ~27.7 s during the release ladder cannot be attributed: the M1 host
+kernel-panicked at the handoff and hard-reset in the same seconds, and the
+controller record is incomplete. Report the three candidates (ladder step 6,
+step 17, host USB reset) with their weaknesses and claim no culprit domain. A
+host failure is not an experimental outcome, so one rerun of the unchanged
+package on a freshly restarted M1 is the cheapest way to separate them; the
+human and M5 decide. Film steadily and low so domain names stay readable.
+Retract the earlier device-tree-order estimate of when display domains release.

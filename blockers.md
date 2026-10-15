@@ -3,7 +3,17 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — silent SoC reset ≈ 5.6 s after sync_state (attempt 14)
+## Current Stage B blocker — attempt 15 reset at ~27.7 s is confounded by an M1 host panic
+
+Boot034 removed attempt 14's bulk sync_state power-off and the ~8.8 s reset did
+not recur; Linux ran >= 27.6 s with a 17-step release ladder. The SoC then reset
+silently at ~27.7-27.85 s. The M1 host kernel-panicked (Apple USB CDC driver)
+at the handoff and hard-reset in the same seconds, so the ladder, step 6 (+~5.7 s)
+or step 17, and a host-side USB reset cannot be separated. The controller record
+is incomplete. Recommend one clean rerun of unchanged boot034. See
+`native/boot/stage-b-2026-10-15-attempt15-result.md`. No retry or settings changes.
+
+## Historical Stage B blocker — silent SoC reset ≈ 5.6 s after sync_state (attempt 14)
 
 Attempt 14 reached native diagnostic PID 1 and reset silently at kernel ≈ 8.77 s.
 Boot034 (attempt 15, **NOT RUN**) tests whether genpd sync_state powering off the

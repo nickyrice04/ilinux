@@ -113,7 +113,14 @@ steps). M1 runs a ladder of human-started rungs (`--layout-only`,
 `native-j716c-hv003`; instructions `tools/m1n1-client/hv-instructions.md`;
 evidence `native/hv/README.md`. Independent of boot034 / attempt 15.
 
-Latest M1 milestone: boot034 / attempt 15 offline readiness PASS on handoff
+Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
+sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder
+executed, then a silent SoC reset at kernel ~27.7 s. **Confounded** by an M1 host
+kernel panic at the handoff (Apple USB CDC driver); controller record incomplete;
+fresh policy checks NOT CHECKED. See
+`native/boot/stage-b-2026-10-15-attempt15-result.md`. Rerun recommended.
+
+Historical M1 milestone: boot034 / attempt 15 offline readiness PASS on handoff
 `9499bd0` (102 tests, controller hashes, Image-only delta, 152 domains
 reproduced, clean pin). One filmed RAM attempt and Macintosh HD return next;
 native/live NOT RUN at readiness. hv003 and the PMGR probe: M1 readiness
