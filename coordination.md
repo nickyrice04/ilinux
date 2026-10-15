@@ -19,8 +19,9 @@ older plan disagree, this file wins for ownership and order of work.
   packager refuses any other DT delta). Image, initramfs, m1n1, config, fixed
   arguments and the reviewed controller are byte-identical. The ladder now walks
   145 domains, ≈ 19–94 s kernel time.
-* **Release:** `native-j716c-boot035` (pending user approval to publish),
-  archive SHA-256 `81cbbd1ca09ec53bbfe8f616e578c07d7f878a26a7629c2d1de40d969be966e7`,
+* **Release:** `native-j716c-boot035`, private prerelease published 2026-10-15
+  on `4debc28`; archive SHA-256 `81cbbd1ca09ec53bbfe8f616e578c07d7f878a26a7629c2d1de40d969be966e7`
+  (16,723,179 bytes; GitHub's asset digest and a fresh download both match),
   DT `b1105bbf…86db`, SHA256SUMS digest `7635c5e4…2f8d`. Offline: launcher
   verification and all suites that run without the client venv PASS.
 * **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 16).
