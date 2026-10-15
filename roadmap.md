@@ -47,28 +47,29 @@ survey is not the next dependency. No proprietary code is copied into Linux.
 
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
-The dedicated lab entry and Stage A handshake/return are established.
-Attempt 11 exposes main pinctrl@29c000000 at callback B63; native userspace
-remains unobserved. Boot031 bounds t6050 GPIO cache reads and initializes IRQ
-state before enabling parents, with 17 new diagnostic boundaries. Full build,
-sanitizers/controller/intake/generic VM liveness PASS. Native attempt 12 NOT RUN;
-post-attempt-11 original Full/lab Permissive and return checks PASS. Preserve the
-existing setup. The observed boundary does not yet prove the hang's cause.
+Updated 2026-10-15 after attempt 15. Native Linux reaches diagnostic PID 1 on
+one CPU (attempts 14–15). Attempt 14 reset 5.6 s after genpd's bulk power-off;
+boot034 removed that and ran ≥ 27.6 s, then reset 5.7 s after releasing the
+last of the SMC-owned `smc_i2cm` domains, which no Asahi device tree exposes.
+Boot035 drops those seven domains from the Stage-B DT (one variable). See
+`native/boot/attempt15-review-2026-10-15.md`. Each step below is a separate,
+human-started RAM session.
 
-| Order | Next experiment | Evidence required before advancing |
-|---|---|---|
-| 1 | One human-started attempt 12 after M1 readiness, using boot031 GPIO handoff repair; installed m1n1 stays boot021, single core, NVMe/cpufreq disabled | Record video before launch; timer/tick, display state, four-row P/S/W/H/D/B/C panel, decoded root/current device and operation, stack/deferred phases, PID 1/one CPU/60-second liveness or first failure; review the recording; then original macOS return. Use the current Stage-B checklist. |
-| 2 | Diagnose the earliest actual failure, or improve logging if screen output is absent | A reproducible checkpoint and tested patch; no blind retry or guessed driver diagnosis |
-| 3 | Establish Linux-side USB/input and an observable control channel | Linux USB enumeration and tested input/network access. The working m1n1 USB proxy does not survive Linux handoff |
-| 4 | Separate bounded SMP/idle/DVFS experiments, informed by existing REA startup findings | Correct core identities/topology, stable incremental secondary startup, validated idle/wake and frequency transitions; no assumed masks or OPP values |
-| 5 | Storage access and persistent Linux environment under a separately approved storage plan | Read-only identification first; stable storage/input/access and preservation of macOS volumes. Only then configure native Omarchy via `native/handoff/` |
-| 6 | G17 GPU/DCP, media, N1 wireless, audio/camera/ANE enablement | Per-device transport/firmware evidence and isolated driver tests, followed by measured physical behavior |
+### Path to a native Omarchy boot
 
-Orders 3–4 can share offline research while physical tests remain separate.
-Stage A approval covered only that completed session; Stage B and later
-experiments require their own scope. No new boot-policy change is needed for
-the proposed Stage B test. The configuration agent can prepare packages now,
-but cannot run inside the current shell-less/network-less RAM diagnostic.
+| Order | Milestone | What it needs | Evidence to advance | Status |
+|---|---|---|---|---|
+| 1 | **Stable native baseline** (boot035 / attempt 16) | DT without SMC domains; the boot034 ladder releases the other 145 unclaimed domains | `ladder complete` and heartbeats to 180 s | 🔄 prepared |
+| 2 | **Control channel into Linux** | USB device-mode networking over the M1 cable: dwc3 dual-role and configfs NCM/ECM are built; missing are the Apple Type-C PHY for t6050 (`PHY_APPLE_ATC` off) or reuse of the PHY state m1n1 leaves, plus the dwc3/PHY DT nodes. m1n1 already drives this port in device mode, so the hardware path exists | The M1 sees a USB network interface; ping and SSH into Linux | ⬜ research |
+| 3 | **RAM root with a real Arch userspace** | Arch Linux ARM packages in a zstd initramfs delivered by the proxy (≈ 4–5 MB/s observed; 126 GiB RAM), init that starts sshd on the USB link; 16K-page-safe packages | Login and the Linux-side agent reachable over the link | ⬜ |
+| 4 | **Visual Omarchy boot** | Hyprland on `simpledrm` (built in) with Mesa llvmpipe, one CPU, Omarchy configuration in the RAM root; proven first in the VM | Hyprland desktop on the M5 screen | ⬜ |
+| 5 | SMP, idle/DVFS, thermal | Existing REA startup findings; secondary bring-up; cpuidle/cpufreq | Stable all-core operation | ⬜ |
+| 6 | Input, storage, wireless, GPU | MTP keyboard/trackpad (DockChannel), NVMe (patches 0004–0005), Wi-Fi, G17 GPU (no Linux driver) | Per device, measured | ⬜ |
+
+Parallel tracks that need no Linux boot: the PMGR probe can confirm the SMC
+mechanism per domain in minutes (`tools/m1n1-client/pmgr-probe-instructions.md`),
+and the hv003 ladder (`tools/m1n1-client/hv-instructions.md`) is the tracing
+tool if a reset ever needs register-level evidence.
 
 ## Phase 4 — Performance engineering on native Linux
 

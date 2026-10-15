@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot034",
+  "package": "ilinux-j716c-boot035",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
-  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038",
   "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
   "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
   "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
@@ -28,8 +28,8 @@
       "sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169"
     },
     "t6050-j716c-stage-b.dtb": {
-      "size": 61567,
-      "sha256": "4b3adee52465b809e9c8a1946b7610c63f1ae3c0b24f7334cd485260da84adce"
+      "size": 60363,
+      "sha256": "b1105bbf2c207c8c816c4b9cc0231ecc1d49543e05fe4b772bcb153019e186db"
     },
     "initramfs-stage-b.cpio.gz": {
       "size": 302464,

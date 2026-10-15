@@ -1485,3 +1485,18 @@ host failure is not an experimental outcome, so one rerun of the unchanged
 package on a freshly restarted M1 is the cheapest way to separate them; the
 human and M5 decide. Film steadily and low so domain names stay readable.
 Retract the earlier device-tree-order estimate of when display domains release.
+
+## 2026-10-15 · Drop the SMC-owned power domains from the Stage-B DT (boot035)
+
+Attempt 15 confirmed that Linux powering PMGR domains off can reset this SoC,
+and both resets so far followed the release of an SMC-owned I2C master by the
+same ≈ 5.6 s. Asahi never exposes `smc_*` domains, and nothing on t6050
+consumes them. Remove the seven nodes from the Stage-B DT and change nothing
+else, so attempt 16 tests one variable: if the ladder completes and Linux stays
+up for 180 s, the remaining 145 unclaimed domains are safe to power off and the
+project has its first stable, power-managed native baseline. Keep the boot034
+kernel (sync_state fix, trace and ladder) for attribution. Do not claim the SMC
+mechanism until attempt 16 or the PMGR probe shows it. Leave the
+framebuffer-domain claim and the M1 launcher's tty mitigation for later
+handoffs, because each would add a second variable or change a reviewed
+controller digest.

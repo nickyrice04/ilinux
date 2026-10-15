@@ -113,6 +113,16 @@ steps). M1 runs a ladder of human-started rungs (`--layout-only`,
 `native-j716c-hv003`; instructions `tools/m1n1-client/hv-instructions.md`;
 evidence `native/hv/README.md`. Independent of boot034 / attempt 15.
 
+Latest M5 result: **boot035 prepared (NOT RUN)** after reviewing attempt 15.
+Asahi exposes no `smc_*` power domain on any SoC; our generated t6050 DT carried
+seven SMC-owned `smc_i2cm` domains, and both native resets followed their
+release by ≈ 5.6 s (Likely mechanism). Boot035 removes them from the Stage-B DT
+and changes nothing else; attempt 16 runs the release ladder over the other 145
+domains and should stay up 180 s. The M4/M5 hurdles (SPTM, WFI state loss,
+locked RVBAR, secondary watchdog) are mapped against our path in
+`native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
+path to a native Omarchy boot.
+
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder
 executed, then a silent SoC reset at kernel ~27.7 s. **Confounded** by an M1 host

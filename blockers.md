@@ -3,7 +3,15 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — attempt 15 reset at ~27.7 s is confounded by an M1 host panic
+## Current Stage B blocker — SMC-owned domains in the Stage-B DT (boot035 prepared)
+
+Both native resets followed the release of an SMC-owned `smc_i2cm` power domain
+by ≈ 5.6 s (Likely mechanism; not proven). Asahi exposes no `smc_*` domain on
+any SoC. Boot035 removes the seven from the Stage-B DT and keeps everything else
+identical; attempt 16 (NOT RUN) should run the full release ladder and 180 s.
+See `native/boot/attempt15-review-2026-10-15.md`.
+
+## Historical Stage B blocker — attempt 15 reset at ~27.7 s is confounded by an M1 host panic
 
 Boot034 removed attempt 14's bulk sync_state power-off and the ~8.8 s reset did
 not recur; Linux ran >= 27.6 s with a 17-step release ladder. The SoC then reset

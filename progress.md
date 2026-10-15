@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-15 · M5: boot035 removes the SMC-owned power domains (attempt 16 NOT RUN)
+
+* **Discovered:**
+  * No Asahi PMGR DT (t8103, t600x, t602x, t8112, t6030, t8122) exposes any
+    `smc_*` domain; our ADT-generated t6050 draft carried `smc_i2cm0`–`6`.
+  * In the real t6050 table every other SMC-island domain is virtual; the seven
+    I2C masters are the only AP-writable ones and have no consumer.
+  * The reset lag matches: attempt 14 5.55–5.69 s after the bulk power-off,
+    attempt 15 5.70–5.88 s after the last SMC release (Likely mechanism: the SMC
+    resets the SoC after losing an I2C master).
+  * Asahi's simple-framebuffer nodes claim the display coprocessor's domain; ours
+    claims none (`disp_cpu`, `disp_adma` unclaimed). Noted, not changed.
+  * The pinned m1n1 already carries the M4-era WFI, CTRR and secondary-watchdog
+    fixes; this M5 reports `wdt-version = 3`, so m1n1 disarms both watchdogs.
+* **Implemented:** VM job 038; `make-package.py` boot035 with an exact DT-delta
+  check; `boot034-package-manifest.json` retained; attempt-16 checklist; review
+  and roadmap (`roadmap.md` Phase 3 is now the path to a native Omarchy boot).
+* **Tested:** seven nodes removed and nothing else (decompiled diff), schema
+  clean, the packager's guard refuses an unchanged DT, offline launcher
+  verification PASS, all repository suites PASS except the five that need the
+  M1 client venv.
+* **Not verified:** everything native; whether the SMC mechanism is right.
+* **Next:** publish `native-j716c-boot035` (user approval), M1 readiness, one
+  filmed attempt 16 to 180 s. Optional: PMGR probe on one `SMC_I2CMn`.
+
 ## 2026-10-15 · M1: attempt 15 outlives the 8.8 s reset, resets at ~27.7 s; M1 panicked at handoff
 
 * One boot034 RAM attempt at readiness `a57837b`, M5 handoff `9499bd0`, started

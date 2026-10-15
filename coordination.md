@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — boot035 / attempt 16: Stage-B DT without the SMC-owned domains (NOT RUN)
+
+* **Review of attempt 15** (`native/boot/attempt15-review-2026-10-15.md`): no
+  Asahi PMGR DT (M1–M3) exposes any `smc_*` domain; our generated t6050 draft
+  carried seven (`smc_i2cm0`–`6`), the SMC's own I2C masters, with no ADT
+  consumer. Attempt 14 reset 5.55–5.69 s after the bulk power-off, attempt 15
+  5.70–5.88 s after the last SMC release. **Likely:** cutting an SMC I2C master
+  makes the SMC reset the SoC ≈ 5.6 s later. Not hardware-confirmed.
+* **boot035** = boot034 with those seven nodes removed from the Stage-B DT (job
+  038: `fdtput -r`, decompiled diff shows nothing else, schema clean; the
+  packager refuses any other DT delta). Image, initramfs, m1n1, config, fixed
+  arguments and the reviewed controller are byte-identical. The ladder now walks
+  145 domains, ≈ 19–94 s kernel time.
+* **Release:** `native-j716c-boot035` (pending user approval to publish),
+  archive SHA-256 `81cbbd1ca09ec53bbfe8f616e578c07d7f878a26a7629c2d1de40d969be966e7`,
+  DT `b1105bbf…86db`, SHA256SUMS digest `7635c5e4…2f8d`. Offline: launcher
+  verification and all suites that run without the client venv PASS.
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 16).
+  Restart the M1 fresh first and keep it awake; film fixed, landscape,
+  bottom-left quarter; keep filming to **180 s** even after `ladder complete`.
+* **Platform hurdles** (SPTM, WFI state loss, locked RVBAR, secondary
+  watchdog) are mapped in the review: none blocks a one-CPU baseline or a first
+  visual Omarchy boot; SMP, deep idle and the GPU remain research tracks.
+
 ### Current M1 result — attempt 15: outlives attempt 14's reset, resets at ~27.7 s; M1 host panic at handoff
 
 * One boot034 RAM attempt at readiness `a57837b`, M5 handoff `9499bd0`, started
