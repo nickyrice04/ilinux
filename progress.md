@@ -5,6 +5,37 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: hv003 repairs and instruments the chainload (NOT RUN)
+
+* **Discovered:**
+  * The hv002 stop is a hang before `fb_init()` in the new m1n1: restored
+    Apple logo, no progress bar, so a hang rather than a reset.
+  * Our copy stub kept its 64-bit entry literal at 4 mod 8 and runs with the MMU
+    off, where an unaligned 8-byte load faults (Likely: arithmetic and an
+    instruction emulator agree; not hardware-confirmed).
+  * The proxy chainload differs from Asahi's in-tree stage-1→2 one: six
+    relocated blobs and a whole-ADT rebuild (a first on t6050).
+  * Review also found and hv003 fixes: the launcher echoed every target console
+    byte (including the device serial) to the terminal and `--log`; the new
+    m1n1's heap could start below live iBoot structures; host breadcrumbs are
+    erased by boot021's own redraw; the stub had no entry mark.
+* **Implemented:**
+  * `0002-ilinux-hv-t6050-hv003-crumbs.patch` (additions only, startup.c and
+    main.c) and VM job 037; padded stub; `adt_patch.py` raw ADT patcher;
+    `hv_chainload.py` plan/gates/breadcrumbs; launcher modes
+    `--layout-only`, `--chainload-only`, `--control stock`,
+    `--chainload-mode`; `make_hv_package.py` (manifest schema 2, two guests).
+* **Tested:** 168 chainload, 76 launcher, 10 ADT and 13 crumb tests (267 under
+  `discover -s native/hv`), 37 native launcher tests, 5 genpd; a 71-bug mutation
+  sweep (2 survivors, now covered). Machine code of the final binary: crumb
+  calls in contract order, state word in `.data`; DAPF guard passes.
+* **Not verified:** everything on hardware, including whether the stub
+  hypothesis is right, `adt_patch.py` on a real t6050 ADT (rung 1 is its first
+  parse) and the Device-memory framebuffer stores with the MMU off.
+* **Released:** `native-j716c-hv003`, archive `3924337…2c05`.
+* **Next:** M1 offline readiness, then the ladder in
+  `tools/m1n1-client/hv-instructions.md`; boot034 / attempt 15 is independent.
+
 ## 2026-10-14 · M5: boot034 tests genpd sync_state as the attempt-14 reset trigger
 
 Boot034 / attempt 15 prepared after reviewing M1 attempt 14 (`a4269bb`) and the
@@ -26,8 +57,8 @@ Evidence/code: `kernel/experiments/genpd-sync-state/`.
 
 * **Chainload analysis (no live action):** `native/hv/hv002-chainload-analysis-2026-10-14.md`.
   The hv002 stop is most likely in our proxy chainload procedure or early re-init,
-  not in HV code; a hardened chainload with on-screen breadcrumbs is planned and is
-  independent of boot034.
+  not in HV code; a hardened chainload with on-screen breadcrumbs was then built as
+  hv003 (entry above) and is independent of boot034.
 
 ## 2026-10-14 · M1: hv002 census v2 PASS; Session 2 never got past the chainload
 

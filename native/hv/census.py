@@ -64,9 +64,24 @@ def main(argv=None):
     return 0 if not blockers else 2
 
 
-if __name__ == "__main__":
+def cli(argv=None):
+    """main() as a process: one scrubbed STOP line, never a traceback (see hv_launch.cli).
+
+    A Ctrl-C raised inside the proxy client's reconnect loop chains pyserial's
+    "could not open port /dev/cu.usbmodem<serial>" text, which Python's own
+    traceback printer would show.
+    """
     try:
-        sys.exit(main())
-    except Exception as exc:
-        print("STOP:", type(exc).__name__, str(exc), file=sys.stderr)
-        sys.exit(1)
+        return main(argv)
+    except SystemExit:
+        raise
+    except BaseException as exc:
+        try:
+            print(hv_launch.stop_line(exc), file=sys.stderr)
+        except BaseException:
+            pass
+        return 130 if isinstance(exc, KeyboardInterrupt) else 1
+
+
+if __name__ == "__main__":
+    sys.exit(cli())

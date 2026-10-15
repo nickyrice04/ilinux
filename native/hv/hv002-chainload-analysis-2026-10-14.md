@@ -1,6 +1,6 @@
 # hv002 session 2: why the chainload went silent, and what to change
 
-2026-10-14, M5 agent, offline. Source: the M1 report
+2026-10-14, M5 agent, offline (updated after the hv003 build). Source: the M1 report
 `hv002-session2-2026-10-14-result.md`, the pinned m1n1 (`57a9339`) and our
 launcher. **No target action. hv002 behavior: NOT RUN beyond the chainload.**
 Private tooling; not for upstream.
@@ -54,6 +54,7 @@ That is a strict *prefix* of m1n1 that none of hv002's changes execute
 
 | # | Hypothesis | Why | Cheap discriminator |
 |---|---|---|---|
+| 0 | **Misaligned entry literal in our copy stub** (found during the hv003 build, after this note's first version). The stub had 36 bytes of code and then its 64-bit entry literal at +36. The stub address was `0x10010db8240` (8-aligned), so the literal sat at 4 mod 8. The stub runs after `mmu_shutdown`, with data accesses treated as Device-nGnRnE, where an unaligned 8-byte load faults. | **Likely** (arithmetic and an instruction emulator confirm it; not hardware-confirmed). Upstream's assembler pads its literal pool to 8 bytes; our hand-built stub did not. Fits a silent hang right after `Vectoring to next stage`. | Padded literal (hv003 stub), clang-verified; run rung 2 of the ladder. |
 | 1 | The Python-rebuilt/pushed ADT, or the six-blob relocation, differs from what m1n1 accepts on this iBoot. | Only difference from the field-proven stage-1→2 path; first ADT push on t6050. | Chainload with in-tree semantics (SEPFW only, in-place ADT patch). |
 | 2 | The staged region overlaps something m1n1 needs (ADT, boot_args, framebuffer, heap staging). | In-place overwrite at `u.base`; sizes are unknown here. | Read-only layout check of the planned region before the chainload. |
 | 3 | Early re-init on t6050 depends on state the first m1n1 changed (MCC, AIC, PMGR, display). | A second m1n1 start after `display_shutdown`/`usb_iodev_shutdown` is untested on this SoC. | On-screen breadcrumbs through `m1n1_main`. |
@@ -61,25 +62,46 @@ That is a strict *prefix* of m1n1 that none of hv002's changes execute
 
 Hypotheses 1 and 2 are fixable on the host side, so they come first.
 
-## Plan (hv003, not yet implemented; independent of boot034)
+## What hv003 does (implemented, offline-tested; hardware NOT RUN)
 
-1. **Layout gate** (read-only, before any write): from the live target compute
-   the planned region and refuse if it overlaps the ADT, `boot_args`, the
-   framebuffer or the proxy staging area, and print a sanitized layout table.
-2. **In-tree-equivalent chainload:** SEPFW only (the Python six-blob mode
-   becomes an explicit option) and an **in-place ADT patch** of the raw bytes,
-   with no Python rebuild.
-3. **Breadcrumbs:** the host paints stage marks before the handoff, the copy
-   stub paints one at the instant before it jumps, and a private m1n1 build
-   paints one per early init step (mapping the framebuffer once after
-   `mmu_init`). The next silent hang then names its step on the screen.
-4. **Control:** a `--chainload-only` mode (chainload, verify the marker, stop;
-   no hypervisor) so a session can test stock boot021 vs hv003 without
-   touching a guest.
+1. **Aligned stub:** literal pool padded to 8 bytes; assembled with clang and run
+   through an instruction emulator that faults on unaligned literal loads.
+2. **Layout gate** (read-only, before any write): from the live target compute the
+   planned region and refuse if it overlaps the ADT, the framebuffer or (unsafely)
+   the proxy staging block, if a second chainload is detected, or if it leaves
+   RAM; print a sanitized layout table. A live `boot_args` inside the destination
+   is a NOTE (the new m1n1 uses its staged copy).
+3. **In-tree-equivalent chainload:** SEPFW only, in-place patch of that one ADT
+   property (16 bytes) as the last write, no Python ADT rebuild, no RVBAR write.
+   The `boot_args` copy changes only `top_of_kernel_data`, which is never below
+   the live value (the in-tree flow can lower it under live iBoot structures,
+   and the new heap starts there). A failed patch is reverted, the whole ADT is
+   verified, and the launcher says whether it was restored.
+4. **Breadcrumbs:** the host paints stage marks (slot 2 just before the ADT
+   patch), the copy stub paints an entry mark in slot 3 before its copy loop and
+   then clears the strip and paints a solid bar (slots 0–4) the instant before
+   it jumps, and the private m1n1 build paints one block per early init step
+   (`c0`…`c15`, mapping the framebuffer once after `mmu_init`; `c15` is also
+   stored into the console shadow framebuffer so the first console write does
+   not erase it).
+5. **Ladder of sessions:** `--layout-only` (no memory writes), `--chainload-only`
+   (chainload and verify, no hypervisor), `--chainload-only --control stock`
+   (installed boot021 binary as a control, digest-checked), then the full run.
+   After the reconnect the launcher also requires the new instance's `boot_args`
+   pointer to be the copy it staged, which proves a new instance is running.
+6. **Hygiene found in review:** the launcher no longer echoes the target's
+   console (it carried the device serial); USB errors carry no device paths; a
+   reload that does not reopen the port falls through to the descriptor-checked
+   reconnect instead of ending the session.
 
 ## What this does *not* say
 
 * It does not say hv002's HV changes work: they have still not executed.
 * It does not say chainloading works on M4/M5; community M5 reports only show
-  m1n1 starts there. Whether our procedure or t6050 is at fault is open.
+  m1n1 starts there. Whether our procedure (the misaligned literal being the
+  leading candidate), the unmoved blobs or t6050 itself is at fault is open.
+* The in-tree flow overwrites five memory-map blobs that the Python flow moved
+  (SEPPatches, uStuff, preoslog, RTBuddySeg, TrustCache). The layout table lists
+  them as NOTES; whether any is live on t6050 is Unknown until a session shows
+  the effect.
 * Boot034 (attempt 15) does not depend on any of this.

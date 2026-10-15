@@ -6,6 +6,43 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — hv003: hardened chainload with breadcrumbs (NOT RUN)
+
+* **Why:** hv002's hypervisor change set has still never executed; its session
+  stopped at the m1n1→m1n1 chainload (restored logo, no USB). The M5 review
+  (`native/hv/hv002-chainload-analysis-2026-10-14.md`) ranks: a misaligned
+  literal in our copy stub (Likely, not hardware-confirmed), the Python
+  six-blob/whole-ADT flow that Asahi's own chainload does not use, overlapping
+  regions, early re-initialization on t6050.
+* **hv003** (patches 0001 unchanged + `0002-ilinux-hv-t6050-hv003-crumbs.patch`,
+  VM job 037, `m1n1-hv.bin` `369b104a…42c8`):
+  * padded-literal copy stub; SEPFW-only relocation with a 16-byte in-place ADT
+    patch applied last and reverted on failure; `top_of_kernel_data` never
+    below the live heap;
+  * read-only layout gate and a raw ADT parser (`adt_patch.py`);
+  * breadcrumb strip on the M5 screen: host marks, a stub entry mark and bar,
+    16 early m1n1 steps (the M5 has no reachable UART);
+  * ladder: `--layout-only`, `--chainload-only`, `--control stock`, full run;
+    new-instance proof by `boot_args` pointer;
+  * launcher no longer echoes the target's console (it carried the device
+    serial); open errors carry no device paths.
+* **Verified offline:** 168 chainload, 76 launcher, 10 ADT and 13 crumb tests
+  (267 under `discover -s native/hv`), 37 native launcher tests; stubs
+  assembled with clang and emulated; a 71-bug mutation sweep (2 survivors, now
+  covered). Final-binary call order checked; DAPF guard passes on the image.
+  **No rung has run.**
+* **Release:** `native-j716c-hv003`, archive `ilinux-j716c-hv003.tar.gz`
+  SHA-256 `392433747cb23dbd44df92b7b24279fb559f243ece30ba6e29efc0b842722c05`.
+  Guests: boot033 and boot034 (selected by Image digest). hv001 and hv002 are
+  superseded; do not run them.
+* **M1 next:** `tools/m1n1-client/hv-instructions.md`: offline readiness, then
+  rung 1 `--layout-only`, rung 2 `--chainload-only`, rung 3 (only if 2 fails)
+  `--control stock`, rung 4 the full run. One human-started rung per boot; power
+  off between rungs; film the top-left corner of the M5 screen; stop at the
+  first failing rung. Independent of boot034 / attempt 15 (either order).
+  * RAM-only; no retries; no security, volume or installed-m1n1 change.
+  * Never contribute any of it upstream.
+
 ### Current M5 handoff — boot034 / attempt 15 ready for M1 intake
 
 Boot034 / attempt 15 prepared after reviewing M1 attempt 14 (`a4269bb`) and the

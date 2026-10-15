@@ -1453,3 +1453,22 @@ releases every unclaimed boot-on domain (152 of 188 here), which matches the one
 native path (Image only), with a bounded one-domain-per-500 ms ladder after a
 long stable window so a reset still names its domain. Do not claim the cause
 until the native run; keep the hypervisor work as a parallel track.
+
+## 2026-10-14 · Repair and instrument the chainload before more hypervisor work (hv003)
+
+hv002's hypervisor change set has still never executed: its session stopped at
+the m1n1→m1n1 chainload with a frozen restored logo and no USB device. Do not
+guess at HV code. Change what differs from the field-proven Asahi stage-1→2
+path and make the next failure describe itself: a padded-literal copy stub
+(the stub's 64-bit entry literal sat at 4 mod 8 and runs with the MMU off),
+SEPFW-only relocation with a 16-byte in-place ADT patch applied last and
+reverted on failure, a `top_of_kernel_data` that never drops below the live
+heap, a read-only layout gate, and a breadcrumb strip painted by the host, the
+stub and 16 early m1n1 steps because the M5 has no reachable UART. Run it as a
+ladder of separate human-started rungs (`--layout-only`, `--chainload-only`,
+`--control stock`, then the full run) with a power cycle between them, and
+stop at the first rung that fails. Keep the hv002 change set byte-identical.
+Label the misaligned-literal explanation Likely, not confirmed; claim no
+chainload or hypervisor progress until a rung passes on hardware. Close the
+launcher's terminal echo of non-protocol target output (it carried the device
+serial) in the same change.

@@ -1,31 +1,61 @@
 {
-  "schema": 1,
-  "package": "ilinux-j716c-hv002",
-  "guest_package": "ilinux-j716c-boot033",
-  "guest_image_sha256": "250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15",
-  "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
-  "m1n1_patch": "native/hv/0001-ilinux-hv-t6050-hv002.patch",
-  "m1n1_patch_sha256": "ecde6b2b9342c91d55b0254217bd940adde234837d23927dee381eea3ad9b11e",
-  "m1n1_build": "virtualization/jobs/035-m1n1-hv002: make -j6 ARCH= BUILDSTD=1, M1N1_VERSION_TAG=ilinux-57a9339-hv002",
-  "hv_version_marker": "##m1n1_ver##ilinux-57a9339-hv002",
-  "hv_version_offset": 527024,
-  "hv_dt_pointer_offset": 1140024,
-  "hv_private_opcode": 2032,
-  "hv_single_cpu_offset": 3515737,
-  "hv_init_failed_offset": 3515736,
+  "schema": 2,
+  "package": "ilinux-j716c-hv003",
+  "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
-  "files": {
-    "m1n1-hv.bin": {
-      "size": 3932160,
-      "sha256": "f3ed870590a02f1b7ef9ee5998ac5bd13444465e0df1c78e2048c21c509a758b"
+  "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "m1n1_patches": [
+    {
+      "file": "0001-ilinux-hv-t6050-hv002.patch",
+      "sha256": "ecde6b2b9342c91d55b0254217bd940adde234837d23927dee381eea3ad9b11e"
     },
+    {
+      "file": "0002-ilinux-hv-t6050-hv003-crumbs.patch",
+      "sha256": "457480e01e85f68499314d6797701c7f9dfb7c36e628b9a00fb4c3f4feb1c590"
+    }
+  ],
+  "m1n1_build": "make -j6 ARCH= BUILDSTD=1 with M1N1_VERSION_TAG set per package",
+  "hv_version_marker": "##m1n1_ver##ilinux-57a9339-hv003",
+  "hv_version_offset": 527024,
+  "hv_private_opcode": 2032,
+  "required_symbols": [
+    "kboot_prepare_hv_guest",
+    "hv_ilinux_timers_reset",
+    "ilinux_crumb"
+  ],
+  "guests": {
+    "250d9ff58e5f5397e1bb54682f2bd8a7a679f44f2863629ef7b89ec45ad1eb15": {
+      "package": "ilinux-j716c-boot033",
+      "system_map": "System.map"
+    },
+    "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579": {
+      "package": "ilinux-j716c-boot034",
+      "system_map": "System.map-boot034"
+    }
+  },
+  "files": {
     "System.map": {
       "size": 10020136,
       "sha256": "e6035b526c74dfaac45d2020d38f9a1f191d58432f1d8e4049d66eb14a576bbf"
     },
+    "System.map-boot034": {
+      "size": 10020544,
+      "sha256": "0a6650ceaebbf234160a46339ee27e48e4f263eac0667679337231a07b65d918"
+    },
     "m1n1-hv-symbols.txt": {
-      "size": 59915,
-      "sha256": "cbb10b47a983fe4fc5065a196486c5a7beaa6934c36801841b4aa1f101b87fba"
+      "size": 60149,
+      "sha256": "62a9d5ef55fb32d4877ebc0c848b1ff9bf34110136977e2dbd5849f76047a82b"
+    },
+    "m1n1-hv.bin": {
+      "size": 3932160,
+      "sha256": "369b104a5260120444b62c22a31818b738457ad99c332ad0079dbd2e884542c8"
+    },
+    "toolchain.txt": {
+      "size": 262,
+      "sha256": "de72cdf5233b1ebff2069705ff947dce285239e3c23a90ab1684fcf3de585fa9"
     }
-  }
+  },
+  "hv_dt_pointer_offset": 1140024,
+  "hv_single_cpu_offset": 3515737,
+  "hv_init_failed_offset": 3515736
 }

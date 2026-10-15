@@ -1,0 +1,251 @@
+diff --git a/src/main.c b/src/main.c
+index d0fe508..d3326ec 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -33,6 +33,10 @@
+ 
+ #define CSR_UNAUTHENTICATED_ROOT BIT(11)
+ 
++/* iLinux private (not for upstream): early framebuffer breadcrumbs, see startup.c. */
++extern void ilinux_crumb_step(unsigned int step);
++extern void ilinux_crumb_shadow_step(unsigned int step, u32 *shadow);
++
+ struct vector_args next_stage;
+ 
+ const char version_tag[] = "##m1n1_ver##" BUILD_TAG;
+@@ -144,8 +148,10 @@ void m1n1_main(void)
+     printf("Running in EL%lu\n\n", mrs(CurrentEL) >> 2);
+ 
+     firmware_init();
++    ilinux_crumb_step(6);
+ 
+     heapblock_init();
++    ilinux_crumb_step(7);
+ 
+ #ifndef BRINGUP
+     int node = adt_path_offset(adt, "/chosen/asmb");
+@@ -161,21 +167,30 @@ void m1n1_main(void)
+     if (supports_gxf())
+         gxf_init();
+     mcc_init();
++    ilinux_crumb_step(8);
+     mmu_init();
++    ilinux_crumb_step(9);
+     aic_init();
++    ilinux_crumb_step(10);
+     smp_init();
++    ilinux_crumb_step(11);
+ #endif
+     wdt_disable();
++    ilinux_crumb_step(12);
+ #ifndef BRINGUP
+     pmgr_init();
++    ilinux_crumb_step(13);
+ #ifdef USE_FB
+     display_init();
+     // Kick DCP to sleep, so dodgy monitors which cause reconnect cycles don't cause us to lose the
+     // framebuffer.
+     display_shutdown(DCP_SLEEP_IF_EXTERNAL);
++    ilinux_crumb_step(14);
+     // On idevice we need to always clear, because otherwise it looks scuffed on white devices
+     fb_init(!is_mac);
+     fb_display_logo();
++    ilinux_crumb_step(15);
++    ilinux_crumb_shadow_step(15, fb.ptr);
+ #ifdef FB_SILENT_MODE
+     fb_set_active(!cur_boot_args.video.display);
+ #else
+diff --git a/src/startup.c b/src/startup.c
+index 5b4a1c5..0e7291e 100644
+--- a/src/startup.c
++++ b/src/startup.c
+@@ -5,6 +5,7 @@
+ #include "dockchannel_uart.h"
+ #include "exception.h"
+ #include "firmware.h"
++#include "memory.h"
+ #include "smp.h"
+ #include "string.h"
+ #include "types.h"
+@@ -158,12 +159,148 @@ void dump_boot_args(struct boot_args *ba)
+     }
+ }
+ 
++/* ILINUX-CRUMB-BEGIN */
++/*
++ * iLinux private (not for upstream): framebuffer breadcrumbs for the hv003
++ * chainload test. Each early-init step stores one white block straight into
++ * the boot framebuffer, so a silent hang names its last completed step on the
++ * screen (the M5 has no reachable UART). Geometry is shared with the host
++ * launcher and the copy stub: slot n is a 24x24 block at x = 8 + 28 * n,
++ * y = 4 in 4-byte pixels. Slots 0..4 belong to the host and the stub; step
++ * cN (N = 0..15) is slot 5 + N. Blocks are never cleared.
++ */
++#define ILINUX_CRUMB_BLOCK      24U
++#define ILINUX_CRUMB_PITCH      28U
++#define ILINUX_CRUMB_ORIGIN_X   8U
++#define ILINUX_CRUMB_ORIGIN_Y   4U
++#define ILINUX_CRUMB_SLOTS      21U
++#define ILINUX_CRUMB_COLOR      0xffffffffU
++#define ILINUX_CRUMB_FIRST_STEP 5U
++#define ILINUX_CRUMB_STEPS      16U
++/* Generous (8K is 30720 x 4320): keeps stride * height and base + size from wrapping. */
++#define ILINUX_CRUMB_MAX_STRIDE ((u64)0x10000)
++#define ILINUX_CRUMB_MAX_HEIGHT ((u64)0x4000)
++
++#define ILINUX_CRUMB_ST_UNSEEN 0x43524d30U
++#define ILINUX_CRUMB_ST_ARMED  0x43524d31U
++#define ILINUX_CRUMB_ST_MAPPED 0x43524d32U
++
++/*
++ * The nonzero initialiser puts this in .data, which is loaded with the image,
++ * not in .bss: at c0 (before _start_c clears .bss) it already holds a defined
++ * value and the clear cannot touch it. It is only ever written by this code.
++ * ARMED means a call saw the MMU off, so m1n1 will build its own page tables
++ * before turning it on; MAPPED means the framebuffer was mapped since.
++ */
++static u32 ilinux_crumb_state = ILINUX_CRUMB_ST_UNSEEN;
++
++static bool ilinux_crumb_geometry_ok(const struct boot_video *video, unsigned int slot)
++{
++    const u64 span = ILINUX_CRUMB_ORIGIN_X + (u64)ILINUX_CRUMB_SLOTS * ILINUX_CRUMB_PITCH;
++    const u64 depth = video->depth & 0xff;
++
++    if (slot >= ILINUX_CRUMB_SLOTS)
++        return false;
++    if (video->base == 0 || (video->base & 3))
++        return false;
++    if (depth != 30 && depth != 32)
++        return false;
++    if (video->width < span)
++        return false;
++    if (video->height < ILINUX_CRUMB_ORIGIN_Y + ILINUX_CRUMB_BLOCK)
++        return false;
++    if (video->stride < span * 4)
++        return false;
++    /* The stores run with the MMU off at c0..c8: every row must stay 4-byte aligned. */
++    if (video->stride & 3)
++        return false;
++    if (video->stride > ILINUX_CRUMB_MAX_STRIDE || video->height > ILINUX_CRUMB_MAX_HEIGHT)
++        return false;
++    if (video->stride * video->height > ~(u64)0 - video->base)
++        return false;
++    return true;
++}
++
++static void ilinux_crumb_fill(u64 fb, u64 stride, unsigned int slot)
++{
++    const u64 x0 = ILINUX_CRUMB_ORIGIN_X + (u64)slot * ILINUX_CRUMB_PITCH;
++
++    for (u64 row = 0; row < ILINUX_CRUMB_BLOCK; row++) {
++        volatile u32 *p = (volatile u32 *)(fb + (ILINUX_CRUMB_ORIGIN_Y + row) * stride + x0 * 4);
++
++        for (u64 col = 0; col < ILINUX_CRUMB_BLOCK; col++)
++            p[col] = ILINUX_CRUMB_COLOR;
++    }
++}
++
++/* Paint one block straight into the framebuffer described by *video. */
++void ilinux_crumb(const struct boot_video *video, unsigned int slot)
++{
++    const bool mmu_on = mmu_active();
++
++    if (!mmu_on)
++        ilinux_crumb_state = ILINUX_CRUMB_ST_ARMED;
++
++    if (!ilinux_crumb_geometry_ok(video, slot))
++        return;
++
++    if (mmu_on) {
++        /* Not ours to map unless this boot saw the MMU off first (see above). */
++        if (ilinux_crumb_state == ILINUX_CRUMB_ST_ARMED) {
++            /* mmu_map() needs 16K alignment; never fault in the painter. */
++            if (video->base & 0x3fff)
++                return;
++            /* Same call as fb_init(): the framebuffer is not part of mmu_init(). */
++            mmu_add_mapping(video->base, video->base,
++                            ALIGN_UP(video->stride * video->height, 0x4000), MAIR_IDX_NORMAL_NC,
++                            PERM_RW);
++            ilinux_crumb_state = ILINUX_CRUMB_ST_MAPPED;
++        }
++        if (ilinux_crumb_state != ILINUX_CRUMB_ST_MAPPED)
++            return;
++    }
++
++    ilinux_crumb_fill(video->base, video->stride, slot);
++    sysop("dsb sy");
++}
++
++/*
++ * Same block in the console's shadow copy of the framebuffer. After fb_init()
++ * every fb_update() overwrites the hardware framebuffer from that copy, so a
++ * block painted only into the hardware buffer (c15) would be erased again by
++ * the first console write.
++ */
++void ilinux_crumb_shadow(const struct boot_video *video, u32 *shadow, unsigned int slot)
++{
++    if (!shadow || !ilinux_crumb_geometry_ok(video, slot))
++        return;
++
++    ilinux_crumb_fill((u64)shadow, video->stride, slot);
++}
++
++/* Step cN of the shared contract, using the copied boot_args. */
++void ilinux_crumb_step(unsigned int step)
++{
++    if (step < ILINUX_CRUMB_STEPS)
++        ilinux_crumb(&cur_boot_args.video, ILINUX_CRUMB_FIRST_STEP + step);
++}
++
++void ilinux_crumb_shadow_step(unsigned int step, u32 *shadow)
++{
++    if (step < ILINUX_CRUMB_STEPS)
++        ilinux_crumb_shadow(&cur_boot_args.video, shadow, ILINUX_CRUMB_FIRST_STEP + step);
++}
++/* ILINUX-CRUMB-END */
++
+ extern void get_device_info(void);
+ void _start_c(void *boot_args, void *base)
+ {
+     UNUSED(base);
+     u32 cpu_id = 0;
+ 
++    /* c0: boot_args is not copied yet, use the raw pointer. */
++    ilinux_crumb(&((struct boot_args *)boot_args)->video, ILINUX_CRUMB_FIRST_STEP);
++
+     memset64(_bss_start, 0, _bss_end - _bss_start);
+     boot_args_addr = (u64)boot_args;
+     memcpy(&cur_boot_args, boot_args, sizeof(cur_boot_args));
+@@ -185,6 +322,7 @@ void _start_c(void *boot_args, void *base)
+         }
+     }
+ #endif
++    ilinux_crumb_step(1);
+ 
+     if (in_el2())
+         msr(TPIDR_EL2, cpu_id);
+@@ -198,20 +336,24 @@ void _start_c(void *boot_args, void *base)
+ 
+     /* Use Dockchannel as a secondary UART for now and ignore failure */
+     dockchannel_uart_init();
++    ilinux_crumb_step(2);
+ 
+     uart_puts("Initializing");
+     get_device_info();
+ 
+     printf("CPU init (MIDR: 0x%lx smp_id:0x%x)...\n", mrs(MIDR_EL1), smp_id());
+     init_cpu();
++    ilinux_crumb_step(3);
+     printf("\n");
+ 
+     printf("boot_args at %p\n", boot_args);
+ 
+     dump_boot_args(&cur_boot_args);
++    ilinux_crumb_step(4);
+     printf("\n");
+ 
+     exception_initialize();
++    ilinux_crumb_step(5);
+     m1n1_main();
+ }
+ 

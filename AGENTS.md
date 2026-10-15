@@ -103,6 +103,16 @@ offline readiness, one human-started filmed attempt 15 (keep filming past 60 s:
 stop on reset, `ladder complete` or 120 s) and return to Macintosh HD.
 Evidence/code: `kernel/experiments/genpd-sync-state/`.
 
+Latest M5 HV result: **hv003 prepared (NOT RUN)**. It keeps the hv002 hypervisor
+patch and changes how it is started, since hv002 never came back from the
+m1n1→m1n1 chainload: padded-literal copy stub (Likely cause, not confirmed),
+SEPFW-only relocation with a 16-byte in-place ADT patch applied last, a read-only
+layout gate, and a breadcrumb strip on the M5 screen (host, stub, 16 early m1n1
+steps). M1 runs a ladder of human-started rungs (`--layout-only`,
+`--chainload-only`, `--control stock`, then the full run), one per boot. Release
+`native-j716c-hv003`; instructions `tools/m1n1-client/hv-instructions.md`;
+evidence `native/hv/README.md`. Independent of boot034 / attempt 15.
+
 Latest M1 HV result: hv002 census v2 **PASS**, but Session 2 **stopped at the
 chainload**: hv002 never came back on USB (M5 frozen at the restored Apple logo).
 Hypervisor/guest NOT STARTED; cause unknown. See
