@@ -11,6 +11,7 @@ A="$PWD/../apple-silicon-linux-research"
 IMG="$A/virtualization/images/alarm"
 [ -x "$JOB/run.sh" ] || { echo "no executable $JOB/run.sh" >&2; exit 1; }
 tools/lock.sh acquire vm "$OWNER" "vm-job $JOB" | tail -1
+[ "${PIPESTATUS[0]}" = 0 ] || exit 1   # held by someone else: never a second VM on the same disk
 trap 'tools/lock.sh release vm "$OWNER" | tail -1' EXIT
 "$A/virtualization/bin/vzrun" --cpus 12 --mem 24 \
   --kernel "$IMG/Image-7.1.6-vzrun2-pkg" \

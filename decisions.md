@@ -1512,3 +1512,31 @@ because this run changed both; do not claim a proven mechanism. A boot034 rerun 
 an M1 panic or a single-domain proxy probe would separate them, at low practical value.
 The next gates are a Linux control channel and RAM root, then SMP, idle and DVFS, each
 with its own evidence. No parity or efficiency claim.
+
+## 2026-10-15 · USB control channel: a CDC-EEM gadget on the PHY state m1n1 leaves (boot036)
+
+Build the control channel without a Linux Type-C PHY driver. The parts:
+
+* three plain `snps,dwc3` device-mode cores at high speed;
+* DMA through DART instance 1 with stream 1, exactly what m1n1's own gadget
+  uses on this Mac;
+* every ATC 0–2 power domain disabled, so Linux neither arms AUTO_ENABLE on
+  them nor releases them;
+* the gadget stack built into the Image (the Stage-B initramfs carries no
+  modules).
+
+The function is CDC-EEM, not NCM or ECM. EEM uses bulk endpoints only, the
+ports flag `ncm-interrupt-ep-disabled`, omarchy-m5 saw NCM stall on its
+interrupt endpoint, and macOS 26.6.2 has an EEM driver. Addresses are IPv6
+link-local only with fixed locally administered MACs, so nothing on the M1 is
+configured or routed. Root logs in by key only; host keys are made in RAM.
+
+Alternatives kept as fallbacks, one variable at a time: both DART instances
+(Asahi's layout; the USB-DT side session's candidate) and NCM.
+
+Consequences:
+
+* the link is USB 2.0 only, and nothing can bring the PHY back after a
+  suspend (the quirks keep it from suspending);
+* boot036 runs only after attempt 16 gives a stable baseline;
+* the SSH key is the user's decision (`blockers.md`).

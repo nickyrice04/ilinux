@@ -119,6 +119,20 @@ older plan disagree, this file wins for ownership and order of work.
   watchdog) are mapped in the review: none blocks a one-CPU baseline or a first
   visual Omarchy boot; SMP, deep idle and the GPU remain research tracks.
 
+### Prepared next, not a handoff — boot036 / USB control channel (NOT RUN, not published)
+
+* **M1: nothing to do for boot036 yet.** Attempt 16 (boot035) above stays the
+  current task. boot036 runs only after attempt 16 reports a stable baseline,
+  with a handoff of its own.
+* boot036 adds a CDC-EEM USB network link and key-only SSH into native Linux.
+  The Linux end of port N is `fe80::69:6cff:fe69:6e0N`. Report:
+  `native/boot/boot036-control-channel-2026-10-15.md`. Draft M1 steps:
+  `tools/m1n1-client/control-channel-draft.md` (including a read-only check
+  that the M1's macOS has `AppleUSBEEM.kext`).
+* VM job 041 is the M5's; job 040 (`040-usb-gadget-dt`) is the USB-DT side
+  session's. `tools/vm-job.sh` now exits when the `vm` lock is held by someone
+  else.
+
 ### Current M1 result — attempt 15: outlives attempt 14's reset, resets at ~27.7 s; M1 host panic at handoff
 
 * One boot034 RAM attempt at readiness `a57837b`, M5 handoff `9499bd0`, started

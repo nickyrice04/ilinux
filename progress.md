@@ -92,6 +92,50 @@ measured, still unsupported, and next.
   launch; film to reset or **180 s from handoff** (the ladder alone runs to
   ~94 s); then Macintosh HD. No retry/reinstall/settings/volume change.
 
+## 2026-10-15 · M5: kernel.config provenance gap in boot024–035 found and guarded
+
+Packages boot024–035 shipped job 020's `kernel.config`. Their Images embed
+(IKCONFIG) a config that differs in 8 rustc-detection lines and no option.
+boot021, boot022 and boot036 match. `make-package.py` now refuses a
+`kernel.config` that is not the Image's own (`native/boot/kconfig_guard.py`,
+7 tests). Details: `native/boot/kernel-config-provenance-2026-10-15.md`.
+
+## 2026-10-15 · M5: boot036 USB control channel prepared offline (native NOT RUN, not published)
+
+* **Discovered:**
+  * macOS 26.6.2 ships `AppleUSBEEM.kext` (interface 2/12/7). All three usb-drd
+    ports carry `ncm-interrupt-ep-disabled`, and omarchy-m5's NCM stalled on its
+    interrupt endpoint, so the gadget is CDC-EEM (bulk only).
+  * m1n1's own gadget uses DART instance 1, stream 1, and leaves the ATC, DART and
+    DRD domains and the USB2 PHY on. Linux's pwrstate probe would arm
+    AUTO_ENABLE on those domains and the boot034 ladder would release them.
+  * The `kernel.config` shipped since boot024 is job 020's: it differs from the
+    config that built boot024–035 in 8 rustc-detection lines, no real option.
+* **Implemented:** `kernel/experiments/usb-gadget/` (init with one EEM gadget per
+  UDC, key-only dropbear and per-heartbeat port status; DT builder; initramfs
+  staging; VM self-test). Also:
+  * the `native/boot/usb_dt.py` and `control_channel.py` contracts;
+  * `make-package.py` boot036 with exact checks and `--record-dir`;
+  * VM job 041;
+  * the `tools/vm-job.sh` lock fix: a held lock no longer lets a second VM start.
+* **Tested:**
+  * 12 contract tests pass, rejecting 19 DT, 16 initramfs and 12 config deviations.
+  * Job 041: the config delta is exactly the 14 gadget symbols, m to y.
+  * The DT is byte-identical from the VM and the Mac, and schema-clean.
+  * All 9 shipped packages are signature-validated, and 22/22 ELF files are
+    16 KiB-safe.
+  * Package `ilinux-j716c-boot036` (SHA-256 `521ffd6d…`): the unchanged
+    launcher's offline check passes.
+  * Generic VM: liveness PASS. The dummy_hcd self-test PASS: EEM enumeration,
+    ping, SSH with the key, refusal without it, and an 8 MiB copy intact.
+* **Measured:** the initramfs is 2.39 MB (+2.09 MB, about +0.5 s over the proxy);
+  the Image grew by 80 KiB.
+* **Not verified:** everything native. That includes the dwc3 probe on m1n1's
+  PHY state, one DART instance being enough, and macOS binding EEM.
+* **Next:** attempt 16 (boot035) first. Then the user's SSH-key decision, a
+  rebuild if attempt 16 changes the DT, publication, and attempt 17
+  (`tools/m1n1-client/control-channel-draft.md`). Report:
+  `native/boot/boot036-control-channel-2026-10-15.md`.
 
 ## 2026-10-15 · M5: boot035 removes the SMC-owned power domains (attempt 16 NOT RUN)
 

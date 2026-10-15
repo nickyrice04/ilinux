@@ -21,6 +21,15 @@ any SoC. Boot035 removes the seven from the Stage-B DT and keeps everything else
 identical; attempt 16 (NOT RUN) should run the full release ladder and 180 s.
 See `native/boot/attempt15-review-2026-10-15.md`.
 
+## 🟡 Pending decision — the SSH key for boot036 (control channel)
+
+boot036 (prepared offline, NOT RUN) authorizes one SSH key for root on the
+native Linux side. The built package carries a test key from job 041, whose
+private half is only on the M5. Proposed: the M1 generates its own key and only
+the public half is committed (`kernel/experiments/usb-gadget/authorized_keys`);
+job 041 then rebuilds and only the initramfs changes. Needs the user's choice
+before attempt 17. See `native/boot/boot036-control-channel-2026-10-15.md`.
+
 ## Historical Stage B blocker — attempt 15 reset at ~27.7 s is confounded by an M1 host panic
 
 Boot034 removed attempt 14's bulk sync_state power-off and the ~8.8 s reset did
