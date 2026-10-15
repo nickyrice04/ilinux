@@ -16,9 +16,10 @@ older plan disagree, this file wins for ownership and order of work.
   `/init` with one gadget per controller plus dropbear for root, **key-only, the
   M1's key** from `a6717b0` (`SHA256:o7wtpNY0RUOIIGTyIJvspZFOetYFFG2oeMw5ecZc3yI`).
   Port N's Linux end is `fe80::69:6cff:fe69:6e0N`.
-* **Release:** `native-j716c-boot036` (pending user approval to publish), archive
-  18,902,541 bytes, SHA-256
-  `f09a00000925aea64a6ea7ab6dace05958d779d2367fc6aec233becc58ca71a3`, SHA256SUMS
+* **Release:** `native-j716c-boot036`, private prerelease published 2026-10-15
+  on `0fbbf82`; archive 18,902,541 bytes, SHA-256
+  `f09a00000925aea64a6ea7ab6dace05958d779d2367fc6aec233becc58ca71a3` (GitHub's
+  asset digest and a fresh download both match), SHA256SUMS
   digest `4fbd64d4…442f`. Image `e0e53113…` (reproducible: two VM builds gave the
   same bytes), DT `a676087b…`, initramfs `5f4b478b…`; m1n1, full DT and generic
   initramfs identical to boot035. Controller digests unchanged.
