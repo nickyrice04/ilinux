@@ -6,6 +6,41 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — MTP input: E1 read-only register probe queued for the M1 (NOT RUN)
+
+* **User approval, 2026-10-15:** "queue the read-only E1 probe
+  (kernel/experiments/mtp-input/probe/mtp_probe.py) for the M1 agent,
+  human-started, no retries." **Scope is E1 only.** Not approved: any write
+  request, E2 (booting a kernel with the MTP input patch), E3 (trackpad
+  firmware, SMC functions), a new boot package (a separate proposal exists for
+  the packaging, offline only).
+* **What it is:** 66 32-bit register reads through the m1n1 proxy, at offsets
+  derived from the target's own ADT and inside the regions that ADT declares,
+  never at a register whose read has a side effect (mailbox RECV, DockChannel RX
+  data). Its proxy object has no write method. It reuses the reviewed gates of
+  `native/probe/pmgr_probe.py` (USB identity, chip t6050, installed boot021
+  marker, no started secondaries). Installed boot021 and the clean pin `57a9339`
+  stay unchanged; RAM-only; no volume, security, `bputil` or `kmutil` change.
+* **M1 next, offline (no device):**
+  `python3 -I kernel/experiments/mtp-input/probe/test_mtp_probe.py` (expect
+  `Ran 26 tests ... OK`), `python3 -I kernel/experiments/mtp-input/probe/mtp_probe.py plan`
+  (expect `PLAN: 66 reads`), and
+  `tools/m1n1-client/run.sh kernel/experiments/mtp-input/probe/mtp_probe.py read --help`.
+  Publish readiness here with live checks **NOT RUN**, then tell the human.
+* **Live, human-started, one session, no automatic retries:** iLinux Boot Lab →
+  Continue → `Running proxy...`, both Macs on power, same direct cable; then the
+  E1 command in `kernel/experiments/mtp-input/m1-instructions.md` (writes
+  `build/native-intake/mtp-probe.{json,txt}`). Stop on any `STOP:` line; return
+  to Macintosh HD.
+* **Report back:** the whole text output and the JSON (addresses and register
+  values only); the table in `m1-instructions.md` says what each line decides
+  (DART register base, which SID iBoot left translating, ASC state, mailbox
+  layout, DockChannel FIFO depth).
+* **Delivery:** committed on `main` by the M5 side ("Add the MTP input path
+  analysis, offline preparation and the queued E1 probe", user-authorized
+  2026-10-15); the M1 gets it with `git pull --ff-only` once the remote's
+  `main` carries that commit.
+
 ### Current M5 handoff — boot036 / attempt 17: the USB control channel (NOT RUN)
 
 * **Attempt 16 consumed** (first stable baseline). boot036 = boot035 plus a

@@ -5,6 +5,38 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-15 · M5: MTP keyboard/trackpad input path analysed from macOS; ring transport prepared offline (hardware NOT RUN)
+
+* **Discovered** (REA on this Mac's kernelcache + read-only `ioreg`; labelled in
+  `kernel/experiments/mtp-input/README.md`):
+  * M4/M5 firmware delivers device→host HID reports through one 2 MiB
+    shared-memory ring registered with `{0xC1,2}` then `{0x91,0,0,iova,size}`
+    100 ms after the first DockChannel bytes; host→device stays on the
+    DockChannel FIFO; same 8-byte-header/word-checksum framing. Doorbell content,
+    DART SID and register base are Unknown.
+  * The keyboard needs no firmware; the STM image is an update program only
+    (`needsFirmwareAtBoot() == 0`).
+  * The trackpad image is `J716c_Multitouch.im4p` (XML OSObject graph, CBOR-encoded
+    by macOS with 0xd3 alignment tags); it also needs an SMC function
+    (`function-afe-reset`) that t6050 Linux lacks: the trackpad blocker.
+* **Implemented** (untracked, nothing committed): `kernel/experiments/mtp-input/`
+  (README, design, DT delta, config delta, `patches/0002` ring-transport patch,
+  firmware converter, read-only m1n1-proxy probe, M1 instructions);
+  `virtualization/jobs/042-mtp-input/` (kernel-side checks).
+* **Tested (offline):** ring core 54,871 checks; the real patched driver against a
+  firmware model 39,483 checks (ASan/UBSan, clang and gcc); converter 27 tests;
+  probe 26 tests; 12/28/19/16 mutants caught. VM job 042 on the boot036 tree:
+  0001+0002 apply, driver compiles with `W=1` and no warning, Image links with
+  the new symbols and is reproducible (`6fb8c371…`).
+* **Not verified:** everything on the M5; that the firmware behaves like the model;
+  byte equality of the converted trackpad image with macOS.
+* **Next:** the user approved queueing the E1 read-only probe for the M1 agent
+  (human-started, no retries; entry in `coordination.md`,
+  `kernel/experiments/mtp-input/m1-instructions.md`); the files are committed on
+  `main` and reach the M1 with `git pull --ff-only`. A boot037 package needs the exact
+  DT-delta rule in `native/boot/make-package.py` (a separate offline proposal
+  was started).
+
 ## 2026-10-15 · M5: boot036 rebuilt with the M1's key; attempt-17 handoff prepared (NOT RUN)
 
 * **Implemented:**

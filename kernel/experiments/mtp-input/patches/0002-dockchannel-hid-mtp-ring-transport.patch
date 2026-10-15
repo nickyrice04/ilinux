@@ -1,0 +1,1106 @@
+dockchannel-hid: M4/M5 shared-memory ring transport (experimental, never booted)
+
+Applies on top of the pinned Asahi tree (77cb8f24) plus
+kernel/experiments/driver-contracts/dockchannel-hid/0001-*.patch.
+
+MacBook Pro M5 Max (t6050) MTP firmware delivers input reports through a
+shared-memory byte ring that the host registers, in addition to the
+DockChannel FIFO the existing driver reads. This adds that receive path,
+selected by the "apple,t6050-dockchannel-hid" compatible (or the mtp_ring
+module parameter), and keeps the FIFO path's behaviour (checked by the harness).
+
+Everything here comes from our own static analysis of the macOS drivers on
+this Mac; see kernel/experiments/mtp-input/README.md for each fact and its
+evidence label. Facts marked Unknown there (doorbell contents, whether the
+descriptors travel through the ring, the trackpad reset path) are handled
+defensively and logged, not assumed.
+
+Changes:
+  - dchid-ring.h (new): framing, checksum, ring consumer, command encoders.
+  - after the first DockChannel traffic wait 100 ms, then send the awake
+    report (0xc1) and register one 2 MiB device->host ring (0x91).
+  - drain the ring after every DockChannel read completion (and optionally
+    from a debug timer); one mutex serialises drains.
+  - accept bare acknowledgements and match them by transfer id in ring mode.
+  - parse the extra init blocks newer firmware appends; an "inactive" ready
+    status no longer completes the interface; an interface announced without
+    a HID descriptor is not created until it has one.
+  - if the STM never becomes ready, create the deferred interfaces after
+    3 s without its device ID (ring mode only).
+
+Not done: trackpad firmware flow (reset goes through SMC functions on this
+hardware, see README), GPIO/SMC request acknowledgement format.
+
+Test: kernel/experiments/mtp-input/driver-test/check_driver.py
+
+---
+
+--- a/drivers/hid/dockchannel-hid/dockchannel-hid.c
++++ b/drivers/hid/dockchannel-hid/dockchannel-hid.c
+@@ -18,11 +18,44 @@
+ #include <linux/string.h>
+ #include <linux/unaligned.h>
+ #include <linux/of.h>
++#include <linux/moduleparam.h>
++#include <linux/mutex.h>
++#include <linux/property.h>
++#include <linux/sizes.h>
++#include <linux/workqueue.h>
+ #include "../hid-ids.h"
++#include "dchid-ring.h"
+ 
+ #define COMMAND_TIMEOUT_MS 1000
+ #define START_TIMEOUT_MS 2000
+ 
++/* M4/M5 ring transport: how long the first DockChannel byte waits before the handshake. */
++#define RING_HANDSHAKE_DELAY_MS 100
++#define RING_DEFAULT_SIZE 0x200000	/* the one memory FIFO macOS creates (2 MiB) */
++#define RING_MAX_SIZE SZ_16M
++/* If the STM never reports ready, create the deferred interfaces after this long. */
++#define STM_FALLBACK_MS 3000
++
++static int mtp_ring = -1;
++module_param(mtp_ring, int, 0444);
++MODULE_PARM_DESC(mtp_ring, "MTP transport: -1 follow the DT compatible, 0 FIFO only, 1 shared-memory ring");
++
++static bool mtp_enable_cmd = true;
++module_param(mtp_enable_cmd, bool, 0444);
++MODULE_PARM_DESC(mtp_enable_cmd, "Send the 0xb4 enable command after an interface descriptor");
++
++static unsigned int mtp_poll_ms;
++module_param(mtp_poll_ms, uint, 0444);
++MODULE_PARM_DESC(mtp_poll_ms, "Debug: also drain the ring every N ms (0 = only after DockChannel traffic)");
++
++static unsigned int mtp_ring_size = RING_DEFAULT_SIZE;
++module_param(mtp_ring_size, uint, 0444);
++MODULE_PARM_DESC(mtp_ring_size, "Ring size in bytes, including the 8-byte index header");
++
++struct dchid_cfg {
++	bool ring;
++};
++
+ #define MAX_INTERFACES 16
+ 
+ /* Data + checksum */
+@@ -71,7 +104,11 @@
+ 
+ #define INIT_HID_DESCRIPTOR	0
+ #define INIT_GPIO_REQUEST	1
+-#define INIT_TERMINATOR		2
++#define INIT_TERMINATOR		2	/* the 6-byte "transport" block on newer firmware */
++#define INIT_SERIAL_NUMBER	3
++#define INIT_READY_STATUS	4
++#define INIT_AVAILABLE_IFACES	5
++#define INIT_LOCATION_ID	6
+ #define INIT_PRODUCT_NAME	7
+ 
+ #define CMD_RESET_INTERFACE 0x40
+@@ -175,6 +212,7 @@
+ 	struct completion out_complete;
+ 
+ 	u32 keyboard_layout_id;
++	bool inactive;		/* ready-status block said "inactive", or a ready event had status != 0 */
+ };
+ 
+ struct dockchannel_hid {
+@@ -193,6 +231,20 @@
+ 
+ 	/* Workqueue to asynchronously create HID devices */
+ 	struct workqueue_struct *new_iface_wq;
++
++	/* M4/M5 shared-memory ring transport (dchid-ring.h) */
++	bool ring_mode;
++	bool ring_registered;
++	atomic_t handshake_started;
++	struct mutex ring_lock;		/* serialises ring drains (RX thread, poll, handshake) */
++	struct mutex id_lock;		/* id_ready and the deferred-interface list */
++	struct dchid_ring ring;
++	dma_addr_t ring_iova;
++	struct dchid_asm ring_asm;
++	struct delayed_work handshake_work;
++	struct delayed_work poll_work;
++	struct delayed_work stm_work;
++	unsigned long ring_drops;
+ };
+ 
+ static ssize_t apple_layout_id_show(struct device *dev,
+@@ -648,10 +700,12 @@
+ 	dev_info(dchid->dev, "New interface %s\n", iface->name);
+ 
+ 	/* Start the interface. This is not the entire init process, as firmware is loaded later on device open. */
+-	ret = dchid_enable_interface(iface);
+-	if (ret < 0) {
+-		dev_warn(dchid->dev, "Failed to enable %s: %d\n", iface->name, ret);
+-		return;
++	if (mtp_enable_cmd) {
++		ret = dchid_enable_interface(iface);
++		if (ret < 0) {
++			dev_warn(dchid->dev, "Failed to enable %s: %d\n", iface->name, ret);
++			return;
++		}
+ 	}
+ 
+ 	iface->deferred = false;
+@@ -752,6 +806,18 @@
+ 		return;
+ 	}
+ 
++	/*
++	 * M4/M5 firmware appends a u16 status. macOS marks the interface type
++	 * invalid when it is non-zero (and still runs its ready() path), so such an
++	 * interface is not usable as a HID device: do not report it ready.
++	 */
++	if (dchid->ring_mode && length >= 4 && get_unaligned_le16(pkt + 2)) {
++		dev_info(dchid->dev, "Interface %s ready with status 0x%x, not a usable HID interface\n",
++			 iface->name, get_unaligned_le16(pkt + 2));
++		iface->inactive = true;
++		return;
++	}
++
+ 	dev_info(dchid->dev, "Interface %s is now ready\n", iface->name);
+ 	complete_all(&iface->ready);
+ 
+@@ -772,15 +838,45 @@
+ 			dchid->serial[0] = 0;
+ 		}
+ 
++		cancel_delayed_work(&dchid->stm_work);
++		mutex_lock(&dchid->id_lock);
+ 		dchid->id_ready = true;
+ 		for (i = 0; i < MAX_INTERFACES; i++) {
+ 			if (!dchid->ifaces[i] || !dchid->ifaces[i]->deferred)
+ 				continue;
+ 			dchid_create_interface(dchid->ifaces[i]);
+ 		}
++		mutex_unlock(&dchid->id_lock);
+ 	}
+ }
+ 
++/*
++ * Ring hardware only: the FIFO-era firmware always brought the STM up first.
++ * If it does not (it may want a firmware download this driver cannot do yet),
++ * carry on without its device ID so the keyboard still appears.
++ */
++static void dchid_stm_fallback_work(struct work_struct *ws)
++{
++	struct dockchannel_hid *dchid = container_of(to_delayed_work(ws),
++						     struct dockchannel_hid, stm_work);
++	int i;
++
++	mutex_lock(&dchid->id_lock);
++	if (!dchid->id_ready) {
++		dev_warn(dchid->dev, "STM not ready after %d ms, creating deferred interfaces without its ID\n",
++			 STM_FALLBACK_MS);
++		memset(&dchid->device_id, 0, sizeof(dchid->device_id));
++		dchid->device_id.vendor_id = HOST_VENDOR_ID_APPLE;
++		dchid->id_ready = true;
++		for (i = 0; i < MAX_INTERFACES; i++) {
++			if (!dchid->ifaces[i] || !dchid->ifaces[i]->deferred)
++				continue;
++			dchid_create_interface(dchid->ifaces[i]);
++		}
++	}
++	mutex_unlock(&dchid->id_lock);
++}
++
+ static void dchid_handle_init(struct dockchannel_hid *dchid, void *data, size_t length)
+ {
+ 	struct dchid_init_hdr *hdr = data;
+@@ -810,7 +906,8 @@
+ 
+ 		switch (blk->type) {
+ 		case INIT_HID_DESCRIPTOR:
+-			dchid_handle_descriptor(iface, data, blk->length);
++			if (blk->length)
++				dchid_handle_descriptor(iface, data, blk->length);
+ 			break;
+ 
+ 		case INIT_GPIO_REQUEST: {
+@@ -831,8 +928,20 @@
+ 		}
+ 
+ 		case INIT_TERMINATOR:
++			break;
++
++		case INIT_SERIAL_NUMBER:
++		case INIT_AVAILABLE_IFACES:
++		case INIT_LOCATION_ID:
++			/* M4/M5 firmware appends these after the transport block */
+ 			break;
+ 
++		case INIT_READY_STATUS:
++			/* 2 bytes: 0 = HID, 1 = inactive (waiting for a download) */
++			if (blk->length == 2)
++				iface->inactive = get_unaligned_le16(data) == 1;
++			break;
++
+ 		case INIT_PRODUCT_NAME: {
+ 			char *product = data;
+ 
+@@ -855,19 +964,39 @@
+ 		data += blk->length;
+ 		length -= blk->length;
+ 
+-		if (blk->type == INIT_TERMINATOR)
++		/*
++		 * The FIFO-era firmware ended with the transport block (anything after it
++		 * is padding). Newer firmware appends more blocks after it, so ring mode
++		 * runs until the payload is used up.
++		 */
++		if (blk->type == INIT_TERMINATOR && !dchid->ring_mode)
+ 			break;
+ 	}
+ 
+ 	if (hdr->more_packets)
+ 		return;
+ 
++	/*
++	 * An inactive interface may announce itself without a HID descriptor and
++	 * send a second init after a firmware download. Creating the HID device
++	 * now would fail and mark the interface as created for good.
++	 */
++	if (dchid->ring_mode && !iface->hid_desc) {
++		dev_info(dchid->dev, "Interface %s has no HID descriptor yet%s\n", iface->name,
++			 iface->inactive ? " (inactive, waiting for firmware)" : "");
++		return;
++	}
++
+ 	/* We need to enable STM first, since it'll give us the device IDs */
+-	if (iface->dchid->id_ready || !strcmp(iface->name, "stm")) {
++	mutex_lock(&dchid->id_lock);
++	if (dchid->id_ready || !strcmp(iface->name, "stm")) {
+ 		dchid_create_interface(iface);
+ 	} else {
+ 		iface->deferred = true;
++		if (dchid->ring_mode)
++			schedule_delayed_work(&dchid->stm_work, msecs_to_jiffies(STM_FALLBACK_MS));
+ 	}
++	mutex_unlock(&dchid->id_lock);
+ }
+ 
+ static void dchid_handle_gpio(struct dockchannel_hid *dchid, void *data, size_t length)
+@@ -932,6 +1061,10 @@
+ 	if (!length)
+ 		return;
+ 
++	if (dchid->ring_mode)
++		dev_info_ratelimited(dchid->dev, "management event 0x%02x, %zu bytes: %*ph\n", *p, length,
++				     (int)min_t(size_t, length, 32), p);
++
+ 	switch (*p) {
+ 	case EVENT_INIT:
+ 		dchid_handle_init(dchid, data, length);
+@@ -1001,42 +1134,235 @@
+ 		return;
+ 	}
+ 	if (shdr->flags != iface->out_flags) {
+-		dev_err(iface->dchid->dev,
+-			"Received unexpected flags 0x%x on ACK channel (expFected 0x%x)\n",
++		/* macOS matches an ack by its transfer id (seq) alone, so ring mode does too. */
++		if (!iface->dchid->ring_mode) {
++			dev_err(iface->dchid->dev,
++				"Received unexpected flags 0x%x on ACK channel (expFected 0x%x)\n",
++				shdr->flags, iface->out_flags);
++			return;
++		}
++		dev_dbg(iface->dchid->dev, "ACK flags 0x%x, expected 0x%x\n",
+ 			shdr->flags, iface->out_flags);
+-		return;
+ 	}
+ 
+-	if (shdr->length < 1) {
+-		dev_err(iface->dchid->dev, "Received length 0 output report ack\n");
+-		return;
+-	}
+ 	if (iface->tx_seq != hdr->seq) {
+ 		dev_err(iface->dchid->dev, "Received ACK with bad seq (expected %d, got %d)\n",
+ 			iface->tx_seq, hdr->seq);
+ 		return;
+ 	}
++
++	/*
++	 * FIFO-era firmware echoes the report id and a payload. The M4/M5 host
++	 * driver does not require either (it matches the transfer id and the
++	 * status), so ring mode accepts a bare acknowledgement.
++	 */
++	if (shdr->length < 1) {
++		if (!iface->dchid->ring_mode) {
++			dev_err(iface->dchid->dev, "Received length 0 output report ack\n");
++			return;
++		}
++		iface->resp_size = 0;
++		goto acked;
++	}
+ 	if (iface->out_report != payload[0]) {
+-		dev_err(iface->dchid->dev, "Received ACK with bad report (expected %d, got %d\n",
+-			iface->out_report, payload[0]);
+-		return;
++		if (!iface->dchid->ring_mode) {
++			dev_err(iface->dchid->dev, "Received ACK with bad report (expected %d, got %d\n",
++				iface->out_report, payload[0]);
++			return;
++		}
++		dev_dbg(iface->dchid->dev, "ACK report id %d, expected %d\n",
++			payload[0], iface->out_report);
+ 	}
+ 
+ 	if (iface->resp_buf && iface->resp_size)
+ 		memcpy(iface->resp_buf, payload + 1, min((size_t)shdr->length - 1, iface->resp_size));
+ 
+ 	iface->resp_size = shdr->length;
++acked:
+ 	iface->out_report = -1;
+ 	iface->retcode = shdr->retcode;
++	/* byte 7 of the transport header is a status on newer firmware (0 = use retcode) */
++	if (iface->dchid->ring_mode && (hdr->pad >> 8))
++		iface->retcode = 0xe00002bc;
+ 	complete(&iface->out_complete);
+ }
+ 
++/*
++ * Route one verified message (header + body, checksum already checked) to the
++ * interface it belongs to. Used for DockChannel FIFO and for ring messages.
++ */
++static void dchid_dispatch(struct dockchannel_hid *dchid, struct dchid_hdr *hdr, const u8 *body)
++{
++	struct dchid_work *work;
++	struct dchid_iface *iface;
++
++	if (hdr->iface >= MAX_INTERFACES) {
++		dev_err(dchid->dev, "Bad iface %d\n", hdr->iface);
++		return;
++	}
++
++	iface = dchid->ifaces[hdr->iface];
++
++	if (!iface) {
++		dev_err(dchid->dev, "Received packet for uninitialized iface %d\n", hdr->iface);
++		return;
++	}
++
++	switch (hdr->channel) {
++		case DCHID_CHANNEL_CMD:
++			dchid_handle_ack(iface, hdr, (void *)body);
++			return;
++		case DCHID_CHANNEL_REPORT:
++			break;
++		default:
++			dev_warn(dchid->dev, "Unknown channel 0x%x, treating as report...\n",
++				 hdr->channel);
++			break;
++	}
++
++	work = kzalloc(sizeof(*work) + hdr->length, GFP_KERNEL);
++	if (!work)
++		return;
++
++	work->hdr = *hdr;
++	work->iface = iface;
++	memcpy(work->data, body, hdr->length);
++	INIT_WORK(&work->work, dchid_packet_work);
++
++	queue_work(iface->wq, &work->work);
++}
++
++/*
++ * Ring side: one complete, checksum-verified message sits in ring_asm.buf.
++ * macOS accepts a transport header of 6..8 bytes; every message seen so far
++ * uses 8, which is all this driver parses.
++ */
++static void dchid_ring_message(struct dockchannel_hid *dchid, u8 *msg, size_t len)
++{
++	struct dchid_hdr hdr;
++
++	if (msg[0] != sizeof(hdr)) {
++		dev_dbg_ratelimited(dchid->dev, "ring: header length %u not handled\n", msg[0]);
++		return;
++	}
++	memcpy(&hdr, msg, sizeof(hdr));
++	if (hdr.channel == 0)		/* valid, carries nothing (doorbell candidate) */
++		return;
++	if (hdr.length < sizeof(struct dchid_subhdr) || (hdr.length & 3) ||
++	    sizeof(hdr) + hdr.length + 4 != len) {
++		dev_err_ratelimited(dchid->dev, "ring: bad body length %hu (message %zu)\n",
++				    hdr.length, len);
++		return;
++	}
++	dchid_dispatch(dchid, &hdr, msg + sizeof(hdr));
++}
++
++/* Resynchronise after a framing error: drop what the device has queued so far (bounded). */
++static void dchid_ring_discard(struct dockchannel_hid *dchid)
++{
++	struct dchid_asm *a = &dchid->ring_asm;
++	size_t left = dchid->ring.cap;
++
++	while (left) {
++		long got = dchid_ring_read(&dchid->ring, a->buf, min(left, a->cap));
++
++		if (got <= 0)
++			break;
++		left -= got;
++	}
++}
++
++/* Pull every complete message out of the ring. Called with no lock held. */
++static void dchid_ring_drain(struct dockchannel_hid *dchid)
++{
++	struct dchid_asm *a = &dchid->ring_asm;
++	int budget = 1 << 14;		/* bounded: a misbehaving device cannot pin the thread */
++
++	mutex_lock(&dchid->ring_lock);
++	while (budget-- > 0) {
++		size_t need = dchid_asm_need(a);
++		enum dchid_asm_status st;
++		long got;
++
++		if (!need)
++			need = 1;
++		got = dchid_ring_read(&dchid->ring, a->buf + a->have, need);
++		if (got < 0) {
++			dev_err_ratelimited(dchid->dev, "ring: index out of range, resetting\n");
++			dchid_ring_reset(&dchid->ring);
++			dchid_asm_reset(a);
++			break;
++		}
++		if (!got)
++			break;
++
++		a->have += got;
++		st = dchid_asm_check(a);
++		if (st == DCHID_ASM_INCOMPLETE)
++			continue;
++		if (st == DCHID_ASM_COMPLETE) {
++			dchid_ring_message(dchid, a->buf, a->have);
++		} else {
++			dchid->ring_drops++;
++			dev_err_ratelimited(dchid->dev, "ring: framing error 0x%x\n", st);
++			/*
++			 * A bad checksum on a plausibly framed message still leaves the next
++			 * boundary credible (a 32-bit sum guards every message). Anything else
++			 * means the byte stream is out of step: drop what is queued.
++			 */
++			if (st != DCHID_ASM_E_CHECKSUM)
++				dchid_ring_discard(dchid);
++		}
++		dchid_asm_reset(a);
++	}
++	mutex_unlock(&dchid->ring_lock);
++}
++
++static void dchid_handshake_work(struct work_struct *ws)
++{
++	struct dockchannel_hid *dchid = container_of(to_delayed_work(ws),
++						     struct dockchannel_hid, handshake_work);
++	u8 cmd[DCHID_CMD_FIFO_LEN];
++	int ret;
++
++	/* 1. tell the MTP the system is awake (macOS: report 0xc1, state 2) */
++	dchid_enc_awake(cmd, true);
++	ret = dchid_comm_cmd(dchid, cmd, DCHID_CMD_AWAKE_LEN);
++	if (ret < 0)
++		dev_warn(dchid->dev, "awake report failed: %d (continuing)\n", ret);
++
++	/* 2. register the device->host ring (report 0x91: iova, total size) */
++	dchid_enc_register_fifo(cmd, dchid->ring_iova, dchid->ring.size);
++	ret = dchid_comm_cmd(dchid, cmd, DCHID_CMD_FIFO_LEN);
++	if (ret < 0)
++		dev_err(dchid->dev, "ring registration failed: %d (draining anyway)\n", ret);
++	else
++		dev_info(dchid->dev, "Ring registered: iova %pad, %u bytes\n", &dchid->ring_iova,
++			 dchid->ring.size);
++
++	dchid->ring_registered = ret >= 0;
++
++	/* The ack, or early input, may already sit in the ring without a doorbell we recognise. */
++	dchid_ring_drain(dchid);
++
++	if (mtp_poll_ms)
++		schedule_delayed_work(&dchid->poll_work, msecs_to_jiffies(mtp_poll_ms));
++}
++
++static void dchid_poll_work(struct work_struct *ws)
++{
++	struct dockchannel_hid *dchid = container_of(to_delayed_work(ws),
++						     struct dockchannel_hid, poll_work);
++
++	/* Debug aid: finds out whether data reaches the ring when no doorbell is recognised. */
++	dchid_ring_drain(dchid);
++	schedule_delayed_work(&dchid->poll_work, msecs_to_jiffies(mtp_poll_ms));
++}
++
+ static void dchid_handle_packet(void *cookie, size_t avail)
+ {
+ 	struct dockchannel_hid *dchid = cookie;
+ 	struct dchid_hdr hdr;
+-	struct dchid_work *work;
+-	struct dchid_iface *iface;
+ 	u32 checksum;
+ 
+ 	if (dockchannel_recv(dchid->dc, &hdr, sizeof(hdr)) != sizeof(hdr)) {
+@@ -1044,6 +1370,14 @@
+ 		return;
+ 	}
+ 
++	/*
++	 * Ring hardware: the first DockChannel traffic means the MTP firmware is up.
++	 * macOS waits 100 ms and then registers its ring.
++	 */
++	if (dchid->ring_mode && !atomic_xchg(&dchid->handshake_started, 1))
++		schedule_delayed_work(&dchid->handshake_work,
++				      msecs_to_jiffies(RING_HANDSHAKE_DELAY_MS));
++
+ 	if (hdr.hdr_len != sizeof(hdr)) {
+ 		dev_err(dchid->dev, "Bad header length %d\n", hdr.hdr_len);
+ 		goto done;
+@@ -1054,6 +1388,10 @@
+ 		goto done;
+ 	}
+ 
++	/* A channel-0 message with no body is valid and ignored (macOS does the same). */
++	if (dchid->ring_mode && hdr.channel == 0 && !hdr.length)
++		goto done;
++
+ 	/* The body contains a subheader and is padded to whole words. */
+ 	if (hdr.length < sizeof(struct dchid_subhdr) || (hdr.length & 3)) {
+ 		dev_err(dchid->dev, "Bad packet body length %hu\n", hdr.length);
+@@ -1069,43 +1407,13 @@
+ 		goto done;
+ 	}
+ 
++	dchid_dispatch(dchid, &hdr, dchid->pkt_buf);
+ 
+-	if (hdr.iface >= MAX_INTERFACES) {
+-		dev_err(dchid->dev, "Bad iface %d\n", hdr.iface);
+-		goto done;
+-	}
+-
+-	iface = dchid->ifaces[hdr.iface];
+-
+-	if (!iface) {
+-		dev_err(dchid->dev, "Received packet for uninitialized iface %d\n", hdr.iface);
+-		goto done;
+-	}
+-
+-	switch (hdr.channel) {
+-		case DCHID_CHANNEL_CMD:
+-			dchid_handle_ack(iface, &hdr, dchid->pkt_buf);
+-			goto done;
+-		case DCHID_CHANNEL_REPORT:
+-			break;
+-		default:
+-			dev_warn(dchid->dev, "Unknown channel 0x%x, treating as report...\n",
+-				 hdr.channel);
+-			break;
+-	}
+-
+-	work = kzalloc(sizeof(*work) + hdr.length, GFP_KERNEL);
+-	if (!work)
+-		goto done;
+-
+-	work->hdr = hdr;
+-	work->iface = iface;
+-	memcpy(work->data, dchid->pkt_buf, hdr.length);
+-	INIT_WORK(&work->work, dchid_packet_work);
+-
+-	queue_work(iface->wq, &work->work);
+-
+ done:
++	/* Any DockChannel read completion is also the cue to look at the ring. */
++	if (dchid->ring_mode)
++		dchid_ring_drain(dchid);
++
+ 	dockchannel_await(dchid->dc, dchid_handle_packet, dchid, sizeof(struct dchid_hdr));
+ }
+ 
+@@ -1116,6 +1424,7 @@
+ 	struct device_node *child, *helper;
+ 	struct platform_device *helper_pdev;
+ 	struct property *prop;
++	const struct dchid_cfg *cfg;
+ 	int ret;
+ 
+ 	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+@@ -1129,6 +1438,17 @@
+ 
+ 	dchid->dev = dev;
+ 
++	cfg = device_get_match_data(dev);
++	if (mtp_ring < 0)
++		dchid->ring_mode = cfg && cfg->ring;
++	else
++		dchid->ring_mode = mtp_ring > 0;
++	mutex_init(&dchid->ring_lock);
++	mutex_init(&dchid->id_lock);
++	INIT_DELAYED_WORK(&dchid->handshake_work, dchid_handshake_work);
++	INIT_DELAYED_WORK(&dchid->poll_work, dchid_poll_work);
++	INIT_DELAYED_WORK(&dchid->stm_work, dchid_stm_fallback_work);
++
+ 	/*
+ 	 * First make sure all the GPIOs are available, in cased we need to defer.
+ 	 * This is necessary because MTP will request them by name later, and by then
+@@ -1185,6 +1505,27 @@
+ 	if (dchid->helper_link->supplier->links.status != DL_DEV_DRIVER_BOUND)
+ 		return -EPROBE_DEFER;
+ 
++	if (dchid->ring_mode) {
++		size_t size = round_up(clamp_t(size_t, mtp_ring_size, SZ_16K, RING_MAX_SIZE), SZ_16K);
++		void *mem;
++
++		/* The device writes here through the MTP DART; mapped once, kept until unbind. */
++		mem = dmam_alloc_coherent(dev, size, &dchid->ring_iova, GFP_KERNEL);
++		if (!mem)
++			return -ENOMEM;
++		if (dchid_ring_init(&dchid->ring, mem, size))
++			return -EINVAL;
++		dchid_ring_reset(&dchid->ring);
++
++		dchid->ring_asm.cap = MAX_PKT_SIZE + sizeof(struct dchid_hdr);
++		dchid->ring_asm.buf = devm_kmalloc(dev, dchid->ring_asm.cap, GFP_KERNEL);
++		if (!dchid->ring_asm.buf)
++			return -ENOMEM;
++		dchid_asm_reset(&dchid->ring_asm);
++
++		dev_info(dev, "M4/M5 ring transport: %zu bytes at iova %pad\n", size, &dchid->ring_iova);
++	}
++
+ 	/* Now it is safe to begin initializing */
+ 	dchid->dc = dockchannel_init(pdev);
+ 	if (IS_ERR_OR_NULL(dchid->dc)) {
+@@ -1211,8 +1552,12 @@
+ 	BUG_ON(1);
+ }
+ 
++static const struct dchid_cfg dchid_cfg_fifo = { .ring = false };
++static const struct dchid_cfg dchid_cfg_ring = { .ring = true };
++
+ static const struct of_device_id dockchannel_hid_of_match[] = {
+-	{ .compatible = "apple,dockchannel-hid" },
++	{ .compatible = "apple,t6050-dockchannel-hid", .data = &dchid_cfg_ring },
++	{ .compatible = "apple,dockchannel-hid", .data = &dchid_cfg_fifo },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, dockchannel_hid_of_match);
+--- /dev/null
++++ b/drivers/hid/dockchannel-hid/dchid-ring.h
+@@ -0,0 +1,420 @@
++/* SPDX-License-Identifier: GPL-2.0-only OR MIT */
++/*
++ * dchid_ring.h - M4/M5 MTP HID transport: shared-memory byte FIFO, message
++ * framing and the three management commands the host sends to set it up.
++ *
++ * Original implementation written from our own static analysis of the macOS
++ * 26.6.2 drivers on this Mac (see kernel/experiments/mtp-input/README.md).
++ * It is portable on purpose: the kernel driver includes it as is, and
++ * test_ring.c builds it in userspace against a synthetic firmware model.
++ *
++ * Evidence labels are in the README. In short:
++ *   ring layout          Confirmed (decompiler + independent disassembly)
++ *   framing, checksum    Confirmed (same)
++ *   0xC1 / 0x91 / 0x95   Confirmed byte layouts
++ *   doorbell contents    Unknown (only "any DockChannel RX, then drain" is known)
++ */
++#ifndef DCHID_RING_H
++#define DCHID_RING_H
++
++#ifdef __KERNEL__
++#include <linux/types.h>
++#include <linux/string.h>
++#include <linux/compiler.h>
++#include <asm/barrier.h>
++#define DCHID_RMB()	dma_rmb()
++#define DCHID_WMB()	dma_wmb()
++#define DCHID_MB()	dma_mb()
++#define DCHID_LOAD32(p)	READ_ONCE(*(volatile u32 *)(p))
++#define DCHID_STORE32(p, v) WRITE_ONCE(*(volatile u32 *)(p), (v))
++#else
++#include <stddef.h>
++#include <stdint.h>
++#include <string.h>
++typedef uint8_t u8;
++typedef uint16_t u16;
++typedef uint32_t u32;
++typedef uint64_t u64;
++#define DCHID_RMB()	__atomic_thread_fence(__ATOMIC_ACQUIRE)
++#define DCHID_WMB()	__atomic_thread_fence(__ATOMIC_RELEASE)
++#define DCHID_MB()	__atomic_thread_fence(__ATOMIC_SEQ_CST)
++#define DCHID_LOAD32(p)	__atomic_load_n((volatile u32 *)(p), __ATOMIC_RELAXED)
++#define DCHID_STORE32(p, v) __atomic_store_n((volatile u32 *)(p), (v), __ATOMIC_RELAXED)
++#endif
++
++/* ------------------------------------------------------------------ framing */
++
++#define DCHID_HDR_LEN		8	/* hdr_len byte may be 6..8 on the wire */
++#define DCHID_SUBHDR_LEN	8
++#define DCHID_CSUM_LEN		4
++#define DCHID_MIN_MSG		12	/* header + checksum, empty body */
++
++#define DCHID_TYPE_NONE		0x00	/* parsed and ignored (doorbell candidate) */
++#define DCHID_TYPE_CMD		0x11	/* host->device command / device ack */
++#define DCHID_TYPE_REPORT	0x12	/* device->host input report or event */
++
++/* Errors for the incremental assembler, same numbering macOS uses internally. */
++enum dchid_asm_status {
++	DCHID_ASM_INCOMPLETE = 0,	/* need more bytes */
++	DCHID_ASM_COMPLETE = 1,
++	DCHID_ASM_E_HDR_LEN = 0xfc,	/* hdr_len > 8 */
++	DCHID_ASM_E_TOO_BIG = 0xfd,	/* declared size exceeds the buffer */
++	DCHID_ASM_E_OVERRUN = 0xfe,	/* more bytes than declared */
++	DCHID_ASM_E_CHECKSUM = 0xff,
++};
++
++static inline u32 dchid_le32(const void *p)
++{
++	const u8 *b = p;
++
++	return (u32)b[0] | (u32)b[1] << 8 | (u32)b[2] << 16 | (u32)b[3] << 24;
++}
++
++static inline u16 dchid_le16(const void *p)
++{
++	const u8 *b = p;
++
++	return (u16)(b[0] | b[1] << 8);
++}
++
++static inline void dchid_put_le32(void *p, u32 v)
++{
++	u8 *b = p;
++
++	b[0] = v; b[1] = v >> 8; b[2] = v >> 16; b[3] = v >> 24;
++}
++
++static inline void dchid_put_le16(void *p, u16 v)
++{
++	u8 *b = p;
++
++	b[0] = v; b[1] = v >> 8;
++}
++
++static inline void dchid_put_le64(void *p, u64 v)
++{
++	dchid_put_le32(p, (u32)v);
++	dchid_put_le32((u8 *)p + 4, (u32)(v >> 32));
++}
++
++/* checksum = ~sum of the little-endian u32 words of header+body (len % 4 == 0) */
++static inline u32 dchid_frame_csum(const void *p, size_t len)
++{
++	const u8 *b = p;
++	u32 sum = 0;
++
++	for (size_t i = 0; i + 4 <= len; i += 4)
++		sum += dchid_le32(b + i);
++	return ~sum;
++}
++
++/*
++ * Incremental message assembler. The caller owns @buf (capacity @cap) and feeds
++ * it exactly dchid_asm_need() bytes at a time; that is how the device side is
++ * read from both the DockChannel FIFO and the ring, so a message is never split
++ * across, or merged with, its neighbour.
++ */
++struct dchid_asm {
++	u8 *buf;
++	size_t cap;
++	size_t have;
++};
++
++static inline void dchid_asm_reset(struct dchid_asm *a)
++{
++	a->have = 0;
++}
++
++/* Total message size once the length field is known (0 if it is not yet). */
++static inline size_t dchid_asm_total(const struct dchid_asm *a)
++{
++	if (a->have < 6)
++		return 0;
++	return (size_t)a->buf[0] + dchid_le16(a->buf + 2) + DCHID_CSUM_LEN;
++}
++
++/* Bytes to read next: 12 first (smallest possible message), then the rest. */
++static inline size_t dchid_asm_need(const struct dchid_asm *a)
++{
++	size_t total;
++
++	if (a->have < DCHID_MIN_MSG)
++		return DCHID_MIN_MSG - a->have;
++	total = dchid_asm_total(a);
++	return total > a->have ? total - a->have : 0;
++}
++
++/* Call after appending @n bytes at buf + have (caller already advanced have). */
++static inline enum dchid_asm_status dchid_asm_check(const struct dchid_asm *a)
++{
++	size_t total;
++
++	if (a->have < 6)
++		return DCHID_ASM_INCOMPLETE;
++	if (a->buf[0] > DCHID_HDR_LEN || a->buf[0] < 6)
++		return DCHID_ASM_E_HDR_LEN;
++	total = dchid_asm_total(a);
++	if (total > a->cap)
++		return DCHID_ASM_E_TOO_BIG;
++	if (a->have < DCHID_MIN_MSG || a->have < total)
++		return DCHID_ASM_INCOMPLETE;
++	if (a->have > total)
++		return DCHID_ASM_E_OVERRUN;
++	if (dchid_le32(a->buf + total - DCHID_CSUM_LEN) !=
++	    dchid_frame_csum(a->buf, total - DCHID_CSUM_LEN))
++		return DCHID_ASM_E_CHECKSUM;
++	return DCHID_ASM_COMPLETE;
++}
++
++/* Accessors, valid only after DCHID_ASM_COMPLETE. */
++static inline u8 dchid_msg_type(const u8 *m)    { return m[1]; }
++static inline u8 dchid_msg_seq(const u8 *m)     { return m[4]; }
++static inline u8 dchid_msg_iface(const u8 *m)   { return m[5]; }
++static inline u8 dchid_msg_status(const u8 *m)  { return m[7]; }
++static inline const u8 *dchid_msg_app(const u8 *m) { return m + m[0]; }
++static inline u16 dchid_msg_payload_len(const u8 *m) { return dchid_le16(dchid_msg_app(m) + 2); }
++static inline const u8 *dchid_msg_payload(const u8 *m) { return dchid_msg_app(m) + DCHID_SUBHDR_LEN; }
++
++/*
++ * Build a host->device message (type 0x11, hdr_len 8). Returns the total size
++ * or 0 if @cap is too small. flags = (report group << 6) | request.
++ */
++static inline size_t dchid_build_cmd(u8 *out, size_t cap, u8 seq, u8 iface, u8 flags,
++				     const void *payload, u16 len)
++{
++	size_t body = ((size_t)len + DCHID_SUBHDR_LEN + 3) & ~(size_t)3;
++	size_t total = DCHID_HDR_LEN + body + DCHID_CSUM_LEN;
++
++	if (total > cap)
++		return 0;
++	memset(out, 0, total);
++	out[0] = DCHID_HDR_LEN;
++	out[1] = DCHID_TYPE_CMD;
++	dchid_put_le16(out + 2, (u16)body);
++	out[4] = seq;
++	out[5] = iface;
++	out[DCHID_HDR_LEN] = flags;
++	dchid_put_le16(out + DCHID_HDR_LEN + 2, len);
++	if (len)
++		memcpy(out + DCHID_HDR_LEN + DCHID_SUBHDR_LEN, payload, len);
++	dchid_put_le32(out + DCHID_HDR_LEN + body, dchid_frame_csum(out, DCHID_HDR_LEN + body));
++	return total;
++}
++
++/* ---------------------------------------------------------------- ring FIFO */
++
++/*
++ * One shared-memory byte FIFO: u32 write index, u32 read index, then data.
++ * The device produces; the host consumes. Indices are byte offsets into data.
++ */
++#define DCHID_RING_HDR		8
++#define DCHID_RING_MIN		(DCHID_RING_HDR + 1)
++
++struct dchid_ring {
++	u8 *mem;		/* start of the shared buffer (the u32 pair) */
++	u32 size;		/* total size, header included */
++	u32 cap;		/* size - 8 */
++	u32 errors;		/* corrupted-index events seen */
++};
++
++static inline int dchid_ring_init(struct dchid_ring *r, void *mem, size_t size)
++{
++	if (!mem || size < DCHID_RING_MIN || size > 0xffffffffu)
++		return -1;
++	r->mem = mem;
++	r->size = (u32)size;
++	r->cap = (u32)size - DCHID_RING_HDR;
++	r->errors = 0;
++	return 0;
++}
++
++static inline void dchid_ring_reset(struct dchid_ring *r)
++{
++	DCHID_STORE32(r->mem, 0);
++	DCHID_STORE32(r->mem + 4, 0);
++	DCHID_WMB();
++}
++
++static inline u8 *dchid_ring_data(const struct dchid_ring *r)
++{
++	return r->mem + DCHID_RING_HDR;
++}
++
++/*
++ * Bytes available to the host (consumer). Sets *wr and *rd. Returns -1 if
++ * either index is outside the data area: the device wrote nonsense, and the
++ * caller must stop trusting this ring until it is reset.
++ */
++static inline long dchid_ring_consumer_avail(struct dchid_ring *r, u32 *wr, u32 *rd)
++{
++	u32 w = DCHID_LOAD32(r->mem);
++	u32 rr = DCHID_LOAD32(r->mem + 4);
++
++	if (w >= r->cap || rr >= r->cap) {
++		r->errors++;
++		return -1;
++	}
++	*wr = w;
++	*rd = rr;
++	return w >= rr ? (long)(w - rr) : (long)r->cap - (long)rr + (long)w;
++}
++
++/* Copy up to @want bytes out and advance the read index. Returns bytes copied. */
++static inline long dchid_ring_read(struct dchid_ring *r, void *dst, size_t want)
++{
++	u32 wr, rd, first, n;
++	long avail = dchid_ring_consumer_avail(r, &wr, &rd);
++	u8 *data = dchid_ring_data(r);
++
++	if (avail < 0)
++		return -1;
++	n = (u32)((size_t)avail < want ? (size_t)avail : want);
++	if (!n)
++		return 0;
++	DCHID_RMB();			/* index load before data loads */
++	first = r->cap - rd;
++	if (first > n)
++		first = n;
++	memcpy(dst, data + rd, first);
++	if (n > first)
++		memcpy((u8 *)dst + first, data, n - first);
++	rd = (u32)(((u64)rd + n) % r->cap);
++	DCHID_MB();			/* data loads before the index release (load->store) */
++	DCHID_STORE32(r->mem + 4, rd);
++	return n;
++}
++
++/* Producer side. Used by the test firmware model and by any future host ring. */
++static inline long dchid_ring_producer_free(struct dchid_ring *r, u32 *wr, u32 *rd)
++{
++	u32 w = DCHID_LOAD32(r->mem);
++	u32 rr = DCHID_LOAD32(r->mem + 4);
++
++	if (w >= r->cap || rr >= r->cap)
++		return -1;
++	*wr = w;
++	*rd = rr;
++	/* one byte is always left unused so that wr == rd means empty */
++	return rr > w ? (long)(rr - w - 1) : (long)r->cap - (long)w + (long)rr - 1;
++}
++
++static inline long dchid_ring_write(struct dchid_ring *r, const void *src, size_t len)
++{
++	u32 wr, rd, first;
++	long room = dchid_ring_producer_free(r, &wr, &rd);
++	u8 *data = dchid_ring_data(r);
++
++	if (room < 0 || (size_t)room < len)
++		return -1;
++	first = r->cap - wr;
++	if (first > len)
++		first = (u32)len;
++	memcpy(data + wr, src, first);
++	if (len > first)
++		memcpy(data, (const u8 *)src + first, len - first);
++	wr = (u32)(((u64)wr + len) % r->cap);
++	DCHID_WMB();
++	DCHID_STORE32(r->mem, wr);
++	return (long)len;
++}
++
++/* --------------------------------------------------------- management cmds */
++
++#define DCHID_CMD_AWAKE		0xc1	/* {0xc1, state}  state 2 = awake, 1 = not */
++#define DCHID_CMD_FIFO		0x91	/* register a device->host ring */
++#define DCHID_CMD_SHMEM		0x95	/* register a typed shared buffer */
++
++#define DCHID_AWAKE_ASLEEP	1
++#define DCHID_AWAKE_AWAKE	2
++#define DCHID_SHMEM_FIRMWARE	2	/* firmware image (as in the FIFO-era driver) */
++#define DCHID_SHMEM_REPORT	3	/* large-report staging buffer */
++
++#define DCHID_CMD_AWAKE_LEN	2
++#define DCHID_CMD_FIFO_LEN	15
++#define DCHID_CMD_SHMEM_LEN	16
++
++static inline size_t dchid_enc_awake(u8 out[DCHID_CMD_AWAKE_LEN], int awake)
++{
++	out[0] = DCHID_CMD_AWAKE;
++	out[1] = awake ? DCHID_AWAKE_AWAKE : DCHID_AWAKE_ASLEEP;
++	return DCHID_CMD_AWAKE_LEN;
++}
++
++/* {0x91, 0, 0, u64 iova @3 (unaligned), u32 total size @11}; size includes the 8-byte header */
++static inline size_t dchid_enc_register_fifo(u8 out[DCHID_CMD_FIFO_LEN], u64 iova, u32 total_size)
++{
++	out[0] = DCHID_CMD_FIFO;
++	out[1] = 0;
++	out[2] = 0;
++	dchid_put_le64(out + 3, iova);
++	dchid_put_le32(out + 11, total_size);
++	return DCHID_CMD_FIFO_LEN;
++}
++
++/* {0x95, type, 0, iface, u64 iova @4, u32 size @12} */
++static inline size_t dchid_enc_register_shmem(u8 out[DCHID_CMD_SHMEM_LEN], u8 type, u8 iface,
++					      u64 iova, u32 size)
++{
++	out[0] = DCHID_CMD_SHMEM;
++	out[1] = type;
++	out[2] = 0;
++	out[3] = iface;
++	dchid_put_le64(out + 4, iova);
++	dchid_put_le32(out + 12, size);
++	return DCHID_CMD_SHMEM_LEN;
++}
++
++/* ---------------------------------------------------------- init descriptor */
++
++/* Management event ids (device -> host on interface 0) */
++#define DCHID_EV_CONFIG_REQ	0xa0
++#define DCHID_EV_RESET_REQ	0xa2
++#define DCHID_EV_DUMP_REQ	0xa3
++#define DCHID_EV_DUMP_RSP	0xa4
++#define DCHID_EV_FUNC_REQ	0xb5
++#define DCHID_EV_INIT		0xf0
++#define DCHID_EV_READY		0xf1
++#define DCHID_EV_WAKE		0xf2
++
++/* TLV block types inside an INIT event */
++#define DCHID_BLK_HID_DESC	0
++#define DCHID_BLK_CONFIG	1
++#define DCHID_BLK_TRANSPORT	2
++#define DCHID_BLK_SERIAL	3
++#define DCHID_BLK_READY		4
++#define DCHID_BLK_IFACES	5
++#define DCHID_BLK_LOCATION	6
++#define DCHID_BLK_PRODUCT	7
++
++#define DCHID_INIT_HDR_LEN	22
++
++struct dchid_init_block {
++	u16 type;
++	u16 len;
++	const u8 *data;
++};
++
++/*
++ * Walk the TLV blocks of an INIT payload (after the 22-byte header). Returns
++ * the number of bytes consumed or -1 on a truncated or oversized block.
++ * *pos is advanced block by block; call until it returns 0.
++ */
++static inline int dchid_init_next(const u8 *payload, size_t len, size_t *pos,
++				  struct dchid_init_block *blk)
++{
++	size_t p = *pos;
++
++	if (p >= len)
++		return 0;
++	if (len - p < 4)
++		return -1;
++	blk->type = dchid_le16(payload + p);
++	blk->len = dchid_le16(payload + p + 2);
++	if (blk->len > 0x7ff || len - p - 4 < blk->len)
++		return -1;
++	blk->data = payload + p + 4;
++	*pos = p + 4 + blk->len;
++	return 1;
++}
++
++#endif /* DCHID_RING_H */
