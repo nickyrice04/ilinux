@@ -1,10 +1,9 @@
-# DRAFT: attempt 17, the USB control channel (boot036)
+# Attempt 17, the USB control channel (boot036): M1-side network steps
 
-**Draft for a future handoff, 2026-10-15. Not an instruction yet. Do not run
-any of it until the M5 publishes boot036 with a handoff of its own.** It follows
-attempt 16 (boot035), and only if attempt 16 reached `ladder complete` and
-heartbeats to 180 s. If attempt 16 found another domain that resets the SoC,
-boot036 is rebuilt first.
+**Active for attempt 17, 2026-10-15.** The checklist is
+`stage-b-instructions.md`; this file holds the M1-side detail it refers to.
+Attempt 16 (boot035) reached `ladder complete` and the first stable baseline,
+which this attempt builds on.
 
 Design and evidence: `kernel/experiments/usb-gadget/README.md`. Everything in
 the Stage-B checklist (`stage-b-instructions.md`) still applies: Full Security
@@ -17,7 +16,10 @@ After the handoff, the M5 no longer goes silent on USB. About 5–15 s after PID
 1, Linux presents a new USB device on the same cable: "iLinux J716c control
 channel, port N", VID:PID `1d6b:0104`, a CDC-EEM network function. It is a
 different device from m1n1's (`1209:316d`), so macOS should bind its EEM network
-driver, not the serial driver that panicked in attempt 15.
+driver, not the serial driver that panicked in attempt 15. Its `bcdDevice` is
+`0x0036` (boot036's Stage-B init). The later Arch RAM root answers on the same
+port, MAC and link-local address with `bcdDevice` `0x0039`, so `ioreg` tells
+the two stages apart.
 
 ## Before the attempt (offline, read-only)
 
@@ -31,17 +33,11 @@ driver, not the serial driver that panicked in attempt 15.
 
    If the kext is missing, stop and report: boot036 would need NCM or ECM, which
    the M5's ports flag `ncm-interrupt-ep-disabled`.
-2. SSH key. Proposed: generate your own key and publish only the public half:
-
-   ```sh
-   mkdir -p build/control
-   ssh-keygen -t ed25519 -N '' -C ilinux-m1-control -f build/control/m1-control
-   ```
-
-   Then commit `build/control/m1-control.pub` as
-   `kernel/experiments/usb-gadget/authorized_keys`. The M5 rebuilds boot036 with
-   it; only the initramfs changes. The private key never leaves the M1.
-   (Pending the user's decision; the alternative is the job-041 test key.)
+2. SSH key: **done** (commit `a6717b0`). The M1's own key
+   `build/control/m1-control` (private half, mode 600, never leaves the M1);
+   its public half is `kernel/experiments/usb-gadget/authorized_keys`,
+   fingerprint `SHA256:o7wtpNY0RUOIIGTyIJvspZFOetYFFG2oeMw5ecZc3yI`. boot036
+   authorizes exactly this key and nothing else.
 3. Record the interfaces before the handoff: `ifconfig -l > build/native-intake/ifaces-before.txt`.
 
 ## During the attempt

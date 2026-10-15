@@ -5,6 +5,26 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-15 · M5: boot036 rebuilt with the M1's key; attempt-17 handoff prepared (NOT RUN)
+
+* **Implemented:**
+  * boot036 rebuilt by job 041 with the M1's public key (`a6717b0`,
+    `SHA256:o7wtpNY0…`). The shipped initramfs authorizes exactly that key; the
+    VM self-test overlay authorizes its own test key, for test boots only.
+  * Job 041 now pins the kernel's build time, user and host. Two builds gave
+    the same Image (`e0e53113…`), so the RAM root can pin boot036's kernel.
+  * The attempt-17 checklist (`tools/m1n1-client/stage-b-instructions.md`) and
+    the handoff records in `native/boot/` now point at boot036.
+* **Tested:**
+  * Package `ilinux-j716c-boot036` (18,902,541 bytes, SHA-256 `f09a0000…71a3`):
+    exact delta and kernel.config-provenance checks PASS.
+  * The committed launcher (`65ece253…`, unchanged) verifies it offline.
+  * Generic-VM liveness and the dummy_hcd USB self-test were rerun on these
+    exact outputs (see the report).
+* **Not verified:** everything native.
+* **Next:** publish `native-j716c-boot036` (user approval), M1 readiness, one
+  human-started attempt 17 reached over SSH.
+
 ## 2026-10-15 · M1: control key published for boot036; macOS EEM driver checked
 
 * **Public key published** for boot036's USB gadget: commit `a6717b0` adds only

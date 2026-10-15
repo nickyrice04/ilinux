@@ -1540,3 +1540,16 @@ Consequences:
   suspend (the quirks keep it from suspending);
 * boot036 runs only after attempt 16 gives a stable baseline;
 * the SSH key is the user's decision (`blockers.md`).
+
+## 2026-10-15 · boot036 authorizes the M1's own key; kernel builds are reproducible
+
+The M1 generated its own ed25519 key and committed only the public half
+(`a6717b0`), so the private half never leaves the controller. The shipped
+initramfs authorizes exactly that key, and the packager checks it. The VM
+self-test cannot use that key, so its overlay authorizes a separate test key;
+the overlay is never shipped.
+
+Kernel jobs pin `KBUILD_BUILD_TIMESTAMP`, `KBUILD_BUILD_USER` and
+`KBUILD_BUILD_HOST`, so a rebuild gives the same Image. Without that, every
+rebuild changed the Image digest, and the RAM root (whose modules and checks
+pin one kernel) could not follow boot036's kernel.

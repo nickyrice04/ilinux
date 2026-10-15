@@ -28,6 +28,11 @@ OVL=/var/tmp/ilinux-boot036/overlay
 MIRROR='https://fl.us.mirror.archlinuxarm.org/$arch/$repo'   # official ALARM mirror
 BOOT035_IMAGE=1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579
 EPOCH=1760486400                     # 2025-10-15 00:00 UTC: fixed cpio mtimes
+# Reproducible kernel builds: the Image embeds its build time, user and host in the
+# version string, so pin them; a rebuild then gives the same Image (and the RAM root
+# can pin it). Each run starts from a fresh copy of the boot034 tree, so the build
+# counter is the same too.
+export KBUILD_BUILD_TIMESTAMP="@$EPOCH" KBUILD_BUILD_USER=ilinux KBUILD_BUILD_HOST=job041
 JOBS=$(nproc)
 log() { printf '[%s] %s\n' "$(date +%T)" "$*"; }
 rm -rf "$OUT/export" "$OUT/build"

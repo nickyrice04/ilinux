@@ -1,75 +1,72 @@
-# Stage B — attempt 16 / boot035: the Stage-B DT without the SMC-owned domains
+# Stage B — attempt 17 / boot036: the USB control channel
 
 **M5 handoff, 2026-10-15.** Pull latest main with `git pull --ff-only`, preserving
-local work and stopping on divergence. Read `coordination.md`, this file and
-`native/boot/attempt15-review-2026-10-15.md`.
-Attempt 15 is consumed: boot034 **outlived attempt 14's 8.8 s reset** (PID 1,
-heartbeats 000–004, a 17-step ladder), then reset silently at kernel ≈ 27.7 s,
-≈ 5.7 s after the sixth `smc_i2cm` release. The M1 host panicked at the handoff.
-See `native/boot/stage-b-2026-10-15-attempt15-result.md`.
-**Native attempt 16 / boot035 / live checks NOT RUN at this handoff.**
+local work and stopping on divergence. Read `coordination.md`, this file,
+`native/boot/boot036-control-channel-2026-10-15.md` and
+`tools/m1n1-client/control-channel-draft.md` (the M1-side network steps).
+Attempt 16 is consumed and gave **the first stable native baseline**: boot035
+ran the whole 74-domain release ladder and stayed alive past 108 s
+(`native/boot/stage-b-2026-10-15-attempt16-result.md`).
+**Native attempt 17 / boot036 / live checks NOT RUN at this handoff.**
 
 **Continue the existing installation.** Installed boot021 m1n1 and clean client
 pin remain unchanged. Do not repeat provisioning, Stage A, Recovery, macOS
 installation, `bputil`, `kmutil`, partitioning or m1n1 installation. Keep
-Macintosh HD at Full Security and as default. No volume/security changes.
+Macintosh HD at Full Security and as default. No volume/security changes, and
+**no network-settings changes on the M1** without the human's approval.
 
 ## What changed and why
 
-The seven `smc_i2cm0`–`6` power domains are the SMC coprocessor's own I2C
-masters. No Asahi PMGR device tree (M1 through M3) exposes any `smc_*` domain.
-Our generated t6050 draft did, and Linux treated them as unclaimed. Attempt 14's
-reset (5.6 s after the bulk power-off) and attempt 15's (5.7 s after the last
-SMC release) fit one mechanism: **Linux cutting an SMC I2C master makes the SMC
-reset the SoC ≈ 5.6 s later** (Likely, not proven).
+boot036 is boot035 plus a **USB network link into native Linux over this same
+cable**, so the M1 can log in and read the kernel log instead of a video:
 
-Boot035 changes **one** thing: those seven nodes are **removed** from the
-Stage-B DT. Image (the boot034 kernel with the sync_state fix and the release
-ladder), initramfs, m1n1, config, fixed arguments, one CPU, GPIO exclusions,
-all hardware gates and the reviewed controller are **byte-identical** to
-boot034. The ladder now walks the remaining **145** unclaimed, not-always-on
-domains that are on at boot, from ≈ 19 s kernel time, one per ≈ 0.51 s, ending
-≈ 94 s.
+* **Kernel:** the boot034 tree with `USB_LIBCOMPOSITE=y` and `USB_CONFIGFS=y`
+  (the 14 gadget lines from m to y, nothing else). The genpd fix and release
+  ladder are unchanged. The shipped `kernel.config` is now the Image's own
+  (the packager checks it against the config embedded in the Image).
+* **Stage-B DT:** boot035's plus three `snps,dwc3` USB controllers in device
+  mode at USB 2.0 speed, on the PHY state m1n1 leaves, with DMA through each
+  port's second USB DART. All 39 power domains of USB-C ports 1–3 are
+  **disabled**, so Linux never touches them and the release ladder skips them.
+* **`/init`:** the same diagnostics and heartbeats, then one **CDC-EEM** USB
+  network gadget per controller and **dropbear SSH** for root, **key-only**
+  (the M1's key from commit `a6717b0`, fingerprint
+  `SHA256:o7wtpNY0RUOIIGTyIJvspZFOetYFFG2oeMw5ecZc3yI`). Port N's Linux end is
+  `fe80::69:6cff:fe69:6e0N` (IPv6 link-local only: no IPv4, no DHCP, no routes).
+  Each heartbeat adds a `[ctl]` status line per port.
+* m1n1, the generic initramfs, the full DT, the launcher and its fixed
+  arguments are unchanged.
 
-Offline: VM job 038 removed exactly the seven nodes (`fdtput -r`; decompiled
-diff shows nothing else), schema validation is clean before and after, and the
-package builder refuses any DT delta other than these seven nodes. No native
-effect is established. See the review for evidence and limits.
-
-## Return protection prerequisite — confirmed after attempt 13
-
-User reports original **Full**, lab **Permissive**; no fresh exit-code JSON was
-supplied this turn. M5 independently read root Macintosh HD/build 25G83/
-FileVault=true/SIP enabled and unchanged staged m1n1 SHA. This supersedes the
-report's pending return status. Default selection/installed boot object/
-authenticated-root were not independently re-queried. No settings changed.
-Do not repeat the same check or add an M1↔M5 approval loop without new evidence.
+Offline: VM job 041 built everything; generic-VM liveness PASS; a VM self-test
+with a virtual USB host PASS (enumeration, ping, SSH with a key, refusal
+without it, an 8 MiB copy). The macOS host, the real dwc3 cores, the DARTs and
+the PHY state are what this attempt tests.
 
 ## Offline intake before the human restarts
 
-Download only private `native-j716c-boot035`; verify the archive against current
+Download only private `native-j716c-boot036`; verify the archive against current
 Git **before extraction**. Preserve every earlier package/receipt/result. Stop
 on a mismatch. The following performs no live USB action.
 
 ```sh
 (
 set -e
-mkdir -p build/native-boot035-download
-if [ ! -f build/native-boot035-download/ilinux-j716c-boot035.tar.gz ]; then
-  gh release download native-j716c-boot035 --repo nickyrice04/ilinux \
-    --pattern ilinux-j716c-boot035.tar.gz --dir build/native-boot035-download
+mkdir -p build/native-boot036-download
+if [ ! -f build/native-boot036-download/ilinux-j716c-boot036.tar.gz ]; then
+  gh release download native-j716c-boot036 --repo nickyrice04/ilinux \
+    --pattern ilinux-j716c-boot036.tar.gz --dir build/native-boot036-download
 fi
 (
-  cd build/native-boot035-download
+  cd build/native-boot036-download
   shasum -a 256 -c ../../native/boot/archive-sha256.txt
-  if [ ! -d ilinux-j716c-boot035 ]; then tar -xzf ilinux-j716c-boot035.tar.gz; fi
+  if [ ! -d ilinux-j716c-boot036 ]; then tar -xzf ilinux-j716c-boot036.tar.gz; fi
 )
 mkdir -p build/native-intake/receipts build/native-intake/results
 tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
-  build/native-boot035-download/ilinux-j716c-boot035 \
+  build/native-boot036-download/ilinux-j716c-boot036 \
   --manifest-sha256 "$(cat native/boot/intake-manifest-sha256.txt)" \
-  > build/native-intake/receipts/boot035-attempt16.json
-python3 -I native/boot/launch.py --package build/native-boot035-download/ilinux-j716c-boot035
+  > build/native-intake/receipts/boot036-attempt17.json
+python3 -I native/boot/launch.py --package build/native-boot036-download/ilinux-j716c-boot036
 python3 -I native/boot/test_launcher.py
 python3 -I native/boot/test_gpio_guard.py
 python3 -I native/boot/test_entry_guard.py
@@ -79,24 +76,38 @@ python3 -I native/boot/test_hardware.py
 tools/m1n1-client/run.sh native/boot/test_dapf_guard_adt.py
 tools/m1n1-client/run.sh native/boot/test_launcher_adt.py
 M1N1_SOURCE="$PWD/third_party/m1n1" tools/m1n1-client/run.sh native/boot/test_protocol.py
+python3 -I native/boot/test_usb_dt.py
+python3 -I native/boot/test_control_channel.py
+python3 -I native/boot/test_kconfig_guard.py
+grep -x "$(cut -d' ' -f1,2 kernel/experiments/usb-gadget/authorized_keys)" <(
+  python3 -I -c 'import json,sys; print(" ".join(json.load(open(sys.argv[1]))["control_channel_authorized_key"].split()[:2]))' \
+    build/native-boot036-download/ilinux-j716c-boot036/package-manifest.json)
 )
 ```
 
-Require **37 + 10 + 6 + 16 + 5 + 19 + 2 + 6 + 1 = 102 cases PASS**, package PASS,
-13 receipt files and the clean client pin `57a9339ffd1876e78297b17d34dece8cff8fa1ba`.
-No kernel/REA setup on M1. The receipt verifies files, not live authorization.
+Require the reviewed **37 + 10 + 6 + 16 + 5 + 19 + 2 + 6 + 1 = 102 cases PASS**,
+plus the three boot036 suites (6 + 6 + 7 tests; their real-package cases skip
+without the M5's `build/` directories), package PASS, 13 receipt files, the
+clean client pin `57a9339ffd1876e78297b17d34dece8cff8fa1ba`, and the last
+command printing the M1's own public key (the package authorizes exactly that
+key). Also confirm `build/control/m1-control` (the private half) is present
+with mode 600. No kernel/REA setup on M1.
 
-Archive **16,723,179 bytes**, SHA-256:
-`81cbbd1ca09ec53bbfe8f616e578c07d7f878a26a7629c2d1de40d969be966e7`.
-Image **44,599,808 bytes**, SHA-256 (unchanged from boot034):
-`1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579`.
-Stage-B DT SHA-256 (boot034 was `4b3adee5…adce`):
-`b1105bbf2c207c8c816c4b9cc0231ecc1d49543e05fe4b772bcb153019e186db`.
+Archive **18,902,541 bytes**, SHA-256:
+`f09a00000925aea64a6ea7ab6dace05958d779d2367fc6aec233becc58ca71a3`.
+Image **44,681,728 bytes**, SHA-256 (two VM builds gave the same bytes):
+`e0e531130a6f6bd7a5768393200a4c6e42f19a65c54c3deb390d53756edef3f7`.
+Stage-B DT SHA-256 (boot035 was `b1105bbf…86db`):
+`a676087bda3cffa178604ca0cf128558d9ab2a620073314d054c79a685ecefa5`.
+Stage-B initramfs **2,392,627 bytes** (boot035: 302,464), SHA-256:
+`5f4b478b6005fe3f137733fbd8c361a4e1d16573b08af1334fc8837689b4b248`.
 SHA256SUMS digest:
-`7635c5e4a25b051fa933ad969e2407c3f6a63cea876570f58052a474cf162f8d`.
+`4fbd64d401917f28ebb21841e284a864e1290286c1dd6d78ff973d0354f6442f`.
+m1n1, the full DT and the generic initramfs are byte-identical to boot035.
 Git manifests are authoritative; stop on disagreement.
 
-Reviewed controller digests (also record checked-out Git commit):
+Reviewed controller digests (unchanged from attempt 16; also record the
+checked-out Git commit):
 
 * `native/boot/launch.py`: `65ece2537fdb9ece0ed54dc234f8ee253bc2f3c44aac8c012014079b6366cfe0`
 * `native/boot/gpio_guard.py`: `a3c038d036e2bc97679bd29d78d16e42b3db06d96775918abaeb01a53434a755`
@@ -105,169 +116,91 @@ Reviewed controller digests (also record checked-out Git commit):
 * `native/boot/fdt.py`: `ee577a08bb48242e84dbc50cd1f40a8d1f47a4d4481ca6dd6503829f53615ad3`
 * `tools/m1n1-client/usb_identity.py`: `72cc8c2a916b8964b2e4b5afc4c1aac22fe8031a2c2f8658df6882b063a47137`
 
-Prepare fresh ignored `boot035-stage-b-attempt16.json`/`.md` records with the
+Before the attempt, run the read-only M1 preparation in
+`tools/m1n1-client/control-channel-draft.md` ("Before the attempt"): the
+`AppleUSBEEM.kext` check is already reported (macOS 26.0.1, 2/12/7); record
+`ifconfig -l` before the handoff.
+
+Prepare fresh ignored `boot036-stage-b-attempt17.json`/`.md` records with the
 source/procedure/controller/payload/receipt hashes. Push sanitized readiness
 in `progress.md` and `coordination.md`, keeping native/live checks NOT RUN.
-Tell the human when ready. M1 readiness plus the human's start suffice; no
-extra M5 review round trip for these unchanged verified instructions.
+Tell the human when ready. M1 readiness plus the human's start suffice.
 
-## One human-started, filmed RAM boot
+## One human-started RAM boot, filmed and reached over SSH
 
-1. Both Macs on power, same direct cable/primary USB interface. **Restart the
-   M1 fresh shortly before the run** (attempt 15's host panicked in Apple's USB
-   CDC driver about six minutes after a sleep/wake), keep it awake with
-   `caffeinate -i`, close any other serial tool, and do not let it sleep.
-   Film the M5 built-in screen **before launching**, 60 fps if available,
-   with the phone **fixed in landscape** (stand or tripod) and **never moved**:
-   attempt 15 lost the domain-name digits when the phone was rotated. Frame
-   the **bottom-left quarter** of the screen, where the newest console lines and
-   the four-row panel are. Keep recording through the stop criterion, including
-   a close final frame. Stop at readiness if recording cannot be arranged. Full
-   media stays local.
-2. Human saves work, shuts down, holds power for startup options and selects
-   **iLinux Boot Lab → Continue**. Keep Macintosh HD as default. If already at
-   `Running proxy...` for this attempt, do not restart again.
-3. After the human starts and reports the proxy, invoke this **once**:
+1. Both Macs on power, same direct cable. **Restart the M1 fresh shortly
+   before the run**, keep it awake with `caffeinate -i`, close any serial tool.
+   Film the M5 screen **before launching**, at **1080p or 4K**, phone fixed in
+   a stand and never moved (portrait is fine). Frame the left part of the
+   screen down to the bottom edge, where the newest lines start. Transfer the
+   **original** file afterwards (AirDrop or cable, not Messages, which
+   compresses it: attempt 16's copy was 320×568 and its digits were unreadable).
+2. Human saves work, shuts down the M5, holds power for startup options and
+   selects **iLinux Boot Lab → Continue**. Keep Macintosh HD as default.
+3. After the human reports the proxy, invoke this **once**:
 
    ```sh
    tools/m1n1-client/run.sh native/boot/launch.py \
-     --package build/native-boot035-download/ilinux-j716c-boot035 \
+     --package build/native-boot036-download/ilinux-j716c-boot036 \
      --launch --device auto --confirm BOOT-J716C-RAM-DIAGNOSTIC
    ```
 
    The existing sanitized wrapper may call the same `main(argv)` once. No
-   `m1n1.setup`, shell, separate handshake, reconnect or automatic retry.
-4. Record times/elapsed/exit, all preflight and final Hardware DT checks,
-   retained GPIO ADT exclusion check, both DAPF checks/readback, framebuffer descriptor/readback and kboot reply.
-   Preserve all gates. No raw target output/ADT/memory/register dumps or
-   serial-bearing paths. Unexpected error: safe function/line/type and reviewed
-   fixed message only; no locals, no weakening detection.
-5. USB proxy ends at handoff. Exit 0 is not Linux success. Capture these:
+   `m1n1.setup`, shell, separate handshake, reconnect or automatic retry. When
+   it reports the handoff, the launcher has closed the serial port: do not
+   reopen it.
+4. Record the controller result as in attempt 16 (times, elapsed, exit, all
+   preflight and final Hardware DT checks, GPIO exclusions, DAPF, framebuffer
+   descriptor, kboot reply). Exit 0 is not Linux success.
+5. **On the M5 screen**, expect the attempt-16 lines (PID 1, `online_cpus=1`,
+   the genpd lines, `ladder complete: N domains released`, now **without any
+   `atc0_`/`atc1_`/`atc2_` domain**) plus:
+   * `[ctl] USB control channel: CDC-EEM gadget per UDC, IPv6 link-local, SSH key only`
+   * one `[ctl] port N: UDC <name> bound, EEM 1d6b:0104, interface usbX up` line
+     per port (three), and `[ctl] dropbear start 1`;
+   * each heartbeat: `[ctl] port1 <state> ... | port2 ... | port3 ...`. The
+     cabled port should reach `configured`, then show rising `rx=`/`tx=` and
+     its `fe80::` address.
+6. **On the M1, read-only** (N = the port whose state is `configured`; the
+   draft has the full command lines):
+   * `ioreg -p IOUSB -l -w0 | grep -i -A3 iLinux` (the device, `bcdDevice` 0x0036);
+   * `ifconfig -l` diffed against the "before" list, then `ifconfig enX`
+     (look for `inet6 fe80::…%enX`);
+   * `ping6 -c 3 fe80::69:6cff:fe69:6e0N%enX`;
+   * SSH with `build/control/m1-control` (own `known_hosts` file under
+     `build/control/`, `StrictHostKeyChecking=accept-new`) as root, and save to
+     ignored `build/native-intake/`:
+     `uname -a; cat /proc/cmdline; cat /sys/class/udc/*/state; cat /proc/interrupts; dmesg`.
+   * Optional, once SSH works: the timed 256 MiB transfer from the draft.
+   Keep the SSH session read-only: no writes to `/sys` or `/dev`, no module or
+   configfs changes, no `reboot`/`poweroff`. If `enX` has no `inet6` address,
+   report it and change nothing (adding a network service is a settings change
+   that needs the human's approval).
+7. Stop criterion: **10 minutes from handoff**, or earlier on a reset, a kernel
+   panic, an M1 panic, or once the SSH captures above are saved. Then the human
+   powers the M5 off (hold power), selects **Macintosh HD → Continue** and
+   confirms the usual desktop return.
 
-   * Kernel `target=j716c-t6050 mode=EL2 cpus=1` (or actual reported EL),
-     `timer counter=PASS ticks=N` and timer/mask status. N must be positive.
-   * `ilinux-display: state=N console_setup=N`, if visible. Console setup
-     does not mean it is still registered. Record this without inferring it.
-   * Phases 10, 11, 12; `reschedule pending=N strip=N display=N`; phase 13
-     if it returns. `strip=1` / `display=6` mean a mapping was available,
-     not that every mark was visible. The repeated display state helps if the
-     earlier mapping log has scrolled away.
-   * **A close photo/paused frame of all four rows**, including literal hex:
+   | M5 screen | M1 | Meaning |
+   |---|---|---|
+   | a port reaches `configured`, rx/tx rise | new `enX`, ping and SSH work | **Control channel works**: the first remote shell into native Linux. Save `dmesg`. |
+   | `dwc3 … -110` or a timeout during probe | no device | the core cannot soft-reset on the PHY state m1n1 left |
+   | `apple-dart … fault` | device seen, traffic dies | DMA mapping wrong: the next step is both DART instances |
+   | ports stay `not attached` / `default` | no device | no pull-up or no PHY: report the states |
+   | `configured` | device in `ioreg`, no `enX` | macOS bound no EEM driver: report the `ioreg` interface lines |
+   | `configured`, rx stays 0 | `enX` without `inet6` | macOS has not set up IPv6 on `enX` |
+   | reset or black screen | | as in attempts 14–16: note the time and the last lines |
 
-     ```text
-     P:xx S:xx
-     W:xx H:xx
-     D:xxxx I:xxx
-     B:xx C:xxxx
-     ```
-
-     P/W/H retain their meanings; S is the watchdog-sampled last scheduler
-     phase. **D** is the root deferred device;
-     **C** is the device supplied to the last marked operation; **B** is that
-     operation's boundary. D/C are public table indexes, not hardware IDs.
-     **I** is a hexadecimal GPIO pin index, 000–1FF; **FFF** means inactive.
-     B91 is before that permitted pin's MMIO read. It is not a faulting PC.
-     Copy literal values before interpreting them. Missing/overwritten lanes
-     stay NOT OBSERVED; 0000 means unknown only when actually readable.
-   * Use `python3 -I kernel/experiments/probe-path/decode.py --device D_HEX
-     --current C_HEX --phase B_HEX --pin I_HEX`, replacing the four placeholders with
-     actual readable hex. Omit --pin if I is unreadable. It is an offline lookup. `device-identities.json`
-     and `phases.json` are the authoritative tables; no hardware/REA setup on M1.
-   * Watchdog heartbeat, scheduler summary, first stack's symbolic function
-     names/offsets, retry-compatible begin/end and later initcalls, if readable.
-     No inferred stack frames or unrelated identifiers. H now updates before
-     printk, so a visible change can survive blocked text logging.
-   * GPIO probe messages: `GPIO cache: pins=N readable=N reserved=N`,
-     `t6050 IRQ handoff: pins=N parents=N masked=N`, each probe return/error,
-     and any `pending reserved GPIO IRQ`, locked-pin or mask-readback error.
-     Main cache expectation is 221/216/5; NUB=61 and AOP=85 are inventory
-     expectations, not observations. Record actual numbers. B90 validates DT
-     exclusions; B91 reads the permitted pin in I; B92 completes defaults;
-     B73 now initializes the explicit sparse cache; B93 checks reserved pending
-     sources before parent enable; B80–84 covers the retained IRQ handoff.
-     Completion of a helper does not establish full peripheral support.
-   * Diagnostic PID 1, `online_cpus=1`, and the 60-second liveness milestone.
-   * **genpd lines (boot035, same kernel as boot034).** Copy literally, with
-     their `printk.time` stamps:
-     * `PM: ilinux-genpd: sync_state keeps unused power domains on (pd_ignore_unused)`
-       (attempt 15 showed it twice, at ≈ 3.24 s);
-     * `PM: ilinux-genpd: ladder armed: first release in 17000 ms, then one
-       domain per 500 ms`;
-     * every `PM: ilinux-genpd: power off NAME` line, including any **before**
-       ≈ 20 s, which would be a runtime-PM power-off the fix does not cover;
-     * `ilinux-genpd: ladder N: release NAME` and `ladder complete: N domains
-       released`;
-     * **no `smc_i2cm` name may appear anywhere** (they are gone from the DT);
-       report it at once if one does;
-     * **the last genpd line visible before the screen goes black**, with the
-       **time of the black frame** (video time − the heartbeat anchor). Attempts
-       14 and 15 reset ≈ 5.6 s after the culprit release, so report both the last
-       line and the release that preceded the black frame by ≈ 5.6 s;
-     * whether the screen **froze or went black without a restart** (the Mac does
-       not reach the macOS login within about 60 s): that is a display-domain
-       release, not a reset. Note the last line and time, keep filming to the
-       stop criterion, then power off.
-
-   P order remains `01 → 0A → 0B → 0C → 0D → 02 ... 09`. P=05/07 marks the
-   first/second work flush. W=04 precedes bus probing; W=05 follows its return.
-   B=10 brackets device locking; 31–33 runtime PM/barrier; 42 pinctrl; 43 DMA;
-   61 clock defaults; 62 power-domain attachment; 63 platform driver callback.
-   The complete **77-code** table is in `phases.json`. Correlate D/C/B with
-   P/W/S/H; these are last boundaries, not blocking PCs or proven faults.
-   Task gating excludes unrelated asynchronous workers. Lanes are not an atomic
-   snapshot, a camera may miss transitions and another console may overwrite
-   them. Repainting adds overhead; do not benchmark this diagnostic build.
-
-   Display state is decimal: 0 no outcome, 1 target/framebuffer absent,
-   2 rejected DT, 3 invalid font/panel height, 4 panel too wide, 5 mapping failed,
-   6 mapping exists. A valid map still needs visible screen confirmation.
-
-   | Observation | Follow-up after returning to macOS |
-   |---|---|
-   | P=05/07 and W=04 | Record D/C/B to locate the deferred device and operation |
-   | Readable B=62 | Inspect domain provider/dependencies for the decoded device |
-   | Readable B=63 | Inspect the decoded device's actual platform driver |
-   | B=70–7B / 80–84 / 90–93 | Decode exact GPIO stage; record I/counts/errors and whether D=C=0059 changes |
-   | GPIO error followed by PID 1 | Report userspace plus failed GPIO; do not claim peripheral support |
-   | W=05/07 or P=09 | Capture subsequent driver/initcall progress |
-   | H changes / symbolic stack | Record time and actual frames; distinguish logging from worker progress |
-   | Panel absent/unreadable | Report mapping text and visibility limit; no guessed values |
-   | Survives the whole ladder (`ladder complete: N domains released`) with heartbeats to 180 s | The SMC domains were the trigger (strong support). **First stable, power-managed native baseline.** Report N. |
-   | Reset ≈ 5.6 s after a ladder release | A second domain with the same mechanism. Report that line and ±2 steps. |
-   | Reset with no ladder release in the preceding ≈ 6 s, or before ≈ 19 s | Not a domain release. Report the last lines and the time. |
-   | Screen frozen or black, no restart to Macintosh HD | Display-domain release; not a reset. Keep the timer running. |
-   | Any `smc_i2cm` line | The wrong DT was loaded. Stop and report. |
-
-   Review the recording by pausing it **before publishing the result**. Include
-   early progress and the final stopped screen; sample around 30/60/90 seconds
-   when those times occur before the stop criterion. State the video duration
-   and reviewed times. Earlier short clips did not cover the full window. If the
-   agent cannot access it, have the human pause/transcribe the relevant frames.
-   If it remains unavailable, explicitly report that limitation. Avoid spending
-   another restart with only an unreviewed recording and ambiguous last line.
-6. Set a visible timer/deadline immediately at handoff. Do not wait for media
-   transfer or review before stopping the target. **Keep filming until the
-   target resets or 180 seconds from handoff**, even after `ladder complete`:
-   the ladder runs from ≈ 19 s to ≈ 94 s of kernel time, and the minutes after
-   it are the stability evidence. Also stop on controller rejection or
-   kernel panic. Calculate/report the deadline. The controller retains
-   180-second total/15-second transport limits. No retry, extra blacklist, new
-   cores/storage or settings change.
-7. Return: hold power to shut down if needed, hold power for startup options,
-   choose **Macintosh HD → Continue**. Confirm the usual desktop return.
-   Do not assert fresh policies until the next read-only check.
-8. Push sanitized attempt-16 report and progress/coordination updates. Separate
-   controller, native kernel, strip/timer/scheduler, PID-1/liveness and return
-   status. Preserve earlier reports; mark unobserved evidence honestly. Keep
-   full media/raw data/proprietary binaries out of Git.
+8. Push the sanitized attempt-17 report and progress/coordination updates. Commit
+   only checked excerpts of `dmesg`: no serial numbers, MACs other than the
+   fixed `02:69:6c:69:6e/6f` gadget ones, or other identifiers. Never copy
+   `/proc/device-tree` (m1n1 adds the target's serial there). Full logs and
+   media stay local.
 
 ## Path toward Omarchy
 
-Do not restart installation. Attempt 16 is meant to give the first stable,
-power-managed native baseline. Next M5 prepares a control channel into Linux
-(USB networking over the same cable), a RAM root with a real Arch userspace,
-then Hyprland on `simpledrm` with software rendering: a visual Omarchy boot on
-one CPU. The Linux-side agent can handle packages, configuration and desktop
-tests once the channel exists. GPU, SMP and efficient idle/DVFS need
-independent native validation. See `roadmap.md`. Boot035 alone cannot
-establish Omarchy or macOS performance parity.
+Attempt 18 boots the Arch RAM root (Hyprland on `simpledrm`, software
+rendering, one CPU) on boot036's kernel and DT through the RAM-root launcher
+profile, and uses this link to measure it: the first visual Omarchy boot.
+Keyboard and trackpad input is being reverse-engineered from macOS's own
+drivers in parallel. See `roadmap.md`.

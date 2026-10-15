@@ -134,14 +134,14 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Next M5 candidate: **boot036 prepared offline (NOT RUN, not published)**, the USB
-control channel. It adds three dwc3 device-mode cores on the PHY state m1n1
-leaves (the ATC 0–2 domains disabled) and a CDC-EEM gadget with IPv6 link-local
-and key-only SSH. VM job 041 and generic-VM liveness PASS; a dummy_hcd
-self-test PASS (enumeration, ping, SSH, refusal without the key, 8 MiB copy).
-It runs only after attempt 16, and the SSH key is the user's decision. See
+Latest M5 handoff: **boot036 / attempt 17, the USB control channel (NOT RUN)**.
+boot035 plus a CDC-EEM USB network link and key-only SSH (the M1's own key)
+into native Linux: the gadget stack built in, three dwc3 device-mode cores on
+the PHY state m1n1 leaves, the ATC 0–2 domains left alone. Reproducible Image;
+VM job 041, generic-VM liveness and a dummy_hcd USB self-test PASS. Release
+`native-j716c-boot036` pending user approval. See
 `native/boot/boot036-control-channel-2026-10-15.md` and
-`kernel/experiments/usb-gadget/`.
+`tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder

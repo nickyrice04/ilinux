@@ -21,7 +21,10 @@ any SoC. Boot035 removes the seven from the Stage-B DT and keeps everything else
 identical; attempt 16 (NOT RUN) should run the full release ladder and 180 s.
 See `native/boot/attempt15-review-2026-10-15.md`.
 
-## 🟡 Pending decision — the SSH key for boot036 (control channel)
+## 🟢 Resolved — the SSH key for boot036 (control channel)
+
+The M1 generated its own key and committed only the public half (`a6717b0`,
+`SHA256:o7wtpNY0…`); boot036 authorizes exactly that key. Original note:
 
 boot036 (prepared offline, NOT RUN) authorizes one SSH key for root on the
 native Linux side. The built package carries a test key from job 041, whose

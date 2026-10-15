@@ -162,6 +162,13 @@ def overlay(root, selftest, key, dest):
     copy_closure(root, dest, TEST)
     write(dest, "etc/ilinux/selftest", Path(selftest).read_bytes(), 0o755)
     write(dest, "etc/ilinux/test-key", Path(key).read_bytes(), 0o600)
+    # The shipped initramfs authorizes only the operator's key, whose private half never
+    # leaves the controller. The VM self-test logs in with its own key, so the overlay
+    # replaces root's authorized_keys for the test boot only.
+    for rel in ("root", "root/.ssh"):
+        (dest / rel).mkdir(exist_ok=True)
+        os.chmod(dest / rel, 0o700)
+    write(dest, "root/.ssh/authorized_keys", Path(key + ".pub").read_bytes(), 0o600)
 
 
 def listing(dest):

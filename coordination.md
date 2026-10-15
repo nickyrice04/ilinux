@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — boot036 / attempt 17: the USB control channel (NOT RUN)
+
+* **Attempt 16 consumed** (first stable baseline). boot036 = boot035 plus a
+  CDC-EEM USB network link and key-only SSH into native Linux over the M1
+  cable: the gadget stack built in (`USB_LIBCOMPOSITE=y`, `USB_CONFIGFS=y`, 14
+  lines m to y), three dwc3 device-mode cores on the PHY state m1n1 leaves
+  (DART instance 1, stream 1), all 39 ATC 0–2 power domains disabled, and an
+  `/init` with one gadget per controller plus dropbear for root, **key-only, the
+  M1's key** from `a6717b0` (`SHA256:o7wtpNY0RUOIIGTyIJvspZFOetYFFG2oeMw5ecZc3yI`).
+  Port N's Linux end is `fe80::69:6cff:fe69:6e0N`.
+* **Release:** `native-j716c-boot036` (pending user approval to publish), archive
+  18,902,541 bytes, SHA-256
+  `f09a00000925aea64a6ea7ab6dace05958d779d2367fc6aec233becc58ca71a3`, SHA256SUMS
+  digest `4fbd64d4…442f`. Image `e0e53113…` (reproducible: two VM builds gave the
+  same bytes), DT `a676087b…`, initramfs `5f4b478b…`; m1n1, full DT and generic
+  initramfs identical to boot035. Controller digests unchanged.
+* **Offline:** VM job 041 PASS; the packager's exact DT/config/init/initramfs and
+  kernel.config-provenance checks PASS; the committed launcher's offline
+  verification PASS; generic-VM liveness and the dummy_hcd USB self-test PASS.
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 17) with the
+  network steps in `tools/m1n1-client/control-channel-draft.md`. Restart the M1
+  fresh, film at 1080p or better (portrait allowed, phone fixed), stop at 10
+  minutes or once the SSH captures are saved. No network-settings changes.
+
 ### Current M1 note — boot036 control key published; macOS EEM driver checked, 2026-10-15
 
 * **Public key published** for boot036's USB gadget: commit `a6717b0` adds only
@@ -94,7 +118,7 @@ older plan disagree, this file wins for ownership and order of work.
   ~94 s); then Macintosh HD. No retry/reinstall/settings/volume change.
 
 
-### Current M5 handoff — boot035 / attempt 16: Stage-B DT without the SMC-owned domains (NOT RUN)
+### Historical M5 handoff — boot035 / attempt 16: Stage-B DT without the SMC-owned domains (consumed: first stable baseline)
 
 * **Review of attempt 15** (`native/boot/attempt15-review-2026-10-15.md`): no
   Asahi PMGR DT (M1–M3) exposes any `smc_*` domain; our generated t6050 draft
@@ -119,7 +143,7 @@ older plan disagree, this file wins for ownership and order of work.
   watchdog) are mapped in the review: none blocks a one-CPU baseline or a first
   visual Omarchy boot; SMP, deep idle and the GPU remain research tracks.
 
-### Prepared next, not a handoff — boot036 / USB control channel (NOT RUN, not published)
+### Historical M5 preparation — boot036 prepared offline (superseded by the attempt-17 handoff above)
 
 * **M1: nothing to do for boot036 yet.** Attempt 16 (boot035) above stays the
   current task. boot036 runs only after attempt 16 reports a stable baseline,

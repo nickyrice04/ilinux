@@ -70,6 +70,11 @@ macOS host. Those are attempt 17's questions.
 
 `init.c` (packaged as `diag-init.c`), `make_stage_b_dt.py`,
 `stage_initramfs.py`, `elf_pages.py`, `selftest/`, `virtualization/jobs/041-usb-gadget/`,
-`native/boot/usb_dt.py`, `native/boot/control_channel.py`. The authorized key
-comes from `authorized_keys` here when that file exists; otherwise job 041 uses
-its own test key and says so.
+`native/boot/usb_dt.py`, `native/boot/control_channel.py`.
+
+`authorized_keys` here is the M1's own public key (commit `a6717b0`,
+`SHA256:o7wtpNY0…`); job 041 builds the shipped initramfs with it, and without
+the file it falls back to its own test key and says so. The VM self-test
+overlay replaces root's `authorized_keys` with the job's test key for test
+boots only. Job 041 pins the kernel's build time, user and host, so rebuilds
+give the same Image.
