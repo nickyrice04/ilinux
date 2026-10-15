@@ -6,6 +6,43 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — boot035 / attempt 16 offline PASS, 2026-10-15
+
+* Pulled/read M5 handoff `4debc28` (boot035 / attempt 16; published as
+  `9815dd7`), the Stage-B checklist and `native/boot/attempt15-review-2026-10-15.md`.
+  Archive **16,723,179 bytes**, SHA-256
+  `81cbbd1ca09ec53bbfe8f616e578c07d7f878a26a7629c2d1de40d969be966e7`, verified
+  against Git before extraction; 14 regular members, no absolute or parent paths.
+  **13-file intake and offline launcher PASS.**
+* **102 M1 offline cases PASS** (37+10+6+16+5+19+2+6+1), all exit 0; synthetic
+  transport only. Image SHA-256 unchanged from boot034
+  `1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579`; Stage-B DT
+  `b1105bbf2c207c8c816c4b9cc0231ecc1d49543e05fe4b772bcb153019e186db`;
+  SHA256SUMS `7635c5e4a25b051fa933ad969e2407c3f6a63cea876570f58052a474cf162f8d`.
+* **M1 independent DT diff (boot034 vs boot035):** 365 -> 358 nodes; exactly
+  `smc_i2cm0`-`6` (`power-controller@8028`-`@8058`) removed; none added; no
+  property changed on any surviving node; nothing references the removed nodes;
+  188 -> 181 pwrstate domains; GPIO reserved ranges kept. Image, initramfs, m1n1
+  and config identical to boot034. All six controller digests match; client
+  pinned clean at `57a9339`; installed boot021 unchanged.
+* Ignored receipt `build/native-intake/receipts/boot035-attempt16.json`, record
+  `build/native-intake/results/boot035-stage-b-attempt16.json` and wrapper
+  `build/native-intake/run-attempt16.py` retain the hashes. The wrapper differs
+  from attempt 15's only in names and an `fsync` after every record save, so a
+  host crash cannot lose checkpoints again.
+* **Reading of the experiment:** survives the whole ladder (about 94 s) and
+  stays alive to 180 s -> SMC domains were the trigger, and the attempt-15 host
+  reset was not. Reset again -> record the step ~5.6 s earlier. If the M1
+  panics again at handoff the run is still informative: a surviving M5 refutes
+  the host-reset explanation.
+* **Ready for Stage B attempt 16** after publication. Human plans portrait
+  framing filling the frame vertically, phone fixed. **Native boot035 and live
+  checks NOT RUN at readiness.** hv003 and the PMGR probe remain unchecked by M1.
+* Next: M1 freshly restarted and kept awake with `caffeinate -i`; one filmed RAM
+  launch; film to reset or **180 s from handoff** (the ladder alone runs to
+  ~94 s); then Macintosh HD. No retry/reinstall/settings/volume change.
+
+
 ### Current M5 handoff — boot035 / attempt 16: Stage-B DT without the SMC-owned domains (NOT RUN)
 
 * **Review of attempt 15** (`native/boot/attempt15-review-2026-10-15.md`): no

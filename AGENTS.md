@@ -123,6 +123,11 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff `4debc28`
+(102 tests, controller hashes, DT delta exactly the seven `smc_i2cm` nodes, clean pin).
+One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
+native/live NOT RUN at readiness.
+
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder
 executed, then a silent SoC reset at kernel ~27.7 s. **Confounded** by an M1 host
