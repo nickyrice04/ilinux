@@ -344,7 +344,7 @@ All need the user's approval; the M1 agent runs them with the existing lab proce
 |---|---|---|---|
 | E0 | `check_all.py` on the M1 host | nothing | the checkout is intact |
 | E1 | `probe/mtp_probe.py read` in one human-started RAM session | proxy, 32-bit reads only | DART register base (+0 vs +0x8000), SID(s) iBoot left translating, ASC running, mailbox layout, DockChannel FIFO depth; fixes `--sids` and the DART `reg` |
-| E2 | boot candidate = boot036 + config delta + patches 0001/0002 + DT delta (the kernel half is job 042's Image `6fb8c371…`, reproducible), `dockchannel_hid.mtp_poll_ms=100` for the first run | native boot, over the existing USB control channel | do `Ring registered` and `management event 0xf0 … keyboard` appear; does `hid-recorder`/`evtest` on the keyboard hidraw show key events; does the ring ever hold data without a doorbell (poll counter) |
+| E2 | boot037 candidate = boot036 + config delta + patches 0001/0002 + DT delta, built offline and checked by `native/boot/mtp_input.py` (`build/native-boot037/`, archive sha256 `3900924b…`, not committed; details in `native/boot/boot037-mtp-input-2026-10-15.md`). The launcher's fixed-argument rules do not allow `dockchannel_hid.mtp_poll_ms=100`, so the first run has no poll timer | native boot, over the existing USB control channel | do `Ring registered` and `management event 0xf0 … keyboard` appear; does `hid-recorder`/`evtest` on the keyboard hidraw show key events; does the ring ever hold data without a doorbell (poll counter) |
 | E3 | trackpad: firmware file in the initramfs, an SMC-function provider, answers to 0xA0 | native boot | whether the AFE comes up (needs the Unknowns in section 9) |
 
 ## 8. Reproduce

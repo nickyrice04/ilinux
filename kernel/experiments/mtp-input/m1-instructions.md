@@ -76,9 +76,10 @@ Not prepared as a release yet; the inputs are:
   2026-10-15, reproducible). It is **not** a release: packaging it needs `native/boot/make-package.py`
   extended for the new DT nodes (the parent's call, as for the USB-gadget DT);
 * DT: `make_mtp_dt.py` on the boot036 Stage-B DTB with the `--sids` value E1 supports;
-* kernel command line for the first run: `dockchannel_hid.mtp_poll_ms=100` (the driver is built in, so
-  parameters are `dockchannel_hid.<name>`; the poll drains without trusting the doorbell and the log
-  says whether data arrived only through it), everything else default;
+* kernel command line: the launcher's fixed-argument rules do **not** allow
+  `dockchannel_hid.mtp_poll_ms=100` (it stops with `unexpected appended bootargs`), so the first run has
+  no poll timer; options A/B/C are in `native/boot/boot037-mtp-input-2026-10-15.md` (recommendation:
+  C for first light, A if the log shows the handshake but no input);
 * no firmware file is needed (the keyboard has none); leave `firmware-name` out or accept one failed
   `request_firmware` when something opens the trackpad.
 

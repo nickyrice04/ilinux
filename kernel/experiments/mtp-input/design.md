@@ -146,8 +146,8 @@ so the firmware is never left waiting.
    * no `Initialized`/ring line → probe/DT problem (SID, `dma-range`, helper not bound) → E1 numbers;
    * handshake ack timeout → framing/handshake mismatch; the logged management events show what the
      firmware does say;
-   * ack fine, no descriptors → doorbell/transport-of-descriptors question (Unknowns 1, 2): use
-     `mtp_poll_ms`;
+   * ack fine, no descriptors → doorbell/transport-of-descriptors question (Unknowns 1, 2): needs the
+     poll timer, which the launcher's fixed arguments do not allow today (boot037 document, options A/B);
    * descriptors, no key events → report path or enable/ready gating (Unknown 8): try
      `mtp_enable_cmd=0`.
 2. **Trackpad (E3)** after the SMC-function and calibration questions have an answer.
