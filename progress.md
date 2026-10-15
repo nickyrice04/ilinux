@@ -5,6 +5,30 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-15 · M1: attempt 16 runs the whole ladder, alive >= 108 s; first stable native baseline
+
+* One boot035 RAM attempt at readiness `7a37fb6`, M5 handoff `4debc28`.
+  **Controller exit 0, 10.493 s**; handoff 2026-10-15T20:28:25.611598Z. All gates
+  PASS. **No M1 host panic** (uptime continuous since 11:09 EDT, no new panic
+  report).
+* **First stable native baseline.** PID 1 alive, one CPU, `online_cpus=1`
+  heartbeats 000-021 every 5.0 s to kernel 108.4 s; `60s elapsed; still alive`
+  at 63.36 s. Clip (120.5 s, 320x568) ends at kernel ~110.7 s, no restart.
+* **Release ladder completed:** first release 19.43 s (`atc?_usb_aon`, **no
+  `smc_i2cm`**), step 11 `atc?_common_dp_3` at 24.55 s passed,
+  `ladder complete: 74 domains released` at 57.31 s (M5 had predicted 145; only
+  74 were powered on at boot). A `dispext*` domain was released and the console
+  kept rendering.
+* **Refuted:** attempt 15's step-17-immediate explanation. **Not separated:**
+  SMC domains versus the M1's post-panic reset for attempt 15's second reset,
+  because this run changed both (SMC nodes removed, no M1 panic). Attempt 14
+  (no M1 event) still needs the SMC or simultaneity explanation.
+* Domain-name digits and the panel/GPIO lines were not readable at this
+  resolution. User reports no M5 or M1 crash afterwards (not filmed).
+* Fresh policy/default NOT CHECKED. No retry or settings change. Report:
+  `native/boot/stage-b-2026-10-15-attempt16-result.md`.
+
+
 ## 2026-10-15 · M1: boot035 attempt 16 offline readiness PASS
 
 * Pulled/read M5 handoff `4debc28` (boot035 / attempt 16; published as

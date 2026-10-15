@@ -3,7 +3,17 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current Stage B blocker — SMC-owned domains in the Stage-B DT (boot035 prepared)
+## Baseline reached — attempt 16 (boot035) ran the whole release ladder; SMC-versus-host attribution open
+
+With the seven SMC-owned domain nodes removed from the Stage-B DT, Linux released all
+74 boot-on unclaimed domains one at a time, completed the ladder at 57.3 s and kept
+heartbeating to >= 108 s with PID 1, one CPU and the 60 s milestone. No reset, no M1
+panic. Whether the SMC domains (or simultaneity) caused attempt 14's reset and the SMC
+domains (or the M1's own reset) attempt 15's is not separated, since attempt 16 changed
+both. See `native/boot/stage-b-2026-10-15-attempt16-result.md`. Remaining blockers: a
+Linux control channel and RAM root, SMP, idle/DVFS, display, GPU.
+
+## Historical Stage B blocker — SMC-owned domains in the Stage-B DT (boot035 prepared)
 
 Both native resets followed the release of an SMC-owned `smc_i2cm` power domain
 by ≈ 5.6 s (Likely mechanism; not proven). Asahi exposes no `smc_*` domain on

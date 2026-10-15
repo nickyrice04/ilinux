@@ -1500,3 +1500,15 @@ mechanism until attempt 16 or the PMGR probe shows it. Leave the
 framebuffer-domain claim and the M1 launcher's tty mitigation for later
 handoffs, because each would add a second variable or change a reviewed
 controller digest.
+
+## 2026-10-15 · Adopt the SMC-less Stage-B DT as the native baseline; leave attribution open
+
+Attempt 16 (boot035) shows Linux releasing 74 boot-on unclaimed domains one at a time
+and staying alive past 108 s with PID 1, one CPU and the 60 s milestone. Treat the DT
+without the seven SMC-owned `smc_i2cm` nodes as the baseline and carry the removal into
+the t6050 DT draft. The step-17 explanation for attempt 15 is refuted. Whether the SMC
+domains or the M1's post-panic reset caused attempt 15's second reset is not separated,
+because this run changed both; do not claim a proven mechanism. A boot034 rerun without
+an M1 panic or a single-domain proxy probe would separate them, at low practical value.
+The next gates are a Linux control channel and RAM root, then SMP, idle and DVFS, each
+with its own evidence. No parity or efficiency claim.

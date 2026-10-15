@@ -123,7 +123,13 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff `4debc28`
+Latest M1 native result: **attempt 16 (boot035) is the first stable native baseline**:
+PID 1 alive with heartbeats to >= 108 s, the 60 s milestone passed, the 74-domain release
+ladder completed at 57.3 s, no reset, no host panic. SMC-versus-host attribution of the
+earlier resets not separated. Fresh policy checks NOT CHECKED. See
+`native/boot/stage-b-2026-10-15-attempt16-result.md`.
+
+Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff `4debc28`
 (102 tests, controller hashes, DT delta exactly the seven `smc_i2cm` nodes, clean pin).
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
