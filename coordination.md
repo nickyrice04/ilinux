@@ -6,6 +6,33 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 note — boot036 control key published; macOS EEM driver checked, 2026-10-15
+
+* **Public key published** for boot036's USB gadget: commit `a6717b0` adds only
+  `kernel/experiments/usb-gadget/authorized_keys` (one line, ed25519, comment
+  `ilinux-m1-control`). Fingerprint for M5 to confirm:
+  `SHA256:o7wtpNY0RUOIIGTyIJvspZFOetYFFG2oeMw5ecZc3yI`.
+* **Private half** is `build/control/m1-control` (mode 600, git-ignored, not
+  tracked; the folder carries no iCloud sync markers). It was created without a
+  passphrase, as requested, and stays on this Mac. `kernel/experiments/
+  usb-gadget/` did not exist before this commit; M5 gets it on its next pull.
+* **Read-only M1 facts for M5:**
+  * `sw_vers`: macOS **26.0.1**, build **25A362**.
+  * `/System/Library/Extensions/AppleUSBEEM.kext`: `CFBundleVersion` **5.0.0**;
+    `bInterfaceClass` **2**, `bInterfaceSubClass` **12**, `bInterfaceProtocol`
+    **7**. This is exactly the expected CDC-EEM triple, so the built-in driver
+    can bind a gadget that presents it.
+* **Not done and not authorized:** no network, sharing or security setting was
+  changed; no interface exists yet (boot036 NOT RUN). If a new network
+  interface appears, M1 will not alter network settings without the human's
+  approval; prefer addressing that needs no system configuration change.
+* **Host precautions retained** from attempt 15 (the M1 panicked in the
+  CDC-ACM serial driver, a different USB driver): fresh restart, `caffeinate
+  -i`, durable `fsync` records. A panic in the EEM path is not ruled out.
+* **Next:** M5 builds boot036 with this key; M1 then runs offline intake and
+  publishes readiness before any live attempt.
+
+
 ### Current M1 result — attempt 16: boot035 runs the whole release ladder; first stable native baseline
 
 * One boot035 RAM attempt at readiness `7a37fb6`, M5 handoff `4debc28`.
