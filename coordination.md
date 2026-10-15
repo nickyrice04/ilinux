@@ -6,6 +6,32 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — PMGR probe: per-domain power-off question via the proxy (NOT RUN)
+
+* **Why:** attempt 14's silent reset came about 5.6 s after Linux's genpd
+  `sync_state` powered off the unclaimed boot-on PMGR domains. Boot034 tests that
+  inside Linux; the m1n1 proxy can ask the same question one domain at a time, in
+  seconds, with no kernel boot.
+* **Tool:** `native/probe/pmgr_probe.py` (private; new files only). `read` is
+  strictly read-only (it sends no write request, not even ProxyUtils' heap
+  bookkeeping); `plan` shows what stage 2 would accept or refuse, offline from a
+  stage-1 JSON file; `cycle` powers named domains off in order and back on in
+  reverse, announcing each write first so a lost link names the domain.
+* **Real table:** the sanitized macOS ADT export has 661 PMGR device records (338
+  virtual, 323 with a power-state register, 118 critical, 205 not, 33 of those
+  `notify_pmp`). CPU cores, cluster managers and the interrupt controller are
+  **not** flagged critical there, so the tool refuses them by name, plus the
+  link closure (UART0 and every ATC USB device with all parents, 19 domains).
+* **Verified offline:** 85 tests (fake ADT and proxy, the real 661-record table,
+  22 planted-bug mutants all caught); end-to-end CLI run against a real-shaped
+  stage-1 file. **No live run.**
+* **M1 next:** `tools/m1n1-client/pmgr-probe-instructions.md`: offline
+  readiness, then stage 1 (read-only, one short lab session); stage 2 only after
+  separate human approval. First experiments: one non-`notify_pmp` leaf (control)
+  and one `notify_pmp` leaf (Hypothesis: unreported PMP state changes matter).
+  * RAM-only; no retries; no security, volume or installed-m1n1 change.
+  * Never contribute any of it upstream.
+
 ### Current M5 handoff — hv003: hardened chainload with breadcrumbs (NOT RUN)
 
 * **Why:** hv002's hypervisor change set has still never executed; its session

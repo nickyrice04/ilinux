@@ -5,6 +5,29 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-14 · M5: proxy-driven PMGR probe built offline (NOT RUN)
+
+* **Discovered:**
+  * The real t6050 PMGR table (sanitized ADT export) has 661 device records; CPU
+    core domains (`MCPU*`, `PCPU_*`), cluster managers (`MCPM*`, `PCPM`) and
+    `AIC*` are ordinary non-critical power-state domains, so the ADT's critical
+    flag alone would have let a naive tool power them off.
+  * The m1n1 hypervisor's link-essential set (UART0, ATCn_USB, ATCn_USB_AON and
+    parents) reproduces from the real table as 19 domains, which the tool never
+    cycles.
+  * Of the 205 non-critical domains with a register, 33 are `notify_pmp`; the
+    accelerator/display "SYS" roots (ISP_SYS, GFX, AVD_SYS, ANS, DISP*, ANE_SYS,
+    ...) carry it. Hypothesis: these are the domains whose unreported power-off
+    matters in attempt 14; nothing here proves it.
+* **Implemented:** `native/probe/pmgr_probe.py` (`read`, `plan`, `cycle`) and
+  `tools/m1n1-client/pmgr-probe-instructions.md`.
+* **Tested:** 85 offline tests incl. the real table and 22 mutants; no hardware.
+* **Not verified:** everything live, including whether m1n1's register sequence
+  on these domains behaves like Linux's (it does not report to the PMP).
+* **Next:** M1 offline readiness, stage 1 in one short lab session, then (separate
+  approval) a control domain and a `notify_pmp` domain. Independent of boot034 and
+  hv003.
+
 ## 2026-10-14 · M5: hv003 repairs and instruments the chainload (NOT RUN)
 
 * **Discovered:**
