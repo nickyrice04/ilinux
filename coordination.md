@@ -16,9 +16,10 @@ older plan disagree, this file wins for ownership and order of work.
   `/dev/cu.usbmodem*`) + CDC-ECM (network, same MACs and link-local addresses,
   key-only dropbear for the M1's key `a6717b0`). `bcdDevice` 0x0038. Image,
   config, Stage-B DT, m1n1 and launcher byte-identical to boot036.
-* **Release:** `native-j716c-boot038` (pending user approval to publish),
-  archive 18,904,584 bytes, SHA-256
-  `09f5a5d723461bccfba3c29aacb084c3318203d074e522c1527d650186e05f70`, SHA256SUMS
+* **Release:** `native-j716c-boot038`, private prerelease published 2026-10-16
+  on `bd814ad`; archive 18,904,584 bytes, SHA-256
+  `09f5a5d723461bccfba3c29aacb084c3318203d074e522c1527d650186e05f70` (GitHub's
+  asset digest and a fresh download both match), SHA256SUMS
   digest `efba5795…a186`; initramfs `30800bdd…`. Offline: job 041, packager,
   committed launcher (`4d55f0c9…`), generic-VM liveness and the dummy_hcd
   self-test (ACM log port, ECM, SSH) all PASS.
