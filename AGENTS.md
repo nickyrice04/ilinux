@@ -123,6 +123,13 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 19 (Omarchy RAM root on boot035,
+`--profile ramroot`) on handoff `59b12a0`: boot035 package re-verified against the Git pin, the RAM-root image
+(182,092,876 bytes, `58bdc6ce…a27e`) matches the manifest by size and digest but its content was not inspected
+(no zstd tool), offline launcher run and 132 cases PASS (102 reviewed + 30 RAM-root), controller digests
+unchanged. No USB device is expected after the handoff, so the video is the evidence. Needs the human's fresh
+M1 restart, cable re-seat, whole-screen filming and start.
+
 Latest M1 native result: **attempt 18 (boot038, CDC-ACM log port + CDC-ECM)**: Linux held the attempt-17
 baseline (50-domain ladder at 45.024 s, 60 s milestone, heartbeats to 113.7 s, no reset, no M1 panic) and
 the M1 enumerated the gadget (+3.95 s) and macOS selected configuration 1 (+8.45 s), but no interface node

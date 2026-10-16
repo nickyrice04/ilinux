@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 19 (Omarchy RAM root on boot035) offline PASS; live NOT RUN, 2026-10-16
+
+* **Intake (M5 handoff `59b12a0`).** The boot035 package was re-verified, not re-downloaded:
+  archive 16,723,179 bytes, SHA-256 `81cbbd1c…`, checked against the Git pin; the `verify-package`
+  receipt (manifest digest `7635c5e4…`, 13 files) PASS; client pin clean `57a9339`.
+* **RAM root.** `ramroot.cpio.zst` arrived by AirDrop into the repository root (untracked and **not
+  ignored**); the M1 moved it into the ignored `build/ramroot/` before any commit. Size 182,092,876 and
+  SHA-256 `58bdc6ce…a27e` equal `ramroot-manifest.json`; the launcher also checks the zstd frame magic
+  and the Image pairing. **The content was not decompressed or inspected:** this Mac has no zstd tool and
+  nothing was installed, so the image is pinned by digest only (an install would need the human's approval).
+* **Offline launcher, `--profile ramroot`:** `Package PASS`, `RAM root PASS`, `Operator key: none`, the
+  fixed arguments, `m1n1 must append: idle=nop arm64.nowfxt`, upload estimate 226,753,047 bytes
+  (45.4 s at 5 MB/s, 56.7 s at 4 MB/s), deadline 300 s. The 102 reviewed cases plus the 30 RAM-root
+  tests (132) PASS. Launcher `4d55f0c9…` and the other five controller digests are unchanged. boot035's
+  config has `RD_ZSTD`, `DRM_SIMPLEDRM`, `SYSFB_SIMPLEFB` and `FRAMEBUFFER_CONSOLE` built in.
+* **Tools (ignored, M1 local):** `run-attempt19.py` is the attempt-18 wrapper with the RAM-root output
+  lines whitelisted and a new record path; an offline dry run against a scratch record captured every
+  RAM-root line. The pre-flight and the read-only USB gate are reused.
+* **What to expect on the M1:** no USB device after the handoff (the boot035 DT has no controllers), so
+  the video is the evidence; the M1 will only save the host log. Same host precautions as before (fresh
+  restart, cable re-seat, `caffeinate -i`, fsync'd records).
+* **State.** Attempt 19: live **NOT RUN**. Needs the human's fresh M1 restart, cable re-seat, whole-screen
+  filming, the M5 at Running proxy, then the go. The fixed E1 probe is still NOT RUN.
+
 ### Current M5 handoff — attempt 19: the Omarchy RAM root on boot035 (NOT RUN)
 
 * **Attempt 18 consumed:** boot038's ACM + ECM gadget was enumerated and

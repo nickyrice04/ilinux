@@ -5,6 +5,21 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: attempt 19 (Omarchy RAM root on boot035) offline readiness PASS (live NOT RUN)
+
+* **Discovered:** the RAM-root image arrived untracked and not ignored in the repository root and was
+  moved into the ignored `build/ramroot/` before any commit; it matches the manifest by size and SHA-256.
+  Its content could not be inspected (no zstd tool; nothing installed). The boot035 config has the zstd
+  initrd decoder, simpledrm, simplefb and fbcon built in.
+* **Tested:** boot035 re-verified against the Git pin (manifest `7635c5e4…`, 13 files); the offline
+  RAM-root launcher run (`RAM root PASS`, upload 226,753,047 bytes, 45.4-56.7 s, deadline 300 s); 132
+  cases PASS (102 reviewed + 30 RAM-root); six controller digests unchanged; the attempt-19 wrapper dry-run
+  offline against a scratch record.
+* **Not verified:** everything native: whether userspace starts, simpledrm keeps the display through the
+  release ladder, time to desktop. No USB device is expected after the handoff, so the video is the evidence.
+* **Next:** the human restarts the M1, re-seats the cable, films the whole screen and puts the M5 at Running
+  proxy; one attempt 19; stop at 2 steady minutes of desktop or 10 minutes.
+
 ## 2026-10-16 · M5: attempt 19 prepared — the Omarchy RAM root on boot035 (NOT RUN)
 
 * **Decided:** attempt 18's USB problem affects only the link, so the first
