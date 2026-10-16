@@ -5,6 +5,30 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: E1 NameError re-verified as independent of the USB port
+
+* **E1 cause re-verified after the human reported the cable had first been in the
+  wrong USB port.** The real E1 code path was run with device access blocked
+  **inside the process** (`pmgr_probe.open_primary`, the only function that opens
+  the serial port, replaced by a stub that raises; the M1 test could not open any
+  port). It stops with the identical `STOP: NameError name 'M1N1Proxy' is not
+  defined`, before device access. With **only** the class-scope fix applied in
+  memory (repo file untouched) it proceeds to the device-access step (the
+  sentinel stops it there). So the NameError is a code bug that does not depend on
+  the port; **the published E1 diagnosis stands**.
+* A wrong port would only have shown **after** the fix, at the USB identity gate:
+  attempt 17's first launch stopped there (`InvalidFileException`, empty USB
+  registry) before the cable was moved. Whether the port was wrong at E1 time is
+  unknown and irrelevant to that failure, but it is a live risk for the next E1
+  session.
+* **Lesson for every live tool:** run the read-only gate (`usb_identity.discover()`
+  plus `select_primary`, which opens no port) before the live command, so a wrong
+  port or stale proxy is caught before a tool consumes its session. M1 did this
+  before attempt 17's second launch. Suggest adding it to the E1 and PMGR runbooks.
+* At review time the M1 saw the M5's m1n1 USB device again (proxy up). Nothing was
+  run against it.
+
+
 ## 2026-10-16 · M1: attempt 17 — first Linux USB works; macOS lacks an EEM driver
 
 * **Launch 1** (18:26:32Z) stopped at the USB identity gate: the freshly restarted M1
