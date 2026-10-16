@@ -1607,3 +1607,14 @@ wrote 130 bytes back; the tool wrote 0). macOS's default on an unrelated serial
 port was raw with echo off, so the guard may be unneeded; it costs nothing. The
 driver report uses the registry (`ioreg`), which opens no port. Nothing the
 checklist touches changes.
+
+## 2026-10-16 · Boot the Omarchy desktop on boot035 before the USB link works
+
+Attempt 18 showed the USB link's problem lies in the gadget's control endpoint
+after configuration, and Linux itself kept running. The RAM root reaches the M5
+through the m1n1 proxy before Linux starts, so the desktop does not need the
+link. Boot it on the boot035 package, attempt 16's proven kernel and DT with no
+USB controllers, so the only new variable is userspace. The video is the only
+evidence this time. The control channel continues as its own candidate
+(boot039, bulk-only), and the RAM root moves to the newer kernel once the link
+works.

@@ -6,6 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt 19: the Omarchy RAM root on boot035 (NOT RUN)
+
+* **Attempt 18 consumed:** boot038's ACM + ECM gadget was enumerated and
+  configured, then its control endpoint stopped answering (interrupt-IN
+  notification endpoint suspected). Only the USB link is affected; a bulk-only
+  candidate (boot039) is being prepared by a side session.
+* **Attempt 19 = the boot035 package (attempt 16's proven kernel and DT, no USB
+  controllers) launched with `--profile ramroot`**: the Arch RAM root from VM job
+  039 run 30 (182,092,876 bytes, SHA-256
+  `58bdc6cee4e2a9d0b1fd2a800f2549c7e3ea300e0a6e76d3d17db3b08dd5a27e`, pinned in
+  `native/boot/ramroot-manifest.json`, commit `02c8ff1`) instead of the
+  diagnostic initramfs: systemd, seatd, Hyprland on simpledrm with llvmpipe,
+  Omarchy's configuration, waybar, foot. View-only (no input yet). The handoff
+  records in `native/boot/` point at boot035 again (archive `81cbbd1c…`,
+  SHA256SUMS digest `7635c5e4…`).
+* **Offline:** the committed launcher (`4d55f0c9…`) verifies boot035 + the run-30
+  RAM root (`Package PASS`, `RAM root PASS`, upload ≈ 226.8 MB, 45–57 s, 300 s
+  deadline); all `native/boot` suites PASS. VM: desktop with wallpaper 68.4 s
+  after kernel start under QEMU TCG, 0 failed units.
+* **The image travels privately:** the human AirDrops `ramroot.cpio.zst` to the
+  M1 (`build/ramroot/`, ignored). Never commit or publish it (SSH host key).
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 19). Re-seat
+  the cable after the M1's restart; film the whole screen; stop when the desktop
+  has been steady 2 minutes, or at 10 minutes.
+
 ### Current M1 result — attempt 18 (boot038): macOS configures the ACM + ECM gadget, then control transfers time out; no serial, no network
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 10.958 s, handoff
@@ -100,7 +125,7 @@ older plan disagree, this file wins for ownership and order of work.
   restart, filming (1080p or better, fixed stand, original file afterwards), the M5 at
   Running proxy, then the go. Order: attempt 18 first; E1 as its own lab boot later.
 
-### Current M5 handoff — boot038 / attempt 18: the USB control channel with ACM + ECM (NOT RUN)
+### Historical M5 handoff — boot038 / attempt 18 (consumed: configured, then EP0 timeouts)
 
 * **Attempt 17 consumed:** the Linux side of boot036's link works on hardware
   (three dwc3 cores, gadget bound, enumerated in 8 s, no faults, baseline held);

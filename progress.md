@@ -5,6 +5,23 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M5: attempt 19 prepared — the Omarchy RAM root on boot035 (NOT RUN)
+
+* **Decided:** attempt 18's USB problem affects only the link, so the first
+  Omarchy desktop goes ahead without USB: the boot035 package (attempt 16's
+  proven kernel and DT, no USB controllers) launched with the RAM-root profile
+  and the run-30 RAM root (Arch, systemd, Hyprland on simpledrm, llvmpipe,
+  Omarchy configuration). The control channel continues separately (boot039).
+* **Implemented:** the RAM-root and launcher-profile sessions' run-30 work
+  committed (`02c8ff1`); the handoff records point at boot035 again; the
+  attempt-19 checklist, coordination and README.
+* **Tested (offline):** the committed launcher verifies boot035 + the run-30 image
+  (`Package PASS`, `RAM root PASS`, upload ≈ 226.8 MB); all `native/boot` suites
+  PASS. VM: desktop with wallpaper in 68.4 s under QEMU TCG, 0 failed units.
+* **Not verified:** everything native; time to desktop on real hardware.
+* **Next:** the human AirDrops the image to the M1; M1 readiness; one filmed
+  attempt 19.
+
 ## 2026-10-16 · M1: attempt 18 (boot038) — gadget configured by macOS, then control transfers time out; no serial, no network
 
 * **Discovered:** with CDC-ACM + CDC-ECM instead of EEM the M1 still enumerates the device (+3.95 s)
