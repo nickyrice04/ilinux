@@ -123,6 +123,11 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for the MTP E1 read-only probe and
+for attempt 17 / boot036 (USB control channel, key-only SSH) on `0363bd5`: 26 probe tests,
+102 controller cases, launcher `4d55f0c9…`, DT/initramfs reviewed independently, packaged
+authorized key equals the M1 key. Order: E1 lab boot first, then attempt 17.
+
 Latest M1 native result: **attempt 16 (boot035) is the first stable native baseline**:
 PID 1 alive with heartbeats to >= 108 s, the 60 s milestone passed, the 74-domain release
 ladder completed at 57.3 s, no reset, no host panic. SMC-versus-host attribution of the

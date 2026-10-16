@@ -5,6 +5,73 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: MTP E1 probe and boot036 attempt 17 offline readiness PASS
+
+* Pulled `0363bd5` (13 commits). Both items are queued in `coordination.md`:
+  E1 (read-only, human-started, no retries, E1 only) and attempt 17 (no
+  network-settings change on the M1). Order: **E1 first, then attempt 17**, as
+  two separate human-started lab boots.
+
+**MTP E1 read-only register probe** (`kernel/experiments/mtp-input/m1-instructions.md`)
+* E0 offline PASS: `test_mtp_probe.py` Ran **26** tests OK; `mtp_probe.py plan`
+  `PLAN: 66 reads, all 32-bit, none with a side effect; nothing was written`;
+  `read --help` rc 0 under the pinned client.
+* **M1 independent review:** the probe's proxy wrapper exposes only `read32`
+  inside ADT-declared regions (any other attribute raises `Forbidden`); the code
+  calls only `read32`, `faulted`, `get_exc_count`, `get_bootargs_rev` and
+  read-only memory fetches; no write, mask, call, reload or chainload anywhere;
+  it reuses `pmgr_probe`'s gates (USB identity, chip t6050, boot021 marker, no
+  secondaries), needs `--confirm MTP-PROBE-J716C-READ`, and refuses an existing
+  JSON output file.
+* **Residual risk, not removed by reading:** a read of an unpowered block could
+  raise an asynchronous SError that hangs m1n1. Recovery is a power-off; the
+  probe writes nothing persistent.
+* Record: ignored `build/native-intake/results/mtp-probe-readiness.json`.
+
+**Attempt 17 / boot036 (USB control channel)**
+* Archive **18,902,541 bytes**, SHA-256
+  `f09a00000925aea64a6ea7ab6dace05958d779d2367fc6aec233becc58ca71a3`, verified
+  against Git before extraction; 14 regular members, no absolute or parent
+  paths. **13-file intake and offline launcher PASS.**
+* **102 reviewed M1 cases PASS** (37+10+6+16+5+19+2+6+1). Boot036 suites:
+  `test_ramroot` 30 PASS; `test_usb_dt` 6 tests (all 6 skipped), `test_control_channel`
+  6 (1 skipped), `test_kconfig_guard` 7 (1 skipped): the skips are the
+  real-package cases that need the M5's build directories, as the checklist says.
+* Payload: Image `e0e53113…f3f7` (44,681,728 B), Stage-B DT `a676087b…efa5`,
+  Stage-B initramfs `5f4b478b…b248` (2,392,627 B), SHA256SUMS `4fbd64d4…442f`.
+  Client pinned clean at `57a9339`; installed boot021 unchanged.
+* **Controller:** `launch.py` `4d55f0c9…840b` matches; the other five digests are
+  unchanged. M1 read the `9ee6b2f` diff: the default `stage-b` profile behaves
+  as in attempt 16 (initramfs, fixed arguments, confirmation string, 180 s
+  deadline, append check); the `ramroot` profile is new code attempt 17 does
+  not use.
+* **M1 independent package review** (because it adds a network-reachable SSH
+  server to the M5):
+  * DT versus boot035: 358 to 361 nodes; exactly three `snps,dwc3` controllers
+    added, three USB DARTs enabled, **39** power domains disabled (13 each for
+    `atc0`-`atc2`); nothing else changed.
+  * initramfs: `/init` is built from the committed `init.c`; dropbear (Arch Linux
+    ARM 2026.94-1) starts with `-F -E -s -R -j -k -K 15 -p 22` (no password
+    logins, no port forwarding); root's password is locked (`*`);
+    `root/.ssh/authorized_keys` is **byte-identical to the M1 public key**
+    (`SHA256:o7wtpNY0RUOIIGTyIJvspZFOetYFFG2oeMw5ecZc3yI`), one line, no other
+    key; `/init` strings show IPv6 link-local only, no DHCP or `ifconfig`.
+  * The checklist's key grep prints the M1 key; the private half is present at
+    mode 600.
+* **Wrapper note:** `launch.py` now formats `Board/framebuffer PASS; allocating
+  RAM for … payloads.`, so a literal-print scan would drop that checkpoint.
+  `run-attempt17.py` adds it explicitly (checked against all 16 attempt-16
+  checkpoints), saves each record with `fsync`, and prints a 10-minute deadline.
+* Records: ignored `build/native-intake/receipts/boot036-attempt17.json`,
+  `…/results/boot036-stage-b-attempt17.json`, `…/run-attempt17.py`.
+
+**Live checks NOT RUN for either item.** Before attempt 17 the M1 should be
+restarted fresh and kept awake with `caffeinate -i`; `ifconfig -l` is recorded
+immediately before the handoff; the original video file (AirDrop or cable, not
+Messages) is needed. No M1 network setting changes; if the new interface has no
+`inet6` address M1 stops and asks.
+
+
 ## 2026-10-15 · M5: MTP keyboard/trackpad input path analysed from macOS; ring transport prepared offline (hardware NOT RUN)
 
 * **Discovered** (REA on this Mac's kernelcache + read-only `ioreg`; labelled in
