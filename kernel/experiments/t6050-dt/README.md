@@ -4,6 +4,13 @@
 
 * The tree is generated from data and compile-checked with `dtc` 1.8.1:
   `validate.sh` reports **0 warnings** and fails on any.
+* Schema-checked inside the kernel tree with the seven patches applied:
+  `make CHECK_DTBS=y apple/t6050-j716c.dtb` (dtschema 2026.9, full processed
+  schema) reports **0 findings**, and `make dt_binding_check
+  DT_SCHEMA_FILES=apple` nothing for the bindings the series touches
+  (`virtualization/jobs/044-t6050-dtbs-check/`, 2026-10-16). A clean check
+  validates property shapes against the bindings, not the hardware facts in
+  the table below.
 * It has **never been booted**. It can't be until m1n1 can boot Linux on
   t6050, and every boot experiment needs the user's explicit authorization
   and a deployment plan (`roadmap.md` Phase 3).

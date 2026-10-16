@@ -1,0 +1,209 @@
+From 05956041db8fdcedba1510a0692d56029fbfb87f Mon Sep 17 00:00:00 2001
+From: "iLinux local research (AI-generated draft)" <local@invalid>
+Date: Sun, 11 Oct 2026 20:05:00 +0000
+Subject: [PATCH 6/7] dt-bindings: apple: Document t6050 (M5 Max) compatibles
+ used by the draft DT
+
+Add the t6050 compatibles referenced by the draft t6050/J716c device
+tree so that dtbs_check can validate it:
+
+  - board: apple,j716c + apple,t6050 (Mac17,6, MacBook Pro 16-inch M5 Max)
+  - CPU cores: apple,sotra-m / apple,sotra-p (placeholder names following
+    the M4 apple,donan-e/-p scheme; m1n1 calls the SoC family "Sotra" and
+    the new core type "M core")
+  - apple,t6050-pmgr, apple,t6050-pmgr-pwrstate (t8103 fallbacks)
+  - apple,t6050-aic3 (t8122-aic3 fallback, 3 interrupt cells)
+  - apple,t6050-pinctrl, apple,t6050-i2c, apple,t6050-wdt
+  - apple,t6050-dart (t8110 fallback; ADT compatible "dart,t8110")
+  - apple,t6050-asc-mailbox (asc-mailbox-v4 fallback; ADT IOPs are
+    "iop,ascwrap-v6", m1n1 drives them with the v4 register layout)
+  - apple,t6050-cluster-cpufreq (t8112 fallback, 5-bit p-state field)
+  - apple,t6050-smc (t8103-smc fallback, as t6020/t8122; added 2026-10-16
+    with the SMC node of the draft DT)
+
+Evidence: ADT of a Mac17,6 (J716c), sanitized capture; m1n1 PR #610
+(commit b2d3f5eba7ce) for the core naming.  The AIC of t6050 reports
+aic-numdies-per-die = 2 in the ADT; whether 4-cell specifiers are needed
+for second-die interrupts is unknown, so the 3-cell form is used.
+
+Status: dt_binding_check DT_SCHEMA_FILES=apple reports nothing for the
+files this series touches and dtbs_check of t6050-j716c.dtb reports 0
+findings, dtschema 2026.9 (iLinux VM job 044, 2026-10-16).  The core
+names stay placeholders.
+
+NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
+Linux generative-AI policy).  No Signed-off-by on purpose.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+---
+ Documentation/devicetree/bindings/arm/apple.yaml            | 6 ++++++
+ Documentation/devicetree/bindings/arm/apple/apple,pmgr.yaml | 1 +
+ Documentation/devicetree/bindings/arm/cpus.yaml             | 2 ++
+ .../devicetree/bindings/cpufreq/apple,cluster-cpufreq.yaml  | 4 +++-
+ Documentation/devicetree/bindings/i2c/apple,i2c.yaml        | 1 +
+ .../bindings/interrupt-controller/apple,aic2.yaml           | 1 +
+ Documentation/devicetree/bindings/iommu/apple,dart.yaml     | 1 +
+ .../devicetree/bindings/mailbox/apple,mailbox.yaml          | 1 +
+ Documentation/devicetree/bindings/mfd/apple,smc.yaml        | 1 +
+ .../devicetree/bindings/pinctrl/apple,pinctrl.yaml          | 1 +
+ .../devicetree/bindings/power/apple,pmgr-pwrstate.yaml      | 1 +
+ Documentation/devicetree/bindings/watchdog/apple,wdt.yaml   | 1 +
+ 12 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/arm/apple.yaml b/Documentation/devicetree/bindings/arm/apple.yaml
+index c967cfce..c8b4a2fb 100644
+--- a/Documentation/devicetree/bindings/arm/apple.yaml
++++ b/Documentation/devicetree/bindings/arm/apple.yaml
+@@ -414,6 +414,12 @@ properties:
+           - const: apple,t6032
+           - const: apple,arm-platform
+ 
++      - description: Apple M5 Max SoC based platforms
++        items:
++          - const: apple,j716c  # MacBook Pro (16-inch, M5 Max, 2026)
++          - const: apple,t6050
++          - const: apple,arm-platform
++
+ additionalProperties: true
+ 
+ ...
+diff --git a/Documentation/devicetree/bindings/arm/apple/apple,pmgr.yaml b/Documentation/devicetree/bindings/arm/apple/apple,pmgr.yaml
+index da660fa1..fdbac718 100644
+--- a/Documentation/devicetree/bindings/arm/apple/apple,pmgr.yaml
++++ b/Documentation/devicetree/bindings/arm/apple/apple,pmgr.yaml
+@@ -40,6 +40,7 @@ properties:
+               - apple,t6020-pmgr
+               - apple,t6030-pmgr
+               - apple,t6031-pmgr
++              - apple,t6050-pmgr
+               - apple,t8122-pmgr
+               - apple,t8132-pmgr
+           - const: apple,t8103-pmgr
+diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+index 1cc9883f..02a44886 100644
+--- a/Documentation/devicetree/bindings/arm/cpus.yaml
++++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+@@ -94,6 +94,8 @@ properties:
+           - apple,icestorm
+           - apple,mistral
+           - apple,monsoon
++          - apple,sotra-m
++          - apple,sotra-p
+           - apple,sawtooth
+           - apple,twister
+           - apple,typhoon
+diff --git a/Documentation/devicetree/bindings/cpufreq/apple,cluster-cpufreq.yaml b/Documentation/devicetree/bindings/cpufreq/apple,cluster-cpufreq.yaml
+index b51913a8..c96ce28f 100644
+--- a/Documentation/devicetree/bindings/cpufreq/apple,cluster-cpufreq.yaml
++++ b/Documentation/devicetree/bindings/cpufreq/apple,cluster-cpufreq.yaml
+@@ -36,7 +36,9 @@ properties:
+           - const: apple,s5l8960x-cluster-cpufreq
+       - const: apple,s5l8960x-cluster-cpufreq
+       - items:
+-          - const: apple,t6020-cluster-cpufreq
++          - enum:
++              - apple,t6020-cluster-cpufreq
++              - apple,t6050-cluster-cpufreq
+           - const: apple,t8112-cluster-cpufreq
+ 
+   reg:
+diff --git a/Documentation/devicetree/bindings/i2c/apple,i2c.yaml b/Documentation/devicetree/bindings/i2c/apple,i2c.yaml
+index 641f24b0..12afef9d 100644
+--- a/Documentation/devicetree/bindings/i2c/apple,i2c.yaml
++++ b/Documentation/devicetree/bindings/i2c/apple,i2c.yaml
+@@ -26,6 +26,7 @@ properties:
+               - apple,t6020-i2c
+               - apple,t6030-i2c
+               - apple,t6031-i2c
++              - apple,t6050-i2c
+               - apple,t8122-i2c
+               - apple,t8132-i2c
+           - const: apple,t8103-i2c
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/apple,aic2.yaml b/Documentation/devicetree/bindings/interrupt-controller/apple,aic2.yaml
+index 1cb88678..a5851c0c 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/apple,aic2.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/apple,aic2.yaml
+@@ -45,6 +45,7 @@ properties:
+           - enum:
+               - apple,t6030-aic3
+               - apple,t6031-aic3
++              - apple,t6050-aic3
+               - apple,t8132-aic3
+           - const: apple,t8122-aic3
+       - const: apple,t8122-aic3
+diff --git a/Documentation/devicetree/bindings/iommu/apple,dart.yaml b/Documentation/devicetree/bindings/iommu/apple,dart.yaml
+index e179199d..ed6e3875 100644
+--- a/Documentation/devicetree/bindings/iommu/apple,dart.yaml
++++ b/Documentation/devicetree/bindings/iommu/apple,dart.yaml
+@@ -31,6 +31,7 @@ properties:
+       - items:
+           - enum:
+               - apple,t6020-dart
++              - apple,t6050-dart
+               - apple,t8122-dart
+           - const: apple,t8110-dart
+ 
+diff --git a/Documentation/devicetree/bindings/mailbox/apple,mailbox.yaml b/Documentation/devicetree/bindings/mailbox/apple,mailbox.yaml
+index 946c909c..fa8371c2 100644
+--- a/Documentation/devicetree/bindings/mailbox/apple,mailbox.yaml
++++ b/Documentation/devicetree/bindings/mailbox/apple,mailbox.yaml
+@@ -33,6 +33,7 @@ properties:
+               - apple,t8122-asc-mailbox
+               - apple,t6000-asc-mailbox
+               - apple,t6020-asc-mailbox
++              - apple,t6050-asc-mailbox
+           - const: apple,asc-mailbox-v4
+ 
+       - description:
+diff --git a/Documentation/devicetree/bindings/mfd/apple,smc.yaml b/Documentation/devicetree/bindings/mfd/apple,smc.yaml
+index d5d30c05..18623986 100644
+--- a/Documentation/devicetree/bindings/mfd/apple,smc.yaml
++++ b/Documentation/devicetree/bindings/mfd/apple,smc.yaml
+@@ -19,6 +19,7 @@ properties:
+       - items:
+           - enum:
+               - apple,t6020-smc
++              - apple,t6050-smc
+               - apple,t8122-smc
+           - const: apple,t8103-smc
+       - items:
+diff --git a/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml
+index bc6d41b6..82c2360e 100644
+--- a/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml
+@@ -22,6 +22,7 @@ properties:
+               - apple,t6020-pinctrl
+               - apple,t6030-pinctrl
+               - apple,t6031-pinctrl
++              - apple,t6050-pinctrl
+               - apple,t8122-pinctrl
+               - apple,t8132-pinctrl
+           - const: apple,t8103-pinctrl
+diff --git a/Documentation/devicetree/bindings/power/apple,pmgr-pwrstate.yaml b/Documentation/devicetree/bindings/power/apple,pmgr-pwrstate.yaml
+index 7161f303..ead01c61 100644
+--- a/Documentation/devicetree/bindings/power/apple,pmgr-pwrstate.yaml
++++ b/Documentation/devicetree/bindings/power/apple,pmgr-pwrstate.yaml
+@@ -47,6 +47,7 @@ properties:
+               - apple,t6020-pmgr-pwrstate
+               - apple,t6030-pmgr-pwrstate
+               - apple,t6031-pmgr-pwrstate
++              - apple,t6050-pmgr-pwrstate
+               - apple,t8122-pmgr-pwrstate
+               - apple,t8132-pmgr-pwrstate
+           - const: apple,t8103-pmgr-pwrstate
+diff --git a/Documentation/devicetree/bindings/watchdog/apple,wdt.yaml b/Documentation/devicetree/bindings/watchdog/apple,wdt.yaml
+index ca4cf01d..dc0ac989 100644
+--- a/Documentation/devicetree/bindings/watchdog/apple,wdt.yaml
++++ b/Documentation/devicetree/bindings/watchdog/apple,wdt.yaml
+@@ -20,6 +20,7 @@ properties:
+               - apple,t6020-wdt
+               - apple,t6030-wdt
+               - apple,t6031-wdt
++              - apple,t6050-wdt
+               - apple,t8122-wdt
+               - apple,t8132-wdt
+           - const: apple,t8103-wdt
+-- 
+2.54.0 (Apple Git-157)
+

@@ -1,4 +1,4 @@
-From b5ce41083f03123af65caab2cceef07a41bd16c8 Mon Sep 17 00:00:00 2001
+From 6aee257b8b7eb8bb0481aaaa78af21d4fc9452e8 Mon Sep 17 00:00:00 2001
 From: "iLinux local research (AI-generated draft)" <local@invalid>
 Date: Sun, 11 Oct 2026 20:06:00 +0000
 Subject: [PATCH 7/7] arm64: dts: apple: Add draft t6050 (M5 Max) J716c device
@@ -29,8 +29,9 @@ m1n1 on t6050 yet, so m1n1 will prune all secondary CPU nodes.
 Recommended extra kernel arguments for a first boot:
 pd_ignore_unused clk_ignore_unused (m1n1 adds idle=nop arm64.nowfxt).
 
-Status: compile-tested with dtc 1.8.1 (0 warnings) outside the kernel
-tree only; dtbs_check pending.
+Status: compile-tested with dtc 1.8.1 (0 warnings); dtbs_check with
+dtschema 2026.9 reports 0 findings for t6050-j716c.dtb (iLinux VM job
+044, 2026-10-16).
 
 2026-10-16 update: add the SMC and its mailbox.  smc@28c600000
 (apple,t6050-smc, apple,t8103-smc; "smc" = the ASC block, "sram" = ASC +
@@ -43,8 +44,7 @@ for the SPMI PMU node that provides their nvmem cells.  Evidence: ADT
 gates) and offline analysis of this Mac's AppleSMC kext, which shows the
 RTKit endpoint (0x20) and message layout the Linux macsmc driver
 implements (iLinux kernel/experiments/smc/README.md).  apple,t6050-smc
-is not yet documented in bindings/mfd/apple,smc.yaml (file outside the
-sparse checkout), so dtbs_check will flag the first compatible.
+is documented in bindings/mfd/apple,smc.yaml by the preceding patch.
 
 NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
 Linux generative-AI policy).  No Signed-off-by on purpose.

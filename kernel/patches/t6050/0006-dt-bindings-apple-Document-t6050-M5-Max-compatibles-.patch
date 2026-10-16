@@ -1,4 +1,4 @@
-From b59950912accbb75d0c33d198376bf63c1c9eef3 Mon Sep 17 00:00:00 2001
+From 05956041db8fdcedba1510a0692d56029fbfb87f Mon Sep 17 00:00:00 2001
 From: "iLinux local research (AI-generated draft)" <local@invalid>
 Date: Sun, 11 Oct 2026 20:05:00 +0000
 Subject: [PATCH 6/7] dt-bindings: apple: Document t6050 (M5 Max) compatibles
@@ -18,18 +18,24 @@ tree so that dtbs_check can validate it:
   - apple,t6050-asc-mailbox (asc-mailbox-v4 fallback; ADT IOPs are
     "iop,ascwrap-v6", m1n1 drives them with the v4 register layout)
   - apple,t6050-cluster-cpufreq (t8112 fallback, 5-bit p-state field)
+  - apple,t6050-smc (t8103-smc fallback, as t6020/t8122; added 2026-10-16
+    with the SMC node of the draft DT)
 
 Evidence: ADT of a Mac17,6 (J716c), sanitized capture; m1n1 PR #610
 (commit b2d3f5eba7ce) for the core naming.  The AIC of t6050 reports
 aic-numdies-per-die = 2 in the ADT; whether 4-cell specifiers are needed
 for second-die interrupts is unknown, so the 3-cell form is used.
 
-Status: untested; dt_binding_check / dtbs_check pending.
+Status: dt_binding_check DT_SCHEMA_FILES=apple reports nothing for the
+files this series touches and dtbs_check of t6050-j716c.dtb reports 0
+findings, dtschema 2026.9 (iLinux VM job 044, 2026-10-16).  The core
+names stay placeholders.
 
 NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
 Linux generative-AI policy).  No Signed-off-by on purpose.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 ---
  Documentation/devicetree/bindings/arm/apple.yaml            | 6 ++++++
  Documentation/devicetree/bindings/arm/apple/apple,pmgr.yaml | 1 +
@@ -39,10 +45,11 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
  .../bindings/interrupt-controller/apple,aic2.yaml           | 1 +
  Documentation/devicetree/bindings/iommu/apple,dart.yaml     | 1 +
  .../devicetree/bindings/mailbox/apple,mailbox.yaml          | 1 +
+ Documentation/devicetree/bindings/mfd/apple,smc.yaml        | 1 +
  .../devicetree/bindings/pinctrl/apple,pinctrl.yaml          | 1 +
  .../devicetree/bindings/power/apple,pmgr-pwrstate.yaml      | 1 +
  Documentation/devicetree/bindings/watchdog/apple,wdt.yaml   | 1 +
- 11 files changed, 19 insertions(+), 1 deletion(-)
+ 12 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/devicetree/bindings/arm/apple.yaml b/Documentation/devicetree/bindings/arm/apple.yaml
 index c967cfce..c8b4a2fb 100644
@@ -149,6 +156,18 @@ index 946c909c..fa8371c2 100644
            - const: apple,asc-mailbox-v4
  
        - description:
+diff --git a/Documentation/devicetree/bindings/mfd/apple,smc.yaml b/Documentation/devicetree/bindings/mfd/apple,smc.yaml
+index d5d30c05..18623986 100644
+--- a/Documentation/devicetree/bindings/mfd/apple,smc.yaml
++++ b/Documentation/devicetree/bindings/mfd/apple,smc.yaml
+@@ -19,6 +19,7 @@ properties:
+       - items:
+           - enum:
+               - apple,t6020-smc
++              - apple,t6050-smc
+               - apple,t8122-smc
+           - const: apple,t8103-smc
+       - items:
 diff --git a/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml
 index bc6d41b6..82c2360e 100644
 --- a/Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml
