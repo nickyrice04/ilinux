@@ -5,6 +5,23 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: attempt 19 — the first native Omarchy desktop on the M5 (view-only, software rendering)
+
+* **Discovered:** the Arch RAM root on boot035 boots on the M5 to a Hyprland desktop on `simpledrm`: wallpaper at
+  video 6.9 s, `desktop ready 7.79 s after kernel start` per the RAM root's own timer, waybar updating (CPU 100% →
+  28% → 1%), a foot terminal with the status block, 1 CPU, 16 KiB pages, kernel `7.1.9-…-dirty`. The human reports it
+  still up after more than 8 minutes, with the clock advanced. A red Hyprland notification (started without
+  `start-hyprland`) shows for about 15 s. No input and no USB (by design). Early error lines in the first frame:
+  `kvm_arch_timer` invalid virtual timer IRQ, and the PMGR controller at `2300e80000` failing to bring the `cs` domain up
+  (`pm_genpd_init failed`, error -22).
+* **Measured:** controller exit 0 in 44.441 s; the 226,753,047-byte upload took 42.28 s (5.36 MB/s); Attempt19.MOV
+  reviewed (39.5 s; it starts at kernel ≈ 0.07 s, so the upload and handoff are not in it).
+* **Not verified:** performance, power, thermals, failed units, stability beyond the human's checks, the RAM-root
+  content (no zstd tool on the M1), and anything about input, storage, USB, SMP or GPU acceleration.
+* **Next (M5's call):** `start-hyprland`; on-screen measurements in the RAM root; the bulk-only USB link (boot039). E1
+  session 2 remains NOT RUN. Fresh policy checks NOT CHECKED. Report:
+  `native/boot/stage-b-2026-10-16-attempt19-result.md`.
+
 ## 2026-10-16 · M1: attempt 19 (Omarchy RAM root on boot035) offline readiness PASS (live NOT RUN)
 
 * **Discovered:** the RAM-root image arrived untracked and not ignored in the repository root and was

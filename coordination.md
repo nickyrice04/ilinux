@@ -6,7 +6,37 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 19 (Omarchy RAM root on boot035) offline PASS; live NOT RUN, 2026-10-16
+### Current M1 result — attempt 19 (Omarchy RAM root on boot035): the first native Omarchy desktop on the M5
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 44.441 s, handoff 2026-10-16T23:21:09Z; the
+  226,753,047-byte upload took 42.28 s, 5.36 MB/s; the M1 did not panic). Launched once, after the pre-flight
+  and read-only gate passed on the first try (cable re-seated, M5 booted into the Boot Lab last) and a 4.5 min wait
+  for the M1's boot-time load to fall.
+* **The Hyprland desktop came up and stayed up.** Video (39.5 s, starting at kernel ≈ 0.07 s, so no upload or
+  handoff in it): wallpaper first visible at 6.9 s; the RAM root's status terminal reads `desktop ready 7.79 s
+  after kernel start`; waybar is live (CPU 100% → 28% → 1%, memory 2.3G → 2.4G); `display card0 on
+  simple-framebuffer`, kernel `7.1.9-g863199d8b4a3-dirty`, 16384-byte pages, 1 CPU; a foot terminal with a
+  prompt. The human reports the desktop still up a few minutes after the handoff and at a later clock check
+  (after more than 8 minutes), **with the clock advanced** (human-reported; not filmed). View-only, as designed.
+* **Cosmetic warning:** a red notification, "Hyprland was started without start-hyprland. This is strongly
+  discouraged unless you are in a debugging environment.", visible at 12 s, gone by 24 s: the session script runs
+  `Hyprland` directly.
+* **Early error lines seen in the first frame (effect unknown):** `kvm_arch_timer: Invalid virtual timer IRQ: 0`;
+  `apple-pmgr-pwrstate 2300e80000 … power-controller@108: PS cs: Failed to reach power state 0xf`,
+  `PM: always-on PM domain cs is not on`, `pm_genpd_init failed`, probe error -22.
+* **No USB device appeared on the M1** after the handoff (the boot035 DT has no controllers); the host log shows only
+  m1n1's device disconnecting 0.2 s after the handoff. The RAM-root image content was **not inspected** on the M1 (no
+  zstd tool); it is pinned by size and digest.
+* **Not established:** performance (frame rate, load), power and thermals, stability beyond what the human watched,
+  failed units, input, storage, USB, SMP, GPU acceleration. No parity claim.
+* **For the M5 (proposals, not authorization):** start Hyprland through `start-hyprland`; let the RAM root print its
+  own measurements on the terminal (a single-thread run of the portable benchmarks, an uptime counter, the kernel
+  log tail, since `quiet` hides the ladder) so a filmed run carries numbers; the USB link (boot039, bulk-only) stays the
+  route to SSH; keep the phone fixed and start recording before the launch.
+* Report: `native/boot/stage-b-2026-10-16-attempt19-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed
+  E1 probe is still **NOT RUN**.
+
+### Historical M1 readiness — attempt 19 (Omarchy RAM root on boot035) offline PASS (consumed: attempt 19 ran), 2026-10-16
 
 * **Intake (M5 handoff `59b12a0`).** The boot035 package was re-verified, not re-downloaded:
   archive 16,723,179 bytes, SHA-256 `81cbbd1c…`, checked against the Git pin; the `verify-package`
