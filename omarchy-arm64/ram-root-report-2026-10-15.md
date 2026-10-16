@@ -6,7 +6,7 @@ committed. **VM results only: nothing here ran on the M5.**
 
 ## Result
 
-**Confirmed (VM).** One run of `host-run.sh` (6 min 25 s) does the following inside the
+**Confirmed (VM).** One run of `host-run.sh` (6 min 19 s) does the following inside the
 project's Arch Linux ARM job VM:
 
 * builds `ramroot.cpio.zst`, 182.1 MB compressed and 853 MB unpacked, from 304 Arch Linux ARM
@@ -22,8 +22,8 @@ What the boot test shows:
   rasterizer: `llvmpipe (LLVM 23.1.1, 128 bits)`, OpenGL ES 3.2 Mesa 26.2.4-arch1.1.
 * waybar and foot run, swaybg shows Tokyo Night's wallpaper, and SSH answers on the USB
   network interface `usb0`.
-* The desktop was ready **76.2 s after kernel start under QEMU's TCG emulator**.
-* 20 s later **2,025 MiB of RAM was in use**.
+* The desktop was ready **68.4 s after kernel start under QEMU's TCG emulator**.
+* 20 s later **2,114 MiB of RAM was in use**.
 * The same job against boot036's tree and Image also reached the desktop
   ([boot036 check](#boot036-check-run-21)).
 
@@ -36,30 +36,30 @@ screen's ready time reads "?" because it is printed before the desktop counts as
 
 ## Measurements
 
-All values are from one run (run 26). Sizes are MB = 10⁶ bytes unless MiB is written.
+All values are from one run (run 30). Sizes are MB = 10⁶ bytes unless MiB is written.
 
 | Quantity | Value | Label |
 |---|---|---|
 | Packages | 304: the 27 in `packages.txt` plus dependencies | Confirmed |
-| Unpacked root | 853.2 MB (813.7 MiB), 21,620 entries; 1,605 MiB before pruning | Confirmed |
-| cpio (newc, sorted, reproducible) | 856.5 MB | Confirmed |
-| Delivered image, `zstd --ultra -22 --long=27` | **182.07 MB** | Confirmed |
+| Unpacked root | 853.3 MB (813.7 MiB), 21,622 entries; 1,605 MiB before pruning | Confirmed |
+| cpio (newc, sorted, reproducible) | 856.6 MB | Confirmed |
+| Delivered image, `zstd --ultra -22 --long=27` | **182.09 MB** | Confirmed |
 | Transfer of the image at 4 / 5 MB/s | **45.5 s / 36.4 s** | Inferred (size ÷ rate) |
-| Same, plus the boot035 Image (44.6 MB) and DT | 56.7 s / 45.3 s | Inferred |
-| Kernel start → desktop ready, TCG, one vCPU | **76.2 s** | Confirmed (VM, emulated CPU) |
-| Same, scaled to native CPU speed | **9–18 s** | Hypothesis (see below) |
-| RAM in use 20 s after the desktop (MemTotal − MemFree) | **2,025 MiB** of 8,007 | Confirmed (VM) |
-| CPU at the idle desktop, 10 s sample | 3.1 % of the one vCPU (TCG) | Confirmed (VM) |
+| Same, plus the boot035 Image (44.6 MB) and DT | 56.7 s / 45.4 s | Inferred |
+| Kernel start → desktop ready, TCG, one vCPU | **68.4 s** | Confirmed (VM, emulated CPU) |
+| Same, scaled to native CPU speed | **10–16 s** | Hypothesis (see below) |
+| RAM in use 20 s after the desktop (MemTotal − MemFree) | **2,114 MiB** of 8,007 | Confirmed (VM) |
+| CPU at the idle desktop, 10 s sample | 2.6 % of the one vCPU (TCG) | Confirmed (VM) |
 | Failed systemd units | 0 | Confirmed (VM) |
 
 Compression (12 threads to compress, 1 thread to decompress):
 
 | zstd | Bytes | Compress | Decompress | At 4 / 5 MB/s |
 |---|---|---|---|---|
-| `-3` | 254,547,163 | 0.2 s | 0.50 s | 63.6 / 50.9 s |
-| `-19` | 192,172,695 | 23.3 s | 0.57 s | 48.0 / 38.4 s |
-| `-19 --long=27` | 185,105,685 | 28.5 s | 0.58 s | 46.3 / 37.0 s |
-| `--ultra -22 --long=27` (delivered) | 182,068,943 | 151.4 s | 0.60 s | 45.5 / 36.4 s |
+| `-3` | 254,546,308 | 0.2 s | 0.50 s | 63.6 / 50.9 s |
+| `-19` | 192,200,972 | 23.3 s | 0.57 s | 48.1 / 38.4 s |
+| `-19 --long=27` | 185,127,976 | 28.2 s | 0.58 s | 46.3 / 37.0 s |
+| `--ultra -22 --long=27` (delivered) | 182,092,876 | 153.1 s | 0.61 s | 45.5 / 36.4 s |
 
 Decompression is the build VM's single-thread speed. The kernel decompresses the image on its
 one CPU at boot. `--ultra -22 --long=27` is 10.1 MB (2.5 s at 4 MB/s) smaller than `-19` and
@@ -68,26 +68,26 @@ no concern with 126 GiB of RAM.
 
 ### Boot timeline
 
-Seconds since kernel start, TCG, from the guest's journal and dmesg (run 26):
+Seconds since kernel start, TCG, from the guest's journal and dmesg (run 30):
 
 | Event | s |
 |---|---|
 | simpledrm bound to the DT framebuffer | 0.3 |
-| initramfs unpacked (zstd → 21,620 files in tmpfs) | 4.6 |
+| initramfs unpacked (zstd → 21,622 files in tmpfs) | 4.6 |
 | `/init` (bind-mount shim) → systemd | 4.9 |
-| SSH socket listening on 10.66.0.2:22 | 10.1 |
+| SSH socket listening on 10.66.0.2:22 | 10.0 |
 | udev done with `/dev/dri/card0`; Hyprland starts; `graphical.target` | 15.4 |
-| Xwayland, swaybg and foot connect | 29.3–29.4 |
-| waybar "Bar configured" | 76.3 |
-| desktop ready (output, wallpaper layer, waybar layer and foot window all exist) | **76.2** |
+| Xwayland, swaybg and foot connect | 28.6–28.7 |
+| waybar "Bar configured" | 64.0 |
+| desktop ready (output, wallpaper layer, waybar layer and foot window all exist) | **68.4** |
 
-TCG timings vary between runs: runs 20–26 reached the desktop in 62.3–76.2 s. Run 26 is the
-slowest. Since run 25 (fast compression) the wallpaper is also decoded on the one vCPU, but
-that is not the whole difference: run 25 decoded it as well and took 67.6 s.
+TCG timings vary between runs: runs 20–30 reached the desktop in 62.3–76.2 s, and the
+wallpaper, decoded on the one vCPU since run 25, does not explain the spread. Run 26 took
+76.2 s, and runs 25 and 28 took 67.6 s and 67.2 s with the same decode.
 
 **Native time (Hypothesis).** The same binaries, run on the same file, are slower in the TCG
-guest than in the build VM: gzip 4.3×, zstd 8.9×. Dividing 76.2 s by those factors gives
-9–18 s from kernel start to desktop on a native CPU. llvmpipe's vector code may suffer more
+guest than in the build VM: gzip 4.2×, zstd 6.6×. Dividing 68.4 s by those factors gives
+10–16 s from kernel start to desktop on a native CPU. llvmpipe's vector code may suffer more
 under TCG than these integer benchmarks, which would make the native time shorter. Not
 covered here:
 
@@ -98,11 +98,15 @@ Power-on to desktop over the proxy would then be roughly 1–1.3 minutes.
 
 ### Memory at the desktop
 
+Shmem, anonymous memory and slab hardly move between runs. RAM in use (MemTotal − MemFree)
+does move: it ranged from 1,951 to 2,114 MiB over runs 20–30, because it also counts memory
+not yet reclaimed.
+
 | Item | MiB | Notes |
 |---|---|---|
 | Shmem | 1,183 | The tmpfs root (813.7 MiB) plus display buffers: Hyprland's swapchain is 3 × 29.5 MiB, plus the clients' shared-memory buffers |
-| Anonymous | 435 | Hyprland's PSS is 474 MB: llvmpipe render targets at 3456×2234 and LLVM. Then waybar 40, Xwayland 28, foot 21, systemd and udev about 7 each |
-| Slab | 50 | |
+| Anonymous | 432 | Hyprland's PSS is 474 MB: llvmpipe render targets at 3456×2234 and LLVM. Then waybar 40, Xwayland 28, foot 21, systemd and udev about 7 each |
+| Slab | 51 | |
 
 Natively, also count the kernel's page array: 64 bytes per 16 KiB page, about 0.49 GiB for
 126 GiB. It is outside MemTotal (Inferred).
@@ -120,7 +124,8 @@ pinned Omarchy clone. `run.sh` then works inside the job VM:
    * the VM's own `pacman.conf`, which uses `arm-mirror.omarchy.org` and `[omarchy]`, is not
      used.
 2. **Kernel modules** for the USB link: `usbnet`, `cdc_ether`, `cdc_ncm`, `libcomposite`,
-   `u_ether`, `usb_f_eem`, `usb_f_ncm` and `usb_f_ecm`.
+   `u_ether`, `usb_f_eem`, `usb_f_ncm` and `usb_f_ecm`, and for the journal's serial port
+   `u_serial` and `usb_f_acm`.
    * Only those the target tree builds as `=m` are made; boot036 builds the gadget stack in.
    * They are built as external modules against the read-only kernel tree, because the
      boot034/035 tree's own `.ko` files are stale (see problems found).
@@ -178,15 +183,27 @@ Native kernel command line used in the test (everything except the console):
 | Bar | waybar 0.15.0, written in Omarchy 3's style: workspaces, clock, `usb*` address, CPU, memory. Omarchy 4 replaced waybar with its Quickshell shell (Qt 6), which this image leaves out | Confirmed (VM) |
 | Terminal | foot 1.28.0, Omarchy 4's own default (`xdg-terminal-exec`), with Omarchy's `foot.ini` and theme. It opens a status screen, because the M5 has no input yet | Confirmed (VM) |
 | Scale | 2. Omarchy's `auto` picked 1, because simpledrm reports a 96-dpi size (914×591 mm) | Confirmed (VM) |
-| USB link | The gadget side is one network function per device-mode controller (`ilinux-usb-gadget@<udc>`, started by udev). CDC-EEM is the default, with NCM or ECM selectable: the ADT's `usb-drd0`–`2` nodes carry a `ncm-interrupt-ep-disabled` property (Observed; value not in the sanitized dump). Port numbers, MACs and USB strings are those of boot036's Stage-B init: UDCs `2a2280000.usb`, `2aa280000.usb` and `382280000.usb` (`usb-drd0`–`2`) are ports 1–3; port N's gadget MAC is `02:69:6c:69:6e:0N` and the M1 side's `02:69:6c:69:6f:0N`, so the M5 end is `fe80::69:6cff:fe69:6e0N` (EUI-64) in both stages. `bcdDevice` 0x0039 tells the RAM root from Stage-B (0x0036). Interfaces keep their u_ether names `usb0`, `usb1`, …; networkd gives the cabled one 10.66.0.2/24 and runs a DHCP server (10.66.0.10–13) | VM: host side only (see below) |
+| USB link | The gadget side is one gadget per device-mode controller (`ilinux-usb-gadget@<udc>`, started by udev), with two functions in one configuration, as in boot038's Stage-B. First CDC-ACM: a serial port that carries the journal (`journalctl -b -f`), read-only, with no login on it. Then CDC-ECM for the network, with NCM or EEM selectable instead. Attempt 17 found that the controller's macOS 26.0.1 has no usable EEM driver but loads ECM and ACM. The unit's main process is the journal stream, so it ends before the gadget is removed: removing an ACM function waits until its serial port is closed. Port numbers, MACs and USB strings are those of boot036's and boot038's Stage-B init: UDCs `2a2280000.usb`, `2aa280000.usb` and `382280000.usb` (`usb-drd0`–`2`) are ports 1–3; port N's gadget MAC is `02:69:6c:69:6e:0N` and the M1 side's `02:69:6c:69:6f:0N`, so the M5 end is `fe80::69:6cff:fe69:6e0N` (EUI-64) in both stages. `bcdDevice` 0x0039 tells the RAM root from Stage-B (0x0036 in boot036, 0x0038 in boot038). Interfaces keep their u_ether names `usb0`, `usb1`, …; networkd gives the cabled one 10.66.0.2/24 and runs a DHCP server (10.66.0.10–13) | VM: host side only (see below) |
 | SSH | `ilinux-sshd.socket` listens on **10.66.0.2:22** (`FreeBind`, so boot never waits for the cable), which exists only on the USB link; key-only logins. Keys come from `/etc/ssh/authorized_keys.d/<user>`, from the build or a 4-byte-aligned cpio appended at delivery | Confirmed (VM) |
 
 In the VM, the USB link is QEMU's `usb-net` seen from the host side: `cdc_ether` gives `usb0`,
 networkd configures it, and SSH works through it. QEMU's device carries port 1's gadget MAC,
 so `usb0` has port 1's address, `fe80::69:6cff:fe69:6e01` (runs 21–22). The gadget side has
-no device-mode controller in a VM. Only this much ran: with boot035, creating the configfs EEM
-function loaded `usb_f_eem` and `u_ether` through the function's alias; with boot036's
-built-in stack it needed no module (run 21). Binding to a UDC is untested (Hypothesis).
+no device-mode controller in a VM. Only the configfs side ran (`usb-gadget.sh check`):
+* With boot035 (run 28), creating `ecm.usb` and `acm.GS0` loaded `usb_f_ecm`, `u_ether`,
+  `usb_f_acm`, `u_serial` and `libcomposite` through the functions' aliases. `/dev/ttyGS0`
+  appeared, the journal stream started on it, and the function was removed after the stream
+  ended. No getty runs on `ttyGS*`.
+* With no host reading, the port's buffer fills and the write blocks. `journalctl` then did
+  not exit on SIGTERM, only on SIGKILL (run 28: exit 137). Run 27 hung exactly there, on a
+  check that had no kill fallback. The unit therefore stops the stream with SIGKILL, before
+  the gadget is removed.
+* Run 21 created the EEM function with boot036's built-in stack, with no module needed. Run
+  29, the ACM check against boot036, did not run: the job VM's boot036 tree no longer matches
+  boot036's Image (`fe73fcdc…`), and the job refuses a mismatched tree. ACM on a kernel with
+  the gadget stack built in is untested.
+
+Binding to a UDC, and the M1 actually reading the port, are untested (Hypothesis).
 
 ## boot036 check (run 21)
 
@@ -212,7 +229,7 @@ The delivered image and every other figure in this report come from the boot035 
   32 MiB huge pages). Everything in the image that ran worked on it: systemd 262, seatd,
   Hyprland, Xwayland, Mesa llvmpipe with LLVM 23, waybar (GTK 3), foot, swaybg, OpenSSH 10.6,
   bubblewrap, and glycin's sandboxed image loader.
-* **Confirmed:** static scan of all 2,271 ELF files in the image:
+* **Confirmed:** static scan of all 2,273 ELF files in the image:
   * 0 have a loadable segment that a 16 KiB kernel cannot map (alignment below 16 KiB or a
     mismatched offset);
   * 0 link jemalloc or tcmalloc;
@@ -234,10 +251,10 @@ The delivered image and every other figure in this report come from the boot035 
 | # | Problem | Evidence | Fix | Label |
 |---|---|---|---|---|
 | 1 | **Nested KVM in the job VM does not deliver the guest's timer interrupts** | With `--nested`, KVM starts (nVHE) and a one-vCPU guest boots. Then guest `jiffies` stayed at `0xfffedbd4` (204 ticks = 0.8 s at HZ=250) from 32 to 92 s, while its clock read 8.3 s; the vCPU was in `cpu_do_idle` in 18/18 samples. The stall also happened with `idle=nop`, the PL011 console and the virtio console. Evidence: `out/evidence-nested-kvm/` | The boot test uses TCG (`VM_ACCEL=kvm` with `NESTED=1` keeps the KVM path) | Confirmed |
-| 2 | The boot034/035 tree's `.ko` files carry vermagic `7.1.9-g863199d8b4a3`, the Image `…-dirty`, so none of them loads | `modinfo` vs the Image's strings | Build the eight needed modules as external modules against the read-only tree | Confirmed |
+| 2 | The boot034/035 tree's `.ko` files carry vermagic `7.1.9-g863199d8b4a3`, the Image `…-dirty`, so none of them loads | `modinfo` vs the Image's strings | Build the needed modules as external modules against the read-only tree | Confirmed |
 | 3 | An uncompressed cpio appended to a compressed initramfs is rejected unless it starts on a 4-byte boundary | `Initramfs unpacking failed: invalid magic at start of compressed archive`; 334,274,882 mod 4 = 2 | Pad with zeros before appending (the key overlay at delivery needs the same) | Confirmed |
 | 4 | The root of an initramfs boot is the kernel's rootfs, which `pivot_root` cannot leave, so bubblewrap (glycin, flatpak) and anything like it would fail | pivot_root(2): rootfs cannot be pivoted away. Not reproduced here: bubblewrap was only tested with the fix in place | `/init` bind-mounts rootfs onto itself (no copy, no extra RAM) and then execs systemd. With it, bubblewrap works as root and as the user (runs 13–22) | Fix Confirmed; the failure without it: Likely |
-| 5 | Hyprland's first start aborted every boot: `Couldn't open a gbm fd` | Crash report backtrace at `CHyprOpenGLImpl::CHyprOpenGLImpl()+0x2380`, the string read at the abort site. simpledrm has no render node, so Hyprland opens `/dev/dri/card0` itself as the user | `ExecStartPre=udevadm wait /dev/dri/card0`. 0 restarts in runs 16–26, against 1 in runs 11–14 | Fix Confirmed; cause (udev not yet done with the node's permissions): Likely |
+| 5 | Hyprland's first start aborted every boot: `Couldn't open a gbm fd` | Crash report backtrace at `CHyprOpenGLImpl::CHyprOpenGLImpl()+0x2380`, the string read at the abort site. simpledrm has no render node, so Hyprland opens `/dev/dri/card0` itself as the user | `ExecStartPre=udevadm wait /dev/dri/card0`. 0 restarts in runs 16–30, against 1 in runs 11–14 | Fix Confirmed; cause (udev not yet done with the node's permissions): Likely |
 | 6 | edk2 with ramfb gave an 800×600 GOP framebuffer | Run 1 screenshot | Replaced by the DT simple-framebuffer at the panel's size | Confirmed |
 | 7 | Omarchy's `auto` scale picks 1 on simpledrm | `hyprctl monitors` | Scale 2 in `hypr/ramroot.lua` | Confirmed |
 | 8 | **No image loaded through glycin**: swaybg's wallpaper failed with `Loader process exited early with status '1'` | A test-only `bwrap` wrapper (`bwrap-trace.sh`, runs 23–25) recorded bubblewrap's own error: `Unexpected capabilities but not setuid, old file caps config?`. Hyprland, and so everything it started (swaybg, waybar, foot, Xwayland), held `CAP_WAKE_ALARM` as an ambient capability (`CapAmb 0000000800000000`). pam_systemd sets that by default for sessions on a local seat (pam_systemd(8), systemd 254 and later); bubblewrap refuses to run when a non-root caller has any permitted capability (`acquire_privs()` in `bubblewrap.c`). The user manager's own services had no ambient capability, which is why uwsm, which runs Hyprland as a user service, does not hit this. glycin's seccomp program, decoded with `seccomp_bpf.py`, played no part: it allows everything except namespace, mount, keyring, NUMA and perf calls | `ExecStart=/usr/bin/setpriv --ambient-caps=-all --inh-caps=-all /usr/bin/Hyprland`. Runs 25–26: the session's capability sets are empty and the wallpaper loads. The boot test now fails if it does not | Confirmed (VM) |
@@ -255,8 +272,8 @@ Problem 8 reached further than the wallpaper:
 
 * **Time to desktop on real hardware is unmeasured.** The table's native figure is an estimate
   from TCG.
-* Under TCG, waybar is the slowest client: 44 s from reading its configuration (32.7 s) to "Bar
-  configured" (76.3 s). GTK's accessibility bus starts with it (`at-spi`). `NO_AT_BRIDGE=1` would skip
+* Under TCG, waybar is the slowest client: 32 s from reading its configuration (31.9 s) to "Bar
+  configured" (64.0 s). GTK's accessibility bus starts with it (`at-spi`). `NO_AT_BRIDGE=1` would skip
   that; it is not set.
 * Xwayland starts with the session (Omarchy enables it) and holds 28 MB PSS. Nothing in the
   image needs it.
@@ -284,14 +301,20 @@ Problem 8 reached further than the wallpaper:
     function's `usbfunc:` alias load the rest. A built-in stack therefore needs no modules.
   * Label: Confirmed in the VM against boot036 (run 21, see
     [boot036 check](#boot036-check-run-21)); binding to a real controller is untested.
-* **The USB link itself.** The dwc3 device-mode controller and the Type-C PHY must work
-  (milestone 2). The RAM root then needs no change: udev starts one gadget per controller.
-  CDC-EEM is the default, matching the main session's choice for the native control channel:
-  * NCM stalled on the same SoC in the omarchy-m5 review;
-  * the ADT's three ports carry an `ncm-interrupt-ep-disabled` property;
-  * macOS ships `AppleUSBEEM`.
-  
-  Label: Likely. The M1 side should get 10.66.0.10 by DHCP and reach
+* **The USB link itself.** Attempt 17 (`native/boot/stage-b-2026-10-16-attempt17-result.md`)
+  showed the dwc3 device-mode controllers working natively: all three probed, and the M1
+  enumerated boot036's gadget 8 s after the handoff. The RAM root needs no change for that:
+  udev starts one gadget per controller. Its functions now follow boot038's Stage-B:
+  * CDC-ECM for the network. In attempt 17 the M1's macOS 26.0.1 had no usable EEM driver
+    (the EEM kext is a stub that never loads), while `cdc.ecm` was loaded.
+  * Before it, a CDC-ACM serial port that carries the journal read-only. The M1 can then
+    follow the boot without the network (`cdc.acm` is loaded there too).
+
+  ECM and ACM each add an interrupt-IN notification endpoint, which EEM avoided. Whether the
+  t6050 dwc3 handles it is Unknown: the ADT marks the three ports `ncm-interrupt-ep-disabled`
+  (Observed; value not in the sanitized dump), and attempt 17 left the question open.
+  Label: Likely that macOS binds ECM and ACM; Unknown for the endpoint. The M1 side should
+  get 10.66.0.10 by DHCP and reach
   `ssh root@10.66.0.2`. Without DHCP, port N's link-local address
   `fe80::69:6cff:fe69:6e0N%<interface>` is the same as in boot036's Stage-B, so one M1
   command reaches both stages. Put the operator's public key in `out/authorized_keys` before
@@ -304,7 +327,7 @@ Problem 8 reached further than the wallpaper:
   * `udevadm wait /dev/dri/card0` covers the start race natively too (Likely).
 * **One CPU, busy idle.**
   * Everything shares one core: compositor, llvmpipe rasterisation and clients.
-  * At the idle desktop the system used 3.1 % of the vCPU under TCG; natively a fraction of
+  * At the idle desktop the system used 2.6 % of the vCPU under TCG; natively a fraction of
     that (Hypothesis).
   * With `idle=nop` the core spins whenever nothing runs, so it is never idle in power terms.
     That is a property of the boot, not of the desktop.

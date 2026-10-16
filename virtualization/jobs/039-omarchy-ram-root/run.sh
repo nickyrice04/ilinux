@@ -161,6 +161,8 @@ want USB_U_ETHER && func="$func u_ether.o"
 want USB_F_EEM && func="$func usb_f_eem.o"
 want USB_F_NCM && func="$func usb_f_ncm.o"
 want USB_F_ECM && func="$func usb_f_ecm.o"
+want USB_U_SERIAL && func="$func u_serial.o"   # the ACM journal port
+want USB_F_ACM && func="$func usb_f_acm.o"
 cp "$KTREE"/drivers/net/usb/{usbnet,cdc_ether,cdc_ncm}.c "$KM/drivers/net/usb/"
 echo "obj-m :=$net" > "$KM/drivers/net/usb/Kbuild"
 cp "$KTREE"/drivers/usb/gadget/*.[ch] "$KM/drivers/usb/gadget/"
@@ -176,6 +178,7 @@ obj-m :=$func
 usb_f_eem-y := f_eem.o
 usb_f_ncm-y := f_ncm.o
 usb_f_ecm-y := f_ecm.o
+usb_f_acm-y := f_acm.o
 EOF
 dirs=
 [ -n "$net" ] && dirs="drivers/net/usb"
@@ -497,9 +500,10 @@ while [ "$SECONDS" -lt "$TIMEOUT" ] && kill -0 "$QPID" 2>/dev/null; do
     fi
     sleep 0.5
 done
-gssh() {
-    chroot "$TOOLS" ssh -i /work/id_ed25519 -p 2222 -o BatchMode=yes -o ConnectTimeout=20 \
-        -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/work/known_hosts root@127.0.0.1 "$@"
+gssh() {   # bounded, so a step that hangs in the guest cannot hold the vm lock (run 27 did)
+    timeout --kill-after=10 900 chroot "$TOOLS" ssh -i /work/id_ed25519 -p 2222 -o BatchMode=yes \
+        -o ConnectTimeout=20 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/work/known_hosts \
+        root@127.0.0.1 "$@"
 }
 fbshot framebuffer
 python3 -I "$J/fb2png.py" "$X/fb.raw" $FB_W $FB_H $FB_STRIDE $FB_FMT "$OUT/test/framebuffer-half.png" 2 || true

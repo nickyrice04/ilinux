@@ -133,8 +133,12 @@ sec hyprctl-layers; hypr layers
 sec hyprctl-clients; hypr clients
 sec hyprctl-systeminfo; hypr systeminfo
 sec usb-link; ip -details address show usb0; networkctl status usb0 --no-pager 2>&1 | head -30
-sec usb-gadget-check; /usr/local/lib/ilinux/usb-gadget.sh check 2>&1; ls /sys/class/udc 2>&1
-lsmod | grep -E '^(libcomposite|u_ether|usb_f_)' || echo "no gadget modules loaded (built in?)"
+sec usb-gadget-check  # bounded: run 27 hung here while a check step could block forever
+timeout --kill-after=2 40 /usr/local/lib/ilinux/usb-gadget.sh check 2>&1 || echo "check: exit $?"
+ls /sys/class/udc 2>&1
+lsmod | grep -E '^(libcomposite|u_ether|u_serial|usb_f_)' || echo "no gadget modules loaded (built in?)"
+systemd-analyze verify /etc/systemd/system/ilinux-usb-gadget@.service 2>&1 | head -5
+echo "units for ttyGS ports: $(systemctl list-units --all --no-legend 'serial-getty@ttyGS*' 2>/dev/null | wc -l) getty"
 sec ssh-socket; systemctl status ilinux-sshd.socket --no-pager 2>&1 | head -12
 sec modules; lsmod
 sec coredumps; coredumpctl list --no-pager 2>&1 | tail -20

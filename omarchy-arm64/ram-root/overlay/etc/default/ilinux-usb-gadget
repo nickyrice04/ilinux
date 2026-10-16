@@ -1,2 +1,5 @@
-# Function for the USB network gadget: eem (default), ncm or ecm. See usb-gadget.sh.
-FUNCTION=eem
+# USB control channel, see usb-gadget.sh.
+# Network function: ecm (default; macOS 26.0.1 loads it), ncm or eem (no usable macOS driver).
+FUNCTION=ecm
+# 1: a CDC-ACM serial port before the network function carries the journal, read-only.
+ACM=1

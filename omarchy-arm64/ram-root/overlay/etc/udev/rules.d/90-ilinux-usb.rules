@@ -1,2 +1,3 @@
-# A device-mode USB controller appeared: expose the network gadget on it (interface usb<N>).
+# A device-mode USB controller appeared: put the control channel on it (journal serial port
+# /dev/ttyGS<n> and network interface usb<N>).
 ACTION=="add", SUBSYSTEM=="udc", TAG+="systemd", ENV{SYSTEMD_WANTS}+="ilinux-usb-gadget@%k.service"

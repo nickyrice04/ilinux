@@ -479,11 +479,11 @@ class InitrdTests(unittest.TestCase):
 
             def __len__(self):
                 return self.n
-        files = {"Image": Size(44599808), "ramroot.cpio.zst": Size(182089436),
+        files = {"Image": Size(44599808), "ramroot.cpio.zst": Size(182092876),
                  "t6050-j716c-stage-b.dtb": Size(60363)}
         total, seconds = launch.upload_estimate(files, RAMROOT)
-        self.assertEqual(total, 226749607)
-        self.assertEqual(["%.1f" % s for s in seconds], ["45.3", "56.7"])
+        self.assertEqual(total, 226753047)
+        self.assertEqual(["%.1f" % s for s in seconds], ["45.4", "56.7"])
 
 
 class RamrootFileTests(unittest.TestCase):

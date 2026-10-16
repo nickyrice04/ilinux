@@ -1,14 +1,15 @@
 # RAM-root launch profile (job 039), prepared offline
 
-2026-10-15, M5 side session. **Native RAM-root boot NOT RUN.** Nothing here touched
-hardware, USB or a live session. Not committed. Labels: Confirmed / Likely /
-Hypothesis / Unknown.
+2026-10-15, updated 2026-10-16, M5 side session. **Native RAM-root boot NOT RUN.**
+Nothing here touched hardware, USB or a live session. The launcher change is in
+`9ee6b2f`. Labels: Confirmed / Likely / Hypothesis / Unknown.
 
 `launch.py --profile ramroot` boots the Omarchy-style RAM root from VM job 039
 ([report](../../omarchy-arm64/ram-root-report-2026-10-15.md)) instead of the
-302 KB diagnostic initramfs. It uses the same package (boot035 Image, Stage-B DT
-and m1n1) and every preflight gate of the Stage-B path. Without `--profile`, the
-launcher is the reviewed Stage-B launcher, byte for byte (see Evidence).
+diagnostic initramfs. It uses the current handoff's package (Image, Stage-B DT
+and m1n1, checked against `package-manifest.json`) and every preflight gate of the
+Stage-B path. Without `--profile`, the launcher is the reviewed Stage-B launcher,
+byte for byte (see Evidence).
 
 | | `stage-b` (default, unchanged) | `ramroot` |
 |---|---|---|
@@ -17,7 +18,7 @@ launcher is the reviewed Stage-B launcher, byte for byte (see Evidence).
 | m1n1's `idle=nop arm64.nowfxt` | tolerated (already in the fixed set) | **required, exactly**: the pinned m1n1 appends it on M4 and later (`kboot.c`), and WFI loses state without it |
 | Confirmation | `BOOT-J716C-RAM-DIAGNOSTIC` | `BOOT-J716C-RAM-ROOT` |
 | Deadline | 180 s | 300 s |
-| Upload | about 45 MB | 226.7 MB: 45.3 s at 5 MB/s, 56.7 s at 4 MB/s (Inferred) |
+| Upload | about 45 MB | about 227 MB: 45–57 s at 5–4 MB/s (Inferred) |
 
 The launcher refuses:
 
@@ -29,19 +30,24 @@ The launcher refuses:
 
 ## Before anyone starts it
 
-1. **Attempt 16 first.** The boot035 Image arms the genpd release ladder
-   whenever `pd_ignore_unused` is set, so the ladder also runs here, from about
-   19 s to about 94 s of kernel time. `quiet` hides its lines. Run this profile only
-   after attempt 16 has reached `ladder complete` with the panel still lit and
-   heartbeats to 180 s. A reset or a dark panel during this profile cannot be
-   attributed; use Stage-B for that.
-2. **Use the recorded build.** The record pins job 039 run 22
-   (182,089,436 bytes, `c4b1daf7…`, built for the boot035 Image `1131a1af…`;
-   the digest is kept in `out/runs/run22/`). Every rebuild changes the digest,
-   because the image records its build time. After a later run, the launcher
-   refuses the new file until `size` and `sha256` are copied from
-   `out/ramroot.cpio.zst.sha256` into `ramroot-manifest.json` and `source` is
-   updated.
+1. **Baseline: met.** Attempt 16 (boot035) completed its release ladder with no
+   reset, and attempt 17 (boot036) held that baseline. The Images since boot034
+   arm the genpd release ladder whenever `pd_ignore_unused` is set, so it also
+   runs in a RAM-root boot. `quiet` hides its lines, so a reset or a dark panel
+   under this profile cannot be attributed; use Stage-B for that.
+2. **A RAM root built for the package's Image.** The record pins job 039 run 30
+   (182,092,876 bytes, `58bdc6ce…`, built for the boot035 Image `1131a1af…`; the
+   image and its digest are kept in `out/runs/run30/`). The handoff manifest is
+   now boot038's (Image `e0e53113…`), so the launcher refuses this pairing:
+   `package Image differs from the Image the RAM root was built for` (Confirmed
+   offline, 2026-10-16). Attempt 19, a RAM root on boot038's kernel and DT, needs
+   a job 039 build for that Image (`KTREE`, `KERNEL` and `IMAGE_SHA` in
+   `out/job.env`). Pin it here with `image_sha256` set to that Image.
+
+   Every rebuild changes the digest, because the image records its build time.
+   After a later run, the launcher refuses the new file until `size` and `sha256`
+   are copied from `out/ramroot.cpio.zst.sha256` into `ramroot-manifest.json` and
+   `source` is updated.
 3. **Move the image privately** to the controller, for example to
    `build/ramroot/ramroot.cpio.zst` (ignored). Never use Git or a release: the
    image holds its SSH host key.
@@ -49,22 +55,24 @@ The launcher refuses:
    `~/.ssh/id_ed25519.pub`. The launcher writes plain public keys, without
    comments, to `/etc/ssh/authorized_keys.d/root` (0600, root) in a cpio
    zero-padded to a 4-byte boundary, and prints each key's SHA256 fingerprint.
-   The boot035 Stage-B DT has no USB device-mode controller, so SSH is not
-   reachable on boot035 anyway. The key matters once a DT with dwc3 is used
-   (boot036): then `ssh root@10.66.0.2`, or `root@fe80::69:6cff:fe69:6e0N%<interface>`
-   on port N, as in boot036.
-5. **Controller digests.** `launch.py` no longer matches the digest
-   `65ece253…` that `tools/m1n1-client/stage-b-instructions.md` pins for
-   attempt 16. Commit this after attempt 16, or update that digest in the same
-   commit. `entry_guard.py`, `fdt.py` and the other controller files are
-   unchanged.
+   The boot035 Stage-B DT has no USB device-mode controller. The boot036/038 DT
+   has three. The RAM root's gadget follows boot038's Stage-B: one configuration
+   with CDC-ACM (a read-only journal; macOS shows `/dev/cu.usbmodem*`) and then
+   CDC-ECM (network), using the same port table and MACs; `bcdDevice` 0x0039.
+   SSH is then `ssh root@10.66.0.2`, or `root@fe80::69:6cff:fe69:6e0N%<interface>`
+   on port N.
+5. **Controller digests: done.** `9ee6b2f` committed the profile, and the Stage-B
+   checklist has pinned `launch.py` at `4d55f0c9…` since `0363bd5`.
 
 ## Starting it (a human, with separate authorization)
+
+The commands assume the planned attempt-19 package, boot038. They pass only once
+the record pins a RAM root built for that package's Image (point 2).
 
 Offline on the controller first; this opens no USB:
 
 ```sh
-python3 -I native/boot/launch.py --package build/native-boot035-download/ilinux-j716c-boot035 \
+python3 -I native/boot/launch.py --package build/native-boot038-download/ilinux-j716c-boot038 \
   --profile ramroot --ramroot build/ramroot/ramroot.cpio.zst --operator-key ~/.ssh/id_ed25519.pub
 python3 -I native/boot/test_ramroot.py
 ```
@@ -78,7 +86,7 @@ Continue**, and wait for the proxy. Then run this once:
 
 ```sh
 tools/m1n1-client/run.sh native/boot/launch.py \
-  --package build/native-boot035-download/ilinux-j716c-boot035 \
+  --package build/native-boot038-download/ilinux-j716c-boot038 \
   --profile ramroot --ramroot build/ramroot/ramroot.cpio.zst \
   --operator-key ~/.ssh/id_ed25519.pub \
   --launch --device auto --confirm BOOT-J716C-RAM-ROOT
@@ -93,8 +101,8 @@ What to expect:
   * the three pre-MMU rectangles at the top left (the framebuffer descriptor is
     filled as in Stage-B);
   * little or no text;
-  * then Hyprland with waybar and a foot status window, 8–16 s after kernel
-    start. In the VM under TCG this took 67.9 s.
+  * then Hyprland with the wallpaper, waybar and a foot status window, 8–16 s
+    after kernel start. In the VM under TCG this took 68.4 s (run 30).
 * Stop at a reset, a dark panel, or 180 s from the handoff.
 * Return to Macintosh HD.
 
@@ -114,10 +122,14 @@ What to expect:
   Four of the eight Stage-B mutations pass the existing `test_launcher.py`:
   Stage-B arguments gaining `quiet`, a swapped upload order, a changed
   confirmation token, and an extra printed line.
-* **Real dry run (Confirmed offline):** the real boot035 package and the run-22
-  image give `RAM root PASS`. The upload is 226,749,607 bytes: 45.3 s at
-  5 MB/s, 56.7 s at 4 MB/s. A key adds a 724-byte cpio with no padding, since
-  182,089,436 is a multiple of 4.
+* **Real dry runs with run 30 (Confirmed offline, 2026-10-16):**
+  * At HEAD, with the boot038 manifest, the boot038 package stops on the Image
+    check, and the boot035 package fails the package check.
+  * A scratch copy of the launcher carrying boot035's manifest gives
+    `RAM root PASS`, so the record itself is right. The upload is 226,753,047
+    bytes: 45.4 s at 5 MB/s, 56.7 s at 4 MB/s.
+  * A key adds a 724-byte cpio; 182,092,876 is a multiple of 4, so there is no
+    padding.
 * **Real-size run:** the real boot035 package plus a synthetic 182,081,015-byte
   file. The RAM-root offline path took 0.25 s. The upload is 226,741,911 bytes
   with a 724-byte key cpio after 1 pad byte.
