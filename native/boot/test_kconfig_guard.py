@@ -11,7 +11,7 @@ import kconfig_guard as kg  # noqa: E402
 BUILD = HERE.parents[1] / "build"
 PACKAGES = {"ilinux-j716c-boot021": BUILD / "native-boot-delivery-check/ilinux-j716c-boot021"}
 PACKAGES.update({"ilinux-j716c-boot%03d" % n: BUILD / ("native-boot%03d/verified" % n)
-                 for n in (22, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36)})
+                 for n in (22, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37)})
 RUSTC_LINES = ["RUSTC_HAS_FILE_AS_C_STR", "RUSTC_HAS_FILE_WITH_NUL", "RUSTC_HAS_SPAN_FILE",
                "RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS", "RUSTC_HAS_UNNECESSARY_TRANSMUTES",
                "RUSTC_LLVM_MAJOR_VERSION", "RUSTC_LLVM_VERSION", "RUSTC_VERSION"]

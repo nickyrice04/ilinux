@@ -29,15 +29,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True, help="VM job out directory containing export/")
     parser.add_argument("--destination", type=Path, required=True)
-    parser.add_argument("--name", choices=(NAME, "ilinux-j716c-boot022", "ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"), default=NAME)
-    parser.add_argument("--previous-package", type=Path, help="boot032/boot035/boot036: verified previous package directory for the exact DT-delta check")
-    parser.add_argument("--authorized-key", type=Path, help="boot036: the one public key root's authorized_keys must hold")
+    parser.add_argument("--name", choices=(NAME, "ilinux-j716c-boot022", "ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"), default=NAME)
+    parser.add_argument("--previous-package", type=Path, help="boot032/boot035/boot036/boot037: verified previous package directory for the exact DT-delta check")
+    parser.add_argument("--authorized-key", type=Path, help="boot036/boot037: the one public key root's authorized_keys must hold")
     parser.add_argument("--record-dir", type=Path, default=HERE, help="where package-manifest.json, intake-manifest-sha256.txt and archive-sha256.txt go (default native/boot: the current handoff)")
     args = parser.parse_args()
     data = {name: (args.out / "export" / name).read_bytes() for name in FILES}
     checks = {n: {"size": len(b), "sha256": hashlib.sha256(b).hexdigest()} for n, b in data.items()}
     for name, digest in ORIGINAL.items():
-        if name == "Image" and args.name in ("ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+        if name == "Image" and args.name in ("ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
             continue
         if checks[name]["sha256"] != digest:
             raise ValueError("original job-020 artifact changed: " + name)
@@ -50,9 +50,9 @@ def main():
         if any(forbidden.intersection(node) for node in properties(data[name]).values()):
             raise ValueError("identifying properties in package DT")
     symbols = {}
-    if args.name in ("ilinux-j716c-boot022", "ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot022", "ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         previous = {"ilinux-j716c-boot022": "boot021", "ilinux-j716c-boot024": "boot022",
-                    "ilinux-j716c-boot025": "boot024", "ilinux-j716c-boot027": "boot025", "ilinux-j716c-boot028": "boot027", "ilinux-j716c-boot029": "boot028", "ilinux-j716c-boot030": "boot029", "ilinux-j716c-boot031": "boot030", "ilinux-j716c-boot032": "boot031", "ilinux-j716c-boot033": "boot032", "ilinux-j716c-boot034": "boot033", "ilinux-j716c-boot035": "boot034", "ilinux-j716c-boot036": "boot035"}[args.name]
+                    "ilinux-j716c-boot025": "boot024", "ilinux-j716c-boot027": "boot025", "ilinux-j716c-boot028": "boot027", "ilinux-j716c-boot029": "boot028", "ilinux-j716c-boot030": "boot029", "ilinux-j716c-boot031": "boot030", "ilinux-j716c-boot032": "boot031", "ilinux-j716c-boot033": "boot032", "ilinux-j716c-boot034": "boot033", "ilinux-j716c-boot035": "boot034", "ilinux-j716c-boot036": "boot035", "ilinux-j716c-boot037": "boot036"}[args.name]
         allowed_changes = {"t6050-j716c-stage-b.dtb"} if previous == "boot021" else {"Image"}
         if args.name == "ilinux-j716c-boot032":
             allowed_changes.add("t6050-j716c-stage-b.dtb")
@@ -61,6 +61,8 @@ def main():
         if args.name == "ilinux-j716c-boot036":   # USB control channel; m1n1 and the generic files stay
             allowed_changes = {"Image", "kernel.config", "t6050-j716c-stage-b.dtb",
                                "initramfs-stage-b.cpio.gz", "diag-init.c", "toolchain.txt"}
+        if args.name == "ilinux-j716c-boot037":   # MTP input path; the control channel and m1n1 stay
+            allowed_changes = {"Image", "kernel.config", "t6050-j716c-stage-b.dtb"}
         baseline = json.loads((HERE / (previous + "-package-manifest.json")).read_text())
         for name, info in baseline["files"].items():
             if name not in allowed_changes and checks[name] != info:
@@ -113,6 +115,25 @@ def main():
                 raise ValueError("diag-init.c is not kernel/experiments/usb-gadget/init.c")
             authorized_key = args.authorized_key.read_bytes()
             control_channel.check_initramfs(data["initramfs-stage-b.cpio.gz"], authorized_key)
+        if args.name == "ilinux-j716c-boot037":
+            import control_channel
+            import mtp_input
+            if args.previous_package is None or args.authorized_key is None:
+                raise ValueError("boot037 needs --previous-package and --authorized-key")
+            prior = {}
+            for name in ("t6050-j716c-stage-b.dtb", "kernel.config"):
+                prior[name] = (args.previous_package / name).read_bytes()
+                if hashlib.sha256(prior[name]).hexdigest() != baseline["files"][name]["sha256"]:
+                    raise ValueError("prior digest mismatch: " + name)
+            mtp_input.check_delta(properties(prior["t6050-j716c-stage-b.dtb"]),
+                                  properties(data["t6050-j716c-stage-b.dtb"]))
+            mtp_input.check_config(prior["kernel.config"].decode(), data["kernel.config"].decode())
+            mtp_input.check_image(data["Image"])
+            # The control channel is how boot037's input is verified: its contract stays enforced.
+            if data["diag-init.c"] != (HERE.parents[1] / "kernel/experiments/usb-gadget/init.c").read_bytes():
+                raise ValueError("diag-init.c is not kernel/experiments/usb-gadget/init.c")
+            authorized_key = args.authorized_key.read_bytes()
+            control_channel.check_initramfs(data["initramfs-stage-b.cpio.gz"], authorized_key)
         symbols = {"_base": 0, "version_tag": baseline["m1n1_version_offset"],
                    "dt": baseline["m1n1_dt_pointer_offset"]}
     else:
@@ -138,38 +159,48 @@ def main():
         "m1n1_dt_pointer_offset": symbols["dt"],
         "files": checks,
     }
-    if args.name in ("ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot024", "ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         from entry_guard import descriptor_offset
         manifest["linux_patches"] = ("kernel/patches/t6050/0001-0007 plus "
                                      "kernel/experiments/early-framebuffer/apply.py; job-024")
         manifest["early_framebuffer_descriptor_offset"] = descriptor_offset(data["Image"])
-        if args.name in ("ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+        if args.name in ("ilinux-j716c-boot025", "ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
             manifest["linux_patches"] += "; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025"
-    if args.name in ("ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot027", "ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; kernel/experiments/deferred-probe/apply.py; job-027"
-    if args.name in ("ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot028", "ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; kernel/experiments/schedule-boundary/apply.py; job-028"
-    if args.name in ("ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot029", "ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; kernel/experiments/context-display/apply.py; job-029"
-    if args.name in ("ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot030", "ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; kernel/experiments/probe-path/apply.py; job-030"
-    if args.name in ("ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot031", "ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; kernel/experiments/gpio-handoff/apply.py; job-031"
-    if args.name in ("ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot032", "ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges"
-    if args.name in ("ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot033", "ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; kernel/experiments/scheduler-ram-only/apply.py; job-033"
-    if args.name in ("ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot034", "ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; kernel/experiments/genpd-sync-state/apply.py; job-036"
-    if args.name in ("ilinux-j716c-boot035", "ilinux-j716c-boot036"):
+    if args.name in ("ilinux-j716c-boot035", "ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += "; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038"
-    if args.name == "ilinux-j716c-boot036":
+    if args.name in ("ilinux-j716c-boot036", "ilinux-j716c-boot037"):
         manifest["linux_patches"] += ("; USB control channel: gadget stack built in, dwc3 peripheral "
                                       "cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear "
                                       "initramfs (kernel/experiments/usb-gadget); job-041")
         manifest["control_channel_authorized_key"] = authorized_key.decode().strip()
+    if args.name == "ilinux-j716c-boot036":
         # boot024-035 shipped job 020's kernel.config; this one is the config that built the Image.
         manifest["kernel_config_toolchain_lines_vs_boot035"] = toolchain_lines
+    if args.name == "ilinux-j716c-boot037":
+        manifest["linux_patches"] += ("; MTP input path (kernel/experiments/mtp-input): "
+                                      "driver-contracts dockchannel-hid 0001 + patches/0002 ring transport, "
+                                      "HIDRAW/HID_APPLE/HID_MAGICMOUSE/APPLE_RTKIT_HELPER built in, Stage-B DT "
+                                      "with the MTP nodes (stream id 1); job-042")
+        manifest["mtp_input"] = {"dt_nodes": list(mtp_input.NEW_NODES), "dart": mtp_input.DART,
+                                 "stream_ids": list(mtp_input.SIDS),
+                                 "config_set": sorted(mtp_input.CONFIG_SET),
+                                 "kernel_parameters_not_in_fixed_arguments": ["dockchannel_hid.mtp_poll_ms=100"]}
     encoded = (json.dumps(manifest, indent=2) + "\n").encode()
     (args.record_dir / "package-manifest.json").write_bytes(encoded)
     data["package-manifest.json"] = encoded
