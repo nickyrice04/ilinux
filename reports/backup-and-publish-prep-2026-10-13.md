@@ -7,8 +7,8 @@ executed change.
 > (the oversized weights survive only in local backup refs; `main` and every
 > tag are clean), the home-directory paths were replaced with `~`, the
 > `README.md` was rewritten for a public audience, and the repository was made
-> public after attempt 19. Still open: a top-level `LICENSE` for the original
-> work (section 3). It separates two targets with very different requirements:
+> public after attempt 19. The user then chose MIT for the original work
+> (top-level `LICENSE`, with the per-directory notes from section 3). It separates two targets with very different requirements:
 
 * **Private backup repo** (the safety net the user asked for): blocked on
   **one** thing — a history rewrite to drop oversized generated blobs.

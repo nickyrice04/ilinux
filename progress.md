@@ -20,9 +20,9 @@ measured, still unsupported, and next.
   parity with native macOS on this machine), the 2026-10-16 status (a view-only
   desktop on one core with software rendering, and the list of what does not
   work), how a native boot works, what never enters Git, licensing.
-* **Open:** no top-level `LICENSE` yet; until one is chosen the original work
-  is all rights reserved, while the kernel and QEMU patches are GPL-2.0 and
-  the Mesa and virglrenderer patches MIT by inheritance.
+* **Licence:** the user chose MIT for the original work (`LICENSE`); the
+  kernel and QEMU patches stay GPL-2.0 and the Mesa and virglrenderer patches
+  MIT by inheritance, as the README's Licensing section records.
 
 ## 2026-10-16 · M1: attempt 19 — the first native Omarchy desktop on the M5 (view-only, software rendering)
 
