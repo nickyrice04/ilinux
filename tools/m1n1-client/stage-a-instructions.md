@@ -85,7 +85,7 @@ record why it was NOT RUN rather than treating discovery as a successful test.
 On return, the human can run this original read-only helper in the M5 Terminal:
 
 ```sh
-sudo /usr/bin/python3 -I '/Users/nickyrice/Documents/iLinux/ilinux-publish/build/installer-verification/check-boot-policies.py' --expected-lab Permissive
+sudo /usr/bin/python3 -I '~/Documents/iLinux/ilinux-publish/build/installer-verification/check-boot-policies.py' --expected-lab Permissive
 ```
 
 Expected original Full / lab Permissive, both exit 0. Enter the password only

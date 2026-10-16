@@ -76,11 +76,14 @@ that reads it with `-I`.
 * For anything meant for upstream Asahi, follow Asahi's clean-room
   copyright policy (see `research/asahi/`). Do not base contributions on
   decompiled Apple code.
-* Git: the user authorized the private `nickyrice04/ilinux` GitHub remote
-  on 2026-10-13 for second-machine setup and agent handoffs. This supersedes
-  the former local-only rule. Never commit VM images, models,
-  build outputs, raw IORegistry dumps or proprietary binaries (see
-  `.gitignore`).
+* Git: the user authorized the `nickyrice04/ilinux` GitHub remote on
+  2026-10-13 (private, for second-machine setup and agent handoffs) and made
+  it **public on 2026-10-16**, after attempt 19. Everything pushed, including
+  the Releases, is visible to anyone at once. Never commit VM images, models,
+  build outputs, raw IORegistry dumps, proprietary binaries, media, the
+  RAM-root image, private keys, home-directory paths or identifiers (see
+  `.gitignore` and the host-protection rules above). Write every document as
+  a public document.
 
 ## Current status (update on every milestone)
 

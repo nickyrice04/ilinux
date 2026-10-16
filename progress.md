@@ -5,6 +5,25 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · Repository public after the first native desktop
+
+* **Decided:** with attempt 19's desktop on record, the user asked for the
+  repository to be public. It now is, Releases included.
+* **Audit before the change:** no key or token in any revision (the only
+  matches are test fixtures); no serial, UUID, chip ID, nonce or MAC address
+  in tracked files (the ADT dump holds the denied key *names* only); the
+  oversized synthetic model weights from 2026-10-11 survive only in local
+  pre-rewrite backup refs, not in `main` or any tag (largest blob on `main`:
+  the 1 MB sanitized ADT); no decompiled code in the findings; 31
+  home-directory paths in 7 files replaced with `~`.
+* **README rewritten** for readers outside the project: the goal (performance
+  parity with native macOS on this machine), the 2026-10-16 status (a view-only
+  desktop on one core with software rendering, and the list of what does not
+  work), how a native boot works, what never enters Git, licensing.
+* **Open:** no top-level `LICENSE` yet; until one is chosen the original work
+  is all rights reserved, while the kernel and QEMU patches are GPL-2.0 and
+  the Mesa and virglrenderer patches MIT by inheritance.
+
 ## 2026-10-16 · M1: attempt 19 — the first native Omarchy desktop on the M5 (view-only, software rendering)
 
 * **Discovered:** the Arch RAM root on boot035 boots on the M5 to a Hyprland desktop on `simpledrm`: wallpaper at

@@ -1,5 +1,5 @@
 == synth-llama3-8b-4bit-g32
-[transformers] The tokenizer you are loading from '/Users/nickyrice/Documents/iLinux/apple-silicon-linux-research/benchmarks/ai/models/mlx-synth-llama3-8b-4bit-g32' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+[transformers] The tokenizer you are loading from '~/Documents/iLinux/apple-silicon-linux-research/benchmarks/ai/models/mlx-synth-llama3-8b-4bit-g32' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
 Running warmup..
 Timing with prompt_tokens=512, generation_tokens=128, batch_size=1.
 Trial 1:  prompt_tps=3102.171, generation_tps=100.836, peak_memory=5.565, total_time=1.439

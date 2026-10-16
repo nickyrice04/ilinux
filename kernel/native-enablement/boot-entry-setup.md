@@ -102,7 +102,7 @@ stop after installation/policy verification and return to original macOS.
    A local original helper is available on the M5 at
    `build/installer-verification/check-boot-policies.py` (ignored, not in Git).
    The user can review it and run it in their own M5 Terminal:
-   `sudo /usr/bin/python3 -I /Users/nickyrice/Documents/iLinux/ilinux-publish/build/installer-verification/check-boot-policies.py`.
+   `sudo /usr/bin/python3 -I ~/Documents/iLinux/ilinux-publish/build/installer-verification/check-boot-policies.py`.
    It identifies the two volume groups in memory, invokes only display-policy,
    and prints sanitized JSON. The user-provided output has now been reviewed.
 2. **DONE:** exact `m1n1.bin` staged and verified using section 4. No restart is
@@ -357,7 +357,7 @@ do not guess a disk number or substitute the original Data volume.
 The sender already verified this local payload:
 
 ```text
-/Users/nickyrice/Documents/iLinux/ilinux-publish/build/native-boot-receipt-check/ilinux-j716c-boot021/m1n1.bin
+~/Documents/iLinux/ilinux-publish/build/native-boot-receipt-check/ilinux-j716c-boot021/m1n1.bin
 ```
 
 Copy **only** that `m1n1.bin` into a new `Users/Shared/iLinuxBoot` folder on

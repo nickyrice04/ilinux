@@ -1618,3 +1618,16 @@ USB controllers, so the only new variable is userspace. The video is the only
 evidence this time. The control channel continues as its own candidate
 (boot039, bulk-only), and the RAM root moves to the newer kernel once the link
 works.
+
+## 2026-10-16 · Make the repository public
+
+The first native desktop is the milestone the user wanted on record before
+opening the project. The audit found nothing that the host-protection rules
+forbid (no identifiers, keys, media, images or decompiled code in any pushed
+revision), so the same remote is made public rather than a fresh copy, keeping
+the history and the Releases that the attempt reports cite. From now on every
+push is public at once: documents are written for outside readers, the
+RAM-root image and the second Mac's private key never enter Git, and the
+project's framing is fixed in the README: unaffiliated with Apple, Asahi Linux
+and Omarchy; AI-assisted; a work in progress whose goal is parity with native
+macOS on this machine, with no performance claim until it is measured.

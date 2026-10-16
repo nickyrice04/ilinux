@@ -1,7 +1,14 @@
 # Backup and publish preparation (goal 6)
 
 Prepared 2026-10-13 by agent A. This is a plan for the user to act on, not an
-executed change. It separates two targets with very different requirements:
+executed change.
+
+> **Outcome, 2026-10-16:** the history was rewritten before the first push
+> (the oversized weights survive only in local backup refs; `main` and every
+> tag are clean), the home-directory paths were replaced with `~`, the
+> `README.md` was rewritten for a public audience, and the repository was made
+> public after attempt 19. Still open: a top-level `LICENSE` for the original
+> work (section 3). It separates two targets with very different requirements:
 
 * **Private backup repo** (the safety net the user asked for): blocked on
   **one** thing — a history rewrite to drop oversized generated blobs.
@@ -79,8 +86,8 @@ for a pure safety-net backup; the rewrite is better if the history matters.
 
 A private backup does **not** need this. For public:
 
-* **Local path / email** in 4 tracked files — replace `/Users/nickyrice` and
-  the email with a neutral placeholder:
+* **Local path / email** in 4 tracked files — replace the home-directory
+  path and the email with a neutral placeholder:
   * `benchmarks/results/macos-2026-10-11-ac-lpm/ai-llamacpp.jsonl`
   * `benchmarks/results/macos-2026-10-11-mlx/mlx.log`
   * `benchmarks/results/macos-2026-10-11-power/power.jsonl`

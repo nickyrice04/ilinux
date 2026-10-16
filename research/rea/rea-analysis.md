@@ -446,15 +446,15 @@ This variant still downloads the package into the **home-directory npm cache** (
 
 **Decisions to make first**
 
-- **D1 – project root.** `.mcp.json` and `.claude/settings.json` must sit in the directory you **launch `claude` from**. The plan assumes `PROJECT_ROOT=/Users/nickyrice/Documents/iLinux/apple-silicon-linux-research`. This session's memory path suggests Claude Code may be launched from the parent, `/Users/nickyrice/Documents/iLinux`. If so, put the two files there instead. The absolute paths below work either way.
+- **D1 – project root.** `.mcp.json` and `.claude/settings.json` must sit in the directory you **launch `claude` from**. The plan assumes `PROJECT_ROOT=~/Documents/iLinux/apple-silicon-linux-research`. This session's memory path suggests Claude Code may be launched from the parent, `~/Documents/iLinux`. If so, put the two files there instead. The absolute paths below work either way.
 - **D2 – launcher.** **(A) Recommended:** a project-local `npm install` launched with `node`. Nothing goes into the home npm cache, and nothing runs `npx` at startup. **(B)** The pinned `npx` launcher is identical to what setup writes, but it uses `~/.npm`.
 - **D3 – engine.** No engine gives static and non-native tools only. Ghidra and the JDK (Phase 5) add decompilation. Hopper and IDA are not planned.
 - **D4 – runtime tools.** Deny them by default (Phase 4) and enable individually later.
 
 ```bash
 # Common variables (NOT EXECUTED)
-PROJ=/Users/nickyrice/Documents/iLinux/apple-silicon-linux-research
-PROJECT_ROOT="$PROJ"            # or /Users/nickyrice/Documents/iLinux, per D1
+PROJ=~/Documents/iLinux/apple-silicon-linux-research
+PROJECT_ROOT="$PROJ"            # or ~/Documents/iLinux, per D1
 REA_VER=6.4.0
 NODE_BIN=/opt/homebrew/bin/node
 ```
@@ -491,7 +491,7 @@ Either write `$PROJECT_ROOT/.mcp.json` by hand:
       "type": "stdio",
       "command": "/opt/homebrew/bin/node",
       "args": [
-        "/Users/nickyrice/Documents/iLinux/apple-silicon-linux-research/tools/rea/node_modules/rea-agents/scripts/rea.mjs",
+        "~/Documents/iLinux/apple-silicon-linux-research/tools/rea/node_modules/rea-agents/scripts/rea.mjs",
         "mcp"
       ],
       "env": {
@@ -604,8 +604,8 @@ JAVA_HOME="$PROJ/tools/jdk/jdk-21.0.12.1+1/Contents/Home" \
 Then add these to the `env` of the `.mcp.json` entry:
 
 ```json
-"GHIDRA_INSTALL_DIR": "/Users/nickyrice/Documents/iLinux/apple-silicon-linux-research/tools/ghidra/ghidra_12.1.4_PUBLIC",
-"JAVA_HOME": "/Users/nickyrice/Documents/iLinux/apple-silicon-linux-research/tools/jdk/jdk-21.0.12.1+1/Contents/Home",
+"GHIDRA_INSTALL_DIR": "~/Documents/iLinux/apple-silicon-linux-research/tools/ghidra/ghidra_12.1.4_PUBLIC",
+"JAVA_HOME": "~/Documents/iLinux/apple-silicon-linux-research/tools/jdk/jdk-21.0.12.1+1/Contents/Home",
 "REA_ANALYSIS_PROVIDER": "ghidra",
 "GHIDRA_HEADLESS_MAXMEM": "4G"
 ```
