@@ -123,7 +123,15 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 18 / boot038 (CDC-ACM kernel-log
+Latest M1 native result: **attempt 18 (boot038, CDC-ACM log port + CDC-ECM)**: Linux held the attempt-17
+baseline (50-domain ladder at 45.024 s, 60 s milestone, heartbeats to 113.7 s, no reset, no M1 panic) and
+the M1 enumerated the gadget (+3.95 s) and macOS selected configuration 1 (+8.45 s), but no interface node
+was published, no ACM/ECM driver bound and the device's control endpoint then timed out; no serial port, no
+network, no SSH. On the M5 the UDC reads `configured` while `usb0` stays down. Likely, not tested: the
+interrupt-IN notification endpoints. M5 to try a gadget with no interrupt endpoint. See
+`native/boot/stage-b-2026-10-16-attempt18-result.md`. The fixed E1 probe is still NOT RUN.
+
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for attempt 18 / boot038 (CDC-ACM kernel-log
 port + CDC-ECM, key-only SSH) on `5105c58` (handoff `bd814ad`): archive `09f5a5d7…5f70` verified against
 Git before extraction, 102 controller cases plus the boot036 suites, launcher `4d55f0c9…`, Image/config/
 DTBs/m1n1 byte-identical to boot036, Stage-B initramfs differs only in `/init`, packaged key equals the M1

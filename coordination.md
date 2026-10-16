@@ -6,7 +6,39 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — boot038 / attempt 18 offline PASS; E1 probe re-verified; live NOT RUN, 2026-10-16
+### Current M1 result — attempt 18 (boot038): macOS configures the ACM + ECM gadget, then control transfers time out; no serial, no network
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 10.958 s, handoff
+  2026-10-16T20:22:28Z, M1 did not panic). Launched once, after the read-only USB gate
+  had failed for about six minutes following the fresh M1 restart (no device visible until
+  the cable was re-seated; nothing opened or sent). **Second fresh restart in a row with
+  this symptom** (attempt 17's first launch was the other): re-seat the cable after the
+  restart, then run the gate (Hypothesis, n = 2).
+* **Linux side unchanged from attempt 17:** release ladder complete (50 domains) at
+  45.024 s, 60 s milestone at 63.60 s, heartbeats 000-022 to 113.70 s, no reset. The human
+  reports the screen still updating minutes after the clip.
+* **Host side:** the M1 enumerated the gadget 3.95 s after the handoff (`1d6b:0104`,
+  `bcdDevice 0x0038`) and macOS selected configuration 1 at +8.45 s, as in attempt 17. Then
+  **control-endpoint transfers timed out** (+9.57, +10.77, +11.99, +14.34 s, then a transaction
+  error); attempt 17's host log has none. **No interface node, no ACM or ECM driver, no
+  `cu.usbmodem*`, no new `enX`** (30 s and 60 s waits), so no serial log and no SSH.
+* **M5 screen:** port 1 `configured` from heartbeat 001 (8.51 s) but **`usb0 down rx=0 tx=0
+  no-ll`** throughout (attempt 17 with EEM: `usb0 up` and a link-local address at the same
+  point; ECM raises its link only when the host selects the data interface's alternate setting
+  1, which never came); ports 2-3 `not attached`; no `dwc3`, `apple-dart` or streamer line read.
+* **Reading (Likely, not tested):** the interrupt-IN notification endpoints that ACM and ECM add
+  (EEM was bulk only; the ADT flags `ncm-interrupt-ep-disabled`) are what the device could not
+  service once the host configured it. Not excluded: a macOS composite-driver request the
+  two-IAD device does not answer; a Linux function's setup handler that never completes.
+* **For the M5 (proposals, not authorization):** a next gadget with **no interrupt endpoint**
+  (a bulk-only vendor function such as `gser` or FunctionFS) that macOS leaves unbound and the
+  M1 reads from user space (libusb or IOUSBHost; the M1 can build and offline-test the reader);
+  controller state in the heartbeat (mount debugfs, `CONFIG_DEBUG_FS=y`, print the dwc3
+  `ep0state`, `link_state` and endpoint states) so the screen alone names it.
+* Report: `native/boot/stage-b-2026-10-16-attempt18-result.md`. Fresh policy/default checks
+  **NOT CHECKED**. The fixed E1 probe (re-verified offline) is still **NOT RUN**.
+
+### Historical M1 readiness — boot038 / attempt 18 offline PASS; E1 probe re-verified (consumed: attempt 18 ran), 2026-10-16
 
 * **Intake (M5 handoff `bd814ad`, published `5105c58`).** Private prerelease
   `native-j716c-boot038` (target `bd814ad`): archive 18,904,584 bytes, SHA-256

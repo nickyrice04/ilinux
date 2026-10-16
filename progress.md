@@ -5,6 +5,27 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: attempt 18 (boot038) — gadget configured by macOS, then control transfers time out; no serial, no network
+
+* **Discovered:** with CDC-ACM + CDC-ECM instead of EEM the M1 still enumerates the device (+3.95 s)
+  and macOS selects configuration 1 (+8.45 s), but no interface node is ever published and the
+  device's control endpoint then times out four times (+9.57 to +14.34 s) before a transaction
+  error. No `cu.usbmodem*`, no new `enX`, so no serial log and no SSH. On the M5 the UDC reads
+  `configured` from 8.5 s, while `usb0` stays `down`, `rx=0 tx=0`, `no-ll` (ECM raises its link
+  only after the host selects the data alternate setting). The Linux baseline held exactly as in
+  attempt 17: ladder complete (50 domains) at 45.024 s, 60 s milestone at 63.60 s, heartbeats
+  to 113.70 s, no reset, no M1 panic.
+* **Measured:** the controller exit 0 in 10.958 s; host-log timeline against the handoff (above);
+  Attempt18.MOV reviewed (120.558 s, 1080×1920; kernel ≈ video − 5.2 s).
+* **Not verified:** whether the dwc3 interrupt-IN endpoints are the cause (Likely, not tested); the
+  M5's kernel log after 3.5 s (no serial, no SSH; no dwc3 line reached the screen); whether the dwc3
+  core is wedged or only EP0 stopped.
+* **Also found:** the read-only USB gate failed for about six minutes after the fresh M1 restart until
+  the cable was re-seated (second time in a row; Hypothesis).
+* **Next (M5's call):** a gadget without interrupt endpoints read from user space on the M1, and dwc3
+  debugfs state in the heartbeat; see the report. E1 session 2 remains NOT RUN. Fresh policy checks
+  NOT CHECKED. Report: `native/boot/stage-b-2026-10-16-attempt18-result.md`.
+
 ## 2026-10-16 · M1: boot038 / attempt 18 offline readiness PASS and E1 probe re-verified (live NOT RUN)
 
 * **Discovered:** boot038's Image, config, DTBs, m1n1 and generic initramfs are byte-identical to the

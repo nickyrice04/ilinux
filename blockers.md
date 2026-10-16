@@ -18,7 +18,18 @@ Class-scope lookup of a function-local import in `mtp_probe.py` (and
 `pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
 M1's re-verification and the human's go.
 
-## Current blocker — macOS 26.0.1 has no EEM driver, so the USB control channel cannot come up
+## Current blocker — attempt 18: macOS configures the ACM + ECM gadget, then control transfers time out; no serial, no network
+
+boot038 enumerated (+3.95 s) and macOS selected configuration 1 (+8.45 s), but no interface node was
+published, no ACM or ECM driver attached, and the device's control endpoint then timed out four times
+before a transaction error (attempt 17's EEM gadget had none). On the M5 the UDC reads `configured`
+while `usb0` stays down; Linux itself is healthy (ladder, 60 s milestone, heartbeats to 113.7 s).
+Likely, not tested: the interrupt-IN notification endpoints ACM and ECM add (`ncm-interrupt-ep-disabled`
+in the ADT). Open: a gadget with no interrupt endpoint (bulk-only vendor function, read from user space
+on the M1), and dwc3 debugfs state in the heartbeat. See
+`native/boot/stage-b-2026-10-16-attempt18-result.md`.
+
+## Historical blocker — macOS 26.0.1 has no EEM driver, so the USB control channel cannot come up (attempt 17)
 
 Attempt 17: Linux's three device-mode dwc3 controllers, three CDC-EEM gadgets and key-only dropbear all
 started and the M1 enumerated the cabled port within 8 s, but macOS attached nothing to the EEM
