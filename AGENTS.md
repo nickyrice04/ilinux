@@ -149,13 +149,16 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Latest M5 handoff: **boot036 / attempt 17, the USB control channel (NOT RUN)**.
-boot035 plus a CDC-EEM USB network link and key-only SSH (the M1's own key)
-into native Linux: the gadget stack built in, three dwc3 device-mode cores on
-the PHY state m1n1 leaves, the ATC 0–2 domains left alone. Reproducible Image;
-VM job 041, generic-VM liveness and a dummy_hcd USB self-test PASS. Release
-`native-j716c-boot036` pending user approval. See
-`native/boot/boot036-control-channel-2026-10-15.md` and
+Latest M5 handoff: **boot038 / attempt 18, the USB control channel with CDC-ACM
++ CDC-ECM (NOT RUN)**. Attempt 17 proved boot036's Linux USB side on hardware
+and found the M1's macOS has no CDC-EEM driver. boot038 changes only the
+gadget's functions: an ACM serial port carrying the kernel log (written only by
+the M5) plus ECM networking with key-only SSH for the M1's key; Image, config,
+DT, m1n1 and launcher byte-identical to boot036. Job 041, generic-VM liveness
+and a dummy_hcd self-test (log over ACM, SSH over ECM) PASS. Release
+`native-j716c-boot038` pending user approval. The E1 and PMGR probes' class-scope
+`NameError` is fixed with tests. See
+`native/boot/boot038-control-channel-2026-10-16.md` and
 `tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:

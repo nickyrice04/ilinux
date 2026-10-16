@@ -1,4 +1,4 @@
-# Attempt 17, the USB control channel (boot036): M1-side network steps
+# Attempt 18, the USB control channel (boot038): M1-side steps
 
 **Active for attempt 17, 2026-10-15.** The checklist is
 `stage-b-instructions.md`; this file holds the M1-side detail it refers to.
@@ -14,12 +14,14 @@ retries, film the M5 screen, Macintosh HD afterwards.
 
 After the handoff, the M5 no longer goes silent on USB. About 5–15 s after PID
 1, Linux presents a new USB device on the same cable: "iLinux J716c control
-channel, port N", VID:PID `1d6b:0104`, a CDC-EEM network function. It is a
-different device from m1n1's (`1209:316d`), so macOS should bind its EEM network
-driver, not the serial driver that panicked in attempt 15. Its `bcdDevice` is
-`0x0036` (boot036's Stage-B init). The later Arch RAM root answers on the same
-port, MAC and link-local address with `bcdDevice` `0x0039`, so `ioreg` tells
-the two stages apart.
+channel, port N", VID:PID `1d6b:0104`, with two functions: a **CDC-ACM serial
+port** that carries the M5's kernel log (the M5 never reads from it) and a
+**CDC-ECM network** function. Attempt 17 proved the enumeration path on this
+device with CDC-EEM, which macOS 26.0.1 cannot bind; ACM and ECM drivers are
+loaded on the M1. It is a different device from m1n1's (`1209:316d`). Its
+`bcdDevice` is `0x0038` (boot038's Stage-B init; boot036 was `0x0036`). The
+later Arch RAM root answers on the same port, MAC and link-local address with
+`bcdDevice` `0x0039`, so `ioreg` tells the stages apart.
 
 ## Before the attempt (offline, read-only)
 
@@ -48,8 +50,8 @@ closed the serial port; do not reopen it.
 
 On the M5 screen, after the usual dumps, expect:
 
-* `[ctl] USB control channel: CDC-EEM gadget per UDC, IPv6 link-local, SSH key only`
-* one `[ctl] port N: UDC <name> bound, EEM 1d6b:0104, interface usbX up` line per
+* `[ctl] USB control channel: CDC-ACM log port + CDC-ECM per UDC, IPv6 link-local, SSH key only`
+* one `[ctl] port N: UDC <name> bound, ACM+ECM 1d6b:0104, interface usbX up, log on ttyGSn` line per
   port (three), naming the address `fe80::69:6cff:fe69:6e0N`
 * `[ctl] dropbear start 1`
 * each heartbeat, `[ctl] port1 <state> ... | port2 ... | port3 ...`; the port with
@@ -93,7 +95,8 @@ in System Settings is a settings change that needs the user's approval.
 | `dwc3 ... -110` or `timeout` during probe | no device | the core cannot soft-reset: PHY or power state differs from what m1n1 left |
 | `apple-dart ... fault` | device seen, then traffic dies | DMA mapping wrong: next try both DART instances (Asahi's layout) |
 | ports stay `not attached` / `default` | no device | no pull-up or no PHY: report the states |
-| `configured` | device in `ioreg`, no `enX` | macOS bound no EEM driver: report the `ioreg` interface lines |
+| `configured` | kernel log arrives on the new `cu.usbmodem*` | the ACM log port works; save the capture |
+| `configured` | device in `ioreg`, no new `cu.usbmodem*`, no `enX` | macOS bound neither driver: report the `ioreg` interface lines |
 | `configured`, rx stays 0 | `enX` without `inet6` | macOS IPv6 not set up on `enX` (see above) |
 | silent reset, black screen | | as in attempt 16: note the time and the last lines |
 

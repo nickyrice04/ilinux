@@ -803,10 +803,13 @@ def connect_and_run(m1n1, device, mode, **options):
     from m1n1.adt import load_adt
     from m1n1.proxy import M1N1Proxy, UartInterface, Serial
     from m1n1.tgtypes import BootArgs_r1, BootArgs_r2, BootArgs_r3
+    # A class body resolves a name it also assigns in class, global and builtin scope
+    # only, never in the enclosing function, so alias the local imports first.
+    proxy_cls, adt_loader = M1N1Proxy, load_adt
 
     class Api:
-        M1N1Proxy = staticmethod(M1N1Proxy)
-        load_adt = staticmethod(load_adt)
+        M1N1Proxy = staticmethod(proxy_cls)
+        load_adt = staticmethod(adt_loader)
         bootargs_types = {0: BootArgs_r1, 1: BootArgs_r1, 2: BootArgs_r2, 3: BootArgs_r3}
         sleep = staticmethod(time.sleep)
         clock = staticmethod(time.monotonic)

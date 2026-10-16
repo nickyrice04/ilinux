@@ -3,6 +3,21 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
+## 🟢 Resolved offline — the M1's macOS has no CDC-EEM driver (attempt 17)
+
+boot036's gadget was CDC-EEM; macOS 26.0.1 on the M1 never claims it (stub
+kext, not loadable). boot038 switches the functions to CDC-ACM (kernel-log
+serial port) + CDC-ECM, whose macOS drivers are loaded on the M1; everything
+else is byte-identical. Open until attempt 18: whether the dwc3 interrupt-IN
+notification endpoint transmits on this hardware. See
+`native/boot/boot038-control-channel-2026-10-16.md`.
+
+## 🟢 Resolved offline — E1 MTP probe stopped on a NameError
+
+Class-scope lookup of a function-local import in `mtp_probe.py` (and
+`pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
+M1's re-verification and the human's go.
+
 ## Current blocker — macOS 26.0.1 has no EEM driver, so the USB control channel cannot come up
 
 Attempt 17: Linux's three device-mode dwc3 controllers, three CDC-EEM gadgets and key-only dropbear all

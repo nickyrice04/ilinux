@@ -421,9 +421,12 @@ def connect_and_run(m1n1, device, json_path, adt_path):
     manifest = _json.loads((P.BOOT / "package-manifest.json").read_text())
     marker, offset = manifest["m1n1_version_marker"], manifest["m1n1_version_offset"]
     types = {0: BootArgs_r1, 1: BootArgs_r1, 2: BootArgs_r2, 3: BootArgs_r3}
+    # A class body resolves a name it also assigns in class, global and builtin scope
+    # only, never in the enclosing function, so alias the local import first.
+    proxy_cls = M1N1Proxy
 
     class Api:
-        M1N1Proxy = staticmethod(M1N1Proxy)
+        M1N1Proxy = staticmethod(proxy_cls)
 
         @staticmethod
         def open_primary(dev):

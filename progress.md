@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M5: boot038 (ACM + ECM control channel) prepared; E1 and PMGR probes fixed (NOT RUN)
+
+* **Discovered (from the M1's reports):** attempt 17 proved the Linux side of
+  the USB link on hardware; macOS 26.0.1 on the M1 cannot bind CDC-EEM (stub
+  kext). The E1 probe stopped on a class-scope `NameError` in our code before
+  any device contact; `pmgr_probe.py` had the same shape.
+* **Implemented:** boot038 = boot036 with the gadget's functions changed to
+  CDC-ACM (read-only kernel-log serial port) + CDC-ECM (network), in `init.c`;
+  job 041's test kernel now carries the host `cdc_ether` and `cdc-acm` drivers;
+  the self-test checks the log over the ACM port; `make-package.py` boot038
+  allows only the initramfs and its source to change. Both probes fixed, with
+  tests that build the live API through `connect_and_run`.
+* **Tested:** job 041 PASS; package `ilinux-j716c-boot038` (18,904,584 bytes,
+  SHA-256 `09f5a5d7…5f70`): only `initramfs-stage-b.cpio.gz` and `diag-init.c`
+  differ from boot036; committed launcher offline PASS; generic-VM liveness and
+  the dummy_hcd self-test PASS (16 checks, 1,796 log lines over the ACM port);
+  all `native/boot` suites, `test_mtp_probe.py` (27) and `test_pmgr_probe.py`
+  (86) PASS; the new tests fail with the original `NameError` when the fix is
+  reverted; the E1 plan is unchanged (66 reads).
+* **Not verified:** everything native; whether the dwc3 interrupt-IN endpoint
+  transmits on this hardware.
+* **Next:** publish `native-j716c-boot038` (user approval), M1 readiness, one
+  human-started attempt 18 read over serial and SSH; E1 rerun after the M1
+  re-verifies the fixed probe.
+
 ## 2026-10-16 · M1: E1 NameError re-verified as independent of the USB port
 
 * **E1 cause re-verified after the human reported the cable had first been in the

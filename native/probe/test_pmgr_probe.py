@@ -444,6 +444,19 @@ class ReadTests(unittest.TestCase):
                 P.write_json(path, {})
 
 
+
+def fake_m1n1_modules():
+    """sys.modules entries that satisfy connect_and_run's imports without the client venv."""
+    m1n1 = types.ModuleType("m1n1")
+    adt = types.ModuleType("m1n1.adt")
+    adt.load_adt = lambda blob: None
+    proxy = types.ModuleType("m1n1.proxy")
+    proxy.M1N1Proxy = lambda iface: None
+    proxy.UartInterface = proxy.Serial = object
+    tgtypes = types.ModuleType("m1n1.tgtypes")
+    tgtypes.BootArgs_r1 = tgtypes.BootArgs_r2 = tgtypes.BootArgs_r3 = object
+    return {"m1n1": m1n1, "m1n1.adt": adt, "m1n1.proxy": proxy, "m1n1.tgtypes": tgtypes}
+
 # --- gates ----------------------------------------------------------------------------
 class GateTests(unittest.TestCase):
     def test_wrong_chip_stops_before_any_register_read(self):
@@ -488,6 +501,32 @@ class GateTests(unittest.TestCase):
         proxy.get_bootargs_rev = lambda: (0x4000, 9)
         with self.assertRaises(P.ProbeStop):
             run_live_with(proxy, adt, "read")
+
+    def test_live_wiring_builds_its_api_and_reaches_open_primary(self):
+        # E1 session 1 (2026-10-16) stopped with NameError while building the Api
+        # class: the class body could not see the function-local m1n1 imports.
+        class Reached(Exception):
+            pass
+
+        def open_primary(dev, uart, serial):
+            raise Reached(dev)
+
+        calls = iter([P.launch.M1N1_COMMIT + "\n", ""])
+        saved = {name: sys.modules.get(name) for name in fake_m1n1_modules()}
+        original = (P.subprocess.check_output, P.open_primary)
+        P.subprocess.check_output = lambda *a, **k: next(calls)
+        P.open_primary = open_primary
+        sys.modules.update(fake_m1n1_modules())
+        try:
+            with self.assertRaises(Reached):
+                P.connect_and_run(Path("/nonexistent"), "auto", "read")
+        finally:
+            P.subprocess.check_output, P.open_primary = original
+            for name, module in saved.items():
+                if module is None:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
 
     def test_pin_check_refuses_an_unpinned_or_dirty_client(self):
         calls = iter(["deadbeef\n", ""])

@@ -3,9 +3,9 @@
 # one CPU, the launcher's fixed arguments with console=hvc0 (as for earlier liveness runs).
 #   liveness   shipped Image + shipped initramfs, 95 s: PID 1, one CPU, "no UDC",
 #              dropbear started, 60-second heartbeat.
-#   selftest   test Image (+ dummy_hcd, usbnet, cdc_eem) + shipped initramfs + overlay,
-#              120 s: gadget bound, EEM host interface, ping, SSH with and without the
-#              key, 8 MiB copy, "[selftest] PASS".
+#   selftest   test Image (+ dummy_hcd, usbnet, cdc_ether, cdc-acm) + shipped initramfs +
+#              overlay, 120 s: gadget bound, ECM host interface, kernel log over the ACM
+#              port, ping, SSH with and without the key, 8 MiB copy, "[selftest] PASS".
 # Logs go to the job's out/vz/. The VM is killed at the end; nothing persists.
 set -euo pipefail
 cd "$(dirname "$0")/../../../.."
@@ -49,7 +49,8 @@ if [ "$which" != selftest ]; then
 fi
 if [ "$which" != liveness ]; then
     # dbclient prints its host-key note before the command output, so match SSH-OK alone.
-    expect selftest "UDC dummy_udc.0 bound, EEM 1d6b:0104" "\[ctl\] dropbear start 1" \
+    expect selftest "UDC dummy_udc.0 bound, ACM+ECM 1d6b:0104" "\[ctl\] dropbear start 1" \
+        "ACM log port: [1-9][0-9]* lines received" \
         "SSH-OK .* ilinux-j716c uid=0" "Pubkey auth succeeded for 'root'" \
         "Exit before auth .*(user 'root', 0 fails)" "login without the key refused" \
         "8 MiB through ssh intact" "\[selftest\] PASS" "selftest exit=0" || status=1

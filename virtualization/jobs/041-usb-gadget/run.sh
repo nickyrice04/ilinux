@@ -1,9 +1,10 @@
 #!/bin/bash
-# Job 041: boot036, the USB control channel candidate (kernel/experiments/usb-gadget).
+# Job 041: the USB control channel candidates boot036 (EEM) and boot038 (ACM + ECM), from
+# kernel/experiments/usb-gadget; the Image, DT and config are the same for both.
 #  1. Image: the boot034 tree (its Image is boot035's) with USB_LIBCOMPOSITE=y and
 #     USB_CONFIGFS=y; the config delta is checked by native/boot/control_channel.py.
-#  2. Test Image, never shipped: the same plus USB_DUMMY_HCD, USB_USBNET and USB_NET_CDC_EEM,
-#     so one kernel is both the EEM gadget and its host for the self-test.
+#  2. Test Image, never shipped: the same plus USB_DUMMY_HCD, USB_USBNET, USB_NET_CDCETHER
+#     and USB_ACM, so one kernel is both the ACM+ECM gadget and its host for the self-test.
 #  3. Stage-B DT: boot035's plus the native/boot/usb_dt.py contract, rebuilt with this VM's
 #     dtc and schema-checked before and after.
 #  4. Stage-B initramfs: /init from init.c (static), dropbear and busybox from signed Arch
@@ -77,7 +78,7 @@ log "2. test Image (not shipped)"
 rm -rf "$TEST"
 cp -a --reflink=auto "$WORK" "$TEST"
 "$TEST/scripts/config" --file "$TEST/.config" --enable USB_DUMMY_HCD --enable USB_USBNET \
-    --enable USB_NET_CDC_EEM
+    --enable USB_NET_CDCETHER --enable USB_ACM
 make -C "$TEST" olddefconfig > /dev/null 2>&1
 diff "$WORK/.config" "$TEST/.config" > "$OUT/build/test-config.diff" || test "$?" = 1
 make -C "$TEST" -j"$JOBS" Image > "$OUT/build/test-build.log" 2>&1

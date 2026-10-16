@@ -1573,3 +1573,25 @@ cannot bind CDC-EEM on this M1 (the kext is not in the kernel collection), so on
 changes: ECM, NCM or ACM serial, each of which macOS binds today. The M1's earlier kext check was
 insufficient; intake must confirm loaded or available state with kmutil, not only the stub plist. Resolve
 the interrupt-endpoint question before choosing ECM or NCM. No parity, input or performance claim.
+
+## 2026-10-16 · Control channel: CDC-ACM log port + CDC-ECM, after attempt 17
+
+Attempt 17 showed the hardware side of boot036's USB link works and that the
+M1's macOS cannot bind CDC-EEM. Change only the gadget's functions: a CDC-ACM
+serial port that the M5 writes its kernel log to and never reads, so the M1
+gets `dmesg` with no network at all, plus CDC-ECM for the network and key-only
+SSH. Both macOS drivers are loaded on the M1. Both functions use an
+interrupt-IN notification endpoint, which the ADT flags for Apple's NCM and
+which m1n1 never transmits on; attempt 18 therefore tests that endpoint, and
+the serial port's silence or output answers it even if ECM fails. Keep Image,
+config, DT, m1n1 and launcher byte-identical to boot036 so the attempt changes
+one variable. The RAM root is asked to default to ECM for the same reason.
+
+## 2026-10-16 · Probes: alias function-local imports before a class body uses them
+
+The E1 probe stopped before any device contact because a class body assigned
+`M1N1Proxy = staticmethod(M1N1Proxy)` with `M1N1Proxy` imported in the
+enclosing function; a class body resolves such a name in class, global and
+builtin scope only. Alias the import first, and test the live wiring by
+building the API through `connect_and_run` with stub m1n1 modules, so a
+regression fails offline rather than in the lab.

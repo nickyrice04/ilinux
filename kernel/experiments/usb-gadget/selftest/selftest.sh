@@ -2,7 +2,7 @@
 # VM-only self-test of the boot036 control channel. Never shipped: it lives in the
 # separate overlay cpio, and the packager refuses a Stage-B initramfs containing
 # /etc/ilinux. In the test kernel, dummy_hcd makes the same kernel the EEM gadget's
-# USB host: the host-side cdc_eem interface moves into its own network namespace,
+# USB host: the host-side cdc_ether (ECM) interface moves into its own network namespace,
 # so ping and SSH really cross the (virtual) USB link to the gadget's dropbear.
 set -u
 say() { echo "[selftest] $*"; }
@@ -10,18 +10,26 @@ fail() { say "FAIL: $*"; exit 1; }
 KEY=/etc/ilinux/test-key
 LL=fe80::69:6cff:fe69:6e04      # port 4: the first UDC that is not one of the M5's dwc3 cores
 
-say "start: waiting for the host-side cdc_eem interface"
+say "start: waiting for the host-side cdc_ether (ECM) interface"
 host_if=
 i=0
 while [ $i -lt 30 ] && [ -z "$host_if" ]; do
     for d in /sys/class/net/*; do
-        case "$(readlink "$d/device/driver" 2>/dev/null)" in */cdc_eem) host_if=${d##*/} ;; esac
+        case "$(readlink "$d/device/driver" 2>/dev/null)" in */cdc_ether) host_if=${d##*/} ;; esac
     done
     [ -n "$host_if" ] || sleep 1
     i=$((i + 1))
 done
-[ -n "$host_if" ] || fail "no cdc_eem host interface after 30 s"
-say "host side $host_if (cdc_eem); gadget side $(cat /sys/kernel/config/usb_gadget/g4/functions/eem.usb/ifname 2>/dev/null)"
+[ -n "$host_if" ] || fail "no cdc_ether host interface after 30 s"
+say "host side $host_if (cdc_ether); gadget side $(cat /sys/kernel/config/usb_gadget/g4/functions/ecm.usb/ifname 2>/dev/null)"
+
+# The ACM function: the host-side cdc-acm port must carry the gadget's kernel-log stream.
+acm=$(ls /dev/ttyACM* 2>/dev/null | head -1)
+[ -n "$acm" ] || fail "no host-side cdc-acm port"
+stty -F "$acm" raw -echo 2>/dev/null || true
+timeout 8 cat "$acm" > /tmp/acm.txt || true
+grep -q '\[ctl\]' /tmp/acm.txt || fail "no kernel log received over the ACM port $acm"
+say "ACM log port: $(wc -l < /tmp/acm.txt) lines received over $acm; first: $(head -1 /tmp/acm.txt | cut -c1-80)"
 say "UDC state $(cat /sys/class/udc/*/state 2>/dev/null | tr '\n' ' ')"
 
 unshare --net sleep 600 &

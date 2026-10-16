@@ -1,10 +1,12 @@
-// diag-init.c (boot036) - PID 1 for the t6050 RAM initramfs, with a USB control channel.
+// diag-init.c (boot038) - PID 1 for the t6050 RAM initramfs, with a USB control channel.
 // Source: kernel/experiments/usb-gadget/init.c; packaged as diag-init.c.
 // Keeps everything boot021-035's diag-init did: mounts proc/sys/dev, prints the
 // bring-up observables to the console (framebuffer) and /dev/kmsg, heartbeats
-// the online-CPU count. New in boot036:
-//  * one configfs gadget per UDC: a single CDC-EEM function (bulk endpoints
-//    only; no NCM/ECM interrupt-IN notification, see the README), VID:PID
+// the online-CPU count. New in boot036, revised in boot038:
+//  * one configfs gadget per UDC with two functions in one configuration:
+//    CDC-ACM (a serial port that carries the kernel log, read-only from the
+//    host side: this init only writes to it) and CDC-ECM (network). boot036
+//    used CDC-EEM, which macOS 26.0.1 on the controller cannot bind. VID:PID
 //    1d6b:0104, fixed locally administered MACs 02:69:6c:69:6e:0N, so the
 //    Linux end of port N is fe80::69:6cff:fe69:6e0N (N = 1..3 for usb-drd0..2);
 //  * the interface brought up: IPv6 link-local only, no IPv4, no routes;
@@ -99,8 +101,11 @@ static const char *const known_udc[] = { "2a2280000.usb", "2aa280000.usb", "3822
 struct port {
     char udc[64];
     char ifname[IFNAMSIZ];
+    char tty[32];   // the ACM serial port on this side, /dev/ttyGSn
     int index;      // 1..9: MAC suffix and link-local address
     int bound;
+    pid_t streamer; // child that copies /dev/kmsg to the serial port
+    int streamer_starts;
 };
 static struct port ports[MAX_UDC];
 static int nports;
@@ -170,7 +175,59 @@ static int set_up(const char *ifname)
     return err;
 }
 
-// One EEM gadget on one UDC. Each step is reported, so the screen names a failure.
+// Copy the kernel log to the ACM serial port, record by record, as "[sec.usec] text".
+// Runs in a child. A full 8 KiB u_serial FIFO (host not reading yet) makes write()
+// return 0 or EAGAIN; the child then waits and retries the same record, so nothing
+// is dropped while the kernel's log buffer still holds it.
+static void stream_kmsg(const char *tty)
+{
+    int in = open("/dev/kmsg", O_RDONLY | O_CLOEXEC);
+    int out = open(tty, O_WRONLY | O_NOCTTY | O_NONBLOCK | O_CLOEXEC);
+    if (in < 0 || out < 0) _exit(1);
+    char rec[8192], line[8192 + 32];
+    for (;;) {
+        ssize_t n = read(in, rec, sizeof rec - 1);
+        if (n < 0) {
+            if (errno == EPIPE || errno == EINTR) continue;   // overrun: continue with the newest
+            _exit(2);
+        }
+        if (n == 0) continue;
+        rec[n] = 0;
+        char *nl = strchr(rec, '\n');
+        if (nl) *nl = 0;
+        char *sep = strchr(rec, ';');
+        unsigned long seq = 0, usec = 0;
+        if (sep) sscanf(rec, "%*u,%lu,%lu", &seq, &usec);
+        int len = snprintf(line, sizeof line, "[%5lu.%06lu] %s\r\n", usec / 1000000, usec % 1000000,
+                           sep ? sep + 1 : rec);
+        for (int off = 0; off < len;) {
+            ssize_t w = write(out, line + off, len - off);
+            if (w > 0) { off += w; continue; }
+            if (w < 0 && errno != EAGAIN && errno != EINTR) _exit(3);
+            usleep(100000);
+        }
+    }
+}
+
+static pid_t spawn_stream(const char *tty)
+{
+    pid_t pid = fork();
+    if (pid == 0) {
+        setsid();
+        stream_kmsg(tty);
+        _exit(0);
+    }
+    return pid;
+}
+
+static void start_streamer(struct port *p)
+{
+    if (!p->tty[0] || p->streamer_starts >= 20) return;
+    p->streamer_starts++;
+    p->streamer = spawn_stream(p->tty);
+}
+
+// One ACM + ECM gadget on one UDC. Each step is reported, so the screen names a failure.
 static void setup_port(struct port *p)
 {
     char g[16], v[64];
@@ -178,7 +235,7 @@ static void setup_port(struct port *p)
     if (gadget_mkdir(g, "")) return;
     gadget_put(g, "idVendor", "0x1d6b");        // Linux Foundation
     gadget_put(g, "idProduct", "0x0104");       // Multifunction Composite Gadget
-    gadget_put(g, "bcdDevice", "0x0036");
+    gadget_put(g, "bcdDevice", "0x0038");
     gadget_put(g, "bcdUSB", "0x0200");
     if (gadget_mkdir(g, "strings/0x409")) return;
     gadget_put(g, "strings/0x409/manufacturer", "iLinux");
@@ -186,28 +243,38 @@ static void setup_port(struct port *p)
     gadget_put(g, "strings/0x409/product", v);
     snprintf(v, sizeof v, "ilinux-port%d", p->index);   // not a hardware serial
     gadget_put(g, "strings/0x409/serialnumber", v);
-    if (gadget_mkdir(g, "functions/eem.usb")) return;
+    // ACM first (interfaces 0-1), then ECM (2-3): the link order sets the interface order.
+    if (gadget_mkdir(g, "functions/acm.GS0") || gadget_mkdir(g, "functions/ecm.usb")) return;
     snprintf(v, sizeof v, "02:69:6c:69:6e:%02x", p->index);
-    gadget_put(g, "functions/eem.usb/dev_addr", v);
+    gadget_put(g, "functions/ecm.usb/dev_addr", v);
     snprintf(v, sizeof v, "02:69:6c:69:6f:%02x", p->index);
-    gadget_put(g, "functions/eem.usb/host_addr", v);
+    gadget_put(g, "functions/ecm.usb/host_addr", v);
     if (gadget_mkdir(g, "configs/c.1") || gadget_mkdir(g, "configs/c.1/strings/0x409")) return;
-    gadget_put(g, "configs/c.1/strings/0x409/configuration", "CDC EEM");
+    gadget_put(g, "configs/c.1/strings/0x409/configuration", "CDC ACM log port + CDC ECM network");
     char from[256], to[256];
-    snprintf(from, sizeof from, GADGETS "/%s/functions/eem.usb", g);
-    snprintf(to, sizeof to, GADGETS "/%s/configs/c.1/eem.usb", g);
-    if (symlink(from, to) && errno != EEXIST) {
-        sayf("[ctl] link %s failed: %s\n", to, strerror(errno));
-        return;
+    static const char *const functions[] = { "acm.GS0", "ecm.usb" };
+    for (unsigned i = 0; i < 2; i++) {
+        snprintf(from, sizeof from, GADGETS "/%s/functions/%s", g, functions[i]);
+        snprintf(to, sizeof to, GADGETS "/%s/configs/c.1/%s", g, functions[i]);
+        if (symlink(from, to) && errno != EEXIST) {
+            sayf("[ctl] link %s failed: %s\n", to, strerror(errno));
+            return;
+        }
     }
     if (gadget_put(g, "UDC", p->udc)) return;
     p->bound = 1;
-    snprintf(from, sizeof from, GADGETS "/%s/functions/eem.usb/ifname", g);
+    snprintf(from, sizeof from, GADGETS "/%s/functions/ecm.usb/ifname", g);
     get(from, p->ifname, sizeof p->ifname);
+    char num[16];
+    snprintf(from, sizeof from, GADGETS "/%s/functions/acm.GS0/port_num", g);
+    get(from, num, sizeof num);
+    if (num[0]) snprintf(p->tty, sizeof p->tty, "/dev/ttyGS%s", num);
     int err = p->ifname[0] ? set_up(p->ifname) : -ENODEV;
-    sayf("[ctl] port %d: UDC %s bound, EEM 1d6b:0104, interface %s %s; "
+    start_streamer(p);
+    sayf("[ctl] port %d: UDC %s bound, ACM+ECM 1d6b:0104, interface %s %s, log on %s; "
          "Linux end fe80::69:6cff:fe69:6e%02x%%<if>\n", p->index, p->udc,
-         p->ifname[0] ? p->ifname : "?", err ? strerror(-err) : "up", p->index);
+         p->ifname[0] ? p->ifname : "?", err ? strerror(-err) : "up",
+         p->tty[0] ? p->tty + 5 : "no tty", p->index);
 }
 
 static int port_index(const char *udc)
@@ -292,6 +359,14 @@ static void reap(void)
         } else if (pid == selftest_pid) {
             sayf("[ctl] selftest exit=%d\n", WIFEXITED(st) ? WEXITSTATUS(st) : 128 + WTERMSIG(st));
             selftest_pid = -1;
+        } else {
+            for (int i = 0; i < nports; i++)
+                if (pid == ports[i].streamer) {
+                    sayf("[ctl] log streamer for port %d exited (status 0x%x); restarting\n",
+                         ports[i].index, st);
+                    ports[i].streamer = -1;
+                    start_streamer(&ports[i]);
+                }
         }
     }
     if (dropbear_pid < 0) start_dropbear();
@@ -359,7 +434,7 @@ static void control_channel_init(void)
     setenv("TERM", "linux", 1);
     int err = set_up("lo");
     if (err) sayf("[ctl] lo up failed: %s\n", strerror(-err));
-    say("\n[ctl] USB control channel: CDC-EEM gadget per UDC, IPv6 link-local, SSH key only\n");
+    say("\n[ctl] USB control channel: CDC-ACM log port + CDC-ECM per UDC, IPv6 link-local, SSH key only\n");
     for (int i = 0; i < 40 && !nports; i++) {   // up to 10 s for the first UDC
         scan_udcs();
         if (!nports) usleep(250000);

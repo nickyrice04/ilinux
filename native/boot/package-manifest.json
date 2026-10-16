@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot036",
+  "package": "ilinux-j716c-boot038",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
-  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038; USB control channel: gadget stack built in, dwc3 peripheral cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear initramfs (kernel/experiments/usb-gadget); job-041",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038; USB control channel: gadget stack built in, dwc3 peripheral cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear initramfs (kernel/experiments/usb-gadget); job-041; control channel gadget revised: CDC-ACM kernel-log port + CDC-ECM network in one configuration (macOS 26.0.1 on the controller has no EEM driver); Image, config and DT identical to boot036; job-041",
   "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
   "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
   "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
@@ -32,8 +32,8 @@
       "sha256": "a676087bda3cffa178604ca0cf128558d9ab2a620073314d054c79a685ecefa5"
     },
     "initramfs-stage-b.cpio.gz": {
-      "size": 2392627,
-      "sha256": "5f4b478b6005fe3f137733fbd8c361a4e1d16573b08af1334fc8837689b4b248"
+      "size": 2392929,
+      "sha256": "30800bdd96b68251dbf1ab704f2d241c1cb9cb5698dfc0e112aeb45d162cef39"
     },
     "m1n1.bin": {
       "size": 3932160,
@@ -52,8 +52,8 @@
       "sha256": "e125d21d1ec9f861d9fd1d2908f2e7ecdf24379401fd08861ec1f64e4cea2985"
     },
     "diag-init.c": {
-      "size": 15733,
-      "sha256": "8987f9a85c247e603adee6e981485b755e0ce6c8cbb04d9218db9417c720c086"
+      "size": 18828,
+      "sha256": "ed29c046d26cf9360d37b9e6d263ce84b722eb62b5b37b906151ba4b0f6e2940"
     },
     "toolchain.txt": {
       "size": 450,
@@ -61,15 +61,5 @@
     }
   },
   "early_framebuffer_descriptor_offset": 35297168,
-  "control_channel_authorized_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK2+YOyTltYHJHc63FMW4MAp5xqsciXaCiYFSfVn3Ed8 ilinux-m1-control",
-  "kernel_config_toolchain_lines_vs_boot035": [
-    "RUSTC_HAS_FILE_AS_C_STR",
-    "RUSTC_HAS_FILE_WITH_NUL",
-    "RUSTC_HAS_SPAN_FILE",
-    "RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS",
-    "RUSTC_HAS_UNNECESSARY_TRANSMUTES",
-    "RUSTC_LLVM_MAJOR_VERSION",
-    "RUSTC_LLVM_VERSION",
-    "RUSTC_VERSION"
-  ]
+  "control_channel_authorized_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK2+YOyTltYHJHc63FMW4MAp5xqsciXaCiYFSfVn3Ed8 ilinux-m1-control"
 }

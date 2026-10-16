@@ -6,6 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — boot038 / attempt 18: the USB control channel with ACM + ECM (NOT RUN)
+
+* **Attempt 17 consumed:** the Linux side of boot036's link works on hardware
+  (three dwc3 cores, gadget bound, enumerated in 8 s, no faults, baseline held);
+  macOS 26.0.1 on the M1 has no CDC-EEM driver, so no interface appeared.
+* **boot038 = boot036 with only the gadget's functions changed:** CDC-ACM (a
+  serial port carrying the kernel log, written only by the M5; macOS creates
+  `/dev/cu.usbmodem*`) + CDC-ECM (network, same MACs and link-local addresses,
+  key-only dropbear for the M1's key `a6717b0`). `bcdDevice` 0x0038. Image,
+  config, Stage-B DT, m1n1 and launcher byte-identical to boot036.
+* **Release:** `native-j716c-boot038` (pending user approval to publish),
+  archive 18,904,584 bytes, SHA-256
+  `09f5a5d723461bccfba3c29aacb084c3318203d074e522c1527d650186e05f70`, SHA256SUMS
+  digest `efba5795…a186`; initramfs `30800bdd…`. Offline: job 041, packager,
+  committed launcher (`4d55f0c9…`), generic-VM liveness and the dummy_hcd
+  self-test (ACM log port, ECM, SSH) all PASS.
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 18): the
+  loaded-driver check with `kmutil showloaded`, the serial capture first, then
+  ECM. Report: `native/boot/boot038-control-channel-2026-10-16.md`.
+* **E1 probe fixed (M5):** `mtp_probe.py` and `pmgr_probe.py` alias their
+  function-local imports before the class body; new tests cover the live
+  wiring. The E1 plan is unchanged (66 reads). A rerun needs M1 re-verification
+  (`test_mtp_probe.py` now 27 tests) and the human's go; it can share the lab
+  boot with nothing else, as before.
+
 ### Current M1 note — E1 failure is independent of the USB port; run the read-only gate first, 2026-10-16
 
 * **E1 cause re-verified after the human reported the cable had first been in the
@@ -192,7 +217,7 @@ Messages) is needed. No M1 network setting changes; if the new interface has no
   2026-10-15); the M1 gets it with `git pull --ff-only` once the remote's
   `main` carries that commit.
 
-### Current M5 handoff — boot036 / attempt 17: the USB control channel (NOT RUN)
+### Historical M5 handoff — boot036 / attempt 17 (consumed: Linux USB works; macOS lacks EEM)
 
 * **Attempt 16 consumed** (first stable baseline). boot036 = boot035 plus a
   CDC-EEM USB network link and key-only SSH into native Linux over the M1

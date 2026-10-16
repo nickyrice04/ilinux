@@ -9,6 +9,7 @@ import json
 import re
 import sys
 import tempfile
+import types
 import unittest
 from pathlib import Path
 
@@ -330,6 +331,51 @@ class Session(unittest.TestCase):
         self.assertTrue(api.transport_closed)
         self.assertTrue(any("no write request was sent" in l for l in lines))
         self.assertGreater(len(proxy.log), 20)
+
+
+def fake_m1n1_modules():
+    """sys.modules entries that satisfy connect_and_run's imports without the client venv."""
+    m1n1 = types.ModuleType("m1n1")
+    adt = types.ModuleType("m1n1.adt")
+    adt.load_adt = lambda blob: None
+    proxy = types.ModuleType("m1n1.proxy")
+    proxy.M1N1Proxy = lambda iface: None
+    proxy.UartInterface = proxy.Serial = object
+    tgtypes = types.ModuleType("m1n1.tgtypes")
+    tgtypes.BootArgs_r1 = tgtypes.BootArgs_r2 = tgtypes.BootArgs_r3 = object
+    return {"m1n1": m1n1, "m1n1.adt": adt, "m1n1.proxy": proxy, "m1n1.tgtypes": tgtypes}
+
+
+class LiveWiring(unittest.TestCase):
+    def test_connect_and_run_builds_its_api_and_reaches_open_primary(self):
+        # E1 session 1 (2026-10-16) stopped with NameError while building the Api
+        # class: the class body could not see the function-local m1n1 imports.
+        sys.path.insert(0, str(P.ROOT / "native" / "probe"))
+        import pmgr_probe
+
+        class Reached(Exception):
+            pass
+
+        def open_primary(dev, uart, serial):
+            raise Reached(dev)
+
+        calls = iter([pmgr_probe.launch.M1N1_COMMIT + "\n", ""])
+        saved = {name: sys.modules.get(name) for name in fake_m1n1_modules()}
+        original = (pmgr_probe.subprocess.check_output, pmgr_probe.open_primary)
+        pmgr_probe.subprocess.check_output = lambda *a, **k: next(calls)
+        pmgr_probe.open_primary = open_primary
+        sys.modules.update(fake_m1n1_modules())
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                with self.assertRaises(Reached):
+                    P.connect_and_run(Path("/nonexistent"), "auto", Path(d) / "x.json", ADT)
+        finally:
+            pmgr_probe.subprocess.check_output, pmgr_probe.open_primary = original
+            for name, module in saved.items():
+                if module is None:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
 
 
 class Cli(unittest.TestCase):

@@ -1,4 +1,4 @@
-# USB control channel (boot036)
+# USB control channel (boot036, revised as boot038)
 
 Roadmap Phase 3, step 2: a network link into native Linux over the same USB
 cable the M1 uses for the m1n1 proxy, so the M1 can run commands, read logs and
@@ -12,7 +12,7 @@ attempt 16 (boot035) reports a stable baseline.**
 |---|---|---|
 | Kernel config | `USB_LIBCOMPOSITE` and `USB_CONFIGFS` from m to y; Kconfig turns the 12 gadget functions and helpers they select (EEM, NCM, ECM, u_ether, ...) from m to y. Nothing else. The Stage-B initramfs carries no modules. | `native/boot/control_channel.py` `check_config` |
 | Stage-B DT | One `snps,dwc3` node per usb-drd port, peripheral, high speed, four PHY-keepalive quirks, DMA through that port's second USB DART with stream 1. Those three DARTs enabled without `power-domains`. All 39 PMGR domains of ATC ports 0–2 disabled. | `native/boot/usb_dt.py` `check_delta` |
-| Initramfs | `/init` from `init.c` (static): everything the old diag-init did, plus one CDC-EEM configfs gadget per UDC, the interface up (IPv6 link-local only), dropbear (root, key only, no forwarding, host keys made in RAM), a status line per heartbeat. dropbear and busybox with their libraries from signed Arch Linux ARM packages. | `control_channel.check_initramfs` |
+| Initramfs | `/init` from `init.c` (static): everything the old diag-init did, plus one configfs gadget per UDC (boot036: CDC-EEM; boot038: CDC-ACM kernel-log port + CDC-ECM in one configuration), the interface up (IPv6 link-local only), dropbear (root, key only, no forwarding, host keys made in RAM), a status line per heartbeat. dropbear and busybox with their libraries from signed Arch Linux ARM packages. | `control_channel.check_initramfs` |
 | Image | Rebuilt from the boot034 tree with the config above. The genpd release ladder and every earlier patch are unchanged. | job 041 symbol and roundtrip checks |
 
 m1n1, the generic `initramfs.cpio.gz`, the full DT and the launcher's fixed
@@ -30,6 +30,8 @@ new DT; no reviewed controller digest changes.
 | dwc3 core = usb-drdN `reg[0]`, IRQ = `interrupts[0]` (DART IRQ + 4, as on M3) | Likely | ADT; Asahi `t6030.dtsi:1374-1405` |
 | Core window 0xcd00; the Apple glue registers follow it | Likely | Asahi `t6030.dtsi:1376` |
 | CDC-EEM uses bulk endpoints only, so no interrupt-IN notification | Confirmed (class spec) | USB CDC EEM 1.0 |
+| **Attempt 17 (boot036):** all three dwc3 cores probe, the EEM gadget binds, the M1 enumerates it in 8 s, no DART fault; but macOS 26.0.1 on the M1 has no loadable EEM driver (stub kext), so no interface appears | Confirmed (hardware) | `native/boot/stage-b-2026-10-16-attempt17-result.md` |
+| **boot038:** CDC-ACM (kernel log, written only by the M5) + CDC-ECM (network) in one configuration; both macOS drivers are loaded on the M1. Both use an interrupt-IN notification endpoint, which attempt 18 therefore tests too | Likely (drivers loaded); endpoint: Hypothesis | attempt-17 report; attempt 18 |
 | NCM stalled on omarchy-m5's J714s after its first interrupt-IN notification | Likely (their commit text) | review §1 |
 | All three usb-drd ports carry `ncm-interrupt-ep-disabled` in our ADT | Confirmed (ADT) | `hardware/adt/adt-sanitized.json` |
 | macOS 26.6.2 (this M5) has `AppleUSBEEM.kext`, `com.apple.driver.usb.cdc.eem` 5.0.0, matching interface 2/12/7 | Confirmed (this Mac) | `/System/Library/Extensions/AppleUSBEEM.kext` Info.plist |
@@ -53,7 +55,7 @@ on the M1 has to be configured, and no traffic is routed.
   build with dtc) and `native/boot/test_control_channel.py` (config delta,
   16 initramfs and 12 config deviations, including toolchain drift).
 * Job 041 builds the Image, a test Image (adds `dummy_hcd`, usbnet and the host
-  `cdc_eem` driver; never shipped), the DT (schema-checked), the initramfs and a
+  `cdc_ether` and `cdc-acm` drivers; never shipped), the DT (schema-checked), the initramfs and a
   self-test overlay, and checks every ELF for 16 KiB pages.
 * `selftest/run-vz.sh` boots both on the Mac (Virtualization.framework, one
   CPU, no disk or network): the shipped pair must reach PID 1 and the 60 s
@@ -61,7 +63,7 @@ on the M1 has to be configured, and no traffic is routed.
   enumerate it through `dummy_hcd`, and pass ping, SSH with the key, refusal
   without it, and an 8 MiB copy, across a network namespace.
 
-Results (2026-10-15): job 041 and both boots PASS; see
+Results (2026-10-15, boot036): job 041 and both boots PASS; (2026-10-16, boot038): rebuilt with the ACM + ECM init, job 041 and both boots rerun; see
 `native/boot/boot036-control-channel-2026-10-15.md`. What the VM cannot show:
 the dwc3 cores, the DARTs, the PHY state m1n1 leaves, the AIC routing and the
 macOS host. Those are attempt 17's questions.
