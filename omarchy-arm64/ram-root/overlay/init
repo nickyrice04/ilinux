@@ -1,0 +1,11 @@
+#!/bin/sh
+# PID 1 from the initramfs: make the system root an ordinary mount, then start systemd.
+# The kernel unpacks the image into rootfs, the one mount pivot_root(2) cannot leave, and
+# bubblewrap needs pivot_root (glycin runs gdk-pixbuf's image loaders in it, so without this
+# swaybg cannot load the wallpaper). A bind mount of rootfs on itself is a normal mount with
+# a parent; it holds the same files and costs no memory. This is what switch_root does,
+# minus the copy and the deletion of the old root.
+mount --bind / /mnt
+cd /mnt
+mount --move . /
+exec chroot . /usr/lib/systemd/systemd "$@"

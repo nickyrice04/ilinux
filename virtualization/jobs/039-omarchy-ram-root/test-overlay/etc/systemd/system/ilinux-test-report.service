@@ -1,0 +1,8 @@
+[Unit]
+Description=VM test: desktop-ready time and memory on the virtio console
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/ilinux-test-report
+StandardOutput=tty
+TTYPath=/dev/hvc0

@@ -1,0 +1,10 @@
+#!/bin/bash
+# VM test only: the desktop is late; put what explains it on the console log.
+echo "ILINUX-DEBUG-BEGIN uptime $(cut -d' ' -f1 /proc/uptime)"
+systemctl --failed --no-pager --plain
+systemctl status ilinux-desktop.service seatd.service --no-pager -n 30
+ls -l /dev/dri /run/user/1000 2>&1
+tail -n 80 /run/user/1000/hypr/*/hyprland.log 2>&1
+journalctl -b -p warning -o short-monotonic --no-pager | tail -n 120
+dmesg | tail -n 40
+echo "ILINUX-DEBUG-END"

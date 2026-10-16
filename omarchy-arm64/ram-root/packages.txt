@@ -1,0 +1,36 @@
+# Explicit package set for the Omarchy-style RAM root (job 039). pacman resolves the
+# dependencies from the official Arch Linux ARM repositories (core, extra, alarm) only.
+# The resolved list with versions is written to out/packages.txt by every build.
+
+# init, login and base tools
+filesystem
+systemd
+systemd-sysvcompat
+dbus-broker-units
+bash
+coreutils
+util-linux
+procps-ng
+iproute2
+iputils
+shadow
+sed
+grep
+gawk
+findutils
+less
+kmod
+
+# seat, compositor and desktop (Omarchy 4's own terminal is foot)
+seatd
+hyprland
+mesa
+waybar
+foot
+swaybg
+webp-pixbuf-loader
+ttf-jetbrains-mono-nerd
+grim
+
+# access over the USB network link
+openssh

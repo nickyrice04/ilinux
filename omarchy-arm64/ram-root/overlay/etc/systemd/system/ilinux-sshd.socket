@@ -1,0 +1,12 @@
+# SSH on the USB link only: 10.66.0.2 exists on a usb<N> interface and nowhere else.
+# FreeBind lets the socket listen before the link is up, so boot never waits for the cable.
+[Unit]
+Description=SSH on the USB network link (RAM root)
+
+[Socket]
+ListenStream=10.66.0.2:22
+FreeBind=yes
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

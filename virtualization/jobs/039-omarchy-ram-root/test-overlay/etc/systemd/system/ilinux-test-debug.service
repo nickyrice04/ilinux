@@ -1,0 +1,10 @@
+[Unit]
+Description=VM test: diagnostics on the virtio console
+ConditionPathExists=!/run/ilinux/desktop-ready
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/ilinux-test-debug
+StandardOutput=tty
+StandardError=tty
+TTYPath=/dev/hvc0

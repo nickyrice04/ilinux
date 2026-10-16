@@ -1,0 +1,27 @@
+// RAM root: a small waybar in Omarchy's style. Omarchy 4 replaced waybar with its Quickshell
+// shell (Qt 6), which this one-CPU llvmpipe image leaves out; colors are Tokyo Night.
+{
+  "layer": "top",
+  "position": "top",
+  "height": 26,
+  "spacing": 0,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["network", "cpu", "memory"],
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": { "default": "", "active": "󱓻" },
+    "persistent-workspaces": { "1": [], "2": [], "3": [], "4": [], "5": [] }
+  },
+  "clock": { "format": "{:%A %H:%M}", "interval": 60, "tooltip": false },
+  "network": {
+    "interface": "usb*",
+    "format": "󰈀 {ipaddr}",
+    "format-disconnected": "󰈂 usb",
+    "interval": 30,
+    "tooltip": false
+  },
+  "cpu": { "format": "󰍛 {usage}%", "interval": 10, "tooltip": false },
+  "memory": { "format": "󰘚 {used:0.1f}G", "interval": 30, "tooltip": false }
+}

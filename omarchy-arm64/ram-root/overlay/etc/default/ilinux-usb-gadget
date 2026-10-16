@@ -1,0 +1,2 @@
+# Function for the USB network gadget: eem (default), ncm or ecm. See usb-gadget.sh.
+FUNCTION=eem

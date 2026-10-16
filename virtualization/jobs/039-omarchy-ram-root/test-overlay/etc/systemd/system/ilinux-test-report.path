@@ -1,0 +1,9 @@
+# VM test only (appended cpio): report on the virtio console once the desktop is ready.
+[Unit]
+Description=VM test: wait for the desktop-ready marker
+
+[Path]
+PathExists=/run/ilinux/desktop-ready
+
+[Install]
+WantedBy=multi-user.target

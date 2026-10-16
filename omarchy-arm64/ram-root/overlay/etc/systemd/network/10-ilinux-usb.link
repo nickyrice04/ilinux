@@ -1,0 +1,7 @@
+# Keep the kernel's usb<N> names for USB network links: g_ether is this side of the M5's
+# gadget link, the others are USB NICs (the VM test uses QEMU's usb-net, driven by cdc_ether).
+[Match]
+Driver=g_ether cdc_eem cdc_ncm cdc_ether
+
+[Link]
+NamePolicy=

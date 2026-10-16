@@ -1,0 +1,34 @@
+[Unit]
+Description=Hyprland with Omarchy's configuration on tty1 (RAM root, seatd)
+After=systemd-user-sessions.service seatd.service getty@tty1.service
+Wants=seatd.service
+Conflicts=getty@tty1.service
+
+[Service]
+User=omarchy
+PAMName=login
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+StandardInput=tty-fail
+StandardOutput=journal
+StandardError=journal
+UtmpIdentifier=tty1
+UtmpMode=user
+Environment=XDG_SESSION_TYPE=wayland LIBSEAT_BACKEND=seatd OMARCHY_PATH=/usr/share/omarchy
+WorkingDirectory=~
+# simpledrm has no render node, so Hyprland opens /dev/dri/card0 itself as this user. Without
+# this wait its first start aborted with "Couldn't open a gbm fd" in every VM boot, likely
+# because udev had not yet given the node its group permissions.
+ExecStartPre=-/usr/bin/udevadm wait --timeout=30 /dev/dri/card0
+# pam_systemd gives sessions on a local seat CAP_WAKE_ALARM as an ambient capability, so
+# Hyprland and everything it starts would hold it. bubblewrap then refuses to run ("Unexpected
+# capabilities but not setuid"), and with it glycin's image loaders, which gdk-pixbuf uses
+# (swaybg's wallpaper was the visible case). Drop it before Hyprland starts.
+ExecStart=/usr/bin/setpriv --ambient-caps=-all --inh-caps=-all /usr/bin/Hyprland
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical.target

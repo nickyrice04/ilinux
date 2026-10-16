@@ -1,0 +1,8 @@
+#!/bin/bash
+# VM test only: tell the harness (which reads the console log, so nothing logs in while the
+# guest boots) when the desktop is ready, then report memory once it has settled for 20 s.
+echo "ILINUX-DESKTOP-READY $(cat /run/ilinux/desktop-ready)"
+sleep 20
+echo "ILINUX-MEMINFO-BEGIN uptime $(cut -d' ' -f1 /proc/uptime)"
+cat /proc/meminfo
+echo "ILINUX-MEMINFO-END"

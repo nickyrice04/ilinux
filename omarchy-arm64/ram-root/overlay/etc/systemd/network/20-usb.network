@@ -1,0 +1,22 @@
+# usb<N>: the USB network link to the second computer. This side is 10.66.0.2; the other side
+# gets 10.66.0.10-13 from networkd's DHCP server. Only a port with a cable gets carrier, so
+# only that link is configured. IPv6 link-local comes from the MAC (EUI-64), so port N is
+# fe80::69:6cff:fe69:6e0N, as in boot036's Stage-B init.
+[Match]
+Name=usb*
+
+[Link]
+RequiredForOnline=no
+
+[Network]
+Address=10.66.0.2/24
+LinkLocalAddressing=ipv6
+IPv6LinkLocalAddressGenerationMode=eui64
+IPv6AcceptRA=no
+DHCPServer=yes
+
+[DHCPServer]
+PoolOffset=10
+PoolSize=4
+EmitDNS=no
+EmitRouter=no

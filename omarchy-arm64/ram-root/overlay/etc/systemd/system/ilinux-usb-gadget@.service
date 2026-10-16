@@ -1,0 +1,12 @@
+# One per device-mode USB controller (UDC), started by 90-ilinux-usb.rules when it appears.
+# Not exercised in the VM (no UDC there); on the M5 it needs the Type-C PHY in device mode.
+[Unit]
+Description=USB network gadget on %i (RAM root)
+Wants=sys-kernel-config.mount
+After=sys-kernel-config.mount
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/lib/ilinux/usb-gadget.sh start %i
+ExecStop=/usr/local/lib/ilinux/usb-gadget.sh stop %i

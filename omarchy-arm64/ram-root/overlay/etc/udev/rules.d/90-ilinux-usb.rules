@@ -1,0 +1,2 @@
+# A device-mode USB controller appeared: expose the network gadget on it (interface usb<N>).
+ACTION=="add", SUBSYSTEM=="udc", TAG+="systemd", ENV{SYSTEMD_WANTS}+="ilinux-usb-gadget@%k.service"

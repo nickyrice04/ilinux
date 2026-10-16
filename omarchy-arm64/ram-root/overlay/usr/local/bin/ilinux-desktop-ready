@@ -1,0 +1,20 @@
+#!/bin/bash
+# Started by the Hyprland session (hypr/ramroot.lua). Every 0.5 s it asks Hyprland whether an
+# output, the wallpaper, waybar's layer surface and the foot window all exist (one hyprctl
+# call per stage, to stay light on a single CPU), then records the time since kernel start
+# (/proc/uptime) in /run/ilinux/desktop-ready and the journal.
+deadline=$((SECONDS + 600))
+while (( SECONDS < deadline )); do
+    if hyprctl monitors 2>/dev/null | grep -q '^Monitor ' &&
+       layers=$(hyprctl layers 2>/dev/null) &&
+       grep -q 'namespace: wallpaper' <<<"$layers" && grep -q 'namespace: waybar' <<<"$layers" &&
+       hyprctl clients 2>/dev/null | grep -q 'class: foot'; then
+        read -r up _ < /proc/uptime
+        echo "$up" > /run/ilinux/desktop-ready
+        echo "desktop ready ${up}s after kernel start"
+        exit 0
+    fi
+    sleep 0.5
+done
+echo "desktop not ready after 600 s" >&2
+exit 1

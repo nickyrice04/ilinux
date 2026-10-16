@@ -1,0 +1,9 @@
+# VM test only: if the desktop is not up 900 s after boot (TCG is slow), dump diagnostics to the virtio console.
+[Unit]
+Description=VM test: diagnostics if the desktop is late
+
+[Timer]
+OnBootSec=900
+
+[Install]
+WantedBy=timers.target

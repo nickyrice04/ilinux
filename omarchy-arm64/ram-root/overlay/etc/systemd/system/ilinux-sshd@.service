@@ -1,0 +1,7 @@
+[Unit]
+Description=SSH session on the USB network link (RAM root)
+
+[Service]
+ExecStart=-/usr/bin/sshd -i
+StandardInput=socket
+StandardError=journal

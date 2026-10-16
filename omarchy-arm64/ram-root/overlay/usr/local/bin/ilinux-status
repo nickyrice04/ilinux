@@ -1,0 +1,11 @@
+#!/bin/bash
+# One-screen status for the terminal the desktop opens at login (the M5 has no input yet).
+for _ in $(seq 50); do [ -s /run/ilinux/desktop-ready ] && break; sleep 0.2; done
+renderer=$(grep -m1 -o 'llvmpipe[^"]*\|softpipe[^"]*' "$XDG_RUNTIME_DIR"/hypr/*/hyprland.log 2>/dev/null)
+echo "iLinux RAM root: Omarchy-style desktop"
+echo "kernel   $(uname -r), $(getconf PAGESIZE)-byte pages, $(nproc) CPU"
+echo "display  card0 on $(basename "$(readlink -f /sys/class/drm/card0/device/driver)")${renderer:+, $renderer}"
+echo "usb      $(ip -brief address 2>/dev/null | grep '^usb' | tr -s ' ' | paste -sd ';' || true)"
+echo "memory   $(free -m | awk '/^Mem:/ {print $3 " MiB used, " $7 " MiB available of " $2}')"
+echo "desktop  ready $(cat /run/ilinux/desktop-ready 2>/dev/null || echo '?') s after kernel start"
+echo

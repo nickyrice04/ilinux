@@ -1,0 +1,30 @@
+/* Tokyo Night, from Omarchy's themes/tokyo-night/colors.toml. */
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 12px;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background-color: #1a1b26;
+  color: #a9b1d6;
+}
+
+#workspaces button {
+  padding: 0 6px;
+  color: #a9b1d6;
+  background: transparent;
+}
+
+#workspaces button.active {
+  color: #7aa2f7;
+}
+
+#clock,
+#network,
+#cpu,
+#memory {
+  padding: 0 10px;
+}
