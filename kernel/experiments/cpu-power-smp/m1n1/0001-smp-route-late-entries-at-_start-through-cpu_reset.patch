@@ -1,0 +1,151 @@
+Subject: [LOCAL EXPERIMENT] smp: route cores that enter at _start after boot through cpu_reset
+
+On SoCs with a locked RVBAR (M4/M5) m1n1 cannot point the reset vector at
+_vectors_start.  Static analysis of this Mac's macOS 26.6.2 kernel shows the
+OS never writes RVBAR either: every secondary start or state-losing WFI
+re-enters the boot object at its entry point, where the kernel dispatches
+on the arrival reason.  m1n1's entry point is _start, which re-runs the
+cold boot path on the shared stack if a secondary ever lands there.
+
+Add a gate in the shared Device-nGnRnE section that smp_init() opens once
+the boot CPU is up.  A core that reaches _start with the gate open records
+how it arrived (MPIDR, x0-x3, count) in smp_entry_log and continues on the
+normal cpu_reset path, so the spin table sees it.  smp_start_cpu() prints
+the recorded entry on a failed start, which tells a locked-RVBAR-to-entry
+arrival apart from a core that never ran m1n1 code at all.
+
+Original code for the independent project, based only on the public m1n1
+source (57a9339) and the project's own analysis.  Native behaviour untested.
+
+--- a/src/smp_asm.h	2026-10-15 19:24:35
++++ b/src/smp_asm.h	2026-10-15 19:26:56
+@@ -8,4 +8,9 @@
+ 
+ #define SECONDARY_STACK_SIZE 0x10000
+ 
++/* Log of cores that enter at _start after m1n1 is up (see start.S) */
++#define SMP_ENTRY_LOG_CLUSTERS   8
++#define SMP_ENTRY_LOG_CORES      8
++#define SMP_ENTRY_LOG_ENTRY_SIZE 48
++
+ #endif
+--- a/src/start.S	2026-10-15 19:24:35
++++ b/src/start.S	2026-10-15 19:26:56
+@@ -67,6 +67,15 @@
+ .globl _start
+ .type _start, @function
+ _start:
++    // On SoCs whose RVBAR is locked, a secondary core (or a core waking
++    // from a state-losing WFI) re-enters the boot object at this entry
++    // point rather than at _vectors_start.  Once smp_init() has opened the
++    // gate, treat every further entry as a CPU reset: note how the core
++    // arrived (MPIDR, x0-x3), then take the normal cpu_reset path.
++    adrp x8, smp_entry_gate
++    ldr w8, [x8, :lo12:smp_entry_gate]
++    cbnz w8, smp_late_entry
++
+     mov x19, x0
+ 
+     mov w0, 'm'
+@@ -224,6 +233,34 @@
+ 
+     eret
+ 
++.globl smp_late_entry
++.type smp_late_entry, @function
++smp_late_entry:
++    // slot = cluster * SMP_ENTRY_LOG_CORES + core, from MPIDR Aff1/Aff0
++    mrs x8, mpidr_el1
++    and x9, x8, #0xff
++    ubfx x10, x8, #8, #8
++    cmp x10, #SMP_ENTRY_LOG_CLUSTERS
++    b.hs 1f
++    cmp x9, #SMP_ENTRY_LOG_CORES
++    b.hs 1f
++    mov x11, #SMP_ENTRY_LOG_CORES
++    madd x9, x10, x11, x9
++    adrp x10, smp_entry_log
++    add x10, x10, :lo12:smp_entry_log
++    mov x11, #SMP_ENTRY_LOG_ENTRY_SIZE
++    madd x10, x9, x11, x10
++    ldr x11, [x10, #40]
++    add x11, x11, #1
++    stp x8, x0, [x10]
++    stp x1, x2, [x10, #16]
++    stp x3, x11, [x10, #32]
++    dsb sy
++1:
++    mov w0, 'L'
++    bl debug_putc
++    b cpu_reset
++
+ .globl debug_putc
+ .type debug_putc, @function
+ debug_putc:
+--- a/src/smp.c	2026-10-15 19:24:35
++++ b/src/smp.c	2026-10-15 19:26:56
+@@ -74,6 +74,30 @@
+     [0 ... MAX_CPUS - 1] = {.mpidr = ~0ULL, .stack = 0},
+ };
+ 
++/*
++ * Gate and log for cores that enter at _start after the boot CPU has
++ * initialised m1n1 (smp_late_entry in start.S).  Both live in the shared
++ * Device-nGnRnE section because the arriving core runs with the MMU off.
++ */
++u32 smp_entry_gate SMP_SHARED = 0;
++
++struct smp_entry_log_entry {
++    u64 mpidr;
++    u64 x[4];
++    u64 count;
++};
++_Static_assert(sizeof(struct smp_entry_log_entry) == SMP_ENTRY_LOG_ENTRY_SIZE,
++               "smp_entry_log entry size must match start.S");
++
++struct smp_entry_log_entry smp_entry_log[SMP_ENTRY_LOG_CLUSTERS * SMP_ENTRY_LOG_CORES] SMP_SHARED;
++
++static const struct smp_entry_log_entry *smp_entry_log_lookup(const struct cpu_info *cpu)
++{
++    if (cpu->cluster >= SMP_ENTRY_LOG_CLUSTERS || cpu->core >= SMP_ENTRY_LOG_CORES)
++        return NULL;
++    return &smp_entry_log[cpu->cluster * SMP_ENTRY_LOG_CORES + cpu->core];
++}
++
+ extern u8 _vectors_start[0];
+ extern u8 _stack_bot[0];
+ int boot_cpu_idx SMP_SHARED = -1;
+@@ -202,10 +226,18 @@
+         udelay(1000);
+     }
+ 
+-    if (i >= 100)
+-        printf("Failed!\n");
+-    else
++    if (i >= 100) {
++        const struct smp_entry_log_entry *e = smp_entry_log_lookup(cpu);
++
++        sysop("dmb ld");
++        if (e && e->count)
++            printf("Failed! (entered _start %ld times, last x0=0x%lx x1=0x%lx x2=0x%lx x3=0x%lx)\n",
++                   e->count, e->x[0], e->x[1], e->x[2], e->x[3]);
++        else
++            printf("Failed! (never entered _start)\n");
++    } else {
+         printf("  Started.\n");
++    }
+ 
+     _reset_stack = dummy_stack + DUMMY_STACK_SIZE;
+     _reset_stack_el1 = dummy_stack_el1 + DUMMY_STACK_SIZE;
+@@ -422,6 +454,11 @@
+     }
+ 
+     cpu_start_base = pmgr_reg + cpu_start_off;
++
++    /* From here on, a core entering at _start is a reset, not a boot */
++    smp_entry_gate = 1;
++    sysop("dsb sy");
++
+     smp_initialized = true;
+ 
+     return 0;

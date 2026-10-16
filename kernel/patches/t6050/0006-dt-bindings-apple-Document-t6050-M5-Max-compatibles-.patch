@@ -1,4 +1,4 @@
-From 5f0824953814f9e32f9bdd1ee6c11bc80980534e Mon Sep 17 00:00:00 2001
+From b59950912accbb75d0c33d198376bf63c1c9eef3 Mon Sep 17 00:00:00 2001
 From: "iLinux local research (AI-generated draft)" <local@invalid>
 Date: Sun, 11 Oct 2026 20:05:00 +0000
 Subject: [PATCH 6/7] dt-bindings: apple: Document t6050 (M5 Max) compatibles

@@ -866,6 +866,48 @@
 			interrupts = <AIC_IRQ 721 IRQ_TYPE_LEVEL_HIGH>;
 		};
 
+		/* ADT smc: iop,ascwrap-v6, role SMC; ASC block at reg[0].  The "sram"
+		 * window follows the t8103/t8122/t6031 DTs (ASC + 0x1a00000, 1 MiB; LIKELY,
+		 * the SMC reports the actual shared-memory address at init); the ADT's own
+		 * reg[1] is 0x28c050000+0x4000.  reboot/rtc subnodes need the PMU nvmem cells
+		 * (no SPMI PMU node in this draft yet).  Evidence:
+		 * kernel/experiments/smc/README.md.
+		 */
+		smc: smc@28c600000 {
+			compatible = "apple,t6050-smc", "apple,t8103-smc";
+			reg = <0x2 0x8c600000 0x0 0x4000>,
+			      <0x2 0x8e000000 0x0 0x100000>;
+			reg-names = "smc", "sram";
+			mboxes = <&smc_mbox>;
+			status = "disabled"; /* DRAFT: enable after a native transport test */
+
+			smc_gpio: gpio {
+				compatible = "apple,smc-gpio";
+				gpio-controller;
+				#gpio-cells = <2>;
+			};
+
+			smc_hwmon: hwmon {
+				compatible = "apple,smc-hwmon";
+			};
+		};
+
+		/* ASC mailbox at smc reg[0] + 0x8000 (as t8103/t8122/t6031).  IRQ order sorted
+		 * from ADT smc interrupts[0..3] (LIKELY, same convention as ans_mbox).
+		 */
+		smc_mbox: mbox@28c608000 {
+			compatible = "apple,t6050-asc-mailbox", "apple,asc-mailbox-v4";
+			reg = <0x2 0x8c608000 0x0 0x4000>;
+			interrupt-parent = <&aic>;
+			interrupts = <AIC_IRQ 899 IRQ_TYPE_LEVEL_HIGH>,
+				     <AIC_IRQ 900 IRQ_TYPE_LEVEL_HIGH>,
+				     <AIC_IRQ 901 IRQ_TYPE_LEVEL_HIGH>,
+				     <AIC_IRQ 902 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "send-empty", "send-not-empty",
+					  "recv-empty", "recv-not-empty";
+			#mbox-cells = <0>;
+		};
+
 		pinctrl_aop: pinctrl@290824000 {
 			compatible = "apple,t6050-pinctrl", "apple,t8103-pinctrl";
 			reg = <0x2 0x90824000 0x0 0x4000>;

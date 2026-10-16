@@ -752,6 +752,34 @@
    interrupt-parent = <&aic>;
    interrupts = <0 721 4>;
   };
+  smc: smc@28c600000 {
+   compatible = "apple,t6050-smc", "apple,t8103-smc";
+   reg = <0x2 0x8c600000 0x0 0x4000>,
+         <0x2 0x8e000000 0x0 0x100000>;
+   reg-names = "smc", "sram";
+   mboxes = <&smc_mbox>;
+   status = "disabled";
+   smc_gpio: gpio {
+    compatible = "apple,smc-gpio";
+    gpio-controller;
+    #gpio-cells = <2>;
+   };
+   smc_hwmon: hwmon {
+    compatible = "apple,smc-hwmon";
+   };
+  };
+  smc_mbox: mbox@28c608000 {
+   compatible = "apple,t6050-asc-mailbox", "apple,asc-mailbox-v4";
+   reg = <0x2 0x8c608000 0x0 0x4000>;
+   interrupt-parent = <&aic>;
+   interrupts = <0 899 4>,
+         <0 900 4>,
+         <0 901 4>,
+         <0 902 4>;
+   interrupt-names = "send-empty", "send-not-empty",
+       "recv-empty", "recv-not-empty";
+   #mbox-cells = <0>;
+  };
   pinctrl_aop: pinctrl@290824000 {
    compatible = "apple,t6050-pinctrl", "apple,t8103-pinctrl";
    reg = <0x2 0x90824000 0x0 0x4000>;

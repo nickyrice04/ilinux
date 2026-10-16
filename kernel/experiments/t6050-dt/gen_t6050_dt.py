@@ -729,6 +729,58 @@ def main():
         "\t\t};",
     ])
 
+    # SMC: ASC block + mailbox.  ADT /arm-io/smc: iop,ascwrap-v6, role SMC,
+    # reg[0] = ASC (0x88000), reg[1] = a 16 KiB window, four mailbox interrupts,
+    # no power-gates (always on).  Transport facts: kernel/experiments/smc/README.md
+    # (REA of this Mac's AppleSMC: RTKit endpoint 0x20, the Linux macsmc message ABI).
+    sm = nodes["/arm-io/smc"]
+    smc_base = translate(rng, int(sm["reg"][0]["addr"], 16))
+    smc_adt_sram = translate(rng, int(sm["reg"][1]["addr"], 16))
+    smc_irqs = sorted(u32s(sm["interrupts"]))
+    node(smc_base, [
+        "\t\t/* ADT smc: iop,ascwrap-v6, role SMC; ASC block at reg[0].  The \"sram\"",
+        "\t\t * window follows the t8103/t8122/t6031 DTs (ASC + 0x1a00000, 1 MiB; LIKELY,",
+        "\t\t * the SMC reports the actual shared-memory address at init); the ADT's own",
+        "\t\t * reg[1] is 0x%x+0x%x.  reboot/rtc subnodes need the PMU nvmem cells" % (
+            smc_adt_sram, int(sm["reg"][1]["size"], 16)),
+        "\t\t * (no SPMI PMU node in this draft yet).  Evidence:",
+        "\t\t * kernel/experiments/smc/README.md.",
+        "\t\t */",
+        "\t\tsmc: smc@%x {" % smc_base,
+        '\t\t\tcompatible = "apple,t6050-smc", "apple,t8103-smc";',
+        "\t\t\treg = %s,\n\t\t\t      %s;" % (
+            cells(smc_base, PAGE), cells(smc_base + 0x1a00000, 0x100000)),
+        '\t\t\treg-names = "smc", "sram";',
+        "\t\t\tmboxes = <&smc_mbox>;",
+        '\t\t\tstatus = "disabled"; /* DRAFT: enable after a native transport test */',
+        "",
+        "\t\t\tsmc_gpio: gpio {",
+        '\t\t\t\tcompatible = "apple,smc-gpio";',
+        "\t\t\t\tgpio-controller;",
+        "\t\t\t\t#gpio-cells = <2>;",
+        "\t\t\t};",
+        "",
+        "\t\t\tsmc_hwmon: hwmon {",
+        '\t\t\t\tcompatible = "apple,smc-hwmon";',
+        "\t\t\t};",
+        "\t\t};",
+    ])
+    node(smc_base + 0x8000, [
+        "\t\t/* ASC mailbox at smc reg[0] + 0x8000 (as t8103/t8122/t6031).  IRQ order sorted",
+        "\t\t * from ADT smc interrupts[0..3] (LIKELY, same convention as ans_mbox).",
+        "\t\t */",
+        "\t\tsmc_mbox: mbox@%x {" % (smc_base + 0x8000),
+        '\t\t\tcompatible = "apple,t6050-asc-mailbox", "apple,asc-mailbox-v4";',
+        "\t\t\treg = %s;" % cells(smc_base + 0x8000, PAGE),
+        "\t\t\tinterrupt-parent = <&aic>;",
+        "\t\t\tinterrupts = %s;" % ",\n\t\t\t\t     ".join(
+            "<AIC_IRQ %d IRQ_TYPE_LEVEL_HIGH>" % i for i in smc_irqs),
+        '\t\t\tinterrupt-names = "send-empty", "send-not-empty",',
+        '\t\t\t\t\t  "recv-empty", "recv-not-empty";',
+        "\t\t\t#mbox-cells = <0>;",
+        "\t\t};",
+    ])
+
     for _, lines in sorted(body, key=lambda x: x[0]):
         L.extend(lines)
         L.append("")

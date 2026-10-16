@@ -1,0 +1,53 @@
+From 10d5318e683bf11e54dc794f92fd0cf745e26eb6 Mon Sep 17 00:00:00 2001
+From: "iLinux local research (AI-generated draft)" <local@invalid>
+Date: Sun, 11 Oct 2026 20:00:00 +0000
+Subject: [PATCH 1/7] dt-bindings: iommu: apple,sart: Add t6050 (SARTv4)
+ compatible
+
+The SART found on the Apple M5 Pro/Max SoC (t6050; ADT compatible
+"sart,coastguard", ADT property sart-version = 4) keeps the SARTv3 entry
+format but moves the PADDR array from 0x40 to 0x60 and the SIZE array
+from 0x80 to 0xc0.  A driver for SARTv3 would program the wrong
+registers, so the new compatible has no fallback.
+
+Evidence: ADT of a Mac17,6 (J716c) captured with the workspace's
+sanitizing extractor (sart-version = 4); register layout from m1n1
+src/sart.c (commit 9bfdf8aeca30 "sart: add SARTv4 support", MIT-licensed
+at tag v1.9.9).
+
+NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
+Linux generative-AI policy).  No Signed-off-by on purpose.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ Documentation/devicetree/bindings/iommu/apple,sart.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/iommu/apple,sart.yaml b/Documentation/devicetree/bindings/iommu/apple,sart.yaml
+index 8fd77757..5f742085 100644
+--- a/Documentation/devicetree/bindings/iommu/apple,sart.yaml
++++ b/Documentation/devicetree/bindings/iommu/apple,sart.yaml
+@@ -26,6 +26,10 @@ description:
+   SART3, first seen in M1 Pro/Max, extends both the address space and filter
+   entry size to 42 bit.
+ 
++  SART4, first seen in M5 Pro/Max, keeps the SART3 entry format but moves the
++  physical address and size register arrays, so it is not compatible with
++  SART3.
++
+ properties:
+   compatible:
+     oneOf:
+@@ -37,6 +41,7 @@ properties:
+           - const: apple,t6000-sart
+       - enum:
+           - apple,t6000-sart
++          - apple,t6050-sart
+           - apple,t8015-sart
+           - apple,t8103-sart
+ 
+
+base-commit: 77cb8f24c2381a8abb7272d7bbdec548d6426a8a
+-- 
+2.54.0 (Apple Git-157)
+

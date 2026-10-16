@@ -28,6 +28,7 @@ capture (`hardware/adt/adt-sanitized.json`) into three files.
 * **6 PMGR blocks.**
 * **42 t8110 DART instances**, all `status = "disabled"`.
 * **SART (SARTv4), the ANS mailbox and NVMe** (M4+ layout, disabled).
+* **The SMC and its mailbox** (2026-10-16; `smc` disabled until verified).
 
 ### `out/t6050-pmgr.dtsi`
 
@@ -75,6 +76,8 @@ python3 -I gen_t6050_dt.py ../../../hardware/adt/adt-sanitized.json out
 | SART | ADT `sart,coastguard`, `sart-version 4` | Confirmed (data) |
 | NVMe regs and IRQ | ADT `ans` reg[9]/reg[3]/reg[0], `nvme-interrupt-idx = 4` → IRQ 2338; m1n1 `53f8ee9b` | Confirmed (data); 0x40000 window Likely |
 | ANS mailbox | ANS reg[0] + 0x8000 (m1n1 `asc.c`); IRQs 1347–1350 sorted from the ADT | Likely |
+| SMC node | ADT `smc` reg[0] (ASC) at `0x28c600000`; `sram` = ASC + 0x1a00000, 1 MiB, the pattern of the t8103/t8122/t6031 DTs; transport = Linux `macsmc` ABI (REA of AppleSMC, `../smc/README.md`) | Likely (sram window) / Confirmed (ABI) |
+| SMC mailbox | ASC + 0x8000; IRQs 899–902 sorted from the ADT | Likely |
 | Memory node | placeholder; m1n1 fills it in | Placeholder |
 
 ## Open questions to resolve on hardware

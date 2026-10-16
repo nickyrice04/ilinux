@@ -1,4 +1,4 @@
-From d55aa8982990ecbc6cfccfe047458944e76fde7e Mon Sep 17 00:00:00 2001
+From b5ce41083f03123af65caab2cceef07a41bd16c8 Mon Sep 17 00:00:00 2001
 From: "iLinux local research (AI-generated draft)" <local@invalid>
 Date: Sun, 11 Oct 2026 20:06:00 +0000
 Subject: [PATCH 7/7] arm64: dts: apple: Add draft t6050 (M5 Max) J716c device
@@ -32,16 +32,31 @@ pd_ignore_unused clk_ignore_unused (m1n1 adds idle=nop arm64.nowfxt).
 Status: compile-tested with dtc 1.8.1 (0 warnings) outside the kernel
 tree only; dtbs_check pending.
 
+2026-10-16 update: add the SMC and its mailbox.  smc@28c600000
+(apple,t6050-smc, apple,t8103-smc; "smc" = the ASC block, "sram" = ASC +
+0x1a00000 with 1 MiB as on t8103/t8122/t6031) and mbox@28c608000
+(apple,t6050-asc-mailbox, interrupts 899-902 sorted from the ADT), with
+gpio and hwmon subnodes.  The smc node stays status = "disabled" until a
+native session verifies the transport; the reboot and rtc subnodes wait
+for the SPMI PMU node that provides their nvmem cells.  Evidence: ADT
+/arm-io/smc (iop,ascwrap-v6, role SMC, four mailbox interrupts, no power
+gates) and offline analysis of this Mac's AppleSMC kext, which shows the
+RTKit endpoint (0x20) and message layout the Linux macsmc driver
+implements (iLinux kernel/experiments/smc/README.md).  apple,t6050-smc
+is not yet documented in bindings/mfd/apple,smc.yaml (file outside the
+sparse checkout), so dtbs_check will flag the first compatible.
+
 NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
 Linux generative-AI policy).  No Signed-off-by on purpose.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 ---
  arch/arm64/boot/dts/apple/Makefile        |    1 +
  arch/arm64/boot/dts/apple/t6050-j716c.dts |   37 +
  arch/arm64/boot/dts/apple/t6050-pmgr.dtsi | 1676 +++++++++++++++++++++
- arch/arm64/boot/dts/apple/t6050.dtsi      | 1530 +++++++++++++++++++
- 4 files changed, 3244 insertions(+)
+ arch/arm64/boot/dts/apple/t6050.dtsi      | 1572 +++++++++++++++++++
+ 4 files changed, 3286 insertions(+)
  create mode 100644 arch/arm64/boot/dts/apple/t6050-j716c.dts
  create mode 100644 arch/arm64/boot/dts/apple/t6050-pmgr.dtsi
  create mode 100644 arch/arm64/boot/dts/apple/t6050.dtsi
@@ -1785,10 +1800,10 @@ index 00000000..638f4399
 +};
 diff --git a/arch/arm64/boot/dts/apple/t6050.dtsi b/arch/arm64/boot/dts/apple/t6050.dtsi
 new file mode 100644
-index 00000000..027d96a0
+index 00000000..85dd6c0e
 --- /dev/null
 +++ b/arch/arm64/boot/dts/apple/t6050.dtsi
-@@ -0,0 +1,1530 @@
+@@ -0,0 +1,1572 @@
 +// SPDX-License-Identifier: GPL-2.0+ OR MIT
 +/*
 + * Apple t6050 "M5 Max" SoC - DRAFT device tree.
@@ -2655,6 +2670,48 @@ index 00000000..027d96a0
 +			clocks = <&clkref>;
 +			interrupt-parent = <&aic>;
 +			interrupts = <AIC_IRQ 721 IRQ_TYPE_LEVEL_HIGH>;
++		};
++
++		/* ADT smc: iop,ascwrap-v6, role SMC; ASC block at reg[0].  The "sram"
++		 * window follows the t8103/t8122/t6031 DTs (ASC + 0x1a00000, 1 MiB; LIKELY,
++		 * the SMC reports the actual shared-memory address at init); the ADT's own
++		 * reg[1] is 0x28c050000+0x4000.  reboot/rtc subnodes need the PMU nvmem cells
++		 * (no SPMI PMU node in this draft yet).  Evidence:
++		 * kernel/experiments/smc/README.md.
++		 */
++		smc: smc@28c600000 {
++			compatible = "apple,t6050-smc", "apple,t8103-smc";
++			reg = <0x2 0x8c600000 0x0 0x4000>,
++			      <0x2 0x8e000000 0x0 0x100000>;
++			reg-names = "smc", "sram";
++			mboxes = <&smc_mbox>;
++			status = "disabled"; /* DRAFT: enable after a native transport test */
++
++			smc_gpio: gpio {
++				compatible = "apple,smc-gpio";
++				gpio-controller;
++				#gpio-cells = <2>;
++			};
++
++			smc_hwmon: hwmon {
++				compatible = "apple,smc-hwmon";
++			};
++		};
++
++		/* ASC mailbox at smc reg[0] + 0x8000 (as t8103/t8122/t6031).  IRQ order sorted
++		 * from ADT smc interrupts[0..3] (LIKELY, same convention as ans_mbox).
++		 */
++		smc_mbox: mbox@28c608000 {
++			compatible = "apple,t6050-asc-mailbox", "apple,asc-mailbox-v4";
++			reg = <0x2 0x8c608000 0x0 0x4000>;
++			interrupt-parent = <&aic>;
++			interrupts = <AIC_IRQ 899 IRQ_TYPE_LEVEL_HIGH>,
++				     <AIC_IRQ 900 IRQ_TYPE_LEVEL_HIGH>,
++				     <AIC_IRQ 901 IRQ_TYPE_LEVEL_HIGH>,
++				     <AIC_IRQ 902 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "send-empty", "send-not-empty",
++					  "recv-empty", "recv-not-empty";
++			#mbox-cells = <0>;
 +		};
 +
 +		pinctrl_aop: pinctrl@290824000 {

@@ -1,22 +1,35 @@
-From 6b29997280df577d7cc5e74ce68dd8e5e55204f4 Mon Sep 17 00:00:00 2001
+From e70e93472b7ee3c962b3f5f20b58f08bf6e711cd Mon Sep 17 00:00:00 2001
 From: "iLinux local research (AI-generated draft)" <local@invalid>
 Date: Sun, 11 Oct 2026 20:04:00 +0000
 Subject: [PATCH 5/7] nvme-apple: Support the M4+ NVMMU/NVMe register split
  (t8132, t6050)
 
 From M4 (t8132) on, the ANS ADT node has an "nvme-secure-bar" property
-and ten reg entries.  m1n1 found that the NVMMU registers (TCB count,
-TCB bases, TCB invalidation) stay in the window that held everything on
-M1-M3 (ADT reg[3]) while the NVMe controller registers, doorbells, boot
-status and the linear-SQ controls are accessed through ADT reg[9].  In
-addition, after the I/O queues have been created the I/O CQ and SQ base
-addresses have to be written to nvme+0x1208 and nvme+0x1200, otherwise
-the ANS firmware crashes and its crash log reports I/O SQ/CQ = 0.
+and ten reg entries.  The NVMMU registers (TCB count, TCB bases, TCB
+invalidation) stay in the window that held everything on M1-M3 (ADT
+reg[3]) while the NVMe controller registers, doorbells, boot status and
+the linear-SQ controls are accessed through ADT reg[9].  In addition,
+after the I/O queues have been created the I/O CQ and SQ base addresses
+have to be written to nvme+0x1208 and nvme+0x1200 (completion queue
+first), otherwise the ANS firmware crashes and its crash log reports
+I/O SQ/CQ = 0.
 
 Add an "nvmmu" MMIO window for apple,t8132-nvme-ans2 (and SoCs that use
 it as fallback, e.g. t6050), route all APPLE_NVMMU_* accesses through
 it (it aliases the "nvme" window on older SoCs, so nothing changes
-there), and mirror the I/O queue bases on M4+.
+there), mirror the I/O queue bases on M4+, and handle three further
+M4+ differences:
+
+ - TCB invalidation status: M4+ keeps a per-TCB state array at the start
+   of the NVMMU block (one 32-bit word per four TCBs, a 5-bit slot per
+   TCB, low four bits zero once invalidated) instead of the single
+   status register at 0x28120 read on M1-M3.  Check the slot of the tag
+   that was just invalidated.
+ - The 64-bit queue and TCB base registers (ASQ/ACQ, the two NVMMU TCB
+   bases, the I/O queue bases) are programmed as two 32-bit stores, low
+   word first, on M4+; older SoCs keep the 64-bit store.
+ - The NVMMU TCB count register keeps the value 63 on M4+ whatever the
+   queue depth, so max_queue_depth stays at 64.
 
 This builds on the macOS 15+ firmware-ABI series already in the asahi
 branch (Sven Peter, b4/nvme-fwabi; asahi commits 9c02d723ef80,
@@ -25,30 +38,38 @@ which is required as well: no opcode in the TCB, DMA direction only for
 data transfers, page-aligned admin buffers, and no access to the
 removed PRP-null-check register at 0x24008 (SErrors on new firmware).
 
-Provenance: m1n1 src/nvme.c, commit 53f8ee9b54ba ("nvme: support
-T8132", Yureka, 2026-07-26, AsahiLinux/m1n1 PR #652), MIT-licensed at
-tag v1.9.9 (commit 809541515659).  m1n1 PR #661 states that with this
-and SARTv4, nvme_init()/nvme_read() work on t6050.  No Apple binary was
-disassembled or decompiled.
+Provenance: the window split and the I/O queue base writes follow m1n1
+src/nvme.c, commit 53f8ee9b54ba ("nvme: support T8132", Yureka,
+2026-07-26, AsahiLinux/m1n1 PR #652), MIT-licensed at tag v1.9.9
+(commit 809541515659); m1n1 PR #661 states that with this and SARTv4,
+nvme_init()/nvme_read() work on t6050.  The per-TCB status array, the
+fixed TCB count value and the 32-bit store sequence were recovered by
+offline analysis (REA/Ghidra) of the SPTM firmware of a Mac17,6 running
+macOS 26.6.2 (iLinux kernel/experiments/nvme-ans3/README.md, section
+4.1); the code here is original and written from those facts.  Because
+of that analysis this patch cannot meet Asahi's clean-room policy.
 
-Open questions (need native hardware): m1n1 uses NVMMU_TCB_STAT at
-0x29120 while this driver uses 0x28120; the ADT sizes reg[9] as 0x10000
+Open questions (need native hardware): the ADT sizes reg[9] as 0x10000
 but the linear-SQ registers at +0x24908..+0x24910 are accessed through
-it (the t6050 draft DT maps 0x40000); ADT nvme-queue-entries is 253 but
-the 64-tag limit is kept.
+it (the t6050 draft DT maps 0x40000; macOS reaches them through
+reg[3]); ADT nvme-queue-entries is 253 but the 64-tag limit is kept;
+whether the M5 windows also accept 64-bit stores is unknown, hence the
+32-bit sequence.
 
-Status: untested; compile test pending.
+Status: untested on hardware; offline compile check in
+virtualization/jobs/043-nvme-smc-patches.
 
 NOT FOR UPSTREAM SUBMISSION: AI-generated local research draft (Asahi
 Linux generative-AI policy).  No Signed-off-by on purpose.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 ---
- drivers/nvme/host/apple.c | 50 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 45 insertions(+), 5 deletions(-)
+ drivers/nvme/host/apple.c | 107 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 96 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
-index a3343c49..a01a53a7 100644
+index a3343c49..6e5eda06 100644
 --- a/drivers/nvme/host/apple.c
 +++ b/drivers/nvme/host/apple.c
 @@ -42,6 +42,14 @@
@@ -66,7 +87,27 @@ index a3343c49..a01a53a7 100644
  #define APPLE_ANS_MAX_PEND_CMDS_CTRL 0x1210
  
  #define APPLE_ANS_BOOT_STATUS	 0x1300
-@@ -167,6 +175,11 @@ struct apple_nvme_iod {
+@@ -59,6 +67,19 @@
+ #define APPLE_NVMMU_TCB_INVAL	  0x28118
+ #define APPLE_NVMMU_TCB_STAT	  0x28120
+ 
++/*
++ * M4 and later: the NVMMU reports the state of every TCB in an array of
++ * 32-bit words at the start of its register block, one word per four TCBs
++ * with a 5-bit slot per TCB.  The low four bits of a slot must read back as
++ * zero once the TCB has been invalidated.  The single APPLE_NVMMU_TCB_STAT
++ * register above is what M1-M3 use; it is not referenced on M4 and later.
++ */
++#define APPLE_NVMMU_TCB_STAT_ARRAY	0x28000
++#define APPLE_NVMMU_TCB_STAT_WORD(tag)	\
++	(APPLE_NVMMU_TCB_STAT_ARRAY + (((tag) >> 2) << 2))
++#define APPLE_NVMMU_TCB_STAT_SHIFT(tag)	(((tag) & 3) * 5)
++#define APPLE_NVMMU_TCB_STAT_MASK	0xf
++
+ /*
+  * This controller is a bit weird in the way command tags works: Both the
+  * admin and the IO queue share the same tag space. Additionally, tags
+@@ -167,6 +188,11 @@ struct apple_nvme_iod {
  
  struct apple_nvme_hw {
  	bool has_lsq_nvmmu;
@@ -78,7 +119,7 @@ index a3343c49..a01a53a7 100644
  	u32 max_queue_depth;
  };
  
-@@ -175,6 +188,8 @@ struct apple_nvme {
+@@ -175,6 +201,8 @@ struct apple_nvme {
  
  	void __iomem *mmio_coproc;
  	void __iomem *mmio_nvme;
@@ -87,54 +128,102 @@ index a3343c49..a01a53a7 100644
  	const struct apple_nvme_hw *hw;
  
  	struct device **pd_dev;
-@@ -293,8 +308,8 @@ static void apple_nvmmu_inval(struct apple_nvme_queue *q, unsigned int tag)
+@@ -292,11 +320,34 @@ static const struct apple_rtkit_ops apple_nvme_rtkit_ops = {
+ static void apple_nvmmu_inval(struct apple_nvme_queue *q, unsigned int tag)
  {
  	struct apple_nvme *anv = queue_to_apple_nvme(q);
++	u32 stat;
  
 -	writel(tag, anv->mmio_nvme + APPLE_NVMMU_TCB_INVAL);
 -	if (readl(anv->mmio_nvme + APPLE_NVMMU_TCB_STAT))
 +	writel(tag, anv->mmio_nvmmu + APPLE_NVMMU_TCB_INVAL);
-+	if (readl(anv->mmio_nvmmu + APPLE_NVMMU_TCB_STAT))
++	if (anv->hw->has_separate_nvmmu) {
++		stat = readl(anv->mmio_nvmmu + APPLE_NVMMU_TCB_STAT_WORD(tag));
++		stat >>= APPLE_NVMMU_TCB_STAT_SHIFT(tag);
++		stat &= APPLE_NVMMU_TCB_STAT_MASK;
++	} else {
++		stat = readl(anv->mmio_nvmmu + APPLE_NVMMU_TCB_STAT);
++	}
++	if (stat)
  		dev_warn_ratelimited(anv->dev,
- 				     "NVMMU TCB invalidation failed\n");
+-				     "NVMMU TCB invalidation failed\n");
++				     "NVMMU TCB %u invalidation failed (state %u)\n",
++				     tag, stat);
++}
++
++/*
++ * M4 and later program the 64-bit queue and TCB base registers as two
++ * 32-bit stores, low word first.  Keep the 64-bit store on the older SoCs
++ * where it is known to work.
++ */
++static void apple_nvme_write_base(struct apple_nvme *anv, u64 val,
++				  void __iomem *reg)
++{
++	if (anv->hw->has_separate_nvmmu)
++		lo_hi_writeq(val, reg);
++	else
++		writeq(val, reg);
  }
-@@ -1160,7 +1175,7 @@ static void apple_nvme_reset_work(struct work_struct *work)
  
- 		/* Setup the NVMMU for the maximum admin and IO queue depth */
+ static void apple_nvme_submit_cmd_t8015(struct apple_nvme_queue *q,
+@@ -1158,24 +1209,30 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 			| (anv->hw->max_queue_depth << 16), anv->mmio_nvme
+ 			+ APPLE_ANS_MAX_PEND_CMDS_CTRL);
+ 
+-		/* Setup the NVMMU for the maximum admin and IO queue depth */
++		/*
++		 * Setup the NVMMU for the maximum admin and IO queue depth.
++		 * M4 and later firmware writes 63 here as well, whatever the
++		 * queue depth, so max_queue_depth stays at 64 on those SoCs.
++		 */
  		writel(anv->hw->max_queue_depth - 1,
 -			anv->mmio_nvme + APPLE_NVMMU_NUM_TCBS);
 +			anv->mmio_nvmmu + APPLE_NVMMU_NUM_TCBS);
  	}
  
  	/* Setup the admin queue */
-@@ -1173,9 +1188,9 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 	aqa = APPLE_NVME_AQ_DEPTH - 1;
+ 	aqa |= aqa << 16;
+ 	writel(aqa, anv->mmio_nvme + NVME_REG_AQA);
+-	writeq(anv->adminq.sq_dma_addr, anv->mmio_nvme + NVME_REG_ASQ);
+-	writeq(anv->adminq.cq_dma_addr, anv->mmio_nvme + NVME_REG_ACQ);
++	apple_nvme_write_base(anv, anv->adminq.sq_dma_addr,
++			      anv->mmio_nvme + NVME_REG_ASQ);
++	apple_nvme_write_base(anv, anv->adminq.cq_dma_addr,
++			      anv->mmio_nvme + NVME_REG_ACQ);
+ 
  	if (anv->hw->has_lsq_nvmmu) {
  		/* Setup NVMMU for both queues */
- 		writeq(anv->adminq.tcb_dma_addr,
+-		writeq(anv->adminq.tcb_dma_addr,
 -			anv->mmio_nvme + APPLE_NVMMU_ASQ_TCB_BASE);
-+			anv->mmio_nvmmu + APPLE_NVMMU_ASQ_TCB_BASE);
- 		writeq(anv->ioq.tcb_dma_addr,
+-		writeq(anv->ioq.tcb_dma_addr,
 -			anv->mmio_nvme + APPLE_NVMMU_IOSQ_TCB_BASE);
-+			anv->mmio_nvmmu + APPLE_NVMMU_IOSQ_TCB_BASE);
++		apple_nvme_write_base(anv, anv->adminq.tcb_dma_addr,
++				      anv->mmio_nvmmu + APPLE_NVMMU_ASQ_TCB_BASE);
++		apple_nvme_write_base(anv, anv->ioq.tcb_dma_addr,
++				      anv->mmio_nvmmu + APPLE_NVMMU_IOSQ_TCB_BASE);
  	}
  
  	anv->ctrl.sqsize =
-@@ -1211,6 +1226,14 @@ static void apple_nvme_reset_work(struct work_struct *work)
+@@ -1211,6 +1268,17 @@ static void apple_nvme_reset_work(struct work_struct *work)
  	if (ret)
  		goto out_remove_cq;
  
 +	if (anv->hw->has_separate_nvmmu) {
-+		/* Same order as m1n1: completion queue first. */
-+		lo_hi_writeq(anv->ioq.cq_dma_addr,
-+			     anv->mmio_nvme + APPLE_ANS_IOQ_CQ_BASE);
-+		lo_hi_writeq(anv->ioq.sq_dma_addr,
-+			     anv->mmio_nvme + APPLE_ANS_IOQ_SQ_BASE);
++		/*
++		 * Completion queue first: the firmware only accepts the
++		 * submission queue base after the completion queue base.
++		 */
++		apple_nvme_write_base(anv, anv->ioq.cq_dma_addr,
++				      anv->mmio_nvme + APPLE_ANS_IOQ_CQ_BASE);
++		apple_nvme_write_base(anv, anv->ioq.sq_dma_addr,
++				      anv->mmio_nvme + APPLE_ANS_IOQ_SQ_BASE);
 +	}
 +
  	apple_nvme_init_queue(&anv->ioq);
  	nr_io_queues = 1;
  	ret = nvme_set_queue_count(&anv->ctrl, &nr_io_queues);
-@@ -1543,6 +1566,16 @@ static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
+@@ -1543,6 +1611,16 @@ static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
  		ret = PTR_ERR(anv->mmio_nvme);
  		goto put_dev;
  	}
@@ -151,7 +240,7 @@ index a3343c49..a01a53a7 100644
  
  	if (anv->hw->has_lsq_nvmmu) {
  		anv->adminq.sq_db = anv->mmio_nvme + APPLE_ANS_LINEAR_ASQ_DB;
-@@ -1761,9 +1794,16 @@ static const struct apple_nvme_hw apple_nvme_t8103_hw = {
+@@ -1761,9 +1839,16 @@ static const struct apple_nvme_hw apple_nvme_t8103_hw = {
  	.max_queue_depth = 64,
  };
  

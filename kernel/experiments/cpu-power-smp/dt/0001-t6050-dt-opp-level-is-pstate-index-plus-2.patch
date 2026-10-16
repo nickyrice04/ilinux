@@ -1,0 +1,24 @@
+--- a/kernel/experiments/t6050-dt/gen_t6050_dt.py	2026-10-13 02:21:33
++++ b/kernel/experiments/t6050-dt/gen_t6050_dt.py	2026-10-15 19:28:59
+@@ -433,8 +433,10 @@
+         table, ops = dvfs[cid]
+         a("\t/*")
+         a("\t * Cluster %d DVFS states from ADT pmgr voltage-states%d(-sram), selected by" % (cid, table))
+-        a("\t * pmgr acc-clusters.  opp-level = table index + 1 (HYPOTHESIS, M1-M3")
+-        a("\t * convention); opp-microvolt = core rail, only used by the energy model.")
++        a("\t * pmgr acc-clusters.  opp-level = table index + 2: macOS 26.6.2 writes DVFS")
++        a("\t * CMD[4:0] = 2 + perf-state index for the CPU domains (AppleT6050PMGR::")
++        a("\t * getPerfStateTableIndex, LIKELY; M1-M3 Linux DTs use index + 1).")
++        a("\t * opp-microvolt = core rail, only used by the energy model.")
+         a("\t * clock-latency-ns is a PLACEHOLDER (not measured).")
+         a("\t */")
+         a("\tcluster%d_opp: opp-table-%d {" % (cid, cid))
+@@ -444,7 +446,7 @@
+         for i, (hz, uv) in enumerate(ops):
+             a("\t\topp%02d {" % (i + 1))
+             a("\t\t\topp-hz = /bits/ 64 <%d>;" % hz)
+-            a("\t\t\topp-level = <%d>;" % (i + 1))
++            a("\t\t\topp-level = <%d>;" % (i + 2))
+             a("\t\t\topp-microvolt = <%d>;" % uv)
+             a("\t\t\tclock-latency-ns = <%d>;" % CLOCK_LATENCY_NS)
+             a("\t\t};")

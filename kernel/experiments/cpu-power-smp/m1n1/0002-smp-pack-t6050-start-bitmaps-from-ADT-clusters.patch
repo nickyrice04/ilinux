@@ -1,0 +1,138 @@
+Subject: [LOCAL EXPERIMENT] smp: pack the t6050 CPU start/stop bitmaps as the PMGR clusters descriptor says
+
+The per-die CPU stop (+0x0) and start (+0x4) registers at the CPU_START
+block hold one field per cluster.  m1n1 packs four bits per cluster, which
+collides on t6050's six-core clusters: cluster 1 cores 0-1 alias cluster 0
+cores 4-5, cluster 2 cores 0-1 alias cluster 1 cores 4-5.  The ADT
+/arm-io/pmgr `clusters` property describes the real packing as
+(u16 width, u16 position) pairs, (6,0) (6,6) (6,12) on this machine, and
+the ADT `acc-cores` table lists the same physical core numbers 0..17.
+
+For T6050/T6051 only, read that descriptor at smp_init(), validate it (no
+overlap, within 32 bits) and use position(cluster) + core for both writes.
+Every other SoC keeps the 4-bit stride unchanged, as does t6050 when the
+descriptor is missing or malformed.  The per-cluster core mask at
++0x8 + 4 * cluster is unchanged.
+
+Original code for the independent project, based only on the public m1n1
+source (57a9339), the sanitized ADT and the project's own analysis.
+Native behaviour untested.
+
+--- a/src/smp.c	2026-10-15 19:26:56
++++ b/src/smp.c	2026-10-15 19:26:57
+@@ -62,6 +62,79 @@
+ 
+ static bool smp_initialized = false;
+ static u64 cpu_start_base;
++
++/*
++ * Bit layout of the per-die CPU stop/start bitmaps at CPU_START + 0x0 / + 0x4.
++ * Most SoCs pack four bits per cluster.  t6050 has six-core clusters and
++ * describes the packing in the PMGR node's `clusters` property as
++ * (u16 width, u16 position) pairs, one per cluster; a zero position on a
++ * later cluster means the default stride.  Without a usable descriptor the
++ * historical 4-bit stride is kept.
++ */
++#define CPU_START_DEFAULT_STRIDE 4
++#define CPU_START_MAX_CLUSTERS   8
++
++static u32 cpu_start_cluster_pos[CPU_START_MAX_CLUSTERS];
++static u32 cpu_start_cluster_width[CPU_START_MAX_CLUSTERS];
++
++static void smp_init_start_layout(int pmgr_node)
++{
++    u32 len = 0;
++    const u16 *desc = NULL;
++    u32 used = 0;
++
++    for (u32 i = 0; i < CPU_START_MAX_CLUSTERS; i++) {
++        cpu_start_cluster_pos[i] = CPU_START_DEFAULT_STRIDE * i;
++        cpu_start_cluster_width[i] = CPU_START_DEFAULT_STRIDE;
++    }
++
++    if (chip_id != T6050 && chip_id != T6051)
++        return;
++
++    desc = adt_getprop(adt, pmgr_node, "clusters", &len);
++    if (!desc || len < 4 || len % 4 || len / 4 > CPU_START_MAX_CLUSTERS) {
++        printf("smp: no usable PMGR clusters descriptor, keeping the 4-bit stride\n");
++        return;
++    }
++
++    for (u32 i = 0; i < len / 4; i++) {
++        u32 width = desc[2 * i];
++        u32 pos = desc[2 * i + 1];
++        u32 mask;
++
++        if (!pos && i)
++            pos = CPU_START_DEFAULT_STRIDE * i;
++        if (!width || width > 31 || pos > 31 || pos + width > 32) {
++            printf("smp: bad clusters descriptor %u (%u @ %u), keeping the 4-bit stride\n",
++                   i, width, pos);
++            goto reset;
++        }
++        mask = ((1u << width) - 1) << pos;
++        if (used & mask) {
++            printf("smp: overlapping clusters descriptor %u, keeping the 4-bit stride\n", i);
++            goto reset;
++        }
++        used |= mask;
++        cpu_start_cluster_pos[i] = pos;
++        cpu_start_cluster_width[i] = width;
++    }
++    printf("smp: CPU start bitmap layout from the PMGR clusters descriptor (%u clusters)\n",
++           len / 4);
++    return;
++
++reset:
++    for (u32 i = 0; i < CPU_START_MAX_CLUSTERS; i++) {
++        cpu_start_cluster_pos[i] = CPU_START_DEFAULT_STRIDE * i;
++        cpu_start_cluster_width[i] = CPU_START_DEFAULT_STRIDE;
++    }
++}
++
++static u32 cpu_start_bit(const struct cpu_info *cpu)
++{
++    if (cpu->cluster < CPU_START_MAX_CLUSTERS && cpu->core < cpu_start_cluster_width[cpu->cluster])
++        return cpu_start_cluster_pos[cpu->cluster] + cpu->core;
++    return CPU_START_DEFAULT_STRIDE * cpu->cluster + cpu->core;
++}
+ static struct cpu_info cpu_info[MAX_CPUS];
+ 
+ // Used from start.S to find the correct stack after the first entry
+@@ -214,7 +287,7 @@
+ 
+     // Some kind of system level startup/status bit
+     // Without this, IRQs don't work
+-    write32(start_base + 0x4, 1 << (4 * cpu->cluster + cpu->core));
++    write32(start_base + 0x4, 1u << cpu_start_bit(cpu));
+ 
+     // Actually start the core
+     write32(start_base + 0x8 + 4 * cpu->cluster, 1 << cpu->core);
+@@ -258,7 +331,7 @@
+     u64 start_base = cpu_start_base + cpu->die * PMGR_DIE_OFFSET;
+ 
+     // Request CPU stop
+-    write32(start_base + 0x0, 1 << (4 * cpu->cluster + cpu->core));
++    write32(start_base + 0x0, 1u << cpu_start_bit(cpu));
+ 
+     u64 dsleep = deep_sleep;
+     // Put the CPU to sleep
+@@ -299,7 +372,8 @@
+     u64 pmgr_reg;
+     u64 cpu_start_off;
+ 
+-    if (pmgr_adt_path_offset_trace(adt, pmgr_path) < 0) {
++    int pmgr_node = pmgr_adt_path_offset_trace(adt, pmgr_path);
++    if (pmgr_node < 0) {
+         printf("Error getting %s node\n", pmgr_name);
+         return -1;
+     }
+@@ -454,6 +528,7 @@
+     }
+ 
+     cpu_start_base = pmgr_reg + cpu_start_off;
++    smp_init_start_layout(pmgr_node);
+ 
+     /* From here on, a core entering at _start is a reset, not a boot */
+     smp_entry_gate = 1;
