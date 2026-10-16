@@ -79,6 +79,7 @@ M1N1_SOURCE="$PWD/third_party/m1n1" tools/m1n1-client/run.sh native/boot/test_pr
 python3 -I native/boot/test_usb_dt.py
 python3 -I native/boot/test_control_channel.py
 python3 -I native/boot/test_kconfig_guard.py
+python3 -I native/boot/test_ramroot.py
 grep -x "$(cut -d' ' -f1,2 kernel/experiments/usb-gadget/authorized_keys)" <(
   python3 -I -c 'import json,sys; print(" ".join(json.load(open(sys.argv[1]))["control_channel_authorized_key"].split()[:2]))' \
     build/native-boot036-download/ilinux-j716c-boot036/package-manifest.json)
@@ -87,7 +88,8 @@ grep -x "$(cut -d' ' -f1,2 kernel/experiments/usb-gadget/authorized_keys)" <(
 
 Require the reviewed **37 + 10 + 6 + 16 + 5 + 19 + 2 + 6 + 1 = 102 cases PASS**,
 plus the three boot036 suites (6 + 6 + 7 tests; their real-package cases skip
-without the M5's `build/` directories), package PASS, 13 receipt files, the
+without the M5's `build/` directories) and the launcher's RAM-root profile
+suite (30 tests), package PASS, 13 receipt files, the
 clean client pin `57a9339ffd1876e78297b17d34dece8cff8fa1ba`, and the last
 command printing the M1's own public key (the package authorizes exactly that
 key). Also confirm `build/control/m1-control` (the private half) is present
@@ -106,10 +108,15 @@ SHA256SUMS digest:
 m1n1, the full DT and the generic initramfs are byte-identical to boot035.
 Git manifests are authoritative; stop on disagreement.
 
-Reviewed controller digests (unchanged from attempt 16; also record the
-checked-out Git commit):
+Reviewed controller digests (also record the checked-out Git commit). Only
+`launch.py` changed since attempt 16: commit `9ee6b2f` added the RAM-root
+profile (`--profile ramroot`). Attempt 17 uses the default `stage-b` profile,
+whose initramfs, fixed arguments, append check, confirmation string and
+180-second deadline are unchanged (reviewed diff; `test_launcher.py` 37 and
+`test_ramroot.py` 30 tests pass; the launcher verifies the boot036 package).
+The other five files are unchanged.
 
-* `native/boot/launch.py`: `65ece2537fdb9ece0ed54dc234f8ee253bc2f3c44aac8c012014079b6366cfe0`
+* `native/boot/launch.py`: `4d55f0c9641f7c572129c7ed374aacd6b91656e41fbb54a7ce05b5d209af840b`
 * `native/boot/gpio_guard.py`: `a3c038d036e2bc97679bd29d78d16e42b3db06d96775918abaeb01a53434a755`
 * `native/boot/entry_guard.py`: `d1fa8ca84aa1c7032c50c8766c8571054047720df35cb7d518310167ec183713`
 * `native/boot/dapf_guard.py`: `bb33d9bebcec3a6cd925ed9e7b28dbabe3c7375c445d7e9d68ace18f4eaa7047`
