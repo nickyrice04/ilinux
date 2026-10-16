@@ -3,7 +3,16 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Baseline reached — attempt 16 (boot035) ran the whole release ladder; SMC-versus-host attribution open
+## Current blocker — macOS 26.0.1 has no EEM driver, so the USB control channel cannot come up
+
+Attempt 17: Linux's three device-mode dwc3 controllers, three CDC-EEM gadgets and key-only dropbear all
+started and the M1 enumerated the cabled port within 8 s, but macOS attached nothing to the EEM
+interface (`com.apple.driver.usb.cdc.eem` is not in its kernel collection), so no interface or SSH
+exists. Open: choose ECM, NCM or ACM serial (macOS loads ECM and ACM today) and resolve the
+interrupt-endpoint question (`ncm-interrupt-ep-disabled`). See
+`native/boot/stage-b-2026-10-16-attempt17-result.md`.
+
+## Historical: Baseline reached — attempt 16 (boot035) ran the whole release ladder; SMC-versus-host attribution open
 
 With the seven SMC-owned domain nodes removed from the Stage-B DT, Linux released all
 74 boot-on unclaimed domains one at a time, completed the ladder at 57.3 s and kept

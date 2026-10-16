@@ -123,6 +123,12 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 native result: **attempt 17 (boot036): first Linux USB on the M5**. Three device-mode dwc3
+controllers probed, EEM gadgets bound, dropbear key-only started, and the M1 enumerated the device 8 s
+after handoff; but macOS 26.0.1 has **no EEM driver** (kext absent from the kernel collection), so no
+interface or SSH. Baseline held (heartbeats to 98.7 s, 50-domain ladder complete, no reset). M5 to pick
+ECM, NCM or ACM serial. See `native/boot/stage-b-2026-10-16-attempt17-result.md`.
+
 Latest M1 result: **MTP E1 probe stopped before any device contact** (`NameError: M1N1Proxy`,
 class-body scoping bug at `mtp_probe.py:426`; the PMGR probe has the same bug at
 `pmgr_probe.py:808-809`). No request was sent; M5 to patch; rerun needs the human's go.

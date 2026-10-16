@@ -5,6 +5,34 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: attempt 17 — first Linux USB works; macOS lacks an EEM driver
+
+* **Launch 1** (18:26:32Z) stopped at the USB identity gate: the freshly restarted M1
+  saw no USB device at all; no port opened, no request sent. The human moved the
+  cable to another port and asked for the rerun. **Launch 2** (handoff
+  2026-10-16T18:29:14Z): **exit 0 in 10.975 s**, all gates PASS; the M1 did not
+  panic.
+* **First Linux USB on this M5 Max.** All three device-mode `dwc3` controllers
+  probed (26-31 ms), three CDC-EEM gadgets bound, dropbear started key-only
+  (pid 55), and the **M1 enumerated the cabled port 8 s after the handoff**
+  (`1d6b:0104`, `bcdDevice 0x0036`, high speed, configuration 1 set by macOS).
+  The M5 reports port 1 `configured`, `usb0 up`, link-local address assigned
+  (tentative at 8.5 s, final from 13.5 s), `rx=0 tx=0` to the end; ports 2-3
+  `not attached`.
+* **The channel did not come up: macOS has no EEM driver.** `AppleUSBCDCCompositeDevice`
+  bound the device, nothing bound the EEM interface, no `enX` appeared, no SSH.
+  `com.apple.driver.usb.cdc.eem` is **not in this Mac's kernel collection in any
+  state** (macOS 26.0.1); the `AppleUSBEEM.kext` on disk is a stub. ECM is loaded,
+  NCM is available, the serial (ACM) driver is loaded.
+* **Correction:** the M1's 2026-10-15 EEM check proved only the stub bundle exists.
+* Baseline held: PID 1, 60 s milestone (63.6 s), heartbeats 000-019 to 98.7 s,
+  ladder complete at 45.02 s (**50 domains**, none from atc0-2 or smc_i2cm), no
+  reset, no error line on screen, DART fault counters 0 early.
+* Return to Macintosh HD reported; fresh policy/default NOT CHECKED. No retry or
+  settings change. Report: `native/boot/stage-b-2026-10-16-attempt17-result.md`.
+  M5 to pick a function macOS can bind (ECM, NCM or ACM serial).
+
+
 ## 2026-10-16 · M1: MTP E1 probe stopped on a NameError before touching the M5
 
 * **E1 session 1 stopped before any device contact.** Human-started proxy; the

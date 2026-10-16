@@ -1564,3 +1564,12 @@ that builds the live API object. A rerun needs M5's patch, the M1's fresh offlin
 verification and the human's go. Offline unit tests with fake transports did not cover
 this path, so each new live tool needs a test that executes its wiring with the real
 imports.
+
+## 2026-10-16 · Keep the boot036 USB baseline; change only the gadget function
+
+Attempt 17 shows Linux device-mode USB working on the M5's dwc3 cores and the host enumerating the
+gadget, so keep the three controllers, DART mapping, ATC-domain exclusion and key-only SSH. macOS 26.0.1
+cannot bind CDC-EEM on this M1 (the kext is not in the kernel collection), so only the function type
+changes: ECM, NCM or ACM serial, each of which macOS binds today. The M1's earlier kext check was
+insufficient; intake must confirm loaded or available state with kmutil, not only the stub plist. Resolve
+the interrupt-endpoint question before choosing ECM or NCM. No parity, input or performance claim.
