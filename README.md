@@ -131,7 +131,8 @@ modify: the Linux kernel patches (`kernel/patches/`, `kernel/experiments/`,
 are GPL-2.0; the virglrenderer and Mesa patches are MIT; code that follows m1n1
 says so in its header and keeps m1n1's licence, which each native package
 includes as `m1n1-LICENSE`. The original tools, benchmarks, scripts and
-documents are under the MIT licence in [`LICENSE`](LICENSE).
+documents are under the MIT licence in [`LICENSE`](LICENSE); [`NOTICE`](NOTICE)
+lists the per-directory licences.
 
 This is a personal research project. There is no support, no release
 schedule and no promise that anything here will work on another machine.

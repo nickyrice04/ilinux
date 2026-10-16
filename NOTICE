@@ -1,0 +1,21 @@
+Licensing notes for this repository
+
+The MIT licence in LICENSE covers the original work: the tools, benchmarks,
+scripts, configuration and documents written for the project.
+
+Patches are derivative works and keep the licence of what they modify:
+
+* Linux kernel patches (kernel/patches/, kernel/experiments/,
+  omarchy-arm64/kernel/): GPL-2.0, like the kernel.
+* QEMU patches (virtualization/qemu/patches/qemu/): GPL-2.0, like QEMU.
+* virglrenderer patches (virtualization/qemu/patches/virglrenderer/) and Mesa
+  patches (omarchy-arm64/packages/mesa-virgl-video/patches/): MIT, like the
+  components they change.
+* Code that follows m1n1 (AsahiLinux/m1n1) says so in its header and keeps
+  m1n1's licence; each native package in the Releases includes it as
+  m1n1-LICENSE.
+
+The Releases contain Linux kernel images built from the AsahiLinux/linux tree
+at the commit named in README.md plus the patches above, with the kernel
+configuration shipped alongside; the corresponding source is that tree and
+this repository.
