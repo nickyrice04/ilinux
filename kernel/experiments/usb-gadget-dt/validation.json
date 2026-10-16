@@ -1,0 +1,103 @@
+{
+ "date": "2026-10-15",
+ "status": "offline candidate; NOT packaged, NOT RUN",
+ "base": {
+  "file": "build/native-boot035/verified/t6050-j716c-stage-b.dtb",
+  "sha256": "b1105bbf2c207c8c816c4b9cc0231ecc1d49543e05fe4b772bcb153019e186db"
+ },
+ "candidate": {
+  "file": "build/usb-gadget-dt/t6050-j716c-stage-b.dtb",
+  "sha256": "d257843b1246ba4958c317f275c835a8be5ed42b2830f9900b05d75dacaee67f",
+  "bytes": 62007
+ },
+ "host": {
+  "python": "3.9.6",
+  "dtc": "1.8.1-gf3451d12 (third_party/dtc)"
+ },
+ "tests": {
+  "command": "python3 -I kernel/experiments/usb-gadget-dt/test_usb_dt.py",
+  "result": "Ran 22 tests in 0.125s OK"
+ },
+ "launcher_check_stage_b": "PASS",
+ "dtc_warnings": {
+  "boot035": 0,
+  "candidate": 0
+ },
+ "decompiled_diff": {
+  "definition": "lines matching ^+[^+] / ^-[^-] in diff -u of dtc -I dtb -O dts -s output",
+  "added_lines": 84,
+  "removed_lines": 12
+ },
+ "domain_audit": {
+  "native-boot034": {
+   "pwrstate_nodes": 188,
+   "disabled": 5,
+   "always_on": 34,
+   "dt_unclaimed": 152,
+   "registered": 183,
+   "releasable": 147,
+   "releasable_atc0_2": 39,
+   "defers_forever": 0
+  },
+  "native-boot035": {
+   "pwrstate_nodes": 181,
+   "disabled": 5,
+   "always_on": 34,
+   "dt_unclaimed": 145,
+   "registered": 176,
+   "releasable": 140,
+   "releasable_atc0_2": 39,
+   "defers_forever": 0
+  },
+  "usb-gadget-dt": {
+   "pwrstate_nodes": 181,
+   "disabled": 44,
+   "always_on": 34,
+   "dt_unclaimed": 145,
+   "registered": 137,
+   "releasable": 101,
+   "releasable_atc0_2": 0,
+   "defers_forever": 0
+  }
+ },
+ "job_040": {
+  "script": "virtualization/jobs/040-usb-gadget-dt/run.sh",
+  "run": "vzjob: start=2026-10-15T17:24:47Z end=2026-10-15T17:25:00Z exit=0",
+  "result": "PASS",
+  "toolchain": [
+   "Linux 7.1.6-vzrun2 aarch64",
+   "Python 3.14.8",
+   "Version: DTC v1.8.1",
+   "gcc (GCC) 16.1.1 20260430"
+  ],
+  "candidate_reproduced": "cmp identical to the host build",
+  "tests": "Ran 22 tests in 0.096s OK",
+  "dtc_new_warnings": 0,
+  "decompiled_diff": {
+   "added_lines": 84,
+   "removed_lines": 12
+  },
+  "dt_validate": {
+   "boot035_full": 0,
+   "candidate_apple_dart": 0,
+   "candidate_pmgr_pwrstate": 0,
+   "candidate_findings": [
+    "snps,dwc3.yaml: iommus is too long (2 entries, binding allows 1) on each of the 3 usb@ nodes; deliberate, see README"
+   ]
+  },
+  "probe_audit": {
+   "snps,dwc3": "drivers/usb/dwc3/core.c",
+   "apple,t6050-dart": "apple,t8110-dart fallback, drivers/iommu/apple-dart.c"
+  },
+  "kernel_release": "7.1.9-g863199d8b4a3-dirty",
+  "eem_modules": {
+   "vermagic": "7.1.9-g863199d8b4a3-dirty SMP preempt mod_unload aarch64",
+   "vermagic_in_boot035_Image": true,
+   "sha256": {
+    "libcomposite.ko": "105d5080fa6093df8f406bbcdf23a759c7e0a5eb4d97142d6247128c73548017",
+    "u_ether.ko": "78c2531c3d02b1d4f253bd41ad7a2baacdbd54a16d312ec57617f53e1c720eee",
+    "usb_f_eem.ko": "58254b0f9d5d1244ac76cb3dc5e0cd268be742a9046c38045553732d206ba68d"
+   }
+  }
+ }
+}

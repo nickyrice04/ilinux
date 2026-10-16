@@ -1,0 +1,355 @@
+{
+ "added_nodes": [
+  {
+   "adt": "/arm-io/usb-drd0",
+   "iommus": [
+    [
+     "/soc/iommu@2a2f00000",
+     0
+    ],
+    [
+     "/soc/iommu@2a2f80000",
+     1
+    ]
+   ],
+   "irq": 1419,
+   "path": "/soc/usb@2a2280000",
+   "port_number": 1,
+   "properties": [
+    "compatible",
+    "reg",
+    "interrupt-parent",
+    "interrupts",
+    "dr_mode",
+    "maximum-speed",
+    "iommus",
+    "snps,usb2-gadget-lpm-disable",
+    "snps,dis_u2_susphy_quirk",
+    "snps,dis_u3_susphy_quirk",
+    "snps,dis_enblslpm_quirk"
+   ]
+  },
+  {
+   "adt": "/arm-io/usb-drd1",
+   "iommus": [
+    [
+     "/soc/iommu@2aaf00000",
+     0
+    ],
+    [
+     "/soc/iommu@2aaf80000",
+     1
+    ]
+   ],
+   "irq": 1451,
+   "path": "/soc/usb@2aa280000",
+   "port_number": 2,
+   "properties": [
+    "compatible",
+    "reg",
+    "interrupt-parent",
+    "interrupts",
+    "dr_mode",
+    "maximum-speed",
+    "iommus",
+    "snps,usb2-gadget-lpm-disable",
+    "snps,dis_u2_susphy_quirk",
+    "snps,dis_u3_susphy_quirk",
+    "snps,dis_enblslpm_quirk"
+   ]
+  },
+  {
+   "adt": "/arm-io/usb-drd2",
+   "iommus": [
+    [
+     "/soc/iommu@382f00000",
+     0
+    ],
+    [
+     "/soc/iommu@382f80000",
+     1
+    ]
+   ],
+   "irq": 1483,
+   "path": "/soc/usb@382280000",
+   "port_number": 3,
+   "properties": [
+    "compatible",
+    "reg",
+    "interrupt-parent",
+    "interrupts",
+    "dr_mode",
+    "maximum-speed",
+    "iommus",
+    "snps,usb2-gadget-lpm-disable",
+    "snps,dis_u2_susphy_quirk",
+    "snps,dis_u3_susphy_quirk",
+    "snps,dis_enblslpm_quirk"
+   ]
+  }
+ ],
+ "base": {
+  "bytes": 60363,
+  "file": "t6050-j716c-stage-b.dtb",
+  "sha256": "b1105bbf2c207c8c816c4b9cc0231ecc1d49543e05fe4b772bcb153019e186db"
+ },
+ "candidate": {
+  "bytes": 62007,
+  "file": "t6050-j716c-stage-b.dtb",
+  "sha256": "d257843b1246ba4958c317f275c835a8be5ed42b2830f9900b05d75dacaee67f"
+ },
+ "counts": {
+  "added_nodes": 3,
+  "darts": 6,
+  "disabled_domains": 39
+ },
+ "darts": [
+  {
+   "former_domain": "/soc/power-management@288300000/power-controller@150",
+   "path": "/soc/iommu@2a2f00000",
+   "phandle": 104,
+   "removed": [
+    "status",
+    "power-domains"
+   ]
+  },
+  {
+   "former_domain": "/soc/power-management@288300000/power-controller@150",
+   "path": "/soc/iommu@2a2f80000",
+   "phandle": 105,
+   "removed": [
+    "status",
+    "power-domains"
+   ]
+  },
+  {
+   "former_domain": "/soc/power-management@288300000/power-controller@168",
+   "path": "/soc/iommu@2aaf00000",
+   "phandle": 106,
+   "removed": [
+    "status",
+    "power-domains"
+   ]
+  },
+  {
+   "former_domain": "/soc/power-management@288300000/power-controller@168",
+   "path": "/soc/iommu@2aaf80000",
+   "phandle": 107,
+   "removed": [
+    "status",
+    "power-domains"
+   ]
+  },
+  {
+   "former_domain": "/soc/power-management@288300000/power-controller@180",
+   "path": "/soc/iommu@382f00000",
+   "phandle": 108,
+   "removed": [
+    "status",
+    "power-domains"
+   ]
+  },
+  {
+   "former_domain": "/soc/power-management@288300000/power-controller@180",
+   "path": "/soc/iommu@382f80000",
+   "phandle": 109,
+   "removed": [
+    "status",
+    "power-domains"
+   ]
+  }
+ ],
+ "disabled_domains": [
+  {
+   "label": "atc0_common",
+   "path": "/soc/power-management@280600000/power-controller@208"
+  },
+  {
+   "label": "atc1_common",
+   "path": "/soc/power-management@280600000/power-controller@210"
+  },
+  {
+   "label": "atc2_common",
+   "path": "/soc/power-management@280600000/power-controller@238"
+  },
+  {
+   "label": "atc0_cio",
+   "path": "/soc/power-management@280600000/power-controller@280"
+  },
+  {
+   "label": "atc0_pcie",
+   "path": "/soc/power-management@280600000/power-controller@288"
+  },
+  {
+   "label": "atc1_cio",
+   "path": "/soc/power-management@280600000/power-controller@290"
+  },
+  {
+   "label": "atc1_pcie",
+   "path": "/soc/power-management@280600000/power-controller@298"
+  },
+  {
+   "label": "atc2_cio",
+   "path": "/soc/power-management@280600000/power-controller@2e8"
+  },
+  {
+   "label": "atc2_pcie",
+   "path": "/soc/power-management@280600000/power-controller@2f0"
+  },
+  {
+   "label": "atc0_cio_pcie",
+   "path": "/soc/power-management@280600000/power-controller@338"
+  },
+  {
+   "label": "atc0_cio_usb",
+   "path": "/soc/power-management@280600000/power-controller@340"
+  },
+  {
+   "label": "atc0_cio_auss",
+   "path": "/soc/power-management@280600000/power-controller@348"
+  },
+  {
+   "label": "atc1_cio_pcie",
+   "path": "/soc/power-management@280600000/power-controller@350"
+  },
+  {
+   "label": "atc1_cio_usb",
+   "path": "/soc/power-management@280600000/power-controller@358"
+  },
+  {
+   "label": "atc1_cio_auss",
+   "path": "/soc/power-management@280600000/power-controller@360"
+  },
+  {
+   "label": "atc2_cio_pcie",
+   "path": "/soc/power-management@280600000/power-controller@3f8"
+  },
+  {
+   "label": "atc2_cio_usb",
+   "path": "/soc/power-management@280600000/power-controller@400"
+  },
+  {
+   "label": "atc2_cio_auss",
+   "path": "/soc/power-management@280600000/power-controller@408"
+  },
+  {
+   "label": "atc0_common_dp_0",
+   "path": "/soc/power-management@288300000/power-controller@98"
+  },
+  {
+   "label": "atc0_common_dp_1",
+   "path": "/soc/power-management@288300000/power-controller@a0"
+  },
+  {
+   "label": "atc0_common_dp_2",
+   "path": "/soc/power-management@288300000/power-controller@a8"
+  },
+  {
+   "label": "atc0_common_dp_3",
+   "path": "/soc/power-management@288300000/power-controller@b0"
+  },
+  {
+   "label": "atc1_common_dp_0",
+   "path": "/soc/power-management@288300000/power-controller@b8"
+  },
+  {
+   "label": "atc1_common_dp_1",
+   "path": "/soc/power-management@288300000/power-controller@c0"
+  },
+  {
+   "label": "atc1_common_dp_2",
+   "path": "/soc/power-management@288300000/power-controller@c8"
+  },
+  {
+   "label": "atc1_common_dp_3",
+   "path": "/soc/power-management@288300000/power-controller@d0"
+  },
+  {
+   "label": "atc2_common_dp_0",
+   "path": "/soc/power-management@288300000/power-controller@d8"
+  },
+  {
+   "label": "atc2_common_dp_1",
+   "path": "/soc/power-management@288300000/power-controller@e0"
+  },
+  {
+   "label": "atc2_common_dp_2",
+   "path": "/soc/power-management@288300000/power-controller@e8"
+  },
+  {
+   "label": "atc2_common_dp_3",
+   "path": "/soc/power-management@288300000/power-controller@f0"
+  },
+  {
+   "label": "atc0_usb_aon",
+   "path": "/soc/power-management@288300000/power-controller@148"
+  },
+  {
+   "label": "atc0_usb",
+   "path": "/soc/power-management@288300000/power-controller@150"
+  },
+  {
+   "label": "atc0_phymxwrap",
+   "path": "/soc/power-management@288300000/power-controller@158"
+  },
+  {
+   "label": "atc1_usb_aon",
+   "path": "/soc/power-management@288300000/power-controller@160"
+  },
+  {
+   "label": "atc1_usb",
+   "path": "/soc/power-management@288300000/power-controller@168"
+  },
+  {
+   "label": "atc1_phymxwrap",
+   "path": "/soc/power-management@288300000/power-controller@170"
+  },
+  {
+   "label": "atc2_usb_aon",
+   "path": "/soc/power-management@288300000/power-controller@178"
+  },
+  {
+   "label": "atc2_usb",
+   "path": "/soc/power-management@288300000/power-controller@180"
+  },
+  {
+   "label": "atc2_phymxwrap",
+   "path": "/soc/power-management@288300000/power-controller@188"
+  }
+ ],
+ "ports": [
+  {
+   "core": 11310465024,
+   "dart_irq": 1423,
+   "darts": [
+    11323572224,
+    11324096512
+   ],
+   "index": 0,
+   "irq": 1419,
+   "port_number": 1
+  },
+  {
+   "core": 11444682752,
+   "dart_irq": 1455,
+   "darts": [
+    11457789952,
+    11458314240
+   ],
+   "index": 1,
+   "irq": 1451,
+   "port_number": 2
+  },
+  {
+   "core": 15068561408,
+   "dart_irq": 1487,
+   "darts": [
+    15081668608,
+    15082192896
+   ],
+   "index": 2,
+   "irq": 1483,
+   "port_number": 3
+  }
+ ]
+}
