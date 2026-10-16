@@ -4,6 +4,8 @@
 Default execution never imports m1n1 or opens USB. No installer is included.
 """
 import argparse
+import base64
+import collections
 import hashlib
 import json
 from pathlib import Path
@@ -28,6 +30,25 @@ BOOTARGS = ("console=tty0 fbcon=nodefer rdinit=/init ro maxcpus=1 nr_cpus=1 "
             "earlycon=ilinuxfb initcall_debug initcall_blacklist=clk_debug_init "
             "ilinux_probe_diag=1")
 CONFIRM = "BOOT-J716C-RAM-DIAGNOSTIC"
+# Omarchy-style RAM root (VM job 039): the same package, gates and Image with another
+# initrd and fixed arguments. These omit idle=nop arm64.nowfxt: the pinned m1n1 appends
+# exactly those on M4 and later (kboot.c, !apple_sysregs_unlocked), and they are required.
+RAMROOT_BOOTARGS = ("console=tty0 rdinit=/init ro maxcpus=1 nr_cpus=1 cpufreq.off=1 "
+                    "pd_ignore_unused clk_ignore_unused quiet")
+RAMROOT_CONFIRM = "BOOT-J716C-RAM-ROOT"
+RAMROOT_RECORD = HERE / "ramroot-manifest.json"
+M1N1_APPEND = ("idle=nop", "arm64.nowfxt")
+Profile = collections.namedtuple("Profile", "initrd bootargs label confirm deadline exact_append")
+PROFILES = {
+    "stage-b": Profile("initramfs-stage-b.cpio.gz", BOOTARGS, "diagnostic", CONFIRM, 180, False),
+    # 300 s: the upload alone is ~227 MB, 45-57 s at the observed 4-5 MB/s.
+    "ramroot": Profile("ramroot.cpio.zst", RAMROOT_BOOTARGS, "RAM-root", RAMROOT_CONFIRM, 300, True),
+}
+STAGE_B = PROFILES["stage-b"]
+PROXY_RATES = (5e6, 4e6)   # observed m1n1 USB proxy upload rates, bytes/s (roadmap.md, Phase 3)
+KEY_TYPES = ("ssh-ed25519", "sk-ssh-ed25519@openssh.com", "ecdsa-sha2-nistp256",
+             "ecdsa-sha2-nistp384", "ecdsa-sha2-nistp521",
+             "sk-ecdsa-sha2-nistp256@openssh.com", "ssh-rsa")
 
 
 def verify_package(directory):
@@ -54,6 +75,79 @@ def verify_package(directory):
     return manifest, loaded
 
 
+def verify_ramroot(path, image):
+    """Return the recorded RAM-root build and its bytes; refuse any other image or Image."""
+    record = json.loads(RAMROOT_RECORD.read_text())
+    if hashlib.sha256(image).hexdigest() != record["image_sha256"]:
+        raise ValueError("package Image differs from the Image the RAM root was built for")
+    if path.is_symlink() or not path.is_file() or path.stat().st_size != record["size"]:
+        raise ValueError("RAM root missing, not a regular file or size mismatch")
+    data = path.read_bytes()
+    if hashlib.sha256(data).hexdigest() != record["sha256"]:
+        raise ValueError("RAM root checksum mismatch: not the recorded build")
+    if data[:4] != b"\x28\xb5\x2f\xfd":
+        raise ValueError("RAM root is not a zstd frame")
+    return record, data
+
+
+def newc_cpio(entries):
+    """Uncompressed newc cpio of (name, mode, data): root-owned, mtime 0, then the trailer."""
+    out = b""
+    for ino, (name, mode, data) in enumerate(entries + [("TRAILER!!!", 0, b"")], 1):
+        if name == "TRAILER!!!":
+            ino = 0
+        nlink = 2 if mode & 0o170000 == 0o040000 else 1
+        fields = (ino, mode, 0, 0, nlink, 0, len(data), 0, 0, 0, 0, len(name) + 1, 0)
+        out += b"070701" + b"".join(b"%08X" % f for f in fields) + name.encode() + b"\0"
+        out += b"\0" * (-len(out) % 4) + data + b"\0" * (-len(data) % 4)
+    return out
+
+
+def operator_key_cpio(text):
+    """Return a cpio holding /etc/ssh/authorized_keys.d/root and the keys' fingerprints.
+
+    Plain OpenSSH public keys only: no options, no private keys; comments are dropped.
+    Same layout as job 039's VM-tested key overlay: directories 0755, file 0600, root.
+    """
+    if len(text) > 16384:
+        raise ValueError("operator key file is larger than 16 KiB")
+    try:
+        lines = [line.split() for line in text.decode("ascii").splitlines() if line.strip()]
+    except UnicodeDecodeError:
+        raise ValueError("operator key file is not ASCII") from None
+    if not 1 <= len(lines) <= 8:
+        raise ValueError("operator key file must hold 1 to 8 public keys")
+    keys, prints = [], []
+    for fields in lines:
+        if len(fields) < 2 or fields[0] not in KEY_TYPES:
+            raise ValueError("operator key file holds something other than a plain public key")
+        try:
+            blob = base64.b64decode(fields[1], validate=True)
+        except ValueError:
+            raise ValueError("operator key data is not base64") from None
+        length = int.from_bytes(blob[:4], "big")
+        if blob[4:4 + length] != fields[0].encode():
+            raise ValueError("operator key type does not match its key data")
+        keys.append("%s %s\n" % (fields[0], fields[1]))
+        digest = base64.b64encode(hashlib.sha256(blob).digest()).decode().rstrip("=")
+        prints.append("%s SHA256:%s" % (fields[0], digest))
+    return newc_cpio([("etc", 0o40755, b""), ("etc/ssh", 0o40755, b""),
+                      ("etc/ssh/authorized_keys.d", 0o40755, b""),
+                      ("etc/ssh/authorized_keys.d/root", 0o100600, "".join(keys).encode())]), prints
+
+
+def ramroot_initrd(image, overlay=b""):
+    # Linux unpacks an uncompressed cpio after a compressed one only at a 4-byte offset
+    # and skips the zero padding before it.
+    return image + b"\0" * (-len(image) % 4) + overlay if overlay else image
+
+
+def upload_estimate(files, profile):
+    """Bytes written over the proxy and the seconds they take at each observed rate."""
+    total = sum(len(files[n]) for n in ("Image", profile.initrd, "t6050-j716c-stage-b.dtb"))
+    return total, [total / rate for rate in PROXY_RATES]
+
+
 def ensure_no_secondaries(proxy):
     # The pinned m1n1 spin-table flag tracks started secondaries; boot CPU's
     # flag remains zero. Check all MAX_CPUS entries, not only this SKU's 18.
@@ -61,8 +155,14 @@ def ensure_no_secondaries(proxy):
         raise ValueError("secondary already started; restart the fresh m1n1 entry")
 
 
-def launch_session(iface, proxy, utils_factory, manifest, files):
+def check_profile(profile):
+    if profile not in PROFILES.values():
+        raise ValueError("unknown launch profile; only stage-b and ramroot exist")
+
+
+def launch_session(iface, proxy, utils_factory, manifest, files, profile=STAGE_B):
     """Transport-injected to test failure paths without physical hardware."""
+    check_profile(profile)
     proxy.nop()
     if proxy.get_chipid() != 0x6050:
         raise ValueError("target chip is not t6050")
@@ -90,7 +190,7 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
         raise ValueError("m1n1 has no boot framebuffer")
     gpio_guard.check_adt(utils.adt)
     print("GPIO ADT PASS: main controller 221 pins/7 groups; exclusions 5,6,7,112,141 match.", flush=True)
-    print("Board/framebuffer PASS; allocating RAM for diagnostic payloads.", flush=True)
+    print("Board/framebuffer PASS; allocating RAM for %s payloads." % profile.label, flush=True)
     dapf_plan = dapf_guard.prepare(iface, base, files["m1n1.bin"], utils.adt)
     print("DAPF layout PASS: AOP has DART/GAPF only; RAM correction planned.", flush=True)
     image = files["Image"]
@@ -101,14 +201,14 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
     kernel = utils.memalign(2 * 1024 * 1024, text_offset + image_size) + text_offset
     dtb = files["t6050-j716c-stage-b.dtb"]
     dt_addr = utils.memalign(65536, len(dtb))
-    initrd = files["initramfs-stage-b.cpio.gz"]
+    initrd = files[profile.initrd]
     initrd_addr = utils.memalign(65536, len(initrd))
     print("Uploading DT, initramfs and kernel to RAM.", flush=True)
     iface.writemem(dt_addr, dtb)
     iface.writemem(initrd_addr, initrd)
     iface.writemem(kernel, image)
     print("RAM upload complete; preparing effective DT and hardware handoff.", flush=True)
-    proxy.kboot_set_chosen("bootargs", BOOTARGS)
+    proxy.kboot_set_chosen("bootargs", profile.bootargs)
     proxy.kboot_set_initrd(initrd_addr, len(initrd))
     if proxy.kboot_prepare_dt(dt_addr) != 0:
         raise ValueError("m1n1 DT preparation failed")
@@ -123,9 +223,13 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
         raise ValueError("invalid prepared DT size")
     tree = check_stage_b(iface.readmem(prepared, total), prepared=True)
     args = tree.get("/chosen", {}).get("bootargs", b"").rstrip(b"\0").decode("ascii").split()
-    if args[:len(BOOTARGS.split())] != BOOTARGS.split():
-        raise ValueError("prepared DT bootargs differ from fixed diagnostic arguments")
-    if any(a not in ("idle=nop", "arm64.nowfxt") for a in args[len(BOOTARGS.split()):]):
+    fixed = profile.bootargs.split()
+    if args[:len(fixed)] != fixed:
+        raise ValueError("prepared DT bootargs differ from fixed %s arguments" % profile.label)
+    if profile.exact_append:
+        if args[len(fixed):] != list(M1N1_APPEND):
+            raise ValueError("prepared DT lacks m1n1's exact idle=nop arm64.nowfxt append")
+    elif any(a not in M1N1_APPEND for a in args[len(fixed):]):
         raise ValueError("unexpected appended bootargs")
     print("Hardware DT PASS: J716c/t6050 CPU topology, AIC3 and timer routes verified.", flush=True)
     descriptor = entry_guard.plan(image, tree)
@@ -142,7 +246,8 @@ def launch_session(iface, proxy, utils_factory, manifest, files):
     # kboot_boot shuts down the proxy/USB on handoff; no ttymode/hang/retry.
 
 
-def connect_and_launch(device, m1n1, manifest, files):
+def connect_and_launch(device, m1n1, manifest, files, profile=STAGE_B):
+    check_profile(profile)
     pin = subprocess.check_output(["git", "-C", str(m1n1), "rev-parse", "HEAD"], text=True).strip()
     dirty = subprocess.check_output(["git", "-C", str(m1n1), "status", "--porcelain", "--untracked-files=no"], text=True)
     if pin != M1N1_COMMIT or dirty:
@@ -162,16 +267,16 @@ def connect_and_launch(device, m1n1, manifest, files):
     transport = None
 
     def timeout(*_):
-        raise TimeoutError("launch exceeded 180 seconds; do not automatically retry")
+        raise TimeoutError("launch exceeded %d seconds; do not automatically retry" % profile.deadline)
 
     old = signal.signal(signal.SIGALRM, timeout)
-    signal.alarm(180)
+    signal.alarm(profile.deadline)
     try:
         transport = Serial(selected, UartInterface.DEFAULT_BAUD_RATE)
         iface = UartInterface(device=transport)
         iface.tty_enable = False
         iface.dev.timeout = 15
-        launch_session(iface, M1N1Proxy(iface), ProxyUtils, manifest, files)
+        launch_session(iface, M1N1Proxy(iface), ProxyUtils, manifest, files, profile)
     except OSError as exc:
         # Serial errors may embed target identifiers in the callout path.
         raise RuntimeError("USB transport failed (%s); do not automatically retry" %
@@ -192,21 +297,53 @@ def connect_and_launch(device, m1n1, manifest, files):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--package", type=Path, required=True)
+    parser.add_argument("--profile", choices=sorted(PROFILES), default="stage-b",
+                        help="stage-b (default): diagnostic initramfs; ramroot: job 039's RAM root")
+    parser.add_argument("--ramroot", type=Path, help="ramroot profile: the recorded ramroot.cpio.zst")
+    parser.add_argument("--operator-key", type=Path,
+                        help="ramroot profile, optional: OpenSSH public key file for root")
     parser.add_argument("--launch", action="store_true", help="LIVE RAM boot; requires separate user authorization")
     parser.add_argument("--device", help="auto, or the exact descriptor-verified primary callout")
     parser.add_argument("--confirm", default="")
     parser.add_argument("--m1n1", type=Path, default=HERE.parents[1] / "third_party/m1n1")
     args = parser.parse_args(argv)
-    if args.launch and (args.confirm != CONFIRM or args.device is None):
-        parser.error("live launch requires --device and --confirm " + CONFIRM)
+    profile = PROFILES[args.profile]
+    if profile is STAGE_B and (args.ramroot is not None or args.operator_key is not None):
+        parser.error("--ramroot and --operator-key require --profile ramroot")
+    if profile is not STAGE_B and args.ramroot is None:
+        parser.error("--profile ramroot requires --ramroot")
+    if args.launch and (args.confirm != profile.confirm or args.device is None):
+        parser.error("live launch requires --device and --confirm " + profile.confirm)
     if not args.launch and (args.device is not None or args.confirm):
         parser.error("offline mode does not accept device/confirmation arguments")
     manifest, files = verify_package(args.package)
     print("Package PASS: all files match the repository manifest.")
+    if profile is not STAGE_B:
+        files = dict(files)
+        record, image = verify_ramroot(args.ramroot, files["Image"])
+        print("RAM root PASS: %s bytes match %s (%s)." % (
+            format(record["size"], ","), RAMROOT_RECORD.name, record["source"]))
+        overlay = b""
+        if args.operator_key is not None:
+            overlay, prints = operator_key_cpio(args.operator_key.read_bytes())
+            for line in prints:
+                print("Operator key for root:", line)
+        else:
+            print("Operator key: none; only keys built into the image can log in.")
+        files[profile.initrd] = ramroot_initrd(image, overlay)
     print("Mode:", "LIVE RAM LAUNCH" if args.launch else "OFFLINE ONLY; USB not opened")
-    print("Boot arguments:", BOOTARGS)
+    print("Boot arguments:", profile.bootargs)
+    if profile is not STAGE_B:
+        print("m1n1 must append:", " ".join(M1N1_APPEND))
+        total, seconds = upload_estimate(files, profile)
+        times = ", ".join("%.1f s at %g MB/s" % (s, rate / 1e6) for s, rate in zip(seconds, PROXY_RATES))
+        print("Upload estimate: %s bytes (Image %s, initrd %s, DT %s): %s "
+              "(Inferred: size / observed proxy rate). Deadline %d s." % (
+                  format(total, ","), format(len(files["Image"]), ","),
+                  format(len(files[profile.initrd]), ","),
+                  format(len(files["t6050-j716c-stage-b.dtb"]), ","), times, profile.deadline))
     if args.launch:
-        connect_and_launch(args.device, args.m1n1, manifest, files)
+        connect_and_launch(args.device, args.m1n1, manifest, files, profile)
     return 0
 
 

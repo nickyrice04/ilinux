@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "profile": "ramroot",
+  "file": "ramroot.cpio.zst",
+  "size": 182089436,
+  "sha256": "c4b1daf777c3a06cdba05c5a464b4a5d816af0397a198e1a745204203799145b",
+  "image_sha256": "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579",
+  "source": "VM job 039 run 22, 2026-10-15T19:46Z",
+  "build": "virtualization/jobs/039-omarchy-ram-root/host-run.sh; zstd --ultra -22 --long=27; 304 Arch Linux ARM packages; digest from out/runs/run22/ramroot.cpio.zst.sha256",
+  "vm_tested": "QEMU TCG, one vCPU, the boot035 Image: Hyprland desktop on simpledrm with llvmpipe 71.6 s after kernel start, 0 failed units",
+  "native_tested": false,
+  "private": "holds the image's SSH host key: never commit or publish the image itself"
+}
