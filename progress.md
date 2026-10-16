@@ -5,6 +5,38 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: MTP E1 probe stopped on a NameError before touching the M5
+
+* **E1 session 1 stopped before any device contact.** Human-started proxy; the
+  probe was invoked once at **18:18:00 UTC** (HEAD `9a3e002`) and printed
+  `STOP: NameError name 'M1N1Proxy' is not defined`, exit 1. **No serial port
+  was opened and no request was sent to the M5**: the error is raised while the
+  probe builds its API object, before `open_primary`. `mtp-probe.txt` holds only
+  the pin-check line and the STOP line; no JSON was written.
+* **Cause (Confirmed, reproduced in isolation under the client's Python 3.9.6):**
+  `mtp_probe.py:426` has `M1N1Proxy = staticmethod(M1N1Proxy)` inside class `Api`,
+  nested in `connect_and_run`, where `M1N1Proxy` is a function-local import
+  (line 418). A class body that assigns a name resolves the right-hand side in
+  class, global and builtin scope only, so the enclosing function's import is not
+  visible. The same shape is at `native/probe/pmgr_probe.py:808-809` (`M1N1Proxy`
+  and `load_adt`): **the PMGR probe would stop the same way.** No other tracked
+  file has it.
+* **Why the tests passed:** neither suite builds that class. The PMGR test
+  exits earlier at the m1n1 pin check, and the E1 tests never call
+  `connect_and_run`.
+* **Suggested fix (M5-owned code; not applied by M1):** alias before the class
+  (`_proxy_cls = M1N1Proxy`, then `M1N1Proxy = staticmethod(_proxy_cls)`, and the
+  same for `load_adt`), or build the API with `types.SimpleNamespace`; add an
+  offline test that runs `connect_and_run` through the API construction with
+  the real `m1n1.proxy` imports and a stub transport.
+* **M1 did not edit the probe or retry.** E1's approval covers the reviewed
+  probe and the procedure says stop on any `STOP:` line. A rerun needs M5's
+  patch, M1's re-verification and the human's go. The M5 stays at
+  `Running proxy...` at the human's discretion; nothing needs cleaning up.
+  Attempt 17 is unaffected (its launcher path is separate and was exercised
+  live in attempts 14-16).
+
+
 ## 2026-10-16 · M1: MTP E1 probe and boot036 attempt 17 offline readiness PASS
 
 * Pulled `0363bd5` (13 commits). Both items are queued in `coordination.md`:

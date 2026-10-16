@@ -1553,3 +1553,14 @@ Kernel jobs pin `KBUILD_BUILD_TIMESTAMP`, `KBUILD_BUILD_USER` and
 `KBUILD_BUILD_HOST`, so a rebuild gives the same Image. Without that, every
 rebuild changed the Image digest, and the RAM root (whose modules and checks
 pin one kernel) could not follow boot036's kernel.
+
+## 2026-10-16 · Do not patch the E1 probe on the M1; stop and hand the fix to M5
+
+The E1 probe stopped on its first live step with a NameError raised before the serial
+port was opened, so no request reached the M5. The approval covers the reviewed probe and
+the procedure says stop on any STOP line, so the M1 neither edits M5-owned code nor
+retries. M5 fixes this and the same pattern in the PMGR probe and adds an offline test
+that builds the live API object. A rerun needs M5's patch, the M1's fresh offline
+verification and the human's go. Offline unit tests with fake transports did not cover
+this path, so each new live tool needs a test that executes its wiring with the real
+imports.

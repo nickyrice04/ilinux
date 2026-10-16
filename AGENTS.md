@@ -123,6 +123,10 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 result: **MTP E1 probe stopped before any device contact** (`NameError: M1N1Proxy`,
+class-body scoping bug at `mtp_probe.py:426`; the PMGR probe has the same bug at
+`pmgr_probe.py:808-809`). No request was sent; M5 to patch; rerun needs the human's go.
+
 Latest M1 milestone: offline readiness PASS (live NOT RUN) for the MTP E1 read-only probe and
 for attempt 17 / boot036 (USB control channel, key-only SSH) on `0363bd5`: 26 probe tests,
 102 controller cases, launcher `4d55f0c9…`, DT/initramfs reviewed independently, packaged
