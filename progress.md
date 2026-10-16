@@ -5,6 +5,26 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: boot038 / attempt 18 offline readiness PASS and E1 probe re-verified (live NOT RUN)
+
+* **Discovered:** boot038's Image, config, DTBs, m1n1 and generic initramfs are byte-identical to the
+  boot036 package the M1 verified; the Stage-B initramfs differs only in `/init`. The shipped kernel
+  config has the ACM and ECM gadget functions built in. `CONFIG_LOG_BUF_SHIFT=17`, so the serial log
+  may start mid-boot. The gadget tty keeps ECHO on, so a host that echoed would write the log back.
+* **Implemented (M1-local, ignored):** pre-flight, wrapper, read-only capture, registry summary and a
+  serial reader that never writes and clears local echo only if on.
+* **Tested:** archive `09f5a5d7…5f70` verified against Git before extraction; 102 controller cases and
+  the boot036 suites PASS; launcher `4d55f0c9…` unchanged; packaged key equals the M1 key. E1:
+  `test_mtp_probe.py` 27 and `test_pmgr_probe.py` 86 PASS, plan identical (66 reads), and the real E1 path
+  with device access blocked in-process passes the former `NameError` site. Loaded-driver check:
+  `cdc.acm`, `cdc.ecm`, `cdc` loaded. Reader tested on a pty (plain `cat` echoed 130 bytes back, the
+  reader 0).
+* **Not verified:** everything native: which macOS drivers bind, whether the dwc3 interrupt-IN endpoint
+  transmits, whether the M1 host stays up with ACM + ECM bound.
+* **Next:** the human restarts the M1, films, puts the M5 at Running proxy and gives the go; one attempt
+  18 (serial first, then ECM and SSH if an `inet6` link-local appears); E1 session 2 as its own lab boot
+  afterwards.
+
 ## 2026-10-16 · M5: boot038 (ACM + ECM control channel) prepared; E1 and PMGR probes fixed (NOT RUN)
 
 * **Discovered (from the M1's reports):** attempt 17 proved the Linux side of

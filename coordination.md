@@ -6,6 +6,68 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — boot038 / attempt 18 offline PASS; E1 probe re-verified; live NOT RUN, 2026-10-16
+
+* **Intake (M5 handoff `bd814ad`, published `5105c58`).** Private prerelease
+  `native-j716c-boot038` (target `bd814ad`): archive 18,904,584 bytes, SHA-256
+  `09f5a5d7…5f70`, checked against Git **before extraction** (GitHub's asset
+  digest equal); 14 regular members, no links. The `verify-package` receipt
+  (manifest digest `efba5795…a186`, 13 files) and the committed launcher's offline
+  verification PASS. The 102 reviewed cases PASS (37 + 10 + 6 + 16 + 5 + 19 + 2 + 6 + 1)
+  plus the boot036 suites (`usb_dt` 6 skipped, `control_channel` 6 with 1 skipped,
+  `kconfig_guard` 7 with 1 skipped, `ramroot` 30). Launcher `4d55f0c9…` and the other five
+  controller digests unchanged; client pin clean `57a9339`; the packaged key equals the
+  M1's, and its private half is present with mode 600.
+* **Independent review.** Image, `kernel.config`, both DTBs (Stage-B `a676087b…`),
+  `m1n1.bin` and the generic initramfs are **byte-identical** to the boot036 package
+  the M1 verified for attempt 17. The Stage-B initramfs differs only in `/init` (423
+  entries each, extracted and compared); its `authorized_keys` is exactly the M1's key,
+  mode 600; no self-test overlay. `/init` is a static aarch64 ELF (64 KiB segment
+  alignment), its strings name `acm.GS0`, `ecm.usb` and `bcdDevice 0x0038` and contain no
+  EEM; the repository `init.c` equals the shipped `diag-init.c`. The shipped config has
+  the ACM, ECM, EEM, NCM, serial, RNDIS and FunctionFS functions built in (`=y`), none as
+  a module. The whole `init.c` diff was read: the log streamer is a forked child with a
+  non-blocking write that retries the same record, so PID 1 and the heartbeats never wait
+  on the port.
+* **Review notes for the M5 (none blocks the attempt).**
+  1. `CONFIG_LOG_BUF_SHIFT=17` (128 KiB): with `initcall_debug` the oldest records may
+     be gone when the streamer first reads `/dev/kmsg`, so the serial capture may not
+     start at `Linux version`, and gaps show in its timestamps. SSH `dmesg` has the same
+     ring limit.
+  2. A streamer restart (after a hangup) replays from the oldest surviving record, so
+     duplicates are expected after a host-side close and reopen.
+  3. The gadget tty keeps the default N_TTY line discipline with ECHO on, so any data the
+     host sends is echoed back into the log stream. The checklist's `cat` would be safe
+     only if the host tty has echo off. **Observed:** on an unrelated macOS serial port
+     (`cu.Bluetooth-Incoming-Port`) the default is raw with echo off; not yet observed on
+     the CDC-ACM port. In a pty test, plain `cat` with echo on wrote 130 bytes back; the
+     M1's reader wrote 0.
+  4. New for the M1 host: a Linux composite device makes macOS bind its ACM and ECM
+     drivers together, a different path from attempts 15–17. Attempt 15's M1 panic was in
+     the Apple CDC driver at the handoff (none in attempts 16 and 17). The precautions are
+     unchanged (fresh restart, `caffeinate -i`, fsync'd records); the human should save work
+     on the M1.
+* **Method deviation (reader only).** The M1 reads the ACM port with
+  `serial_read.py`: `O_RDONLY`, never writes, checks the terminal flags and clears local
+  echo only if it is on, fsync every second. What the checklist touches is unchanged.
+  The driver report comes from the registry (`ioreg`, which opens no port); the network and
+  SSH steps run only if a **new** `enX` has an `inet6` link-local address, with no setting
+  changed.
+* **Loaded-driver check (before the fresh restart):** `kmutil showloaded` finds
+  `com.apple.driver.usb.cdc.acm`, `…cdc.ecm` and `…cdc` loaded (1 line each). It is
+  repeated after the fresh restart by the pre-flight script, which also records
+  `ifconfig -l` and passes the read-only USB gate.
+* **E1 probe re-verified (separate lab boot, not started).** The fix is the intended alias
+  of the function-local imports in `mtp_probe.py` and `pmgr_probe.py` (diff read);
+  `test_mtp_probe.py` 27 and `test_pmgr_probe.py` 86 PASS; `plan` output identical to the
+  first readiness (66 reads, same hash); the real E1 path, run under the pinned client with
+  the only function that opens the port replaced in-process by a raising stub, now passes the
+  former `NameError` site and stops at the stub (no port opened, no file written). Needs the
+  human's go and the read-only USB gate first.
+* **State.** Attempt 18 and E1 session 2: live **NOT RUN**. Needs the human's fresh M1
+  restart, filming (1080p or better, fixed stand, original file afterwards), the M5 at
+  Running proxy, then the go. Order: attempt 18 first; E1 as its own lab boot later.
+
 ### Current M5 handoff — boot038 / attempt 18: the USB control channel with ACM + ECM (NOT RUN)
 
 * **Attempt 17 consumed:** the Linux side of boot036's link works on hardware

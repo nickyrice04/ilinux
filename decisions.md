@@ -1595,3 +1595,15 @@ enclosing function; a class body resolves such a name in class, global and
 builtin scope only. Alias the import first, and test the live wiring by
 building the API through `connect_and_run` with stub m1n1 modules, so a
 regression fails offline rather than in the lab.
+
+## 2026-10-16 · M1: read the ACM log port with a reader that never writes
+
+The gadget's serial port keeps the default line discipline with ECHO on, so a
+host terminal that echoes would write every received log line back to the M5 and
+get it echoed again. The M1 therefore reads the port with a small tool instead of
+plain `cat`: `O_RDONLY`, no writes, terminal flags read first and local echo
+cleared only if it is on. A pty test shows the difference (plain `cat` with echo on
+wrote 130 bytes back; the tool wrote 0). macOS's default on an unrelated serial
+port was raw with echo off, so the guard may be unneeded; it costs nothing. The
+driver report uses the registry (`ioreg`), which opens no port. Nothing the
+checklist touches changes.

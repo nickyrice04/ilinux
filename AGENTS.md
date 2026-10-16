@@ -123,6 +123,14 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 18 / boot038 (CDC-ACM kernel-log
+port + CDC-ECM, key-only SSH) on `5105c58` (handoff `bd814ad`): archive `09f5a5d7…5f70` verified against
+Git before extraction, 102 controller cases plus the boot036 suites, launcher `4d55f0c9…`, Image/config/
+DTBs/m1n1 byte-identical to boot036, Stage-B initramfs differs only in `/init`, packaged key equals the M1
+key. The fixed E1 probe is re-verified offline too (27 + 86 tests, same 66-read plan, the former NameError
+site now passes). The M1 reads the ACM port with a tool that never writes. Needs a fresh M1 restart, filming
+and the human's start; attempt 18 first, E1 as its own lab boot.
+
 Latest M1 native result: **attempt 17 (boot036): first Linux USB on the M5**. Three device-mode dwc3
 controllers probed, EEM gadgets bound, dropbear key-only started, and the M1 enumerated the device 8 s
 after handoff; but macOS 26.0.1 has **no EEM driver** (kext absent from the kernel collection), so no
@@ -131,9 +139,10 @@ ECM, NCM or ACM serial. See `native/boot/stage-b-2026-10-16-attempt17-result.md`
 
 Latest M1 result: **MTP E1 probe stopped before any device contact** (`NameError: M1N1Proxy`,
 class-body scoping bug at `mtp_probe.py:426`; the PMGR probe has the same bug at
-`pmgr_probe.py:808-809`). No request was sent; M5 to patch; rerun needs the human's go.
+`pmgr_probe.py:808-809`). No request was sent; the M5 patched both in `bd814ad` and the M1
+re-verified them offline (see above); rerun needs the human's go.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for the MTP E1 read-only probe and
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for the MTP E1 read-only probe and
 for attempt 17 / boot036 (USB control channel, key-only SSH) on `0363bd5`: 26 probe tests,
 102 controller cases, launcher `4d55f0c9…`, DT/initramfs reviewed independently, packaged
 authorized key equals the M1 key. Order: E1 lab boot first, then attempt 17.
