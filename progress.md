@@ -5,6 +5,23 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: attempt 20 — a stable ten-minute Omarchy desktop with a live status screen and on-screen benchmarks
+
+* **Discovered:** the run-33 RAM root on boot035 starts Hyprland through `start-hyprland` with no warning, shows its status
+  screen about 7 s after the handoff (`desktop ready 8.50 s after kernel start`) and stays up and updating for the whole
+  filmed ten minutes: counter `0:09:59` at the end, clock advancing at real-time rate, memory flat at 1.83-1.88 GiB, no
+  kernel message after the 74-domain release ladder (complete at 55.268 s), display intact after the `dispext*` domains
+  were released. The eleven on-screen benchmark steps finished in 348 s (expected ≈ 75 s): the DRAM-sized pointer chases
+  read 604 ns (32 MiB) and 617 ns (128 MiB), and compute and STREAM rows are about a fifth of this machine's macOS
+  baseline (context only, no parity claim; Hypothesis: the boot CPU is an efficiency-class core near 2.65 GHz).
+* **Measured:** controller exit 0 in 44.553 s, upload 42.38 s (5.36 MB/s); Attempt20.MOV reviewed (646.4 s, whole
+  screen, proxy screen to kernel ≈ 601 s) by eye and with on-device text recognition.
+* **Not verified:** which core CPU 0 is, why the DRAM latency is long, parity with anything, power and thermals, input,
+  USB, SMP, GPU acceleration, and the RAM-root content (no zstd tool on the M1).
+* **Next (M5's call):** show the CPU part on the status screen; a before/after-ladder chase; the bulk-only USB link
+  (boot039). E1 session 2 remains NOT RUN. Fresh policy checks NOT CHECKED. Report:
+  `native/boot/stage-b-2026-10-16-attempt20-result.md`.
+
 ## 2026-10-16 · M1: attempt 20 (boot035 RAM root, run 33) offline readiness PASS (live NOT RUN)
 
 * **Discovered:** the run-33 image again arrived untracked and not ignored in the repository root and was moved into

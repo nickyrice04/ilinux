@@ -6,7 +6,36 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 20 (boot035 RAM root, run 33) offline PASS; live NOT RUN, 2026-10-16
+### Current M1 result — attempt 20 (boot035 RAM root, run 33): a stable ten-minute desktop with on-screen benchmarks
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 44.553 s, handoff 2026-10-17T01:50:36Z; the 227,080,994-byte
+  upload took 42.38 s, 5.36 MB/s; no M1 panic). The recording started before the launch, so the clip holds the proxy
+  screen, the upload and the handoff, and runs to kernel ≈ 601 s.
+* **As intended:** the status screen appears about 7 s after the handoff flash; `desktop ready 8.50 s after kernel start`;
+  `Hyprland 0.56.2 under start-hyprland (its watchdog)`; **no red notice** in any sampled frame. The counter reads
+  `0:09:59` at the end; the waybar clock ran `Thursday 23:46` → `23:56` at real-time rate; memory in use stayed at
+  1.83-1.88 GiB; the kernel-log pane did not change after `ladder complete: 74 domains released` at kernel 55.268 s, and the
+  display kept updating after `dispext0-3_sys` were released (52-55 s). The M1's host log shows no USB event for 13 minutes
+  after the handoff.
+* **On-screen numbers (native, attempt 20; one CPU, software rendering beside them, gcc 16.1.1; no parity claim):**
+  `freq 2.65 GHz est`, `fma_asm 29.8` / `fma 28.5 GFLOP/s`, `intmix 5.00 Gop/s`, `sort 4.94 Melem/s`, `sgemm 11.6 GFLOP/s`,
+  `syscall 352 ns`, `pingpong 3.99 us`, STREAM `28.2 / 19.9 / 25.0 / 24.7 GB/s`, chase `2.37 ns` (16 KiB), `15.3` (4 MiB),
+  **`604` (32 MiB), `617` (128 MiB)**, first touch `42.7 GB/s`. All eleven steps finished in **348 s** (expected ≈ 75 s):
+  steps 1-10 took 16 s, the chase about 332 s.
+* **Observed, cause unknown:** DRAM-sized chases read 604-617 ns (this machine's macOS baseline: 51 and 106 ns); compute
+  and STREAM rows are about a fifth of the baseline's. *Hypothesis:* CPU 0 is an efficiency-class core near 2.65 GHz with no
+  frequency scaling; the STREAM gap follows from the long DRAM latency. The STREAM rows ran before most of the 74 ladder
+  steps; the 32/128 MiB chase rows after all of them. Idle desktop CPU after the benchmark: 38-40%.
+* **No USB device appeared on the M1** after the handoff (the boot035 DT has no controllers). The RAM-root image content was
+  **not inspected** on the M1 (no zstd tool); the overlay source in Git was reviewed.
+* **For the M5 (proposals, not authorization):** print the CPU's implementer/part (and cluster) on the status screen and
+  decide whether to measure on a performance core; run one 128 MiB chase before the ladder (kernel < 18 s) and one after
+  (> 60 s); shorten or reorder the long chase step and slow the redraw during long runs; the USB link (boot039) stays the
+  route to SSH.
+* Report: `native/boot/stage-b-2026-10-16-attempt20-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed E1
+  probe is still **NOT RUN**.
+
+### Historical M1 readiness — attempt 20 (boot035 RAM root, run 33) offline PASS (consumed: attempt 20 ran), 2026-10-16
 
 * **Intake (M5 handoff `3f7b24d`).** The boot035 package was re-verified, not re-downloaded: archive 16,723,179 bytes,
   SHA-256 `81cbbd1c…`, checked against the Git pin; the `verify-package` receipt (manifest digest `7635c5e4…`, 13

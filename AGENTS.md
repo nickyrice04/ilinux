@@ -138,7 +138,16 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 20 (boot035 RAM root run 33 with the live
+Latest M1 native result: **attempt 20 (boot035 RAM root run 33): a stable ten-minute Omarchy desktop with a live status
+screen.** Hyprland starts through `start-hyprland` with no warning, the status screen appears about 7 s after the
+handoff (`desktop ready 8.50 s after kernel start`) and the counter, clock and display keep updating for the whole filmed
+ten minutes (counter `0:09:59` at the end); no kernel message after the 74-domain release ladder (complete at 55.268 s). The
+on-screen single-thread benchmarks finished in 348 s: compute and STREAM rows are about a fifth of this machine's macOS
+baseline and DRAM-sized pointer chases read about 600 ns (context only, no parity claim; Hypothesis: the boot CPU is an
+efficiency-class core near 2.65 GHz). Controller exit 0, upload 42.38 s, no M1 panic, no USB device by design. See
+`native/boot/stage-b-2026-10-16-attempt20-result.md`. The fixed E1 probe is still NOT RUN.
+
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for attempt 20 (boot035 RAM root run 33 with the live
 status screen, `--profile ramroot`) on handoff `3f7b24d`: boot035 re-verified against the Git pin, the run-33 image
 (182,420,823 bytes, `67f25732…d3f7`) matches the manifest by size and digest but its content was not inspected (no zstd
 tool; the overlay source in Git was reviewed instead), offline launcher run and 132 cases PASS, controller digests
