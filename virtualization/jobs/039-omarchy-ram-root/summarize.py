@@ -3,7 +3,8 @@
 
 Reads OUT/sizes.txt, OUT/compression.txt, OUT/packages.txt, OUT/elf-16k-check.txt and,
 when the boot test ran, OUT/test/{serial.log,guest-measure.txt,journal.txt,dmesg.txt,
-hyprland.log,wall.txt} and test/console.log. Standard library only.
+hyprland.log,wall.txt} and test/console.log (the desktop-ready, meminfo and benchmark
+markers). Standard library only.
 """
 import json
 import pathlib
@@ -141,6 +142,39 @@ def main():
     m = re.search(r"Using: ([^\n]+)", read(test / "hyprland.log"))
     t["gl_version"] = m.group(1).strip() if m else None
     t["bubblewrap"] = " ".join(sections.get("bwrap", [])).strip()
+    session = "\n".join(sections.get("session-start", []))
+    t["start_hyprland_running"] = "start-hyprland" in session and "no start-hyprland process" not in session
+    m = re.search(r"warning lines in the journal: (\d+)", session)
+    t["start_hyprland_warning_lines"] = int(m.group(1)) if m else None
+    t["start_hyprland_warning_in_journal"] = "without start-hyprland" in journal.lower()
+    t["bench_status"] = [l for l in sections.get("bench-status", []) if l.strip()]
+    results = []
+    for line in sections.get("bench-results", []):
+        line = line.strip()
+        if line.startswith("{"):
+            try:
+                results.append(json.loads(line))
+            except ValueError:
+                pass
+    t["bench_results"] = results
+    summary = {}
+    for r in results:
+        name = r.get("kernel") or r.get("test") or "?"
+        if name == "latency_random_chase":
+            name = "latency_%s_KiB" % r.get("size_KiB", "?")
+        value = r.get("aggregate_median", r.get("median", r.get("best")))
+        summary[name] = [value, r.get("unit")]
+    t["bench_summary"] = summary
+    m = re.search(r"ILINUX-BENCH-BEGIN uptime ([0-9.]+)", serial)
+    t["bench_end_s_after_kernel_start"] = float(m.group(1)) if m else None
+    t["bench_timed_out"] = "ILINUX-BENCH-TIMEOUT" in serial
+    t["status_screen_log"] = [l for l in sections.get("status-screen", [])
+                              if re.match(r"\[[0-9.]+\] ", l)][:12]
+    ticks = re.findall(r"\[([0-9.]+)\] tick (\d+) at ([0-9.]+) s", "\n".join(sections.get("status-screen", [])))
+    if len(ticks) >= 2:
+        (t0, n0, _), (t1, n1, _) = ticks[0], ticks[-1]
+        t["status_screen_ticks"] = [int(n0), int(n1)]
+        t["status_screen_tick_period_s"] = round((float(t1) - float(t0)) / max(int(n1) - int(n0), 1), 2)
     t["root_mount"] = sections.get("root-mount", [])
     res["boot_test"] = t
     print(json.dumps(res, indent=2))

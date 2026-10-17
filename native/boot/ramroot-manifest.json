@@ -2,12 +2,12 @@
   "schema": 1,
   "profile": "ramroot",
   "file": "ramroot.cpio.zst",
-  "size": 182092876,
-  "sha256": "58bdc6cee4e2a9d0b1fd2a800f2549c7e3ea300e0a6e76d3d17db3b08dd5a27e",
+  "size": 182420823,
+  "sha256": "67f257327ce308531b0c338babb8b644928cae8148bb34467042cca13cbad3f7",
   "image_sha256": "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579",
-  "source": "VM job 039 run 30, 2026-10-16T19:47Z",
-  "build": "virtualization/jobs/039-omarchy-ram-root/host-run.sh; zstd --ultra -22 --long=27; 304 Arch Linux ARM packages; image and digest kept in out/runs/run30/",
-  "vm_tested": "QEMU TCG, one vCPU, the boot035 Image: Hyprland desktop with wallpaper on simpledrm with llvmpipe 68.4 s after kernel start, 0 failed units",
+  "source": "VM job 039 run 33, 2026-10-17T00:53Z",
+  "build": "virtualization/jobs/039-omarchy-ram-root/host-run.sh; zstd --ultra -22 --long=27; 304 Arch Linux ARM packages plus the repository's cpubench and membench built in; image and digest kept in out/runs/run33/",
+  "vm_tested": "QEMU TCG, one vCPU, the boot035 Image: Hyprland desktop with wallpaper on simpledrm with llvmpipe 82.7 s after kernel start under start-hyprland (no warning), 0 failed units, the live status screen's counter advancing, all eleven benchmark steps finished",
   "native_tested": false,
   "private": "holds the image's SSH host key: never commit or publish the image itself"
 }

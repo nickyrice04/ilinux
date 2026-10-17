@@ -1,8 +1,7 @@
 -- RAM root (one CPU, llvmpipe on simpledrm): start what Omarchy's Quickshell session would
--- otherwise provide. swaybg draws the theme background, waybar the bar, and foot a status
--- terminal (the M5 has no keyboard or trackpad driver yet). Each logs to the journal.
--- The wallpaper image does not load yet: gdk-pixbuf 2.44 hands it to glycin, whose sandboxed
--- loader exits with status 1 in this RAM root, so swaybg falls back to Tokyo Night's colour.
+-- otherwise provide. swaybg draws the theme background, waybar the bar, and foot the live
+-- status screen (the M5 has no keyboard or trackpad driver yet, so the filmed screen is the
+-- only output channel). Each logs to the journal.
 local state = os.getenv("HOME") .. "/.local/state/omarchy/current"
 
 -- The 16-inch panel is 254 ppi, but simpledrm reports a 96-dpi size (914x591 mm for 3456x2234),
@@ -20,6 +19,9 @@ end
 hl.on("hyprland.start", function()
   hl.exec_cmd("systemd-cat -t swaybg swaybg -c '#1a1b26' -m fill -i " .. state .. "/background")
   hl.exec_cmd("systemd-cat -t waybar waybar")
-  hl.exec_cmd("systemd-cat -t foot foot --title=ilinux-status bash -c 'ilinux-status; exec bash -i'")
+  -- The status screen: Omarchy's foot.ini (size 9 at scale 2) is too small for a phone video of
+  -- the panel, so this window overrides the font size; at 18 the window holds about 116 columns
+  -- and 32 rows. If ilinux-status ever exits, the window keeps a shell.
+  hl.exec_cmd("systemd-cat -t foot foot --title=ilinux-status -o main.font='JetBrainsMono Nerd Font:size=18' bash -c 'ilinux-status; exec bash -i'")
   hl.exec_cmd("systemd-cat -t ilinux-desktop-ready ilinux-desktop-ready")
 end)

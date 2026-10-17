@@ -26,7 +26,12 @@ ExecStartPre=-/usr/bin/udevadm wait --timeout=30 /dev/dri/card0
 # Hyprland and everything it starts would hold it. bubblewrap then refuses to run ("Unexpected
 # capabilities but not setuid"), and with it glycin's image loaders, which gdk-pixbuf uses
 # (swaybg's wallpaper was the visible case). Drop it before Hyprland starts.
-ExecStart=/usr/bin/setpriv --ambient-caps=-all --inh-caps=-all /usr/bin/Hyprland
+# Hyprland 0.56 ships start-hyprland, a small supervisor (a compiled program in the hyprland
+# package): it forks Hyprland, found on PATH, with a watchdog pipe (--watchdog-fd), restarts
+# it in safe mode after an unclean exit and returns 0 after a clean one. Hyprland started any
+# other way shows "started without start-hyprland" on screen for about 15 s (attempt 19), so
+# the session goes through it. The child inherits the capability sets setpriv cleared.
+ExecStart=/usr/bin/setpriv --ambient-caps=-all --inh-caps=-all /usr/bin/start-hyprland
 Restart=on-failure
 RestartSec=3
 

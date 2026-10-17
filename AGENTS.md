@@ -76,6 +76,18 @@ that reads it with `-I`.
 * For anything meant for upstream Asahi, follow Asahi's clean-room
   copyright policy (see `research/asahi/`). Do not base contributions on
   decompiled Apple code.
+* **Decompile freely, publish only original work (user decision
+  2026-10-16).** REA/Ghidra analysis of this Mac's own macOS binaries is the
+  main instrument for finding how macOS drives the hardware, and is
+  encouraged. Decompiler output, pseudocode and extracted Apple bytes stay
+  under the ignored `build/` tree and never enter Git, documents, commit
+  messages, chat summaries or Releases. Findings record behaviour (addresses,
+  sequences, message formats, timings, with the binary, function, offset,
+  evidence and confidence), never statements of code. Linux drivers are
+  original code written from the findings, preferably by a session that does
+  not open the decompiler, so that everything published contains no decompiled
+  code and only works. Not legal advice; the licence terms and local law
+  decide what is allowed.
 * Git: the user authorized the `nickyrice04/ilinux` GitHub remote on
   2026-10-13 (private, for second-machine setup and agent handoffs) and made
   it **public on 2026-10-16**, after attempt 19. Everything pushed, including
@@ -184,14 +196,16 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Latest M5 handoff: **attempt 19, the Omarchy RAM root on boot035 (NOT RUN)**.
-The boot035 package (attempt 16's proven kernel and DT, no USB controllers)
-launched with `--profile ramroot` and the run-30 Arch RAM root (Hyprland on
-simpledrm with llvmpipe, Omarchy configuration, view-only), pinned in
-`native/boot/ramroot-manifest.json`. The image reaches the M1 privately
-(AirDrop). Offline launcher verification and all suites PASS. The USB link
-continues separately (boot039, bulk-only). See
-`tools/m1n1-client/stage-b-instructions.md`.
+Latest M5 handoff: **attempt 20, the boot035 RAM root with a live status screen
+(NOT RUN)**. Attempt 19 reached the first native Omarchy desktop; its two
+RAM-root findings are fixed in a new image (VM job 039 run 33): the session
+starts through `start-hyprland` with no warning, and the status terminal is a
+live screen with a kernel-start counter, the kernel-log tail and one-CPU
+`cpubench`/`membench` results. The boot035 package, launcher and RAM-root
+profile are unchanged; the image (182,420,823 bytes) reaches the M1 privately
+(AirDrop) and is pinned in `native/boot/ramroot-manifest.json`. VM-verified;
+offline launcher check and all suites PASS. The USB link continues separately
+(boot039, bulk-only). See `tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder

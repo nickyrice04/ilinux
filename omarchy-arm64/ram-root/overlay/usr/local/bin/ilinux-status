@@ -1,11 +1,286 @@
 #!/bin/bash
-# One-screen status for the terminal the desktop opens at login (the M5 has no input yet).
-for _ in $(seq 50); do [ -s /run/ilinux/desktop-ready ] && break; sleep 0.2; done
-renderer=$(grep -m1 -o 'llvmpipe[^"]*\|softpipe[^"]*' "$XDG_RUNTIME_DIR"/hypr/*/hyprland.log 2>/dev/null)
-echo "iLinux RAM root: Omarchy-style desktop"
-echo "kernel   $(uname -r), $(getconf PAGESIZE)-byte pages, $(nproc) CPU"
-echo "display  card0 on $(basename "$(readlink -f /sys/class/drm/card0/device/driver)")${renderer:+, $renderer}"
-echo "usb      $(ip -brief address 2>/dev/null | grep '^usb' | tr -s ' ' | paste -sd ';' || true)"
-echo "memory   $(free -m | awk '/^Mem:/ {print $3 " MiB used, " $7 " MiB available of " $2}')"
-echo "desktop  ready $(cat /run/ilinux/desktop-ready 2>/dev/null || echo '?') s after kernel start"
-echo
+# ilinux-status: the live status screen of the RAM-root desktop, in the terminal Hyprland opens
+# at start (hypr/ramroot.lua). The M5 has no input yet, so a filmed screen is the only output
+# channel. Once a second the screen is redrawn in place, changed rows only:
+#   * the time since kernel start, as block digits a phone camera resolves from across a desk,
+#     with CPU use over the last second beside it;
+#   * memory and load (from /proc);
+#   * the single-thread results of the repository's portable C benchmarks: ilinux-bench runs
+#     them once, detached, after the desktop is ready, and the rows fill in as each step ends
+#     (or read "failed" when it did not);
+#   * the tail of the kernel log, which the quiet console hides: the power-domain release
+#     ladder and any warning show only here.
+# Cost on the one CPU: a few milliseconds a second for the script; the compositor then
+# re-renders the changed cells (llvmpipe). The loop sleeps on a FIFO (no fork per tick), the
+# only long-lived child is the kernel-log follower (journalctl -k -f, or dmesg -w), and the
+# benchmark is a detached process; nothing here blocks the session. If this script exits, the
+# window keeps a shell. /run/ilinux/status.log records the start, the log source, the
+# desktop-ready time, the benchmark start and end, and a "tick" line once a minute.
+export LC_ALL=C.UTF-8
+S=/run/ilinux
+B=$S/bench
+LOG=$S/status.log
+KLOG=$S/kmsg.txt
+INFO=/usr/share/ilinux
+BENCH_START_CAP=300   # start the benchmark at this many seconds after kernel start at the latest
+
+log() { local up rest; read -r up rest < /proc/uptime; echo "[$up] $*" >> "$LOG"; }
+
+# Tokyo Night (Omarchy's theme), as escape sequences.
+N=$'\e[0m' BOLD=$'\e[1m'
+DIM=$'\e[38;2;86;95;137m' FG=$'\e[38;2;169;177;214m' BLUE=$'\e[38;2;122;162;247m'
+YELLOW=$'\e[38;2;224;175;104m'
+
+ROWS=32 COLS=116
+size() {
+    local r c
+    read -r r c < <(stty size < /dev/tty 2>/dev/null)
+    [[ $r =~ ^[0-9]+$ && $c =~ ^[0-9]+$ ]] && (( r > 0 && c > 0 )) && ROWS=$r COLS=$c
+}
+declare -a PREV=()
+pad() {  # pad TEXT WIDTH -> REPLY: TEXT cut or space-padded to WIDTH characters
+    REPLY=${1:0:$2}
+    printf -v REPLY '%s%*s' "$REPLY" $(( $2 - ${#REPLY} )) ''
+}
+draw() {  # draw ROW LINE: LINE is styled and already COLS characters wide; redraw if changed
+    local row=$1 line=$2
+    (( row > ROWS )) && return
+    [ "${PREV[row]:-}" = "$line" ] && return
+    PREV[row]=$line
+    printf '\e[%d;1H%s\e[0m' "$row" "$line"
+}
+put() {  # put ROW TEXT [STYLE]: one row
+    pad "$2" "$COLS"
+    draw "$1" "${3:-$FG}$REPLY"
+}
+putl() {  # putl ROW LABEL TEXT [TEXT_STYLE]: a dim ten-column label, then the text
+    local l
+    pad "$2" 10
+    l=$DIM$REPLY
+    pad "$3" $(( COLS - 10 ))
+    draw "$1" "$l${4:-$FG}$REPLY"
+}
+
+declare -a BIG=()
+big_rows() {  # big_rows TEXT -> BIG[0..4]: 3x5 block glyphs, one column apart
+    local text=$1 c ch r g
+    BIG=("" "" "" "" "")
+    for (( c = 0; c < ${#text}; c++ )); do
+        ch=${text:c:1}
+        case $ch in
+            0) g=("███" "█ █" "█ █" "█ █" "███") ;;
+            1) g=(" █ " "██ " " █ " " █ " "███") ;;
+            2) g=("███" "  █" "███" "█  " "███") ;;
+            3) g=("███" "  █" "███" "  █" "███") ;;
+            4) g=("█ █" "█ █" "███" "  █" "  █") ;;
+            5) g=("███" "█  " "███" "  █" "███") ;;
+            6) g=("███" "█  " "███" "█ █" "███") ;;
+            7) g=("███" "  █" "  █" "  █" "  █") ;;
+            8) g=("███" "█ █" "███" "█ █" "███") ;;
+            9) g=("███" "█ █" "███" "  █" "███") ;;
+            :) g=("   " " █ " "   " " █ " "   ") ;;
+            *) g=("   " "   " "   " "   " "   ") ;;
+        esac
+        for r in 0 1 2 3 4; do BIG[r]+="${g[r]} "; done
+    done
+}
+
+declare -A R=() FAILED=()
+read_bench() {  # the benchmark files -> R[key]=value (the median; the chase's best), FAILED[step]=1
+    local line k v
+    R=() FAILED=()
+    if [ -r "$B/steps.txt" ]; then   # "cpubench fma exit 124 after 60 s"
+        while read -r _ k _ v _; do [ "$v" = 0 ] || FAILED[$k]=1; done < "$B/steps.txt"
+    fi
+    [ -r "$B/results.jsonl" ] || return 0
+    while IFS= read -r line; do
+        if [[ $line =~ \"kernel\":\"([a-z_0-9]+)\" ]]; then k=${BASH_REMATCH[1]}
+        elif [[ $line =~ \"test\":\"([a-z_0-9]+)\" ]]; then k=${BASH_REMATCH[1]}
+        else continue; fi
+        if [ "$k" = latency_random_chase ]; then
+            [[ $line =~ \"size_KiB\":([0-9]+) ]] && k=lat_${BASH_REMATCH[1]}
+        fi
+        if [[ $line =~ \"aggregate_median\":([0-9.]+) ]] || [[ $line =~ \"median\":([0-9.]+) ]] ||
+           [[ $line =~ \"best\":([0-9.]+) ]]; then
+            R[$k]=${BASH_REMATCH[1]}
+        fi
+    done < "$B/results.jsonl"
+}
+fmt() {  # fmt VALUE -> F: about three significant digits
+    local v=$1 ip=${1%%.*}
+    if [[ ! $v =~ ^[0-9]+(\.[0-9]+)?$ ]]; then F=$v; return; fi
+    if (( ${#ip} >= 3 )); then printf -v F '%.0f' "$v"
+    elif (( ${#ip} == 2 )); then printf -v F '%.1f' "$v"
+    else printf -v F '%.2f' "$v"; fi
+}
+cell() {  # cell KEY UNIT LABEL STEP -> C: "LABEL value UNIT", "LABEL failed" or "LABEL …"
+    local v=${R[$1]:-}
+    if [ -n "$v" ]; then fmt "$v"; C="$3 $F${2:+ $2}"
+    elif [ "${FAILED[$4]:-}" = 1 ]; then C="$3 failed"
+    else C="$3 …"; fi
+}
+klfmt() {  # klfmt LINE -> KL: "[  12.345] message" without the journal's host name and "kernel:"
+    local l=$1 m
+    if [[ $l =~ ^\[[[:space:]]*([0-9]+)\.([0-9]{1,3})[0-9]*\][[:space:]]*(.*)$ ]]; then
+        m=${BASH_REMATCH[3]}
+        [ -n "$HOST" ] && m=${m#"$HOST" }
+        m=${m#kernel: }
+        printf -v KL '[%9s] %s' "${BASH_REMATCH[1]}.${BASH_REMATCH[2]}" "$m"
+    else
+        KL=$l
+    fi
+}
+
+start_klog() {  # follow the kernel log into $KLOG; the journal needs the systemd-journal group
+    : > "$KLOG"
+    if journalctl -k -n 1 -q -o cat > /dev/null 2>&1; then
+        journalctl -k -f -n 300 -q -o short-monotonic >> "$KLOG" 2> /dev/null &
+        KPID=$!; KSRC=journal
+    elif dmesg > /dev/null 2>&1; then
+        dmesg -w >> "$KLOG" 2> /dev/null &
+        KPID=$!; KSRC=dmesg
+    else
+        echo "kernel log not readable by this user (journalctl -k and dmesg both refused)" > "$KLOG"
+        KSRC=none
+    fi
+    log "kernel log follower: $KSRC"
+}
+start_bench() {
+    BENCH_STARTED=1
+    [ -e "$B/started" ] && { log "benchmarks already running"; return; }
+    if [ -x /usr/local/bin/ilinux-bench ] && [ -x /usr/local/bin/cpubench ] && [ -x /usr/local/bin/membench ]; then
+        setsid -f systemd-cat -t ilinux-bench /usr/local/bin/ilinux-bench < /dev/null > /dev/null 2>&1
+        log "benchmarks started"
+    else
+        mkdir -p "$B"
+        echo "benchmarks missing from this image" > "$B/status"
+        log "benchmarks missing"
+    fi
+}
+
+tick() {
+    local up rest ups h m s text r i k v l1 l5 l15 mt=0 mf=0 ma=0 u n sy id w q sq st busy total pct
+    read -r up rest < /proc/uptime
+    ups=${up%.*}
+    TICKS=$(( TICKS + 1 ))
+    (( TICKS % 60 == 1 )) && log "tick $TICKS at $up s"   # the loop's cadence, once a minute
+    # Every second once the desktop is up; every 2 s before, so the redraws do not delay the
+    # last clients on a slow (emulated) CPU. Natively the desktop is ready about a second after
+    # this screen appears.
+    PERIOD=1
+    [ -z "$READY" ] && (( ups <= BENCH_START_CAP )) && PERIOD=2
+    if (( RESIZED )); then size; PREV=(); printf '\e[2J'; RESIZED=0; fi
+    local nlog=$(( ROWS - 21 ))
+    (( nlog < 2 )) && nlog=2
+    (( nlog > 14 )) && nlog=14
+
+    put 1 "iLinux RAM root · Omarchy-style Hyprland desktop · one CPU · software rendering · view-only" "$BOLD$BLUE"
+    putl 2 kernel "$KREL · ${PAGE}-byte pages · $NCPU CPU · image built ${BUILT:-?}"
+    putl 3 display "card0 on ${DRIVER:-?}${MODE:+ · $MODE}${SCALE:+ · scale $SCALE} · ${RENDERER:-Mesa ${MESAV:-?} llvmpipe (software rendering)}"
+    if [ -z "$READY" ] && [ -s "$S/desktop-ready" ]; then
+        read -r READY < "$S/desktop-ready"
+        log "desktop ready $READY s after kernel start"
+    fi
+    local ready_text="desktop not ready yet"
+    [ -n "$READY" ] && ready_text="desktop ready $READY s after kernel start"
+    putl 4 session "Hyprland ${HYPRV:-?} $SUPER · $ready_text"
+    while read -r k v _; do
+        case $k in MemTotal:) mt=$v ;; MemFree:) mf=$v ;; MemAvailable:) ma=$v ;; esac
+    done < /proc/meminfo
+    read -r l1 l5 l15 _ < /proc/loadavg
+    putl 5 memory "$(( (mt - mf) / 1024 )) MiB in use (MemTotal - MemFree) · $(( ma / 1024 )) MiB available of $(( mt / 1024 )) · load $l1 $l5 $l15"
+
+    read -r _ u n sy id w q sq st _ < /proc/stat
+    busy=$(( u + n + sy + q + sq + st )); total=$(( busy + id + w ))
+    pct=
+    if [ -n "$PTOTAL" ] && (( total > PTOTAL )); then pct=$(( 100 * (busy - PBUSY) / (total - PTOTAL) )); fi
+    PBUSY=$busy PTOTAL=$total
+    h=$(( ups / 3600 )); m=$(( ups % 3600 / 60 )); s=$(( ups % 60 ))
+    printf -v text '%d:%02d:%02d' "$h" "$m" "$s"
+    big_rows "$text"
+    local side=("since kernel start" "$ups s" "" "cpu ${pct:-…}% busy over the last second" "")
+    for r in 0 1 2 3 4; do
+        pad "${BIG[r]}" 32
+        text=$BOLD$BLUE$REPLY
+        pad "${side[r]}" $(( COLS - 32 ))
+        draw $(( 7 + r )) "$text$N$FG$REPLY"
+    done
+
+    if [ -z "$BENCH_STARTED" ] && { [ -s "$S/desktop-ready" ] || (( ups > BENCH_START_CAP )); }; then
+        start_bench
+    fi
+    read_bench
+    local st="waiting for the desktop" row
+    [ -r "$B/status" ] && read -r st < "$B/status"
+    [ -r "$B/done" ] && [ -z "$BENCH_DONE" ] && { BENCH_DONE=1; log "benchmarks $st"; }
+    put 13 "benchmarks  single thread · ${BENCHBUILD:-no build record} · $st" "$BOLD$BLUE"
+    cell freq "GHz est" freq freq; row=$C
+    cell fma_asm GFLOP/s fma_asm fma_asm; row+="   $C"
+    cell fma GFLOP/s fma fma; row+="   $C"
+    cell intmix Gop/s intmix intmix; row+="   $C"
+    putl 14 cpu "$row"
+    cell sort Melem/s sort sort; row=$C
+    cell sgemm GFLOP/s sgemm sgemm; row+="   $C"
+    cell syscall_getppid ns syscall syscall; row+="   $C"
+    cell pipe_pingpong_roundtrip us pingpong pingpong; row+="   $C (both ends on the one CPU)"
+    putl 15 "" "$row"
+    cell stream_copy "" copy stream; row=$C
+    cell stream_scale "" scale stream; row+=" · $C"
+    cell stream_add "" add stream; row+=" · $C"
+    cell stream_triad "" triad stream; row+=" · $C GB/s (median of 4, 3 × 128 MiB arrays)"
+    putl 16 stream "$row"
+    cell lat_16 "" "16 KiB" latency; row=$C
+    cell lat_4096 "" "4 MiB" latency; row+=" · $C"
+    cell lat_32768 "" "32 MiB" latency; row+=" · $C"
+    cell lat_131072 "" "128 MiB" latency; row+=" · $C ns (random pointer chase, 128-byte lines)"
+    putl 17 latency "$row"
+    cell anon_first_touch GB/s "first touch" fault
+    putl 18 fault "$C · 1 GiB mapped and touched, ${PAGE}-byte pages"
+
+    put 20 "kernel log  last $nlog lines (the console is quiet: the power-domain release ladder shows only here)" "$BOLD$BLUE"
+    local lines=() nk idx
+    [ -r "$KLOG" ] && mapfile -t lines < "$KLOG"
+    nk=${#lines[@]}
+    for (( i = 0; i < nlog; i++ )); do
+        idx=$(( nk - nlog + i ))
+        KL=
+        if (( idx >= 0 )); then klfmt "${lines[idx]}"; fi
+        put $(( 21 + i )) "$KL"
+    done
+}
+
+cleanup() {
+    printf '\e[?25h\e[0m\e[%d;1H\n' "$ROWS"
+    [ -n "$KPID" ] && kill "$KPID" 2> /dev/null
+    log "status screen exiting"
+}
+
+mkdir -p "$S" 2> /dev/null
+log "status screen started (pid $$)"
+KREL=$(uname -r) PAGE=$(getconf PAGESIZE) NCPU=$(nproc)
+DRIVER=$(basename "$(readlink -f /sys/class/drm/card0/device/driver 2> /dev/null)" 2> /dev/null)
+BUILT=$(sed -n 's/^built //p' "$INFO/build-info.txt" 2> /dev/null)
+HYPRV=$(awk '$1 == "hyprland" {print $2}' "$INFO/packages.txt" 2> /dev/null)
+MESAV=$(awk '$1 == "mesa" {print $2}' "$INFO/packages.txt" 2> /dev/null)
+HYPRV=${HYPRV%%-*} MESAV=${MESAV%%-*} MESAV=${MESAV#*:}
+BENCHBUILD=$(awk '/^compiler / {c = $2 " " $4} /^flags / {sub(/^flags /, ""); sub(/ -pthread.*/, ""); f = $0}
+                  END {if (c != "") print c " " f}' "$INFO/bench-build.txt" 2> /dev/null)
+HOST=$(cat /etc/hostname 2> /dev/null)
+RENDERER=$(grep -m1 -o 'llvmpipe[^"]*\|softpipe[^"]*' "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"/hypr/*/hyprland.log 2> /dev/null)
+MODE= SCALE=
+mon=$(hyprctl monitors 2> /dev/null)
+[[ $mon =~ ([0-9]+x[0-9]+)@([0-9]+) ]] && MODE="${BASH_REMATCH[1]}@${BASH_REMATCH[2]}"
+[[ $mon =~ scale:\ ([0-9]+)(\.[0-9]*[1-9])? ]] && SCALE="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+if pgrep -x start-hyprland > /dev/null 2>&1; then SUPER="under start-hyprland (its watchdog)"
+else SUPER="started directly, without start-hyprland"; fi
+READY= PBUSY= PTOTAL= BENCH_STARTED= BENCH_DONE= KPID= RESIZED=1 TICKFD= TICKS=0 PERIOD=1
+[ -s "$S/desktop-ready" ] && read -r READY < "$S/desktop-ready"
+start_klog
+trap cleanup EXIT
+trap 'RESIZED=1' WINCH
+printf '\e[?25l\e[2J'
+if mkfifo "$S/tick.$$" 2> /dev/null && exec 3<> "$S/tick.$$"; then TICKFD=3; rm -f "$S/tick.$$"; fi
+while :; do
+    tick
+    if [ -n "$TICKFD" ]; then read -r -t "$PERIOD" -u 3 _ || :; else sleep "$PERIOD"; fi
+done

@@ -1,0 +1,66 @@
+#!/bin/bash
+# ilinux-bench: one bounded, single-thread run of the repository's portable C benchmarks
+# (benchmarks/src/cpubench.c and membench.c, built into this image by VM job 039 as
+# /usr/local/bin/cpubench and membench; compiler and flags are in
+# /usr/share/ilinux/bench-build.txt). ilinux-status starts it once, detached, after the desktop
+# is ready, and shows the results as they arrive. It writes to /run/ilinux/bench:
+#   started        this process's PID; a second start finds it and exits (one run per boot)
+#   status         one line for the screen: "running NAME (i/n) ..." then "done in N s ..."
+#   results.jsonl  every JSON line the benchmarks print (the repository's result format)
+#   steps.txt      one line per step: name, exit status, seconds
+#   errors.txt     the benchmarks' stderr
+#   env.txt        kernel, CPU count, page size, command line, the build record
+#   done           written last: the total time in seconds
+# Every step runs under timeout; one that fails or hangs is recorded and the next one runs, so
+# nothing waits on it. Order: the short CPU kernels first, the pointer chase (the longest) last.
+# Budget: about 75 s natively (-s 0.5 per rep; the chase over 20 sizes dominates); several
+# minutes under QEMU TCG. Memory: 3 x 128 MiB STREAM arrays, a 128 MiB chase buffer, a 1 GiB
+# first-touch mapping, one at a time.
+export LC_ALL=C.UTF-8
+B=/run/ilinux/bench
+CPU=/usr/local/bin/cpubench
+MEM=/usr/local/bin/membench
+up() { local u rest; read -r u rest < /proc/uptime; echo "${u%.*}"; }   # whole seconds since kernel start
+
+mkdir -p "$B" || exit 1
+cd "$B" || exit 1
+( set -o noclobber; echo $$ > started ) 2>/dev/null || exit 0
+STEPS=(
+    "cpubench freq|60|$CPU freq -r 3 -s 0.5"
+    "cpubench fma|60|$CPU fma -r 3 -s 0.5"
+    "cpubench fma_asm|60|$CPU fma_asm -r 3 -s 0.5"
+    "cpubench intmix|60|$CPU intmix -r 3 -s 0.5"
+    "cpubench sort|60|$CPU sort -r 3 -s 0.5"
+    "cpubench sgemm|60|$CPU sgemm -r 3 -s 0.5"
+    "cpubench syscall|120|$CPU syscall -r 3"
+    "cpubench pingpong|120|$CPU pingpong -r 3 -n 20000"
+    "membench stream|240|$MEM stream -m 128 -r 5"
+    "membench fault|120|$MEM fault -m 1024 -r 3"
+    "membench latency|600|$MEM latency -m 128"
+)
+t_start=$(up)
+{ echo "started $t_start s after kernel start"
+  uname -a
+  echo "nproc $(nproc), page size $(getconf PAGESIZE) bytes"
+  echo "cmdline $(cat /proc/cmdline)"
+  grep -m1 -E '^CPU implementer' /proc/cpuinfo
+  grep -m1 -E '^CPU part' /proc/cpuinfo
+  cat /usr/share/ilinux/bench-build.txt 2>/dev/null; } > env.txt 2>&1
+echo "ilinux-bench: ${#STEPS[@]} steps, started $t_start s after kernel start"
+n=${#STEPS[@]} i=0 failed=0
+for step in "${STEPS[@]}"; do
+    IFS='|' read -r name limit cmd <<< "$step"
+    i=$((i + 1))
+    echo "running $name ($i/$n) · $(( $(up) - t_start )) s so far" > status.tmp && mv -f status.tmp status
+    t0=$(up)
+    # $cmd unquoted on purpose: the program and its arguments.
+    timeout --kill-after=5 "$limit" $cmd >> results.jsonl 2>> errors.txt
+    rc=$?
+    [ "$rc" = 0 ] || failed=$((failed + 1))
+    echo "$name exit $rc after $(( $(up) - t0 )) s" | tee -a steps.txt
+done
+total=$(( $(up) - t_start ))
+echo "done in $total s · $((n - failed)) of $n steps OK" > status.tmp && mv -f status.tmp status
+echo "$total" > done
+echo "ilinux-bench: done in $total s, $failed of $n steps failed; results:"
+cat results.jsonl

@@ -4,15 +4,18 @@
 #     pacman's signature checks against a keyring populated from the VM's
 #     archlinuxarm-keyring (omarchy-arm64/ram-root/packages.txt).
 #  2. Add Omarchy's configuration (pinned upstream commit, Tokyo Night rendered by Omarchy's
-#     own template script), the RAM-root layer (omarchy-arm64/ram-root) and the kernel
-#     modules for the USB network link; prune; check every ELF for 16 KiB pages; pack a
-#     zstd-compressed cpio (out/ramroot.cpio.zst).
+#     own template script), the RAM-root layer (omarchy-arm64/ram-root), the kernel modules
+#     for the USB network link and the repository's portable C benchmarks (built here, run by
+#     the status screen); prune; check every ELF for 16 KiB pages; pack a zstd-compressed cpio
+#     (out/ramroot.cpio.zst).
 #  3. Boot it with the exact native boot035 Image in a one-vCPU QEMU guest (TCG; see below),
 #     the way m1n1 boots the M5: direct kernel entry with a device tree whose
 #     /chosen/framebuffer is a simple-framebuffer (3456x2234 x2r10g10b10, the 16-inch panel)
 #     in reserved RAM, which simpledrm drives. No firmware, no virtio-gpu. Wait for the
-#     desktop, read the framebuffer out of guest RAM, collect the journal and measurements
-#     over SSH on usb0 (QEMU usb-net).
+#     desktop, read the framebuffer out of guest RAM twice (the status screen's counter must
+#     advance), wait for the status screen's benchmark run, read it again, then collect the
+#     journal and measurements over SSH on usb0 (QEMU usb-net). The run fails without the
+#     desktop, the wallpaper, a session under start-hyprland or the benchmark results.
 # Host side: host-run.sh in this directory (vm lock, read-only Omarchy share).
 # Optional out/job.env: FAST=1 (one quick zstd level, no level comparison), TEST=0 (no boot),
 # DEBUG=1 (boot without quiet, journal on the console, framebuffer and vCPU PC every 30 s),
@@ -212,7 +215,8 @@ git -c safe.directory='*' -C /mnt/omarchy archive --format=tar "$OMARCHY_COMMIT"
 first_bg=$(ls "$OM/themes/tokyo-night/backgrounds" | sort | awk 'NR == 1')
 find "$OM/themes/tokyo-night/backgrounds" -type f ! -name "$first_bg" -delete
 chroot "$R" getent group seat > /dev/null || chroot "$R" groupadd -r seat
-chroot "$R" useradd -m -u 1000 -U -G seat,video,input -s /bin/bash omarchy
+# systemd-journal: the status screen follows the kernel log with journalctl -k as this user.
+chroot "$R" useradd -m -u 1000 -U -G seat,video,input,systemd-journal -s /bin/bash omarchy
 chroot "$R" passwd -l root > /dev/null
 H=$R/home/omarchy
 mkdir -p "$H/.config" "$H/.cache"   # Hyprland's crash reporter writes to ~/.cache/hyprland
@@ -273,6 +277,42 @@ mkdir -p "$R/usr/share/ilinux"
 cp "$OUT/packages.txt" "$R/usr/share/ilinux/packages.txt"
 printf 'built %s\nomarchy %s\nkernel %s (sha256 %s)\n' "$(date -u +%FT%TZ)" \
     "$OMARCHY_COMMIT" "$KREL" "$IMAGE_SHA" > "$R/usr/share/ilinux/build-info.txt"
+
+# The repository's portable C benchmarks, built here for the image (the image has no compiler):
+# single-thread cpubench and membench, which ilinux-bench runs once at the desktop and the
+# status screen prints. -march=armv8.4-a is a fixed target that both the M5 and QEMU's "max"
+# CPU (sve=off, sme=off, pauth=off in the boot test) run; no SME kernel is compiled in. Static
+# when the VM's glibc provides libc.a, else dynamic against the image's libraries; either way
+# both binaries are run once inside the image root with a tiny, bounded workload.
+log "benchmarks"
+BB=$T/bench
+rm -rf "$BB"
+mkdir -p "$BB"
+cp /mnt/ilinux/benchmarks/src/cpubench.c /mnt/ilinux/benchmarks/src/membench.c "$BB/"
+BFLAGS="-O3 -march=armv8.4-a -pthread"
+: > "$OUT/build/bench-build.log"
+blink=static
+for b in cpubench membench; do
+    if ! gcc $BFLAGS -static -o "$BB/$b" "$BB/$b.c" >> "$OUT/build/bench-build.log" 2>&1; then
+        blink=dynamic
+        gcc $BFLAGS -o "$BB/$b" "$BB/$b.c" >> "$OUT/build/bench-build.log" 2>&1 ||
+            { tail -20 "$OUT/build/bench-build.log"; exit 1; }
+    fi
+    install -m 0755 "$BB/$b" "$R/usr/local/bin/$b"
+done
+{ echo "compiler $(gcc --version | head -1)"
+  echo "flags $BFLAGS ($blink)"
+  echo "sources benchmarks/src at ilinux $(git -c safe.directory='*' -C /mnt/ilinux rev-parse --short HEAD 2>/dev/null || echo unknown)"
+  (cd /mnt/ilinux/benchmarks/src && sha256sum cpubench.c membench.c)
+  file "$BB/cpubench" "$BB/membench" 2>/dev/null | sed "s|$BB/||" || true; } > "$R/usr/share/ilinux/bench-build.txt"
+cp "$R/usr/share/ilinux/bench-build.txt" "$OUT/build/bench-build.txt"
+{ timeout 120 chroot "$R" /usr/local/bin/cpubench freq -r 1 -s 0.05
+  timeout 120 chroot "$R" /usr/local/bin/membench fault -m 16 -r 3; } > "$OUT/build/bench-smoke.txt" 2>&1 ||
+    { echo "benchmark smoke test failed:"; cat "$OUT/build/bench-smoke.txt"; exit 1; }
+for key in '"kernel":"freq"' '"test":"anon_first_touch"'; do
+    grep -q "$key" "$OUT/build/bench-smoke.txt" || { echo "benchmark smoke test printed no $key:"; cat "$OUT/build/bench-smoke.txt"; exit 1; }
+done
+cat "$OUT/build/bench-build.txt" "$OUT/build/bench-smoke.txt"
 
 log "prune"
 chroot_down "$R"
@@ -480,7 +520,7 @@ fbshot() {  # fbshot NAME: the simple-framebuffer bytes in guest RAM, i.e. what 
     python3 -I "$J/fb2png.py" "$X/fb.raw" $FB_W $FB_H $FB_STRIDE $FB_FMT "$OUT/test/$1.png" "${2:-1}" ||
         echo "fbshot $1 failed" >&2
 }
-ready= seen= shot=0
+ready= seen= shot=0 memdone=
 SECONDS=0
 while [ "$SECONDS" -lt "$TIMEOUT" ] && kill -0 "$QPID" 2>/dev/null; do
     every=120; [ "$DEBUG" = 1 ] && every=30
@@ -492,11 +532,21 @@ while [ "$SECONDS" -lt "$TIMEOUT" ] && kill -0 "$QPID" 2>/dev/null; do
         fi
     fi
     cp "$X/console.log" "$OUT/test/console.log" 2>/dev/null || true   # visible on the host
-    if grep -q 'ILINUX-MEMINFO-END' "$X/console.log" 2>/dev/null; then ready=1; break; fi
+    if grep -q 'ILINUX-BENCH-END' "$X/console.log" 2>/dev/null; then
+        ready=1
+        echo "wall_s_qemu_start_to_bench_end_marker $(calc "$(date +%s.%N) - $t0")" >> "$OUT/test/wall.txt"
+        break
+    fi
     if grep -q 'ILINUX-DEBUG-END' "$X/console.log" 2>/dev/null; then break; fi
+    if [ -z "$memdone" ] && grep -q 'ILINUX-MEMINFO-END' "$X/console.log" 2>/dev/null; then ready=1; memdone=$SECONDS; fi
+    # The guest waits up to 900 s for the benchmark itself; this is the harness's own bound.
+    if [ -n "$memdone" ] && [ $((SECONDS - memdone)) -gt 1000 ]; then break; fi
     if [ -z "$seen" ] && grep -q 'ILINUX-DESKTOP-READY' "$X/console.log" 2>/dev/null; then
         seen=1
         echo "wall_s_qemu_start_to_ready_marker $(calc "$(date +%s.%N) - $t0")" > "$OUT/test/wall.txt"
+        # Two half-size frames 30 s apart: the status screen's counter must differ between them
+        # (under TCG the compositor's llvmpipe frames lag the screen by up to about 20 s).
+        fbshot ready-1 2; sleep 30; fbshot ready-2 2
     fi
     sleep 0.5
 done
@@ -505,6 +555,9 @@ gssh() {   # bounded, so a step that hangs in the guest cannot hold the vm lock 
         -o ConnectTimeout=20 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/work/known_hosts \
         root@127.0.0.1 "$@"
 }
+# Under TCG the compositor's frames lag the status screen by up to about 20 s (runs 31-32);
+# give it time to show the finished benchmark table before the final capture.
+[ -n "$ready" ] && sleep 30
 fbshot framebuffer
 python3 -I "$J/fb2png.py" "$X/fb.raw" $FB_W $FB_H $FB_STRIDE $FB_FMT "$OUT/test/framebuffer-half.png" 2 || true
 [ -n "$ready" ] && log "desktop ready" || log "NO desktop-ready marker (timeout ${TIMEOUT}s, diagnostics or QEMU exit)"
@@ -513,6 +566,10 @@ gssh journalctl -b -o short-monotonic --no-pager > "$OUT/test/journal.txt" 2>&1 
 gssh dmesg > "$OUT/test/dmesg.txt" 2>&1 || true
 gssh 'for d in /run/user/1000/hypr/*/; do echo "=== $d"; cat "$d/hyprland.log"; done' \
     > "$OUT/test/hyprland.log" 2>&1 || true
+gssh cat /run/ilinux/bench/results.jsonl > "$OUT/test/bench-results.jsonl" 2>/dev/null || true
+gssh 'cat /run/ilinux/bench/env.txt /run/ilinux/bench/steps.txt /run/ilinux/bench/status; echo; echo "--- errors"; cat /run/ilinux/bench/errors.txt' \
+    > "$OUT/test/bench-run.txt" 2>&1 || true
+gssh 'cat /run/ilinux/status.log; echo "--- kernel log follower"; cat /run/ilinux/kmsg.txt' > "$OUT/test/status-screen.txt" 2>&1 || true
 gssh 'd=$(cd /run/user/1000 && ls -d wayland-[0-9]* | grep -v lock | head -1);
       setpriv --reuid=1000 --regid=1000 --init-groups env XDG_RUNTIME_DIR=/run/user/1000 \
       WAYLAND_DISPLAY=$d grim /tmp/grim.png && cat /tmp/grim.png' > "$OUT/test/grim.png" 2>/dev/null || true
@@ -532,4 +589,29 @@ if grep -q 'Failed to load background image' "$OUT/test/journal.txt"; then
     echo "FAIL: desktop reached, but swaybg could not load the wallpaper (glycin/bubblewrap)"
     exit 1
 fi
-echo "PASS: RAM root reached the Hyprland desktop with its wallpaper (1 vCPU, ${ACCEL%%,*}, simpledrm ${FB_W}x${FB_H})"
+# Attempt 19 showed Hyprland's "started without start-hyprland" notice for 15 s: the session
+# must run under the supervisor, and the status screen's benchmark run must have finished.
+if grep -q -i 'without start-hyprland' "$OUT/test/journal.txt" "$OUT/test/hyprland.log"; then
+    echo "FAIL: Hyprland was started without start-hyprland"
+    exit 1
+fi
+if grep -q 'ILINUX-BENCH-TIMEOUT' "$OUT/test/console.log" || ! grep -q 'ILINUX-BENCH-END' "$OUT/test/console.log"; then
+    echo "FAIL: the status screen's benchmark run did not finish within the wait"
+    exit 1
+fi
+for key in '"kernel":"fma_asm"' '"kernel":"syscall_getppid"' '"test":"stream_copy"' '"test":"latency_random_chase"' '"test":"anon_first_touch"'; do
+    grep -q "$key" "$OUT/test/bench-results.jsonl" || { echo "FAIL: no benchmark result for $key"; exit 1; }
+done
+# The status screen logs "tick N at T s" once a minute: its loop must have kept going at
+# roughly its period (1 s at the desktop, 2 s before it) from its first tick to its last.
+read -r t1 n1 tn nn < <(awk '/^\[[0-9.]+\] tick [0-9]+ at [0-9.]+ s$/ {if (!f) {f = 1; t1 = $5; n1 = $3} tn = $5; nn = $3}
+                             END {print t1 + 0, n1 + 0, tn + 0, nn + 0}' "$OUT/test/status-screen.txt")
+if [ "${nn:-0}" -lt 2 ] || ! awk -v t1="$t1" -v n1="$n1" -v tn="$tn" -v nn="$nn" \
+        'BEGIN {exit !(tn - t1 > 0 && (nn - n1) / (tn - t1) >= 0.4)}'; then
+    echo "FAIL: the status screen's loop stopped or ran far below its period (ticks $n1..$nn over ${t1}-${tn} s)"
+    exit 1
+fi
+cmp -s "$OUT/test/ready-1.png" "$OUT/test/ready-2.png" && echo "note: the two counter frames 30 s apart are identical (compositor lag under TCG?)"
+steps=$(grep -c ' exit ' "$OUT/test/bench-run.txt" 2>/dev/null || echo 0)
+failed=$(grep -c ' exit [1-9]' "$OUT/test/bench-run.txt" 2>/dev/null || echo 0)
+echo "PASS: RAM root reached the Hyprland desktop with its wallpaper under start-hyprland; the status screen ticked $nn times in $(awk -v a="$t1" -v b="$tn" 'BEGIN {printf "%.0f", b - a}') s and ran $steps benchmark steps, $failed failed (1 vCPU, ${ACCEL%%,*}, simpledrm ${FB_W}x${FB_H})"

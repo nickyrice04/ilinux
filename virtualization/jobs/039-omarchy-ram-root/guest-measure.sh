@@ -20,6 +20,26 @@ sec pagesize; getconf PAGESIZE
 sec nproc; nproc
 sec cmdline; cat /proc/cmdline
 sec desktop-ready; cat /run/ilinux/desktop-ready
+sec session-start  # Hyprland under start-hyprland, its watchdog (without it, a 15 s notice on screen)
+pgrep -a -x start-hyprland || echo "no start-hyprland process"
+for p in $(pidof Hyprland); do
+    pp=$(awk '/^PPid:/ {print $2}' /proc/$p/status)
+    echo "Hyprland pid $p, parent $pp ($(cat /proc/$pp/comm 2>/dev/null)), cmdline: $(tr '\0' ' ' < /proc/$p/cmdline)"
+done
+echo "warning lines in the journal: $(journalctl -b --no-pager -o cat | grep -c -i 'without start-hyprland')"
+sec bench-status  # ilinux-bench, started by the status screen once the desktop was ready
+cat /run/ilinux/bench/status 2>&1
+echo "--- steps"; cat /run/ilinux/bench/steps.txt 2>&1
+echo "--- done (total seconds): $(cat /run/ilinux/bench/done 2>&1)"
+sec bench-env; cat /run/ilinux/bench/env.txt 2>&1
+sec bench-results; cat /run/ilinux/bench/results.jsonl 2>&1
+sec bench-errors; cat /run/ilinux/bench/errors.txt 2>&1
+sec status-screen  # ilinux-status: its log, the kernel-log copy it shows, its processes
+cat /run/ilinux/status.log 2>&1
+echo "--- kernel log follower: $(wc -l < /run/ilinux/kmsg.txt 2>/dev/null) lines, last 12"
+tail -n 12 /run/ilinux/kmsg.txt 2>&1
+echo "--- processes"
+pgrep -a -f 'ilinux-status|ilinux-bench|journalctl -k|dmesg -w|foot' 2>&1
 sec systemd-analyze; systemd-analyze
 sec critical-chain; systemd-analyze critical-chain ilinux-desktop.service --no-pager
 sec blame; systemd-analyze blame --no-pager | head -40

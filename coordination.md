@@ -6,6 +6,41 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt 20: the boot035 RAM root with the live status screen (NOT RUN)
+
+* **Attempt 19 consumed:** the first native Omarchy desktop came up on the M5 and
+  stayed up. Its two RAM-root findings are fixed in a new image; the kernel,
+  DT, m1n1, launcher and profile are **unchanged** (boot035, `--profile ramroot`,
+  `launch.py` `4d55f0c9…`).
+* **The new image, VM job 039 run 33:** 182,420,823 bytes, SHA-256
+  `67f257327ce308531b0c338babb8b644928cae8148bb34467042cca13cbad3f7`, pinned in `native/boot/ramroot-manifest.json`
+  (`test_ramroot.py` 30 PASS; the committed launcher verifies boot035 + run 33
+  offline: `Package PASS`, `RAM root PASS`, upload 227,080,994 bytes).
+  Changes: (1) `ilinux-desktop.service` starts Hyprland through its own
+  `start-hyprland` supervisor, so the red "started without start-hyprland"
+  notice is gone (VM: 0 warning lines); (2) the status terminal is a live
+  screen (`ilinux-status`): seconds since kernel start in block digits,
+  CPU use, memory, the kernel-log tail (`quiet` hides the release ladder on the
+  console; it shows here) and the single-thread results of the repository's
+  `cpubench`/`membench`, built into the image with `gcc -O3 -march=armv8.4-a`
+  and run once by `ilinux-bench` after the desktop is ready: eleven bounded
+  steps under `timeout`, about 75 s natively; a failing step is reported and
+  skipped, nothing waits on it. The user is in `systemd-journal` for the log.
+* **VM (QEMU TCG, one vCPU, the boot035 Image):** desktop with wallpaper
+  82.7 s after kernel start, 0 failed units, no warning,
+  the counter advanced between two framebuffer captures 30 s apart, all eleven
+  benchmark steps finished at 224 s (emulated timings, not hardware
+  numbers). Report: `omarchy-arm64/ram-root-report-2026-10-16.md`.
+* **The image travels privately:** the human AirDrops run 33's
+  `ramroot.cpio.zst` to the M1 (`build/ramroot/`, ignored; replace run 30's
+  file). Never commit or publish it (SSH host key).
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 20):
+  offline intake, then one filmed boot with the recording started **before**
+  the launch command, the phone fixed, the whole screen in frame; stop at 10
+  minutes from the handoff or on a reset; report the counter, the benchmark
+  rows and the kernel-log lines read from the video. No parity claim from the
+  on-screen numbers (one CPU, gcc build, the desktop running beside them).
+
 ### Current M1 result — attempt 19 (Omarchy RAM root on boot035): the first native Omarchy desktop on the M5
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 44.441 s, handoff 2026-10-16T23:21:09Z; the
@@ -60,7 +95,7 @@ older plan disagree, this file wins for ownership and order of work.
 * **State.** Attempt 19: live **NOT RUN**. Needs the human's fresh M1 restart, cable re-seat, whole-screen
   filming, the M5 at Running proxy, then the go. The fixed E1 probe is still NOT RUN.
 
-### Current M5 handoff — attempt 19: the Omarchy RAM root on boot035 (NOT RUN)
+### Consumed M5 handoff — attempt 19: the Omarchy RAM root on boot035 (ran 2026-10-16; see the M1 result above)
 
 * **Attempt 18 consumed:** boot038's ACM + ECM gadget was enumerated and
   configured, then its control endpoint stopped answering (interrupt-IN

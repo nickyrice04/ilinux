@@ -1,8 +1,17 @@
 #!/bin/bash
 # VM test only: tell the harness (which reads the console log, so nothing logs in while the
-# guest boots) when the desktop is ready, then report memory once it has settled for 20 s.
+# guest boots) when the desktop is ready, then report memory once it has settled for 20 s,
+# then wait (bounded) for the status screen's benchmark run, so the final framebuffer
+# capture shows its numbers. TCG is 4-7x slower than the build VM, so the run that takes
+# about 75 s natively may take several minutes here.
 echo "ILINUX-DESKTOP-READY $(cat /run/ilinux/desktop-ready)"
 sleep 20
 echo "ILINUX-MEMINFO-BEGIN uptime $(cut -d' ' -f1 /proc/uptime)"
 cat /proc/meminfo
 echo "ILINUX-MEMINFO-END"
+for _ in $(seq 450); do [ -e /run/ilinux/bench/done ] && break; sleep 2; done
+echo "ILINUX-BENCH-BEGIN uptime $(cut -d' ' -f1 /proc/uptime)"
+cat /run/ilinux/bench/status 2>&1
+cat /run/ilinux/bench/steps.txt 2>&1
+[ -e /run/ilinux/bench/done ] || echo "ILINUX-BENCH-TIMEOUT"
+echo "ILINUX-BENCH-END"

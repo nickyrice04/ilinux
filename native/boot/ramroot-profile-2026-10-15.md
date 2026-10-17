@@ -35,9 +35,10 @@ The launcher refuses:
    arm the genpd release ladder whenever `pd_ignore_unused` is set, so it also
    runs in a RAM-root boot. `quiet` hides its lines, so a reset or a dark panel
    under this profile cannot be attributed; use Stage-B for that.
-2. **A RAM root built for the package's Image.** The record pins job 039 run 30
-   (182,092,876 bytes, `58bdc6ce…`, built for the boot035 Image `1131a1af…`; the
-   image and its digest are kept in `out/runs/run30/`). The handoff manifest is
+2. **A RAM root built for the package's Image.** The record pins job 039 run 33
+   (182,420,823 bytes, `67f25732…`, built for the boot035 Image `1131a1af…`; the
+   image and its digest are kept in `out/runs/run33/`; attempt 19 ran run 30,
+   182,092,876 bytes, `58bdc6ce…`, kept in `out/runs/run30/`). The handoff manifest is
    now boot038's (Image `e0e53113…`), so the launcher refuses this pairing:
    `package Image differs from the Image the RAM root was built for` (Confirmed
    offline, 2026-10-16). Attempt 19, a RAM root on boot038's kernel and DT, needs

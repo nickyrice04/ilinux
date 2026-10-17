@@ -1631,3 +1631,20 @@ RAM-root image and the second Mac's private key never enter Git, and the
 project's framing is fixed in the README: unaffiliated with Apple, Asahi Linux
 and Omarchy; AI-assisted; a work in progress whose goal is parity with native
 macOS on this machine, with no performance claim until it is measured.
+
+## 2026-10-16 · Decompile freely, publish only original work
+
+The user's position: decompiling this Mac's macOS drivers with REA is a major
+accelerator and should continue, while the published code needs to contain no
+decompiled code, only what works. This is the clean-room split the project was
+already following: REA output stays in the ignored `build/` tree; findings in
+Git are specifications (addresses, sequences, formats, timings, each with its
+evidence and confidence); Linux drivers are original code written from them,
+ideally by a session that does not open the decompiler. The split matters more
+now that the repository and its Releases are public: a compiled kernel image is
+distribution, and a driver derived from Apple's code could neither meet the
+kernel's GPL nor ever be shared. A driver written from a specification can be
+published later. Recorded in `AGENTS.md` (Conventions) so every session
+follows it. Not legal advice; Apple's licence terms, which restrict reverse
+engineering except where the law permits, are a contract question separate from
+copyright.

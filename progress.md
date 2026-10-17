@@ -5,6 +5,33 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M5: attempt 20 prepared — the boot035 RAM root with a live status screen (NOT RUN)
+
+* **Decided:** attempt 19's two RAM-root findings are fixed in a new image and
+  nothing else changes: the boot035 package, the launcher and its RAM-root
+  profile stay as in attempt 19, so the next filmed boot carries numbers.
+* **Implemented (`omarchy-arm64/ram-root/`, job 039):** the session runs under
+  Hyprland's `start-hyprland` supervisor; `ilinux-status` is a live screen
+  (block-digit counter since kernel start, CPU use, memory, kernel-log tail,
+  benchmark rows); `ilinux-bench` runs the repository's `cpubench` and
+  `membench`, built into the image by the job (`gcc -O3 -march=armv8.4-a`,
+  static, smoke-tested in the image root), once after the desktop is ready,
+  eleven steps under `timeout`; the job's boot test now also fails on the
+  start-hyprland warning or missing benchmark results, and captures the screen
+  twice 30 s apart. The pin in `native/boot/ramroot-manifest.json` is run 33
+  (182,420,823 bytes, `67f25732…`).
+* **Tested (VM, QEMU TCG, one vCPU, boot035 Image):** desktop with wallpaper
+  82.7 s after kernel start, 0 failed units, 0 warning
+  lines, counter advancing, 11/11 benchmark steps done at 224 s
+  (emulated timings). Offline: the committed launcher verifies boot035 + run 33
+  (`Package PASS`, `RAM root PASS`); `test_ramroot.py` 30 PASS.
+* **Not verified:** everything native (the native benchmark values, the
+  ladder lines on screen, 10-minute stability).
+* **Next:** the human AirDrops the image to the M1; M1 readiness; one filmed
+  10-minute attempt 20 with the recording started before the launch. Report:
+  `omarchy-arm64/ram-root-report-2026-10-16.md`; checklist:
+  `tools/m1n1-client/stage-b-instructions.md`.
+
 ## 2026-10-16 · Repository public after the first native desktop
 
 * **Decided:** with attempt 19's desktop on record, the user asked for the
