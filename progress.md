@@ -5,6 +5,50 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M5: boot039 published, attempt 21 handed off — a bulk-only USB log port with the dwc3 state on screen (NOT RUN)
+
+* **Decided:** attempt 21 goes back to the USB link and asks attempt 18's question with
+  one variable. boot038's device timed out on EP0 right after macOS set the
+  configuration, and both of its functions (ACM, ECM) add an interrupt-IN endpoint.
+  boot039 has none.
+* **Implemented (`kernel/experiments/usb-gadget/`, job 041; `713989c`):**
+  * `/init` sets up one generic serial function `gser` per controller (vendor class
+    `0xff`, bulk IN + bulk OUT), which carries the kernel log, written only by the M5
+    on a raw port; `bcdDevice 0x0139`; no network function;
+  * debugfs is mounted, and every heartbeat's `[ctl]` line reads each dwc3 core's link
+    state, SOF frame, pending events, interrupt count, last EP0 OUT/IN commands and
+    endpoint TRB rings. Only files whose reads write no register are used, in a child
+    process. A one-time line per core gives the TX FIFO sizes;
+  * `make-package.py` boot039 allows only `/init` and its source to differ from
+    boot036, checks the init sets up `gser` and no CDC function, and now pins every
+    control-channel package's `diag-init.c` by SHA-256;
+  * `tools/m1n1-client/bulk-log-reader-brief.md` specifies the M1's read-only IOUSBHost
+    reader.
+* **Discovered:**
+  * configfs accepts only BCD for `bcdDevice`: `0x003a` was refused and the gadget kept
+    the kernel default `0x0701` (the VM self-test caught it);
+  * this tree's dwc3 debugfs has no `ep0state` file, and its FIFO/queue files,
+    `GDBGEPINFO` and `lsp_dump` write a debug select register when read.
+* **Tested (VM and offline):**
+  * job 041 PASS (kernel facts against the exact tree; the status line on fixture
+    trees, plain and ASan+UBSan; no build warnings);
+  * generic-VM liveness PASS;
+  * the dummy_hcd self-test PASS (16 + 4 checks; 1,926 log lines over bulk IN, no
+    echo);
+  * packager tests 8 and all `native/boot` suites PASS (`test_mtp_input.py` 33 again);
+  * the committed launcher verifies boot039 (`Package PASS`).
+* **Published:** prerelease `native-j716c-boot039`: 18,915,359 bytes, SHA-256
+  `b85c8d45…7d51` (GitHub's asset digest and a fresh download match). The handoff
+  records point at boot039.
+* **Not verified:** everything native: what macOS binds, whether the device without
+  interrupt endpoints avoids attempt 18's timeouts, the dwc3 reads on the real cores,
+  the reader (not built yet).
+* **Next:** M1 readiness (intake, build and offline-test the reader with nothing
+  installed), then one filmed attempt 21: M1 freshly restarted, cable re-seated,
+  recording started before the launch, the reader started after the handoff. Report:
+  `native/boot/boot039-bulk-log-2026-10-16.md`; checklist:
+  `tools/m1n1-client/stage-b-instructions.md`.
+
 ## 2026-10-16 · M1: attempt 20 — a stable ten-minute Omarchy desktop with a live status screen and on-screen benchmarks
 
 * **Discovered:** the run-33 RAM root on boot035 starts Hyprland through `start-hyprland` with no warning, shows its status

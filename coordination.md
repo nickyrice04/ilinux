@@ -6,6 +6,49 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt 21 / boot039: a bulk-only USB log port with the dwc3 state on screen (NOT RUN)
+
+* **Attempt 20 consumed:** the run-33 RAM root ran ten stable minutes with its
+  benchmarks on screen (the M1 result below). Attempt 21 goes back to the USB link
+  with the diagnostic Stage-B initramfs (the launcher's default `stage-b` profile)
+  and asks attempt 18's question with one variable.
+* **boot039 = boot036 with only `/init` changed**
+  (`native/boot/boot039-bulk-log-2026-10-16.md`):
+  * one `gser` function per controller (vendor class `0xff`, bulk IN + bulk OUT, **no
+    interrupt endpoint**, no class requests), which carries the kernel log, written
+    only by the M5 on a raw port;
+  * `bcdDevice 0x0139` (configfs accepts only BCD);
+  * no network function (dropbear on loopback only);
+  * debugfs is mounted, and every `[ctl]` line carries each dwc3 core's link, SOF
+    frame, pending events, interrupt count, EP0 OUT/IN commands and endpoint TRB
+    rings, plus a one-time line per core with its TX FIFO sizes (for the FIFO
+    alternative).
+* **Release `native-j716c-boot039`** (prerelease, public, tag on `713989c`): archive
+  18,915,359 bytes, SHA-256 `b85c8d45552f21de475e46009599a06b3d723b44e66cbc0087ff5fdf00b57d51`,
+  equal to GitHub's asset digest and to a fresh download; SHA256SUMS digest
+  `883464897e2e…4df5`. Image `e0e53113…` and Stage-B DT `a676087b…` are boot036's;
+  the initramfs `19e5e366…` differs from boot036's in `/init` only. The handoff
+  records in `native/boot/` now point at boot039.
+* **Offline:**
+  * VM job 041 PASS: kernel facts checked against the exact tree, and the status line
+    on fixture trees, plain and under ASan+UBSan;
+  * generic-VM liveness and the dummy_hcd self-test PASS (one vendor interface, two
+    bulk endpoints, no interrupt endpoint; 1,926 kernel-log lines over bulk IN; no
+    echo);
+  * packager tests (8) and all `native/boot` suites PASS;
+  * the committed launcher `4d55f0c9…` verifies boot039 (`Package PASS`); the six
+    controller digests are unchanged.
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 21):
+  * offline intake;
+  * build and offline-test the read-only bulk-log reader
+    (`tools/m1n1-client/bulk-log-reader-brief.md`; IOUSBHost, the interface and its
+    bulk-IN pipe only, never a write) with only what macOS provides, installing
+    nothing;
+  * then one filmed boot: M1 freshly restarted, cable re-seated, recording started
+    before the launch, the reader started right after the handoff, the host USB log
+    captured as in attempt 18. Stop at 10 minutes from the handoff or on a reset or
+    panic. The checklist's table says what each outcome means.
+
 ### Current M1 result — attempt 20 (boot035 RAM root, run 33): a stable ten-minute desktop with on-screen benchmarks
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 44.553 s, handoff 2026-10-17T01:50:36Z; the 227,080,994-byte
@@ -61,7 +104,7 @@ older plan disagree, this file wins for ownership and order of work.
   **before** the launch command (phone fixed, whole screen, about 10 minutes), the M5 at Running proxy, then the go.
   The fixed E1 probe is still NOT RUN.
 
-### Current M5 handoff — attempt 20: the boot035 RAM root with the live status screen (NOT RUN)
+### Consumed M5 handoff — attempt 20: the boot035 RAM root with the live status screen (ran 2026-10-16; see the M1 result above)
 
 * **Attempt 19 consumed:** the first native Omarchy desktop came up on the M5 and
   stayed up. Its two RAM-root findings are fixed in a new image; the kernel,

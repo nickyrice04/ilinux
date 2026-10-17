@@ -211,16 +211,20 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Latest M5 handoff: **attempt 20, the boot035 RAM root with a live status screen
-(NOT RUN)**. Attempt 19 reached the first native Omarchy desktop; its two
-RAM-root findings are fixed in a new image (VM job 039 run 33): the session
-starts through `start-hyprland` with no warning, and the status terminal is a
-live screen with a kernel-start counter, the kernel-log tail and one-CPU
-`cpubench`/`membench` results. The boot035 package, launcher and RAM-root
-profile are unchanged; the image (182,420,823 bytes) reaches the M1 privately
-(AirDrop) and is pinned in `native/boot/ramroot-manifest.json`. VM-verified;
-offline launcher check and all suites PASS. The USB link continues separately
-(boot039, bulk-only). See `tools/m1n1-client/stage-b-instructions.md`.
+Latest M5 handoff: **attempt 21, boot039: a bulk-only USB log port with the
+dwc3 state on screen (NOT RUN)**. Attempt 18's ACM + ECM device timed out on
+EP0 right after macOS set the configuration; both functions add an interrupt-IN
+endpoint. boot039 changes only `/init`: one generic serial function `gser` per
+controller (vendor class, bulk IN + bulk OUT, no interrupt endpoint) carries the
+kernel log, written only by the M5, which the M1 reads with its own read-only
+IOUSBHost tool (`tools/m1n1-client/bulk-log-reader-brief.md`). `bcdDevice
+0x0139`; no network. Every heartbeat's `[ctl]` line shows each dwc3 core's link,
+events, interrupts, EP0 commands and endpoint rings, read from debugfs without
+register writes. Image, config, DTs and m1n1 are boot036's (packager-enforced).
+Prerelease `native-j716c-boot039` (`b85c8d45…7d51`, GitHub's digest verified);
+VM job 041, liveness, the dummy_hcd self-test (1,926 log lines over bulk IN) and
+offline launcher check PASS. See `native/boot/boot039-bulk-log-2026-10-16.md`
+and `tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder
