@@ -5,6 +5,20 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-16 · M1: attempt 20 (boot035 RAM root, run 33) offline readiness PASS (live NOT RUN)
+
+* **Discovered:** the run-33 image again arrived untracked and not ignored in the repository root and was moved into
+  the ignored `build/ramroot/` before any commit (run 30 kept beside it); it matches the manifest by size and SHA-256.
+  Its content could not be inspected (no zstd tool; nothing installed), so the overlay source in Git was reviewed
+  instead: the benchmark and status scripts write only to tmpfs, run under `timeout` and use no network or disk.
+* **Tested:** boot035 re-verified against the Git pin (manifest `7635c5e4…`, 13 files); the offline RAM-root launcher
+  run (`RAM root PASS`, upload 227,080,994 bytes, 45.4-56.8 s, deadline 300 s); 132 cases PASS (102 reviewed + 30
+  RAM-root); six controller digests unchanged; the attempt-20 wrapper dry-run offline against a scratch record.
+* **Not verified:** everything native: the new session and status screen on hardware, the on-screen benchmark values,
+  stability over the ten-minute run, the RAM-root content.
+* **Next:** the human restarts the M1, re-seats the cable, starts the recording before the launch and puts the M5 at
+  Running proxy; one attempt 20; film until 10 minutes from the handoff or a reset.
+
 ## 2026-10-16 · M5: attempt 20 prepared — the boot035 RAM root with a live status screen (NOT RUN)
 
 * **Decided:** attempt 19's two RAM-root findings are fixed in a new image and

@@ -6,6 +6,32 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 20 (boot035 RAM root, run 33) offline PASS; live NOT RUN, 2026-10-16
+
+* **Intake (M5 handoff `3f7b24d`).** The boot035 package was re-verified, not re-downloaded: archive 16,723,179 bytes,
+  SHA-256 `81cbbd1c…`, checked against the Git pin; the `verify-package` receipt (manifest digest `7635c5e4…`, 13
+  files) PASS; client pin clean `57a9339`.
+* **RAM root (run 33).** `ramroot.cpio.zst` arrived by AirDrop into the repository root again (untracked, **not
+  ignored**; the checklist's `~/Downloads` path was not used) and the M1 moved it into the ignored `build/ramroot/`
+  before any commit, keeping run 30 beside it. Size 182,420,823 and SHA-256 `67f25732…d3f7` equal
+  `ramroot-manifest.json`. **The image content was not decompressed or inspected** (no zstd tool, nothing installed):
+  it is pinned by size, digest and the launcher's zstd frame check. The overlay **source** in Git was read instead:
+  `ilinux-bench` writes only under `/run/ilinux/bench` and runs the benchmark steps under `timeout` (largest
+  allocations 3 × 128 MiB, a 128 MiB chase buffer and a 1 GiB first-touch mapping, one at a time); `ilinux-status`
+  reads `/proc` and the kernel journal and writes only under `/run/ilinux`; `ilinux-desktop.service` starts
+  `start-hyprland` as the unprivileged user with `Restart=on-failure`, `RestartSec=3` and no start-limit change, so a
+  persistent crash would restart every 3 s. No network, disk, mount or reboot commands.
+* **Offline launcher, `--profile ramroot`:** `Package PASS`, `RAM root PASS` (run 33), `Operator key: none`, the fixed
+  arguments, `m1n1 must append: idle=nop arm64.nowfxt`, upload estimate 227,080,994 bytes (45.4 s at 5 MB/s, 56.8 s
+  at 4 MB/s), deadline 300 s. The 102 reviewed cases plus the 30 RAM-root tests (132) PASS. Launcher `4d55f0c9…` and
+  the other five controller digests are unchanged.
+* **Tools (ignored, M1 local):** `run-attempt20.py` is the attempt-19 wrapper with only the record path and title
+  changed; an offline dry run against a scratch record captured every RAM-root line. Pre-flight and the read-only
+  USB gate are reused.
+* **State.** Attempt 20: live **NOT RUN**. Needs the human's fresh M1 restart, cable re-seat, a recording started
+  **before** the launch command (phone fixed, whole screen, about 10 minutes), the M5 at Running proxy, then the go.
+  The fixed E1 probe is still NOT RUN.
+
 ### Current M5 handoff — attempt 20: the boot035 RAM root with the live status screen (NOT RUN)
 
 * **Attempt 19 consumed:** the first native Omarchy desktop came up on the M5 and

@@ -138,6 +138,12 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 20 (boot035 RAM root run 33 with the live
+status screen, `--profile ramroot`) on handoff `3f7b24d`: boot035 re-verified against the Git pin, the run-33 image
+(182,420,823 bytes, `67f25732…d3f7`) matches the manifest by size and digest but its content was not inspected (no zstd
+tool; the overlay source in Git was reviewed instead), offline launcher run and 132 cases PASS, controller digests
+unchanged. Needs the human's fresh M1 restart, cable re-seat, a recording started before the launch, and the start.
+
 Latest M1 native result: **attempt 19 (Omarchy RAM root on boot035): the first native Omarchy desktop on the M5.**
 Hyprland on `simpledrm` with software rendering came up (wallpaper at video 6.9 s; the RAM root reports `desktop
 ready 7.79 s after kernel start`), with a live waybar and a terminal; 1 CPU, view-only, no USB by design. The human
