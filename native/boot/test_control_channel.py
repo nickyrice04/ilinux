@@ -1,4 +1,5 @@
-"""boot036 config and initramfs contract: the expected payload passes, deviations fail closed."""
+"""boot036 config and initramfs contract, boot039's bulk-only init: the expected payload passes,
+deviations fail closed."""
 import gzip
 from pathlib import Path
 import struct
@@ -11,6 +12,9 @@ import control_channel as cc  # noqa: E402
 
 KEY = b"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExampleExampleExampleExampleExampleExampl test\n"
 BOOT035_CONFIG = HERE.parents[1] / "build/native-boot035/verified/kernel.config"
+INIT_C = HERE.parents[1] / "kernel/experiments/usb-gadget/init.c"
+BOOT036 = HERE.parents[1] / "build/native-boot036/verified"
+BOOT039 = HERE.parents[1] / "build/native-boot039/verified"
 
 
 def static_elf():
@@ -95,6 +99,59 @@ class InitramfsTests(unittest.TestCase):
         for name, blob in cases.items():
             with self.subTest(case=name), self.assertRaises(ValueError):
                 cc.check_initramfs(blob, KEY)
+
+
+class BulkOnlyInitTests(unittest.TestCase):
+    """boot039: gser and nothing else, in the source and in the compiled /init."""
+    SOURCE = INIT_C.read_bytes()
+    BINARY = (b"\x7fELF ... /sys/kernel/config/usb_gadget/%s/functions/gser.GS0\0functions/gser.GS0\0"
+              b"0x0139\0bcdDevice\0/sys/kernel/config/usb_gadget/%s/functions/gser.GS0/port_num\0")
+
+    def test_current_init_passes(self):
+        cc.check_bulk_only_init(self.SOURCE, self.BINARY)
+
+    def test_deviations(self):
+        src, binary = self.SOURCE, self.BINARY
+        cases = {
+            "ACM in the source": (src.replace(b'#define FUNCTION "gser.GS0"', b'#define FUNCTION "acm.GS0"'), binary),
+            "ECM added to the source": (src + b'\ngadget_mkdir(g, "functions/ecm.usb");\n', binary),
+            "a second function": (src + b'\ngadget_mkdir(g, "functions/gser.GS1");\n', binary),
+            "boot038's bcdDevice": (src.replace(b'"0x0139"', b'"0x0038"'), binary),
+            "binary without gser": (src, binary.replace(b"gser.GS0", b"acm.GS0")),
+            "binary with EEM too": (src, binary + b"/sys/kernel/config/usb_gadget/%s/functions/eem.usb\0"),
+            "binary with NCM too": (src, binary + b"/functions/ncm.usb\0"),
+            "binary without bcdDevice": (src, binary.replace(b"0x0139", b"0x0039")),
+        }
+        for name, (source, init) in cases.items():
+            with self.subTest(case=name), self.assertRaises(ValueError):
+                cc.check_bulk_only_init(source, init)
+
+    def test_init_only_delta(self):
+        before = entries()
+        after = dict(before, init=(0o100755, static_elf() + b"boot039"))
+        cc.check_init_only_delta(newc(before), newc(after))
+        cases = {
+            "nothing changed": dict(before),
+            "dropbear changed too": dict(after, **{"usr/bin/dropbear": (0o100755, b"\x7fELF other")}),
+            "file added": dict(after, **{"etc/extra": (0o100644, b"x")}),
+            "mode changed": dict(after, **{"etc/passwd": (0o100600, before["etc/passwd"][1])}),
+        }
+        removed = dict(after)
+        removed.pop("usr/bin/ls")
+        cases["file removed"] = removed
+        for name, tree in cases.items():
+            with self.subTest(case=name), self.assertRaises(ValueError):
+                cc.check_init_only_delta(newc(before), newc(tree))
+
+    @unittest.skipUnless((BOOT039 / "initramfs-stage-b.cpio.gz").is_file() and
+                         (BOOT036 / "initramfs-stage-b.cpio.gz").is_file(), "boot036/boot039 not extracted in build/")
+    def test_real_boot039_package(self):
+        blob = (BOOT039 / "initramfs-stage-b.cpio.gz").read_bytes()
+        cc.check_bulk_only_init((BOOT039 / "diag-init.c").read_bytes(), cc.cpio_entries(blob)["init"][3])
+        cc.check_init_only_delta((BOOT036 / "initramfs-stage-b.cpio.gz").read_bytes(), blob)
+        with self.assertRaises(ValueError):   # boot036's own init is EEM
+            cc.check_bulk_only_init((BOOT036 / "diag-init.c").read_bytes(),
+                                    cc.cpio_entries((BOOT036 / "initramfs-stage-b.cpio.gz").read_bytes())["init"][3])
 
 
 class ConfigTests(unittest.TestCase):

@@ -1,4 +1,4 @@
-# USB control channel (boot036, revised as boot038)
+# USB control channel (boot036, revised as boot038 and boot039)
 
 Roadmap Phase 3, step 2: a network link into native Linux over the same USB
 cable the M1 uses for the m1n1 proxy, so the M1 can run commands, read logs and
@@ -12,7 +12,7 @@ attempt 16 (boot035) reports a stable baseline.**
 |---|---|---|
 | Kernel config | `USB_LIBCOMPOSITE` and `USB_CONFIGFS` from m to y; Kconfig turns the 12 gadget functions and helpers they select (EEM, NCM, ECM, u_ether, ...) from m to y. Nothing else. The Stage-B initramfs carries no modules. | `native/boot/control_channel.py` `check_config` |
 | Stage-B DT | One `snps,dwc3` node per usb-drd port, peripheral, high speed, four PHY-keepalive quirks, DMA through that port's second USB DART with stream 1. Those three DARTs enabled without `power-domains`. All 39 PMGR domains of ATC ports 0–2 disabled. | `native/boot/usb_dt.py` `check_delta` |
-| Initramfs | `/init` from `init.c` (static): everything the old diag-init did, plus one configfs gadget per UDC (boot036: CDC-EEM; boot038: CDC-ACM kernel-log port + CDC-ECM in one configuration), the interface up (IPv6 link-local only), dropbear (root, key only, no forwarding, host keys made in RAM), a status line per heartbeat. dropbear and busybox with their libraries from signed Arch Linux ARM packages. | `control_channel.check_initramfs` |
+| Initramfs | `/init` from `init.c` (static): everything the old diag-init did, plus one configfs gadget per UDC (boot036: CDC-EEM; boot038: CDC-ACM kernel-log port + CDC-ECM in one configuration; boot039: one bulk-only `gser` kernel-log port, no network), the interface up (IPv6 link-local only; not in boot039), dropbear (root, key only, no forwarding, host keys made in RAM), a status line per heartbeat (boot039: with the dwc3 state from debugfs). dropbear and busybox with their libraries from signed Arch Linux ARM packages. | `control_channel.check_initramfs`; boot039: `check_bulk_only_init`, `check_init_only_delta` |
 | Image | Rebuilt from the boot034 tree with the config above. The genpd release ladder and every earlier patch are unchanged. | job 041 symbol and roundtrip checks |
 
 m1n1, the generic `initramfs.cpio.gz`, the full DT and the launcher's fixed
@@ -39,6 +39,36 @@ new DT; no reviewed controller digest changes.
 | The USB DARTs translate without `apple,dma-range` (macOS's ADT window starts at 0x100_0000_4000) | Hypothesis | Asahi M3 dwc3 DARTs carry none |
 | The gadget enumerates and carries traffic on a macOS host | Hypothesis | attempt 17 |
 
+## boot039: one bulk-only function and the dwc3 state on screen
+
+Attempt 18: right after macOS selected configuration 1, boot038's device stopped
+answering control transfers. Both of its functions have an interrupt-IN notification
+endpoint, and the ADT marks these ports `ncm-interrupt-ep-disabled`. boot039 keeps
+everything but the gadget and the status line:
+
+* **Function:** the in-kernel generic serial function `gser` (`f_serial.c`). It has one
+  vendor-class (`0xff`) interface, one bulk-IN and one bulk-OUT endpoint, no interrupt
+  endpoint and no setup handler. No macOS driver binds it; the M1 reads the bulk-IN
+  endpoint with a read-only user-space tool (`tools/m1n1-client/bulk-log-reader-brief.md`).
+  The kmsg streamer is unchanged except that the port is raw (no echo, exact CR LF)
+  and it counts what it writes, in memory shared with `/init`.
+* **bcdDevice `0x0139`:** configfs accepts only BCD (`is_valid_bcd`). `0x003a` was
+  refused with `EINVAL` in the VM, and the gadget fell back to the kernel default
+  `0x0701`; the self-test caught it. `0x0039` is the RAM root's.
+* **Status line:** per port, `log <records>L <bytes>B q<queued>`. Then, per dwc3
+  controller, `dwc3 <link> f<SOF frame> ev<pending event bytes> [STOPPED HALTED BUSERR
+  CSR-TIMEOUT EVBUSY] irq<count> ep0 o:<cmd> i:<cmd> <ep> <type> h<HW-owned TRBs>
+  d<dequeue>`. Here `<cmd>` is the last command in that endpoint's DEPCMD register, `*`
+  means still active and `!N` a nonzero status. Once per controller, `core <id>, <n>
+  endpoints (<m> IN), MDWIDTH <w>; TX FIFO words ...`. Only `link_state`, `regdump`
+  and the endpoints' `transfer_type` and `trb_ring` are read. Reading the FIFO and queue
+  files, `GDBGEPINFO` or `lsp_dump` writes a debug select register, so those are not
+  read. A child process does the reading, so a stuck read costs one line, not the
+  heartbeat. This tree has no `ep0state` file: the driver's EP0 state machine is not
+  visible, only its commands, events and interrupts.
+* **No network:** dropbear still runs, on loopback only. The initramfs differs from
+  boot036's in `/init` only (packager-enforced).
+
 ## Address plan
 
 Gadget N (N = 1..3 for `2a2280000.usb`, `2aa280000.usb`, `382280000.usb`, the
@@ -64,7 +94,12 @@ on the M1 has to be configured, and no traffic is routed.
   without it, and an 8 MiB copy, across a network namespace.
 
 Results (2026-10-15, boot036): job 041 and both boots PASS; (2026-10-16, boot038): rebuilt with the ACM + ECM init, job 041 and both boots rerun; see
-`native/boot/boot036-control-channel-2026-10-15.md`. What the VM cannot show:
+`native/boot/boot036-control-channel-2026-10-15.md`. (2026-10-16, boot039): the test
+kernel adds the host's generic usb-serial driver, the self-test reads the log over
+the bulk-IN endpoint, and job 041 checks the kernel facts the status line relies on
+(`selftest/check_kernel_facts.py`) and runs the status line on fixture trees
+(`selftest/status_fixture.c`, also under ASan/UBSan); see
+`native/boot/boot039-bulk-log-2026-10-16.md`. What the VM cannot show:
 the dwc3 cores, the DARTs, the PHY state m1n1 leaves, the AIC routing and the
 macOS host. Those are attempt 17's questions.
 

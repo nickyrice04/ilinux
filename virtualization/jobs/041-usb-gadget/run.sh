@@ -1,10 +1,12 @@
 #!/bin/bash
-# Job 041: the USB control channel candidates boot036 (EEM) and boot038 (ACM + ECM), from
-# kernel/experiments/usb-gadget; the Image, DT and config are the same for both.
+# Job 041: the USB control channel candidates boot036 (EEM), boot038 (ACM + ECM) and boot039
+# (gser, bulk only), from kernel/experiments/usb-gadget; the Image, DT and config are the
+# same for all three, and init.c is the current candidate's (boot039).
 #  1. Image: the boot034 tree (its Image is boot035's) with USB_LIBCOMPOSITE=y and
 #     USB_CONFIGFS=y; the config delta is checked by native/boot/control_channel.py.
-#  2. Test Image, never shipped: the same plus USB_DUMMY_HCD, USB_USBNET, USB_NET_CDCETHER
-#     and USB_ACM, so one kernel is both the ACM+ECM gadget and its host for the self-test.
+#  2. Test Image, never shipped: the same plus USB_DUMMY_HCD, USB_USBNET, USB_NET_CDCETHER,
+#     USB_ACM and USB_SERIAL_GENERIC, so one kernel is both the gadget and its host for the
+#     self-test (the generic usb-serial driver reads boot039's bulk-only log port).
 #  3. Stage-B DT: boot035's plus the native/boot/usb_dt.py contract, rebuilt with this VM's
 #     dtc and schema-checked before and after.
 #  4. Stage-B initramfs: /init from init.c (static), dropbear and busybox from signed Arch
@@ -12,6 +14,9 @@
 #     16 KiB pages; reproducible cpio.
 #  5. Self-test overlay, never shipped: test key, selftest script, dbclient, ip, unshare,
 #     nsenter and ping. The boots themselves run on the Mac (selftest/run-vz.sh).
+#  Also: the kernel facts init.c's status line relies on, checked against this tree
+#  (selftest/check_kernel_facts.py), and that status line run on fixture trees in those
+#  formats (selftest/status_fixture.c), since the VM has no dwc3.
 # The boot034 tree and every earlier package stay untouched.
 set -euo pipefail
 mkdir -p /mnt/ilinux
@@ -56,6 +61,29 @@ print("packaged kernel.config vs the tree that built boot035: toolchain detectio
 log "1. boot036 Image"
 rm -rf "$WORK"
 cp -a --reflink=auto "$SRC" "$WORK"
+# Kernel facts the init and the self-test depend on, from this exact tree: the dwc3 debugfs
+# names the status line reads, the bulk-only serial function, the host's generic usb-serial
+# driver. Sources are copied to out/ (gitignored) for review on the Mac.
+mkdir -p "$OUT/build/kernel-src"
+for f in drivers/usb/dwc3/debugfs.c drivers/usb/dwc3/debug.h drivers/usb/dwc3/core.h \
+         drivers/usb/dwc3/core.c drivers/usb/dwc3/ep0.c drivers/usb/dwc3/gadget.c \
+         drivers/usb/gadget/function/f_serial.c drivers/usb/gadget/function/u_serial.c \
+         drivers/usb/gadget/function/f_acm.c drivers/usb/gadget/configfs.c \
+         drivers/usb/serial/generic.c drivers/usb/serial/bus.c drivers/usb/serial/Kconfig \
+         drivers/usb/serial/Makefile drivers/usb/core/driver.c drivers/usb/common/common.c \
+         drivers/usb/gadget/udc/core.c fs/debugfs/file.c kernel/irq/irqdesc.c \
+         drivers/irqchip/irq-apple-aic.c; do
+    install -D -m 0644 "$WORK/$f" "$OUT/build/kernel-src/$f"
+done
+{ echo "tree: $WORK ($(make -s -C "$WORK" kernelversion))"
+  echo "## dwc3 debugfs files"; grep -nE 'debugfs_create_(dir|file|regset32)|\{ *"[a-zA-Z_0-9]+",' "$WORK/drivers/usb/dwc3/debugfs.c"
+  echo "## usb debug root"; grep -rn 'usb_debug_root *=' "$WORK/drivers/usb/common" "$WORK/drivers/usb/core" | head -3
+  echo "## gser descriptors"; grep -nE 'bmAttributes|bInterfaceClass|bNumEndpoints' "$WORK/drivers/usb/gadget/function/f_serial.c"
+  echo "## generic usb-serial"; grep -nE 'module_param|new_id|usb_serial_register_drivers' \
+      "$WORK/drivers/usb/serial/generic.c" "$WORK/drivers/usb/serial/bus.c"
+} > "$OUT/build/kernel-facts.txt"
+python3 -I "$EXP/selftest/check_kernel_facts.py" "$WORK" "$EXP/init.c" "$OUT/build/dwc3-regdump-names.txt" \
+    | tee "$OUT/build/kernel-facts-check.txt"
 "$WORK/scripts/config" --file "$WORK/.config" --enable USB_LIBCOMPOSITE --enable USB_CONFIGFS
 make -C "$WORK" olddefconfig > "$OUT/build/olddefconfig.log" 2>&1
 python3 -I -c 'import sys; sys.path.insert(0, sys.argv[1]); import control_channel as c
@@ -68,20 +96,25 @@ cmp "$WORK/arch/arm64/boot/Image" "$OUT/build/roundtrip.bin"
 rm "$OUT/build/roundtrip.bin"
 nm "$WORK/vmlinux" > "$OUT/build/symbols.txt"
 for sym in eem_alloc_inst gether_connect usb_composite_probe configfs_composite_bind \
-           dwc3_gadget_init ilinux_genpd_ladder_fn; do
+           dwc3_gadget_init ilinux_genpd_ladder_fn gser_alloc_inst gserial_connect dwc3_debugfs_init; do
     grep -q " $sym$" "$OUT/build/symbols.txt" || { echo "missing symbol $sym"; exit 1; }
 done
-echo "gadget, configfs, dwc3 gadget and genpd ladder symbols present" > "$OUT/build/symbols-check.txt"
+echo "gadget (EEM, gser), configfs, dwc3 gadget and debugfs, genpd ladder symbols present" > "$OUT/build/symbols-check.txt"
 cp "$WORK/arch/arm64/boot/Image" "$WORK/.config" "$OUT/build/"
 
 log "2. test Image (not shipped)"
 rm -rf "$TEST"
 cp -a --reflink=auto "$WORK" "$TEST"
 "$TEST/scripts/config" --file "$TEST/.config" --enable USB_DUMMY_HCD --enable USB_USBNET \
-    --enable USB_NET_CDCETHER --enable USB_ACM
+    --enable USB_NET_CDCETHER --enable USB_ACM --enable USB_SERIAL --enable USB_SERIAL_GENERIC
 make -C "$TEST" olddefconfig > /dev/null 2>&1
 diff "$WORK/.config" "$TEST/.config" > "$OUT/build/test-config.diff" || test "$?" = 1
 make -C "$TEST" -j"$JOBS" Image > "$OUT/build/test-build.log" 2>&1
+nm "$TEST/vmlinux" > "$OUT/build/test-symbols.txt"
+for sym in dummy_udc_probe usb_serial_generic_probe usb_serial_generic_register acm_probe; do
+    grep -q " $sym$" "$OUT/build/test-symbols.txt" || { echo "test Image lacks $sym"; exit 1; }
+done
+rm "$OUT/build/test-symbols.txt"
 cp "$TEST/arch/arm64/boot/Image" "$OUT/build/Image-test"
 
 log "3. Stage-B DT"
@@ -154,6 +187,21 @@ echo "$KEYSRC: $(ssh-keygen -l -f "$AUTH" 2>/dev/null || cut -c1-40 "$AUTH")" > 
 log "5. init and Stage-B initramfs"
 gcc -static -O2 -Wall -Wextra -Wno-unused-result -o "$OUT/build/init" "$EXP/init.c" 2> "$OUT/build/init-build.log"
 cp "$EXP/init.c" "$OUT/build/diag-init.c"
+# The status line on fixture trees (the VM has no dwc3), plain and with ASan/UBSan.
+FIX=$(mktemp -d)
+gcc -O2 -Wall -Wextra -Wno-unused-function -Wno-unused-variable -Wno-unused-result -o "$OUT/build/status_fixture" \
+    "$EXP/selftest/status_fixture.c" 2> "$OUT/build/status-fixture-build.log"
+"$OUT/build/status_fixture" "$FIX/plain" "$OUT/build/dwc3-regdump-names.txt" > "$OUT/build/status-fixture.txt"
+if gcc -g -O1 -fsanitize=address,undefined -fno-sanitize-recover=all -Wno-unused-result \
+       -o "$OUT/build/status_fixture-san" "$EXP/selftest/status_fixture.c" 2>> "$OUT/build/status-fixture-build.log"; then
+    "$OUT/build/status_fixture-san" "$FIX/san" "$OUT/build/dwc3-regdump-names.txt" > "$OUT/build/status-fixture-san.txt"
+    echo "status fixture PASS twice: plain -O2 and ASan+UBSan" > "$OUT/build/status-fixture-check.txt"
+else
+    echo "status fixture PASS (plain -O2); ASan+UBSan build unavailable here" > "$OUT/build/status-fixture-check.txt"
+fi
+rm -rf "$FIX"
+tail -1 "$OUT/build/status-fixture.txt"; cat "$OUT/build/status-fixture-check.txt"
+strings "$OUT/build/init" | grep -E 'functions/(gser|acm|ecm|eem|ncm|rndis)\.|0x0139' > "$OUT/build/init-strings.txt" || true
 python3 -I "$EXP/stage_initramfs.py" ship "$W/ship" "$OUT/build/init" "$OUT/build/authorized_keys" \
     "$STAGE" > "$OUT/build/initramfs-contents.txt"
 python3 -I "$EXP/stage_initramfs.py" overlay "$W/test" "$EXP/selftest/selftest.sh" "$OUT/keys/test-key" \
@@ -182,4 +230,4 @@ mv "$OUT/export/.config" "$OUT/export/kernel.config"
 (cd "$OUT/export" && sha256sum Image kernel.config t6050-j716c-stage-b.dtb initramfs-stage-b.cpio.gz \
     diag-init.c toolchain.txt) | tee "$OUT/export-sha256.txt"
 (cd "$OUT/build" && sha256sum Image-test selftest-overlay.cpio.gz) >> "$OUT/export-sha256.txt"
-echo "PASS: boot036 Image, test Image, Stage-B DT, initramfs and self-test overlay built and checked"
+echo "PASS: Image (boot036's), test Image, Stage-B DT, boot039 initramfs, self-test overlay, kernel facts and status fixture built and checked"

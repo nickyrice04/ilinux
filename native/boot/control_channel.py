@@ -12,6 +12,11 @@ Initramfs: a gzip-compressed newc cpio with a static /init, dropbear and
 busybox (with their shared libraries) from signed Arch Linux ARM packages, and
 root's authorized key. It must not contain the VM self-test (/etc/ilinux), a
 private key, a set-id file, or a file not owned by root.
+
+boot039 (bulk-only log port): /init and its source set up exactly one gadget
+function, the generic serial function gser (vendor class, two bulk endpoints,
+no interrupt endpoint), and no CDC-ACM, ECM, EEM, NCM or RNDIS function; and
+the Stage-B initramfs differs from boot036's in /init only.
 """
 import gzip
 import struct
@@ -32,6 +37,10 @@ SYMLINKS = {"bin": "usr/bin", "sbin": "usr/bin", "lib": "usr/lib", "usr/sbin": "
 FORBIDDEN_PREFIXES = ("etc/ilinux/",)
 DENIED_APPLETS = ("reboot", "poweroff", "halt", "linuxrc")
 KEY_MARKERS = (b"PRIVATE KEY", b"ssh-ed25519", b"ssh-rsa", b"ecdsa-sha2", b"ssh-dss")
+# boot039: the one function, its bcdDevice, and the functions that must not be set up.
+BULK_ONLY_FUNCTION = b"gser.GS0"
+BULK_ONLY_BCD_DEVICE = b"0x0139"
+NOT_BULK_ONLY = (b"acm.", b"ecm.", b"eem.", b"ncm.", b"rndis.", b"obex.", b"subset.")
 
 
 def check_config(before_text, after_text, allow_toolchain=False):
@@ -126,3 +135,35 @@ def check_initramfs(blob, authorized_key):
     if entries["usr/bin/sh"][0] & 0o170000 != 0o120000 or entries["usr/bin/sh"][3] != b"busybox":
         raise ValueError("/bin/sh must be busybox")
     return entries
+
+
+def check_bulk_only_init(source, init):
+    """Raise unless the init source and the /init binary set up gser and no CDC function.
+
+    source: diag-init.c; init: the static /init ELF from the Stage-B initramfs. The
+    configfs paths are string literals, so both must name functions/gser.GS0 and
+    bcdDevice 0x0139, and neither may name another function directory."""
+    if b'#define FUNCTION "%s"' % BULK_ONLY_FUNCTION not in source \
+            or b'"functions/" FUNCTION' not in source:
+        raise ValueError("init source does not set up functions/" + BULK_ONLY_FUNCTION.decode())
+    if b'#define BCD_DEVICE "%s"' % BULK_ONLY_BCD_DEVICE not in source:
+        raise ValueError("init source does not set bcdDevice " + BULK_ONLY_BCD_DEVICE.decode())
+    if b"/functions/" + BULK_ONLY_FUNCTION not in init or BULK_ONLY_BCD_DEVICE not in init:
+        raise ValueError("/init does not set up functions/%s with bcdDevice %s" % (
+            BULK_ONLY_FUNCTION.decode(), BULK_ONLY_BCD_DEVICE.decode()))
+    for name in NOT_BULK_ONLY:
+        if b"functions/" + name in source or b"/functions/" + name in init:
+            raise ValueError("init sets up functions/%s*: boot039 is bulk-only" % name.decode())
+    if source.count(b"gadget_mkdir(g, \"functions/") != 1:
+        raise ValueError("init source creates more than one function")
+
+
+def check_init_only_delta(before_blob, after_blob):
+    """Raise unless the two Stage-B initramfs images differ in /init only."""
+    before, after = cpio_entries(before_blob), cpio_entries(after_blob)
+    if set(before) != set(after):
+        raise ValueError("initramfs entries differ: added %s, removed %s" % (
+            sorted(set(after) - set(before))[:8], sorted(set(before) - set(after))[:8]))
+    changed = sorted(name for name in after if after[name] != before[name])
+    if changed != ["init"]:
+        raise ValueError("initramfs must differ in /init only, differs in %s" % changed[:8])
