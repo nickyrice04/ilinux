@@ -5,8 +5,9 @@
 #     archlinuxarm-keyring (omarchy-arm64/ram-root/packages.txt).
 #  2. Add Omarchy's configuration (pinned upstream commit, Tokyo Night rendered by Omarchy's
 #     own template script), the RAM-root layer (omarchy-arm64/ram-root), the kernel modules
-#     for the USB network link and the repository's portable C benchmarks (built here, run by
-#     the status screen); prune; check every ELF for 16 KiB pages; pack a zstd-compressed cpio
+#     for the USB link (whatever gadget functions the tree builds as modules) and the
+#     repository's portable C benchmarks (built here, run by the status screen); prune; check
+#     every ELF for 16 KiB pages; pack a zstd-compressed cpio
 #     (out/ramroot.cpio.zst).
 #  3. Boot it with the exact native boot035 Image in a one-vCPU QEMU guest (TCG; see below),
 #     the way m1n1 boots the M5: direct kernel entry with a device tree whose
@@ -166,6 +167,7 @@ want USB_F_NCM && func="$func usb_f_ncm.o"
 want USB_F_ECM && func="$func usb_f_ecm.o"
 want USB_U_SERIAL && func="$func u_serial.o"   # the ACM journal port
 want USB_F_ACM && func="$func usb_f_acm.o"
+want USB_F_SERIAL && func="$func usb_f_serial.o"   # gser: the bulk-only log port and the SSH byte pipe
 cp "$KTREE"/drivers/net/usb/{usbnet,cdc_ether,cdc_ncm}.c "$KM/drivers/net/usb/"
 echo "obj-m :=$net" > "$KM/drivers/net/usb/Kbuild"
 cp "$KTREE"/drivers/usb/gadget/*.[ch] "$KM/drivers/usb/gadget/"
@@ -182,6 +184,7 @@ usb_f_eem-y := f_eem.o
 usb_f_ncm-y := f_ncm.o
 usb_f_ecm-y := f_ecm.o
 usb_f_acm-y := f_acm.o
+usb_f_serial-y := f_serial.o
 EOF
 dirs=
 [ -n "$net" ] && dirs="drivers/net/usb"
@@ -269,8 +272,14 @@ fi
 install -m 0600 "$W/hostkey/ssh_host_ed25519_key" "$R/etc/ssh/"
 install -m 0644 "$W/hostkey/ssh_host_ed25519_key.pub" "$R/etc/ssh/"
 ssh-keygen -lf "$W/hostkey/ssh_host_ed25519_key.pub" > "$OUT/ssh-host-key-fingerprint.txt"
-if [ -s "$OUT/authorized_keys" ]; then   # optional operator key(s) for the native image
-    install -D -m 0600 "$OUT/authorized_keys" "$R/etc/ssh/authorized_keys.d/root"
+# Operator public keys for the native image: out/authorized_keys (gitignored) when present, else
+# the M1's own public key, which job 041 ships in the Stage-B initramfs the same way. root and
+# omarchy get the same keys (sshd reads /etc/ssh/authorized_keys.d/<user>); public keys only.
+AUTH=$OUT/authorized_keys
+[ -s "$AUTH" ] || AUTH=/mnt/ilinux/kernel/experiments/usb-gadget/authorized_keys
+if [ -s "$AUTH" ]; then
+    for u in root omarchy; do install -D -m 0600 "$AUTH" "$R/etc/ssh/authorized_keys.d/$u"; done
+    ssh-keygen -lf "$AUTH" > "$OUT/authorized-keys-fingerprints.txt"
 fi
 chroot "$R" sshd -t
 mkdir -p "$R/usr/share/ilinux"

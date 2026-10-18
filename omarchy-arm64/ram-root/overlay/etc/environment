@@ -1,0 +1,12 @@
+# Web access for the RAM root, read by pam_env for every PAM session (the desktop session, a
+# TTY login) and set for SSH commands by sshd_config.d/25-ilinux-usb-pipe.conf: an HTTP CONNECT
+# proxy on the M1 (tools/m1n1-client/connect-proxy.py, localhost only), reverse-forwarded to
+# 127.0.0.1:3128 here by the M1's SSH session over the USB byte pipe
+# (tools/m1n1-client/m5-ssh-config). pacman (curl), mise, curl and Claude Code read these.
+# The port answers only while that session is open; no DNS or route exists on this side.
+HTTPS_PROXY=http://127.0.0.1:3128
+HTTP_PROXY=http://127.0.0.1:3128
+https_proxy=http://127.0.0.1:3128
+http_proxy=http://127.0.0.1:3128
+NO_PROXY=localhost,127.0.0.1,::1
+no_proxy=localhost,127.0.0.1,::1

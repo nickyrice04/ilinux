@@ -1,9 +1,10 @@
 # One per device-mode USB controller (UDC), started by 90-ilinux-usb.rules when it appears:
-# the gadget (CDC-ACM journal port + CDC-ECM network, see usb-gadget.sh), then the journal on
-# its serial port as the main process. Binding is not exercised in the VM (no UDC there); on
-# the M5 it needs the Type-C PHY in device mode.
+# the gadget (two bulk-only serial functions by default: the journal port and the SSH byte
+# pipe, see usb-gadget.sh), then the journal on the log port as the main process. The gadget
+# script starts ilinux-sshd-tty@<tty>.service for the SSH port and stops it in its stop action.
+# Binding needs a UDC: on the M5 the Type-C PHY in device mode, in the VM self-test dummy_hcd.
 [Unit]
-Description=USB control channel on %i: journal serial port and network (RAM root)
+Description=USB control channel on %i: journal port and SSH byte pipe (RAM root)
 Wants=sys-kernel-config.mount
 After=sys-kernel-config.mount systemd-journald.service
 
@@ -14,5 +15,6 @@ ExecStart=/usr/local/lib/ilinux/usb-gadget.sh log %i
 # journalctl blocks SIGTERM while it follows, and a write to a port no host reads blocks it,
 # so SIGTERM would only end it at the stop timeout. Nothing in the stream needs a clean exit.
 KillSignal=SIGKILL
-# After the log process has ended: removing the ACM function waits for its port to close.
+# After the log process has ended: stops sshd's unit, then removes the functions (removing a
+# serial function waits for its port to close).
 ExecStopPost=-/usr/local/lib/ilinux/usb-gadget.sh stop %i

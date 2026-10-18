@@ -17,6 +17,9 @@ StandardError=journal
 UtmpIdentifier=tty1
 UtmpMode=user
 Environment=XDG_SESSION_TYPE=wayland LIBSEAT_BACKEND=seatd OMARCHY_PATH=/usr/share/omarchy
+# The M1's web proxy, reverse-forwarded by its SSH session (see /etc/environment): programs started
+# from the desktop, such as a terminal running pacman, mise or Claude Code, inherit it.
+EnvironmentFile=-/etc/environment
 WorkingDirectory=~
 # simpledrm has no render node, so Hyprland opens /dev/dri/card0 itself as this user. Without
 # this wait its first start aborted with "Couldn't open a gbm fd" in every VM boot, likely

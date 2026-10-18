@@ -1,0 +1,15 @@
+# VM test only (job 046, never in the RAM root): the M1's part on the host side of dummy_hcd,
+# reported on the virtio console (hvc0), which run-vz.sh reads.
+[Unit]
+Description=VM test: SSH over the USB byte pipe and the web proxy, end to end
+After=systemd-udevd.service systemd-udev-trigger.service systemd-tmpfiles-setup.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/ilinux-test/selftest.sh
+StandardOutput=tty
+StandardError=tty
+TTYPath=/dev/hvc0
+
+[Install]
+WantedBy=multi-user.target

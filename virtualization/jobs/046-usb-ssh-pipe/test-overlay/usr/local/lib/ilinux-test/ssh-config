@@ -1,0 +1,18 @@
+# VM test only: tools/m1n1-client/m5-ssh-config with the test's paths; selftest.sh fills in
+# the host-side serial device of the M5's SSH interface for %%TTY%%.
+Host m5
+    HostName m5
+    User root
+    IdentityFile /usr/local/lib/ilinux-test/test-key
+    IdentitiesOnly yes
+    UserKnownHostsFile /tmp/known_hosts
+    StrictHostKeyChecking accept-new
+    BatchMode yes
+    ConnectTimeout 45
+    RemoteForward 127.0.0.1:3128 127.0.0.1:3128
+    ExitOnForwardFailure yes
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+    PreferredAuthentications publickey
+    LogLevel DEBUG1
+    ProxyCommand /usr/local/bin/usb-pipe --tty %%TTY%% --banner-wait 20 --log /tmp/usb-pipe.log

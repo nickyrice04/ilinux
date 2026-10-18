@@ -1,0 +1,44 @@
+# ssh -F tools/m1n1-client/m5-ssh-config m5        (from the repository root on the M1)
+#
+# The M5's RAM root over the USB byte pipe. usb-pipe (build/control/usb-pipe, built by
+# tools/m1n1-client/usb-pipe/build.sh) is the ProxyCommand: it opens interface 1 of the M5's
+# gadget and relays this ssh to the sshd that waits on it. The M1's CONNECT proxy
+# (python3 -I tools/m1n1-client/connect-proxy.py, 127.0.0.1:3128, started separately) is
+# reverse-forwarded to 127.0.0.1:3128 on the M5, where /etc/environment and sshd's SetEnv
+# already point HTTPS_PROXY at it: pacman, mise, curl and Claude Code there reach the web
+# through this session, and nothing on the M1's network settings changes.
+# Keys: build/control/m1-control, the M1's own key (its public half is
+# kernel/experiments/usb-gadget/authorized_keys, which the RAM root authorizes for root and
+# omarchy). The host key goes to build/control/known_hosts under the name "m5" on first use.
+# Several M5 ports plugged in at once: usb-pipe needs --port N (m5-port1, m5-port2, m5-port3).
+Host m5 m5-port1 m5-port2 m5-port3
+    HostName m5
+    User root
+    IdentityFile build/control/m1-control
+    IdentitiesOnly yes
+    UserKnownHostsFile build/control/known_hosts
+    StrictHostKeyChecking accept-new
+    UpdateHostKeys no
+    RemoteForward 127.0.0.1:3128 127.0.0.1:3128
+    ExitOnForwardFailure no
+    ConnectTimeout 45
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+    ControlMaster no
+    ForwardAgent no
+    ForwardX11 no
+    GSSAPIAuthentication no
+    PreferredAuthentications publickey
+    LogLevel INFO
+
+Host m5
+    ProxyCommand build/control/usb-pipe --log build/native-intake/usb-pipe.log
+
+Host m5-port1
+    ProxyCommand build/control/usb-pipe --port 1 --log build/native-intake/usb-pipe.log
+
+Host m5-port2
+    ProxyCommand build/control/usb-pipe --port 2 --log build/native-intake/usb-pipe.log
+
+Host m5-port3
+    ProxyCommand build/control/usb-pipe --port 3 --log build/native-intake/usb-pipe.log

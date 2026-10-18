@@ -177,3 +177,27 @@ test checks that:
 
 It cannot show what macOS binds, or how the M5's real dwc3 cores and the M1's host
 controller behave; those are the attempt's questions.
+
+## Attempt 22: the RAM root's two-interface device (added 2026-10-16)
+
+The RAM root (`omarchy-arm64/ram-root`, `usb-gadget.sh` with `FUNCTION=gser`) presents the
+same `1d6b:0104` device with **`bcdDevice 0x0039`** and **two** `gser` interfaces in
+configuration 1 ("Bulk-only kernel log port + SSH byte pipe"): interface 0 is the journal,
+written only by the M5, exactly as boot039's interface 0; interface 1 is a raw byte pipe with
+`sshd` on it, which the M1's `usb-pipe` opens (`usb-ssh-link.md`). For the reader this means:
+
+* **Accept `bcdDevice 0x0039` as well as `0x0139`**, from a fixed two-entry table in the code
+  (still no option), and keep matching `interfaceNumber:@0`. Print which stage answered.
+* **`bNumInterfaces`** in the configuration descriptor is 1 for boot039 and 2 for the RAM root;
+  both are fine. The per-interface checks of step 5 are unchanged: interface 0, class `0xff`,
+  exactly one bulk IN and one bulk OUT, no interrupt endpoint.
+* **Never open interface 1.** Two user clients on two interfaces of one device are expected
+  to coexist (Likely); the device nub stays with macOS's composite driver as before. Add
+  `bInterfaceNumber` other than 0 and `interfaceNumber:@1` to the static check's forbidden
+  list.
+* The data is the systemd journal (`journalctl -b -f -o short-monotonic --no-hostname`),
+  one record per line ending in CR LF, from the boot's start; the stream restarts from the
+  boot's start after a hang-up. On the M5's status screen there is no `log … B q…` field for
+  the RAM root; `systemctl status ilinux-usb-gadget@<udc>` over SSH shows the streamer.
+* Everything else in this brief (read-only contract, fail-safe table, offline checks) applies
+  unchanged.

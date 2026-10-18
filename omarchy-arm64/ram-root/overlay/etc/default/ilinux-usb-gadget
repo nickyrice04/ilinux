@@ -1,5 +1,10 @@
 # USB control channel, see usb-gadget.sh.
-# Network function: ecm (default; macOS 26.0.1 loads it), ncm or eem (no usable macOS driver).
-FUNCTION=ecm
-# 1: a CDC-ACM serial port before the network function carries the journal, read-only.
-ACM=1
+# gser (default): two bulk-only serial functions per controller, no interrupt endpoint and no
+#   network. Interface 0 carries the journal (read by the M1's bulk-log reader), interface 1 a
+#   raw byte pipe with sshd on it (the M1's usb-pipe is ssh's ProxyCommand). Web access comes
+#   through the M1's CONNECT proxy, reverse-forwarded by that SSH session (/etc/environment).
+# ecm, ncm or eem: a CDC network function instead (macOS 26.0.1 loads ECM; no usable EEM
+#   driver), SSH on 10.66.0.2:22. ACM=1 puts a CDC-ACM journal port in front of it. Both ECM
+#   and ACM add an interrupt endpoint, after which attempt 18's device stopped answering.
+FUNCTION=gser
+ACM=0

@@ -1,0 +1,24 @@
+# sshd on one USB byte pipe, /dev/%i (the gser.ssh serial port of a gadget, see usb-gadget.sh),
+# inetd style: one SSH connection at a time, then sshd exits and starts again. usb-gadget.sh
+# start starts this unit once the gadget is bound; usb-gadget.sh stop stops it before it
+# removes the function (which waits for the port to close). The port is never a controlling
+# terminal of anything else, and no getty runs on it.
+# sshd sends its banner at once and waits for the M1's; the M1's usb-pipe forwards ssh only
+# after it has seen that banner. sshd_config.d/25-ilinux-usb-pipe.conf bounds a connection
+# that never authenticates (LoginGraceTime) and a session whose client vanished (ClientAlive*,
+# since bulk endpoints carry no hang-up), so the port is free again within about 45 s.
+# Every session ends with an sshd exit and a restart, and sessions may follow each other
+# quickly, so the start rate is not limited. A port that is gone (an unclean teardown) costs
+# one failed start every 5 s (the script's pause) until the unit is stopped, which usb-gadget.sh stop does.
+[Unit]
+Description=SSH on the USB byte pipe /dev/%i (RAM root)
+After=systemd-journald.service
+StartLimitIntervalSec=0
+
+[Service]
+ExecStart=/usr/local/lib/ilinux/usb-gadget.sh sshd %i
+Restart=always
+# Short: the M1's tool takes the newest banner after 0.4 s of quiet, so the next sshd's banner must
+# follow the last one's end within that.
+RestartSec=100ms
+TimeoutStopSec=10
