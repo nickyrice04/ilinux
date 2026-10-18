@@ -138,6 +138,13 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 22 (Omarchy itself, VM job 045, a view-only RAM boot on
+boot035, launcher `--profile omarchy`) on handoff `7eb2aad`: the boot035 package re-verified against the Git pin, the 2.34 GB image
+(`d00ba156…578a`) equal to the manifest by size and digest (zstd header read; content not inspected, no zstd tool), the new launcher
+`b14ec7a1…` diff (39 lines) read in full, the offline launcher run (exactly the seven expected lines) and 146 cases PASS (102 plus
+44). Needs a fresh M1 restart (unlocked, lid open, awake for the ≈ 7.5-minute upload plus 10 minutes), cable re-seat, a 20-minute
+recording started before the launch, and the human's start; the serial-number line on the m1n1 screen is never transcribed or shared.
+
 Latest M1 native result: **attempt 21 (boot039, a bulk-only `gser` USB log port): macOS publishes the interface and the
 read-only reader streams 36,909 bytes, then the M5's dwc3 flags a DMA bus error.** With no interrupt endpoint, EP0 stayed
 healthy for 10 minutes (zero EP0 timeouts; attempt 18's wedge needed something only ACM/ECM had), macOS bound no driver to the

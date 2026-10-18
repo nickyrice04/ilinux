@@ -6,6 +6,40 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 22 (Omarchy itself, VM job 045, `--profile omarchy`) offline PASS; live NOT RUN, 2026-10-18
+
+* **Intake (M5 handoff `7eb2aad`, root rebuild `b520330`).** The boot035 package, re-verified and not re-downloaded: archive
+  16,723,179 bytes, SHA-256 `81cbbd1c…`, checked against the Git pin; the `verify-package` receipt (SHA256SUMS digest
+  `7635c5e4…`, 13 files, clean client pin `57a9339`) PASS. **The image:** the human AirDropped it; it arrived untracked in the
+  repository root and was moved into the ignored `build/ramroot045/`. Its size, 2,337,897,871 bytes, and SHA-256 `d00ba156…578a`
+  equal `native/boot/omarchy-root-manifest.json`. Its zstd frame header was read (magic OK, window 128 MiB, declared content
+  size 8,561,316,352 bytes, the 8.56 GB of tmpfs the checklist names; the manifest's 8,525,249,287 is file content without cpio
+  headers). **Its content was not decompressed or inspected on the M1** (no zstd tool, nothing installed); the build script
+  `virtualization/jobs/045-omarchy-installer-root/ramroot.sh` (93 lines) was read in full instead: a snapshot of the installed
+  root, job 039's `/init`, zram-generator masked, Omarchy's Stay Awake toggle and the frame-callback toggle (deviation 15), and
+  nothing that touches a network, a device or storage. The report says the image holds no SSH host key, keyring or password,
+  but does hold the build's machine-id; it stays local.
+* **Launcher review.** `launch.py` is `b14ec7a1…` (new: the `omarchy` profile). The diff against the reviewed `4d55f0c9…` (39
+  lines, `git diff 4d53cff`) was read in full: a third `Profile` with a `heap` field (`None` for `stage-b` and `ramroot`, 3 GiB
+  for `omarchy`), a 900 s deadline, the confirmation `BOOT-J716C-OMARCHY-ROOT`, `verify_ramroot` taking its record file, the heap
+  passed to `ProxyUtils` (the pinned client takes `heap_size`, default 1 GiB, with `heap_top = heap_base + heap_size` and m1n1's
+  own limit set to `heap_base`, so the size is the client's bookkeeping), and parser and message changes. The gates, the DT
+  checks and the handoff are untouched. The other five controller digests equal the checklist; client pin `57a9339`.
+* **Offline.** The launcher with `--profile omarchy` exits 0 with exactly the seven expected lines (`RAM root PASS`, upload
+  estimate 2,382,558,042 bytes: 476.5 s at 5 MB/s, 595.6 s at 4 MB/s, deadline 900 s). The suites PASS: launcher 37, ramroot 44
+  (1 skipped), gpio 10, entry 6, DAPF 16, framebuffer 5, hardware 19, DAPF ADT 2, launcher ADT 6, protocol 1 (the reviewed 102
+  plus the 44). The M1 has 16 GiB of RAM (about 6.8 GiB free and inactive now); the launcher holds the image in RAM (2.41 GB
+  peak on the M5's offline run).
+* **What the run needs from the human:** a fresh M1 restart, kept unlocked with its lid open and awake for the whole upload
+  (about 7.5 minutes, 6-10 plausible) plus 10 minutes; the cable re-seated, and if the read-only gate still sees nothing, the M5
+  booted into the Boot Lab again (as in attempt 21); the recording started before the launch (about 20 minutes, at least 25
+  minutes of storage, phone charging); then the human's explicit start. The m1n1 heap and memory lines are copied from the video;
+  **the `FDT: reporting device serial number` line is never transcribed or shared.**
+* **Risks, read from the checklist and not tested:** where the 2.39 GB lands in the M5's RAM relative to live carveouts is
+  Unknown (a reset during the upload would be the evidence); the upload is CPU-bound in Python on the M1; the kernel unpacks
+  2.34 GB on one CPU, so the panel may stay black for tens of seconds and must not be stopped early.
+* **NOT RUN:** the native attempt and every native check. No retry.
+
 ### Current M5 handoff — attempt 22: Omarchy itself (VM job 045) as a RAM root on boot035 (NOT RUN)
 
 * **Attempt 21 consumed:** the bulk-only port kept EP0 healthy and the M1's reader streamed

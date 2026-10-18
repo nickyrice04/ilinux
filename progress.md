@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-18 · M1: attempt 22 (Omarchy itself, job 045, `--profile omarchy`) offline readiness PASS (live NOT RUN)
+
+* **Discovered:** the installer-built Omarchy root is 2,337,897,871 bytes (declared decompressed size 8,561,316,352) and its
+  upload takes about 7.5 minutes, so the launcher gained a third profile with a 3 GiB client heap and a 900 s deadline. The
+  launcher diff is 39 lines and leaves the gates, DT checks and handoff alone. The image's size and SHA-256 equal the pinned
+  manifest; its content could not be inspected on the M1 (no zstd tool).
+* **Implemented:** nothing in Git except this entry and the coordination/AGENTS readiness text. Local and ignored: the record
+  `boot035-omarchy-attempt22.json` (25 pinned files), the one-shot wrapper `run-attempt22.py` (attempt 20's with the record path,
+  module name and the omarchy manifest lines changed), the image moved into `build/ramroot045/`.
+* **Tested:** the boot035 package against the Git pin and `verify-package`; the image's size, SHA-256 and zstd header; the
+  launcher offline with `--profile omarchy` (exit 0, exactly the seven expected lines); the suites (the reviewed 102 plus
+  `test_ramroot.py`'s 44, 1 skipped); the six controller digests (equal the checklist); the client pin (clean `57a9339`).
+* **Not verified:** everything native: the 7.5-minute upload, the 3 GiB heap placement against live carveouts, the unpack of
+  2.34 GB on one CPU, Omarchy's session on the hardware, the image's content.
+* **Next:** the human restarts the M1 (kept unlocked, lid open, awake), re-seats the cable (and boots the M5 into the Boot Lab
+  again if the gate sees nothing), starts a 20-minute recording before the launch and then starts attempt 22 (one boot,
+  filmed to 10 minutes after the handoff). The m1n1 heap and memory lines are read from the video; the serial-number line never.
+
 ## 2026-10-18 · M5: attempt 22 handed off — Omarchy itself (job 045) on boot035 with the launcher's `omarchy` profile (NOT RUN)
 
 * **Decided:** after attempt 21 proved the bulk-only USB path against macOS and then met a DMA
