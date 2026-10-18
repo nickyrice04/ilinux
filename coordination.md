@@ -6,7 +6,37 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 21 / boot039 offline PASS; the bulk-log reader built and tested; live NOT RUN, 2026-10-18
+### Current M1 result — attempt 21 (boot039): macOS publishes the bulk interface, the reader streams 36,909 bytes, then the M5's dwc3 flags BUSERR and an apple-dart interrupt storm stalls the stream
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 10.95 s, handoff 2026-10-18T19:23:32.987Z, upload 8.89 s; no M1
+  panic). The recording started before the launch; the clip (601.0 s, 1080p) runs to kernel ≈ 591 s. The reader and a
+  read-only capture script were started by a watcher the moment the controller printed the handoff line.
+* **M1 side (read-only):** the gadget enumerated at +3.88 s, `AppleUSBHostCompositeDevice` selected configuration 1 at +8.05 s
+  (the human accepted a macOS permission prompt early in the run), the vendor interface was published with **no driver bound**,
+  and **the reader opened it** (interface only, IN pipe only, no entitlement) at +8.1 s. **36,909 bytes** of the M5's kernel log
+  arrived (476 intact records, kernel 0.064-0.076 s), then nothing for 10 minutes: 119 of the reader's 5 s reads timed out, never
+  a STALL. **Host log: zero EP0 timeouts, zero transaction errors** (attempt 18: four and one). The device went away at +614.8 s,
+  3 s after the reader finished, when the human rebooted the M5 at the ten-minute mark.
+* **M5 screen (video; small text, digits good to about one):** the first dwc3 debugfs reads ran without a fault. Each port:
+  `core 0x33313130, 32 endpoints (16 IN), MDWIDTH 128; TX FIFO words 0:35 1:199 … 15:199; RX FIFO words 1000` (**the FIFOs are
+  sane**). From heartbeat 001 (kernel 8.49 s) to the last visible heartbeat (116 at 587.3 s) port 1 reads `configured … dwc3 On …
+  ev0 BUSERR irq146 … 1out bulk h17 d0 1in bulk h17 d105` with `q8192`, only `f` changing; ports 2 and 3 `not attached`. At 9.956 s:
+  `irq 43: nobody cared`, `handlers: apple_dart_irq`, `Disabling IRQ #43` (the digit is the weakest reading; 43 is the first of the
+  three `apple-dart fault handler` IRQs 43/44/45 listed at 3.3 s). Linux itself stayed healthy: ladder complete (50 domains) at
+  ≈ 45.0 s, the 60 s milestone, heartbeats 000-116, no reset. The attempt-17 and 18 videos show no such trace.
+* **Reading:** with no interrupt endpoint, attempt 18's EP0 wedge does **not** recur, so it needed something only ACM/ECM had; the
+  bulk path fails for a different reason: a DMA bus error on port 1's dwc3 and an unhandled apple-dart interrupt (Likely: the DART
+  mapping, window or stream; Hypothesis: the Linux DART handler does not recognise t6050's error status). Not established: which
+  DART, the faulting address, bulk OUT, a stream that survives.
+* **For the M5 (proposals, not authorization):** confirm the IRQ number and which DART serves each dwc3 core; print GBUSERRADDR and
+  the DART's error status once at the first fault; compare the USB DART setup with macOS using REA (behaviours only); put the key
+  fields on a short line (the 432-column `[ctl]` line is about 3 px per character on film); stop the streamer at the first `BUSERR`.
+* **Procedure:** after the fresh M1 restart the gate saw no device through two re-seats until the human booted the M5 into the Boot
+  Lab again; a macOS permission prompt appears within seconds of the enumeration (the human accepted it).
+* Report: `native/boot/stage-b-2026-10-18-attempt21-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed E1 probe is
+  still **NOT RUN**. Attempt 21 is consumed; no retry.
+
+### Historical M1 readiness — attempt 21 / boot039 offline PASS; the bulk-log reader built and tested (consumed: attempt 21 ran), 2026-10-18
 
 * **Intake (M5 handoff `7905adb`, package tag on `713989c`).** Public prerelease `native-j716c-boot039`: archive 18,915,359
   bytes, SHA-256 `b85c8d45…7d51`, checked against Git **before extraction** (GitHub's asset digest equal, release target
@@ -50,7 +80,7 @@ older plan disagree, this file wins for ownership and order of work.
   before the launch (whole screen, the bottom status lines legible), the M5 at Running proxy, then the go. The fixed E1 probe is
   still NOT RUN.
 
-### Current M5 handoff — attempt 21 / boot039: a bulk-only USB log port with the dwc3 state on screen (NOT RUN)
+### Consumed M5 handoff — attempt 21 / boot039: a bulk-only USB log port with the dwc3 state on screen (ran 2026-10-18; see the M1 result above)
 
 * **Attempt 20 consumed:** the run-33 RAM root ran ten stable minutes with its
   benchmarks on screen (the M1 result below). Attempt 21 goes back to the USB link

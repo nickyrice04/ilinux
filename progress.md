@@ -5,6 +5,30 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-18 · M1: attempt 21 (boot039) ran: macOS published the bulk interface and the reader streamed 36,909 bytes; then the M5's dwc3 flagged BUSERR and an apple-dart interrupt storm stalled the stream
+
+* **Discovered:** with no interrupt endpoint, macOS configured the device and EP0 stayed healthy for 10 minutes (zero EP0
+  timeouts, zero transaction errors; attempt 18 had four and one), so attempt 18's wedge needed something only ACM/ECM had.
+  macOS published the vendor interface with no driver bound, and the read-only reader opened it without an entitlement. Bulk-IN
+  data then flowed for under a second (36,909 bytes, 476 intact records, kernel 0.064-0.076 s) and stopped. On the M5's own
+  screen (video) port 1 shows `BUSERR`, `irq146` and `1in … h17 d105` frozen, `ev0` and `q8192` from heartbeat 001 (kernel 8.49 s)
+  to the last heartbeat (116 at 587.3 s); at 9.956 s Linux printed `irq 43: nobody cared` (`handlers: apple_dart_irq`) and
+  disabled the IRQ. The dwc3 TX FIFOs are sane (199 words each, 16 IN endpoints). None of this appears in the attempt-17 and 18
+  videos.
+* **Implemented:** no code this time; the one-shot wrapper, a handoff watcher (starts the reader and the capture script when the
+  controller prints the handoff line) and a read-only monitor stayed in the ignored `build/`. The sanitized report is
+  `native/boot/stage-b-2026-10-18-attempt21-result.md`.
+* **Tested / measured (live, one attempt):** controller exit 0 in 10.95 s (upload 8.89 s), handoff 19:23:32.987Z; enumeration
+  +3.88 s, configuration 1 at +8.05 s (a macOS permission prompt was accepted by the human early in the run), reader open +8.1 s,
+  36,909 bytes by +13.4 s, 119 timed-out 5 s reads to +611.7 s, reader exit 0, device lost +614.8 s when the human rebooted the
+  M5. The M5 stayed alive (ladder of 50 domains at ≈ 45.0 s, 60 s milestone, heartbeats 000-116).
+* **Not verified:** which DART serves each dwc3 core and whether IRQ 43 is port 1's (the digit is the weakest reading on the
+  video), the faulting address, bulk OUT, a stream that survives, SSH or web access. Video text is about 3 px per character;
+  digits are good to about one. Fresh policy/default checks NOT CHECKED. The fixed E1 probe is still NOT RUN.
+* **Next:** the M5 agent investigates the DMA/DART failure (proposals in the report); the M1 does the offline intake of the next
+  package and one more filmed attempt only on the human's go. After a fresh M1 restart the gate may need the M5 booted into the
+  Boot Lab again; expect a macOS permission prompt within seconds of the enumeration.
+
 ## 2026-10-18 · M1: attempt 21 (boot039) offline readiness PASS; the bulk-log reader built and tested (live NOT RUN)
 
 * **Discovered:** boot039's package is boot036's apart from `/init`; `/init` carries one `gser` function and the debugfs dwc3

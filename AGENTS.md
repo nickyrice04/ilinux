@@ -138,7 +138,17 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 21 / boot039 (a bulk-only `gser` USB log port, the
+Latest M1 native result: **attempt 21 (boot039, a bulk-only `gser` USB log port): macOS publishes the interface and the
+read-only reader streams 36,909 bytes, then the M5's dwc3 flags a DMA bus error.** With no interrupt endpoint, EP0 stayed
+healthy for 10 minutes (zero EP0 timeouts; attempt 18's wedge needed something only ACM/ECM had), macOS bound no driver to the
+vendor interface and the reader opened it without an entitlement. Then the stream stopped: on the M5's screen (video) port 1 shows
+`BUSERR`, `irq146` and the `1in` ring frozen from heartbeat 001 on, and Linux printed `irq 43: nobody cared` (`handlers:
+apple_dart_irq`) and disabled the IRQ at 9.956 s (the digit is the weakest reading). The dwc3 TX FIFOs are sane; Linux stayed
+healthy (50-domain ladder at ≈ 45 s, heartbeats to 116, no reset). Likely: a DMA fault through the USB DART; the M5 investigates.
+Controller exit 0 in 10.95 s, no M1 panic. See `native/boot/stage-b-2026-10-18-attempt21-result.md`. The fixed E1 probe is still
+NOT RUN.
+
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for attempt 21 / boot039 (a bulk-only `gser` USB log port, the
 dwc3 state on the M5 screen) on handoff `7905adb`: archive `b85c8d45…7d51` verified against Git before extraction, 102
 controller cases plus the USB, boot039 and RAM-root suites, launcher `4d55f0c9…` unchanged, Image/config/DTBs/m1n1 identical to
 boot036, the Stage-B initramfs differs only in `/init`. The M1 built the read-only bulk-log reader

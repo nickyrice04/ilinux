@@ -18,7 +18,19 @@ Class-scope lookup of a function-local import in `mtp_probe.py` (and
 `pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
 M1's re-verification and the human's go.
 
-## Current blocker — attempt 18: macOS configures the ACM + ECM gadget, then control transfers time out; no serial, no network
+## Current blocker — attempt 21: bulk-IN data stops after 36,909 bytes; the M5's dwc3 flags BUSERR and an apple-dart interrupt storm follows
+
+boot039's bulk-only function enumerated (+3.88 s), macOS configured it (+8.05 s) and published its vendor interface with no driver
+bound, and the M1's read-only reader opened it and read 36,909 bytes (476 intact records of the M5's early kernel log); the stream
+then stopped for the remaining 10 minutes, with the link up and SOFs counting. The M5's own status line (video) shows `BUSERR` on
+port 1's dwc3 from the first heartbeat after the configuration, its interrupt counter frozen (`irq146`, `ev0`), `1in` with 17
+hardware TRBs and a frozen dequeue index, the log FIFO full (`q8192`); Linux printed `irq 43: nobody cared` (`handlers:
+apple_dart_irq`) and disabled the IRQ at 9.956 s (the digit is the weakest reading). EP0 stayed healthy (zero timeouts in 10
+minutes) and the TX FIFOs are sane (199 words each). Likely, not tested: a DMA fault through the USB DART (mapping, window or
+stream) whose error interrupt the Linux handler does not recognise on t6050. Open: which DART, the faulting address, bulk OUT, and a
+stream that survives. See `native/boot/stage-b-2026-10-18-attempt21-result.md`.
+
+## Historical blocker — attempt 18: macOS configures the ACM + ECM gadget, then control transfers time out; no serial, no network (a bulk-only function did not reproduce it in attempt 21)
 
 boot038 enumerated (+3.95 s) and macOS selected configuration 1 (+8.45 s), but no interface node was
 published, no ACM or ECM driver attached, and the device's control endpoint then timed out four times
