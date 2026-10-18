@@ -1,4 +1,4 @@
-// diag-init.c (boot039) - PID 1 for the t6050 RAM initramfs, with a USB log channel.
+// diag-init.c (boot040) - PID 1 for the t6050 RAM initramfs, with a USB log channel.
 // Source: kernel/experiments/usb-gadget/init.c; packaged as diag-init.c.
 // Keeps everything boot021-035's diag-init did: mounts proc/sys/dev, prints the
 // bring-up observables to the console (framebuffer) and /dev/kmsg, heartbeats
@@ -23,13 +23,26 @@
 //  * once per controller: its endpoint count and TX FIFO sizes;
 //  * /etc/ilinux/selftest, if present (VM tests only; the packager refuses a
 //    shipped initramfs that contains it), runs once after the first setup.
-// It writes nothing to any disk and never mounts storage.
+// New in boot040 (after attempt 21: bulk IN flowed, then the dwc3 flagged a bus error,
+// its interrupts stopped and an apple-dart fault interrupt stormed until Linux disabled
+// it, with no fault ever reported):
+//  * a short line per port each heartbeat, about 100 columns, with the fields that
+//    matter on film: UDC state, link, SOF frame, dwc3 and DART fault interrupt counts,
+//    log counters, the ring state of every enabled endpoint and, when the controller
+//    flags a bus error, the address it failed on (GBUSERRADDR0/1);
+//  * at bind, which DART instance, stream and fault interrupt serve each dwc3 core
+//    (from the kernel's own sysfs links) and a read-only register snapshot of both
+//    DART instances of that port, the one in the DT and its sibling, through /dev/mem;
+//  * at the first bus error on a port: that port's log streamer is stopped for good
+//    and the DART snapshot is taken again, so the fault state is on the screen.
+// It writes nothing to any disk, never mounts storage and writes no device register.
 // Build: gcc -static -O2 -o init diag-init.c
 #define _GNU_SOURCE
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <net/if.h>
+#include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,14 +119,32 @@ static int online_cpus(void)
 #define FUNCTION "gser.GS0"     // generic serial: vendor class, two bulk endpoints
 #define BCD_DEVICE "0x0139"     // boot039; must be BCD (configfs is_valid_bcd)
 #define MAX_UDC 8
-// usb-drd0..2 (ports 1..3) by their dwc3 node; any other UDC (VM tests) gets 4+.
-static const char *const known_udc[] = { "2a2280000.usb", "2aa280000.usb", "382280000.usb" };
+// usb-drd0..2 (ports 1..3) by their dwc3 node; any other UDC (VM tests) gets 4+. The DART
+// bases are the ADT's dart-usbN reg[0] (instance 0) and reg[1] (instance 1) translated
+// through /arm-io ranges; the Stage-B DT gives each core instance 1, stream 1.
+static const struct { const char *udc; unsigned long long dart0, dart1; } known_udc[] = {
+    { "2a2280000.usb", 0x2a2f00000ull, 0x2a2f80000ull },
+    { "2aa280000.usb", 0x2aaf00000ull, 0x2aaf80000ull },
+    { "382280000.usb", 0x382f00000ull, 0x382f80000ull },
+};
 
 // Log stream counters, in memory shared with the streamer child (it writes, /init reads).
 struct stream_stats {
     unsigned long records, bytes;  // records copied, bytes accepted by the tty
     int queued;                    // bytes still in the M5's 8 KiB serial FIFO (TIOCOUTQ)
     int info_done;                 // the one-time dwc3 line for this port was printed
+    int buserr;                    // the status reader saw GSTS.BUS_ERR_ADDR_VLD on this port
+    unsigned buserr_lo, buserr_hi; // GBUSERRADDR0/1 at that time (the failing DMA address)
+};
+
+// The DART behind one dwc3 core, as the kernel's sysfs describes it, plus its sibling.
+struct dartinfo {
+    int known;                 // the iommu link resolved
+    char name[64];             // e.g. apple-dart.2a2f80000.iommu
+    unsigned long long base;   // instance 1 register base (from the device name)
+    unsigned long long base0;  // instance 0 base from known_udc, 0 if unknown or mismatched
+    unsigned sid, hwirq;       // stream id (iommus), fault IRQ (DT interrupts[1])
+    int linux_irq;             // Linux IRQ number of the "apple-dart fault handler", -1 if none
 };
 
 struct port {
@@ -121,9 +152,11 @@ struct port {
     char tty[32];   // the gser serial port on this side, /dev/ttyGSn
     int index;      // 1..9: port number in the strings
     int bound;
+    int stopped;    // the streamer was stopped at a bus error and is not restarted
     pid_t streamer; // child that copies /dev/kmsg to the serial port
     int streamer_starts;
     struct stream_stats *st;
+    struct dartinfo dart;
 };
 static struct port ports[MAX_UDC];
 static struct stream_stats *stats;   // MAX_UDC entries, MAP_SHARED
@@ -258,6 +291,8 @@ static void stream_kmsg(const char *tty, struct stream_stats *st)
     }
 }
 
+static void port_dart_report(struct port *p);   // defined with the DART helpers below
+
 static pid_t spawn_stream(const char *tty, struct stream_stats *st)
 {
     pid_t pid = fork();
@@ -311,12 +346,13 @@ static void setup_port(struct port *p)
     start_streamer(p);
     sayf("[ctl] port %d: UDC %s bound, GSER bulk-only 1d6b:0104 bcdDevice " BCD_DEVICE
          ", no interrupt endpoint, log on %s\n", p->index, p->udc, p->tty[0] ? p->tty + 5 : "no tty");
+    port_dart_report(p);
 }
 
 static int port_index(const char *udc)
 {
     for (unsigned i = 0; i < sizeof known_udc / sizeof *known_udc; i++)
-        if (!strcmp(udc, known_udc[i])) return i + 1;
+        if (!strcmp(udc, known_udc[i].udc)) return i + 1;
     int next = 4;
     for (int i = 0; i < nports; i++)
         if (ports[i].index >= next) next = ports[i].index + 1;
@@ -404,9 +440,10 @@ static void reap(void)
         } else {
             for (int i = 0; i < nports; i++)
                 if (pid == ports[i].streamer) {
+                    ports[i].streamer = -1;
+                    if (ports[i].stopped) continue;   // stopped at a bus error: stays stopped
                     sayf("[ctl] log streamer for port %d exited (status 0x%x); restarting\n",
                          ports[i].index, st);
-                    ports[i].streamer = -1;
                     start_streamer(&ports[i]);
                 }
         }
@@ -484,18 +521,28 @@ static void trb_state(const char *path, int *hwo, int *deq)
     }
 }
 
-// Interrupt count of the "dwc3" action whose hwirq matches this UDC's DT interrupt.
-static long irq_count(const char *udc)
+// The DT interrupt number (cell 1 of the first 3-cell AIC specifier) of a device node.
+static long dt_irq(const char *of_node_dir)
 {
-    char path[320], text[256];
+    char path[320];
     unsigned char cells[12];
-    snprintf(path, sizeof path, SYSROOT "/sys/class/udc/%.63s/device/of_node/interrupts", udc);
+    snprintf(path, sizeof path, "%s/interrupts", of_node_dir);
     int f = open(path, O_RDONLY | O_CLOEXEC);
     if (f < 0) return -1;
     ssize_t n = read(f, cells, sizeof cells);
     close(f);
     if (n != 12) return -1;
-    unsigned long want = (unsigned long)cells[4] << 24 | cells[5] << 16 | cells[6] << 8 | cells[7];
+    return (long)cells[4] << 24 | cells[5] << 16 | cells[6] << 8 | cells[7];
+}
+
+// Interrupt count of the /sys/kernel/irq entry whose actions name `action` and whose
+// AIC hwirq (bits 15:0 = the DT interrupt) is `want`; -1 if none. *linux_irq gets its
+// number. A shared line lists its actions comma-separated, so the match is by substring.
+static long irq_count_of(const char *action, long want, int *linux_irq)
+{
+    char path[320], text[256];
+    if (linux_irq) *linux_irq = -1;
+    if (want < 0) return -1;
     DIR *d = opendir(SYSROOT "/sys/kernel/irq");
     if (!d) return -1;
     long total = -1;
@@ -503,11 +550,13 @@ static long irq_count(const char *udc)
     while (total < 0 && (e = readdir(d))) {
         if (e->d_name[0] == '.') continue;
         snprintf(path, sizeof path, SYSROOT "/sys/kernel/irq/%s/actions", e->d_name);
-        if (strcmp(get(path, text, sizeof text), "dwc3")) continue;
+        get(path, text, sizeof text);
+        if (!strstr(text, action)) continue;
         snprintf(path, sizeof path, SYSROOT "/sys/kernel/irq/%s/hwirq", e->d_name);
-        if ((strtoul(get(path, text, sizeof text), 0, 10) & 0xffff) != want) continue;
+        if ((long)(strtoul(get(path, text, sizeof text), 0, 10) & 0xffff) != want) continue;
         snprintf(path, sizeof path, SYSROOT "/sys/kernel/irq/%s/per_cpu_count", e->d_name);
         get(path, text, sizeof text);
+        if (linux_irq) *linux_irq = atoi(e->d_name);
         total = 0;
         for (char *s = text; *s; s++) {
             total += strtol(s, &s, 10);
@@ -518,20 +567,241 @@ static long irq_count(const char *udc)
     return total;
 }
 
+// Interrupt count of the "dwc3" action whose hwirq matches this UDC's DT interrupt.
+static long irq_count(const char *udc)
+{
+    char dir[320];
+    snprintf(dir, sizeof dir, SYSROOT "/sys/class/udc/%.63s/device/of_node", udc);
+    return irq_count_of("dwc3", dt_irq(dir), NULL);
+}
+
+// ---- the DART behind each core ---------------------------------------------------------
+// The kernel links a DMA master to its IOMMU: <dwc3 device>/iommu -> the DART's class
+// device (…/<dart>.iommu/iommu/apple-dart.<dart>.iommu), and the dwc3 node's iommus cells
+// give the stream id. From the DART device's of_node come its fault interrupt and base.
+// The ADT pairs that instance with instance 0 of the same dart-usbN node on the same
+// interrupt; the Stage-B DT leaves instance 0 out, so known_udc supplies its base.
+static void dart_identify(struct port *p)
+{
+    struct dartinfo *d = &p->dart;
+    char path[320], target[320], of_dir[384];
+    unsigned char cells[8];
+    memset(d, 0, sizeof *d);
+    d->linux_irq = -1;
+    snprintf(path, sizeof path, SYSROOT "/sys/class/udc/%.63s/device/iommu", p->udc);
+    if (!realpath(path, target)) return;
+    const char *name = strrchr(target, '/');
+    if (!name) return;
+    snprintf(d->name, sizeof d->name, "%s", name + 1);
+    // …/<dart platform device>/iommu/apple-dart.<dart>.iommu: two levels up is the device.
+    char *cut = strrchr(target, '/');
+    if (cut) *cut = 0;
+    cut = strrchr(target, '/');
+    if (cut) *cut = 0;
+    const char *devname = strrchr(target, '/');
+    if (!devname) return;
+    d->base = strtoull(devname + 1, NULL, 16);
+    snprintf(of_dir, sizeof of_dir, "%s/of_node", target);
+    long irq = dt_irq(of_dir);
+    if (irq < 0) return;
+    d->hwirq = (unsigned)irq;
+    snprintf(path, sizeof path, SYSROOT "/sys/class/udc/%.63s/device/of_node/iommus", p->udc);
+    int f = open(path, O_RDONLY | O_CLOEXEC);
+    if (f >= 0) {
+        if (read(f, cells, sizeof cells) == 8)
+            d->sid = (unsigned)cells[4] << 24 | cells[5] << 16 | cells[6] << 8 | cells[7];
+        close(f);
+    }
+    for (unsigned i = 0; i < sizeof known_udc / sizeof *known_udc; i++)
+        if (!strcmp(p->udc, known_udc[i].udc) && known_udc[i].dart1 == d->base)
+            d->base0 = known_udc[i].dart0;
+    d->known = 1;
+}
+
+// Count of the DART fault interrupt behind this port (and its Linux number); -1 if unknown.
+static long dart_irq_count(struct port *p)
+{
+    if (!p->dart.known) return -1;
+    return irq_count_of("apple-dart fault handler", p->dart.hwirq, &p->dart.linux_irq);
+}
+
+// One line: which dwc3 interrupt, DART instance, stream and fault interrupt serve the port.
+static void dart_identity_text(struct port *p, struct buf *b)
+{
+    char dir[320];
+    int dwc3_irq = -1;
+    snprintf(dir, sizeof dir, SYSROOT "/sys/class/udc/%.63s/device/of_node", p->udc);
+    long hw = dt_irq(dir);
+    irq_count_of("dwc3", hw, &dwc3_irq);
+    add(b, "[usb%d] %s irq %lx(%d)", p->index, p->udc, hw < 0 ? 0 : hw, dwc3_irq);
+    if (!p->dart.known) {
+        add(b, " no iommu link in sysfs\n");
+        return;
+    }
+    dart_irq_count(p);
+    add(b, " dart1 %llx sid %u fault irq %x(%d);", p->dart.base, p->dart.sid, p->dart.hwirq, p->dart.linux_irq);
+    if (p->dart.base0) add(b, " dart0 %llx not in DT\n", p->dart.base0);
+    else add(b, " dart0 unknown (%s)\n", p->dart.name);
+}
+
+// Registers of one t8110-class DART instance, read through /dev/mem: 32-bit loads only,
+// never a write. Offsets from drivers/iommu/apple-dart.c (DART_T8110_*): PARAMS1-4 0x00-0x0c,
+// TLB_CMD 0x80, ERROR 0x100, ERROR_MASK 0x104, ERROR_ADDR_LO/HI 0x170/0x174, ERROR_STREAMS
+// 0x1c0, PROTECT 0x200, ENABLE_STREAMS 0xc00, TCR 0x1000 + 4*sid, TTBR 0x1400 + 4*sid.
+// A DART whose PARAMS3 bits 15:0 report version 2.2 or later keeps its fault state elsewhere
+// (dart-diag/rea-dart-2026-10-18.md; the boot040 kernel patch part 2 uses the same offsets):
+// pending bitmap 0x4000, mask 0x4060, control 0x210, protection status 0x704 (0x4204 from
+// 2.4), and a 64-byte block per stream at 0x8000 + 0x40*sid (summary +0, address +8/+0xc).
+// Those are read only when the version says so; the instance window is 0xc000 (ADT reg).
+struct dart_regs {
+    unsigned params[4], tlb, err, mask, addr_lo, addr_hi, streams, prot, enable, tcr[2], ttbr[2];
+    unsigned version, g22_pending, g22_mask, ctrl, prot_status;   // v2.2 layout, else 0
+    struct { unsigned summary, addr_lo, addr_hi; } s[2];
+};
+
+static int dart_peek(unsigned long long base, struct dart_regs *r)
+{
+    int f = open(SYSROOT "/dev/mem", O_RDONLY | O_SYNC | O_CLOEXEC);
+    if (f < 0) return -errno;
+    volatile unsigned *m = mmap(NULL, 0xc000, PROT_READ, MAP_SHARED, f, (off_t)base);
+    int err = m == MAP_FAILED ? -errno : 0;
+    close(f);
+    if (err) return err;
+    for (int i = 0; i < 4; i++) r->params[i] = m[i];
+    r->tlb = m[0x80 / 4];
+    r->err = m[0x100 / 4];
+    r->mask = m[0x104 / 4];
+    r->addr_lo = m[0x170 / 4];
+    r->addr_hi = m[0x174 / 4];
+    r->streams = m[0x1c0 / 4];
+    r->prot = m[0x200 / 4];
+    r->enable = m[0xc00 / 4];
+    for (int sid = 0; sid < 2; sid++) {
+        r->tcr[sid] = m[0x1000 / 4 + sid];
+        r->ttbr[sid] = m[0x1400 / 4 + sid];
+    }
+    r->version = r->params[2] & 0xffff;
+    if (r->version >= 0x0202) {
+        r->g22_pending = m[0x4000 / 4];
+        r->g22_mask = m[0x4060 / 4];
+        r->ctrl = m[0x210 / 4];
+        r->prot_status = m[(r->version >= 0x0204 ? 0x4204 : 0x704) / 4];
+        for (int sid = 0; sid < 2; sid++) {
+            r->s[sid].summary = m[(0x8000 + 0x40 * sid) / 4];
+            r->s[sid].addr_lo = m[(0x8000 + 0x40 * sid + 0x08) / 4];
+            r->s[sid].addr_hi = m[(0x8000 + 0x40 * sid + 0x0c) / 4];
+        }
+    }
+    munmap((void *)m, 0xc000);
+    return 0;
+}
+
+// The snapshot's text: the static parameters once (with_params), then the fault and
+// translation state. ERROR bit 31 is the driver's fault flag ("FAULT"); its code bits
+// 5..0 mean read fault, write fault, no PTE, no PMD, no PGD, no TTBR; stream in 27:20.
+static void dart_regs_text(struct buf *b, int port, int inst, unsigned long long base,
+                           const struct dart_regs *r, int with_params)
+{
+    if (with_params)
+        add(b, "[usb%d] dart%d @%llx p1 %08x p2 %08x p3 %08x p4 %08x prot %x en %x\n", port, inst, base,
+            r->params[0], r->params[1], r->params[2], r->params[3], r->prot, r->enable);
+    add(b, "[usb%d] dart%d err %08x%s strm %x addr %x%08x tcr %x/%x ttbr %x/%x tlb %x mask %x\n",
+        port, inst, r->err, (r->err >> 31) ? " FAULT" : "", r->streams, r->addr_hi, r->addr_lo,
+        r->tcr[0], r->tcr[1], r->ttbr[0], r->ttbr[1], r->tlb, r->mask);
+    if (r->version >= 0x0202)   // the v2.2 fault layout: pending streams, mask, control, protection, blocks 0-1
+        add(b, "[usb%d] dart%d v%u.%u pend %x mask %x ctl %x prot %x s0 %08x@%llx s1 %08x@%llx\n", port, inst,
+            r->version >> 8, r->version & 0xff, r->g22_pending, r->g22_mask, r->ctrl, r->prot_status,
+            r->s[0].summary, (unsigned long long)r->s[0].addr_hi << 32 | r->s[0].addr_lo,
+            r->s[1].summary, (unsigned long long)r->s[1].addr_hi << 32 | r->s[1].addr_lo);
+}
+
+// Both DART instances of the port: instance 1 (the DT's, driven by the kernel) and its
+// sibling instance 0. Nothing is read unless the kernel's own iommu link confirmed the
+// instance-1 base, so an unknown UDC (the VM's dummy_udc) reads no device memory.
+static void dart_snapshot_text(struct port *p, struct buf *b, int with_params)
+{
+    struct dart_regs r;
+    memset(&r, 0, sizeof r);
+    if (!p->dart.known || !p->dart.base0) {
+        add(b, "[usb%d] dart regs not read (no confirmed DART bases for %s)\n", p->index, p->udc);
+        return;
+    }
+    unsigned long long bases[2] = { p->dart.base0, p->dart.base };
+    for (int inst = 0; inst < 2; inst++) {
+        int err = dart_peek(bases[inst], &r);
+        if (err) add(b, "[usb%d] dart%d @%llx regs n/a (%s)\n", p->index, inst, bases[inst], strerror(-err));
+        else dart_regs_text(b, p->index, inst, bases[inst], &r, with_params);
+    }
+}
+
+static void say_lines(const char *text)   // one kmsg record per line
+{
+    char copy[2048];
+    snprintf(copy, sizeof copy, "%s", text);
+    for (char *s = copy, *nl; *s && (nl = strchr(s, '\n')); s = nl + 1) {
+        char c = nl[1];
+        nl[1] = 0;
+        say(s);
+        nl[1] = c;
+    }
+}
+
+static void dart_snapshot(struct port *p, int with_params)
+{
+    char text[1024];
+    struct buf b = { text, sizeof text, 0 };
+    text[0] = 0;
+    if (p->dart.known && p->dart.base0)
+        sayf("[ctl] port %d: reading DART registers at 0x%llx and 0x%llx through /dev/mem\n", p->index,
+             p->dart.base0, p->dart.base);
+    dart_snapshot_text(p, &b, with_params);
+    say_lines(text);
+}
+
+// At bind: the DART identity line and the first register snapshot (with the parameters).
+static void port_dart_report(struct port *p)
+{
+    char text[512];
+    struct buf b = { text, sizeof text, 0 };
+    text[0] = 0;
+    dart_identify(p);
+    dart_identity_text(p, &b);
+    say(text);
+    dart_snapshot(p, 1);
+}
+
+// The fields of one controller that the short per-port line shows.
+struct keyf {
+    int ok;                              // the regdump was read
+    char link[64];
+    unsigned frame;
+    long irqs, dart_irqs;                // dwc3 and DART fault interrupt counts, -1 unknown
+    int stopped, halted, buserr, csr_timeout, evbusy;
+    unsigned buserr_lo, buserr_hi;       // GBUSERRADDR0/1 when buserr
+    int neps;
+    struct { int num, in, hwo, deq; } ep[6];
+};
+
 // Compact state of one dwc3 controller for the status line. If info is given, it also
 // gets the controller's endpoint count and FIFO sizes (static after the core's init).
-static void dwc3_state(const char *udc, struct buf *b, struct buf *info)
+// k gets the key fields; a bus error is also recorded in the port's shared stats.
+static void dwc3_state(struct port *p, struct buf *b, struct buf *info, struct keyf *k)
 {
     static char dump[32768];
+    const char *udc = p->udc;
     char dir[192], path[256], link[64], type[32];
+    memset(k, 0, sizeof *k);
+    k->irqs = k->dart_irqs = -1;
     snprintf(dir, sizeof dir, SYSROOT DEBUG_USB "/%.63s", udc);
     snprintf(path, sizeof path, "%s/regdump", dir);
     if (slurp(path, dump, sizeof dump) <= 0) {
         add(b, " dwc3 n/a");
         return;
     }
+    k->ok = 1;
     snprintf(path, sizeof path, "%s/link_state", dir);
     get(path, link, sizeof link);
+    snprintf(k->link, sizeof k->link, "%s", link[0] ? link : "?");
     unsigned gsts = 0, dctl = 0, dsts = 0, evcount = 0, alepena = 0, cmd0 = 0, cmd1 = 0;
     reg(dump, "GSTS", &gsts);
     reg(dump, "DCTL", &dctl);
@@ -540,15 +810,29 @@ static void dwc3_state(const char *udc, struct buf *b, struct buf *info)
     reg(dump, "DALEPENA", &alepena);
     reg(dump, "DEPCMD(0)", &cmd0);
     reg(dump, "DEPCMD(1)", &cmd1);
-    add(b, " dwc3 %s f%u ev%u", link[0] ? link : "?", (dsts >> 3) & 0x3fff, evcount & 0xfffc);
-    if (!(dctl & (1u << 31))) add(b, " STOPPED");          // DCTL.RUN_STOP clear
-    if (dsts & (1u << 22)) add(b, " HALTED");              // DSTS.DEVCTRLHLT
-    if (gsts & (1u << 4)) add(b, " BUSERR");               // GSTS.BUS_ERR_ADDR_VLD
-    if (gsts & (1u << 5)) add(b, " CSR-TIMEOUT");          // GSTS.CSR_TIMEOUT
-    if (evcount & (1u << 31)) add(b, " EVBUSY");           // GEVNTCOUNT.EVNT_HANDLER_BUSY
-    long irqs = irq_count(udc);
-    if (irqs >= 0) add(b, " irq%ld", irqs);
+    k->frame = (dsts >> 3) & 0x3fff;
+    k->stopped = !(dctl & (1u << 31));                     // DCTL.RUN_STOP clear
+    k->halted = !!(dsts & (1u << 22));                     // DSTS.DEVCTRLHLT
+    k->buserr = !!(gsts & (1u << 4));                      // GSTS.BUS_ERR_ADDR_VLD
+    k->csr_timeout = !!(gsts & (1u << 5));                 // GSTS.CSR_TIMEOUT
+    k->evbusy = !!(evcount & (1u << 31));                  // GEVNTCOUNT.EVNT_HANDLER_BUSY
+    if (k->buserr) {                                       // the first DMA address that failed
+        reg(dump, "GBUSERRADDR0", &k->buserr_lo);
+        reg(dump, "GBUSERRADDR1", &k->buserr_hi);
+        p->st->buserr_lo = k->buserr_lo;
+        p->st->buserr_hi = k->buserr_hi;
+        p->st->buserr = 1;
+    }
+    add(b, " dwc3 %s f%u ev%u", k->link, k->frame, evcount & 0xfffc);
+    if (k->stopped) add(b, " STOPPED");
+    if (k->halted) add(b, " HALTED");
+    if (k->buserr) add(b, " BUSERR@%llx", (unsigned long long)k->buserr_hi << 32 | k->buserr_lo);
+    if (k->csr_timeout) add(b, " CSR-TIMEOUT");
+    if (k->evbusy) add(b, " EVBUSY");
+    k->irqs = irq_count(udc);
+    if (k->irqs >= 0) add(b, " irq%ld", k->irqs);
     else add(b, " irq?");
+    k->dart_irqs = dart_irq_count(p);
     add(b, " ep0");
     depcmd(b, "o", cmd0);
     depcmd(b, "i", cmd1);
@@ -568,6 +852,13 @@ static void dwc3_state(const char *udc, struct buf *b, struct buf *info)
         if (hwo >= 0) add(b, " h%d d%d", hwo, deq);
         else add(b, " h?");
         if ((cmd & (1u << 10)) || ((cmd >> 12) & 0xf)) depcmd(b, "c", cmd);
+        if (k->neps < (int)(sizeof k->ep / sizeof *k->ep)) {
+            k->ep[k->neps].num = n >> 1;
+            k->ep[k->neps].in = n & 1;
+            k->ep[k->neps].hwo = hwo;
+            k->ep[k->neps].deq = deq;
+            k->neps++;
+        }
     }
     if (!info) return;
     unsigned id = 0, hw0 = 0, hw3 = 0, fifo = 0;
@@ -586,12 +877,51 @@ static void dwc3_state(const char *udc, struct buf *b, struct buf *info)
     if (!reg(dump, "GRXFIFOSIZ(0)", &fifo)) add(info, "; RX FIFO words %u", fifo & 0xffff);
 }
 
+// The short line of one port, about 100 columns, for the film: UDC state, link, SOF frame,
+// the dwc3 and DART fault interrupt counts, the bytes accepted and queued (or "nostream"
+// once the streamer was stopped), every enabled endpoint's hardware-owned TRBs and dequeue
+// index, the flags, a bus error with its address last. The record count and the EP0
+// commands stay in the long line. Three endpoints, two halt flags and a bus error at once
+// can reach about 105 columns.
+static void brief_line(struct buf *b, struct port *p, const char *state, const struct keyf *k, int with_dwc3)
+{
+    add(b, "[usb%d] %s", p->index, state[0] ? state : "?");
+    if (!p->bound) add(b, " unbound");
+    else if (!p->tty[0]) add(b, " no-tty");
+    if (with_dwc3 && k->ok) {
+        add(b, " %s f%u", k->link, k->frame);
+        if (k->irqs >= 0) add(b, " irq%ld", k->irqs);
+        else add(b, " irq?");
+        if (k->dart_irqs >= 0) add(b, " dart%ld", k->dart_irqs);
+        else add(b, " dart?");
+    }
+    if (p->stopped) add(b, " nostream");                  // stopped at a bus error; counters frozen
+    else if (p->bound && p->tty[0]) add(b, " %luB q%d", p->st->bytes, p->st->queued);
+    if (!with_dwc3) return;
+    if (!k->ok) {
+        add(b, " dwc3 n/a");
+        return;
+    }
+    for (int i = 0; i < k->neps; i++) {
+        add(b, " %d%c", k->ep[i].num, k->ep[i].in ? 'i' : 'o');
+        if (k->ep[i].hwo >= 0) add(b, " h%d d%d", k->ep[i].hwo, k->ep[i].deq);
+        else add(b, " h?");
+    }
+    if (k->stopped) add(b, " STOPPED");
+    if (k->halted) add(b, " HALTED");
+    if (k->csr_timeout) add(b, " CSR-TIMEOUT");
+    if (k->evbusy) add(b, " EVBUSY");
+    if (k->buserr) add(b, " BUSERR@%llx", (unsigned long long)k->buserr_hi << 32 | k->buserr_lo);
+}
+
 // The status line: per port, the UDC state, the log stream's counters (records,
 // bytes accepted, bytes still queued in the M5's FIFO) and, with with_dwc3, the
-// controller state; pre gets the one-time controller lines that come before it.
-static void build_status(struct buf *line, struct buf *pre, int with_dwc3)
+// controller state; pre gets the one-time controller lines that come before it, and
+// brief one short line per port (printed between the heartbeat and the long line).
+static void build_status(struct buf *line, struct buf *pre, struct buf *brief, int with_dwc3)
 {
     char state[64], path[160], text[256];
+    struct keyf k;
     add(line, "[ctl] %s", nports ? "" : "no UDC");
     for (int i = 0; i < nports; i++) {
         struct port *p = &ports[i];
@@ -601,32 +931,56 @@ static void build_status(struct buf *line, struct buf *pre, int with_dwc3)
         if (!p->bound) add(line, " unbound");
         else if (!p->tty[0]) add(line, " no-tty");
         else add(line, " log %luL %luB q%d", p->st->records, p->st->bytes, p->st->queued);
-        if (!with_dwc3) continue;
-        struct buf info = { text, sizeof text, 0 };
-        text[0] = 0;
-        dwc3_state(p->udc, line, p->st->info_done ? NULL : &info);
-        if (info.len) {
-            add(pre, "[ctl] port%d dwc3: %s\n", p->index, text);
-            p->st->info_done = 1;
+        memset(&k, 0, sizeof k);
+        k.irqs = k.dart_irqs = -1;
+        if (with_dwc3) {
+            struct buf info = { text, sizeof text, 0 };
+            text[0] = 0;
+            dwc3_state(p, line, p->st->info_done ? NULL : &info, &k);
+            if (info.len) {
+                add(pre, "[ctl] port%d dwc3: %s\n", p->index, text);
+                p->st->info_done = 1;
+            }
         }
+        brief_line(brief, p, state, &k, with_dwc3);
+        add(brief, "\n");
     }
 }
 
 static void status_line(int with_dwc3)
 {
-    char line[1000], pre[1024];
-    struct buf b = { line, sizeof line - 1, 0 }, p = { pre, sizeof pre, 0 };   // room for '\n'
-    line[0] = pre[0] = 0;
-    build_status(&b, &p, with_dwc3);
+    char line[1000], pre[1024], brief[1024];
+    struct buf b = { line, sizeof line - 1, 0 }, p = { pre, sizeof pre, 0 }, q = { brief, sizeof brief, 0 };
+    line[0] = pre[0] = brief[0] = 0;                                        // room for '\n'
+    build_status(&b, &p, &q, with_dwc3);
     line[b.len++] = '\n';
     line[b.len] = 0;
-    for (char *s = pre, *nl; *s && (nl = strchr(s, '\n')); s = nl + 1) {   // one kmsg record each
-        char c = nl[1];
-        nl[1] = 0;
-        say(s);
-        nl[1] = c;
-    }
+    say_lines(pre);     // one kmsg record each
+    say_lines(brief);
     say(line);
+}
+
+// The first bus error on a port: its log streamer is stopped for good (a stalled bulk
+// path no longer gets the kernel log copied into it, and the later kernel messages are
+// read on the console), and both DART instances' registers are shown while the fault is
+// fresh. The streamer's death is reaped without a restart (stopped).
+static void bus_error_text(struct port *p, struct buf *b)
+{
+    add(b, "[ctl] port %d: dwc3 bus error at DMA address 0x%llx: log streamer %s; kernel messages "
+        "stay on the console\n", p->index, (unsigned long long)p->st->buserr_hi << 32 | p->st->buserr_lo,
+        p->streamer > 0 ? "stopped" : "not running");
+}
+
+static void on_bus_error(struct port *p)
+{
+    char text[256];
+    struct buf b = { text, sizeof text, 0 };
+    text[0] = 0;
+    p->stopped = 1;
+    bus_error_text(p, &b);
+    if (p->streamer > 0) kill(p->streamer, SIGKILL);
+    say(text);
+    dart_snapshot(p, 0);
 }
 
 // The status line is built in a child that also reads the dwc3 state, so a debugfs read
@@ -657,6 +1011,8 @@ static void status(int beat)
                 sayf("[ctl] dwc3 status reader failed (status 0x%x)\n", st);
                 status_line(0);
             }
+            for (int j = 0; j < nports; j++)   // the child records a bus error in shared memory
+                if (ports[j].st->buserr && !ports[j].stopped) on_bus_error(&ports[j]);
             return;
         }
         usleep(10000);
@@ -691,7 +1047,7 @@ static void control_channel_init(void)
     int err = set_up("lo");
     if (err) sayf("[ctl] lo up failed: %s\n", strerror(-err));
     say("\n[ctl] USB control channel: GSER bulk-only kernel log port per UDC, no interrupt endpoint, "
-        "no network\n");
+        "no network; boot040: DART identity and registers, bus-error address, short [usbN] lines\n");
     for (int i = 0; i < 40 && !nports; i++) {   // up to 10 s for the first UDC
         scan_udcs();
         if (!nports) usleep(250000);

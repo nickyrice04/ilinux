@@ -13,7 +13,11 @@ must be what this tree's code creates and prints:
   * trb_ring lines have nine comma-separated fields and end in the E/D markers;
   * /sys/kernel/irq/<n>/{actions,hwirq,per_cpu_count} exist, the Apple AIC puts the
     IRQ number in the low 16 bits of hwirq, and dwc3 names its action "dwc3";
-  * the gadget's gser function has one vendor-class interface with two bulk endpoints.
+  * the gadget's gser function has one vendor-class interface with two bulk endpoints;
+  * boot040: the regdump has GBUSERRADDR0/1 (the first failing DMA address), the DART
+    driver registers its shared fault interrupt as "apple-dart fault handler", the IOMMU
+    core links a master to its IOMMU as <device>/iommu (iommu-sysfs.c), and the t8110
+    register offsets init.c reads through /dev/mem are the driver's DART_T8110_* values.
 Writes the regdump names (one per line) for the fixture test and prints the facts.
 """
 import re
@@ -146,6 +150,69 @@ def main(tree, init_c, names_out):
         fail("no configfs function named gser")
     facts.append("gser: one interface, class 0xff, two bulk endpoints, no interrupt endpoint, "
                  "no setup (class request) handler")
+
+    # boot040: the bus-error address registers, the DART fault IRQ, the iommu link and the
+    # register offsets of the read-only DART snapshot.
+    for name in ("GBUSERRADDR0", "GBUSERRADDR1"):
+        if name not in names or 'reg(dump, "%s"' % name not in init:
+            fail("regdump or init.c lacks " + name)
+    core_h = (tree / "drivers/usb/dwc3/core.h").read_text()
+    if "#define DWC3_GSTS_BUS_ERR_ADDR_VLD\tBIT(4)" not in core_h:
+        fail("GSTS.BUS_ERR_ADDR_VLD is not bit 4")
+    dart = (tree / "drivers/iommu/apple-dart.c").read_text()
+    if 'request_irq(dart->irq, apple_dart_irq, IRQF_SHARED,\n\t\t\t  "apple-dart fault handler", dart)' not in dart:
+        fail('the DART fault interrupt is not requested shared as "apple-dart fault handler"')
+    if '"apple-dart fault handler"' not in init:
+        fail("init.c does not look for the apple-dart fault handler action")
+    offsets = {"DART_T8110_TLB_CMD": "0x80", "DART_T8110_ERROR": "0x100", "DART_T8110_ERROR_MASK": "0x104",
+               "DART_T8110_ERROR_ADDR_LO": "0x170", "DART_T8110_ERROR_ADDR_HI": "0x174",
+               "DART_T8110_ERROR_STREAMS": "0x1c0", "DART_T8110_PROTECT": "0x200",
+               "DART_T8110_ENABLE_STREAMS": "0xc00", "DART_T8110_TCR": "0x1000", "DART_T8110_TTBR": "0x1400"}
+    for name, value in offsets.items():
+        if not re.search(r"#define %s\s+%s\b" % (name, value), dart):
+            fail("%s is not %s in apple-dart.c" % (name, value))
+    peek = function_body(init, "dart_peek")
+    for value in ("0x80", "0x100", "0x104", "0x170", "0x174", "0x1c0", "0x200", "0xc00", "0x1000", "0x1400"):
+        if "m[%s / 4" % value not in peek:
+            fail("init.c's dart_peek does not read offset " + value)
+    # boot040 part 2: the v2.2 fault layout, in the patched driver and in init.c, gated on PARAMS3 bits 15:0.
+    g22 = {"DART_T8110_PARAMS3_VERSION": "GENMASK(15, 0)", "DART_T8110_VERSION_2_2": "0x0202",
+           "DART_T8110_VERSION_2_4": "0x0204", "DART_T8110_CTRL": "0x210", "DART_T8110_G22_PROT_STATUS": "0x704",
+           "DART_T8110_G24_PROT_STATUS": "0x4204", "DART_T8110_G22_PENDING": "0x4000",
+           "DART_T8110_G22_ERROR_MASK": "0x4060", "DART_T8110_G22_ADDR_LO": "0x08", "DART_T8110_G22_ADDR_HI": "0x0c"}
+    for name, value in g22.items():
+        if not re.search(r"#define %s\s+%s" % (name, re.escape(value)), dart):
+            fail("%s is not %s in the patched apple-dart.c" % (name, value))
+    if "#define DART_T8110_G22_STREAM_BLOCK(sid) (0x8000 + 0x40 * (sid))" not in dart:
+        fail("the v2.2 stream block is not at 0x8000 + 0x40*sid in the patched apple-dart.c")
+    for value in ("m[0x4000 / 4]", "m[0x4060 / 4]", "m[0x210 / 4]", "? 0x4204 : 0x704) / 4]",
+                  "m[(0x8000 + 0x40 * sid) / 4]", "m[(0x8000 + 0x40 * sid + 0x08) / 4]",
+                  "m[(0x8000 + 0x40 * sid + 0x0c) / 4]"):
+        if value not in peek:
+            fail("init.c's dart_peek does not read the v2.2 register " + value)
+    if "if (r->version >= 0x0202)" not in peek or "r->version = r->params[2] & 0xffff;" not in peek:
+        fail("init.c's v2.2 reads are not gated on PARAMS3 bits 15:0 >= 0x0202")
+    if "mmap(NULL, 0xc000" not in peek:
+        fail("init.c's dart_peek does not map the 0xc000 instance window")
+    if "writel" in peek or "m[" in peek.split("munmap")[-1] or peek.count("= m[") + peek.count("] = m[") < 10 \
+            or re.search(r"m\[[^\]]*\]\s*=", peek):
+        fail("init.c's dart_peek must only read device memory")
+    if "#define DART_T8110_ERROR_FLAG BIT(31)" not in dart or "#define DART_T8110_ERROR_STREAM GENMASK(27, 20)" not in dart:
+        fail("the t8110 error flag or stream field moved")
+    if "readl(dart->regs + DART_T8110_PARAMS3)" not in dart or "DART_T8110_PARAMS3 0x08" not in dart:
+        fail("PARAMS3 is not at 0x08")
+    sysfs = (tree / "drivers/iommu/iommu-sysfs.c").read_text()
+    if 'sysfs_create_link_nowarn(&link->kobj, &iommu->dev->kobj, "iommu")' not in sysfs \
+            or 'iommu->dev->parent = parent;' not in sysfs or 'iommu->dev->class = &iommu_class;' not in sysfs:
+        fail("the IOMMU core no longer links <device>/iommu to a class device under the IOMMU's parent")
+    if '"/sys/class/udc/%.63s/device/iommu"' not in init:
+        fail("init.c does not follow <dwc3>/iommu")
+    facts.append("boot040: GBUSERRADDR0/1 in the regdump; GSTS bit 4 = BUS_ERR_ADDR_VLD; DART fault IRQ shared as "
+                 '"apple-dart fault handler"; <device>/iommu links to the DART class device under its platform '
+                 "device; dart_peek offsets = DART_T8110_{TLB_CMD,ERROR,ERROR_MASK,ERROR_ADDR_LO/HI,ERROR_STREAMS,"
+                 "PROTECT,ENABLE_STREAMS,TCR,TTBR}, reads only; v2.2 layout (patched driver and init.c, gated on "
+                 "PARAMS3 bits 15:0): PENDING 0x4000, MASK 0x4060, CTRL 0x210, PROT_STATUS 0x704/0x4204, blocks "
+                 "0x8000 + 0x40*sid (addr +0x08/+0x0c)")
     configfs = (tree / "drivers/usb/gadget/configfs.c").read_text()
     store = function_body(configfs, "gadget_dev_desc_bcdDevice_store")
     if "is_valid_bcd(bcdDevice)" not in store or "if ((bcd_val & 0xf) > 9)" not in function_body(configfs, "is_valid_bcd"):

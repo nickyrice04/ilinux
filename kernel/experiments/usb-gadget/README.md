@@ -1,4 +1,4 @@
-# USB control channel (boot036, revised as boot038 and boot039)
+# USB control channel (boot036, revised as boot038, boot039 and boot040)
 
 Roadmap Phase 3, step 2: a network link into native Linux over the same USB
 cable the M1 uses for the m1n1 proxy, so the M1 can run commands, read logs and
@@ -69,6 +69,38 @@ everything but the gadget and the status line:
 * **No network:** dropbear still runs, on loopback only. The initramfs differs from
   boot036's in `/init` only (packager-enforced).
 
+## boot040: the first fault on the screen (after attempt 21)
+
+Attempt 21 read 36,909 bytes over the bulk-IN endpoint, then port 1's dwc3 flagged a bus
+error, its interrupts stopped and the DART fault interrupt stormed until Linux disabled
+it, without one fault report. boot040 keeps boot039's gadget, DT and config and adds
+only diagnostics, so the next film shows the first fault instead of the storm:
+
+* **Image:** `dart-diag/` patches the apple-dart driver twice. Part 1 makes the t8110
+  fault handler print the raw ERROR, ERROR_MASK, ERROR_STREAMS, ERROR_ADDR and TLB_CMD
+  when the interrupt arrives without the error flag (count-limited), acknowledge a pending
+  ERROR or stream bit and otherwise return IRQ_NONE, and name each t8110 instance at probe
+  (version, PARAMS, Linux fault IRQ). Part 2, written after the REA of this Mac's macOS DART
+  driver (`dart-diag/rea-dart-2026-10-18.md`: the fault-register layout switches at DART
+  version 2.2, which Linux does not know), reports and acknowledges faults in that layout
+  when, and only when, PARAMS3 reports version 2.2 or later, with a bound of 256
+  acknowledged interrupts per instance. Nothing in translation, protection or the TLB-flush
+  path changes (`dart-diag/test_dart_diag.py`, W=1 build, digest-gated two-stage `apply.py`).
+* **`/init`:** `BUSERR@<GBUSERRADDR1:0>` in the status line; at bind an identity line per
+  port (dwc3 IRQ, DART instance, stream, fault IRQ, the sibling instance the DT leaves
+  out, all from sysfs) and a read-only register snapshot of both DART instances through
+  `/dev/mem` (both fault layouts, chosen by the version the DART reports), repeated at the
+  first bus error; a short `[usbN]` line per port each heartbeat (about 100 columns: state,
+  link, frame, dwc3 and DART interrupt counts, bytes, queue, ring state, flags, bus-error
+  address); the log streamer of a port stops for good at its first bus error.
+* **Audit** of the Linux DART driver against the ADT, Asahi's wiring and m1n1
+  (`dart-diag/README.md`, findings D1-D7 with evidence and confidence) and the fix
+  candidates A-D it leaves, each tied to the evidence boot040 would show.
+
+Report: `native/boot/boot040-dart-fault-2026-10-18.md`. Packaging: `make-package.py
+--name ilinux-j716c-boot040` (Image, `/init` and its source may differ from boot039;
+`test_boot040_package.py`).
+
 ## Address plan
 
 Gadget N (N = 1..3 for `2a2280000.usb`, `2aa280000.usb`, `382280000.usb`, the
@@ -106,8 +138,9 @@ macOS host. Those are attempt 17's questions.
 ## Files
 
 `init.c` (packaged as `diag-init.c`), `make_stage_b_dt.py`,
-`stage_initramfs.py`, `elf_pages.py`, `selftest/`, `virtualization/jobs/041-usb-gadget/`,
-`native/boot/usb_dt.py`, `native/boot/control_channel.py`.
+`stage_initramfs.py`, `elf_pages.py`, `selftest/`, `dart-diag/` (boot040),
+`virtualization/jobs/041-usb-gadget/`, `native/boot/usb_dt.py`,
+`native/boot/control_channel.py`.
 
 `authorized_keys` here is the M1's own public key (commit `a6717b0`,
 `SHA256:o7wtpNY0…`); job 041 builds the shipped initramfs with it, and without

@@ -1,0 +1,107 @@
+--- a/drivers/iommu/apple-dart.c
++++ b/drivers/iommu/apple-dart.c
+@@ -226,6 +226,10 @@
+ 	u32 supports_bypass : 1;
+ 	u32 four_level : 1;
+ 	u32 locked : 1;
++
++	/* iLinux boot040 diagnostics (t6050): fault interrupts seen by this instance */
++	u32 faults_reported;
++	u32 irqs_without_flag;
+ 
+ 	dma_addr_t dma_min;
+ 	dma_addr_t dma_max;
+@@ -1258,7 +1262,23 @@
+ 	writel(error, dart->regs + DART_T8020_ERROR);
+ 	return IRQ_HANDLED;
+ }
++
++/*
++ * iLinux boot040 diagnostics (t6050, kernel/experiments/usb-gadget/dart-diag):
++ * the per-stream error bitmap, read for the fault report and for the case below.
++ */
++static u32 apple_dart_t8110_error_streams(struct apple_dart *dart, u32 *words, int max)
++{
++	int n = min_t(int, BITS_TO_U32(dart->num_streams), max), i;
++	u32 any = 0;
+ 
++	for (i = 0; i < n; i++) {
++		words[i] = readl(dart->regs + DART_T8110_ERROR_STREAMS + 4 * i);
++		any |= words[i];
++	}
++	return any;
++}
++
+ static irqreturn_t apple_dart_t8110_irq(int irq, void *dev)
+ {
+ 	struct apple_dart *dart = dev;
+@@ -1269,9 +1289,38 @@
+ 	u32 addr_hi = readl(dart->regs + DART_T8110_ERROR_ADDR_HI);
+ 	u64 addr = addr_lo | (((u64)addr_hi) << 32);
+ 	u8 stream_idx = FIELD_GET(DART_T8110_ERROR_STREAM, error);
++	u32 streams[2] = { 0, 0 };
++	u32 any_stream = apple_dart_t8110_error_streams(dart, streams, 2);
+ 
+-	if (!(error & DART_T8110_ERROR_FLAG))
+-		return IRQ_NONE;
++	if (!(error & DART_T8110_ERROR_FLAG)) {
++		/*
++		 * iLinux boot040 (t6050): in attempt 21 this line fired with the
++		 * flag clear until the kernel disabled it, and no fault was ever
++		 * reported. Show the raw registers, rate-limited by count, and
++		 * acknowledge whatever is pending: a nonzero ERROR is written
++		 * back (the driver's write-one-to-clear model) and set stream
++		 * bits are cleared. Nothing pending means this instance did not
++		 * raise the line (its sibling instance shares it), so IRQ_NONE
++		 * keeps the kernel's spurious-interrupt protection in force.
++		 * Translation and protection settings are never touched here.
++		 */
++		u32 n = ++dart->irqs_without_flag;
++
++		if (n <= 4 || n % 25000 == 0)
++			dev_err(dart->dev,
++				"fault IRQ %d without the error flag (#%u): ERROR 0x%08x MASK 0x%08x STREAMS 0x%08x 0x%08x ADDR 0x%llx TLB_CMD 0x%08x\n",
++				irq, n, error,
++				readl(dart->regs + DART_T8110_ERROR_MASK),
++				streams[0], streams[1], addr,
++				readl(dart->regs + DART_T8110_TLB_CMD));
++		if (!error && !any_stream)
++			return IRQ_NONE;
++		if (error)
++			writel(error, dart->regs + DART_T8110_ERROR);
++		for (int i = 0; i < BITS_TO_U32(dart->num_streams); i++)
++			writel(U32_MAX, dart->regs + DART_T8110_ERROR_STREAMS + 4 * i);
++		return IRQ_HANDLED;
++	}
+ 
+ 	/* there should only be a single bit set but let's use == to be sure */
+ 	if (error_code == DART_T8110_ERROR_READ_FAULT)
+@@ -1289,10 +1338,12 @@
+ 	else
+ 		fault_name = "unknown";
+ 
++	dart->faults_reported++;
+ 	dev_err_ratelimited(
+ 		dart->dev,
+-		"translation fault: status:0x%x stream:%d code:0x%x (%s) at 0x%llx",
+-		error, stream_idx, error_code, fault_name, addr);
++		"translation fault: status:0x%x stream:%d code:0x%x (%s) at 0x%llx (fault #%u, IRQ %d, streams 0x%08x 0x%08x)",
++		error, stream_idx, error_code, fault_name, addr,
++		dart->faults_reported, irq, streams[0], streams[1]);
+ 
+ 	writel(error, dart->regs + DART_T8110_ERROR);
+ 	for (int i = 0; i < BITS_TO_U32(dart->num_streams); i++)
+@@ -1384,6 +1435,13 @@
+ 		dart->oas = FIELD_GET(DART_T8110_PARAMS3_PA_WIDTH, dart_params[2]);
+ 		dart->num_streams = FIELD_GET(DART_T8110_PARAMS4_NUM_SIDS, dart_params[3]);
+ 		dart->four_level = dart->ias > 36;
++		/* iLinux boot040 diagnostics (t6050): name the instance on the console */
++		dev_info(dev, "t8110-class DART v%lu.%lu: PARAMS 0x%08x 0x%08x 0x%08x 0x%08x, %lu clients, fault IRQ %d, ERROR 0x%08x\n",
++			 FIELD_GET(DART_T8110_PARAMS3_VER_MAJ, dart_params[2]),
++			 FIELD_GET(DART_T8110_PARAMS3_VER_MIN, dart_params[2]),
++			 dart_params[0], dart_params[1], dart_params[2], dart_params[3],
++			 FIELD_GET(DART_T8110_PARAMS4_NUM_CLIENTS, dart_params[3]),
++			 dart->irq, readl(dart->regs + DART_T8110_ERROR));
+ 		break;
+ 	}
+ 

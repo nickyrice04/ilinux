@@ -1,5 +1,5 @@
-"""boot036 config and initramfs contract, boot039's bulk-only init: the expected payload passes,
-deviations fail closed."""
+"""boot036 config and initramfs contract, boot039's bulk-only init, boot040's DART diagnostics:
+the expected payload passes, deviations fail closed."""
 import gzip
 from pathlib import Path
 import struct
@@ -15,6 +15,7 @@ BOOT035_CONFIG = HERE.parents[1] / "build/native-boot035/verified/kernel.config"
 INIT_C = HERE.parents[1] / "kernel/experiments/usb-gadget/init.c"
 BOOT036 = HERE.parents[1] / "build/native-boot036/verified"
 BOOT039 = HERE.parents[1] / "build/native-boot039/verified"
+BOOT040 = HERE.parents[1] / "build/native-boot040/verified"
 
 
 def static_elf():
@@ -152,6 +153,43 @@ class BulkOnlyInitTests(unittest.TestCase):
         with self.assertRaises(ValueError):   # boot036's own init is EEM
             cc.check_bulk_only_init((BOOT036 / "diag-init.c").read_bytes(),
                                     cc.cpio_entries((BOOT036 / "initramfs-stage-b.cpio.gz").read_bytes())["init"][3])
+
+
+class DartDiagTests(unittest.TestCase):
+    """boot040: the Image carries the apple-dart fault-report patch and /init the DART diagnostics."""
+    IMAGE = b"\x00" * 64 + b"".join(text + b"\0" for text in cc.DART_DIAG_IMAGE_STRINGS) + b"IKCFG_ST"
+    INIT = b"\x7fELF" + BulkOnlyInitTests.BINARY + b"".join(text + b"\0" for text in cc.DART_DIAG_INIT_STRINGS)
+
+    def test_expected_pass(self):
+        cc.check_dart_diag_image(self.IMAGE)
+        cc.check_dart_diag_init(self.INIT)
+
+    def test_deviations(self):
+        for text in cc.DART_DIAG_IMAGE_STRINGS:
+            with self.subTest(image_without=text[:30]), self.assertRaises(ValueError):
+                cc.check_dart_diag_image(self.IMAGE.replace(text, text[:-1] + b"?"))
+        for text in cc.DART_DIAG_INIT_STRINGS:
+            with self.subTest(init_without=text[:30]), self.assertRaises(ValueError):
+                cc.check_dart_diag_init(self.INIT.replace(text, text[:-1] + b"?"))
+        with self.subTest(case="boot039-style init"), self.assertRaises(ValueError):
+            cc.check_dart_diag_init(b"\x7fELF" + BulkOnlyInitTests.BINARY)
+
+    @unittest.skipUnless((BOOT040 / "Image").is_file() and (BOOT039 / "Image").is_file(),
+                         "boot039/boot040 not extracted in build/")
+    def test_real_boot040_package(self):
+        cc.check_dart_diag_image((BOOT040 / "Image").read_bytes())
+        blob = (BOOT040 / "initramfs-stage-b.cpio.gz").read_bytes()
+        init = cc.cpio_entries(blob)["init"][3]
+        cc.check_bulk_only_init((BOOT040 / "diag-init.c").read_bytes(), init)
+        cc.check_dart_diag_init(init)
+        cc.check_init_only_delta((BOOT039 / "initramfs-stage-b.cpio.gz").read_bytes(), blob)
+        with self.assertRaises(ValueError):   # boot039's Image has no DART patch
+            cc.check_dart_diag_image((BOOT039 / "Image").read_bytes())
+        with self.assertRaises(ValueError):   # boot039's init has no DART diagnostics
+            cc.check_dart_diag_init(cc.cpio_entries((BOOT039 / "initramfs-stage-b.cpio.gz").read_bytes())["init"][3])
+        self.assertEqual((BOOT040 / "kernel.config").read_bytes(), (BOOT039 / "kernel.config").read_bytes())
+        self.assertEqual((BOOT040 / "t6050-j716c-stage-b.dtb").read_bytes(),
+                         (BOOT039 / "t6050-j716c-stage-b.dtb").read_bytes())
 
 
 class ConfigTests(unittest.TestCase):

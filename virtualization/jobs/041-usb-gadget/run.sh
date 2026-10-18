@@ -1,9 +1,14 @@
 #!/bin/bash
-# Job 041: the USB control channel candidates boot036 (EEM), boot038 (ACM + ECM) and boot039
-# (gser, bulk only), from kernel/experiments/usb-gadget; the Image, DT and config are the
-# same for all three, and init.c is the current candidate's (boot039).
+# Job 041: the USB control channel candidates boot036 (EEM), boot038 (ACM + ECM), boot039
+# (gser, bulk only) and boot040 (boot039 plus the DART fault diagnostics), from
+# kernel/experiments/usb-gadget; the DT and config are the same for all four, init.c is the
+# current candidate's (boot040), and since boot040 the Image carries the apple-dart
+# fault-report patch (kernel/experiments/usb-gadget/dart-diag, digest-gated).
 #  1. Image: the boot034 tree (its Image is boot035's) with USB_LIBCOMPOSITE=y and
 #     USB_CONFIGFS=y; the config delta is checked by native/boot/control_channel.py.
+#     boot040: plus dart-diag/apply.py on drivers/iommu/apple-dart.c (reports and
+#     acknowledges a fault interrupt the t8110 handler does not recognise; no change to
+#     translation or protection); the object is also built with W=1.
 #  2. Test Image, never shipped: the same plus USB_DUMMY_HCD, USB_USBNET, USB_NET_CDCETHER,
 #     USB_ACM and USB_SERIAL_GENERIC, so one kernel is both the gadget and its host for the
 #     self-test (the generic usb-serial driver reads boot039's bulk-only log port).
@@ -58,12 +63,13 @@ print("packaged kernel.config vs the tree that built boot035: toolchain detectio
 { uname -srm; gcc --version | head -1; ld --version | head -1; dtc --version; python3 --version
   pacman -V | sed -n 2p; } > "$OUT/build/vm-tools.txt"
 
-log "1. boot036 Image"
+log "1. boot040 Image (boot036's tree and config, plus the DART fault-report patch)"
 rm -rf "$WORK"
 cp -a --reflink=auto "$SRC" "$WORK"
 # Kernel facts the init and the self-test depend on, from this exact tree: the dwc3 debugfs
 # names the status line reads, the bulk-only serial function, the host's generic usb-serial
-# driver. Sources are copied to out/ (gitignored) for review on the Mac.
+# driver, the DART driver and the IOMMU sysfs links. Sources are copied to out/ (gitignored)
+# for review on the Mac; apple-dart.c is copied before and after the patch.
 mkdir -p "$OUT/build/kernel-src"
 for f in drivers/usb/dwc3/debugfs.c drivers/usb/dwc3/debug.h drivers/usb/dwc3/core.h \
          drivers/usb/dwc3/core.c drivers/usb/dwc3/ep0.c drivers/usb/dwc3/gadget.c \
@@ -72,9 +78,15 @@ for f in drivers/usb/dwc3/debugfs.c drivers/usb/dwc3/debug.h drivers/usb/dwc3/co
          drivers/usb/serial/generic.c drivers/usb/serial/bus.c drivers/usb/serial/Kconfig \
          drivers/usb/serial/Makefile drivers/usb/core/driver.c drivers/usb/common/common.c \
          drivers/usb/gadget/udc/core.c fs/debugfs/file.c kernel/irq/irqdesc.c \
-         drivers/irqchip/irq-apple-aic.c; do
+         drivers/irqchip/irq-apple-aic.c drivers/iommu/apple-dart.c drivers/iommu/io-pgtable-dart.c \
+         drivers/iommu/iommu-sysfs.c drivers/iommu/dma-iommu.c drivers/char/mem.c \
+         arch/arm64/mm/mmap.c kernel/irq/spurious.c; do
     install -D -m 0644 "$WORK/$f" "$OUT/build/kernel-src/$f"
 done
+cp "$WORK/drivers/iommu/apple-dart.c" "$OUT/build/kernel-src/drivers/iommu/apple-dart.c.before-boot040"
+python3 -I "$EXP/dart-diag/apply.py" "$WORK" | tee "$OUT/build/dart-diag-apply.txt"
+cp "$WORK/drivers/iommu/apple-dart.c" "$OUT/build/kernel-src/drivers/iommu/apple-dart.c"
+python3 -I "$EXP/dart-diag/test_dart_diag.py" "$WORK/drivers/iommu/apple-dart.c" | tee "$OUT/build/dart-diag-check.txt"
 { echo "tree: $WORK ($(make -s -C "$WORK" kernelversion))"
   echo "## dwc3 debugfs files"; grep -nE 'debugfs_create_(dir|file|regset32)|\{ *"[a-zA-Z_0-9]+",' "$WORK/drivers/usb/dwc3/debugfs.c"
   echo "## usb debug root"; grep -rn 'usb_debug_root *=' "$WORK/drivers/usb/common" "$WORK/drivers/usb/core" | head -3
@@ -90,16 +102,25 @@ python3 -I -c 'import sys; sys.path.insert(0, sys.argv[1]); import control_chann
 c.check_config(open(sys.argv[2]).read(), open(sys.argv[3]).read()); print("config delta PASS (exactly the gadget stack, m to y)")' \
     "$NB" "$SRC/.config" "$WORK/.config" | tee "$OUT/build/config-check.txt"
 diff "$SRC/.config" "$WORK/.config" > "$OUT/build/config.diff" || test "$?" = 1
+# The patched DART object alone with W=1: the patch must add no warning.
+make -C "$WORK" -j"$JOBS" W=1 drivers/iommu/apple-dart.o > "$OUT/build/dart-w1.log" 2>&1
+if grep -n "warning:" "$OUT/build/dart-w1.log"; then echo "apple-dart.c W=1 warnings"; exit 1; fi
+echo "apple-dart.o builds with W=1 and no warning" > "$OUT/build/dart-w1-check.txt"
 make -C "$WORK" -j"$JOBS" Image > "$OUT/build/build.log" 2>&1
 objcopy -O binary "$WORK/vmlinux" "$OUT/build/roundtrip.bin"
 cmp "$WORK/arch/arm64/boot/Image" "$OUT/build/roundtrip.bin"
 rm "$OUT/build/roundtrip.bin"
 nm "$WORK/vmlinux" > "$OUT/build/symbols.txt"
 for sym in eem_alloc_inst gether_connect usb_composite_probe configfs_composite_bind \
-           dwc3_gadget_init ilinux_genpd_ladder_fn gser_alloc_inst gserial_connect dwc3_debugfs_init; do
+           dwc3_gadget_init ilinux_genpd_ladder_fn gser_alloc_inst gserial_connect dwc3_debugfs_init \
+           apple_dart_t8110_irq; do   # the stream-bitmap helper is inlined: no symbol of its own
     grep -q " $sym$" "$OUT/build/symbols.txt" || { echo "missing symbol $sym"; exit 1; }
 done
-echo "gadget (EEM, gser), configfs, dwc3 gadget and debugfs, genpd ladder symbols present" > "$OUT/build/symbols-check.txt"
+# The patched handler's messages prove the patched object is what got linked.
+strings -a "$WORK/arch/arm64/boot/Image" | grep -c "without the error flag" > "$OUT/build/dart-diag-strings.txt"
+test "$(cat "$OUT/build/dart-diag-strings.txt")" -ge 1
+strings -a "$WORK/arch/arm64/boot/Image" | grep -q "t8110-class DART v" || { echo "DART probe line missing"; exit 1; }
+echo "gadget (EEM, gser), configfs, dwc3 gadget and debugfs, genpd ladder and patched DART handler symbols present; boot040 DART strings in the Image" > "$OUT/build/symbols-check.txt"
 cp "$WORK/arch/arm64/boot/Image" "$WORK/.config" "$OUT/build/"
 
 log "2. test Image (not shipped)"
@@ -230,4 +251,4 @@ mv "$OUT/export/.config" "$OUT/export/kernel.config"
 (cd "$OUT/export" && sha256sum Image kernel.config t6050-j716c-stage-b.dtb initramfs-stage-b.cpio.gz \
     diag-init.c toolchain.txt) | tee "$OUT/export-sha256.txt"
 (cd "$OUT/build" && sha256sum Image-test selftest-overlay.cpio.gz) >> "$OUT/export-sha256.txt"
-echo "PASS: Image (boot036's), test Image, Stage-B DT, boot039 initramfs, self-test overlay, kernel facts and status fixture built and checked"
+echo "PASS: boot040 Image (boot036's tree and config plus the DART fault-report patch), test Image, Stage-B DT, boot040 initramfs, self-test overlay, kernel facts and status fixture built and checked"

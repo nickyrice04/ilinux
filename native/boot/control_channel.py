@@ -17,6 +17,11 @@ boot039 (bulk-only log port): /init and its source set up exactly one gadget
 function, the generic serial function gser (vendor class, two bulk endpoints,
 no interrupt endpoint), and no CDC-ACM, ECM, EEM, NCM or RNDIS function; and
 the Stage-B initramfs differs from boot036's in /init only.
+
+boot040 (DART fault diagnostics): the same gadget contract; the Stage-B
+initramfs differs from boot039's in /init only; and the Image carries the
+apple-dart fault-report patch (kernel/experiments/usb-gadget/dart-diag), shown
+by its message strings, with boot039's kernel config byte for byte.
 """
 import gzip
 import struct
@@ -41,6 +46,19 @@ KEY_MARKERS = (b"PRIVATE KEY", b"ssh-ed25519", b"ssh-rsa", b"ecdsa-sha2", b"ssh-
 BULK_ONLY_FUNCTION = b"gser.GS0"
 BULK_ONLY_BCD_DEVICE = b"0x0139"
 NOT_BULK_ONLY = (b"acm.", b"ecm.", b"eem.", b"ncm.", b"rndis.", b"obex.", b"subset.")
+# boot040: message strings only the patched apple-dart t8110 handler and probe carry, and
+# the strings the boot040 /init prints (the DART identity, the snapshot, the bus-error stop).
+DART_DIAG_IMAGE_STRINGS = (b"fault IRQ %d without the error flag (#%u): ERROR 0x%08x MASK 0x%08x STREAMS",
+                           b"t8110-class DART v%lu.%lu: PARAMS",
+                           b"(fault #%u, IRQ %d, streams 0x%08x 0x%08x)",
+                           b"translation fault (v2.2 layout): stream %d code %u (%s) level %s at 0x%llx",
+                           b"fault IRQ %d (v2.2 layout) with nothing pending (#%u): PENDING 0x%08x MASK",
+                           b"fault IRQ %d acknowledged %u times; disabling it")
+DART_DIAG_INIT_STRINGS = (b"reading DART registers at 0x%llx and 0x%llx through /dev/mem",
+                          b"dwc3 bus error at DMA address 0x%llx: log streamer %s",
+                          b"apple-dart fault handler", b"GBUSERRADDR0", b"GBUSERRADDR1",
+                          b"/sys/class/udc/%.63s/device/iommu",
+                          b"pend %x mask %x ctl %x prot %x s0 %08x@%llx s1 %08x@%llx")
 
 
 def check_config(before_text, after_text, allow_toolchain=False):
@@ -167,3 +185,17 @@ def check_init_only_delta(before_blob, after_blob):
     changed = sorted(name for name in after if after[name] != before[name])
     if changed != ["init"]:
         raise ValueError("initramfs must differ in /init only, differs in %s" % changed[:8])
+
+
+def check_dart_diag_image(image):
+    """Raise unless the Image carries the boot040 apple-dart fault-report patch (its messages)."""
+    missing = [text.decode() for text in DART_DIAG_IMAGE_STRINGS if text not in image]
+    if missing:
+        raise ValueError("Image lacks the boot040 DART fault-report patch: missing %s" % missing)
+
+
+def check_dart_diag_init(init):
+    """Raise unless the static /init is the boot040 one (DART identity, snapshot, bus-error stop)."""
+    missing = [text.decode() for text in DART_DIAG_INIT_STRINGS if text not in init]
+    if missing:
+        raise ValueError("/init lacks the boot040 DART diagnostics: missing %s" % missing)
