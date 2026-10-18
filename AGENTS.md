@@ -138,6 +138,14 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 21 / boot039 (a bulk-only `gser` USB log port, the
+dwc3 state on the M5 screen) on handoff `7905adb`: archive `b85c8d45…7d51` verified against Git before extraction, 102
+controller cases plus the USB, boot039 and RAM-root suites, launcher `4d55f0c9…` unchanged, Image/config/DTBs/m1n1 identical to
+boot036, the Stage-B initramfs differs only in `/init`. The M1 built the read-only bulk-log reader
+(`tools/m1n1-client/bulk-log-reader.m`, interface only, IN pipe only, never a write) with only the SDK this Mac has; 15 tests
+PASS (static, refusals, a fake-pipe read loop), 10 of 10 forbidden-call mutants caught; no real read yet. Needs a fresh M1
+restart (kept unlocked), cable re-seat, a recording started before the launch, and the human's start.
+
 Latest M1 native result: **attempt 20 (boot035 RAM root run 33): a stable ten-minute Omarchy desktop with a live status
 screen.** Hyprland starts through `start-hyprland` with no warning, the status screen appears about 7 s after the
 handoff (`desktop ready 8.50 s after kernel start`) and the counter, clock and display keep updating for the whole filmed

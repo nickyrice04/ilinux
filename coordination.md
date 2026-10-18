@@ -6,6 +6,50 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 21 / boot039 offline PASS; the bulk-log reader built and tested; live NOT RUN, 2026-10-18
+
+* **Intake (M5 handoff `7905adb`, package tag on `713989c`).** Public prerelease `native-j716c-boot039`: archive 18,915,359
+  bytes, SHA-256 `b85c8d45…7d51`, checked against Git **before extraction** (GitHub's asset digest equal, release target
+  `713989c`); 14 regular members. The `verify-package` receipt (manifest digest `88346489…4df5`, 13 files) and the committed
+  launcher's offline verification PASS. The 102 reviewed cases PASS (37 + 10 + 6 + 16 + 5 + 19 + 2 + 6 + 1); the USB suites
+  `test_usb_dt` (6, all skipped), `test_control_channel` (10, 2 skipped), `test_kconfig_guard` (7, 1 skipped),
+  `test_boot039_package` (8, all skipped: they need the M5's build directories) and `test_ramroot` (30) PASS. Launcher
+  `4d55f0c9…` and the other five controller digests unchanged; client pin clean `57a9339`; the packaged key equals the M1's.
+* **Independent review.** Image, `kernel.config`, both DTBs (Stage-B `a676087b…`), `m1n1.bin`, the generic initramfs and
+  `toolchain.txt` are byte-identical to the boot036 package. The Stage-B initramfs differs only in `/init` (423 entries
+  each), whose `authorized_keys` is the M1's key and which carries no self-test overlay. `/init` (sha `c012ed68…`) is a static
+  aarch64 ELF; its strings name `functions/gser.GS0` and `0x0139` and none of `acm.`, `ecm.`, `eem.`, `ncm.`, `rndis.`,
+  `obex.`, `subset.`, nor the debugfs files whose reads write a select register (`*_fifo_size`, `*_queue`, `lsp_dump`,
+  `GDBGEPINFO`). The shipped `diag-init.c` (`8ba20c93…`) equals `init.c` at the tag commit and at HEAD. The whole
+  `init.c` diff was read: one function (`gser`), a raw-tty streamer with shared counters, debugfs mounted, and the dwc3 state
+  read per heartbeat in a forked child (regdump, `link_state`, endpoint `transfer_type` and `trb_ring`) with a 2 s wait, so
+  a stuck read costs a status line and never the heartbeat. **Residual hardware risk (the M5's own note, confirmed by
+  reading):** those register reads have never been done on this hardware; the first is at heartbeat 000 (≈ 3.5 s), before
+  any USB traffic, so a fault would show at once.
+* **The reader (built here, from the brief, with only what this Mac has: Command Line Tools, no install).**
+  `tools/m1n1-client/bulk-log-reader.m` (Objective-C, IOUSBHost): fixed identity `1d6b:0104`, interface 0, configuration 1,
+  class `0xff`, `bcdDevice` from a fixed two-entry table (`0x0139` boot039, `0x0039` RAM root) and the product string
+  `iLinux J716c control channel, port N`; it opens the **interface only**, with no options, checks the cached descriptors
+  (exactly one bulk IN, one bulk OUT, no interrupt endpoint), copies **only the IN pipe** and reads it into an `O_EXCL`
+  capture with a sidecar, never writes to the device, and follows the brief's fail-safe table. Built with
+  `clang -fobjc-arc -O2 -Wall -Wextra` with no warnings. **Deviation from the brief:** the SDK's pipe class has no
+  `destroy`, so the pipe is released and only the interface is destroyed.
+  * `test_bulk_log_reader.py` (15 tests PASS): ten static checks (forbidden calls and constants, the fixed identity, only the
+    five documented options, `O_EXCL` files, refusals before any IOKit call, the IN address checked before the pipe is
+    copied); four refusal tests on the binary; and `test_bulk_log_reader_loop.m`, which runs the shipped `read_loop()` against
+    a fake pipe (11 scenarios: bytes kept on timeouts, stall, device gone with and without data, three errors, the 64 MiB cap,
+    a write error, service termination, a signal, the `--seconds` limit). The static check was mutation-tested: 10 of 10
+    forbidden-call mutants are caught.
+  * Offline runs of the binary: `--dry-run` with no iLinux device exits 2 after `--wait` and writes only the sidecar (its
+    diagnostic says no `1d6b:0104` device is in the USB plane); SIGINT and SIGTERM during the wait exit cleanly and remove the
+    lock; a second instance and an existing `--out` are refused before any IOKit call. **Not done offline:** `--dry-run` with
+    m1n1's device attached (it needs the M5 at the proxy; done at pre-flight) and any real read (the first is the attempt).
+* **Tools (ignored, M1 local):** `run-attempt21.py` (the attempt-18 wrapper, only names changed), `capture-attempt21.sh`
+  (read-only registry dumps at ≈ +5 s and ≈ +60 s) and the pre-flight and USB gate from earlier attempts.
+* **State.** Attempt 21: live **NOT RUN**. Needs the human's fresh M1 restart (kept unlocked), cable re-seat, a recording started
+  before the launch (whole screen, the bottom status lines legible), the M5 at Running proxy, then the go. The fixed E1 probe is
+  still NOT RUN.
+
 ### Current M5 handoff — attempt 21 / boot039: a bulk-only USB log port with the dwc3 state on screen (NOT RUN)
 
 * **Attempt 20 consumed:** the run-33 RAM root ran ten stable minutes with its

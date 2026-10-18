@@ -5,6 +5,23 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-18 · M1: attempt 21 (boot039) offline readiness PASS; the bulk-log reader built and tested (live NOT RUN)
+
+* **Discovered:** boot039's package is boot036's apart from `/init`; `/init` carries one `gser` function and the debugfs dwc3
+  status reader, and names none of the forbidden debugfs files. The macOS SDK on this Mac has every IOUSBHost call the reader
+  brief needs; the SDK's pipe class has no `destroy`, so the reader releases the pipe and destroys the interface only.
+* **Implemented (committed with this entry):** `tools/m1n1-client/bulk-log-reader.m`, a read-only IOUSBHost reader with a fixed
+  identity (interface only, IN pipe only, never a write); `test_bulk_log_reader.py` (static, refusal and read-loop checks);
+  `test_bulk_log_reader_loop.m` (the shipped read loop against a fake pipe). The binary stays ignored.
+* **Tested:** the package against the Git pin (manifest `88346489…`); 102 controller cases plus the USB, boot039 and RAM-root
+  suites; six controller digests unchanged; the reader: 15 tests PASS, 10 of 10 forbidden-call mutants caught, build without
+  warnings, `--dry-run` with no device exits 2 (sidecar only), SIGINT and SIGTERM exit cleanly, a second instance and an
+  existing `--out` are refused.
+* **Not verified:** any real read, what macOS publishes for a vendor-class interface of `1d6b:0104`, whether a user client can
+  open it without an entitlement (Likely yes), `--dry-run` with m1n1 attached, and the dwc3 debugfs reads on the M5.
+* **Next:** the human restarts the M1 (kept unlocked), re-seats the cable, starts the recording before the launch and puts
+  the M5 at Running proxy; one attempt 21, the reader started right after the handoff; film until 10 minutes from the handoff.
+
 ## 2026-10-17 · M5 (VM only): Omarchy itself as a RAM root — built by Omarchy's installer, its session up on the boot035 Image
 
 * **Decided (roadmap Phase 3, row 4):** *Omarchy* means built by Omarchy's own installer from
