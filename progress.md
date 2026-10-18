@@ -5,6 +5,23 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-18 · M1: attempt 22 ran: the installer-built Omarchy desktop came up on the M5 about 39 s after the handoff and stayed up for the filmed 10 minutes
+
+* **Discovered:** the `omarchy` launcher profile works natively: a 2.38 GB upload in 456.5 s (5.22 MB/s) with the 3 GiB heap, no
+  reset during the write, then Omarchy's own session (SDDM → uwsm → Hyprland → Quickshell) on simpledrm with software rendering
+  and one CPU: wallpaper, top bar and the two first-run notifications by +39.5 s (VM under TCG: 194.8 s). The kernel unpacked
+  2.34 GB into 8.56 GB of tmpfs and reached systemd within about 17 s.
+* **Implemented:** nothing in Git except this entry, the report, and the coordination/AGENTS text. Local and ignored: the wrapper
+  `run-attempt22.py`, a read-only monitor, and OCR helpers for the m1n1 text that withhold the serial-number line.
+* **Tested / measured (live, one attempt):** controller exit 0 in 460.186 s, handoff 22:26:29.937Z; video 1084.0 s (to +628 s),
+  desktop at video 495 s; a one-second brightness trace (77-106) shows no blackout or restart; clock `23:46` → `23:56`; m1n1's
+  device destroyed +0.23 s, no other USB event for 13 minutes, no M1 panic. m1n1's heap limit `0x10010150000 (128 MiB)`.
+* **Not verified:** performance, power, input, GPU acceleration, anything beyond +628 s, m1n1's `FDT:` memory lines (not legible;
+  the serial-number line shares their screen), the image's content (no zstd tool). Fresh policy/default checks NOT CHECKED. The
+  fixed E1 probe is still NOT RUN.
+* **Next:** the M5 agent's call: the combined boot (this root on the USB kernel with the SSH-over-bulk link) after boot040's DMA
+  fix; the M1 does the offline intake of whatever it publishes next, and any further attempt only on the human's go.
+
 ## 2026-10-18 · M1: attempt 22 (Omarchy itself, job 045, `--profile omarchy`) offline readiness PASS (live NOT RUN)
 
 * **Discovered:** the installer-built Omarchy root is 2,337,897,871 bytes (declared decompressed size 8,561,316,352) and its

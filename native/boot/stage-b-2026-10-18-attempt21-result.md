@@ -77,7 +77,8 @@ bulk OUT only, no interrupt endpoint, `bcdDevice 0x0139`. The M5's screen was fi
 between video 8 and 10 s, and heartbeats 045 and 116 are the last ones visible at video 240 s and 598 s.
 
 The console is 432 columns wide, so at 1080p a character is about 3 px wide and the long `[ctl]` lines are small.
-Apple's Vision text recognition returned nothing on this footage, and a frame-averaging helper only smeared the picture,
+Apple's Vision text recognition returned nothing on whole frames and only garbage on upscaled crops of the console text, and a
+frame-averaging helper only smeared the picture,
 so **every value below was read by eye from upscaled single frames.** Whole words and the repeated lines are
 unambiguous (`configured`, `BUSERR`, `q8192`, `h17 d0`, `h17 d105`, `irq146`, `nobody cared`, `apple_dart_irq`,
 `Disabling IRQ`, `ladder complete: 50 domains released`); the digits in `605L`, `46250B`, `f…`, `core 0x33313130`

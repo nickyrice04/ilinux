@@ -138,7 +138,16 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 22 (Omarchy itself, VM job 045, a view-only RAM boot on
+Latest M1 native result: **attempt 22 (Omarchy itself, VM job 045, `--profile omarchy`): the first installer-built Omarchy
+desktop on the M5, up about 39 s after the handoff and stable for the filmed 10 minutes.** The 2.38 GB upload took 456.5 s (5.22 MB/s)
+with the 3 GiB client heap and no reset; the kernel unpacked the image and reached systemd within about 17 s; then Omarchy's own
+session (SDDM → uwsm → Hyprland → Quickshell) showed the default wallpaper, the top bar (a wrong-time clock) and its two first-run
+notifications, and stayed up with the panel lit to the end of the clip (+628 s, no blackout or restart in a one-second brightness
+trace). View-only, one CPU, software rendering, no USB by design. Controller exit 0 in 460.186 s, no M1 panic. m1n1's memory lines
+were not legible (the serial-number line shares their screen). Performance, power and input are not established. See
+`native/boot/stage-b-2026-10-18-attempt22-result.md`. The fixed E1 probe is still NOT RUN.
+
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for attempt 22 (Omarchy itself, VM job 045, a view-only RAM boot on
 boot035, launcher `--profile omarchy`) on handoff `7eb2aad`: the boot035 package re-verified against the Git pin, the 2.34 GB image
 (`d00ba156…578a`) equal to the manifest by size and digest (zstd header read; content not inspected, no zstd tool), the new launcher
 `b14ec7a1…` diff (39 lines) read in full, the offline launcher run (exactly the seven expected lines) and 146 cases PASS (102 plus

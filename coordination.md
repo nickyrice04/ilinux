@@ -6,7 +6,35 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 22 (Omarchy itself, VM job 045, `--profile omarchy`) offline PASS; live NOT RUN, 2026-10-18
+### Current M1 result — attempt 22 (Omarchy itself, job 045, `--profile omarchy`): the first installer-built Omarchy desktop on the M5, up about 39 s after the handoff and stable for the filmed 10 minutes
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 460.186 s, handoff 2026-10-18T22:26:29.937Z; the 2,382,558,042-byte
+  upload took 456.5 s, 5.22 MB/s; every gate PASS including the 3 GiB heap allocation; no M1 panic). The recording started
+  before the launch; the clip (1084.0 s, 1080p, 2.16 GB) holds the whole upload, the handoff and the desktop to +628 s.
+* **As intended (video):** the same five early error-level kernel lines as attempts 19 and 20; systemd's `[ OK ]` console at
+  +17.5 to +26.5 s (no `[FAILED]` in the frames read); black seconds; then **Omarchy's own session at +39.5 s**: the default
+  wallpaper (a rocket launch), the thin top bar with a wrong-time clock (`Thursday 23:46`) and the two notifications, `Setup
+  Wi-Fi` and `Learn Keybindings`. The VM needed 194.8 s under TCG (a ratio of about 4.9).
+* **Stable:** the panel stayed lit and the desktop stayed up to the end of the clip (+628 s): a one-second brightness trace
+  of 590 samples stays within 77-106 (106 only on the first frame), so no blackout and no Hyprland or SDDM restart; the clock
+  advanced `23:46` → `23:56` (the human also notes that the clock kept increasing while its time and day were wrong).
+* **Memory placement:** m1n1's heap limit reads `0x10010150000 (128 MiB)` (three clean OCR reads), so the 2.39 GB went in
+  between about DRAM + 0.25 and + 2.5 GiB, overlapping the span (DRAM + 0.56 to 1.79 GiB) where the macOS boot's carveout map
+  lists regions, with no reset: consistent with those regions not being live in this boot (Likely, not proven). m1n1's `FDT:`
+  memory lines were not legible (they scroll past on the screen that also prints the Mac's serial number, which was never opened
+  by eye). The kernel unpacked the 2.34 GB into 8.56 GB of tmpfs and reached systemd within about 17 s (the checklist guessed 30 s).
+* **No USB, by design:** the host log shows m1n1's device destroyed at +0.23 s and no event for 13 minutes; the M5 shut down at
+  +13.3 min and came back as a `Mac` device (the human's return to Macintosh HD, reported).
+* **Not established:** performance, power, GPU acceleration, input (no driver), the first run's later steps, anything beyond
+  +628 s, and the image's content (not inspected on the M1: no zstd tool).
+* **For the M5 (proposals, not authorization):** the combined boot of this root on the USB kernel with the SSH-over-bulk link,
+  once boot040 fixes attempt 21's DMA fault (expect systemd within about 20 s and the desktop about 40 s after the handoff); if
+  the `FDT:` memory lines are wanted, the human can read `DRAM at`, `Usable memory` and `initrd at` from video 453-455 s, never
+  the serial-number line; a larger console font or a 4K recording would help the early console text.
+* Report: `native/boot/stage-b-2026-10-18-attempt22-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed E1 probe is
+  still **NOT RUN**. Attempt 22 is consumed; no retry.
+
+### Historical M1 readiness — attempt 22 (Omarchy itself, VM job 045, `--profile omarchy`) offline PASS (consumed: attempt 22 ran), 2026-10-18
 
 * **Intake (M5 handoff `7eb2aad`, root rebuild `b520330`).** The boot035 package, re-verified and not re-downloaded: archive
   16,723,179 bytes, SHA-256 `81cbbd1c…`, checked against the Git pin; the `verify-package` receipt (SHA256SUMS digest
@@ -40,7 +68,7 @@ older plan disagree, this file wins for ownership and order of work.
   2.34 GB on one CPU, so the panel may stay black for tens of seconds and must not be stopped early.
 * **NOT RUN:** the native attempt and every native check. No retry.
 
-### Current M5 handoff — attempt 22: Omarchy itself (VM job 045) as a RAM root on boot035 (NOT RUN)
+### Consumed M5 handoff — attempt 22: Omarchy itself (VM job 045) as a RAM root on boot035 (ran 2026-10-18; see the M1 result above)
 
 * **Attempt 21 consumed:** the bulk-only port kept EP0 healthy and the M1's reader streamed
   36,909 bytes, then the M5's dwc3 flagged a DMA bus error and the stream stopped. boot040
