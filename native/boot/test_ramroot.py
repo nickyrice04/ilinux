@@ -1,9 +1,11 @@
-"""Offline tests for the launcher's two fixed profiles: Stage-B and the job 039 RAM root.
+"""Offline tests for the launcher's fixed profiles: Stage-B, the job 039 RAM root and job
+045's Omarchy root.
 
 Synthetic data and fake transports only; nothing opens USB or touches a target. The
 Stage-B tests run every case through the reviewed launcher as well (its git object,
 checked against the digest that tools/m1n1-client/stage-b-instructions.md pins) and
-require identical requests, uploads, printed lines and errors.
+require identical requests, uploads, printed lines and errors. The RAM-root tests do the
+same against the committed launcher that attempts 19 and 20 ran.
 """
 import base64
 import contextlib
@@ -28,6 +30,8 @@ from test_launcher import FakeInterface, FakeProxy, FakeUtils, prepared
 
 REVIEWED_COMMIT = "f2b2c4d327fa4d2cdc22b07eb47173b950023868"   # last change to launch.py before profiles
 REVIEWED_SHA256 = "65ece2537fdb9ece0ed54dc234f8ee253bc2f3c44aac8c012014079b6366cfe0"
+COMMITTED_COMMIT = "9ee6b2fa590ff139175052e4f84266d55fdd83ec"  # the RAM-root profile, run in attempts 19-20
+COMMITTED_SHA256 = "4d55f0c9641f7c572129c7ed374aacd6b91656e41fbb54a7ce05b5d209af840b"
 # Written out, not read from launch.py, so that a change to either string fails here.
 STAGE_B_ARGS = ("console=tty0 fbcon=nodefer rdinit=/init ro maxcpus=1 nr_cpus=1 cpufreq.off=1 "
                 "idle=nop arm64.nowfxt pd_ignore_unused clk_ignore_unused loglevel=8 "
@@ -37,8 +41,14 @@ STAGE_B_CONFIRM = "BOOT-J716C-RAM-DIAGNOSTIC"
 RAMROOT_ARGS = ("console=tty0 rdinit=/init ro maxcpus=1 nr_cpus=1 cpufreq.off=1 "
                 "pd_ignore_unused clk_ignore_unused quiet")
 RAMROOT_CONFIRM = "BOOT-J716C-RAM-ROOT"
+OMARCHY_CONFIRM = "BOOT-J716C-OMARCHY-ROOT"
+HEAP = 3 * 1024**3
 APPENDED = " idle=nop arm64.nowfxt"   # what the pinned m1n1 adds on M4 and later
 RAMROOT = launch.PROFILES["ramroot"]
+OMARCHY = launch.PROFILES["omarchy"]
+OMARCHY_RECORD = json.loads((HERE / "omarchy-root-manifest.json").read_text())
+BOOT035 = HERE.parents[1] / "build/native-boot035/verified"
+BOOT035_IMAGE_SIZE = 45613056   # boot035's Image header: image_size, text_offset 0
 ZSTD = b"\x28\xb5\x2f\xfd"
 MANIFEST = {"m1n1_version_marker": "version", "m1n1_version_offset": 0x100,
             "m1n1_dt_pointer_offset": 0x200}
@@ -60,6 +70,16 @@ REVIEWED_LINES = [
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
+
+
+class Size:
+    """Stands in for a payload of n bytes."""
+
+    def __init__(self, n):
+        self.n = n
+
+    def __len__(self):
+        return self.n
 
 
 def package_files(text_offset=0):
@@ -99,7 +119,7 @@ def run_session(module, case, *profile):
     files = package_files(case.get("text_offset", 0))
     files.update(case.get("files", {}))
 
-    def factory(p):
+    def factory(p, **options):
         utils = FakeUtils(p)
         if "compatible" in case:
             utils.adt.compatible = case["compatible"]
@@ -107,7 +127,7 @@ def run_session(module, case, *profile):
             utils.ba.video.base = case["video_base"]
         if "gpio_pins" in case:
             utils.adt.gpio["no-restore-gpio-pins"] = case["gpio_pins"]
-        log.append(("utils", "created"))
+        log.append(("utils", "created") + tuple(sorted(options.items())))   # e.g. heap_size
         return Recorder(utils, "utils", log)
 
     def prepare(_iface, base, m1n1, _adt):
@@ -174,18 +194,18 @@ def run_connect(module, *profile):
     return alarms, message, opens, transport.closed, sessions, handlers[1:]
 
 
-def reviewed_launcher():
-    """The reviewed launch.py as a separate module, or None without its git object."""
+def reviewed_launcher(commit=REVIEWED_COMMIT, digest=REVIEWED_SHA256, name="reviewed"):
+    """A launch.py from Git as a separate module, or None without its git object."""
     try:
-        source = subprocess.run(["git", "-C", str(HERE), "show", REVIEWED_COMMIT + ":native/boot/launch.py"],
+        source = subprocess.run(["git", "-C", str(HERE), "show", commit + ":native/boot/launch.py"],
                                 capture_output=True, check=True, timeout=30).stdout
     except (OSError, subprocess.SubprocessError):
         return None
-    if sha(source) != REVIEWED_SHA256:
-        raise AssertionError("git object is not the reviewed launcher")
-    module = importlib.util.module_from_spec(importlib.util.spec_from_loader("reviewed_launch", loader=None))
+    if sha(source) != digest:
+        raise AssertionError("git object is not the %s launcher" % name)
+    module = importlib.util.module_from_spec(importlib.util.spec_from_loader(name + "_launch", loader=None))
     module.__file__ = str(HERE / "launch.py")
-    exec(compile(source, "reviewed launch.py", "exec"), module.__dict__)
+    exec(compile(source, name + " launch.py", "exec"), module.__dict__)
     return module
 
 
@@ -254,11 +274,13 @@ class ReviewedStageBTests(unittest.TestCase):
 class StageBUnchangedTests(unittest.TestCase):
     """The same facts without git: Stage-B stays the default and keeps its fixed values."""
 
-    def test_exactly_two_profiles(self):
-        self.assertEqual(sorted(launch.PROFILES), ["ramroot", "stage-b"])
+    def test_exactly_three_profiles(self):
+        self.assertEqual(sorted(launch.PROFILES), ["omarchy", "ramroot", "stage-b"])
         self.assertEqual(launch.PROFILES["stage-b"],
-                         ("initramfs-stage-b.cpio.gz", STAGE_B_ARGS, "diagnostic", STAGE_B_CONFIRM, 180, False))
-        self.assertEqual(RAMROOT, ("ramroot.cpio.zst", RAMROOT_ARGS, "RAM-root", RAMROOT_CONFIRM, 300, True))
+                         ("initramfs-stage-b.cpio.gz", STAGE_B_ARGS, "diagnostic", STAGE_B_CONFIRM, 180, False, None))
+        self.assertEqual(RAMROOT, ("ramroot.cpio.zst", RAMROOT_ARGS, "RAM-root", RAMROOT_CONFIRM, 300, True, None))
+        self.assertEqual(OMARCHY, ("ramroot.cpio.zst", RAMROOT_ARGS, "Omarchy RAM-root", OMARCHY_CONFIRM, 900,
+                                   True, HEAP))
         self.assertEqual((launch.BOOTARGS, launch.CONFIRM), (STAGE_B_ARGS, STAGE_B_CONFIRM))
 
     def test_default_session_is_stage_b(self):
@@ -312,10 +334,12 @@ class StageBUnchangedTests(unittest.TestCase):
 
     def test_unknown_profile_refused_before_any_request(self):
         for profile in (RAMROOT._replace(bootargs=RAMROOT_ARGS + " init=/bin/sh"),
-                        launch.STAGE_B._replace(initrd="ramroot.cpio.zst")):
+                        launch.STAGE_B._replace(initrd="ramroot.cpio.zst"),
+                        RAMROOT._replace(heap=HEAP), OMARCHY._replace(heap=4 * 1024**3),
+                        OMARCHY._replace(deadline=300)):
             with self.subTest(profile=profile):
                 log, lines, error = run_session(launch, {}, profile)
-                self.assertEqual(error, "ValueError: unknown launch profile; only stage-b and ramroot exist")
+                self.assertEqual(error, "ValueError: unknown launch profile; only stage-b, ramroot and omarchy exist")
                 self.assertEqual((log, lines), ([], []))
                 with patch.object(launch.subprocess, "check_output") as git, self.assertRaises(ValueError):
                     launch.connect_and_launch("auto", Path("/fake-client"), {}, {}, profile)
@@ -386,6 +410,132 @@ class RamrootSessionTests(unittest.TestCase):
         alarms, message, opens, closed, sessions, restored = run_connect(launch, RAMROOT)
         self.assertEqual((alarms, len(opens), closed, restored), ([300, 0], 1, True, ["old"]))
         self.assertEqual(message, "launch exceeded 300 seconds; do not automatically retry")
+
+
+RAMROOT_INITRD = launch.ramroot_initrd(ZSTD + b"frame", launch.newc_cpio([("x", 0o100600, b"y")]))
+RAMROOT_CASES = {
+    "boot": {},
+    "nonzero text offset": {"text_offset": 0x80000},
+    "no append": {"tree": prepared(bootargs=RAMROOT_ARGS)},
+    "foreign append": {"tree": prepared(bootargs=RAMROOT_ARGS + APPENDED + " init=/bin/sh")},
+    "Stage-B arguments": {"tree": prepared(bootargs=STAGE_B_ARGS + APPENDED)},
+    "wrong chip": {"chip": 0x8103},
+    "wrong m1n1": {"marker": b"wrong\0"},
+    "started secondary": {"alive": 31},
+    "wrong board": {"compatible": ["J714cAP"]},
+    "no boot framebuffer": {"video_base": 0},
+    "changed GPIO exclusions": {"gpio_pins": struct.pack("<5I", 5, 6, 8, 112, 141)},
+    "DT preparation fails": {"dt_result": -1},
+    "two CPUs": {"tree": prepared(cpu_count=2, bootargs=RAMROOT_ARGS + APPENDED)},
+    "storage enabled": {"tree": prepared(storage=True, bootargs=RAMROOT_ARGS + APPENDED)},
+    "framebuffer missing": {"tree": prepared(framebuffer=False, bootargs=RAMROOT_ARGS + APPENDED)},
+    "bad DT header": {"tree": bytes(8)},
+}
+
+
+def ramroot_session(module, name, profile):
+    case = dict(RAMROOT_CASES[name], files={"ramroot.cpio.zst": RAMROOT_INITRD})
+    case.setdefault("tree", prepared(bootargs=RAMROOT_ARGS + APPENDED))
+    return run_session(module, case, profile)
+
+
+class CommittedRamrootTests(unittest.TestCase):
+    """The RAM-root profile is byte-for-byte the launcher that attempts 19 and 20 ran."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.committed = reviewed_launcher(COMMITTED_COMMIT, COMMITTED_SHA256, "committed")
+
+    def setUp(self):
+        if self.committed is None:
+            self.skipTest("committed launcher's git object unavailable")
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.root = Path(tmp.name)
+        self.files = package_files()
+        (self.root / "ramroot.cpio.zst").write_bytes(RAMROOT_INITRD)
+        (self.root / "id.pub").write_text(ed25519_line()[0] + "\n")
+        (self.root / "ramroot-manifest.json").write_text(json.dumps(
+            {"size": len(RAMROOT_INITRD), "sha256": sha(RAMROOT_INITRD), "source": "synthetic run",
+             "image_sha256": sha(self.files["Image"])}))
+
+    def test_sessions_match_committed_launcher(self):
+        booted = 0
+        for name in RAMROOT_CASES:
+            with self.subTest(case=name):
+                ours = ramroot_session(launch, name, RAMROOT)
+                self.assertEqual(ours, ramroot_session(self.committed, name, self.committed.PROFILES["ramroot"]))
+                booted += any(event[1] == "kboot_boot" for event in ours[0])
+        self.assertEqual(booted, 2)
+
+    def test_cli_matches_committed_launcher(self):
+        base = ["--package", "/fake", "--profile", "ramroot"]
+        image = ["--ramroot", str(self.root / "ramroot.cpio.zst")]
+        live = ["--launch", "--device", "auto", "--confirm"]
+        for argv in (base + image, base + image + ["--operator-key", str(self.root / "id.pub")],
+                     base + image + live + [RAMROOT_CONFIRM], base + image + live + [STAGE_B_CONFIRM],
+                     base + image + live + [OMARCHY_CONFIRM], base):
+            with self.subTest(argv=argv):
+                ours, theirs = [self.main(module, argv) for module in (launch, self.committed)]
+                self.assertEqual(ours[:3], theirs[:3])
+                self.assertEqual([c.args[:4] + tuple(c.args[4])[:6] for c in ours[3]],
+                                 [c.args[:4] + tuple(c.args[4]) for c in theirs[3]])
+
+    def test_controller_matches_committed_launcher(self):
+        ours = run_connect(launch, RAMROOT)
+        theirs = run_connect(self.committed, self.committed.PROFILES["ramroot"])
+        self.assertEqual(ours[:5], theirs[:5])
+        self.assertEqual(ours[0], [300, 0])
+
+    def main(self, module, argv):
+        with patch.object(module, "RAMROOT_RECORD", self.root / "ramroot-manifest.json"):
+            return run_main(module, argv, self.files)
+
+
+class OmarchySessionTests(unittest.TestCase):
+    """Job 045's Omarchy root: the RAM-root requests with a 3 GiB client heap and 900 s."""
+
+    def test_uploads_with_a_3_gib_heap(self):
+        log, lines, error = ramroot_session(launch, "boot", OMARCHY)
+        files = package_files()
+        self.assertIsNone(error)
+        self.assertEqual([e for e in log if e[:2] == ("utils", "created")],
+                         [("utils", "created", ("heap_size", HEAP))])
+        self.assertEqual([e[3] for e in log if e[:2] == ("iface", "writemem")],
+                         [files["t6050-j716c-stage-b.dtb"], RAMROOT_INITRD, files["Image"]])
+        initrd_addr = [e[2] for e in log if e[:2] == ("iface", "writemem")][1]
+        self.assertIn(("proxy", "kboot_set_chosen", "bootargs", RAMROOT_ARGS), log)
+        self.assertIn(("proxy", "kboot_set_initrd", initrd_addr, len(RAMROOT_INITRD)), log)
+        self.assertEqual([e for e in log if e[1] == "kboot_boot"], [("proxy", "kboot_boot", 0x200000)])
+        self.assertEqual(lines, [line.replace("diagnostic payloads", "Omarchy RAM-root payloads")
+                                 for line in REVIEWED_LINES])
+
+    def test_ramroot_requests_plus_only_the_heap(self):
+        """Every RAM-root case, compared whole: same requests, uploads, lines and errors."""
+        for name in RAMROOT_CASES:
+            with self.subTest(case=name):
+                log, lines, error = ramroot_session(launch, name, OMARCHY)
+                created = [e for e in log if e[:2] == ("utils", "created")]
+                self.assertIn(created, ([], [("utils", "created", ("heap_size", HEAP))]))
+                log = [e[:2] if e[:2] == ("utils", "created") else e for e in log]
+                lines = [line.replace("Omarchy RAM-root", "RAM-root") for line in lines]
+                error = error and error.replace("Omarchy RAM-root", "RAM-root")
+                self.assertEqual((log, lines, error), ramroot_session(launch, name, RAMROOT))
+
+    def test_other_profiles_keep_proxyutils_default_heap(self):
+        for profile in (launch.STAGE_B, RAMROOT):
+            with self.subTest(profile=profile.label):
+                case = {"tree": prepared(bootargs=profile.bootargs + APPENDED),
+                        "files": {"ramroot.cpio.zst": RAMROOT_INITRD}}
+                log, _, error = run_session(launch, case, profile)
+                self.assertIsNone(error)
+                self.assertEqual([e for e in log if e[0] == "utils" and e[1] == "created"],
+                                 [("utils", "created")])
+
+    def test_deadline(self):
+        alarms, message, opens, closed, sessions, restored = run_connect(launch, OMARCHY)
+        self.assertEqual((alarms, len(opens), closed, restored), ([900, 0], 1, True, ["old"]))
+        self.assertEqual(message, "launch exceeded 900 seconds; do not automatically retry")
 
 
 def ed25519_line(seed=b"operator", comment=" operator@host"):
@@ -473,17 +623,36 @@ class InitrdTests(unittest.TestCase):
         self.assertIs(launch.ramroot_initrd(image), image)
 
     def test_upload_estimate(self):
-        class Size:
-            def __init__(self, n):
-                self.n = n
-
-            def __len__(self):
-                return self.n
         files = {"Image": Size(44599808), "ramroot.cpio.zst": Size(182092876),
                  "t6050-j716c-stage-b.dtb": Size(60363)}
         total, seconds = launch.upload_estimate(files, RAMROOT)
         self.assertEqual(total, 226753047)
         self.assertEqual(["%.1f" % s for s in seconds], ["45.4", "56.7"])
+
+    def test_omarchy_upload_fits_its_deadline(self):
+        files = {"Image": Size(44599808), "ramroot.cpio.zst": Size(OMARCHY_RECORD["size"]),
+                 "t6050-j716c-stage-b.dtb": Size(60363)}
+        total, seconds = launch.upload_estimate(files, OMARCHY)
+        self.assertEqual(total, 2382558042)
+        self.assertEqual(["%.1f" % s for s in seconds], ["476.5", "595.6"])
+        self.assertEqual("%.1f" % (total / 5.36e6), "444.5")       # attempt 20's measured rate
+        self.assertGreater(OMARCHY.deadline - seconds[1], 300)    # 4 MB/s leaves five minutes
+
+    def test_omarchy_image_needs_the_larger_heap(self):
+        """Bounds of the launcher's placement in ProxyUtils' heap (64-byte blocks, first fit)."""
+        image_size, dtb = BOOT035_IMAGE_SIZE, 60363
+        buffers = 0x10000 + 512 + 64   # ProxyUtils' code, SIMD and argument buffers come first
+        least = buffers + image_size + dtb + OMARCHY_RECORD["size"]
+        most = buffers + (2 * 1024**2 - 1) + image_size + 2 * (65536 - 1) + dtb + OMARCHY_RECORD["size"]
+        self.assertGreater(least, 1024**3)                 # ProxyUtils' default heap cannot place it
+        self.assertLess(most, OMARCHY.heap - 800 * 10**6)  # 3 GiB places it, > 0.8 GB to spare
+        self.assertLess(buffers + (2 * 1024**2 - 1) + image_size + 2 * (65536 - 1) + dtb + 182420823,
+                        1024**3)                            # run 33 still fits the default heap
+
+    @unittest.skipUnless((BOOT035 / "Image").is_file(), "boot035 package not extracted in build/")
+    def test_boot035_image_size(self):
+        text_offset, image_size = struct.unpack_from("<QQ", (BOOT035 / "Image").read_bytes()[:64], 8)
+        self.assertEqual((text_offset, image_size), (0, BOOT035_IMAGE_SIZE))
 
 
 class RamrootFileTests(unittest.TestCase):
@@ -499,6 +668,16 @@ class RamrootFileTests(unittest.TestCase):
                        "image_sha256": sha(self.files["Image"])}
         self.write_record()
         recorded = patch.object(launch, "RAMROOT_RECORD", self.root / "ramroot-manifest.json")
+        recorded.start()
+        self.addCleanup(recorded.stop)
+        self.omarchy_data = ZSTD + b"synthetic Omarchy root"
+        self.omarchy_path = self.root / "omarchy" / "ramroot.cpio.zst"
+        self.omarchy_path.parent.mkdir()
+        self.omarchy_path.write_bytes(self.omarchy_data)
+        (self.root / "omarchy-root-manifest.json").write_text(json.dumps(
+            {"size": len(self.omarchy_data), "sha256": sha(self.omarchy_data), "source": "synthetic job",
+             "image_sha256": sha(self.files["Image"])}))
+        recorded = patch.object(launch, "OMARCHY_RECORD", self.root / "omarchy-root-manifest.json")
         recorded.start()
         self.addCleanup(recorded.stop)
 
@@ -528,18 +707,70 @@ class RamrootFileTests(unittest.TestCase):
         self.write_record()
         self.refuse("not a zstd frame")
 
-    def test_repository_record(self):
-        record = json.loads((HERE / "ramroot-manifest.json").read_text())
-        self.assertEqual((record["profile"], record["file"], record["native_tested"]),
-                         ("ramroot", "ramroot.cpio.zst", False))
-        self.assertIsInstance(record["size"], int)
-        self.assertGreater(record["size"], 0)
-        for key in ("sha256", "image_sha256"):
-            self.assertRegex(record[key], "^[0-9a-f]{64}$")
+    def test_repository_records(self):
+        """Each RAM-root profile reads its own pin; job 045's is the image VM-tested on boot035."""
+        for name, path in (("ramroot", HERE / "ramroot-manifest.json"),
+                           ("omarchy", HERE / "omarchy-root-manifest.json")):
+            with self.subTest(profile=name):
+                record = json.loads(path.read_text())
+                self.assertEqual((record["profile"], record["file"], record["native_tested"]),
+                                 (name, "ramroot.cpio.zst", False))
+                self.assertIsInstance(record["size"], int)
+                self.assertGreater(record["size"], 0)
+                for key in ("sha256", "image_sha256"):
+                    self.assertRegex(record[key], "^[0-9a-f]{64}$")
+        self.assertEqual((OMARCHY_RECORD["size"], OMARCHY_RECORD["sha256"], OMARCHY_RECORD["image_sha256"]),
+                         (2337897871, "d00ba1563312e69ce366b316dab245ea76226c4f0399a6e32d36932aaa63578a",
+                          "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579"))   # boot035's Image
+        self.assertEqual((launch.RAMROOT_RECORD.name, launch.OMARCHY_RECORD.name),
+                         ("ramroot-manifest.json", "omarchy-root-manifest.json"))
 
-    def main(self, *extra):
-        argv = ["--package", "/fake", "--profile", "ramroot", "--ramroot", str(self.path)] + list(extra)
+    def main(self, *extra, profile="ramroot"):
+        path = self.omarchy_path if profile == "omarchy" else self.path
+        argv = ["--package", "/fake", "--profile", profile, "--ramroot", str(path)] + list(extra)
         return run_main(launch, argv, self.files)
+
+    def test_omarchy_dry_run_names_its_pin_and_deadline(self):
+        result, out, _, launches = self.main(profile="omarchy")
+        lines = out.splitlines()
+        self.assertEqual((result, launches), (0, []))
+        self.assertEqual(lines[:6], [
+            "Package PASS: all files match the repository manifest.",
+            "RAM root PASS: 26 bytes match omarchy-root-manifest.json (synthetic job).",
+            "Operator key: none; only keys built into the image can log in.",
+            "Mode: OFFLINE ONLY; USB not opened", "Boot arguments: " + RAMROOT_ARGS,
+            "m1n1 must append: idle=nop arm64.nowfxt"])
+        self.assertRegex(lines[6], r"^Upload estimate: .* Deadline 900 s\.$")
+        self.assertEqual(len(lines), 7)
+
+    def test_each_profile_refuses_the_other_pin(self):
+        with self.assertRaisesRegex(ValueError, "size mismatch"):
+            run_main(launch, ["--package", "/fake", "--profile", "omarchy", "--ramroot", str(self.path)], self.files)
+        with self.assertRaisesRegex(ValueError, "size mismatch"):
+            run_main(launch, ["--package", "/fake", "--profile", "ramroot", "--ramroot", str(self.omarchy_path)],
+                     self.files)
+
+    def test_omarchy_live_launch_needs_its_token(self):
+        live = ["--launch", "--device", "auto", "--confirm"]
+        for token in (RAMROOT_CONFIRM, STAGE_B_CONFIRM):
+            with self.subTest(token=token):
+                result, out, err, launches = self.main(*live, token, profile="omarchy")
+                self.assertEqual((result, out, launches), ("exit 2", "", []))
+                self.assertIn("--confirm " + OMARCHY_CONFIRM, err[0])
+        result, out, _, launches = self.main(*live, OMARCHY_CONFIRM, profile="omarchy")
+        self.assertEqual(result, 0)
+        self.assertIn("Mode: LIVE RAM LAUNCH", out.splitlines())
+        device, _, _, files, profile = launches[0].args
+        self.assertEqual((device, files["ramroot.cpio.zst"]), ("auto", self.omarchy_data))
+        self.assertIs(profile, OMARCHY)
+        result, _, err, _ = self.main(*live, OMARCHY_CONFIRM)   # the RAM-root profile keeps its own token
+        self.assertEqual(result, "exit 2")
+        self.assertIn("--confirm " + RAMROOT_CONFIRM, err[0])
+
+    def test_omarchy_needs_its_image(self):
+        result, out, err, _ = run_main(launch, ["--package", "/fake", "--profile", "omarchy"])
+        self.assertEqual((result, out), ("exit 2", ""))
+        self.assertIn("--profile omarchy requires --ramroot", err[0])
 
     def test_dry_run_reports_estimate_and_stays_offline(self):
         key = self.root / "id.pub"

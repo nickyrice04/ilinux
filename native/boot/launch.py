@@ -37,12 +37,21 @@ RAMROOT_BOOTARGS = ("console=tty0 rdinit=/init ro maxcpus=1 nr_cpus=1 cpufreq.of
                     "pd_ignore_unused clk_ignore_unused quiet")
 RAMROOT_CONFIRM = "BOOT-J716C-RAM-ROOT"
 RAMROOT_RECORD = HERE / "ramroot-manifest.json"
+# Omarchy itself (VM job 045, built by Omarchy's installer): the RAM-root package, gates and
+# arguments with a 2.34 GB image. Only the deadline, the client heap and the pin differ.
+OMARCHY_CONFIRM = "BOOT-J716C-OMARCHY-ROOT"
+OMARCHY_RECORD = HERE / "omarchy-root-manifest.json"
 M1N1_APPEND = ("idle=nop", "arm64.nowfxt")
-Profile = collections.namedtuple("Profile", "initrd bootargs label confirm deadline exact_append")
+# heap: ProxyUtils' heap_size, from which kernel, DT and initrd are placed; None keeps its 1 GiB.
+Profile = collections.namedtuple("Profile", "initrd bootargs label confirm deadline exact_append heap")
 PROFILES = {
-    "stage-b": Profile("initramfs-stage-b.cpio.gz", BOOTARGS, "diagnostic", CONFIRM, 180, False),
+    "stage-b": Profile("initramfs-stage-b.cpio.gz", BOOTARGS, "diagnostic", CONFIRM, 180, False, None),
     # 300 s: the upload alone is ~227 MB, 45-57 s at the observed 4-5 MB/s.
-    "ramroot": Profile("ramroot.cpio.zst", RAMROOT_BOOTARGS, "RAM-root", RAMROOT_CONFIRM, 300, True),
+    "ramroot": Profile("ramroot.cpio.zst", RAMROOT_BOOTARGS, "RAM-root", RAMROOT_CONFIRM, 300, True, None),
+    # 900 s: ~2.38 GB, 444.5 s at attempt 20's 5.36 MB/s, 596 s at 4 MB/s. 1 GiB of heap leaves
+    # ~1.03 GB for an initrd; 3 GiB holds this one with ~0.8 GB to spare.
+    "omarchy": Profile("ramroot.cpio.zst", RAMROOT_BOOTARGS, "Omarchy RAM-root", OMARCHY_CONFIRM, 900,
+                       True, 3 * 1024**3),
 }
 STAGE_B = PROFILES["stage-b"]
 PROXY_RATES = (5e6, 4e6)   # observed m1n1 USB proxy upload rates, bytes/s (roadmap.md, Phase 3)
@@ -75,9 +84,9 @@ def verify_package(directory):
     return manifest, loaded
 
 
-def verify_ramroot(path, image):
+def verify_ramroot(path, image, record_file=None):
     """Return the recorded RAM-root build and its bytes; refuse any other image or Image."""
-    record = json.loads(RAMROOT_RECORD.read_text())
+    record = json.loads((record_file or RAMROOT_RECORD).read_text())
     if hashlib.sha256(image).hexdigest() != record["image_sha256"]:
         raise ValueError("package Image differs from the Image the RAM root was built for")
     if path.is_symlink() or not path.is_file() or path.stat().st_size != record["size"]:
@@ -157,7 +166,7 @@ def ensure_no_secondaries(proxy):
 
 def check_profile(profile):
     if profile not in PROFILES.values():
-        raise ValueError("unknown launch profile; only stage-b and ramroot exist")
+        raise ValueError("unknown launch profile; only stage-b, ramroot and omarchy exist")
 
 
 def launch_session(iface, proxy, utils_factory, manifest, files, profile=STAGE_B):
@@ -175,7 +184,7 @@ def launch_session(iface, proxy, utils_factory, manifest, files, profile=STAGE_B
     # No m1n1.setup, bootstrap_port, PMU reset, shell, cpufreq_init or SMP start.
     # ProxyUtils sets up a RAM heap and reads boot arguments; it is not read-only.
     print("Initializing controller RAM utilities.", flush=True)
-    utils = utils_factory(proxy)
+    utils = utils_factory(proxy) if profile.heap is None else utils_factory(proxy, heap_size=profile.heap)
     print("Reading target ADT root compatibility.", flush=True)
     # LazyADT already represents the root. In the pinned API, ["/"] looks
     # for an empty-named child and raises KeyError; it does not return root.
@@ -298,10 +307,11 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--package", type=Path, required=True)
     parser.add_argument("--profile", choices=sorted(PROFILES), default="stage-b",
-                        help="stage-b (default): diagnostic initramfs; ramroot: job 039's RAM root")
-    parser.add_argument("--ramroot", type=Path, help="ramroot profile: the recorded ramroot.cpio.zst")
+                        help="stage-b (default): diagnostic initramfs; ramroot: job 039's RAM root; "
+                             "omarchy: job 045's Omarchy root (2.34 GB, about 7.5 min of upload)")
+    parser.add_argument("--ramroot", type=Path, help="ramroot/omarchy profile: the recorded ramroot.cpio.zst")
     parser.add_argument("--operator-key", type=Path,
-                        help="ramroot profile, optional: OpenSSH public key file for root")
+                        help="ramroot/omarchy profile, optional: OpenSSH public key file for root")
     parser.add_argument("--launch", action="store_true", help="LIVE RAM boot; requires separate user authorization")
     parser.add_argument("--device", help="auto, or the exact descriptor-verified primary callout")
     parser.add_argument("--confirm", default="")
@@ -309,9 +319,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     profile = PROFILES[args.profile]
     if profile is STAGE_B and (args.ramroot is not None or args.operator_key is not None):
-        parser.error("--ramroot and --operator-key require --profile ramroot")
+        parser.error("--ramroot and --operator-key require --profile ramroot or omarchy")
     if profile is not STAGE_B and args.ramroot is None:
-        parser.error("--profile ramroot requires --ramroot")
+        parser.error("--profile %s requires --ramroot" % args.profile)
     if args.launch and (args.confirm != profile.confirm or args.device is None):
         parser.error("live launch requires --device and --confirm " + profile.confirm)
     if not args.launch and (args.device is not None or args.confirm):
@@ -320,9 +330,10 @@ def main(argv=None):
     print("Package PASS: all files match the repository manifest.")
     if profile is not STAGE_B:
         files = dict(files)
-        record, image = verify_ramroot(args.ramroot, files["Image"])
+        record_file = OMARCHY_RECORD if profile is PROFILES["omarchy"] else RAMROOT_RECORD
+        record, image = verify_ramroot(args.ramroot, files["Image"], record_file)
         print("RAM root PASS: %s bytes match %s (%s)." % (
-            format(record["size"], ","), RAMROOT_RECORD.name, record["source"]))
+            format(record["size"], ","), record_file.name, record["source"]))
         overlay = b""
         if args.operator_key is not None:
             overlay, prints = operator_key_cpio(args.operator_key.read_bytes())

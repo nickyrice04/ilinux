@@ -5,6 +5,28 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-18 · M5: attempt 22 handed off — Omarchy itself (job 045) on boot035 with the launcher's `omarchy` profile (NOT RUN)
+
+* **Decided:** after attempt 21 proved the bulk-only USB path against macOS and then met a DMA
+  fault, the first installer-built Omarchy desktop goes ahead on boot035, which has no USB
+  controllers, while boot040 works on the fault. The user approved the launcher change.
+* **Implemented:** the launcher's third profile, `omarchy` (3 GiB proxy-client heap, since the
+  1 GiB default refuses a 2.34 GB initrd; 900 s deadline; confirmation `BOOT-J716C-OMARCHY-ROOT`;
+  its own pin `native/boot/omarchy-root-manifest.json`); `test_ramroot.py` grew from 30 to 44
+  cases, comparing the `stage-b` and `ramroot` profiles against the committed launcher case by
+  case; the handoff records point at boot035 again; the attempt-22 checklist, coordination entry,
+  README and status. Job 045's root is the 2026-10-18 rebuild with deviation 15 (VM job 048's
+  frame-callback fix) and its hardened boot test.
+* **Tested (offline):** in a clean copy of main with these files, the launcher prints `Package
+  PASS` and `RAM root PASS` for boot035 plus the job 045 image (upload 2,382,558,042 bytes, 476.5 s
+  at 5 MB/s, deadline 900 s) and the `native/boot` suites PASS. VM (QEMU TCG): desktop ready
+  194.8 s after kernel start, Chromium's window in 17 s, 0 failed units beyond the four expected.
+* **Not verified:** everything native: the 7.5-minute upload through the proxy, the 3 GiB heap
+  placement against live carveouts, the unpack of 2.34 GB on one CPU, Omarchy's session on the
+  hardware.
+* **Next:** the human AirDrops the image to the M1; M1 readiness with the launcher diff review;
+  one filmed attempt 22 of about 20 minutes.
+
 ## 2026-10-18 · M1: attempt 21 (boot039) ran: macOS published the bulk interface and the reader streamed 36,909 bytes; then the M5's dwc3 flagged BUSERR and an apple-dart interrupt storm stalled the stream
 
 * **Discovered:** with no interrupt endpoint, macOS configured the device and EP0 stayed healthy for 10 minutes (zero EP0

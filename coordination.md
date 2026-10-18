@@ -6,6 +6,37 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt 22: Omarchy itself (VM job 045) as a RAM root on boot035 (NOT RUN)
+
+* **Attempt 21 consumed:** the bulk-only port kept EP0 healthy and the M1's reader streamed
+  36,909 bytes, then the M5's dwc3 flagged a DMA bus error and the stream stopped. boot040
+  investigates that in its own track. **This attempt has no USB link**: the boot035 package's DT
+  has no USB controllers.
+* **Attempt 22 = the boot035 package launched with the launcher's new `omarchy` profile and the
+  root Omarchy's own installer built** (VM job 045, 2,337,897,871 bytes, SHA-256
+  `d00ba1563312e69ce366b316dab245ea76226c4f0399a6e32d36932aaa63578a`, pinned in
+  `native/boot/omarchy-root-manifest.json`): 865 packages, Omarchy's session (SDDM → uwsm →
+  Hyprland 0.56.2 → Quickshell), its first run and menu, Chromium and Obsidian, 20 agent
+  launchers installed and signed out, with deviation 15 (`QT_WAYLAND_FRAME_CALLBACK_TIMEOUT=0`)
+  from VM job 048. View-only, offline. Report:
+  `omarchy-arm64/omarchy-root-report-2026-10-17.md`.
+* **The launcher changed** (first time since attempt 18): a third profile, `omarchy`, with a
+  3 GiB proxy-client heap (the 1 GiB default refuses this image), a 900 s deadline, its own
+  confirmation `BOOT-J716C-OMARCHY-ROOT` and its own pin. `launch.py` is now `b14ec7a1…`; the
+  `stage-b` and `ramroot` profiles behave exactly as before (`test_ramroot.py`, 44 cases), and
+  the other five controller files are unchanged. The handoff records point at boot035 again
+  (archive `81cbbd1c…`, SHA256SUMS `7635c5e4…`).
+* **Offline:** against `build/native-boot035/verified` and the job 045 image the launcher prints
+  `Package PASS`, `RAM root PASS`, upload 2,382,558,042 bytes (476.5 s at 5 MB/s, deadline
+  900 s); the `native/boot` suites PASS. VM (QEMU TCG, one vCPU, the boot035 Image): desktop
+  ready 194.8 s after kernel start, 0 Hyprland restarts, Chromium's window in 17 s.
+* **The image travels privately:** the human AirDrops it to the M1 (`build/ramroot045/`,
+  ignored; keep run 33's file in `build/ramroot/`). Never commit or publish it (machine-id).
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 22): offline intake, the
+  launcher diff review, then one filmed boot of about 20 minutes (about 7.5 min of upload, then
+  10 min), the recording started before the launch; copy m1n1's heap and memory lines from the
+  video, never the serial-number line.
+
 ### Current M1 result — attempt 21 (boot039): macOS publishes the bulk interface, the reader streams 36,909 bytes, then the M5's dwc3 flags BUSERR and an apple-dart interrupt storm stalls the stream
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 10.95 s, handoff 2026-10-18T19:23:32.987Z, upload 8.89 s; no M1

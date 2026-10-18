@@ -229,20 +229,17 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Latest M5 handoff: **attempt 21, boot039: a bulk-only USB log port with the
-dwc3 state on screen (NOT RUN)**. Attempt 18's ACM + ECM device timed out on
-EP0 right after macOS set the configuration; both functions add an interrupt-IN
-endpoint. boot039 changes only `/init`: one generic serial function `gser` per
-controller (vendor class, bulk IN + bulk OUT, no interrupt endpoint) carries the
-kernel log, written only by the M5, which the M1 reads with its own read-only
-IOUSBHost tool (`tools/m1n1-client/bulk-log-reader-brief.md`). `bcdDevice
-0x0139`; no network. Every heartbeat's `[ctl]` line shows each dwc3 core's link,
-events, interrupts, EP0 commands and endpoint rings, read from debugfs without
-register writes. Image, config, DTs and m1n1 are boot036's (packager-enforced).
-Prerelease `native-j716c-boot039` (`b85c8d45…7d51`, GitHub's digest verified);
-VM job 041, liveness, the dummy_hcd self-test (1,926 log lines over bulk IN) and
-offline launcher check PASS. See `native/boot/boot039-bulk-log-2026-10-16.md`
-and `tools/m1n1-client/stage-b-instructions.md`.
+Latest M5 handoff: **attempt 22, Omarchy itself (VM job 045) as a RAM root on
+boot035 (NOT RUN)**. The root Omarchy's own installer built (865 packages,
+Omarchy's session, first run and menu, agent launchers signed out) boots on
+attempt 16's package, which has no USB controllers, with the launcher's new
+`omarchy` profile: a 3 GiB proxy-client heap, a 900 s deadline, its own
+confirmation and pin (`native/boot/omarchy-root-manifest.json`, 2,337,897,871
+bytes). `launch.py` is `b14ec7a1…`; the other profiles are unchanged by test.
+The image reaches the M1 privately (AirDrop). VM-tested on the boot035 Image;
+offline launcher check and all suites PASS. The USB link continues separately
+(boot040 on attempt 21's DMA fault; the SSH-over-bulk link is VM-proven). See
+`tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder

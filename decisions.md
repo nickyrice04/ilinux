@@ -1648,3 +1648,17 @@ published later. Recorded in `AGENTS.md` (Conventions) so every session
 follows it. Not legal advice; Apple's licence terms, which restrict reverse
 engineering except where the law permits, are a contract question separate from
 copyright.
+
+## 2026-10-18 · Change the launcher for the installer-built Omarchy root
+
+The reviewed launcher had not changed since attempt 18, and every handoff pins its digest. The
+root Omarchy's own installer builds is 2.34 GB, which the proxy client's default 1 GiB heap
+refuses before a byte is written and which needs about 7.5 minutes of upload against a 300 s
+deadline. Shrinking the root to fit would drop Chromium, LibreOffice and the agent tools and make
+it Omarchy-style again, so the launcher changes instead, in the smallest way: a third profile with
+a 3 GiB heap, a 900 s deadline, its own confirmation and its own pin, while the two existing
+profiles are shown by test to behave exactly as the committed launcher did. The user approved the
+change on 2026-10-17 and the handoff on 2026-10-18. The risk the heap adds is where 2.39 GB lands
+in the M5's RAM relative to live carveouts, which only the native run can answer; the checklist
+reads m1n1's heap and memory lines from the video and treats a reset during the upload as that
+evidence. A two-stage delivery over the USB link remains the plan once that link works.

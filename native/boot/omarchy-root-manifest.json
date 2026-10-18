@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "profile": "omarchy",
+  "file": "ramroot.cpio.zst",
+  "size": 2337897871,
+  "sha256": "d00ba1563312e69ce366b316dab245ea76226c4f0399a6e32d36932aaa63578a",
+  "image_sha256": "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579",
+  "source": "VM job 045, 2026-10-18T06:54Z",
+  "build": "virtualization/jobs/045-omarchy-installer-root/host-run.sh; Omarchy's own installer with the edge aarch64 runtime (omarchy-dev, omarchy-settings-dev 4.0.0.r7028.g33783b1-1), 865 packages, then ramroot.sh with deviation 15 (QT_WAYLAND_FRAME_CALLBACK_TIMEOUT=0 for the session); zstd --ultra -22 --long=27; 8,525,249,287 bytes unpacked, 10,773,544,960 in 16 KiB pages",
+  "vm_tested": "QEMU TCG, one vCPU, the boot035 Image and the M5's root compatible: SDDM autologin, uwsm, Hyprland 0.56.2 and Quickshell; desktop ready 194.8 s and first run done 202.2 s after kernel start; menu, Chromium 153 and Obsidian 1.14.4 rendered, their windows 17 s and 56 s after launch; 13,801 MiB in use at the settled desktop; failed units ufw, linux-modules-cleanup, omarchy-provision-hardware (its last step) and the user's xdg-document-portal",
+  "native_tested": false,
+  "private": "holds no SSH host key, pacman keyring or password, but the build's machine-id: never commit or publish the image itself"
+}
