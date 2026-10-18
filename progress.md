@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-18 · M5: boot040 published and attempt 23 handed off — the bulk-only USB port with the DART fault made visible (NOT RUN)
+
+* **Decided:** with the installer-built Omarchy desktop proven (attempt 22), the USB link is the
+  remaining step to agents on the machine. boot040 goes next: attempt 21's link unchanged, the
+  DART fault made visible, and one fix candidate that selects itself by the DART's version.
+* **Reviewed and committed** (`d125b61`, boot040's 19 files): only the Image, `diag-init.c` and
+  the Stage-B initramfs differ from boot039; no private key in the archive, only the M1's public
+  key; no decompiler output in the findings (`rea-dart-2026-10-18.md` records behaviours).
+* **Published:** prerelease `native-j716c-boot040`, 18,921,232 bytes, SHA-256 `1d7f5c8d…66cf`;
+  GitHub's asset digest and a fresh download equal the local archive.
+* **Tested (offline, clean copy of main):** the committed launcher passes the package; the
+  native/boot, USB, package, kconfig and MTP suites PASS; VM job 041, liveness and the dummy_hcd
+  self-test PASS (boot040 session).
+* **Handed off:** the records point at boot040; the attempt-23 checklist (from boot040's draft),
+  coordination, README, AGENTS and roadmap rows 2 and 4 (attempt 22 marked native ✅).
+* **Next:** M1 readiness and one filmed attempt 23; in parallel, a link-enabled Omarchy root
+  pinned to boot040's kernel is being prepared in the VM.
+
 ## 2026-10-18 · M1: attempt 22 ran: the installer-built Omarchy desktop came up on the M5 about 39 s after the handoff and stayed up for the filmed 10 minutes
 
 * **Discovered:** the `omarchy` launcher profile works natively: a 2.38 GB upload in 456.5 s (5.22 MB/s) with the 3 GiB heap, no

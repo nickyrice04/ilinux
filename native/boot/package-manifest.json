@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot035",
+  "package": "ilinux-j716c-boot040",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
-  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038; USB control channel: gadget stack built in, dwc3 peripheral cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear initramfs (kernel/experiments/usb-gadget); job-041; boot039's bulk-only gser log port unchanged; DART fault diagnostics after attempt 21: the Image adds kernel/experiments/usb-gadget/dart-diag (part 1: the apple-dart t8110 fault handler reports and acknowledges an interrupt it does not recognise and names each instance at probe; part 2: a DART whose PARAMS3 reports version 2.2 or later is reported and acknowledged in that version's fault layout, with a bound of 256 acknowledged interrupts; translation and protection untouched), /init adds the dwc3 bus-error address, the DART identity and a read-only DART register snapshot per port (both layouts), short [usbN] lines and the streamer stop at the first bus error; config and DT identical to boot039; job-041",
   "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
   "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
   "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
@@ -12,8 +12,8 @@
   "m1n1_dt_pointer_offset": 1140024,
   "files": {
     "Image": {
-      "size": 44599808,
-      "sha256": "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579"
+      "size": 44681728,
+      "sha256": "a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9"
     },
     "t6050-j716c.dtb": {
       "size": 61326,
@@ -24,16 +24,16 @@
       "sha256": "15565c4bc7371dd40ce6387305af40391140fda5a871e9012aebd65e95162618"
     },
     "kernel.config": {
-      "size": 321615,
-      "sha256": "4f7f459988a4e5ba23fbf7ce74c56e0266ac193b185da357c9dc3296afe93169"
+      "size": 321820,
+      "sha256": "caa8e71a095aca35024688ced8025a8cc03925e641e3988587627d7f5f3e3887"
     },
     "t6050-j716c-stage-b.dtb": {
-      "size": 60363,
-      "sha256": "b1105bbf2c207c8c816c4b9cc0231ecc1d49543e05fe4b772bcb153019e186db"
+      "size": 62043,
+      "sha256": "a676087bda3cffa178604ca0cf128558d9ab2a620073314d054c79a685ecefa5"
     },
     "initramfs-stage-b.cpio.gz": {
-      "size": 302464,
-      "sha256": "7778aa9002b6e57dfba53594365fbdac3a110cdc22484e6b568552fd8773fb0f"
+      "size": 2402470,
+      "sha256": "59bc2afcb1db341bad739efdddef43b097011aed04f70e678f76e9ccc5acaad6"
     },
     "m1n1.bin": {
       "size": 3932160,
@@ -52,13 +52,34 @@
       "sha256": "e125d21d1ec9f861d9fd1d2908f2e7ecdf24379401fd08861ec1f64e4cea2985"
     },
     "diag-init.c": {
-      "size": 3558,
-      "sha256": "55b277100f7cc3ab890cd933525572bc8988ed9eaae69db40ee8a63370f3a3b9"
+      "size": 45907,
+      "sha256": "58c68268b2f05ad2d5f5f1e25478814ec019211a405342e7c9cc256c359e22de"
     },
     "toolchain.txt": {
-      "size": 246,
-      "sha256": "d7648113f762d0ee17624ea09e33faa44fc08aa4de1b81b14d834cb5779f2758"
+      "size": 450,
+      "sha256": "7adc98d7d1fe419ab18bdb906e43eada58ede32c4059bb142682fd78d61e6e18"
     }
   },
-  "early_framebuffer_descriptor_offset": 35198864
+  "early_framebuffer_descriptor_offset": 35313552,
+  "control_channel_authorized_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK2+YOyTltYHJHc63FMW4MAp5xqsciXaCiYFSfVn3Ed8 ilinux-m1-control",
+  "control_channel_function": {
+    "configfs": "gser.GS0",
+    "bcdDevice": "0x0139",
+    "interface_class": "0xff",
+    "endpoints": [
+      "bulk IN",
+      "bulk OUT"
+    ]
+  },
+  "dart_diagnostics": {
+    "kernel_patches": [
+      "kernel/experiments/usb-gadget/dart-diag/dart-diag.patch",
+      "kernel/experiments/usb-gadget/dart-diag/dart-diag-2-gen22.patch"
+    ],
+    "apple_dart_c_before": "f48a05cf9ae17cc1871211cfd7a634f75d3bcdc131c0d7e896a8c8a80451a845",
+    "apple_dart_c_after_part1": "1ed5acf9588650cf9fb7dbba950433c60bbf30d8d0aa3c54f6a4345484db6f29",
+    "apple_dart_c_after": "b3eb0da83235164e2d514c106ec134d6e24c335ba6e36e0124534fb60ca9b288",
+    "v2_2_layout_source": "kernel/experiments/usb-gadget/dart-diag/rea-dart-2026-10-18.md",
+    "init_reads_dart_registers": "through /dev/mem, 32-bit loads, instances 0 and 1 of each port's dart-usbN, both layouts by PARAMS3 version"
+  }
 }

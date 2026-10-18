@@ -6,6 +6,32 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt 23 / boot040: attempt 21's bulk-only log port with the DART fault made visible (NOT RUN)
+
+* **Attempt 22 consumed:** the installer-built Omarchy desktop came up on boot035 and stayed up
+  for the filmed ten minutes, view-only. Agents on the machine need the USB link next.
+* **Attempt 23 = boot040** with the launcher's default `stage-b` profile and the diagnostic
+  initramfs, read by the M1's existing reader, exactly as attempt 21 apart from three files: the
+  Image (the apple-dart fault-report patches: part 1 reports an unrecognised fault interrupt
+  with its raw registers and names each DART at probe; part 2 reports and acknowledges a DART of
+  version 2.2 or later in that version's fault layout, which Linux did not read, per the REA of
+  this Mac's DART driver; bounded, inert below 2.2; translation and protection unchanged),
+  `diag-init.c` and the Stage-B initramfs (the failing DMA address at a bus error, the DART and
+  fault IRQ per port, a read-only register snapshot, short per-port lines, the streamer stopped
+  at the first bus error). The DT, config, m1n1 and gadget are boot039's (packager-enforced).
+* **Release:** prerelease `native-j716c-boot040` at `d125b61`: archive 18,921,232 bytes,
+  SHA-256 `1d7f5c8de17608b21eb9d047d4ee8470c785e3d2ba252fc7b156b4aee46166cf` (GitHub's asset
+  digest and a fresh download equal it); SHA256SUMS digest `4ee2f1f3…e4c9`. The handoff records
+  in `native/boot/` point at boot040.
+* **Offline:** the committed launcher (`b14ec7a1…`, unchanged) passes the package; VM job 041,
+  generic-VM liveness, the dummy_hcd self-test (1,929 log lines over bulk IN) and the package,
+  control-channel, kconfig, USB, MTP and native/boot suites PASS on a clean copy of main.
+* **The first question is on the screen at about 2-3 s:** the DART version on the probe lines.
+  Version 2.2 or later means Linux was blind to this DART's faults and part 2 is active.
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 23): download and verify
+  boot040, re-check the reader, then one filmed boot with the reader started right after the
+  handoff; expect macOS's prompt to allow the USB accessory and accept it.
+
 ### Current M1 result — attempt 22 (Omarchy itself, job 045, `--profile omarchy`): the first installer-built Omarchy desktop on the M5, up about 39 s after the handoff and stable for the filmed 10 minutes
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 460.186 s, handoff 2026-10-18T22:26:29.937Z; the 2,382,558,042-byte

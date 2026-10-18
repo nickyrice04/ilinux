@@ -245,16 +245,16 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Latest M5 handoff: **attempt 22, Omarchy itself (VM job 045) as a RAM root on
-boot035 (NOT RUN)**. The root Omarchy's own installer built (865 packages,
-Omarchy's session, first run and menu, agent launchers signed out) boots on
-attempt 16's package, which has no USB controllers, with the launcher's new
-`omarchy` profile: a 3 GiB proxy-client heap, a 900 s deadline, its own
-confirmation and pin (`native/boot/omarchy-root-manifest.json`, 2,337,897,871
-bytes). `launch.py` is `b14ec7a1…`; the other profiles are unchanged by test.
-The image reaches the M1 privately (AirDrop). VM-tested on the boot035 Image;
-offline launcher check and all suites PASS. The USB link continues separately
-(boot040 on attempt 21's DMA fault; the SSH-over-bulk link is VM-proven). See
+Latest M5 handoff: **attempt 23, boot040: attempt 21's bulk-only USB log port
+with the DART fault made visible (NOT RUN)**. Same link as attempt 21 (one
+`gser` per controller, read by the M1's existing reader); the Image adds the
+apple-dart fault reporting and, on a DART of version 2.2 or later, reporting
+and acknowledgement in that version's fault layout (from the REA of this Mac's
+DART driver; translation and protection unchanged); `/init` adds the failing
+DMA address, the DART per port, a read-only register snapshot and short
+per-port lines. Prerelease `native-j716c-boot040` (`1d7f5c8d…66cf`, GitHub's
+digest verified); launcher unchanged (`b14ec7a1…`); VM job 041, liveness, the
+dummy_hcd self-test and all suites PASS. See
 `tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:

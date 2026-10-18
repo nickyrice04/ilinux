@@ -1,6 +1,7 @@
 # boot040: attempt 21's bulk-only log port with the DART fault made visible, prepared offline
 
-2026-10-18, M5 side session. **Native boot040 NOT RUN; not handed off, not published.** It
+2026-10-18, M5 side session. **Native boot040 NOT RUN.** Published as the prerelease
+`native-j716c-boot040` (GitHub's asset digest verified) and handed off as attempt 23 the same day. It
 builds on `boot039-bulk-log-2026-10-16.md` and the attempt-21 result
 (`stage-b-2026-10-18-attempt21-result.md`). Labels: Confirmed / Likely / Hypothesis /
 Unknown; "Confirmed" means by source, ADT, VM or package check, never on the M5's hardware.
@@ -48,7 +49,7 @@ Unknown; "Confirmed" means by source, ADT, VM or package check, never on the M5'
 * **Package** `ilinux-j716c-boot040.tar.gz`: 18,921,232 bytes, SHA-256
   `1d7f5c8de17608b21eb9d047d4ee8470c785e3d2ba252fc7b156b4aee46166cf`; SHA256SUMS digest
   `4ee2f1f343a2539e18e5e19f9c4ed190e8e730ad685933e2f238bbc65174e4c9`. Records in
-  `build/native-boot040/records/` (not in `native/boot/`, which still points at attempt 22).
+  `build/native-boot040/records/`, copied to `native/boot/` at the attempt-23 handoff.
   An earlier boot040 archive of this day (`387cfc05…`, part 1 only, before the REA result) is
   superseded and was not published.
 * **VM:** job 041 PASS (kernel facts incl. the DART facts; `apple-dart.o` with W=1, no
@@ -172,8 +173,8 @@ console logs).
 
 ## Reading the attempt
 
-`dart-diag/README.md` has the line-by-line legend and `tools/m1n1-client/stage-b-boot040-draft.md`
-the outcome table. In short: the first bus error now comes with its DMA address, the DART's own
+`dart-diag/README.md` has the line-by-line legend and `tools/m1n1-client/stage-b-instructions.md`
+(attempt 23) the outcome table. In short: the first bus error now comes with its DMA address, the DART's own
 view (a recognised fault with code and address, or the raw registers of an interrupt without the
 flag), the sibling instance's registers, and the fault-interrupt count in every short line.
 `ERROR 0 … STREAMS 0 0` on instance 1 with a `FAULT` or stream bit on instance 0 points at
@@ -183,8 +184,8 @@ or the GAPF/PS_PROT units.
 
 ## NOT RUN / Unknown
 
-* **NOT RUN:** native boot040; the handoff (records, release, checklist); the M1's offline
-  readiness for it.
+* **NOT RUN:** native boot040 (attempt 23) and the M1's offline readiness for it. The release and
+  the handoff are done (2026-10-18).
 * **Unknown:** everything attempt 21 left unknown (which instance raised IRQ 43, the fault
   address, stream and code, bulk OUT, instance 0's state); whether instance 0 answers a
   `/dev/mem` read (Likely yes, see above); the t6050 DART's version and widths (printed at
@@ -211,7 +212,8 @@ python3 -I native/boot/test_boot040_package.py
   `apply.py`, `test_dart_diag.py`, `README.md`; `rea-dart-2026-10-18.md` by the REA side
   session), `native/boot/test_boot040_package.py`,
   `native/boot/boot039-package-manifest.json` (the boot039 manifest as the boot040 baseline),
-  `tools/m1n1-client/stage-b-boot040-draft.md`, this report.
+  this report; the draft checklist became `tools/m1n1-client/stage-b-instructions.md` at the
+  attempt-23 handoff.
 * Changed: `kernel/experiments/usb-gadget/init.c`, `selftest/status_fixture.c`,
   `selftest/check_kernel_facts.py`, `selftest/run-vz.sh`, `README.md`;
   `virtualization/jobs/041-usb-gadget/run.sh`; `native/boot/make-package.py` (boot040 entry,
