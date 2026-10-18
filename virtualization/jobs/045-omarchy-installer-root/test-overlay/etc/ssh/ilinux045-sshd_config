@@ -1,0 +1,9 @@
+# VM test only (job 045): the harness's key, the harness's host key, the test NIC only.
+ListenAddress 10.0.2.15
+HostKey /etc/ssh/ilinux045_host_ed25519_key
+AuthorizedKeysFile /etc/ssh/ilinux045_authorized_keys
+PermitRootLogin prohibit-password
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+UsePAM no
+Subsystem sftp internal-sftp

@@ -1,0 +1,8 @@
+# VM test only (job 045, appended cpio): follow Omarchy's boot and session, then drive the
+# menu and the apps; markers on the virtio console, files on the 9p results share.
+[Unit]
+Description=VM test: Omarchy session probe
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/ilinux045-probe

@@ -1,0 +1,7 @@
+# VM test only (job 045): sshd on the VM-only NIC, key-only, for debugging the test guest.
+[Unit]
+Description=VM test: sshd on the test NIC
+
+[Service]
+ExecStart=/usr/bin/sshd -D -e -f /etc/ssh/ilinux045-sshd_config
+RuntimeDirectory=sshd

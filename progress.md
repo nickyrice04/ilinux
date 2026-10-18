@@ -5,6 +5,36 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-17 · M5 (VM only): Omarchy itself as a RAM root — built by Omarchy's installer, its session up on the boot035 Image
+
+* **Decided (roadmap Phase 3, row 4):** *Omarchy* means built by Omarchy's own installer from
+  Omarchy's repositories and running Omarchy's own session, with hardware-forced deviations
+  only. Job 039's root (attempts 19 and 20) is *Omarchy-style*.
+* **Implemented (VM job 045, `virtualization/jobs/045-omarchy-installer-root/`, nothing
+  committed):** the ISO orchestrator's phases one by one into a btrfs subvolume, with the edge
+  aarch64 ISO's runtime (`omarchy-dev` / `omarchy-settings-dev` 4.0.0.r7028.g33783b1), as an
+  image build for `aarch64`; then a snapshot made into the RAM root. 14 deviations from stock
+  Omarchy, each recorded with its reason (our kernel, no bootloader or disk, no password,
+  autologin, Stay Awake, zram masked, job 039's `/init`, …).
+* **Discovered:** the published `omarchy` 4.0.4 runtime cannot install on aarch64 (x64-only Node
+  lookup, no image mode); Omarchy recognizes the M5 as `aarch64-apple`, so its first-boot
+  hardware service stops at `omarchy-mac-boot`; our kernel lacks zram (a 90 s stall per boot,
+  now masked) and nf_tables (ufw fails); without input, Omarchy's idle chain blanks the panel;
+  QEMU's `-initrd` refuses files of 2 GiB or more; m1n1's proxy heap (1 GiB) caps the launcher's
+  initrd at about 1.03 GB.
+* **Tested (QEMU TCG, one vCPU, boot035 Image, the M5's `compatible`, simpledrm 3456×2234):**
+  SDDM autologin → uwsm → Hyprland → Quickshell; first run done at 231 s, desktop ready 246 s;
+  the menu opens; Chromium 153 and Obsidian 1.14.4 (Electron) render on 16 KiB pages, no core
+  dump; 4 failed units, all kernel- or platform-caused.
+* **Measured:** 865 packages, 8.53 GB unpacked (10.77 GB in 16 KiB pages); image 2,337,836,738
+  bytes (`zstd --ultra -22 --long=27`), 444.5 s of upload at 5.36 MB/s; 13,658 MiB in use at the
+  desktop, 10.2 GiB of it the root.
+* **Still unsupported / next:** native delivery. Proposed (not made): a larger m1n1 heap and a
+  900 s deadline in the `ramroot` profile (one stage, about 7.5 min of upload), then two stages
+  over the USB link. Report: `omarchy-arm64/omarchy-root-report-2026-10-17.md`.
+
+---
+
 ## 2026-10-16 · M5: boot039 published, attempt 21 handed off — a bulk-only USB log port with the dwc3 state on screen (NOT RUN)
 
 * **Decided:** attempt 21 goes back to the USB link and asks attempt 18's question with

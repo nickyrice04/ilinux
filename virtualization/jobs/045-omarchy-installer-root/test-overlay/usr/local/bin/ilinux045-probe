@@ -1,0 +1,176 @@
+#!/bin/bash
+# VM test only (job 045, appended to the image by the harness, never in the delivered root).
+# Runs as root from boot. Follows Omarchy's boot to its session and marks each milestone on the
+# virtio console (ILINUX045-<NAME> <seconds since kernel start>), which the harness reads; then
+# drives the session the way its keybindings do: the Omarchy menu (omarchy-menu), the browser
+# and the Electron apps (their launch commands, in the user's systemd manager). "SHOT <name>"
+# asks the harness for a framebuffer capture.
+# Everything else lands on the 9p results share.
+set -u
+RES=/run/ilinux045/results
+mkdir -p "$RES"
+mount -t 9p -o trans=virtio,version=9p2000.L,msize=262144 results "$RES" 2>/dev/null || true
+CON=/dev/hvc0
+up() { cut -d' ' -f1 /proc/uptime; }
+mark() { local t; t=$(up); echo "ILINUX045-$1 $t ${2:-}" > "$CON"; echo "$t $1 ${2:-}" >> "$RES/timeline.txt"; }
+note() { echo "$(up) $*" >> "$RES/probe.log"; }
+
+U=omarchy
+uid=$(id -u "$U")
+RUN=/run/user/$uid
+sig() { local d; d=$(ls -td "$RUN"/hypr/*/ 2>/dev/null | head -1); d=${d%/}; echo "${d##*/}"; }
+wl() { local s; s=$(ls -t "$RUN"/wayland-[0-9]* 2>/dev/null | grep -v '\.lock$' | head -1); echo "${s##*/}"; }
+# as_user CMD...: the user, in the session's environment (for queries, not launches)
+as_user() {
+    setpriv --reuid="$uid" --regid="$(id -g "$U")" --init-groups env -i HOME=/home/$U USER=$U \
+        LOGNAME=$U XDG_RUNTIME_DIR="$RUN" DBUS_SESSION_BUS_ADDRESS=unix:path=$RUN/bus \
+        WAYLAND_DISPLAY="$(wl)" HYPRLAND_INSTANCE_SIGNATURE="$(sig)" OMARCHY_PATH=/usr/share/omarchy \
+        PATH=/home/$U/.local/bin:/usr/share/omarchy/bin:/usr/local/bin:/usr/bin LANG=en_US.UTF-8 "$@"
+}
+hypr() { as_user timeout 20 hyprctl "$@" 2>/dev/null; }
+# launch NAME CMD...: what a keybinding's command does, run in the user's systemd manager, which
+# holds the session's environment (Omarchy's autostart imports it; uwsm-app and
+# omarchy-launch-browser start apps there). The first boot test used `hyprctl dispatch exec`,
+# which started nothing there; Hyprland's IPC often timed out under TCG (probe.log).
+launch() {
+    local name=$1; shift
+    note "launch $name: $*"
+    as_user systemd-run --user --collect --quiet --unit="ilinux045-$name" -- "$@" >> "$RES/probe.log" 2>&1
+    note "launch $name: systemd-run exit $?"
+}
+
+# The harness reaches the guest over a VM-only NIC that NetworkManager leaves alone (the M5
+# has no network device): a static address and a test sshd, for debugging only.
+nic=$(ip -o link | awk -F': ' '/52:54:00:45:00:01/ {print $2; exit}')
+if [ -n "$nic" ]; then
+    ip link set "$nic" up && ip addr add 10.0.2.15/24 dev "$nic" && systemctl start --no-block ilinux045-sshd.service
+fi
+mark PROBE-START "$(uname -r)"
+
+# ---- boot to session ---------------------------------------------------------------------------
+declare -A seen=()
+once() { [ -n "${seen[$1]:-}" ] && return 1; seen[$1]=1; mark "$1" "${2:-}"; }
+layers_seen=""
+deadline=$((SECONDS + 5400))
+ready_at=
+heavy=0
+while [ "$SECONDS" -lt "$deadline" ]; do
+    # light checks every 2 s; Hyprland and shell IPC queries every 10 s (one emulated CPU)
+    pgrep -x sddm > /dev/null && once SDDM
+    loginctl list-sessions --no-legend 2>/dev/null | grep -q " $U " && once SESSION "$(loginctl list-sessions --no-legend | grep " $U " | head -1)"
+    pgrep -u "$uid" -x Hyprland > /dev/null && once HYPRLAND
+    pgrep -u "$uid" -x quickshell > /dev/null && once SHELL-PROCESS
+    heavy=$((heavy + 1))
+    if [ $((heavy % 5)) = 1 ] && [ -n "$(sig)" ] && hypr -j monitors | grep -q '"name"'; then
+        once MONITOR "$(hypr -j monitors | grep -o -E '"(name|description|width|height)": [^,]*' | tr '\n' ' ')"
+        # each layer-shell namespace the first time it appears (bar, wallpaper, notifications, ...)
+        for ns in $(hypr -j layers | grep -o '"namespace": "[^"]*"' | cut -d'"' -f4 | sort -u); do
+            case " $layers_seen " in *" $ns "*) ;; *) layers_seen="$layers_seen $ns"; mark LAYER "$ns" ;; esac
+        done
+        [ -n "${seen[SHELL-PROCESS]:-}" ] && [ -z "${seen[SHELL-PING]:-}" ] &&
+            as_user timeout 30 omarchy-shell shell ping > /dev/null 2>&1 && once SHELL-PING
+    fi
+    [ -e /home/$U/.local/state/omarchy/first-run.log ] && once FIRSTRUN-STARTED
+    if [ -e /home/$U/.local/state/omarchy/done/first-run-user ] ||
+       { [ $((heavy % 5)) = 1 ] && [ -n "${seen[FIRSTRUN-STARTED]:-}" ] && as_user omarchy-done check first-run-user 2>/dev/null; }; then
+        once FIRSTRUN-DONE
+    fi
+    # Desktop ready: the shell answers its IPC ping and has drawn layer surfaces. Then give the
+    # first run 300 s more to finish (it waits for the notification service).
+    if [ -z "$ready_at" ] && [ -n "${seen[SHELL-PING]:-}" ] && [ -n "$layers_seen" ]; then
+        ready_at=$SECONDS; mark READY "$layers_seen"
+    fi
+    if [ -n "$ready_at" ] && { [ -n "${seen[FIRSTRUN-DONE]:-}" ] || [ $((SECONDS - ready_at)) -gt 300 ]; }; then
+        break
+    fi
+    sleep 2
+done
+[ -n "$ready_at" ] || mark NOT-READY "$(systemctl --failed --no-legend | tr '\n' ';')"
+
+{ echo "hyprctl dispatch exec true ->"; hypr dispatch exec true; echo "hyprctl version:"; hypr version | head -3; } >> "$RES/probe.log" 2>&1
+
+snapshot() {  # snapshot NAME: memory, processes, units, the session's state
+    local d=$RES/$1
+    mkdir -p "$d"
+    cat /proc/meminfo > "$d/meminfo.txt"
+    free -m > "$d/free.txt"
+    ps -eo pid,user,rss,vsz,pcpu,etimes,comm --sort=-rss > "$d/ps.txt"
+    systemctl --failed --no-pager > "$d/failed-units.txt" 2>&1
+    systemctl --user -M "$U@" --failed --no-pager > "$d/failed-user-units.txt" 2>&1
+    hypr -j clients > "$d/clients.json"
+    hypr -j layers > "$d/layers.json"
+    hypr -j monitors > "$d/monitors.json"
+    coredumpctl list --no-pager > "$d/coredumps.txt" 2>&1
+    cp /home/$U/.local/state/omarchy/first-run.log "$d/" 2>/dev/null
+    ls -la /home/$U/.local/state/omarchy/done/ > "$d/omarchy-done.txt" 2>&1
+}
+sleep 60
+snapshot ready
+mark SETTLED "$(awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf "used_mib=%d", (t - a) / 1024}' /proc/meminfo)"
+mark SHOT desktop
+sleep 30
+
+# ---- the Omarchy menu (its Quickshell plugin, as SUPER + SPACE opens it) -------------------------
+menu_ok=0
+if as_user timeout 60 omarchy-menu summon root >> "$RES/probe.log" 2>&1; then menu_ok=1; fi
+sleep 40
+mark MENU "summon_exit_ok=$menu_ok layers=$(hypr -j layers | grep -o '"namespace": "[^"]*"' | cut -d'"' -f4 | sort -u | tr '\n' ',')"
+mark SHOT menu
+sleep 30
+as_user timeout 60 omarchy-menu close >> "$RES/probe.log" 2>&1
+sleep 10
+
+# ---- apps: the browser, then each Electron app --------------------------------------------------
+# app NAME CLASS-REGEX CMD...: launch, wait (TCG is slow) for a window whose class matches, mark
+# the time and memory, ask for a capture, record crashes, close it.
+app() {
+    local name=$1 class=$2; shift 2
+    local t0=$SECONDS before after
+    before=$(coredumpctl list --no-legend 2>/dev/null | wc -l)
+    launch "$name" "$@"
+    local ok=0 proc_seen=
+    while [ $((SECONDS - t0)) -lt 900 ]; do
+        if hypr -j clients | grep -o '"class": "[^"]*"' | cut -d'"' -f4 | grep -q -i -E "$class"; then ok=1; break; fi
+        if [ -z "$proc_seen" ] && pgrep -u "$uid" -f -i "$name" > /dev/null; then
+            proc_seen=1; mark APP-PROCESS "$name after_s=$((SECONDS - t0))"
+        fi
+        sleep 3
+    done
+    after=$(coredumpctl list --no-legend 2>/dev/null | wc -l)
+    if [ "$ok" = 1 ]; then
+        sleep 45   # let it draw under TCG
+        mark APP "$name window_s=$((SECONDS - t0 - 45)) coredumps_new=$((after - before))"
+        mark SHOT "app-$name"
+        sleep 25
+    else
+        mark APP-FAIL "$name no_window_after_s=$((SECONDS - t0)) coredumps_new=$((after - before))"
+    fi
+    snapshot "app-$name"
+    ps -eo pid,rss,comm,args --sort=-rss | grep -i -E "$class|electron|chrom" | grep -v grep > "$RES/app-$name/app-processes.txt"
+    journalctl -b --since "-$(( SECONDS - t0 + 5 ))s" --no-pager > "$RES/app-$name/journal.txt" 2>&1
+    as_user systemctl --user status "ilinux045-$name" --no-pager > "$RES/app-$name/unit.txt" 2>&1
+    hypr dispatch closewindow "class:$class" > /dev/null
+    sleep 10
+    pkill -u "$uid" -f -i "$class" 2>/dev/null
+    sleep 5
+}
+app chromium '^chromium' omarchy-launch-browser
+while read -r name class cmd; do
+    [ -n "$name" ] && app "$name" "$class" $cmd
+done < /usr/local/share/ilinux045/electron-apps.txt
+
+# ---- the end -----------------------------------------------------------------------------------
+snapshot final
+journalctl -b -o short-monotonic --no-pager > "$RES/journal.txt" 2>&1
+journalctl -b -o short-monotonic --no-pager -t omarchy-shell > "$RES/journal-omarchy-shell.txt" 2>&1
+cp /var/log/omarchy-install.log "$RES/omarchy-install-firstboot.log" 2>/dev/null
+cat /var/lib/omarchy/image/deferred-steps > "$RES/deferred-steps-after.txt" 2>/dev/null
+ls -la /var/lib/omarchy/image/ > "$RES/image-state.txt" 2>&1
+systemctl status omarchy-provision-hardware.service --no-pager > "$RES/provision-hardware.txt" 2>&1
+as_user omarchy-hw-platform > "$RES/hw-platform.txt" 2>&1
+systemd-detect-virt > "$RES/detect-virt.txt" 2>&1
+systemd-analyze > "$RES/systemd-analyze.txt" 2>&1
+systemd-analyze blame --no-pager > "$RES/systemd-blame.txt" 2>&1
+for d in "$RUN"/hypr/*/; do cat "$d/hyprland.log"; done > "$RES/hyprland.log" 2>/dev/null
+sync
+mark DONE
