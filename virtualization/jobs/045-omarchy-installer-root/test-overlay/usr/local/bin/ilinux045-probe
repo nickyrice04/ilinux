@@ -1,5 +1,10 @@
 #!/bin/bash
 # VM test only (job 045, appended to the image by the harness, never in the delivered root).
+# Nothing here waits on hyprctl's 5 s reply limit (VM job 048): under TCG Hyprland answers its
+# socket between frames that can take seconds, and hyprctl mostly gave up (job 047: 0 of 36 calls
+# on boot039-family kernels). Queries go to Hyprland's request socket with a 120 s limit (hypr
+# below), the shell is pinged on its own socket whatever the compositor does, and layers and
+# windows are read from Hyprland's event socket (socket2), which needs no reply.
 # Runs as root from boot. Follows Omarchy's boot to its session and marks each milestone on the
 # virtio console (ILINUX045-<NAME> <seconds since kernel start>), which the harness reads; then
 # drives the session the way its keybindings do: the Omarchy menu (omarchy-menu), the browser
@@ -27,7 +32,27 @@ as_user() {
         WAYLAND_DISPLAY="$(wl)" HYPRLAND_INSTANCE_SIGNATURE="$(sig)" OMARCHY_PATH=/usr/share/omarchy \
         PATH=/home/$U/.local/bin:/usr/share/omarchy/bin:/usr/local/bin:/usr/bin LANG=en_US.UTF-8 "$@"
 }
-hypr() { as_user timeout 20 hyprctl "$@" 2>/dev/null; }
+# hypr [-j] ARGS...: what `hyprctl [-j] ARGS` asks, sent over Hyprland's request socket as hyprctl
+# sends it ("j/monitors", "/dispatch ..."), and answered however long the compositor takes, up to
+# 120 s. hyprctl itself gives up after 5 s (SO_RCVTIMEO); under TCG, with the shell repainting,
+# replies took 21-74 s (job 048).
+hypr() {
+    local flags=
+    while [ "${1:-}" = -j ]; do flags=j; shift; done
+    printf '%s/%s' "$flags" "$*" | as_user timeout 150 socat -t 120 - "UNIX-CONNECT:$RUN/hypr/$(sig)/.socket.sock" 2>/dev/null
+}
+# Hyprland's event socket, read from the moment it exists into hypr-events.txt ("<uptime>
+# openlayer>>omarchy-bar", "<uptime> openwindow>>address,workspace,class,title", ...)
+EVENTS=$RES/hypr-events.txt
+events_pid=
+listen_events() {
+    local s
+    s=$RUN/hypr/$(sig)/.socket2.sock
+    [ -z "$events_pid" ] && [ -n "$(sig)" ] && [ -S "$s" ] || return 0
+    { as_user socat -u "UNIX-CONNECT:$s" - | while IFS= read -r l; do echo "$(up) $l"; done >> "$EVENTS"; } &
+    events_pid=$!
+    note "reading Hyprland's events from $s"
+}
 # launch NAME CMD...: what a keybinding's command does, run in the user's systemd manager, which
 # holds the session's environment (Omarchy's autostart imports it; uwsm-app and
 # omarchy-launch-browser start apps there). The first boot test used `hyprctl dispatch exec`,
@@ -59,16 +84,24 @@ while [ "$SECONDS" -lt "$deadline" ]; do
     pgrep -x sddm > /dev/null && once SDDM
     loginctl list-sessions --no-legend 2>/dev/null | grep -q " $U " && once SESSION "$(loginctl list-sessions --no-legend | grep " $U " | head -1)"
     pgrep -u "$uid" -x Hyprland > /dev/null && once HYPRLAND
+    listen_events
     pgrep -u "$uid" -x quickshell > /dev/null && once SHELL-PROCESS
     heavy=$((heavy + 1))
-    if [ $((heavy % 5)) = 1 ] && [ -n "$(sig)" ] && hypr -j monitors | grep -q '"name"'; then
-        once MONITOR "$(hypr -j monitors | grep -o -E '"(name|description|width|height)": [^,]*' | tr '\n' ' ')"
-        # each layer-shell namespace the first time it appears (bar, wallpaper, notifications, ...)
-        for ns in $(hypr -j layers | grep -o '"namespace": "[^"]*"' | cut -d'"' -f4 | sort -u); do
-            case " $layers_seen " in *" $ns "*) ;; *) layers_seen="$layers_seen $ns"; mark LAYER "$ns" ;; esac
-        done
+    if [ $((heavy % 5)) = 1 ] && [ -n "$(sig)" ]; then
+        # the shell answers on its own socket, whatever the compositor is doing; it may take longer
+        # than omarchy-shell's own 2 s while it renders under TCG, so it gets 20 s
         [ -n "${seen[SHELL-PROCESS]:-}" ] && [ -z "${seen[SHELL-PING]:-}" ] &&
-            as_user timeout 30 omarchy-shell shell ping > /dev/null 2>&1 && once SHELL-PING
+            as_user env OMARCHY_SHELL_IPC_TIMEOUT=20s timeout 30 omarchy-shell shell ping > /dev/null 2>&1 && once SHELL-PING
+        # each layer-shell namespace the first time Hyprland maps it (bar, wallpaper, notifications, ...)
+        new_layers() { for ns in "$@"; do
+            case " $layers_seen " in *" $ns "*) ;; *) layers_seen="$layers_seen $ns"; mark LAYER "$ns" ;; esac
+        done; }
+        new_layers $(sed -n 's/^[0-9.]* openlayer>>//p' "$EVENTS" 2>/dev/null | sort -u)
+        if [ -z "${seen[MONITOR]:-}" ] && mon=$(hypr -j monitors) && grep -q '"name"' <<< "$mon"; then
+            once MONITOR "$(grep -o -E '"(name|description|width|height)": [^,]*' <<< "$mon" | tr '\n' ' ')"
+            # and any namespace mapped before the event socket was read
+            new_layers $(hypr -j layers | grep -o '"namespace": "[^"]*"' | cut -d'"' -f4 | sort -u)
+        fi
     fi
     [ -e /home/$U/.local/state/omarchy/first-run.log ] && once FIRSTRUN-STARTED
     if [ -e /home/$U/.local/state/omarchy/done/first-run-user ] ||
@@ -87,7 +120,12 @@ while [ "$SECONDS" -lt "$deadline" ]; do
 done
 [ -n "$ready_at" ] || mark NOT-READY "$(systemctl --failed --no-legend | tr '\n' ';')"
 
-{ echo "hyprctl dispatch exec true ->"; hypr dispatch exec true; echo "hyprctl version:"; hypr version | head -3; } >> "$RES/probe.log" 2>&1
+# Hyprland 0.56 evaluates a dispatch as Lua (return hl.dispatch(<request>)), so a dispatcher is
+# called as Omarchy's own scripts call it: hl.dsp.exec_cmd(...) (omarchy-restart-shell),
+# hl.dsp.window.close({ window = "address:..." }) (omarchy-hyprland-window-close-all). The old
+# "exec true" form is a Lua syntax error there.
+{ echo "hyprctl dispatch 'hl.dsp.exec_cmd(\"true\")' -> $(hypr dispatch 'hl.dsp.exec_cmd("true")')"
+  echo "hyprctl version:"; hypr version | head -3; } >> "$RES/probe.log" 2>&1
 
 snapshot() {  # snapshot NAME: memory, processes, units, the session's state
     local d=$RES/$1
@@ -125,12 +163,16 @@ sleep 10
 # the time and memory, ask for a capture, record crashes, close it.
 app() {
     local name=$1 class=$2; shift 2
-    local t0=$SECONDS before after
+    local t0=$SECONDS before after ev0
     before=$(coredumpctl list --no-legend 2>/dev/null | wc -l)
+    ev0=$(wc -l < "$EVENTS" 2>/dev/null || echo 0)
     launch "$name" "$@"
     local ok=0 proc_seen=
     while [ $((SECONDS - t0)) -lt 900 ]; do
-        if hypr -j clients | grep -o '"class": "[^"]*"' | cut -d'"' -f4 | grep -q -i -E "$class"; then ok=1; break; fi
+        # a window of that class opened since the launch (openwindow>>address,workspace,class,title),
+        # or one Hyprland lists
+        if tail -n +"$((ev0 + 1))" "$EVENTS" 2>/dev/null | sed -n 's/^[0-9.]* openwindow>>[^,]*,[^,]*,\([^,]*\),.*/\1/p' | grep -q -i -E "$class" ||
+           hypr -j clients | grep -o '"class": "[^"]*"' | cut -d'"' -f4 | grep -q -i -E "$class"; then ok=1; break; fi
         if [ -z "$proc_seen" ] && pgrep -u "$uid" -f -i "$name" > /dev/null; then
             proc_seen=1; mark APP-PROCESS "$name after_s=$((SECONDS - t0))"
         fi
@@ -149,9 +191,17 @@ app() {
     ps -eo pid,rss,comm,args --sort=-rss | grep -i -E "$class|electron|chrom" | grep -v grep > "$RES/app-$name/app-processes.txt"
     journalctl -b --since "-$(( SECONDS - t0 + 5 ))s" --no-pager > "$RES/app-$name/journal.txt" 2>&1
     as_user systemctl --user status "ilinux045-$name" --no-pager > "$RES/app-$name/unit.txt" 2>&1
-    hypr dispatch closewindow "class:$class" > /dev/null
+    # Close its windows as omarchy-hyprland-window-close-all does (by address, in Hyprland 0.56's
+    # Lua form), then end what is left of it. Its processes are matched on their command lines,
+    # which start with a path, not with the class: so the class regex without its anchor
+    # (/usr/lib/chromium/chromium never matched ^chromium, and Chromium stayed open to the end).
+    local addr pat=${class#^}
+    for addr in $(hypr -j clients | jq -r --arg c "$class" '.[] | select((.class // "") | test($c; "i")) | .address' 2>/dev/null); do
+        note "close $name $addr: $(hypr dispatch "hl.dsp.window.close({ window = \"address:$addr\" })")"
+    done
     sleep 10
-    pkill -u "$uid" -f -i "$class" 2>/dev/null
+    note "close $name: $(pgrep -u "$uid" -f -i -c "$pat") of its processes left; pkill"
+    pkill -u "$uid" -f -i "$pat" 2>/dev/null
     sleep 5
 }
 app chromium '^chromium' omarchy-launch-browser

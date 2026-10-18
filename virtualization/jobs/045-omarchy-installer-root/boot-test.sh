@@ -167,13 +167,15 @@ DTS
         if [ "$SECONDS" -ge $((shot * every + every)) ]; then   # progress frames, quarter scale
             shot=$((shot + 1)); fbshot "progress-$((shot * every))s" 4
         fi
-        # captures the probe asks for, in order
-        mapfile -t shots < <(grep -a -o -E '^ILINUX045-SHOT [0-9.]+ [A-Za-z0-9_-]+' "$X/console.log" 2>/dev/null | awk '{print $3}')
+        # captures the probe asks for, in order. A marker can start mid-line: the serial getty's
+        # login prompt and systemd's terminal resets share hvc0 and end without a newline
+        # ("omarchy login: ILINUX045-SDDM 100.74"), so no marker grep is anchored.
+        mapfile -t shots < <(grep -a -o -E 'ILINUX045-SHOT [0-9.]+ [A-Za-z0-9_-]+' "$X/console.log" 2>/dev/null | awk '{print $3}')
         while [ "$shots_done" -lt "${#shots[@]}" ]; do
             fbshot "${shots[$shots_done]}" 2
             shots_done=$((shots_done + 1))
         done
-        if grep -a -q '^ILINUX045-DONE' "$X/console.log" 2>/dev/null; then done_marker=1; break; fi
+        if grep -a -q 'ILINUX045-DONE' "$X/console.log" 2>/dev/null; then done_marker=1; break; fi
         sleep 0.5
     done
     echo "wall_s $(calc "$(date +%s.%N) - $t0")" > "$OUT/test/wall.txt"
@@ -198,10 +200,10 @@ DTS
     cp -R "$X/results" "$OUT/test/results" 2>/dev/null || true
     chroot_down "$TOOLS"
     { echo "milestones (seconds since kernel start, from the probe):"
-      grep -a -E '^ILINUX045-' "$OUT/test/console.log" | grep -v -E '^ILINUX045-SHOT' | cut -c1-300
+      LC_ALL=C grep -a -o -E 'ILINUX045-.*' "$OUT/test/console.log" | grep -v -E '^ILINUX045-SHOT' | cut -c1-300
     } > "$OUT/test/summary.txt"
     cat "$OUT/test/summary.txt"
     [ -n "$done_marker" ] || { echo "FAIL: the probe did not finish"; return 1; }
-    grep -q '^ILINUX045-READY' "$OUT/test/console.log" || { echo "FAIL: Omarchy's session never came up"; return 1; }
+    grep -a -q 'ILINUX045-READY' "$OUT/test/console.log" || { echo "FAIL: Omarchy's session never came up"; return 1; }
     echo "PASS: the probe ran to the end; see out/test/summary.txt"
 }

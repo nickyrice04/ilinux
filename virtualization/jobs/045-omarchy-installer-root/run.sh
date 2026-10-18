@@ -18,11 +18,13 @@
 # Host side: host-run.sh in this directory (vm lock, the work disk, the read-only Omarchy share).
 # Optional out/job.env: REINSTALL=1, CONVERT=0 (stop after the install), TEST=0 (no boot test),
 # FAST=1 (one quick zstd level), ZSTD_FINAL="-19 --long=27" (that level only), VARIANTS=0 (no
-# delivery-size variant), TIMEOUT=seconds (the boot test's bound). Read-only modes, each instead
-# of the stages: INSPECT=1 (the installed runtime's installer and the edge repository's other
-# runtime, unpacked into out/inspect/), QPROBE=1 (the largest -initrd QEMU accepts here),
-# ELFCHECK=1 (every ELF in the RAM root against 16 KiB pages, the Chromium-based files, the
-# agent wrappers, the package cache).
+# delivery-size variant), TIMEOUT=seconds (the boot test's bound), RETEST=1 (stage 4 alone, on
+# out/ramroot.cpio.zst as stage 3 packed it, digest-checked: stage 2 writes the build time into
+# the root, so a rebuild always changes the image's digest; this keeps it through a change to the
+# test alone). Read-only modes, each instead of the stages: INSPECT=1 (the installed runtime's
+# installer and the edge repository's other runtime, unpacked into out/inspect/), QPROBE=1 (the
+# largest -initrd QEMU accepts here), ELFCHECK=1 (every ELF in the RAM root against 16 KiB pages,
+# the Chromium-based files, the agent wrappers, the package cache).
 set -euo pipefail
 J=/mnt/job
 OUT=$J/out
@@ -64,6 +66,21 @@ mkdir -p "$W/cache"
 if [ "${INSPECT:-0}" = 1 ]; then . "$J/inspect.sh"; stage_inspect; exit 0; fi
 if [ "${QPROBE:-0}" = 1 ]; then . "$J/qprobe.sh"; stage_qprobe; exit 0; fi
 if [ "${ELFCHECK:-0}" = 1 ]; then . "$J/elfcheck.sh"; stage_elfcheck; exit 0; fi
+if [ "${RETEST:-0}" = 1 ]; then
+    # the packed image, unchanged; the Electron app list still comes from its snapshot ($C)
+    rm -rf "$OUT/test"
+    log "retest: out/ramroot.cpio.zst as packed"
+    (cd "$OUT" && sha256sum -c ramroot.cpio.zst.sha256)
+    echo "$IMAGE_SHA  $KERNEL" | sha256sum -c -
+    [ -d "$C" ] || { echo "no RAM root snapshot at $C"; exit 1; }
+    cat "$C/usr/share/ilinux/build-info.txt"
+    T=/run/ilinux-045
+    mkdir -p "$T"
+    mountpoint -q "$T" || mount -t tmpfs -o size=9G,mode=0755 tmpfs "$T"
+    . "$J/boot-test.sh"
+    stage_boot_test
+    exit
+fi
 rm -rf "$OUT/build" "$OUT/test"
 mkdir -p "$OUT/build"
 log "inputs"

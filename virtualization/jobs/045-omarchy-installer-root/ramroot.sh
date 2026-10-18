@@ -39,6 +39,19 @@ stage_ramroot() {
         record build-host "undid vm-no-animations.sh's two toggles (no-animations, window-opaque): the user setup ran in the build VM, where omarchy-hw-vm is true; on the M5 it is false"
     fi
 
+    # Qt Wayland stops counting a window as shown when its frame callback is more than 100 ms late
+    # and repaints the whole window when the callback comes (QT_WAYLAND_FRAME_CALLBACK_TIMEOUT, Qt's
+    # default 100). Hyprland on the CPU (llvmpipe, 3456x2234) takes longer than that per frame: so
+    # every window of Omarchy's shell timed out on every frame and was repainted in full, and Hyprland
+    # composited back to back at 83 % of the one CPU (VM job 048; on the M5 a frame should take
+    # 0.6-1.1 s, estimated). Off for the session, through Omarchy's toggle directory, which Hyprland's
+    # config loads; Hyprland starts the shell, which inherits it.
+    printf '%s\n' '-- iLinux RAM root (job 045, ramroot.sh): Qt never treats a window as hidden for a late frame' \
+        '-- callback; CPU-rendered frames take longer than its 100 ms (VM job 048).' \
+        'hl.env("QT_WAYLAND_FRAME_CALLBACK_TIMEOUT", "0")' > "$t/ilinux-frame-callbacks.lua"
+    chown 1000:1000 "$t/ilinux-frame-callbacks.lua"
+    record changed "QT_WAYLAND_FRAME_CALLBACK_TIMEOUT=0 for the session (~/.local/state/omarchy/toggles/hypr/ilinux-frame-callbacks.lua, hl.env): with frames slower than Qt's 100 ms, every shell window timed out and was repainted on every frame, so Hyprland never went idle (VM job 048)"
+
     # Our kernel has no zram (boot035: CONFIG_ZRAM is not set). Omarchy's zram-generator still
     # declares /dev/zram0, and systemd waited its full 90 s for that device before sysinit.target
     # on every boot (VM job 045, first boot test). Mask the generator.
