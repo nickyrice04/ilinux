@@ -5,6 +5,26 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M1: attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041) offline readiness PASS (live NOT RUN)
+
+* **Discovered:** the AirDropped Omarchy image equals the M5's pin (2,434,354,327 bytes, `b8eae454…66c1`), and, which was not possible
+  for the earlier Omarchy images, it was read from the image itself with this Mac's own `tar`: no SSH host key, user key, keyring,
+  credentials file, history or Wi-Fi secret; the authorized key is the M1's; the lab's eleven files are byte-identical to Git; root and
+  `omarchy` have locked passwords; Omarchy's own passwordless grant and the clock rule are the only sudo additions; sshd is key-only
+  and runs on the USB pipe only. The M1's new tools read in full match their contracts: `usb-pipe` opens only interface 1 and writes
+  nothing before sshd's banner; the web proxy is loopback-only, ports 80 and 443, public destinations only (so a signed-in agent on
+  the M5 can reach any public host through the M1's network, by design).
+* **Implemented:** nothing in Git except this entry and the coordination/AGENTS text. Local and ignored: the launch record,
+  `run-attempt25.py` (attempt 22's wrapper with four lines changed), the capture script, the handoff watcher and a read-only
+  monitor; `build/control/usb-pipe` built from the committed source (SHA-256 `94b33396…bffe`).
+* **Tested (offline):** the launcher's `omarchy` profile exits 0 with exactly the seven expected lines; the 102 controller cases,
+  `test_ramroot` (45), `test_usb_pipe` (15), `test_connect_proxy` (16) and `test_m5_clock` (13) PASS; `usb-pipe`'s dry run with no
+  gadget exits 2 and opens nothing; the reader accepts `bcdDevice 0x0039` and two interfaces.
+* **Not verified:** everything on hardware: the first M1-to-M5 data (bulk OUT), two interfaces per port, macOS's view of the
+  two-interface device, the web relay, the clock step, SSH, Claude Code and the human's sign-in. Fresh policy checks NOT CHECKED.
+  The fixed E1 probe is still NOT RUN.
+* **Next:** a fresh M1 restart, the cable re-seat, a 30-minute recording and the human's start; one attempt, no retry.
+
 ## 2026-10-19 · M5: attempt 25 handed off — Omarchy itself with the USB link and Claude Code, on boot041 (NOT RUN)
 
 * **Decided:** attempt 24 proved boot041's link from the M5 to the M1, so the next attempt joins it

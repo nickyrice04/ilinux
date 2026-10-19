@@ -138,6 +138,19 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 25 (Omarchy itself with the USB link and Claude Code on
+boot041, launcher `--profile omarchy`) on handoff `38e91fb`: the boot041 archive re-verified against Git and the launcher unchanged
+(`b14ec7a1…`); the privately delivered image `b8eae454…66c1` (2,434,354,327 bytes) equals the pin and, which the earlier Omarchy images
+could not be, **was read from the image itself** with this Mac's own `tar`: no SSH host or user private key, no keyring, credentials,
+history or Wi-Fi secret, root and `omarchy` passwords locked, the authorized key equal to the M1's, the lab's eleven files
+byte-identical to Git, Omarchy's own passwordless grant and the clock rule the only sudo additions, sshd key-only on the USB pipe only.
+The offline launcher run (exactly the seven expected lines), the 102 controller cases and the ramroot (45), usb-pipe (15),
+connect-proxy (16) and m5-clock (13) suites PASS; `usb-pipe`, `connect-proxy.py`, `m5-clock.py` and the SSH config were read in full
+and `usb-pipe` built from source (SHA-256 `94b33396…bffe`). New and untested on hardware: the first data from the M1 to the M5 (bulk
+OUT), two interfaces per port, the web relay and the human's Claude sign-in. Needs a fresh M1 restart (unlocked, lid open for 20
+minutes or more), cable re-seat, a 30-minute recording started before the launch and the human's start; the serial-number line on the
+m1n1 screen is never shared, and nothing about the sign-in (link, code, account) is recorded.
+
 Latest M1 native result: **attempt 24 (boot041, boot040 with both DART instances per dwc3 core): the USB log streamed for the full
 ten minutes.** The M1's read-only reader captured 218,079 bytes (2,580 intact records, kernel 0.065 to 604.3 s, heartbeats 000 to 119
 with no gap, the M5's byte counter matching the capture at every status line) with the DART fault-interrupt count 0 and `pend 0/0` on

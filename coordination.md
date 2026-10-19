@@ -6,6 +6,51 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041) offline PASS; live NOT RUN, 2026-10-19
+
+* **Intake (M5 handoff `38e91fb`, image work `33c37c8`).** The boot041 package is attempt 24's, unchanged: its archive checks against
+  `archive-sha256.txt` (`shasum -a 256 -c` OK), the pinned package records and the six controller files are unchanged since attempt 24
+  (empty `git diff`), launcher `b14ec7a1…`. **The AirDropped image** arrived untracked in the repository root and was moved into the
+  ignored `build/ramroot045-link/` before any commit: 2,434,354,327 bytes, SHA-256 `b8eae454…66c1`, equal to
+  `omarchy-root-manifest.json` by size and digest.
+* **The image was read from itself, which the earlier Omarchy images could not be** (this Mac's own `tar` reads zstd): the listing
+  (215,472 entries) and 28 small members read in a scratch directory that was deleted. **No** SSH host key, user key or `.ssh` file
+  (`/root/.ssh` is an empty directory), no GPG or pacman keyring, no `.credentials.json` or `~/.claude.json`, no history file, no Wi-Fi
+  secret; `~/.claude` holds only Omarchy's skill symlinks, the one keyring file is an empty default keyring, there is no git identity,
+  and root and `omarchy` have locked passwords. `/etc/ssh/authorized_keys.d/omarchy` (0644, one key) is the key of
+  `kernel/experiments/usb-gadget/authorized_keys` and the public half of the M1's `build/control/m1-control`. The lab's eleven files
+  (`set-clock`, `usb-gadget.sh`, the sudoers rule, the host-key, sshd-tty and gadget units, both sshd drop-ins, `/etc/environment`,
+  the udev rule, `/etc/default/ilinux-usb-gadget`) are **byte-identical to Git**. Sudo: Omarchy's permanent grant (`omarchy
+  ALL=(ALL) NOPASSWD: ALL`, user-approved 2026-10-18) and the clock rule, plus Omarchy's stock narrow rules; sshd is key-only and runs
+  in inetd mode on the pipe only, with no socket and no network function. Claude Code 2.1.303 (285,335,616 bytes) is installed,
+  signed out. The M5 has no network interface for Omarchy's usual services (NetworkManager, avahi, cups, docker, ufw) to listen on.
+* **Independent review of the M1's new tools, read in full.** `usb-pipe` (about 1,000 lines): a fixed-identity match field by field,
+  only interface 1 opened with no capture or seize, no control request, stall clearing, reset or power change, and nothing written
+  before sshd's banner. `connect-proxy.py`: loopback only, CONNECT and `http://`, ports 443 and 80, loopback, private and special
+  destinations refused after resolving; **by design any program on the M5, including a signed-in agent with passwordless sudo, can
+  reach any public host on 80 and 443 through the M1's network**. `m5-clock.py` and `set-clock`: one time line, 2025 to 2099, a fake
+  `date` in the tests, so the M1's clock is never touched. `m5-ssh-config`'s `m5o` entry (`ssh -G` checked): `omarchy`, its own
+  `known_hosts-omarchy`, the M1's key (`0600`, `IdentitiesOnly`), no agent forwarding, the reverse forward of `127.0.0.1:3128`.
+  `usb-pipe` builds from the SDK alone into the ignored `build/control` (SHA-256 `94b33396…bffe`); its dry run with no gadget exits 2
+  with nothing opened. **The reader** is the unchanged attempt 21 to 24 binary (`77677ee3…`); it accepts `bcdDevice 0x0039` and a
+  two-interface configuration.
+* **Offline.** The launcher with `--profile omarchy --ramroot …` exits 0 with exactly the seven expected lines (`RAM root PASS`, upload
+  estimate 2,479,098,050 bytes, 495.8 s at 5 MB/s, deadline 900 s). The reviewed 102 controller cases PASS, `test_ramroot` 45 (2
+  skipped), `test_usb_pipe` 15 (86 s: a real ssh through the tool to an unprivileged `sshd -i` on a pseudo-terminal, ending at the
+  authenticated handshake as documented for macOS), `test_connect_proxy` 16, `test_m5_clock` 13, `test_control_channel` 16 (4
+  skipped), `test_kconfig_guard` 7 (1 skipped); `test_usb_dt` and `test_boot041_package` skip without the M5's `build/`.
+* **New and untested on this hardware:** the first data from the M1 to the M5 (bulk OUT, which SSH needs; the reader never wrote); two
+  interfaces per port (a second IN and OUT endpoint); what macOS does with a two-interface vendor device (Unknown: both nubs
+  published, no driver bound); the reader and `usb-pipe` open different interfaces of one device at once (Likely fine); the web relay;
+  the human's Claude sign-in through it.
+* **What the run needs from the human:** a fresh M1 restart (unlocked, lid open; about 8 minutes of upload plus the session, so 20
+  minutes or more), the cable re-seated (the M5 booted into the Boot Lab again if the read-only gate sees nothing), a **30-minute**
+  recording started before the launch, and the human's start; accept the macOS USB accessory prompt if it appears. After the handoff
+  the M1 starts the reader (interface 0) and the proxy, sets the clock and opens the SSH session; **the human signs in to Claude in
+  the M1's browser and pastes the code into the session, and the M1 records nothing about the link, the code or the account.** **The
+  m1n1 screen shows the Mac's serial-number line before the handoff: never transcribe or share it.**
+* **NOT RUN:** native attempt 25 and every live check, and the fresh policy checks.
+
 ### Current M5 handoff — attempt 25: Omarchy itself with the USB link and Claude Code, on boot041 (NOT RUN)
 
 * **Attempt 24 consumed:** with both DART instances per dwc3 core, the USB log streamed from the M5
