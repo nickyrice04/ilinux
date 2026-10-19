@@ -5,6 +5,25 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M1: attempt 24 (boot041, both DART instances per dwc3 core) offline readiness PASS (live NOT RUN)
+
+* **Discovered:** boot041 is boot040 with one device-tree change (each dwc3 core gets `iommus = <dart0 0>, <dart1 1>` and
+  instance 0 is enabled like instance 1 was) plus a larger `/init`; the Image is byte-identical to boot040's. The M1's own
+  property-level diff of the two Stage-B DTs finds exactly six nodes changed and nothing else. The new risk is that Linux now
+  resets and programs DART instance 0, which has not been done on this chip.
+* **Implemented:** nothing in Git except this entry and the coordination/AGENTS readiness text. Local and ignored: the record
+  `boot041-stage-b-attempt24.json` (32 pinned files), the wrapper `run-attempt24.py`, the capture script, the handoff watcher and a
+  read-only monitor (attempt 23's, renamed), the verified package in `build/native-boot041-download/`.
+* **Tested:** the release archive against Git before extraction (and GitHub's digest); `verify-package` (13 files); the
+  checklist's delta command against the M1's boot040 download; the M1's own DT property diff; the shipped `/init` source against
+  the repo's and its write and `/dev/mem` calls; the launcher offline (default profile, exit 0); the reviewed 102 controller cases
+  plus the ramroot, USB, control-channel, kconfig and boot041 package suites; the reader's tests and dry run.
+* **Not verified:** everything native: whether programming instance 0 stops the stall, which stream instance 0 carries, whether its
+  reset is safe on this chip; the DT-schema findings and the Image beyond its digest. Fresh policy checks NOT CHECKED.
+* **Next:** the human restarts the M1 (kept unlocked), re-seats the cable (and boots the M5 into the Boot Lab again if the gate
+  sees nothing), starts a recording before the launch and then starts attempt 24; one boot, the reader started right after the
+  handoff, filmed to 10 minutes after it (the first minute carries most of it).
+
 ## 2026-10-19 · M5: boot041 published and attempt 24 handed off — both DART instances per USB controller (NOT RUN)
 
 * **Decided:** attempt 23 showed the stall's fault pending on the DART instance the Stage-B DT

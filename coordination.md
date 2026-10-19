@@ -6,6 +6,39 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 24 / boot041 (both DART instances per dwc3 core) offline PASS; live NOT RUN, 2026-10-19
+
+* **Intake (M5 handoff `b5ef90d`, release target `88d392c`).** Public prerelease `native-j716c-boot041`: archive 18,926,067
+  bytes, SHA-256 `ab49e307…4d28`, checked against Git **before extraction** (GitHub's asset digest equal); 14 regular members, no
+  unsafe path. The `verify-package` receipt (SHA256SUMS digest `593c4492…80a1`, 13 files, clean client pin `57a9339`) PASS.
+  `Image` `a53d1d47…` (44,681,728 bytes, equal to boot040's), `kernel.config`, `initramfs-stage-b` `27314880…`, `diag-init.c`
+  `2e2e9923…` and the Stage-B DT `b053f248…` (61,995 bytes) match the checklist's table.
+* **Independent review.** The checklist's own delta command, run against the M1's attempt-23 boot040 download, passes:
+  *boot041 = boot040 + the two-DART DT delta + /init only* (Image, config, m1n1, the generic DT and initramfs, `toolchain.txt`
+  byte-identical). **The M1's own property-level diff of the two Stage-B DTs** (361 entries each): exactly six nodes differ. The
+  three DART instance-0 nodes (`/soc/iommu@2a2f00000`, `@2aaf00000`, `@382f00000`) lose `status = "disabled"` and
+  `power-domains` and gain a phandle (`0x6b`, `0x6c`, `0x6d`); the three controllers (`/soc/usb@2a2280000`, `@2aa280000`,
+  `@382280000`) change `iommus` from `<dartN 1>` to `<dart0 0>, <dartN 1>`; every other property is equal. The shipped
+  `diag-init.c` equals `init.c` at HEAD; its new code reads only: `/sys/bus/platform/devices` for the DART phandles, and
+  `/dev/mem` with `O_RDONLY`, `PROT_READ` and 32-bit loads (PARAMS3 and the pending word of each confirmed instance, now at each
+  heartbeat); every write is as in boot040 (kmsg, configfs, mounts, `SIGKILL` of the streamer at the first bus error).
+* **The one new hardware-facing change** is that Linux now probes, resets and programs DART instance 0 (reset at probe: TCR and
+  TTBR zero on all 16 streams, all streams enabled, error, pending and protection state cleared, a TLB invalidate; later the
+  TTBR/TCR of stream 0 and TLB flushes on every map and unmap). Instance 0 shares instance 1's clock gate and power, answered
+  `/dev/mem` reads in attempt 23 and reported `prot 0` (unlocked); **untested on this chip**. The M5's stop rule: a freeze around
+  the DART probe lines (about 2-3 s, before any UDC binds) points at instance 0's reset.
+* **The reader** is attempt 21's binary (`77677ee3…`), unchanged: its 15 tests PASS and its dry run exits 2 with nothing matched.
+* **Offline.** The launcher with the default `stage-b` profile exits 0 (`Package PASS`, `Mode: OFFLINE ONLY`). The reviewed 102
+  controller cases PASS, `test_ramroot.py` 44 (1 skipped), `test_usb_dt` 12 (all skipped), `test_control_channel` 16 (4 skipped),
+  `test_kconfig_guard` 7 (1 skipped), `test_boot041_package` 11 (all skipped: they need the M5's `build/` directories). The
+  packaged authorized key equals the repository's.
+* **What the run needs from the human:** a fresh M1 restart (kept unlocked), the cable re-seated (and the M5 booted into the Boot
+  Lab again if the read-only gate sees nothing), a recording started before the launch (portrait with the left two thirds of the
+  console framed worked in attempt 23; the first minute carries most of it), and the human's start; accept the macOS USB
+  accessory prompt if it appears. The reader starts right after the handoff; stop 10 minutes after it, or earlier on a reset, a
+  kernel panic or an M1 panic. **The m1n1 screen shows the Mac's serial-number line before the handoff: never transcribe or share it.**
+* **NOT RUN:** native boot041 / attempt 24, and the fresh policy checks.
+
 ### Current M5 handoff — attempt 24 / boot041: boot040 with both DART instances per dwc3 core (NOT RUN)
 
 * **Attempt 23 consumed:** the USB DART is version 2.4; at the first bus error the fault was

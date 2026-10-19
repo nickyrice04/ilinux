@@ -138,6 +138,14 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 24 / boot041 (boot040 with both DART instances per dwc3 core
+in the Stage-B DT) on handoff `b5ef90d`: archive `ab49e307…4d28` verified against Git before extraction (GitHub's digest equal), the
+Image byte-identical to boot040's, the M1's own property-level diff of the two Stage-B DTs finds exactly six nodes changed (the three
+instance-0 DART nodes enabled, the three controllers' `iommus` extended), the Stage-B initramfs differs from boot040's only in `/init`
+(reads only), launcher `b14ec7a1…` offline run and the reviewed 102 controller cases plus the suites PASS, the reader unchanged and
+re-tested. New and untested on this chip: Linux resets and programs DART instance 0. Needs a fresh M1 restart (unlocked), cable
+re-seat, a recording started before the launch and the human's start; the serial-number line on the m1n1 screen is never shared.
+
 Latest M1 native result: **attempt 23 (boot040, attempt 21's bulk-only `gser` port with the DART fault made visible): the USB DART
 is version 2.4, instance 1's fault line finds nothing pending, and at the first bus error the sibling instance the DT omits holds the
 fault.** The same stop as attempt 21 (25,911 bytes captured; no endpoint-0 error; Linux healthy), now explained on the M5's screen:
