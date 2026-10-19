@@ -281,15 +281,15 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Latest M5 handoff: **attempt 24, boot041: boot040 with both DART instances per
-dwc3 core (NOT RUN)**. Attempt 23 found the stall's fault pending on the DART
-instance the Stage-B DT left out; boot041 gives each USB controller both
-instances (`<dart0 0>, <dart1 1>`, as Asahi's DTs do) and keeps boot040's kernel
-Image, config, m1n1 and diagnostics, adding both instances to the per-port
-lines. Prerelease `native-j716c-boot041` (`ab49e307…4d28`, GitHub's digest
-verified); launcher unchanged (`b14ec7a1…`); VM job 041, liveness, the dummy_hcd
-self-test and all suites PASS. If the link carries data, the Omarchy root with
-the SSH link follows. See `tools/m1n1-client/stage-b-instructions.md`.
+Latest M5 handoff: **attempt 25, Omarchy itself with the USB link and Claude Code,
+on boot041 (NOT RUN)**. boot041's package (attempt 24's link, unchanged) with the
+launcher's `omarchy` profile and the job 045 root built with the link: two
+`gser` interfaces (the journal and an SSH byte pipe for `omarchy`, key-only),
+the M1's web relay, a clock helper, Claude Code installed signed out and
+Omarchy's passwordless-sudo grant (user-approved). Image 2,434,354,327 bytes,
+`b8eae454…66c1`, pinned in `native/boot/omarchy-root-manifest.json`; it reaches
+the M1 privately. First test of data from the M1 to the M5. Offline launcher
+check and all suites PASS. See `tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder

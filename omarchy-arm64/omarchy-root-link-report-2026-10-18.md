@@ -2,7 +2,7 @@
 
 2026-10-18 · VM job [`045-omarchy-installer-root`](../virtualization/jobs/045-omarchy-installer-root/run.sh)
 with two new build options · the image for attempt 24
-([draft checklist](../tools/m1n1-client/stage-b-attempt24-draft.md)) · follows
+([attempt-25 checklist](../tools/m1n1-client/stage-b-instructions.md)) · follows
 [the job 045 report](omarchy-root-report-2026-10-17.md) (the root, deviations 1-15) and job 046's
 [USB SSH link](../native/boot/usb-ssh-link-2026-10-16.md) · nothing committed. **VM results only:
 nothing here ran on the M5.** Labels: Confirmed / Likely / Hypothesis / Unknown; "Confirmed" means in

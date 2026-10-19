@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M5: attempt 25 handed off — Omarchy itself with the USB link and Claude Code, on boot041 (NOT RUN)
+
+* **Decided:** attempt 24 proved boot041's link from the M5 to the M1, so the next attempt joins it
+  with attempt 22's installer-built Omarchy: the root built with the link, on boot041's unchanged
+  package. It is the first test of data from the M1 to the M5.
+* **Reviewed and committed** (`33c37c8`, the link work's 21 files): job 045's `LINK`, `CLAUDE` and
+  `NOPASSWD` build options, their overlays and VM test, deviations 16-24, the image pin, the M1's
+  clock tool and the `m5o` SSH entry. No private key, token, identifier or home path; the sudo grant
+  is Omarchy's own permanent format for `omarchy` only, and the clock helper's rule allows one
+  argument-less helper that accepts only a well-formed time.
+* **Tested (offline):** the committed launcher's `omarchy` profile passes boot041 with the image
+  (2,479,098,050 bytes to upload, deadline 900 s); `test_ramroot.py` (45), `test_m5_clock.py` (13),
+  `test_usb_pipe.py` (15), `test_connect_proxy.py` (16) and the native/boot suites PASS.
+* **Handed off:** the attempt-25 checklist (the link session's draft, switched to boot041), the
+  coordination entry, README, AGENTS, roadmap rows 2 to 4 and the decision on passwordless sudo.
+* **Next:** the human AirDrops the image; M1 readiness, including building and reviewing
+  `usb-pipe`; one filmed attempt 25 with the SSH session and the Claude sign-in.
+
 ## 2026-10-19 · M1: attempt 24 ran: both DART instances per dwc3 core removed the stall; the USB log streamed for the full ten minutes
 
 * **Discovered:** with the DT listing both DART instances per controller (`<dart0 0>, <dart1 1>`), attempts 21 and 23's stall did

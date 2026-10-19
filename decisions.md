@@ -1662,3 +1662,14 @@ change on 2026-10-17 and the handoff on 2026-10-18. The risk the heap adds is wh
 in the M5's RAM relative to live carveouts, which only the native run can answer; the checklist
 reads m1n1's heap and memory lines from the video and treats a reset during the upload as that
 evidence. A two-stage delivery over the USB link remains the plan once that link works.
+
+## 2026-10-18 · Passwordless sudo for the desktop user in the lab Omarchy image
+
+Agents running inside Omarchy on the M5 need root for package installs, loading modules and
+driver work, and the RAM-root image's desktop user has no password, because there is no keyboard to
+type one. The user approved passwordless sudo for `omarchy` in this lab image on 2026-10-18,
+confirming it directly in the session that builds the image. It uses Omarchy's own permanent grant,
+`/etc/sudoers.d/99-omarchy-permanent-nopasswd-1000`, as `omarchy-sudo-passwordless permanent`
+writes it, so Omarchy's bar shows its indicator and its own `--disable` revokes it for the rest of a
+boot. The image lives only in RAM, is offline except through the M1's relay, and accepts only the
+M1's key over SSH. Nothing grants root to any other account. Recorded as deviation 24 of job 045.

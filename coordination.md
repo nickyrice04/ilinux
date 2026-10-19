@@ -6,6 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt 25: Omarchy itself with the USB link and Claude Code, on boot041 (NOT RUN)
+
+* **Attempt 24 consumed:** with both DART instances per dwc3 core, the USB log streamed from the M5
+  to the M1 for the full ten minutes with no fault. Data from the M1 to the M5 is still untested.
+* **Attempt 25 = boot041's package** (unchanged, the same archive as attempt 24) **with the launcher's
+  `omarchy` profile and the Omarchy root built with the link** (VM job 045 with `LINK=1 CLAUDE=1
+  NOPASSWD=1`, committed at `33c37c8`): 2,434,354,327 bytes, SHA-256
+  `b8eae454809839abcf6e3279e028576fa8e47b835f211968dd198a33a18c66c1`, pinned in
+  `native/boot/omarchy-root-manifest.json` for boot040's Image, which boot041 shares byte for byte.
+  The root carries two `gser` interfaces per port (the journal, and a byte pipe with sshd for the
+  desktop user `omarchy`, key-only, the M1's key), the M1's web relay in the session environment, a
+  clock helper, Claude Code installed signed out through Omarchy's own wrapper, and Omarchy's own
+  passwordless-sudo grant for `omarchy` (user-approved 2026-10-18). Deviations 16-24 of job 045.
+* **Offline:** the committed launcher (`b14ec7a1…`, unchanged) passes boot041 with this image
+  (upload 2,479,098,050 bytes, about 8 minutes, deadline 900 s); `test_ramroot.py` (45),
+  `test_m5_clock.py` (13), `test_usb_pipe.py` (15), `test_connect_proxy.py` (16) and the native/boot
+  suites PASS. VM: SSH as `omarchy` over the pipe, the clock step, HTTPS through the relay,
+  `claude --version` without a download, `sudo -n`, a keyless login refused.
+* **The image travels privately:** the human AirDrops it to the M1 (`build/ramroot045-link/`,
+  ignored). Never commit or publish it.
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 25): build and review
+  `usb-pipe`, the first M1 tool that writes to the M5; the offline launcher run; then one filmed boot
+  with the reader on the journal, the relay, the clock step, the SSH session and the human's Claude
+  sign-in in the M1's browser.
+
 ### Current M1 result — attempt 24 (boot041): both DART instances per dwc3 core remove the stall; the USB log streams for the full ten minutes
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 11.197 s, handoff 2026-10-19T03:38:34.430Z, 11:38:34 PM Eastern; no M1
