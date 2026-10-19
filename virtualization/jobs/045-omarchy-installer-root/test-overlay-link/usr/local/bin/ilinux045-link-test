@@ -1,0 +1,324 @@
+#!/bin/bash
+# VM test only (job 045, LINK=1: appended to the image by the harness, never in the delivered root). The
+# USB link of the RAM root end to end, the way job 046 tests it: dummy_hcd makes this kernel the host of
+# its own gadget, so one boot holds both computers.
+#  * The M5 is the root as built: udev starts ilinux-usb-gadget@dummy_udc.0 (gser.log, gser.ssh),
+#    ilinux-ssh-hostkey makes this boot's host key, ilinux-sshd-tty@ttyGS1 runs sshd -i on the pipe in a
+#    network namespace with loopback alone (job 046's test drop-in), so a session reaches the test's web
+#    server only through the reverse-forwarded proxy. The login is the desktop user.
+#  * The M1 is this script in the root namespace with the M1's tools from the working tree: the generic
+#    usb-serial driver as the host's view of the two interfaces, the Linux usb-pipe as ssh's ProxyCommand,
+#    m5-ssh-config's m5o entry with the test's paths, connect-proxy.py, an HTTPS server for web.test on
+#    127.0.0.1 (the M1's network), and m5-clock.py.
+# The M5 starts with a wrong clock. Both sides share one clock here, so the script turns it back two days
+# first and gives m5-clock.py the true time, carried on the monotonic clock, as the M1's.
+# Steps: modules, the gadget and the host's view, the log port, SSH as omarchy with the proxy in the
+# session, the host key against the journal, the operator's key file, an HTTPS fetch before the clock step
+# (the certificate is not yet valid), the clock step, the fetch through the proxy (and not directly),
+# claude --version three ways without a download, sudo (the image's passwordless grant, NOPASSWD=1, over
+# SSH and from the desktop session, as Omarchy's own --active sees it; else the clock rule's limits), the
+# desktop session's proxy environment, then, with the grant, Omarchy's --disable on this boot's copy in RAM
+# (the shipped image file is not touched) and the clock step again through the helper's own rule, and
+# last that SSH offers public keys only. Run by ilinux045-probe once the desktop has settled; "[link]"
+# lines, console markers (ILINUX045-LINK), exit 0 on PASS.
+set -u
+T=/usr/local/lib/ilinux045-link
+U=omarchy
+CON=/dev/hvc0
+up() { cut -d' ' -f1 /proc/uptime; }
+say() { echo "[link] $*"; echo "ILINUX045-LINK $(up) $*" | cut -c1-320 > "$CON"; }
+t0=$(up)   # elapsed times on the uptime clock: the test moves the wall clock
+since() { awk -v a="$1" -v b="$(up)" 'BEGIN {printf "%.1f", b - a}'; }
+fail() {
+    say "FAIL: $*"
+    echo "--- failed units"; systemctl --no-pager --failed --plain 2>&1 | head -20
+    echo "--- ilinux units"; systemctl status --no-pager -n 15 'ilinux-*' 2>&1 | tail -80
+    echo "--- usb-pipe log"; tail -20 /tmp/usb-pipe.log 2>/dev/null
+    echo "--- proxy log"; tail -20 /tmp/proxy.log 2>/dev/null
+    echo "--- ssh errors"; tail -5 /tmp/ssh-*.err 2>/dev/null
+    echo "--- journal (gadget, sshd, host key, clock, sudo)"
+    journalctl -b --no-pager -o short-monotonic -u 'ilinux-*' -t ilinux-clock -t sudo 2>&1 | tail -80
+    exit 1
+}
+SSH=(ssh -F /tmp/link-ssh-config -o BatchMode=yes)
+# m5 NAME CMD: one SSH session as the M1 runs it, bounded; stdout in $out, stderr in /tmp/ssh-NAME.err
+m5() { local name=$1; shift; out=$(timeout 900 "${SSH[@]}" m5o "$@" 2> "/tmp/ssh-$name.err"); }
+
+say "start: $(uname -r); $(tr '\n' ' ' < /usr/share/ilinux/build-info.txt)"
+# The options the harness built and expects, against the image's own record
+expected=$(cat "$T/expected-options")
+grep -qx "options $expected" /usr/share/ilinux/build-info.txt || fail "the image says $(grep '^options' /usr/share/ilinux/build-info.txt), the harness expects $expected"
+case " $expected " in *" NOPASSWD=1 "*) nopasswd=1 ;; *) nopasswd=0 ;; esac
+
+# ---- the test's kernel modules (built for this exact Image by the harness) --------------------------
+insmod "$T/usbserial.ko" vendor=0x1d6b product=0x0104 || fail "usbserial.ko did not load"
+insmod "$T/dummy_hcd.ko" || fail "dummy_hcd.ko did not load"
+udc=
+for _ in $(seq 60); do udc=$(ls /sys/class/udc 2> /dev/null | head -1); [ -n "$udc" ] && break; sleep 1; done
+[ -n "$udc" ] || fail "no UDC after loading dummy_hcd"
+
+# ---- the M5 side, as the root's units run it -------------------------------------------------------------
+unit=ilinux-usb-gadget@$udc.service
+for _ in $(seq 180); do systemctl is-active -q "$unit" && break; sleep 1; done
+systemctl is-active -q "$unit" || fail "$unit is not active: $(systemctl status --no-pager -n 10 "$unit" 2>&1 | tail -10 | tr '\n' ' ')"
+G=/sys/kernel/config/usb_gadget/ilinux-$(printf '%s' "$udc" | tr -c 'A-Za-z0-9' '_')
+[ -d "$G/functions/gser.log" ] && [ -d "$G/functions/gser.ssh" ] || fail "gser.log and gser.ssh missing under $G"
+[ "$(cat "$G/bcdDevice")" = 0x0039 ] || fail "bcdDevice $(cat "$G/bcdDevice")"
+ssh_port=$(cat "$G/functions/gser.ssh/port_num")
+log_port=$(cat "$G/functions/gser.log/port_num")
+for _ in $(seq 60); do [ "$(cat "/sys/class/udc/$udc/state")" = configured ] && break; sleep 1; done
+say "M5 side: $unit active, gser.log on ttyGS$log_port (interface 0), gser.ssh on ttyGS$ssh_port (interface 1), UDC $(cat "/sys/class/udc/$udc/state")"
+sunit=ilinux-sshd-tty@ttyGS$ssh_port.service
+for _ in $(seq 120); do systemctl is-active -q "$sunit" && break; sleep 1; done
+systemctl is-active -q "$sunit" || fail "$sunit is not active"
+systemctl is-active -q ilinux-ssh-hostkey.service || fail "ilinux-ssh-hostkey.service is not active"
+spid=$(systemctl show -p MainPID --value "$sunit")
+[ "$(readlink "/proc/$spid/ns/net")" != "$(readlink /proc/1/ns/net)" ] || fail "sshd is not in the test's private network namespace"
+hostfp=$(journalctl -b -u ilinux-ssh-hostkey.service -o cat --no-pager | grep -o 'SHA256:[A-Za-z0-9+/]*' | tail -1)
+[ -n "$hostfp" ] || fail "no host key fingerprint in the journal"
+btime=$(awk '/^btime/ {print $2}' /proc/stat)
+[ "$(stat -c %Y /etc/ssh/ssh_host_ed25519_key)" -ge "$btime" ] || fail "the SSH host key is older than this boot"
+say "M5 side: $sunit active (sshd in its own network namespace); this boot's host key $hostfp (journal), made $(( $(stat -c %Y /etc/ssh/ssh_host_ed25519_key) - btime )) s after boot"
+
+# ---- the M1 side: the device as the host sees it -------------------------------------------------------
+dev=
+for _ in $(seq 60); do
+    for d in /sys/bus/usb/devices/*; do
+        [ -f "$d/idVendor" ] && [ "$(cat "$d/idVendor")" = 1d6b ] && [ "$(cat "$d/idProduct")" = 0104 ] && dev=$d
+    done
+    [ -n "$dev" ] && break
+    sleep 1
+done
+[ -n "$dev" ] || fail "no 1d6b:0104 device on the host side"
+[ "$(cat "$dev/bcdDevice")" = 0039 ] || fail "host sees bcdDevice $(cat "$dev/bcdDevice")"
+for n in 0 1; do
+    [ "$(cat "$dev:1.$n/bInterfaceClass")" = ff ] || fail "interface $n is not vendor class"
+    [ "$(cat "$dev:1.$n"/ep_*/type | grep -c '^Bulk$')" = 2 ] || fail "interface $n is not two bulk endpoints"
+done
+grep -l Interrupt "$dev"/ep_*/type "$dev":1.*/ep_*/type > /dev/null 2>&1 && fail "an interrupt endpoint exists"
+tty_log= tty_ssh=
+for _ in $(seq 30); do
+    tty_log=$(cd "$dev:1.0" 2> /dev/null && ls -d ttyUSB* 2> /dev/null | head -1)
+    tty_ssh=$(cd "$dev:1.1" 2> /dev/null && ls -d ttyUSB* 2> /dev/null | head -1)
+    [ -n "$tty_log" ] && [ -n "$tty_ssh" ] && break
+    sleep 1
+done
+[ -n "$tty_log" ] && [ -n "$tty_ssh" ] || fail "the generic usb-serial driver did not bind both interfaces"
+say "host side: $(cat "$dev/product"), two vendor interfaces, bulk only; interface 0 -> /dev/$tty_log, interface 1 -> /dev/$tty_ssh"
+# The M1's stand-in reads the pipe through Linux's usb-serial tty, which opens with echo on: whatever
+# the M5's sshd has queued (its banner) is echoed back to it before usb-pipe has made the port raw, and
+# that sshd then fails (seen once under TCG: "Bad packet length", its own "\r\nSS" read back). The M1's
+# usb-pipe talks to the interface through IOUSBHost, with no tty between. So the test makes the host's
+# port raw once (the kernel keeps a usb-serial port's settings from one open to the next) and starts
+# the M5's sshd afresh, whose banner then meets a raw port.
+stty -F "/dev/$tty_ssh" raw -echo -echoe -echok -echoctl -echoke -echonl 2> /dev/null || fail "cannot make /dev/$tty_ssh raw"
+systemctl restart "$sunit"
+for _ in $(seq 60); do systemctl is-active -q "$sunit" && break; sleep 1; done
+systemctl is-active -q "$sunit" || fail "$sunit did not restart"
+say "host side: /dev/$tty_ssh raw ($(stty -F "/dev/$tty_ssh" -a | grep -o -- '-echo ' | head -1)), $sunit started afresh"
+# The log port streams the whole boot's journal from its start (as the M1's bulk-log reader sees it):
+# read until this boot's host key fingerprint has come by, at most 180 s (TCG streams slowly).
+( stty raw -echo 2> /dev/null; exec timeout 180 cat ) < "/dev/$tty_log" > /tmp/log.txt &
+lpid=$!
+t1=$(up)
+for _ in $(seq 180); do grep -a -q -F "$hostfp" /tmp/log.txt && break; sleep 1; done
+kill "$lpid" 2> /dev/null; wait "$lpid" 2> /dev/null
+grep -a -q 'systemd\[1\]' /tmp/log.txt || fail "no journal over /dev/$tty_log ($(wc -c < /tmp/log.txt) bytes)"
+grep -a -q -F "$hostfp" /tmp/log.txt || fail "the host key's fingerprint is not in the journal on interface 0 ($(wc -l < /tmp/log.txt) lines)"
+say "log port: $(wc -l < /tmp/log.txt) journal lines over interface 0 in $(since "$t1") s, up to this boot's host key fingerprint"
+
+# ---- the M1's network: an HTTPS server for web.test and the CONNECT proxy ---------------------------------
+# The M1 resolves names itself (macOS). Here its stand-in would share the M5 root's resolver, Omarchy's
+# systemd-resolved, which stalled 30 s on web.test in this VM; so the M1's programs run in a mount
+# namespace of their own whose nsswitch.conf reads /etc/hosts alone, and web.test is in /etc/hosts.
+echo "127.0.0.1 web.test" >> /etc/hosts   # test only
+printf '%s\n' 'passwd: files' 'group: files' 'shadow: files' 'hosts: files' > /tmp/m1-nsswitch.conf
+m1() { unshare -m --propagation private sh -c 'mount --bind /tmp/m1-nsswitch.conf /etc/nsswitch.conf && exec "$@"' m1 "$@"; }
+m1 python3 -I "$T/https_server.py" --port 8443 --cert "$T/cert.pem" --key "$T/key.pem" --dir "$T/www" > /tmp/https.log 2>&1 &
+m1 python3 -I "$T/connect-proxy.py" --port 3128 --allow-loopback --allow-ports 8443,443,80 --log /tmp/proxy.log > /tmp/proxy.out 2>&1 &
+for _ in $(seq 60); do grep -q 'https on' /tmp/https.log 2> /dev/null && grep -q 'listening on' /tmp/proxy.log 2> /dev/null && break; sleep 1; done
+m1 curl -sS --max-time 30 --cacert "$T/cert.pem" https://web.test:8443/hello.txt | grep -q HELLO-FROM-THE-M1-SIDE ||
+    fail "the test's HTTPS server does not answer on the M1 side: $(tail -2 /tmp/https.log | tr '\n' ' ')"
+say "M1 side: connect-proxy.py on 127.0.0.1:3128 (loopback allowed for the test), HTTPS server web.test:8443"
+
+# ---- SSH as the desktop user, with tools/m1n1-client/m5-ssh-config's m5o entry ---------------------------
+install -d -m 0700 -o "$U" -g "$U" "/home/$U/.ssh"
+install -m 0600 -o "$U" -g "$U" "$T/link-key.pub" "/home/$U/.ssh/authorized_keys"   # the VM's key; the image's file holds the operator's
+sed -e "s#build/control/m1-control#$T/link-key#" -e "s#build/control/known_hosts-omarchy#/tmp/link-known_hosts#" \
+    -e "s#build/control/usb-pipe #$T/usb-pipe --tty /dev/$tty_ssh --banner-wait 30 #" \
+    -e "s#build/native-intake/usb-pipe.log#/tmp/usb-pipe.log#" "$T/m5-ssh-config" > /tmp/link-ssh-config
+grep -q '^Host m5o ' /tmp/link-ssh-config || fail "m5-ssh-config has no m5o entry"
+t1=$(up)
+m5 login 'echo SSH-OK "$(id -un)@$(uname -n)" "$HTTPS_PROXY" "$https_proxy" "NO_PROXY=$NO_PROXY"' ||
+    fail "ssh as omarchy failed: $(tail -5 /tmp/ssh-login.err | tr '\n' ' ')"
+say "ssh m5o ($(since "$t1") s): $out"
+case "$out" in *"SSH-OK omarchy@"*) ;; *) fail "not logged in as omarchy" ;; esac
+case "$out" in *"http://127.0.0.1:3128 http://127.0.0.1:3128 NO_PROXY=localhost,127.0.0.1,::1"*) ;; *) fail "the proxy variables are not set in the session" ;; esac
+knownfp=$(ssh-keygen -l -f /tmp/link-known_hosts | awk '{print $2}' | head -1)
+[ "$knownfp" = "$hostfp" ] || fail "ssh recorded $knownfp, the journal says $hostfp"
+grep -q '^m5-omarchy ' /tmp/link-known_hosts || fail "the host key is not recorded under m5-omarchy"
+say "host key: ssh recorded $knownfp under m5-omarchy, equal to the journal's"
+[ "$(stat -c '%U:%G %a' /etc/ssh/authorized_keys.d/omarchy)" = "root:root 644" ] || fail "the operator's key file is $(stat -c '%U:%G %a' /etc/ssh/authorized_keys.d/omarchy)"
+setpriv --reuid="$(id -u "$U")" --regid="$(id -g "$U")" --init-groups ssh-keygen -l -f /etc/ssh/authorized_keys.d/omarchy > /tmp/operator.txt 2>&1 ||
+    fail "omarchy cannot read its authorized-keys file (sshd reads it as the user): $(cat /tmp/operator.txt)"
+[ "$(awk '{print $2}' /tmp/operator.txt)" = "$(grep -v '^source ' "$T/operator-fingerprints.txt" | awk '{print $2}')" ] ||
+    fail "the image's key for omarchy is not the build's operator key"
+[ ! -e /etc/ssh/authorized_keys.d/root ] || fail "root has an authorized key in the image"
+say "operator key: /etc/ssh/authorized_keys.d/omarchy root:root 644, readable as omarchy, $(awk '{print $2, $3}' /tmp/operator.txt); none for root"
+
+# ---- the clock: wrong first, as the M5 starts --------------------------------------------------------------
+# clock_back SECONDS: the true time (base, on the monotonic clock from mono0) is kept, the clock turned back
+clock_back() {
+    read -r base mono0 < <(python3 -I -c 'import time; print(time.time_ns(), time.monotonic_ns())')
+    date -u -s "@$(( base / 1000000000 - $1 ))" > /dev/null || fail "cannot turn the clock back"
+}
+# clock_fix NAME: tools/m1n1-client/m5-clock.py as the M1 runs it, with the true time as the M1's clock
+clock_fix() {
+    local t1 rc m1 now off_ms
+    t1=$(up)
+    out=$(timeout 900 python3 -I -c '
+import runpy, sys, time
+base, mono0 = int(sys.argv[1]), int(sys.argv[2])
+time.time_ns = lambda: base + (time.monotonic_ns() - mono0)   # the M1: the true time on its own clock
+time.time = lambda: time.time_ns() / 1e9
+sys.argv = sys.argv[3:]
+runpy.run_path(sys.argv[0], run_name="__main__")' "$base" "$mono0" "$T/m5-clock.py" --config /tmp/link-ssh-config --host m5o 2>&1)
+    rc=$?
+    echo "$out"
+    say "m5-clock.py ($1) exit $rc in $(since "$t1") s: $(echo "$out" | grep '^m5-clock' | tr '\n' ' ' | cut -c1-260)"
+    [ "$rc" = 0 ] || fail "the clock step ($1) failed"
+    read -r m1 now < <(python3 -I -c "import time; print($base + time.monotonic_ns() - $mono0, time.time_ns())")
+    off_ms=$(( (now - m1) / 1000000 ))
+    [ "${off_ms#-}" -lt 2000 ] || fail "after the clock step ($1) the M5's clock is $off_ms ms off the M1's"
+    say "clock ($1): the M5's now reads $(date -u +%FT%TZ), $off_ms ms from the M1's; journal: $(journalctl -b -t ilinux-clock -o cat --no-pager | tail -1 | cut -c1-120)"
+}
+clock_back 172800
+say "the shared clock now reads $(date -u +%FT%TZ): two days behind, as the M5's starts wrong"
+m5 early 'curl -sS --max-time 60 --cacert /usr/local/lib/ilinux045-link/cert.pem https://web.test:8443/hello.txt 2>&1; echo "curl exit $?"' ||
+    fail "the session before the clock step failed: $(tail -3 /tmp/ssh-early.err | tr '\n' ' ')"
+case "$out" in
+    *"curl exit 60"*) say "before the clock step: the fetch through the proxy fails as on the M5: $(echo "$out" | tr '\n' ' ' | cut -c1-140)" ;;
+    *) fail "the fetch did not fail on the wrong clock: $(echo "$out" | tr '\n' ' ')" ;;
+esac
+clock_fix "after connecting"
+journalctl -b -t ilinux-clock -o cat --no-pager | grep -q 'set from the M1' || fail "no ilinux-clock line in the journal"
+
+# ---- the web through the reverse-forwarded proxy, and not directly ----------------------------------------
+m5 web 'curl -sS --max-time 60 --cacert /usr/local/lib/ilinux045-link/cert.pem https://web.test:8443/hello.txt; echo "direct: $(curl -sS --noproxy "*" --max-time 5 --cacert /usr/local/lib/ilinux045-link/cert.pem https://web.test:8443/hello.txt 2>&1 | tr -d "\n" | cut -c1-80)"' ||
+    fail "the web session failed: $(tail -3 /tmp/ssh-web.err | tr '\n' ' ')"
+case "$out" in *HELLO-FROM-THE-M1-SIDE*) ;; *) fail "the HTTPS fetch through the proxy did not return the page: $(echo "$out" | tr '\n' ' ')" ;; esac
+case "$out" in *"direct: "*HELLO*) fail "the session reached the web server directly: the proxy was not the only way" ;; esac
+for _ in $(seq 20); do grep -q 'CONNECT web.test:8443 -> 127.0.0.1:8443 .* ok' /tmp/proxy.log && break; sleep 0.5; done
+grep -q 'CONNECT web.test:8443 -> 127.0.0.1:8443 .* ok' /tmp/proxy.log || fail "no completed CONNECT in the proxy's log"
+say "web: HTTPS through the reverse-forwarded proxy returned the page, certificate checked; $(echo "$out" | grep '^direct:' | cut -c1-90); proxy: $(grep 'CONNECT web.test' /tmp/proxy.log | tail -1 | cut -d' ' -f2- | cut -c1-90)"
+
+# ---- Claude Code: installed, starts without a download, signed out -----------------------------------------
+before=$(ls "/home/$U/.local/share/mise/installs/claude" 2> /dev/null | tr '\n' ' ')
+[ -n "$before" ] || fail "no Claude Code under ~/.local/share/mise/installs/claude"
+p0=$(wc -l < /tmp/proxy.log)
+i=0
+for how in 'claude --version' '~/.local/bin/claude --version' 'bash -lc "type -P claude; claude --version"'; do
+    i=$((i + 1))
+    t1=$(up)
+    m5 "claude$i" "$how"
+    rc=$?
+    say "claude ($how): exit $rc in $(since "$t1") s: $(echo "$out" | tr '\n' ' ' | cut -c1-140)"
+    [ "$rc" = 0 ] && echo "$out" | grep -q -E '[0-9]+\.[0-9]+\.[0-9]+' ||
+        fail "claude did not start ($how): $(tail -5 "/tmp/ssh-claude$i.err" | tr '\n' ' ')"
+done
+after=$(ls "/home/$U/.local/share/mise/installs/claude" 2> /dev/null | tr '\n' ' ')
+[ "$before" = "$after" ] || fail "mise installed another Claude Code: $before -> $after"
+say "claude: no download (installed versions unchanged: $after); proxy requests meanwhile: $(tail -n +"$((p0 + 1))" /tmp/proxy.log | grep -c CONNECT) ($(tail -n +"$((p0 + 1))" /tmp/proxy.log | grep -o 'CONNECT [^ ]*' | sort | uniq -c | tr '\n' ' ' | cut -c1-120))"
+# On the M5 the attempt runs days after the build, so mise's caches (its remote version lists) are
+# stale: aged three days here. The proxy has no Internet behind it in this VM, so this shows what mise
+# reaches for and whether claude still starts; the shim and the account dispatcher must.
+find "/home/$U/.cache/mise" -type f -exec touch -d '-3 days' {} +
+p1=$(wc -l < /tmp/proxy.log)
+i=0
+for how in 'claude --version' 'bash -lc "claude --version"' '~/.local/bin/claude --version'; do
+    i=$((i + 1))
+    t1=$(up)
+    m5 "stale$i" "$how"
+    rc=$?
+    say "claude, caches stale ($how): exit $rc in $(since "$t1") s: $(echo "$out" | tr '\n' ' ' | cut -c1-100) $(tail -2 "/tmp/ssh-stale$i.err" | tr '\n' ' ' | cut -c1-160)"
+    if [ "$i" -lt 3 ]; then
+        [ "$rc" = 0 ] && echo "$out" | grep -q -E '[0-9]+\.[0-9]+\.[0-9]+' || fail "claude did not start with stale caches ($how)"
+    fi
+done
+[ "$after" = "$(ls "/home/$U/.local/share/mise/installs/claude" 2> /dev/null | tr '\n' ' ')" ] || fail "mise installed another Claude Code with stale caches"
+say "claude, caches stale: proxy requests $(tail -n +"$((p1 + 1))" /tmp/proxy.log | grep -c CONNECT) ($(tail -n +"$((p1 + 1))" /tmp/proxy.log | grep -o 'CONNECT [^ ]* .*' | cut -d' ' -f1,2 | sort | uniq -c | tr '\n' ' ' | cut -c1-160)); refused for want of a route: $(tail -n +"$((p1 + 1))" /tmp/proxy.log | grep -c -v ' ok$')"
+# Signed out: no credentials file, no account in the CLI's state file. ~/.claude itself is Omarchy's (its agent
+# skills, from omarchy-provision-user), so its top level is listed for the record.
+m5 signedout 'if test -e ~/.claude/.credentials.json || grep -q -E "\"(oauthAccount|primaryApiKey)\"" ~/.claude.json 2>/dev/null; then echo NOT-SIGNED-OUT; else echo SIGNED-OUT; fi; echo "~/.claude: $(ls -A ~/.claude 2>/dev/null | tr "\n" " ")"; test -e ~/.claude.json && echo "~/.claude.json exists" || true'
+case "$out" in *NOT-SIGNED-OUT*|"") fail "claude is not signed out: $(echo "$out" | tr '\n' ' ')" ;; esac
+say "claude: signed out (no ~/.claude/.credentials.json, no account in ~/.claude.json); $(echo "$out" | grep '^~/.claude' | tr '\n' ' ' | cut -c1-140)"
+
+# ---- sudo ------------------------------------------------------------------------------------------------------
+GRANT=/etc/sudoers.d/99-omarchy-permanent-nopasswd-1000
+# as_desktop CMD...: the user's command in the session's systemd manager, where Omarchy's desktop runs its
+# programs (uwsm, the shell, the apps), as a transient unit like an app launch; its output comes back
+as_desktop() {
+    timeout 300 setpriv --reuid=1000 --regid=1000 --init-groups env -i HOME=/home/$U USER=$U LOGNAME=$U \
+        XDG_RUNTIME_DIR=/run/user/1000 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus PATH=/usr/local/bin:/usr/bin \
+        systemd-run --user --wait --pipe --quiet --collect -- "$@" 2>&1
+}
+if [ "$nopasswd" = 1 ]; then
+    # Omarchy's own permanent grant, user-approved for this image (job 045 deviation 24)
+    [ "$(stat -c '%U:%G %a' "$GRANT")" = "root:root 440" ] || fail "the grant is $(stat -c '%U:%G %a' "$GRANT")"
+    [ "$(cat "$GRANT")" = "omarchy ALL=(ALL) NOPASSWD: ALL" ] || fail "the grant's content is not Omarchy's permanent rule"
+    [ "$(grep -l -E '^[^#]*NOPASSWD:[[:space:]]*ALL[[:space:]]*$' /etc/sudoers /etc/sudoers.d/* | tr '\n' ' ')" = "$GRANT " ] ||
+        fail "another unrestricted grant exists: $(grep -l -E '^[^#]*NOPASSWD:[[:space:]]*ALL[[:space:]]*$' /etc/sudoers /etc/sudoers.d/* | tr '\n' ' ')"
+    m5 sudo 'echo "uid $(sudo -n id -u 2>&1)"; omarchy-sudo-passwordless --active; echo "active exit $?"' || fail "the sudo session failed"
+    case "$out" in *"uid 0"*) ;; *) fail "sudo -n id -u over SSH did not print 0: $(echo "$out" | tr '\n' ' ')" ;; esac
+    case "$out" in *"active exit 0"*) ;; *) fail "omarchy-sudo-passwordless --active does not report active: $(echo "$out" | tr '\n' ' ')" ;; esac
+    desk=$(as_desktop sudo -n id -u)
+    [ "$desk" = 0 ] || fail "sudo -n id -u from the desktop session printed: $desk"
+    as_desktop omarchy-sudo-passwordless --active > /tmp/desk-active.txt; deskrc=$?
+    [ "$deskrc" = 0 ] || fail "--active from the desktop session: exit $deskrc $(cat /tmp/desk-active.txt)"
+    say "sudo: the grant ($GRANT root:root 440, Omarchy's permanent rule, the only unrestricted one); sudo -n id -u prints 0 over SSH and from the desktop session; omarchy-sudo-passwordless --active: active (SSH and desktop)"
+else
+    m5 sudo 'sudo -n true 2>&1; echo "plain exit $?"; sudo -n /usr/local/lib/ilinux/set-clock now 2>&1; echo "args exit $?"' || true
+    case "$out" in *"plain exit 0"*|*"args exit 0"*) fail "sudo allowed more than the clock helper: $(echo "$out" | tr '\n' ' ')" ;; esac
+    say "sudo: only the clock helper without arguments ($(echo "$out" | tr '\n' ' ' | cut -c1-140))"
+fi
+
+# ---- the desktop session has the proxy environment ----------------------------------------------------------
+hpid=$(pgrep -u "$U" -x Hyprland | head -1)
+[ -n "$hpid" ] || fail "no Hyprland process"
+tr '\0' '\n' < "/proc/$hpid/environ" | grep -qx 'HTTPS_PROXY=http://127.0.0.1:3128' || fail "Hyprland's environment has no HTTPS_PROXY"
+qpid=$(pgrep -u "$U" -x quickshell | head -1)
+[ -z "$qpid" ] || tr '\0' '\n' < "/proc/$qpid/environ" | grep -qx 'HTTPS_PROXY=http://127.0.0.1:3128' || fail "Quickshell's environment has no HTTPS_PROXY"
+nuser=$(systemctl --user -M "$U@" show-environment 2> /dev/null | grep -c -i -E '^(https?|no)_proxy=')
+say "desktop: Hyprland (pid $hpid) and Quickshell (pid ${qpid:-none}) have HTTPS_PROXY; the user manager $nuser proxy variables"
+
+# ---- the grant is Omarchy's to revoke: --disable on this boot's copy in RAM (the shipped image is a file the
+# guest never writes), then the clock step again through the helper's own rule ---------------------------------
+if [ "$nopasswd" = 1 ]; then
+    m5 disable 'omarchy-sudo-passwordless --disable; echo "disable exit $?"; omarchy-sudo-passwordless --active; echo "active exit $?"; sudo -n true 2>&1; echo "sudo exit $?"' ||
+        fail "the --disable session failed: $(tail -3 /tmp/ssh-disable.err | tr '\n' ' ')"
+    case "$out" in *"disable exit 0"*) ;; *) fail "--disable failed: $(echo "$out" | tr '\n' ' ')" ;; esac
+    case "$out" in *"active exit 0"*|*"sudo exit 0"*) fail "passwordless sudo is still on after --disable: $(echo "$out" | tr '\n' ' ')" ;; esac
+    [ ! -e "$GRANT" ] || fail "--disable left $GRANT"
+    say "omarchy-sudo-passwordless --disable (in RAM): $(echo "$out" | head -1 | cut -c1-80); --active then inactive, sudo -n refused; $GRANT gone"
+    clock_back 86400
+    clock_fix "after --disable"
+fi
+
+# ---- SSH offers public keys only (a refused handshake blocks the pipe until LoginGraceTime, so this is last) ---
+if timeout 300 ssh -F /tmp/link-ssh-config -o BatchMode=yes -o PubkeyAuthentication=no \
+       -o PreferredAuthentications=password,keyboard-interactive m5o true > /dev/null 2> /tmp/ssh-nokey.err; then
+    fail "a login without a key succeeded"
+fi
+grep -q 'Permission denied (publickey)' /tmp/ssh-nokey.err || fail "the refusal does not name publickey alone: $(tail -2 /tmp/ssh-nokey.err | tr '\n' ' ')"
+t1=$(up)
+for i in 1 2 3 4 5 6 7 8 9 10; do
+    m5 recover 'echo RECOVERED' && [ "$out" = RECOVERED ] && break
+    sleep 10
+done
+[ "$out" = RECOVERED ] || fail "no session after the refused handshake"
+say "key-only: a login without a key is refused ($(grep -o 'Permission denied ([a-z,-]*)' /tmp/ssh-nokey.err | tail -1)); the next session worked after $(since "$t1") s (try $i)"
+
+mine=$(systemctl --failed --no-legend --plain | awk '{print $1}' | grep '^ilinux-' | tr '\n' ' ')
+[ -z "$mine" ] || fail "failed ilinux units: $mine"
+say "sshd sessions: $(journalctl -b --no-pager -o cat -u "$sunit" 2> /dev/null | grep -c 'Accepted publickey for omarchy') logins as omarchy; usb-pipe: $(grep -c 'banner after' /tmp/usb-pipe.log) banners; PASS in $(since "$t0") s"
+exit 0

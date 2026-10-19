@@ -148,6 +148,17 @@ mark SETTLED "$(awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf "used_m
 mark SHOT desktop
 sleep 30
 
+# ---- the USB link, when the image has it (LINK=1: the harness appends ilinux045-link-test) -----------
+if [ -x /usr/local/bin/ilinux045-link-test ]; then
+    mark LINK-START
+    timeout 3600 /usr/local/bin/ilinux045-link-test > "$RES/link-test.log" 2>&1
+    rc=$?
+    if [ "$rc" = 0 ]; then mark LINK-PASS
+    else mark LINK-FAIL "exit $rc: $(grep -a '^\[link\] FAIL' "$RES/link-test.log" | tail -1 | cut -c1-200)"; fi
+    mark SHOT after-link
+    sleep 20
+fi
+
 # ---- the Omarchy menu (its Quickshell plugin, as SUPER + SPACE opens it) -------------------------
 menu_ok=0
 if as_user timeout 60 omarchy-menu summon root >> "$RES/probe.log" 2>&1; then menu_ok=1; fi

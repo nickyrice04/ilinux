@@ -161,6 +161,22 @@ step that makes it recorded it (19 lines, grouped into the rows below).
 | 14 | changed | Timezone UTC (the configurator asks or detects it) | The image carries no location |
 | 15 | changed | `QT_WAYLAND_FRAME_CALLBACK_TIMEOUT=0` for the session (2026-10-18): `hl.env("QT_WAYLAND_FRAME_CALLBACK_TIMEOUT", "0")` in `~/.local/state/omarchy/toggles/hypr/ilinux-frame-callbacks.lua`, Omarchy's own toggles directory, which its Hyprland config loads; Hyprland starts the shell, which inherits it | No GPU driver: Hyprland renders on the CPU (llvmpipe), slower than Qt Wayland's default 100 ms frame-callback timeout. A late callback makes Qt count a window as hidden and repaint all of it when the callback comes, so every shell window was repainted after every frame and Hyprland never went idle: 81–82 % of the CPU at an idle desktop under TCG, 5 % with the change (VM job 048). On the M5 a full-screen frame should take about 0.6–1.1 s, so the loop would run there too (Likely, estimated by job 048) |
 
+**Build options (2026-10-18), only in a root built with `LINK=1`, `CLAUDE=1` and `NOPASSWD=1`** (the
+attempt-24 image, for boot040; [link report](omarchy-root-link-report-2026-10-18.md) with the details
+and the VM test). Without them the job builds the root above, unchanged.
+
+| # | Kind | Deviation | Forced by |
+|---|---|---|---|
+| 16 | added | Job 039's USB control channel (`usb-gadget.sh` with `FUNCTION=gser`, its unit and udev rule): per controller two bulk-only `gser` interfaces, the journal and an SSH byte pipe | The M5's only link to the second computer |
+| 17 | added | sshd on that pipe (job 039's `ilinux-sshd-tty@.service`, key-only, inetd style, its two `sshd_config.d` drop-ins) | Omarchy enables no SSH server |
+| 18 | added | The SSH host key made at each boot (`ilinux-ssh-hostkey.service`), its fingerprint to the journal | The image holds no private key |
+| 19 | added | The operator's public key for `omarchy` (`/etc/ssh/authorized_keys.d/omarchy`, 0644); none for root | Key-only logins as the desktop user; sshd reads the file as that user |
+| 20 | added | `/etc/environment` with the M1's proxy (`HTTPS_PROXY=http://127.0.0.1:3128` …) | The web reaches the M5 only through the SSH session's reverse-forwarded proxy; set for SSH logins and the desktop session |
+| 21 | added | `/usr/local/lib/ilinux/set-clock` and its sudo rule (`omarchy`, no password, no arguments) | No clock source: every boot starts wrong, and TLS fails until the M1 sets it |
+| 22 | added | Claude Code 2.1.303, installed by running Omarchy's own wrapper once (`mise use -g claude`), signed out | `claude` starts without a first-use download |
+| 23 | changed | mise's download store (`~/.cache/mise/downloads-cas`, 127 MB) left out | A second copy of the binary, in RAM and in every upload |
+| 24 | changed | Passwordless sudo for `omarchy` (`NOPASSWD=1`, **user-approved 2026-10-18**): Omarchy's own permanent grant, as `omarchy-sudo-passwordless permanent` writes it, `/etc/sudoers.d/99-omarchy-permanent-nopasswd-1000` (root:root 0440, exactly `omarchy ALL=(ALL) NOPASSWD: ALL`). Nothing for root or any other account; the clock rule of 21 stays, so the clock step survives a revocation | Agents inside Omarchy need sudo for pacman, loading modules and driver work, and the image has no password. The root is RAM-only, offline except through the M1's relay, and SSH takes only the operator's key. Reversible with Omarchy's own `omarchy-sudo-passwordless --disable`; boot cleanup and the settings package's hook remove only timed grants. The bar shows Omarchy's red passwordless-sudo indicator while it is on |
+
 Deviation 15's side effect (job 048, from Qt's source): Qt no longer counts a window as hidden
 when Hyprland stops sending it frame callbacks (a window on another workspace, behind the lock).
 Such a window still renders only when its content changes, so the cost is one frame per change,
@@ -518,8 +534,10 @@ packed image after checking its digest, in about 13 min.
 Outputs are under the ignored `virtualization/jobs/045-omarchy-installer-root/out/`; none is
 in Git.
 
-* `ramroot.cpio.zst` (2,337,897,871 bytes, SHA-256
-  `d00ba1563312e69ce366b316dab245ea76226c4f0399a6e32d36932aaa63578a`): built
+* `runs/attempt22/ramroot.cpio.zst` (2,337,897,871 bytes, SHA-256
+  `d00ba1563312e69ce366b316dab245ea76226c4f0399a6e32d36932aaa63578a`, attempt 22's image, moved
+  there with its records on 2026-10-18 when `out/` took the `LINK=1 CLAUDE=1` build for boot040; see
+  the [link report](omarchy-root-link-report-2026-10-18.md)): built
   2026-10-18T06:54Z for boot035's Image `1131a1af…`, with deviation 15. It holds no SSH host key
   (sshd never ran), no pacman keyring and no password; it does hold the build's machine-id. Keep
   it private like job 039's images all the same. The 2026-10-17 image (2,337,836,738 bytes,

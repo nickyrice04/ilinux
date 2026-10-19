@@ -4,12 +4,17 @@
 # much a root pruned of what a RAM root never reads (documentation, translations, headers,
 # static libraries) would save.
 
-PROXY_BPS=5360000          # attempt 19 and 20: 226.8 MB in 42.3 s (coordination.md)
-DEADLINE_S=300             # native/boot/launch.py, ramroot profile
-HEAP_BYTES=1073741824      # m1n1 ProxyUtils heap (proxyclient/m1n1/proxyutils.py, 1 GiB default)
-IMAGE_BYTES=44599808       # boot035 Image
-IMAGE_MEM=45613056         # its header image_size (the launcher allocates it 2 MiB-aligned)
-DTB_BYTES=60363            # t6050-j716c-stage-b.dtb
+# The launcher's omarchy profile (native/boot/launch.py), which delivers this root: a 900 s deadline and a
+# 3 GiB ProxyUtils heap for kernel, DT and initrd. The rate is attempt 22's, the only upload of this size:
+# 2,382,558,042 bytes in 456.5 s (native/boot/stage-b-2026-10-18-attempt22-result.md).
+PROXY_BPS=5220000
+DEADLINE_S=900
+HEAP_BYTES=3221225472
+# The package the root is for: its Image (the header's image_size is what the launcher allocates,
+# 2 MiB-aligned) and the Stage-B DT the launcher uploads with it.
+IMAGE_BYTES=$(stat -c %s "$KERNEL")
+IMAGE_MEM=$(od -An -t u8 -j 16 -N 8 "$KERNEL" | tr -d ' ')
+DTB_BYTES=$(stat -c %s "$(dirname "$KERNEL")/t6050-j716c-stage-b.dtb")
 
 # cpio_of ROOT OUT: newc cpio of ROOT, names sorted, inode and device numbers renumbered
 cpio_of() { ( cd "$1" && find . -mindepth 1 -printf '%P\n' | LC_ALL=C sort | cpio --quiet -o -H newc --reproducible ) > "$2"; }

@@ -42,3 +42,45 @@ Host m5-port2
 
 Host m5-port3
     ProxyCommand build/control/usb-pipe --port 3 --log build/native-intake/usb-pipe.log
+
+# ssh -F tools/m1n1-client/m5-ssh-config m5o       (Omarchy itself: VM job 045 built with LINK=1)
+#
+# The same pipe and proxy, on the root Omarchy's installer built. The login is the desktop user
+# omarchy (the image authorizes the M1's key for it, and for nobody else), and the host key is made
+# at every boot (the image holds no private key), so it goes to its own file under its own name:
+# clear that file before each boot (rm -f build/control/known_hosts-omarchy). The fingerprint of
+# the boot's key is in the M5's journal (ilinux-ssh-hostkey), which interface 0 carries.
+# The M5's clock is wrong after every boot: right after connecting, before any web access, run
+# python3 -I tools/m1n1-client/m5-clock.py (its own short session to m5o).
+Host m5o m5o-port1 m5o-port2 m5o-port3
+    HostName m5
+    HostKeyAlias m5-omarchy
+    User omarchy
+    IdentityFile build/control/m1-control
+    IdentitiesOnly yes
+    UserKnownHostsFile build/control/known_hosts-omarchy
+    StrictHostKeyChecking accept-new
+    UpdateHostKeys no
+    RemoteForward 127.0.0.1:3128 127.0.0.1:3128
+    ExitOnForwardFailure no
+    ConnectTimeout 45
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+    ControlMaster no
+    ForwardAgent no
+    ForwardX11 no
+    GSSAPIAuthentication no
+    PreferredAuthentications publickey
+    LogLevel INFO
+
+Host m5o
+    ProxyCommand build/control/usb-pipe --log build/native-intake/usb-pipe.log
+
+Host m5o-port1
+    ProxyCommand build/control/usb-pipe --port 1 --log build/native-intake/usb-pipe.log
+
+Host m5o-port2
+    ProxyCommand build/control/usb-pipe --port 2 --log build/native-intake/usb-pipe.log
+
+Host m5o-port3
+    ProxyCommand build/control/usb-pipe --port 3 --log build/native-intake/usb-pipe.log

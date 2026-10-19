@@ -2,12 +2,12 @@
   "schema": 1,
   "profile": "omarchy",
   "file": "ramroot.cpio.zst",
-  "size": 2337897871,
-  "sha256": "d00ba1563312e69ce366b316dab245ea76226c4f0399a6e32d36932aaa63578a",
-  "image_sha256": "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579",
-  "source": "VM job 045, 2026-10-18T06:54Z",
-  "build": "virtualization/jobs/045-omarchy-installer-root/host-run.sh; Omarchy's own installer with the edge aarch64 runtime (omarchy-dev, omarchy-settings-dev 4.0.0.r7028.g33783b1-1), 865 packages, then ramroot.sh with deviation 15 (QT_WAYLAND_FRAME_CALLBACK_TIMEOUT=0 for the session); zstd --ultra -22 --long=27; 8,525,249,287 bytes unpacked, 10,773,544,960 in 16 KiB pages",
-  "vm_tested": "QEMU TCG, one vCPU, the boot035 Image and the M5's root compatible: SDDM autologin, uwsm, Hyprland 0.56.2 and Quickshell; desktop ready 194.8 s and first run done 202.2 s after kernel start; menu, Chromium 153 and Obsidian 1.14.4 rendered, their windows 17 s and 56 s after launch; 13,801 MiB in use at the settled desktop; failed units ufw, linux-modules-cleanup, omarchy-provision-hardware (its last step) and the user's xdg-document-portal",
+  "size": 2434354327,
+  "sha256": "b8eae454809839abcf6e3279e028576fa8e47b835f211968dd198a33a18c66c1",
+  "image_sha256": "a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9",
+  "source": "VM job 045 with the USB link, Claude Code and passwordless sudo, 2026-10-19T01:25Z",
+  "build": "virtualization/jobs/045-omarchy-installer-root/host-run.sh with LINK=1 CLAUDE=1 NOPASSWD=1 for boot040's Image (out/job.env); Omarchy's own installer with the edge aarch64 runtime (omarchy-dev, omarchy-settings-dev 4.0.0.r7028.g33783b1-1), 865 packages, then ramroot.sh with deviations 1-24 (16-21: job 039's gadget with two gser interfaces, sshd in inetd mode on the byte pipe for omarchy with the M1's public key, the host key made at each boot, the M1's proxy in /etc/environment, the clock helper and its sudo rule; 22-23: Claude Code 2.1.303 through Omarchy's mise wrapper, signed out, mise's download store left out; 24, user-approved 2026-10-18: Omarchy's own permanent passwordless-sudo grant for omarchy, /etc/sudoers.d/99-omarchy-permanent-nopasswd-1000); zstd --ultra -22 --long=27; 8,810,610,345 bytes unpacked, 11,059,183,616 in 16 KiB pages",
+  "vm_tested": "QEMU TCG, one vCPU, the boot040 Image and the M5's root compatible: SDDM autologin, uwsm, Hyprland 0.56.2 and Quickshell; desktop ready 224.4 s and first run done 221.7 s after kernel start; menu, Chromium 153 and Obsidian 1.14.4 rendered; 14,126 MiB in use at the settled desktop; over job 046's dummy_hcd link (test-only modules for this Image): SSH as omarchy on the gser pipe, key-only, the host key made at this boot and equal to the journal's on interface 0, the clock set by tools/m1n1-client/m5-clock.py (2.0 days behind to 20 ms), HTTPS through the reverse-forwarded proxy, claude --version 2.1.303 three ways with no download, signed out; sudo -n id -u prints 0 over SSH and from the desktop session, omarchy-sudo-passwordless --active reports active, and --disable in the guest's RAM copy revokes it; failed units ufw, linux-modules-cleanup, omarchy-provision-hardware (its last step) and the user's xdg-document-portal",
   "native_tested": false,
-  "private": "holds no SSH host key, pacman keyring or password, but the build's machine-id: never commit or publish the image itself"
+  "private": "holds no SSH host key (made at each boot), private key, pacman keyring, password or token, but the build's machine-id, the M1's public key and a passwordless sudo grant for omarchy: never commit or publish the image itself"
 }

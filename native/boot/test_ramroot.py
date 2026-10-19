@@ -49,6 +49,11 @@ OMARCHY = launch.PROFILES["omarchy"]
 OMARCHY_RECORD = json.loads((HERE / "omarchy-root-manifest.json").read_text())
 BOOT035 = HERE.parents[1] / "build/native-boot035/verified"
 BOOT035_IMAGE_SIZE = 45613056   # boot035's Image header: image_size, text_offset 0
+# The omarchy pin is for boot040's package (attempt 24): its Image, header image_size and Stage-B DT.
+# The pin's own image (size, digest) is read from the manifest, so a rebuild changes only the pin.
+BOOT040 = HERE.parents[1] / "build/native-boot040/verified"
+BOOT040_IMAGE_BYTES, BOOT040_IMAGE_SIZE, BOOT040_DTB_BYTES = 44681728, 45678592, 62043
+BOOT040_IMAGE_SHA256 = "a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9"
 ZSTD = b"\x28\xb5\x2f\xfd"
 MANIFEST = {"m1n1_version_marker": "version", "m1n1_version_offset": 0x100,
             "m1n1_dt_pointer_offset": 0x200}
@@ -630,22 +635,22 @@ class InitrdTests(unittest.TestCase):
         self.assertEqual(["%.1f" % s for s in seconds], ["45.4", "56.7"])
 
     def test_omarchy_upload_fits_its_deadline(self):
-        files = {"Image": Size(44599808), "ramroot.cpio.zst": Size(OMARCHY_RECORD["size"]),
-                 "t6050-j716c-stage-b.dtb": Size(60363)}
+        files = {"Image": Size(BOOT040_IMAGE_BYTES), "ramroot.cpio.zst": Size(OMARCHY_RECORD["size"]),
+                 "t6050-j716c-stage-b.dtb": Size(BOOT040_DTB_BYTES)}
         total, seconds = launch.upload_estimate(files, OMARCHY)
-        self.assertEqual(total, 2382558042)
-        self.assertEqual(["%.1f" % s for s in seconds], ["476.5", "595.6"])
-        self.assertEqual("%.1f" % (total / 5.36e6), "444.5")       # attempt 20's measured rate
-        self.assertGreater(OMARCHY.deadline - seconds[1], 300)    # 4 MB/s leaves five minutes
+        self.assertEqual(total, BOOT040_IMAGE_BYTES + OMARCHY_RECORD["size"] + BOOT040_DTB_BYTES)
+        self.assertEqual(seconds, [total / 5e6, total / 4e6])
+        self.assertGreater(OMARCHY.deadline - total / 5.22e6, 300)  # attempt 22's measured rate: 5 min to spare
+        self.assertGreater(OMARCHY.deadline, seconds[1])           # and it fits at 4 MB/s
 
     def test_omarchy_image_needs_the_larger_heap(self):
         """Bounds of the launcher's placement in ProxyUtils' heap (64-byte blocks, first fit)."""
-        image_size, dtb = BOOT035_IMAGE_SIZE, 60363
+        image_size, dtb = BOOT040_IMAGE_SIZE, BOOT040_DTB_BYTES
         buffers = 0x10000 + 512 + 64   # ProxyUtils' code, SIMD and argument buffers come first
         least = buffers + image_size + dtb + OMARCHY_RECORD["size"]
         most = buffers + (2 * 1024**2 - 1) + image_size + 2 * (65536 - 1) + dtb + OMARCHY_RECORD["size"]
         self.assertGreater(least, 1024**3)                 # ProxyUtils' default heap cannot place it
-        self.assertLess(most, OMARCHY.heap - 800 * 10**6)  # 3 GiB places it, > 0.8 GB to spare
+        self.assertLess(most, OMARCHY.heap - 600 * 10**6)  # 3 GiB places it, > 0.6 GB to spare
         self.assertLess(buffers + (2 * 1024**2 - 1) + image_size + 2 * (65536 - 1) + dtb + 182420823,
                         1024**3)                            # run 33 still fits the default heap
 
@@ -653,6 +658,14 @@ class InitrdTests(unittest.TestCase):
     def test_boot035_image_size(self):
         text_offset, image_size = struct.unpack_from("<QQ", (BOOT035 / "Image").read_bytes()[:64], 8)
         self.assertEqual((text_offset, image_size), (0, BOOT035_IMAGE_SIZE))
+
+    @unittest.skipUnless((BOOT040 / "Image").is_file(), "boot040 package not extracted in build/")
+    def test_boot040_image_and_dt_sizes(self):
+        image = (BOOT040 / "Image").read_bytes()
+        self.assertEqual(hashlib.sha256(image).hexdigest(), BOOT040_IMAGE_SHA256)
+        self.assertEqual((len(image),) + struct.unpack_from("<QQ", image[:64], 8),
+                         (BOOT040_IMAGE_BYTES, 0, BOOT040_IMAGE_SIZE))
+        self.assertEqual((BOOT040 / "t6050-j716c-stage-b.dtb").stat().st_size, BOOT040_DTB_BYTES)
 
 
 class RamrootFileTests(unittest.TestCase):
@@ -708,7 +721,7 @@ class RamrootFileTests(unittest.TestCase):
         self.refuse("not a zstd frame")
 
     def test_repository_records(self):
-        """Each RAM-root profile reads its own pin; job 045's is the image VM-tested on boot035."""
+        """Each RAM-root profile reads its own pin; job 045's is the attempt-24 image, VM-tested on boot040."""
         for name, path in (("ramroot", HERE / "ramroot-manifest.json"),
                            ("omarchy", HERE / "omarchy-root-manifest.json")):
             with self.subTest(profile=name):
@@ -719,9 +732,9 @@ class RamrootFileTests(unittest.TestCase):
                 self.assertGreater(record["size"], 0)
                 for key in ("sha256", "image_sha256"):
                     self.assertRegex(record[key], "^[0-9a-f]{64}$")
-        self.assertEqual((OMARCHY_RECORD["size"], OMARCHY_RECORD["sha256"], OMARCHY_RECORD["image_sha256"]),
-                         (2337897871, "d00ba1563312e69ce366b316dab245ea76226c4f0399a6e32d36932aaa63578a",
-                          "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579"))   # boot035's Image
+        self.assertEqual(OMARCHY_RECORD["image_sha256"], BOOT040_IMAGE_SHA256)   # built for boot040's Image
+        self.assertGreater(OMARCHY_RECORD["size"], 1024**3)   # the full root: the 3 GiB heap is why the profile exists
+        self.assertTrue(OMARCHY_RECORD["source"].startswith("VM job 045"))
         self.assertEqual((launch.RAMROOT_RECORD.name, launch.OMARCHY_RECORD.name),
                          ("ramroot-manifest.json", "omarchy-root-manifest.json"))
 

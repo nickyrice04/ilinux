@@ -1,5 +1,5 @@
 # boot-test.sh: stage 4 of job 045, sourced by run.sh. Boot the RAM root the way m1n1 boots the
-# M5, in QEMU (TCG, one vCPU) with the exact boot035 Image: direct kernel entry, the launcher's
+# M5, in QEMU (TCG, one vCPU) with the exact Image it is for: direct kernel entry, the launcher's
 # RAM-root arguments plus m1n1's append, and a device tree with the M5's root compatible (so
 # Omarchy's platform detector answers as it will on the M5) and a /chosen simple-framebuffer
 # (3456x2234 x2r10g10b10, the 16-inch panel) in reserved RAM, which simpledrm drives. No
@@ -71,6 +71,8 @@ stage_boot_test() {
     cp -R "$J/test-overlay" "$O"
     install -m 0600 "$W/testkey/host_ed25519" "$O/etc/ssh/ilinux045_host_ed25519_key"
     install -m 0600 "$W/testkey/id_ed25519.pub" "$O/etc/ssh/ilinux045_authorized_keys"
+    # LINK=1: the USB link test (link-test.sh), job 046's dummy_hcd approach, run by the probe
+    if [ "$LINK" = 1 ]; then . "$J/link-test.sh"; link_test_overlay "$O"; fi
     mkdir -p "$O/usr/local/share/ilinux045"
     electron_apps "$C" > "$O/usr/local/share/ilinux045/electron-apps.txt"
     cp "$O/usr/local/share/ilinux045/electron-apps.txt" "$OUT/test/electron-apps.txt"
@@ -205,5 +207,11 @@ DTS
     cat "$OUT/test/summary.txt"
     [ -n "$done_marker" ] || { echo "FAIL: the probe did not finish"; return 1; }
     grep -a -q 'ILINUX045-READY' "$OUT/test/console.log" || { echo "FAIL: Omarchy's session never came up"; return 1; }
+    if [ "$LINK" = 1 ]; then
+        grep -a -q 'ILINUX045-LINK-PASS' "$OUT/test/console.log" ||
+            { echo "FAIL: the USB link test did not pass (out/test/results/link-test.log)"; return 1; }
+    fi
+    # The guest ran a copy in its RAM: the packed image is still the one it was
+    (cd "$OUT" && sha256sum -c --quiet ramroot.cpio.zst.sha256) || { echo "FAIL: out/ramroot.cpio.zst changed"; return 1; }
     echo "PASS: the probe ran to the end; see out/test/summary.txt"
 }

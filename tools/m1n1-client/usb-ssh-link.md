@@ -111,6 +111,51 @@ the Linux stand-in; `iousbhost.m` the macOS backend; `usb-pipe.c` the command li
    desktop). `curl` is there, so the web test above works as it is. The installer-built Omarchy
    root is where the package tools live.
 
+## From attempt 24: Omarchy itself (job 045 built with `LINK=1 CLAUDE=1`)
+
+The same gadget, pipe and proxy on the root Omarchy's installer built, with three differences
+that change the M1's steps:
+
+| | Job 039's RAM root (`m5`) | Omarchy's root (`m5o`) |
+|---|---|---|
+| Login | `root` (and `omarchy`) | **`omarchy`**, the desktop user, only; root has no key |
+| sudo | (root logs in) | **passwordless for `omarchy`** (Omarchy's own permanent grant, user-approved 2026-10-18): `sudo -n` works in the session; `omarchy-sudo-passwordless --disable` revokes it until the next boot |
+| Host key | fixed in the image | **made at every boot** (the image holds no private key): it goes to `build/control/known_hosts-omarchy` under the name `m5-omarchy`; clear that file before each boot; the M5's journal on interface 0 prints the boot's fingerprint (`ilinux-ssh-hostkey`) |
+| Clock | (not needed by its tools) | **wrong after every boot**: set it from the M1 first, before any web access |
+
+The connect flow, from the repository root, with `connect-proxy.py` already running:
+
+1. **The clock, right after connecting** (one short session of its own; it also proves the link):
+
+   ```sh
+   python3 -I tools/m1n1-client/m5-clock.py
+   ```
+
+   It opens `m5o` with port forwarding off, runs `/usr/local/lib/ilinux/set-clock` through its
+   own sudo rule (no password, no arguments; it works with or without the passwordless grant),
+   sends the M1's clock only once the M5 says it is
+   ready, and reads it back. It prints the M5's error before the step (Likely days or months: with no
+   clock source, systemd starts the clock at its own build date) and the residual after it
+   (milliseconds, bounded by the round trip), then `PASS` (exit 0). Exit 1: the clock did not take; 2: the session failed
+   (ssh's message is above it); 3: the M5 refused (not a `LINK=1` root). The M5's journal records the
+   change (`ilinux-clock`). Until it has run, TLS fails on the M5 (`certificate is not yet valid`):
+   the VM test shows that on purpose, then the fix (Confirmed in the VM: 2.0 days set to within 30 ms).
+2. **The session:**
+
+   ```sh
+   ssh -F tools/m1n1-client/m5-ssh-config m5o
+   ```
+
+   Then the web test of step 4 above (`curl ... https://archlinuxarm.org/`), as `omarchy`.
+3. **Claude Code** is installed (Omarchy's own mise wrapper ran at build time) and signed out.
+   Run `claude` in that session. The session has no browser, so Claude Code prints its sign-in
+   link (Likely; the VM has no Internet to try it): open it in the M1's browser, sign in there, and
+   paste the code it shows back into the session. The account's tokens then live in the M5's RAM only (`~/.claude`), gone at the next
+   boot. It starts without a download: in the VM test, with mise's caches fresh and aged three days,
+   `claude --version` ran in about 1.5 s through mise's shim, Omarchy's wrapper and a login shell,
+   and nothing went through the proxy (mise resolves `latest` to the installed version without
+   asking). A newer release comes on request (`mise up claude`).
+
 Keep the proxy log, the usb-pipe log and any M5 output local in `build/native-intake/`;
 commit excerpts only after checking them for identifiers (`AGENTS.md`).
 

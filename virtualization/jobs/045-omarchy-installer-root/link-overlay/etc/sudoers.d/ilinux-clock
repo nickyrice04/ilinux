@@ -1,0 +1,4 @@
+# VM job 045 (LINK=1): the M1 sets the M5's clock over SSH (tools/m1n1-client/m5-clock.py) as the
+# desktop user, which has no password in this image. This allows that one helper, with no arguments
+# (the "" below), and nothing else; the helper reads one time on its input and refuses anything else.
+omarchy ALL=(root) NOPASSWD: /usr/local/lib/ilinux/set-clock ""

@@ -1,0 +1,15 @@
+# VM job 045 (LINK=1): the SSH host key of this boot. The image holds no private key, so the RAM root
+# makes its own at every boot, before sshd starts on the USB byte pipe (the drop-in
+# ilinux-sshd-tty@.service.d/10-ilinux-hostkey.conf orders it). The fingerprint goes to the journal,
+# which interface 0 of the gadget carries to the M1, so the key ssh records there on first use
+# (build/control/known_hosts-omarchy) can be checked against it.
+[Unit]
+Description=SSH host key for this boot (RAM root)
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c 'test -s /etc/ssh/ssh_host_ed25519_key || /usr/bin/ssh-keygen -q -t ed25519 -N "" -C ilinux-m5-boot -f /etc/ssh/ssh_host_ed25519_key; /usr/bin/ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub'
+
+[Install]
+WantedBy=multi-user.target

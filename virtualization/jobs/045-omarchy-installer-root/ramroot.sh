@@ -2,6 +2,19 @@
 # ($R -> $C) made into the M5's RAM root. The install stays as Omarchy's installer left it; every
 # change here is recorded (out/deviations.tsv) with its reason.
 
+# private_keys: text files of the RAM root that hold a private key, as root-relative paths. A key is a
+# whole-line PEM or OpenSSH BEGIN marker with base64 lines after it (a header line or two may come
+# between); documentation that quotes the marker inside a string (npm's config docs do) is no key.
+private_keys() {
+    local f
+    grep -r -l -I -E -e '^-----BEGIN ([A-Z0-9]+ )*PRIVATE KEY-----$' "$C"/etc "$C"/home "$C"/root "$C"/usr/local \
+        "$C"/var "$C"/opt "$C"/srv 2> /dev/null | while read -r f; do
+        awk '/^-----BEGIN ([A-Z0-9]+ )*PRIVATE KEY-----$/ { body = 4; next }
+             body > 0 { if ($0 ~ /^[A-Za-z0-9+\/=]{40,}$/) { found = 1; exit } body-- }
+             END { exit !found }' "$f" && echo "${f#"$C"}"
+    done || true
+}
+
 stage_ramroot() {
     DEV=$W/deviations-ramroot.tsv
     : > "$DEV"
@@ -67,6 +80,13 @@ stage_ramroot() {
     install -m 0644 -o 1000 -g 1000 /dev/null "$C/home/omarchy/.local/state/omarchy/indicators/stay-awake"
     record changed "Omarchy's Stay Awake toggle on (~/.local/state/omarchy/indicators/stay-awake, what omarchy-toggle-idle stay-awake writes): with no input device the idle chain (screensaver, lock, display off) would leave the M5's panel dark with no way to wake it"
 
+    # The build options (link.sh): the USB link to the M1, Claude Code ready to start, and Omarchy's
+    # passwordless-sudo grant for the user.
+    if [ "$LINK" = 1 ] || [ "$CLAUDE" = 1 ] || [ "$NOPASSWD" = 1 ]; then . "$J/link.sh"; fi
+    if [ "$LINK" = 1 ]; then stage_link; fi
+    if [ "$CLAUDE" = 1 ]; then stage_claude; fi
+    if [ "$NOPASSWD" = 1 ]; then stage_nopasswd; fi
+
     # A RAM root boots as if freshly installed every time, so systemd's ConditionNeedsUpdate
     # units (ldconfig, hwdb, journal catalog, update-done) would run on every boot; pacman's
     # hooks ran them at install. Stamp /etc and /var as systemd-update-done would.
@@ -79,15 +99,23 @@ stage_ramroot() {
 
     # The image's identity, for the boot test and the report.
     mkdir -p "$C/usr/share/ilinux"
-    printf 'built %s\nomarchy %s\nkernel boot035 (Image sha256 %s)\njob 045, ilinux %s\n' \
-        "$(date -u +%FT%TZ)" "$(pac "$C" -Q omarchy-dev | cut -d' ' -f2)" "$IMAGE_SHA" "$ILINUX_REV" \
-        > "$C/usr/share/ilinux/build-info.txt"
+    printf 'built %s\nomarchy %s\nkernel %s (Image sha256 %s)\njob 045, ilinux %s\noptions LINK=%s CLAUDE=%s NOPASSWD=%s\n' \
+        "$(date -u +%FT%TZ)" "$(pac "$C" -Q omarchy-dev | cut -d' ' -f2)" "$KERNEL_NAME" "$IMAGE_SHA" \
+        "$ILINUX_REV" "$LINK" "$CLAUDE" "$NOPASSWD" > "$C/usr/share/ilinux/build-info.txt"
     record added "/usr/share/ilinux/build-info.txt (what was built, from what)"
 
     # What the image holds that must stay private, for the report.
     { echo "ssh host keys:"; ls "$C"/etc/ssh/ssh_host_* 2>/dev/null || echo "  none"
       echo "machine-id: $(wc -c < "$C/etc/machine-id") bytes"
       echo "user shadow fields: $(chroot "$C" getent shadow omarchy root | cut -d: -f1,2 | sed 's/:\(.\).*/:\1.../' | tr '\n' ' ')"
+      echo "authorized keys (public): $(ls "$C"/etc/ssh/authorized_keys.d/ 2>/dev/null | tr '\n' ' ')"
+      echo "claude sign-in state (~/.claude/.credentials.json, ~/.claude.json): $(ls -d "$C"/home/omarchy/.claude/.credentials.json "$C"/home/omarchy/.claude.json 2>/dev/null | sed "s#$C##" | tr '\n' ' ' | grep . || echo none)"
+      echo "unrestricted sudo grants (NOPASSWD: ALL): $(grep -l -E '^[^#]*NOPASSWD:[[:space:]]*ALL[[:space:]]*$' "$C"/etc/sudoers "$C"/etc/sudoers.d/* 2>/dev/null | sed "s#$C##" | tr '\n' ' ' | grep . || echo none)"
+      echo "private keys (PEM or OpenSSH, text files under /etc /home /root /usr/local /var /opt /srv): $(private_keys | tr '\n' ' ' | grep . || echo none)"
     } > "$OUT/build/private-contents.txt"
+    # The USB link's rule: no private key in the image (its SSH host key is made at boot)
+    if [ "$LINK" = 1 ] && [ -n "$(private_keys)" ]; then
+        echo "private keys in the image: $(private_keys | tr '\n' ' ')"; return 1
+    fi
     cat "$DEV"
 }

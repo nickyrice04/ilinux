@@ -12,9 +12,10 @@
 #  2. ramroot.sh: a snapshot of the install, made bootable as the M5's RAM root; every change
 #     is recorded in out/deviations.tsv with its reason.
 #  3. pack.sh: newc cpio, zstd; sizes and upload times at the measured proxy rate.
-#  4. boot-test.sh: QEMU TCG, one vCPU, the exact boot035 Image, a DT simple-framebuffer for
-#     simpledrm and the M5's root compatible; Omarchy's session, first run, menu, Chromium and
-#     the Electron apps; time to desktop and memory.
+#  4. boot-test.sh: QEMU TCG, one vCPU, the exact Image the root is for (boot035 unless KERNEL says
+#     otherwise), a DT simple-framebuffer for simpledrm and the M5's root compatible; Omarchy's
+#     session, first run, menu, Chromium and the Electron apps; time to desktop and memory. With
+#     LINK=1 also the USB link over dummy_hcd (link-test.sh), job 046's way.
 # Host side: host-run.sh in this directory (vm lock, the work disk, the read-only Omarchy share).
 # Optional out/job.env: REINSTALL=1, CONVERT=0 (stop after the install), TEST=0 (no boot test),
 # FAST=1 (one quick zstd level), ZSTD_FINAL="-19 --long=27" (that level only), VARIANTS=0 (no
@@ -24,7 +25,13 @@
 # test alone). Read-only modes, each instead of the stages: INSPECT=1 (the installed runtime's
 # installer and the edge repository's other runtime, unpacked into out/inspect/), QPROBE=1 (the
 # largest -initrd QEMU accepts here), ELFCHECK=1 (every ELF in the RAM root against 16 KiB pages,
-# the Chromium-based files, the agent wrappers, the package cache).
+# the Chromium-based files, the agent wrappers, the package cache), LINKCHECK=1 (the facts the
+# link build depends on: PAM, sudoers, sshd, mise, the work disk, KTREE).
+# Build options (link.sh): LINK=1 (the USB link: gadget, sshd on its byte pipe for the user, the
+# M1's proxy in the environment, the clock helper; stage 4 tests it and needs KTREE), CLAUDE=1
+# (Claude Code through Omarchy's own mise wrapper, signed out), NOPASSWD=1 (Omarchy's permanent
+# passwordless-sudo grant for the user; stage 4 tests it). Another kernel: KERNEL_NAME,
+# KERNEL, IMAGE_SHA and KTREE (e.g. boot040: build/native-boot040/verified/Image).
 set -euo pipefail
 J=/mnt/job
 OUT=$J/out
@@ -35,9 +42,21 @@ CONVERT=${CONVERT:-1}
 TEST=${TEST:-1}
 FAST=${FAST:-0}
 VARIANTS=${VARIANTS:-1}
-# The kernel the root is for: boot035 (its Image is byte-identical to boot034's), unchanged.
-KERNEL=/mnt/ilinux/build/native-boot035/verified/Image
-IMAGE_SHA=1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579
+# The kernel the root is for: by default boot035 (its Image is byte-identical to boot034's).
+# out/job.env may name another package's: KERNEL_NAME, KERNEL (its verified Image), IMAGE_SHA, and
+# for the link test's VM-only modules KTREE, the read-only tree that built it (job 039's way).
+KERNEL_NAME=${KERNEL_NAME:-boot035}
+KERNEL=${KERNEL:-/mnt/ilinux/build/native-boot035/verified/Image}
+IMAGE_SHA=${IMAGE_SHA:-1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579}
+KTREE=${KTREE:-}
+# LINK=1: the USB link (link.sh: the gadget with the journal and SSH byte pipe, sshd on the pipe
+# for the user, the M1's web proxy in the environment, the clock helper), tested in stage 4 over
+# dummy_hcd. CLAUDE=1: Claude Code installed through Omarchy's own mise wrapper, signed out.
+LINK=${LINK:-0}
+CLAUDE=${CLAUDE:-0}
+# NOPASSWD=1 (user-approved 2026-10-18 for the attempt-24 image): Omarchy's own permanent
+# passwordless-sudo grant for the user, as omarchy-sudo-passwordless permanent writes it.
+NOPASSWD=${NOPASSWD:-0}
 W=/var/tmp/ilinux-045          # the work disk (/dev/vdb, btrfs): cache, keyrings, roots
 R=$W/@root                     # the installed Omarchy (a subvolume, never changed after stage 1)
 C=$W/@ramroot                  # its snapshot, made into the RAM root
@@ -66,6 +85,7 @@ mkdir -p "$W/cache"
 if [ "${INSPECT:-0}" = 1 ]; then . "$J/inspect.sh"; stage_inspect; exit 0; fi
 if [ "${QPROBE:-0}" = 1 ]; then . "$J/qprobe.sh"; stage_qprobe; exit 0; fi
 if [ "${ELFCHECK:-0}" = 1 ]; then . "$J/elfcheck.sh"; stage_elfcheck; exit 0; fi
+if [ "${LINKCHECK:-0}" = 1 ]; then . "$J/linkcheck.sh"; stage_linkcheck; exit 0; fi
 if [ "${RETEST:-0}" = 1 ]; then
     # the packed image, unchanged; the Electron app list still comes from its snapshot ($C)
     rm -rf "$OUT/test"

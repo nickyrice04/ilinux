@@ -1,0 +1,38 @@
+#!/bin/bash
+# set-clock: the M5's clock, set from the M1's over the USB link (VM job 045, LINK=1). The M5 has no
+# clock source in this boot path (no RTC driver, and no route for NTP: the link carries SSH and the
+# M1's HTTP proxy only), so every boot starts with a wrong clock, and TLS certificates then look not
+# yet valid or expired. tools/m1n1-client/m5-clock.py on the M1 runs this over SSH right after
+# connecting, before any web access, as the desktop user through its one sudo rule
+# (/etc/sudoers.d/ilinux-clock: no password, no arguments). One exchange of lines, so that the M1
+# reads its clock only once this side is ready and can bound the error by the round trip:
+#   this side  "ilinux-clock ready <ns>"               its clock now, in ns since the epoch (UTC)
+#   the M1     "set <ns>"                              the M1's clock as it sends
+#   this side  "ilinux-clock set <before> <after>"     its clock just before and after setting it
+#   the M1     "read"
+#   this side  "ilinux-clock now <ns>"
+# Refused (exit 2): any other line, a time outside 2025-2099, or no line within 30 s. The change is
+# logged to the journal (ilinux-clock), which interface 0 carries to the M1.
+set -u
+export LC_ALL=C
+say() { printf 'ilinux-clock %s\n' "$*"; }
+now() { date +%s%N; }
+say "ready $(now)"
+IFS=' ' read -r -t 30 cmd t rest || { say "refused: no 'set' line within 30 s"; exit 2; }
+if [ "$cmd" != set ] || [ -n "$rest" ] || ! [[ $t =~ ^[0-9]{19}$ ]]; then
+    say "refused: expected 'set <nanoseconds since the epoch>'"
+    exit 2
+fi
+s=${t:0:10} ns=${t:10:9}
+if [ "$s" -lt 1735689600 ] || [ "$s" -gt 4102444799 ]; then   # 2025-01-01 .. 2099-12-31 UTC
+    say "refused: $s s since the epoch is outside 2025-2099"
+    exit 2
+fi
+before=$(now)
+date -u -s "@$s.$ns" > /dev/null || { say "failed: date -s"; exit 1; }
+after=$(now)
+say "set $before $after"
+logger -t ilinux-clock "set from the M1 over SSH: was $(date -u -d "@${before:0:10}" +%FT%TZ), now $(date -u -d "@${after:0:10}" +%FT%TZ), moved $(( ${after:0:10} - ${before:0:10} )) s" 2> /dev/null || true
+IFS=' ' read -r -t 30 cmd rest || exit 0
+[ "$cmd" = read ] && say "now $(now)"
+exit 0
