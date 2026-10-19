@@ -1,9 +1,10 @@
 #!/bin/bash
 # Job 041: the USB control channel candidates boot036 (EEM), boot038 (ACM + ECM), boot039
-# (gser, bulk only) and boot040 (boot039 plus the DART fault diagnostics), from
-# kernel/experiments/usb-gadget; the DT and config are the same for all four, init.c is the
-# current candidate's (boot040), and since boot040 the Image carries the apple-dart
-# fault-report patch (kernel/experiments/usb-gadget/dart-diag, digest-gated).
+# (gser, bulk only), boot040 (boot039 plus the DART fault diagnostics) and boot041 (boot040
+# with both DART instances per dwc3 core in the Stage-B DT), from kernel/experiments/usb-gadget;
+# the config is the same for all five, init.c is the current candidate's (boot041), since
+# boot040 the Image carries the apple-dart fault-report patch (kernel/experiments/usb-gadget/
+# dart-diag, digest-gated), and boot041 keeps that Image byte for byte (checked below).
 #  1. Image: the boot034 tree (its Image is boot035's) with USB_LIBCOMPOSITE=y and
 #     USB_CONFIGFS=y; the config delta is checked by native/boot/control_channel.py.
 #     boot040: plus dart-diag/apply.py on drivers/iommu/apple-dart.c (reports and
@@ -13,7 +14,10 @@
 #     USB_ACM and USB_SERIAL_GENERIC, so one kernel is both the gadget and its host for the
 #     self-test (the generic usb-serial driver reads boot039's bulk-only log port).
 #  3. Stage-B DT: boot035's plus the native/boot/usb_dt.py contract, rebuilt with this VM's
-#     dtc and schema-checked before and after.
+#     dtc and schema-checked before and after (boot036-040's DT, checked to be the shipped
+#     one); then boot041's from it: each dwc3 core gets both DART instances of its port,
+#     <dart0 0>, <dart1 1>, as Asahi wires them (usb_dt.check_both_darts_delta), schema-checked
+#     with exactly the three snps,dwc3 "iommus ... is too long" findings that wiring causes.
 #  4. Stage-B initramfs: /init from init.c (static), dropbear and busybox from signed Arch
 #     Linux ARM packages with their libraries, root's authorized key; every ELF checked for
 #     16 KiB pages; reproducible cpio.
@@ -63,7 +67,7 @@ print("packaged kernel.config vs the tree that built boot035: toolchain detectio
 { uname -srm; gcc --version | head -1; ld --version | head -1; dtc --version; python3 --version
   pacman -V | sed -n 2p; } > "$OUT/build/vm-tools.txt"
 
-log "1. boot040 Image (boot036's tree and config, plus the DART fault-report patch)"
+log "1. boot040's Image (boot036's tree and config, plus the DART fault-report patch); boot041 keeps it"
 rm -rf "$WORK"
 cp -a --reflink=auto "$SRC" "$WORK"
 # Kernel facts the init and the self-test depend on, from this exact tree: the dwc3 debugfs
@@ -80,7 +84,8 @@ for f in drivers/usb/dwc3/debugfs.c drivers/usb/dwc3/debug.h drivers/usb/dwc3/co
          drivers/usb/gadget/udc/core.c fs/debugfs/file.c kernel/irq/irqdesc.c \
          drivers/irqchip/irq-apple-aic.c drivers/iommu/apple-dart.c drivers/iommu/io-pgtable-dart.c \
          drivers/iommu/iommu-sysfs.c drivers/iommu/dma-iommu.c drivers/char/mem.c \
-         arch/arm64/mm/mmap.c kernel/irq/spurious.c; do
+         arch/arm64/mm/mmap.c kernel/irq/spurious.c drivers/of/fdt.c drivers/of/kobj.c \
+         drivers/of/platform.c drivers/of/device.c drivers/base/core.c drivers/base/dd.c; do
     install -D -m 0644 "$WORK/$f" "$OUT/build/kernel-src/$f"
 done
 cp "$WORK/drivers/iommu/apple-dart.c" "$OUT/build/kernel-src/drivers/iommu/apple-dart.c.before-boot040"
@@ -122,6 +127,12 @@ test "$(cat "$OUT/build/dart-diag-strings.txt")" -ge 1
 strings -a "$WORK/arch/arm64/boot/Image" | grep -q "t8110-class DART v" || { echo "DART probe line missing"; exit 1; }
 echo "gadget (EEM, gser), configfs, dwc3 gadget and debugfs, genpd ladder and patched DART handler symbols present; boot040 DART strings in the Image" > "$OUT/build/symbols-check.txt"
 cp "$WORK/arch/arm64/boot/Image" "$WORK/.config" "$OUT/build/"
+# boot041 changes no kernel byte: this reproducible build must be boot040's Image (the one the
+# Omarchy root of omarchy-root-manifest.json is pinned to).
+BOOT040_IMAGE=a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9
+test "$(sha256sum "$OUT/build/Image" | cut -d' ' -f1)" = "$BOOT040_IMAGE" \
+    || { echo "the Image is not boot040's byte for byte"; exit 1; }
+echo "Image = boot040's ($BOOT040_IMAGE)" > "$OUT/build/image-check.txt"
 
 log "2. test Image (not shipped)"
 rm -rf "$TEST"
@@ -137,18 +148,45 @@ for sym in dummy_udc_probe usb_serial_generic_probe usb_serial_generic_register 
 done
 rm "$OUT/build/test-symbols.txt"
 cp "$TEST/arch/arm64/boot/Image" "$OUT/build/Image-test"
+BOOT040_IMAGE_TEST=a1ecd7f899097dc70870678281e3b99b69120412e5bad7bad01e55b43b1a6bbc   # never shipped
+if [ "$(sha256sum "$OUT/build/Image-test" | cut -d' ' -f1)" = "$BOOT040_IMAGE_TEST" ]; then
+    echo "test Image = boot040's" >> "$OUT/build/image-check.txt"
+else
+    echo "test Image differs from boot040's (not shipped; the dummy_hcd self-test uses this one)" >> "$OUT/build/image-check.txt"
+fi
 
-log "3. Stage-B DT"
+log "3. Stage-B DT (boot036-040's, then boot041's from it)"
 python3 -I "$EXP/make_stage_b_dt.py" dtc "$B35/t6050-j716c-stage-b.dtb" \
-    "$OUT/build/t6050-j716c-stage-b.dtb" "$OUT/build/stage-b-036.dts" | tee "$OUT/build/dt-check.txt"
+    "$OUT/build/t6050-j716c-stage-b-036.dtb" "$OUT/build/stage-b-036.dts" | tee "$OUT/build/dt-check.txt"
+BOOT036_DTB=a676087bda3cffa178604ca0cf128558d9ab2a620073314d054c79a685ecefa5   # shipped by boot036-040
+test "$(sha256sum "$OUT/build/t6050-j716c-stage-b-036.dtb" | cut -d' ' -f1)" = "$BOOT036_DTB"
+python3 -I "$EXP/make_stage_b_dt.py" --both-darts dtc "$OUT/build/t6050-j716c-stage-b-036.dtb" \
+    "$OUT/build/t6050-j716c-stage-b.dtb" "$OUT/build/stage-b-041.dts" | tee -a "$OUT/build/dt-check.txt"
 export PATH=/var/tmp/t6050-build/dtvenv/bin:$PATH
 SCHEMA=$SRC/Documentation/devicetree/bindings/processed-schema.json
 dt-validate -s "$SCHEMA" "$B35/t6050-j716c-stage-b.dtb" > "$OUT/build/dt-validate-035.log" 2>&1 || true
-dt-validate -s "$SCHEMA" "$OUT/build/t6050-j716c-stage-b.dtb" > "$OUT/build/dt-validate-036.log" 2>&1 || true
-dt-validate -l snps,dwc3 -s "$SCHEMA" "$OUT/build/t6050-j716c-stage-b.dtb" > "$OUT/build/dt-validate-dwc3.log" 2>&1 || true
+dt-validate -s "$SCHEMA" "$OUT/build/t6050-j716c-stage-b-036.dtb" > "$OUT/build/dt-validate-036.log" 2>&1 || true
+dt-validate -l snps,dwc3 -s "$SCHEMA" "$OUT/build/t6050-j716c-stage-b-036.dtb" > "$OUT/build/dt-validate-dwc3.log" 2>&1 || true
+dt-validate -s "$SCHEMA" "$OUT/build/t6050-j716c-stage-b.dtb" > "$OUT/build/dt-validate-041.log" 2>&1 || true
+dt-validate -l apple,dart -s "$SCHEMA" "$OUT/build/t6050-j716c-stage-b.dtb" > "$OUT/build/dt-validate-dart-041.log" 2>&1 || true
+# boot041's only schema findings: the generic snps,dwc3 binding allows one iommus entry, and
+# every Asahi DT gives this block two (kernel/experiments/usb-gadget-dt/README.md, job 040).
+python3 -I - "$OUT/build/dt-validate-041.log" "$OUT/build/dt-validate-dart-041.log" > "$OUT/build/dt-validate-041-check.txt" <<'PY'
+import re, sys
+lines = open(sys.argv[1]).read().splitlines()
+finding = re.compile(r".*: usb@(2a2280000|2aa280000|382280000) \(snps,dwc3\): iommus: \[\[\d+, 0\], \[\d+, 1\]\] is too long$")
+found = sorted(m.group(1) for m in map(finding.match, lines) if m)
+other = [l for l in lines if not finding.match(l) and l.strip() != "from schema $id: http://devicetree.org/schemas/usb/snps,dwc3.yaml"]
+if found != ["2a2280000", "2aa280000", "382280000"] or other or open(sys.argv[2]).read().strip():
+    raise SystemExit("boot041 schema findings differ from the three expected: %s %s" % (found, other[:4]))
+print("boot041 DT schema: exactly the three snps,dwc3 'iommus ... is too long' findings; apple,dart clean")
+PY
+cat "$OUT/build/dt-validate-041-check.txt"
 dtc -q -I dtb -O dts -s "$B35/t6050-j716c-stage-b.dtb" > "$OUT/build/before.dts"
-dtc -q -I dtb -O dts -s "$OUT/build/t6050-j716c-stage-b.dtb" > "$OUT/build/after.dts"
+dtc -q -I dtb -O dts -s "$OUT/build/t6050-j716c-stage-b-036.dtb" > "$OUT/build/after.dts"
 diff -u "$OUT/build/before.dts" "$OUT/build/after.dts" > "$OUT/build/dt.diff" || test "$?" = 1
+dtc -q -I dtb -O dts -s "$OUT/build/t6050-j716c-stage-b.dtb" > "$OUT/build/after-041.dts"
+diff -u "$OUT/build/after.dts" "$OUT/build/after-041.dts" > "$OUT/build/dt-041.diff" || test "$?" = 1
 
 log "4. packages (signed, official mirror)"
 if [ ! -s "$W/gnupg/trustdb.gpg" ]; then
@@ -251,4 +289,4 @@ mv "$OUT/export/.config" "$OUT/export/kernel.config"
 (cd "$OUT/export" && sha256sum Image kernel.config t6050-j716c-stage-b.dtb initramfs-stage-b.cpio.gz \
     diag-init.c toolchain.txt) | tee "$OUT/export-sha256.txt"
 (cd "$OUT/build" && sha256sum Image-test selftest-overlay.cpio.gz) >> "$OUT/export-sha256.txt"
-echo "PASS: boot040 Image (boot036's tree and config plus the DART fault-report patch), test Image, Stage-B DT, boot040 initramfs, self-test overlay, kernel facts and status fixture built and checked"
+echo "PASS: boot041 = boot040's Image byte for byte (boot036's tree and config plus the DART fault-report patch), test Image, Stage-B DT with both DART instances per dwc3, boot041 initramfs, self-test overlay, kernel facts and status fixture built and checked"

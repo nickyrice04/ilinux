@@ -1,4 +1,4 @@
-// diag-init.c (boot040) - PID 1 for the t6050 RAM initramfs, with a USB log channel.
+// diag-init.c (boot041) - PID 1 for the t6050 RAM initramfs, with a USB log channel.
 // Source: kernel/experiments/usb-gadget/init.c; packaged as diag-init.c.
 // Keeps everything boot021-035's diag-init did: mounts proc/sys/dev, prints the
 // bring-up observables to the console (framebuffer) and /dev/kmsg, heartbeats
@@ -35,6 +35,17 @@
 //    DART instances of that port, the one in the DT and its sibling, through /dev/mem;
 //  * at the first bus error on a port: that port's log streamer is stopped for good
 //    and the DART snapshot is taken again, so the fault state is on the screen.
+// New in boot041 (after attempt 23: at the first bus error the fault sat on DART instance 0,
+// which the boot036-040 DT leaves out, so Linux never set it up and had no handler for it;
+// boot041's DT gives each dwc3 core both instances, <dart0 0>, <dart1 1>, as Asahi does):
+//  * the DART instances of a core are read from the DT the kernel booted (the core's iommus
+//    cells, each DART node found by its phandle) and checked against the ADT's pair, so the
+//    identity line names both instances, their streams and how many apple-dart fault
+//    handlers share the port's fault interrupt;
+//  * at bind, after the register snapshot, one line per port says whether the kernel set
+//    up each instance (bound to apple-dart, its stream translating on a valid table) and
+//    both on one table;
+//  * the short line carries both instances' pending-fault words (instance 0/instance 1).
 // It writes nothing to any disk, never mounts storage and writes no device register.
 // Build: gcc -static -O2 -o init diag-init.c
 #define _GNU_SOURCE
@@ -121,7 +132,8 @@ static int online_cpus(void)
 #define MAX_UDC 8
 // usb-drd0..2 (ports 1..3) by their dwc3 node; any other UDC (VM tests) gets 4+. The DART
 // bases are the ADT's dart-usbN reg[0] (instance 0) and reg[1] (instance 1) translated
-// through /arm-io ranges; the Stage-B DT gives each core instance 1, stream 1.
+// through /arm-io ranges; the boot036-040 Stage-B DT gives each core instance 1, stream 1,
+// boot041's both instances, streams 0 and 1.
 static const struct { const char *udc; unsigned long long dart0, dart1; } known_udc[] = {
     { "2a2280000.usb", 0x2a2f00000ull, 0x2a2f80000ull },
     { "2aa280000.usb", 0x2aaf00000ull, 0x2aaf80000ull },
@@ -137,14 +149,31 @@ struct stream_stats {
     unsigned buserr_lo, buserr_hi; // GBUSERRADDR0/1 at that time (the failing DMA address)
 };
 
-// The DART behind one dwc3 core, as the kernel's sysfs describes it, plus its sibling.
+// One t8110-class DART instance's registers as dart_peek reads them (see there).
+struct dart_regs {
+    unsigned params[4], tlb, err, mask, addr_lo, addr_hi, streams, prot, enable, tcr[2], ttbr[2];
+    unsigned version, g22_pending, g22_mask, ctrl, prot_status;   // v2.2 layout, else 0
+    struct { unsigned summary, addr_lo, addr_hi; } s[2];
+};
+
+#define MAX_DARTS 3   // MAX_DARTS_PER_DEVICE in drivers/iommu/apple-dart.c
+
+// The DARTs behind one dwc3 core, as the kernel's sysfs and the DT it booted describe them:
+// instance 0 and instance 1 of the port's dart-usbN pair, in the DT or not.
 struct dartinfo {
     int known;                 // the iommu link resolved
-    char name[64];             // e.g. apple-dart.2a2f80000.iommu
-    unsigned long long base;   // instance 1 register base (from the device name)
-    unsigned long long base0;  // instance 0 base from known_udc, 0 if unknown or mismatched
-    unsigned sid, hwirq;       // stream id (iommus), fault IRQ (DT interrupts[1])
+    char name[64];             // its target, e.g. apple-dart.2a2f00000.iommu
+    unsigned long long base;   // instance 1 register base
+    unsigned long long base0;  // instance 0 base, only once the bases are confirmed (dart_identify), else 0
+    unsigned sid, sid0, hwirq; // instance 1's and instance 0's streams (iommus), fault IRQ (DT interrupts[1])
     int linux_irq;             // Linux IRQ number of the "apple-dart fault handler", -1 if none
+    int handlers;              // apple-dart fault handlers on that IRQ: one per DART instance with a driver
+    int ndt;                   // DART instances the DT gives the core (its iommus entries)
+    struct { unsigned long long base; unsigned sid; int inst, bound; } dt[MAX_DARTS];
+    int in_dt0;                // instance 0 is one of them (boot041's DT)
+    int bound[2];              // instance 0 / instance 1 bound to the apple-dart driver
+    struct dart_regs regs[2];  // the last register snapshot (instance 0, instance 1)
+    int regs_ok[2];
 };
 
 struct port {
@@ -537,11 +566,13 @@ static long dt_irq(const char *of_node_dir)
 
 // Interrupt count of the /sys/kernel/irq entry whose actions name `action` and whose
 // AIC hwirq (bits 15:0 = the DT interrupt) is `want`; -1 if none. *linux_irq gets its
-// number. A shared line lists its actions comma-separated, so the match is by substring.
-static long irq_count_of(const char *action, long want, int *linux_irq)
+// number and *matches how many of its actions are `action`. A shared line lists its actions
+// comma-separated, so the match is by substring.
+static long irq_count_of(const char *action, long want, int *linux_irq, int *matches)
 {
     char path[320], text[256];
     if (linux_irq) *linux_irq = -1;
+    if (matches) *matches = 0;
     if (want < 0) return -1;
     DIR *d = opendir(SYSROOT "/sys/kernel/irq");
     if (!d) return -1;
@@ -554,6 +585,11 @@ static long irq_count_of(const char *action, long want, int *linux_irq)
         if (!strstr(text, action)) continue;
         snprintf(path, sizeof path, SYSROOT "/sys/kernel/irq/%s/hwirq", e->d_name);
         if ((long)(strtoul(get(path, text, sizeof text), 0, 10) & 0xffff) != want) continue;
+        if (matches) {
+            snprintf(path, sizeof path, SYSROOT "/sys/kernel/irq/%s/actions", e->d_name);
+            get(path, text, sizeof text);
+            for (const char *s = text; (s = strstr(s, action)); s += strlen(action)) (*matches)++;
+        }
         snprintf(path, sizeof path, SYSROOT "/sys/kernel/irq/%s/per_cpu_count", e->d_name);
         get(path, text, sizeof text);
         if (linux_irq) *linux_irq = atoi(e->d_name);
@@ -572,20 +608,72 @@ static long irq_count(const char *udc)
 {
     char dir[320];
     snprintf(dir, sizeof dir, SYSROOT "/sys/class/udc/%.63s/device/of_node", udc);
-    return irq_count_of("dwc3", dt_irq(dir), NULL);
+    return irq_count_of("dwc3", dt_irq(dir), NULL, NULL);
 }
 
 // ---- the DART behind each core ---------------------------------------------------------
 // The kernel links a DMA master to its IOMMU: <dwc3 device>/iommu -> the DART's class
-// device (…/<dart>.iommu/iommu/apple-dart.<dart>.iommu), and the dwc3 node's iommus cells
-// give the stream id. From the DART device's of_node come its fault interrupt and base.
-// The ADT pairs that instance with instance 0 of the same dart-usbN node on the same
-// interrupt; the Stage-B DT leaves instance 0 out, so known_udc supplies its base.
+// device (…/<dart>.iommu/iommu/apple-dart.<dart>.iommu); apple-dart returns there the DART
+// of the core's first iommus entry (apple_dart_probe_device: stream_maps[0]). The dwc3
+// node's iommus cells name every DART the DT gives the core, with its stream; each phandle
+// is found among the DART platform devices' of_node (phandle, reg, interrupts), whose
+// driver link says whether apple-dart is bound. The ADT pairs instance 0 and instance 1 of
+// one dart-usbN node on one interrupt (known_udc): the boot036-040 DT gives the core
+// instance 1 only, boot041's both.
+
+static unsigned be32(const unsigned char *c)
+{
+    return (unsigned)c[0] << 24 | (unsigned)c[1] << 16 | (unsigned)c[2] << 8 | c[3];
+}
+
+// The DART platform device whose DT node has this phandle: its base (DT reg), fault IRQ (DT
+// interrupts) and whether the apple-dart driver is bound to it; 0 if found, -1 if not.
+static int dart_by_phandle(unsigned phandle, unsigned long long *base, unsigned *hwirq, int *bound)
+{
+    char path[320], target[320];
+    unsigned char cells[16];
+    int found = -1;
+    DIR *d = opendir(SYSROOT "/sys/bus/platform/devices");
+    if (!d) return -1;
+    struct dirent *e;
+    while (found && (e = readdir(d))) {
+        size_t n = strlen(e->d_name);
+        if (n < 7 || strcmp(e->d_name + n - 6, ".iommu")) continue;
+        snprintf(path, sizeof path, SYSROOT "/sys/bus/platform/devices/%.200s/of_node/phandle", e->d_name);
+        int f = open(path, O_RDONLY | O_CLOEXEC);
+        if (f < 0) continue;
+        ssize_t got = read(f, cells, 4);
+        close(f);
+        if (got != 4 || be32(cells) != phandle) continue;
+        snprintf(path, sizeof path, SYSROOT "/sys/bus/platform/devices/%.200s/of_node/reg", e->d_name);
+        f = open(path, O_RDONLY | O_CLOEXEC);
+        got = f < 0 ? -1 : read(f, cells, sizeof cells);
+        if (f >= 0) close(f);
+        if (got != 16) break;   // /soc has two address and two size cells
+        *base = (unsigned long long)be32(cells) << 32 | be32(cells + 4);
+        snprintf(path, sizeof path, SYSROOT "/sys/bus/platform/devices/%.200s/of_node", e->d_name);
+        long irq = dt_irq(path);
+        *hwirq = irq < 0 ? 0 : (unsigned)irq;
+        snprintf(path, sizeof path, SYSROOT "/sys/bus/platform/devices/%.200s/driver", e->d_name);
+        ssize_t len = readlink(path, target, sizeof target - 1);
+        target[len > 0 ? len : 0] = 0;
+        const char *driver = strrchr(target, '/');
+        *bound = !strcmp(driver ? driver + 1 : target, "apple-dart");
+        found = 0;
+    }
+    closedir(d);
+    return found;
+}
+
+// The bases are confirmed, and both instances' registers may be read, only when the kernel
+// attached the core to the DT's first DART, every DART the DT gives the core is instance 0
+// or 1 of this port's ADT pair on the same fault interrupt, and instance 1 is one of them.
+// Instance 0's base is then the pair's, also when the DT leaves it out (boot036-040).
 static void dart_identify(struct port *p)
 {
     struct dartinfo *d = &p->dart;
     char path[320], target[320], of_dir[384];
-    unsigned char cells[8];
+    unsigned char cells[8 * MAX_DARTS];
     memset(d, 0, sizeof *d);
     d->linux_irq = -1;
     snprintf(path, sizeof path, SYSROOT "/sys/class/udc/%.63s/device/iommu", p->udc);
@@ -600,48 +688,79 @@ static void dart_identify(struct port *p)
     if (cut) *cut = 0;
     const char *devname = strrchr(target, '/');
     if (!devname) return;
-    d->base = strtoull(devname + 1, NULL, 16);
+    unsigned long long linked = strtoull(devname + 1, NULL, 16);
+    d->base = linked;
     snprintf(of_dir, sizeof of_dir, "%s/of_node", target);
     long irq = dt_irq(of_dir);
     if (irq < 0) return;
     d->hwirq = (unsigned)irq;
+    d->known = 1;
+    int pair = -1;
+    for (unsigned i = 0; i < sizeof known_udc / sizeof *known_udc; i++)
+        if (!strcmp(p->udc, known_udc[i].udc)) pair = i;
     snprintf(path, sizeof path, SYSROOT "/sys/class/udc/%.63s/device/of_node/iommus", p->udc);
     int f = open(path, O_RDONLY | O_CLOEXEC);
-    if (f >= 0) {
-        if (read(f, cells, sizeof cells) == 8)
-            d->sid = (unsigned)cells[4] << 24 | cells[5] << 16 | cells[6] << 8 | cells[7];
-        close(f);
+    ssize_t got = f < 0 ? -1 : read(f, cells, sizeof cells);
+    if (f >= 0) close(f);
+    int confirmed = pair >= 0 && got >= 8 && got % 8 == 0, have1 = 0;
+    for (int i = 0; got >= 8 && i < got / 8; i++) {
+        unsigned hw = 0;
+        d->dt[i].sid = be32(cells + 8 * i + 4);
+        d->dt[i].inst = -1;
+        if (dart_by_phandle(be32(cells + 8 * i), &d->dt[i].base, &hw, &d->dt[i].bound) == 0 && pair >= 0
+                && hw == d->hwirq)
+            d->dt[i].inst = d->dt[i].base == known_udc[pair].dart0 ? 0
+                          : d->dt[i].base == known_udc[pair].dart1 ? 1 : -1;
+        if (d->dt[i].inst < 0) confirmed = 0;
+        if (d->dt[i].inst == 1 && !have1) {
+            have1 = 1;
+            d->sid = d->dt[i].sid;
+            d->bound[1] = d->dt[i].bound;
+        }
+        if (d->dt[i].inst == 0 && !d->in_dt0) {
+            d->in_dt0 = 1;
+            d->sid0 = d->dt[i].sid;
+            d->bound[0] = d->dt[i].bound;
+        }
+        d->ndt++;
     }
-    for (unsigned i = 0; i < sizeof known_udc / sizeof *known_udc; i++)
-        if (!strcmp(p->udc, known_udc[i].udc) && known_udc[i].dart1 == d->base)
-            d->base0 = known_udc[i].dart0;
-    d->known = 1;
+    if (confirmed && have1 && d->dt[0].base == linked) {
+        d->base = known_udc[pair].dart1;
+        d->base0 = known_udc[pair].dart0;
+    }
 }
 
-// Count of the DART fault interrupt behind this port (and its Linux number); -1 if unknown.
+// Count of the DART fault interrupt behind this port (and its Linux number and how many
+// apple-dart fault handlers share it); -1 if unknown.
 static long dart_irq_count(struct port *p)
 {
     if (!p->dart.known) return -1;
-    return irq_count_of("apple-dart fault handler", p->dart.hwirq, &p->dart.linux_irq);
+    return irq_count_of("apple-dart fault handler", p->dart.hwirq, &p->dart.linux_irq, &p->dart.handlers);
 }
 
-// One line: which dwc3 interrupt, DART instance, stream and fault interrupt serve the port.
+// One line: which dwc3 interrupt, DART instances, streams and fault interrupt serve the port.
 static void dart_identity_text(struct port *p, struct buf *b)
 {
     char dir[320];
     int dwc3_irq = -1;
+    const struct dartinfo *d = &p->dart;
     snprintf(dir, sizeof dir, SYSROOT "/sys/class/udc/%.63s/device/of_node", p->udc);
     long hw = dt_irq(dir);
-    irq_count_of("dwc3", hw, &dwc3_irq);
+    irq_count_of("dwc3", hw, &dwc3_irq, NULL);
     add(b, "[usb%d] %s irq %lx(%d)", p->index, p->udc, hw < 0 ? 0 : hw, dwc3_irq);
-    if (!p->dart.known) {
+    if (!d->known) {
         add(b, " no iommu link in sysfs\n");
         return;
     }
     dart_irq_count(p);
-    add(b, " dart1 %llx sid %u fault irq %x(%d);", p->dart.base, p->dart.sid, p->dart.hwirq, p->dart.linux_irq);
-    if (p->dart.base0) add(b, " dart0 %llx not in DT\n", p->dart.base0);
-    else add(b, " dart0 unknown (%s)\n", p->dart.name);
+    if (!d->base0)   // what the kernel linked; nothing is read
+        add(b, " iommu %s, %d DART%s in DT: bases not confirmed\n", d->name, d->ndt, d->ndt == 1 ? "" : "s");
+    else if (d->in_dt0)   // boot041's DT: both instances, and the fault handlers on their shared line
+        add(b, " dart0 %llx sid %u + dart1 %llx sid %u fault irq %x(%d) x%d\n", d->base0, d->sid0, d->base,
+            d->sid, d->hwirq, d->linux_irq, d->handlers);
+    else
+        add(b, " dart1 %llx sid %u fault irq %x(%d); dart0 %llx not in DT\n", d->base, d->sid, d->hwirq,
+            d->linux_irq, d->base0);
 }
 
 // Registers of one t8110-class DART instance, read through /dev/mem: 32-bit loads only,
@@ -653,12 +772,6 @@ static void dart_identity_text(struct port *p, struct buf *b)
 // pending bitmap 0x4000, mask 0x4060, control 0x210, protection status 0x704 (0x4204 from
 // 2.4), and a 64-byte block per stream at 0x8000 + 0x40*sid (summary +0, address +8/+0xc).
 // Those are read only when the version says so; the instance window is 0xc000 (ADT reg).
-struct dart_regs {
-    unsigned params[4], tlb, err, mask, addr_lo, addr_hi, streams, prot, enable, tcr[2], ttbr[2];
-    unsigned version, g22_pending, g22_mask, ctrl, prot_status;   // v2.2 layout, else 0
-    struct { unsigned summary, addr_lo, addr_hi; } s[2];
-};
-
 static int dart_peek(unsigned long long base, struct dart_regs *r)
 {
     int f = open(SYSROOT "/dev/mem", O_RDONLY | O_SYNC | O_CLOEXEC);
@@ -696,6 +809,23 @@ static int dart_peek(unsigned long long base, struct dart_regs *r)
     return 0;
 }
 
+// One DART instance's pending-fault word for the short line, through /dev/mem as dart_peek
+// (32-bit loads, never a write): PARAMS3 for the version, then the per-stream pending bitmap
+// (0x4000, streams 0-31) on a version 2.2 or later DART, else ERROR_STREAMS (0x1c0), the
+// older layout's per-stream error bitmap. The word, or -errno.
+static long long dart_pending(unsigned long long base)
+{
+    int f = open(SYSROOT "/dev/mem", O_RDONLY | O_SYNC | O_CLOEXEC);
+    if (f < 0) return -errno;
+    volatile unsigned *m = mmap(NULL, 0xc000, PROT_READ, MAP_SHARED, f, (off_t)base);
+    int err = m == MAP_FAILED ? -errno : 0;
+    close(f);
+    if (err) return err;
+    unsigned word = (m[0x08 / 4] & 0xffff) >= 0x0202 ? m[0x4000 / 4] : m[0x1c0 / 4];
+    munmap((void *)m, 0xc000);
+    return word;
+}
+
 // The snapshot's text: the static parameters once (with_params), then the fault and
 // translation state. ERROR bit 31 is the driver's fault flag ("FAULT"); its code bits
 // 5..0 mean read fault, write fault, no PTE, no PMD, no PGD, no TTBR; stream in 27:20.
@@ -715,23 +845,72 @@ static void dart_regs_text(struct buf *b, int port, int inst, unsigned long long
             r->s[1].summary, (unsigned long long)r->s[1].addr_hi << 32 | r->s[1].addr_lo);
 }
 
-// Both DART instances of the port: instance 1 (the DT's, driven by the kernel) and its
-// sibling instance 0. Nothing is read unless the kernel's own iommu link confirmed the
-// instance-1 base, so an unknown UDC (the VM's dummy_udc) reads no device memory.
+// Both DART instances of the port: instance 0 and instance 1 of its dart-usbN pair, the
+// DT's and, on the boot036-040 DT, the sibling it leaves out. Nothing is read unless
+// dart_identify confirmed the bases, so an unknown UDC (the VM's dummy_udc) reads no device
+// memory. The values read stay in the port's dartinfo for the setup line.
 static void dart_snapshot_text(struct port *p, struct buf *b, int with_params)
 {
-    struct dart_regs r;
-    memset(&r, 0, sizeof r);
-    if (!p->dart.known || !p->dart.base0) {
+    struct dartinfo *d = &p->dart;
+    d->regs_ok[0] = d->regs_ok[1] = 0;
+    if (!d->known || !d->base0) {
         add(b, "[usb%d] dart regs not read (no confirmed DART bases for %s)\n", p->index, p->udc);
         return;
     }
-    unsigned long long bases[2] = { p->dart.base0, p->dart.base };
+    unsigned long long bases[2] = { d->base0, d->base };
     for (int inst = 0; inst < 2; inst++) {
-        int err = dart_peek(bases[inst], &r);
+        struct dart_regs *r = &d->regs[inst];
+        memset(r, 0, sizeof *r);
+        int err = dart_peek(bases[inst], r);
         if (err) add(b, "[usb%d] dart%d @%llx regs n/a (%s)\n", p->index, inst, bases[inst], strerror(-err));
-        else dart_regs_text(b, p->index, inst, bases[inst], &r, with_params);
+        else {
+            d->regs_ok[inst] = 1;
+            dart_regs_text(b, p->index, inst, bases[inst], r, with_params);
+        }
     }
+}
+
+// Whether a DART instance translates a stream the way the kernel sets it up for a DMA
+// domain (apple_dart_setup_translation): the stream enabled, TCR translate (bit 0) without
+// bypass (bits 2:1), TTBR valid (bit 0). The snapshot holds streams 0 and 1.
+static int stream_set_up(const struct dart_regs *r, unsigned sid)
+{
+    return sid < 2 && (r->enable >> sid & 1) && (r->tcr[sid] & 7) == 1 && (r->ttbr[sid] & 1);
+}
+
+// After the bind snapshot, one line: per DART instance the DT gives the core, its stream,
+// whether apple-dart is bound to it, and that stream's TCR and TTBR; then the verdict. Both
+// set up = both bound and translating, on one table (the core's one DMA domain).
+static void dart_setup_text(struct port *p, struct buf *b)
+{
+    const struct dartinfo *d = &p->dart;
+    if (!d->known || !d->base0) return;
+    int insts[2], n = 0, good = 0, unread = 0, same = 1;
+    unsigned table = 0;
+    if (d->in_dt0) insts[n++] = 0;
+    insts[n++] = 1;
+    add(b, "[usb%d]", p->index);
+    for (int i = 0; i < n; i++) {
+        int inst = insts[i];
+        unsigned sid = inst ? d->sid : d->sid0;
+        const struct dart_regs *r = &d->regs[inst];
+        add(b, "%s dart%d sid %u %s", i ? " +" : "", inst, sid, d->bound[inst] ? "bound" : "unbound");
+        if (!d->regs_ok[inst] || sid > 1) {
+            add(b, " regs n/a");
+            unread = 1;
+            continue;
+        }
+        add(b, " tcr %x ttbr %x", r->tcr[sid], r->ttbr[sid]);
+        if (d->bound[inst] && stream_set_up(r, sid)) good |= 1 << inst;
+        if (i && r->ttbr[sid] != table) same = 0;
+        table = r->ttbr[sid];
+    }
+    const char *verdict;
+    if (unread) verdict = "not checked";
+    else if (n == 1) verdict = good ? "set up; dart0 not in DT" : "NOT set up; dart0 not in DT";
+    else if (good == 3) verdict = same ? "both set up" : "both translating, NOT one table";
+    else verdict = good == 2 ? "dart0 NOT set up" : good == 1 ? "dart1 NOT set up" : "neither set up";
+    add(b, ": %s\n", verdict);
 }
 
 static void say_lines(const char *text)   // one kmsg record per line
@@ -758,7 +937,8 @@ static void dart_snapshot(struct port *p, int with_params)
     say_lines(text);
 }
 
-// At bind: the DART identity line and the first register snapshot (with the parameters).
+// At bind: the DART identity line, the first register snapshot (with the parameters) and
+// whether the kernel set up the DT's instances.
 static void port_dart_report(struct port *p)
 {
     char text[512];
@@ -768,6 +948,10 @@ static void port_dart_report(struct port *p)
     dart_identity_text(p, &b);
     say(text);
     dart_snapshot(p, 1);
+    b.len = 0;
+    text[0] = 0;
+    dart_setup_text(p, &b);
+    if (text[0]) say(text);
 }
 
 // The fields of one controller that the short per-port line shows.
@@ -776,6 +960,8 @@ struct keyf {
     char link[64];
     unsigned frame;
     long irqs, dart_irqs;                // dwc3 and DART fault interrupt counts, -1 unknown
+    int pend_read;                       // both DART instances' pending words: 1 read, -1 failed, 0 not read
+    unsigned pend[2];                    // instance 0, instance 1
     int stopped, halted, buserr, csr_timeout, evbusy;
     unsigned buserr_lo, buserr_hi;       // GBUSERRADDR0/1 when buserr
     int neps;
@@ -833,6 +1019,12 @@ static void dwc3_state(struct port *p, struct buf *b, struct buf *info, struct k
     if (k->irqs >= 0) add(b, " irq%ld", k->irqs);
     else add(b, " irq?");
     k->dart_irqs = dart_irq_count(p);
+    if (p->dart.known && p->dart.base0) {   // both instances' pending faults, in the confirmed bases only
+        long long w0 = dart_pending(p->dart.base0), w1 = dart_pending(p->dart.base);
+        k->pend_read = w0 >= 0 && w1 >= 0 ? 1 : -1;
+        k->pend[0] = w0 >= 0 ? (unsigned)w0 : 0;
+        k->pend[1] = w1 >= 0 ? (unsigned)w1 : 0;
+    }
     add(b, " ep0");
     depcmd(b, "o", cmd0);
     depcmd(b, "i", cmd1);
@@ -878,11 +1070,12 @@ static void dwc3_state(struct port *p, struct buf *b, struct buf *info, struct k
 }
 
 // The short line of one port, about 100 columns, for the film: UDC state, link, SOF frame,
-// the dwc3 and DART fault interrupt counts, the bytes accepted and queued (or "nostream"
+// the dwc3 and DART fault interrupt counts, both DART instances' pending-fault words
+// (boot041: "pend <instance 0>/<instance 1>"), the bytes accepted and queued (or "nostream"
 // once the streamer was stopped), every enabled endpoint's hardware-owned TRBs and dequeue
 // index, the flags, a bus error with its address last. The record count and the EP0
-// commands stay in the long line. Three endpoints, two halt flags and a bus error at once
-// can reach about 105 columns.
+// commands stay in the long line. Three endpoints, two halt flags, a bus error and the
+// pending words at once can reach about 115 columns.
 static void brief_line(struct buf *b, struct port *p, const char *state, const struct keyf *k, int with_dwc3)
 {
     add(b, "[usb%d] %s", p->index, state[0] ? state : "?");
@@ -894,6 +1087,8 @@ static void brief_line(struct buf *b, struct port *p, const char *state, const s
         else add(b, " irq?");
         if (k->dart_irqs >= 0) add(b, " dart%ld", k->dart_irqs);
         else add(b, " dart?");
+        if (k->pend_read > 0) add(b, " pend %x/%x", k->pend[0], k->pend[1]);
+        else if (k->pend_read < 0) add(b, " pend ?");
     }
     if (p->stopped) add(b, " nostream");                  // stopped at a bus error; counters frozen
     else if (p->bound && p->tty[0]) add(b, " %luB q%d", p->st->bytes, p->st->queued);
@@ -1047,7 +1242,8 @@ static void control_channel_init(void)
     int err = set_up("lo");
     if (err) sayf("[ctl] lo up failed: %s\n", strerror(-err));
     say("\n[ctl] USB control channel: GSER bulk-only kernel log port per UDC, no interrupt endpoint, "
-        "no network; boot040: DART identity and registers, bus-error address, short [usbN] lines\n");
+        "no network; boot041: both DART instances per port in the DT, their setup at bind, both "
+        "pending-fault words in the short [usbN] lines; boot040's DART lines kept\n");
     for (int i = 0; i < 40 && !nports; i++) {   // up to 10 s for the first UDC
         scan_udcs();
         if (!nports) usleep(250000);

@@ -1,4 +1,5 @@
-"""boot036 USB DT contract: the exact delta passes, every deviation fails closed."""
+"""boot036 USB DT contract and boot041's two-DART wiring: the exact delta passes, every
+deviation fails closed."""
 from pathlib import Path
 import shutil
 import struct
@@ -13,6 +14,7 @@ import usb_dt  # noqa: E402
 from fdt import check_stage_b, properties  # noqa: E402
 
 BOOT035 = HERE.parents[1] / "build/native-boot035/verified/t6050-j716c-stage-b.dtb"
+BOOT040 = HERE.parents[1] / "build/native-boot040/verified/t6050-j716c-stage-b.dtb"   # = boot036's
 DTC = HERE.parents[2] / "apple-silicon-linux-research/third_party/dtc/dtc"
 MAKE_DT = HERE.parents[1] / "kernel/experiments/usb-gadget/make_stage_b_dt.py"
 QUIRKS = {"snps,usb2-gadget-lpm-disable": b"", "snps,dis_u2_susphy_quirk": b"",
@@ -128,6 +130,113 @@ class USBDTTests(unittest.TestCase):
             usb_dt.check_delta(self.before, after)
             check_stage_b(out.read_bytes())
             self.assertEqual(after, boot036(self.before))
+
+
+# boot041, independent oracle: instance 0 of each port (ADT dart-usbN reg[0]) and the phandles dtc
+# gives them (the lowest free ones after boot036's 1..0x6a, in the order the iommus refer to them).
+DART0 = {"/soc/usb@2a2280000": "/soc/iommu@2a2f00000", "/soc/usb@2aa280000": "/soc/iommu@2aaf00000",
+         "/soc/usb@382280000": "/soc/iommu@382f00000"}
+DART0_PHANDLES = (0x6b, 0x6c, 0x6d)
+
+
+def boot041(before):
+    after = {path: dict(node) for path, node in before.items()}
+    for (dwc3, dart0), phandle0, phandle1 in zip(sorted(DART0.items()), DART0_PHANDLES, NEW_PHANDLES):
+        del after[dart0]["status"], after[dart0]["power-domains"]
+        after[dart0]["phandle"] = struct.pack(">I", phandle0)
+        after[dwc3]["iommus"] = struct.pack(">IIII", phandle0, 0, phandle1, 1)
+    return after
+
+
+@unittest.skipUnless(BOOT040.is_file(), "boot040 package not extracted in build/")
+class BothDartsTests(unittest.TestCase):
+    def setUp(self):
+        self.before = properties(BOOT040.read_bytes())
+
+    def test_boot040_is_boot036(self):
+        usb_dt.check_delta(properties(BOOT035.read_bytes()), self.before)
+
+    def test_exact_delta_passes(self):
+        after = boot041(self.before)
+        usb_dt.check_both_darts_delta(self.before, after)
+        self.assertEqual(after["/soc/usb@2a2280000"]["iommus"], bytes.fromhex("0000006b000000000000006800000001"))
+
+    def test_amendment_text(self):
+        text = usb_dt.both_darts_amendment(self.before)
+        self.assertEqual(text.count("/delete-property/ power-domains; /delete-property/ status;"), 3)
+        self.assertEqual(text.count("iommus = "), 3)
+        self.assertIn("&{/soc/usb@2aa280000} { iommus = <&{/soc/iommu@2aaf00000} 0x0>, "
+                      "<&{/soc/iommu@2aaf80000} 0x1>; };", text)
+        self.assertNotIn("atc", text)
+        self.assertNotIn("dma-range", text)
+
+    def mutated(self, change):
+        after = boot041(self.before)
+        change(after)
+        with self.assertRaises(ValueError):
+            usb_dt.check_both_darts_delta(self.before, after)
+
+    def test_mutations(self):
+        dwc3, dart0, dart1 = "/soc/usb@2a2280000", "/soc/iommu@2a2f00000", "/soc/iommu@2a2f80000"
+        atc0 = next(p for p, n in self.before.items() if n.get("label") == b"atc0_usb\0")
+        cpu = next(p for p in self.before if p.startswith("/cpus/cpu@"))
+
+        def iommus(*cells):
+            return lambda t: t[dwc3].__setitem__("iommus", struct.pack(">%dI" % len(cells), *cells))
+        mutations = {
+            "instance 0 keeps power-domains": lambda t: t[dart0].__setitem__(
+                "power-domains", self.before[dart0]["power-domains"]),
+            "instance 0 still disabled": lambda t: t[dart0].__setitem__("status", b"disabled\0"),
+            "instance 0 marked okay": lambda t: t[dart0].__setitem__("status", b"okay\0"),
+            "instance 0 without phandle": lambda t: t[dart0].pop("phandle"),
+            "instance 0 phandle = instance 1's": lambda t: t[dart0].__setitem__("phandle", struct.pack(">I", 0x68)),
+            "duplicate phandle": lambda t: t[dart0].__setitem__("phandle", struct.pack(">I", 0x1c)),
+            "order swapped": iommus(0x68, 1, 0x6b, 0),
+            "streams swapped": iommus(0x6b, 1, 0x68, 0),
+            "instance 0 only": iommus(0x6b, 0),
+            "instance 1 only (boot040's)": iommus(0x68, 1),
+            "both streams on both instances": iommus(0x6b, 0, 0x6b, 1, 0x68, 0, 0x68, 1),
+            "other port's instance 0": iommus(0x6c, 0, 0x68, 1),
+            "instance 1 renumbered": lambda t: (t[dart1].__setitem__("phandle", struct.pack(">I", 0x70)),
+                                                t[dwc3].__setitem__("iommus", struct.pack(">IIII", 0x6b, 0, 0x70, 1))),
+            "instance 0 gains a DMA range": lambda t: t[dart0].__setitem__("apple,dma-range", bytes(16)),
+            "instance 0 on another interrupt": lambda t: t[dart0].__setitem__(
+                "interrupts", struct.pack(">III", 0, 0x590, 4)),
+            "a port left on instance 1": lambda t: t["/soc/usb@382280000"].__setitem__(
+                "iommus", struct.pack(">II", 0x6a, 1)),
+            "ATC domain re-enabled": lambda t: t[atc0].pop("status"),
+            "unrelated change": lambda t: t[cpu].__setitem__("status", b"disabled\0"),
+            "extra node": lambda t: t.__setitem__("/soc/usb@3a2280000", dict(t[dwc3])),
+        }
+        for name, change in mutations.items():
+            with self.subTest(mutation=name):
+                self.mutated(change)
+
+    def test_input_must_be_boot036_state(self):
+        for name, before in (("boot041 applied twice", boot041(self.before)),
+                             ("boot035, no USB nodes", properties(BOOT035.read_bytes()))):
+            with self.subTest(input=name), self.assertRaises(ValueError):
+                usb_dt.check_both_darts_delta(before, boot041(self.before))
+        with self.assertRaises(ValueError):
+            usb_dt.both_darts_amendment(boot041(self.before))
+
+    @unittest.skipUnless(DTC.is_file() or shutil.which("dtc"), "no dtc")
+    def test_build_script(self):
+        dtc = str(DTC) if DTC.is_file() else shutil.which("dtc")
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "stage-b-041.dtb"
+            result = subprocess.run([sys.executable, "-I", str(MAKE_DT), "--both-darts", dtc, str(BOOT040),
+                                     str(out)], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            after = properties(out.read_bytes())
+            usb_dt.check_both_darts_delta(self.before, after)
+            check_stage_b(out.read_bytes())
+            self.assertEqual(after, boot041(self.before))
+            # The boot035 input is refused in this mode, and boot040's in the boot036 mode.
+            for args in (["--both-darts", dtc, str(BOOT035), str(out)], [dtc, str(BOOT040), str(out)]):
+                refused = subprocess.run([sys.executable, "-I", str(MAKE_DT)] + args, capture_output=True, text=True)
+                self.assertNotEqual(refused.returncode, 0)
+                self.assertIn("input is not the", refused.stderr)
 
 
 if __name__ == "__main__":

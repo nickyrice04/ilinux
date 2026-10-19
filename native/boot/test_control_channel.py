@@ -1,5 +1,5 @@
-"""boot036 config and initramfs contract, boot039's bulk-only init, boot040's DART diagnostics:
-the expected payload passes, deviations fail closed."""
+"""boot036 config and initramfs contract, boot039's bulk-only init, boot040's DART diagnostics,
+boot041's two-DART lines: the expected payload passes, deviations fail closed."""
 import gzip
 from pathlib import Path
 import struct
@@ -16,6 +16,7 @@ INIT_C = HERE.parents[1] / "kernel/experiments/usb-gadget/init.c"
 BOOT036 = HERE.parents[1] / "build/native-boot036/verified"
 BOOT039 = HERE.parents[1] / "build/native-boot039/verified"
 BOOT040 = HERE.parents[1] / "build/native-boot040/verified"
+BOOT041 = HERE.parents[1] / "build/native-boot041/verified"
 
 
 def static_elf():
@@ -190,6 +191,36 @@ class DartDiagTests(unittest.TestCase):
         self.assertEqual((BOOT040 / "kernel.config").read_bytes(), (BOOT039 / "kernel.config").read_bytes())
         self.assertEqual((BOOT040 / "t6050-j716c-stage-b.dtb").read_bytes(),
                          (BOOT039 / "t6050-j716c-stage-b.dtb").read_bytes())
+
+
+class DartBothTests(unittest.TestCase):
+    """boot041: /init keeps boot040's DART diagnostics and adds the two-DART lines."""
+    INIT = DartDiagTests.INIT + b"".join(text + b"\0" for text in cc.DART_BOTH_INIT_STRINGS)
+
+    def test_expected_pass(self):
+        cc.check_dart_diag_init(self.INIT)
+        cc.check_dart_both_init(self.INIT)
+
+    def test_deviations(self):
+        for text in cc.DART_BOTH_INIT_STRINGS:
+            with self.subTest(init_without=text[:30]), self.assertRaises(ValueError):
+                cc.check_dart_both_init(self.INIT.replace(text, text[:-1] + b"?"))
+        with self.subTest(case="boot040-style init"), self.assertRaises(ValueError):
+            cc.check_dart_both_init(DartDiagTests.INIT)
+
+    @unittest.skipUnless((BOOT041 / "Image").is_file() and (BOOT040 / "Image").is_file(),
+                         "boot040/boot041 not extracted in build/")
+    def test_real_boot041_package(self):
+        blob = (BOOT041 / "initramfs-stage-b.cpio.gz").read_bytes()
+        init = cc.cpio_entries(blob)["init"][3]
+        cc.check_bulk_only_init((BOOT041 / "diag-init.c").read_bytes(), init)
+        cc.check_dart_diag_init(init)
+        cc.check_dart_both_init(init)
+        cc.check_init_only_delta((BOOT040 / "initramfs-stage-b.cpio.gz").read_bytes(), blob)
+        with self.assertRaises(ValueError):   # boot040's init has no two-DART lines
+            cc.check_dart_both_init(cc.cpio_entries((BOOT040 / "initramfs-stage-b.cpio.gz").read_bytes())["init"][3])
+        for name in ("Image", "kernel.config", "m1n1.bin", "toolchain.txt"):
+            self.assertEqual((BOOT041 / name).read_bytes(), (BOOT040 / name).read_bytes(), name)
 
 
 class ConfigTests(unittest.TestCase):

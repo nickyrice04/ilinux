@@ -17,7 +17,13 @@ must be what this tree's code creates and prints:
   * boot040: the regdump has GBUSERRADDR0/1 (the first failing DMA address), the DART
     driver registers its shared fault interrupt as "apple-dart fault handler", the IOMMU
     core links a master to its IOMMU as <device>/iommu (iommu-sysfs.c), and the t8110
-    register offsets init.c reads through /dev/mem are the driver's DART_T8110_* values.
+    register offsets init.c reads through /dev/mem are the driver's DART_T8110_* values;
+  * boot041: apple-dart keeps one stream map per DART of a master's iommus, in order, links
+    <device>/iommu to the first, sets a paging domain up (enable, TTBR valid, TCR translate,
+    no bypass) and flushes on every one; a shared IRQ's actions are comma-separated; the DT
+    node's phandle, reg and interrupts are of_node files, a bound device links its driver as
+    "driver", DT platform devices are named <address>.<node>, the DART driver is "apple-dart";
+    init.c's dart_pending reads only, at the offsets and version gate of dart_peek.
 Writes the regdump names (one per line) for the fixture test and prints the facts.
 """
 import re
@@ -213,6 +219,78 @@ def main(tree, init_c, names_out):
                  "PROTECT,ENABLE_STREAMS,TCR,TTBR}, reads only; v2.2 layout (patched driver and init.c, gated on "
                  "PARAMS3 bits 15:0): PENDING 0x4000, MASK 0x4060, CTRL 0x210, PROT_STATUS 0x704/0x4204, blocks "
                  "0x8000 + 0x40*sid (addr +0x08/+0x0c)")
+    # boot041: the two-DART wiring, and the sysfs files init.c resolves it from.
+    probe_device = function_body(dart, "apple_dart_probe_device")
+    if "return &cfg->stream_maps[0].dart->iommu;" not in probe_device \
+            or not re.search(r"for_each_stream_map\(i, cfg, stream_map\)\s*device_link_add\(dev, stream_map->dart->dev,",
+                             probe_device):
+        fail("apple-dart no longer links a master to every stream map's DART and its iommu link to the first")
+    xlate = function_body(dart, "apple_dart_of_xlate")
+    for needle in ("if (cfg_dart->pgsize != dart->pgsize)", "if (cfg_dart->ias != dart->ias)",
+                   "if (cfg->stream_maps[i].dart == dart) {", "if (!cfg->stream_maps[i].dart) {"):
+        if needle not in xlate:
+            fail("apple_dart_of_xlate no longer keeps one stream map per DART in iommus order: " + needle)
+    if not re.search(r"for_each_stream_map\(i, cfg, stream_map\) \{\s*if \(!stream_map->dart->locked\)\s*"
+                     r"apple_dart_setup_translation\(dart_domain, stream_map\);",
+                     function_body(dart, "apple_dart_attach_dev_paging")):
+        fail("a paging domain is no longer set up on every DART of the master")
+    setup = function_body(dart, "apple_dart_setup_translation")
+    for needle in ("writel(U32_MAX, dart->regs + dart->hw->enable_streams + 4 * i);",
+                   "apple_dart_hw_set_ttbr(stream_map, i, ttbr);", "apple_dart_hw_enable_translation(stream_map,"):
+        if needle not in setup:
+            fail("apple_dart_setup_translation changed: " + needle)
+    if "u32 tcr = dart->hw->tcr_enabled;" not in function_body(dart, "apple_dart_hw_enable_translation") \
+            or "writel(dart->hw->ttbr_valid |" not in function_body(dart, "apple_dart_hw_set_ttbr"):
+        fail("TCR/TTBR are no longer written from tcr_enabled / ttbr_valid")
+    t8110 = dart[dart.index("static const struct apple_dart_hw apple_dart_hw_t8110 = {"):]
+    t8110 = t8110[:t8110.index("};")]
+    for needle in (".tcr_enabled = DART_T8110_TCR_TRANSLATE_ENABLE,", ".ttbr_valid = DART_T8110_TTBR_VALID,",
+                   ".tcr_bypass = DART_T8110_TCR_BYPASS_DAPF | DART_T8110_TCR_BYPASS_DART,"):
+        if needle not in t8110:
+            fail("the t8110 hw description changed: " + needle)
+    for name, value in (("DART_T8110_TCR_TRANSLATE_ENABLE", "BIT(0)"), ("DART_T8110_TCR_BYPASS_DART", "BIT(1)"),
+                        ("DART_T8110_TCR_BYPASS_DAPF", "BIT(2)"), ("DART_T8110_TCR_FOUR_LEVEL", "BIT(3)"),
+                        ("DART_T8110_TTBR_VALID", "BIT(0)"), ("DART_T8110_ENABLE_STREAMS", "0xc00")):
+        if not re.search(r"#define %s\s+%s" % (name, re.escape(value)), dart):
+            fail("%s is not %s in apple-dart.c" % (name, value))
+    if "for_each_stream_map(i, domain, domain_stream_map) {" not in function_body(dart, "apple_dart_domain_flush_tlb"):
+        fail("TLB flushes no longer reach every DART of the domain")
+    if not re.search(r'\.name\s*=\s*"apple-dart",', dart):
+        fail('the DART platform driver is not named "apple-dart"')
+    if '"%s%s", p, action->name);' not in function_body(irqdesc, "actions_show") or 'p = ",";' not in irqdesc:
+        fail("/sys/kernel/irq/<n>/actions no longer lists a shared line's actions comma-separated")
+    fdt_c = (tree / "drivers/of/fdt.c").read_text()
+    props = function_body(fdt_c, "populate_properties")
+    if '!strcmp(pname, "phandle")' not in props or not re.search(r"pp->name\s*=\s*\(char \*\)pname;", props):
+        fail("the unflattened DT no longer keeps phandle as a property")
+    kobj = function_body((tree / "drivers/of/kobj.c").read_text(), "__of_add_property_sysfs")
+    if "sysfs_create_bin_file(&np->kobj, &pp->attr);" not in kobj or "phandle" in kobj:
+        fail("__of_add_property_sysfs no longer exposes every property (phandle, reg, interrupts)")
+    base_core = (tree / "drivers/base/core.c").read_text()
+    if 'sysfs_create_link(&dev->kobj, of_node_kobj(of_node), "of_node")' not in base_core:
+        fail("a device no longer links its DT node as of_node")
+    if not re.search(r'sysfs_create_link\(&dev->kobj, &dev->driver->p->kobj,\s*"driver"\)',
+                     (tree / "drivers/base/dd.c").read_text()):
+        fail("a bound device no longer links its driver as driver")
+    bus_id = (tree / "drivers/of/device.c").read_text()   # where of_device_make_bus_id lives in this tree
+    if "of_device_make_bus_id(&dev->dev);" not in (tree / "drivers/of/platform.c").read_text() \
+            or '"%llx.%pOFn"' not in function_body(bus_id, "of_device_make_bus_id"):
+        fail('a DT platform device is no longer named "<address>.<node name>"')
+    for used in ('"/sys/bus/platform/devices"', '"/sys/bus/platform/devices/%.200s/of_node/phandle"',
+                 '"/sys/bus/platform/devices/%.200s/of_node/reg"', '"/sys/bus/platform/devices/%.200s/driver"',
+                 '"apple-dart")', '"/sys/class/udc/%.63s/device/of_node/iommus"'):
+        if used not in init:
+            fail("init.c does not read " + used)
+    pending = function_body(init, "dart_pending")
+    if "mmap(NULL, 0xc000, PROT_READ" not in pending or "(m[0x08 / 4] & 0xffff) >= 0x0202 ? m[0x4000 / 4] : m[0x1c0 / 4]" \
+            not in pending or "writel" in pending or re.search(r"m\[[^\]]*\]\s*=[^=]", pending):
+        fail("init.c's dart_pending must read PARAMS3, then 0x4000 (v2.2+) or 0x1c0, and only read")
+    facts.append("boot041: apple-dart keeps one stream map per DART in iommus order (same page size and VA width), "
+                 "links the master to every one and its iommu link to the first, sets a paging domain up on every "
+                 "one (all streams enabled, TTBR | valid bit 0, TCR translate bit 0, bypass bits 2:1 clear) and "
+                 "flushes every one; driver \"apple-dart\"; a shared line's actions comma-separated; phandle, reg "
+                 "and interrupts are of_node files; driver and of_node links; platform devices named "
+                 "<address>.<node>; dart_pending reads PARAMS3 then 0x4000 or 0x1c0, reads only")
     configfs = (tree / "drivers/usb/gadget/configfs.c").read_text()
     store = function_body(configfs, "gadget_dev_desc_bcdDevice_store")
     if "is_valid_bcd(bcdDevice)" not in store or "if ((bcd_val & 0xf) > 9)" not in function_body(configfs, "is_valid_bcd"):

@@ -10,7 +10,8 @@
 #              over the bulk-IN endpoint, no echo, no CDC function, the status line, SSH
 #              with and without the key over loopback, "[selftest] PASS". boot040: the
 #              short [usb4] line, the DART identity line without an iommu link (dummy_udc
-#              has none) and no DART register read for the unknown UDC.
+#              has none) and no DART register read for the unknown UDC. boot041: no setup
+#              line and no pending words either (nothing confirmed, nothing read).
 # Logs go to the job's out/vz/. The VM is killed at the end; nothing persists.
 set -euo pipefail
 cd "$(dirname "$0")/../../../.."
@@ -81,6 +82,7 @@ if [ "$which" != liveness ]; then
         "Exit before auth .*(user 'root', 0 fails)" "login without the key refused" \
         "\[selftest\] PASS" "selftest exit=0" || status=1
     reject selftest "dwc3 status reader" "Attempted to kill init" "\[selftest\] FAIL" "\[ctl\] write .* failed" \
-        "reading DART registers" "bus error" "STREAMER-STOPPED" "log streamer for port .* exited" || status=1
+        "reading DART registers" "bus error" "STREAMER-STOPPED" "log streamer for port .* exited" \
+        "^\[usb[0-9]*\] dart[01] sid" "^\[usb[0-9]*\] .* pend [0-9a-f?]" || status=1
 fi
 exit $status

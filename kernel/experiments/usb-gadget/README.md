@@ -1,4 +1,4 @@
-# USB control channel (boot036, revised as boot038, boot039 and boot040)
+# USB control channel (boot036, revised as boot038, boot039, boot040 and boot041)
 
 Roadmap Phase 3, step 2: a network link into native Linux over the same USB
 cable the M1 uses for the m1n1 proxy, so the M1 can run commands, read logs and
@@ -101,6 +101,38 @@ Report: `native/boot/boot040-dart-fault-2026-10-18.md`. Packaging: `make-package
 --name ilinux-j716c-boot040` (Image, `/init` and its source may differ from boot039;
 `test_boot040_package.py`).
 
+## boot041: both DART instances per dwc3 core (after attempt 23)
+
+Attempt 23 showed the DART is version 2.4 (boot040's part 2 was active) and, at the first
+bus error, the fault pending on DART instance 0, which the boot036-040 DT leaves out: Linux
+had never reset or programmed it and had no handler for it on the shared fault interrupt.
+boot041 is fix candidate A of `dart-diag/README.md` and changes the DT only, plus `/init`
+lines to show the result:
+
+* **Stage-B DT** (`native/boot/usb_dt.py` `check_both_darts_delta`, built by
+  `make_stage_b_dt.py --both-darts` from the boot036-040 DT): each dwc3 core gets
+  `iommus = <dart0 0>, <dart1 1>`, as every Asahi DT wires this block; instance 0 of each
+  port (`iommu@…f00000`) loses `status` and `power-domains` (its domain is the disabled
+  `atcN_usb`, as instance 1's was) and gains a phandle. Nothing else changes: the decompiled
+  diff is 3 × (−2 +1) lines on the instance-0 nodes and 3 changed `iommus` lines. With it,
+  apple-dart probes instance 0 (reset, both fault handlers on the line), keeps one stream
+  map per instance and sets the core's DMA domain up on both: stream 0 on instance 0,
+  stream 1 on instance 1, one page table (Confirmed, source; `check_kernel_facts.py`).
+* **Image:** boot040's, byte for byte (job 041 checks its reproducible build; the packager
+  refuses any other), so the Omarchy root pinned to it stays valid.
+* **`/init`:** keeps boot040's lines. The DART instances now come from the DT the kernel
+  booted (the core's `iommus`, each phandle found among the DART platform devices'
+  `of_node`, their `driver` link), checked against the ADT's pair; the identity line names
+  both and how many apple-dart fault handlers share the line (`x2`). After the bind
+  snapshot one line says whether the kernel set each up (bound, the stream enabled and
+  translating without bypass on a valid TTBR) and both on one table (`: both set up`). The
+  short line gains `pend <instance 0>/<instance 1>`, the pending-fault words (0x4000 from
+  version 2.2, else ERROR_STREAMS), read each heartbeat by the status child.
+
+Report: `native/boot/boot041-two-darts-2026-10-18.md`. Packaging: `make-package.py
+--name ilinux-j716c-boot041` (only the DT, `/init` and its source may differ from boot040;
+`test_boot041_package.py`).
+
 ## Address plan
 
 Gadget N (N = 1..3 for `2a2280000.usb`, `2aa280000.usb`, `382280000.usb`, the
@@ -137,8 +169,8 @@ macOS host. Those are attempt 17's questions.
 
 ## Files
 
-`init.c` (packaged as `diag-init.c`), `make_stage_b_dt.py`,
-`stage_initramfs.py`, `elf_pages.py`, `selftest/`, `dart-diag/` (boot040),
+`init.c` (packaged as `diag-init.c`), `make_stage_b_dt.py` (boot036's DT, and with
+`--both-darts` boot041's), `stage_initramfs.py`, `elf_pages.py`, `selftest/`, `dart-diag/` (boot040),
 `virtualization/jobs/041-usb-gadget/`, `native/boot/usb_dt.py`,
 `native/boot/control_channel.py`.
 

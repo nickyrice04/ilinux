@@ -22,6 +22,11 @@ boot040 (DART fault diagnostics): the same gadget contract; the Stage-B
 initramfs differs from boot039's in /init only; and the Image carries the
 apple-dart fault-report patch (kernel/experiments/usb-gadget/dart-diag), shown
 by its message strings, with boot039's kernel config byte for byte.
+
+boot041 (both DART instances per dwc3 core in the Stage-B DT): boot040's Image
+and gadget contract; the Stage-B initramfs differs from boot040's in /init only,
+and that /init keeps boot040's DART diagnostics and adds the boot041 ones (the
+DT's DART instances by phandle, the setup line, both pending-fault words).
 """
 import gzip
 import struct
@@ -59,6 +64,11 @@ DART_DIAG_INIT_STRINGS = (b"reading DART registers at 0x%llx and 0x%llx through 
                           b"apple-dart fault handler", b"GBUSERRADDR0", b"GBUSERRADDR1",
                           b"/sys/class/udc/%.63s/device/iommu",
                           b"pend %x mask %x ctl %x prot %x s0 %08x@%llx s1 %08x@%llx")
+# boot041: what the boot041 /init adds to boot040's: the DART instances found through the DT's
+# iommus phandles, the two-instance identity line, the setup verdict and the pending words.
+DART_BOTH_INIT_STRINGS = (b"/sys/bus/platform/devices/%.200s/of_node/phandle",
+                          b" dart0 %llx sid %u + dart1 %llx sid %u fault irq %x(%d) x%d\n",
+                          b"%s dart%d sid %u %s", b"both set up", b" pend %x/%x")
 
 
 def check_config(before_text, after_text, allow_toolchain=False):
@@ -199,3 +209,10 @@ def check_dart_diag_init(init):
     missing = [text.decode() for text in DART_DIAG_INIT_STRINGS if text not in init]
     if missing:
         raise ValueError("/init lacks the boot040 DART diagnostics: missing %s" % missing)
+
+
+def check_dart_both_init(init):
+    """Raise unless the static /init carries the boot041 lines (both instances, setup, pending words)."""
+    missing = [text.decode() for text in DART_BOTH_INIT_STRINGS if text not in init]
+    if missing:
+        raise ValueError("/init lacks the boot041 two-DART lines: missing %s" % missing)

@@ -15,6 +15,14 @@ The delta from the boot035 Stage-B DT, and nothing else:
   AUTO_ENABLE nor releases them through the boot034 ladder: the PHY and power
   state of the three ports stay exactly as m1n1 left them.
 
+boot041 (after attempt 23) changes that DT and nothing else: each dwc3 core gets
+both DART instances of its port, `iommus = <dart0 0>, <dart1 1>`, as every Asahi
+device tree gives this USB block. Instance 0 (ADT dart-usbN reg[0]), which
+boot036-040 left disabled, is enabled the way instance 1 was: without
+`power-domains` (its domain is that port's disabled atcN_usb) and with a new
+phandle. Instance 1 keeps its node and phandle; both instances keep their shared
+fault interrupt.
+
 No MMIO, transport writes or ADT access happen here.
 """
 import re
@@ -33,6 +41,10 @@ PORTS = (
 )
 CORE_SIZE = 0xcd00   # dwc3 core window (xHCI, global, device, OTG); Apple glue follows
 SID = 1
+# boot041: DART instance 0 of each port (ADT dart-usbN reg[0]), in PORTS order, and the
+# stream it serves, as Asahi wires it (t8103.dtsi .. t6030.dtsi: <&dwc3_N_dart_0 0>).
+DART0 = ("/soc/iommu@2a2f00000", "/soc/iommu@2aaf00000", "/soc/iommu@382f00000")
+SID0 = 0
 QUIRKS = ("snps,usb2-gadget-lpm-disable", "snps,dis_u2_susphy_quirk",
           "snps,dis_u3_susphy_quirk", "snps,dis_enblslpm_quirk")
 
@@ -115,3 +127,73 @@ def check_delta(before, after):
         differ = sorted(path for path in set(expected) | set(after)
                         if expected.get(path) != after.get(path))
         raise ValueError("DT delta differs from the boot036 USB contract: " + ", ".join(differ[:6]))
+
+
+def _phandle(node):
+    value = node.get("phandle", b"")
+    if len(value) != 4 or struct.unpack(">I", value)[0] in (0, 0xffffffff):
+        return None
+    return struct.unpack(">I", value)[0]
+
+
+def _check_boot036_darts(tree):
+    """Raise unless tree has boot036-040's USB DART wiring (instance 1 only); return the phandles."""
+    phandles = []
+    for (dwc3, _, _, dart1), dart0 in zip(PORTS, DART0):
+        zero, one, core = tree.get(dart0), tree.get(dart1), tree.get(dwc3)
+        if zero is None or one is None or core is None:
+            raise ValueError("DART instance or dwc3 node missing: " + ", ".join(
+                p for p, n in ((dart0, zero), (dart1, one), (dwc3, core)) if n is None))
+        if (zero.get("status") != b"disabled\0" or "power-domains" not in zero or "phandle" in zero
+                or "status" in one or "power-domains" in one or _phandle(one) is None):
+            raise ValueError("DART instances not in their boot036-040 state: %s, %s" % (dart0, dart1))
+        if core.get("iommus") != struct.pack(">II", _phandle(one), SID):
+            raise ValueError("dwc3 not wired to instance 1 alone: " + dwc3)
+        # The two instances of one dart-usbN node: same compatible and fault interrupt, 0xc000
+        # windows 0x80000 apart (ADT reg[0], reg[1]).
+        base0 = int(dart0.rsplit("@", 1)[1], 16)
+        base1 = int(dart1.rsplit("@", 1)[1], 16)
+        if (base1 - base0 != 0x80000
+                or zero.get("reg") != struct.pack(">IIII", base0 >> 32, base0 & 0xffffffff, 0, 0xc000)
+                or one.get("reg") != struct.pack(">IIII", base1 >> 32, base1 & 0xffffffff, 0, 0xc000)
+                or zero.get("interrupts") != one.get("interrupts")
+                or zero.get("interrupt-parent") != one.get("interrupt-parent")
+                or zero.get("compatible") != one.get("compatible")
+                or zero.get("#iommu-cells") != b"\0\0\0\1" or one.get("#iommu-cells") != b"\0\0\0\1"):
+            raise ValueError("DART instances %s and %s are not one dart-usbN pair" % (dart0, dart1))
+        phandles.append(_phandle(one))
+    return phandles
+
+
+def both_darts_amendment(tree):
+    """DTS text appended to the decompiled boot036-040 Stage-B DT to make boot041's."""
+    _check_boot036_darts(tree)
+    lines = ["", "/* boot041: both DART instances per dwc3 core, as Asahi wires them: native/boot/usb_dt.py */"]
+    lines += ["&{%s} { /delete-property/ power-domains; /delete-property/ status; };" % dart0
+              for dart0 in DART0]
+    lines += ["&{%s} { iommus = <&{%s} 0x%x>, <&{%s} 0x%x>; };" % (dwc3, dart0, SID0, dart1, SID)
+              for (dwc3, _, _, dart1), dart0 in zip(PORTS, DART0)]
+    return "\n".join(lines) + "\n"
+
+
+def check_both_darts_delta(before, after):
+    """Raise unless `after` is exactly `before` (the boot036-040 Stage-B DT) plus the boot041 delta:
+    each port's DART instance 0 loses `status` and `power-domains` and gains a new phandle, and
+    each dwc3 core's `iommus` becomes <instance 0, stream 0>, <instance 1, stream 1>."""
+    phandles1 = _check_boot036_darts(before)
+    used = [_phandle(node) for node in after.values() if "phandle" in node]
+    if None in used or len(used) != len(set(used)):
+        raise ValueError("invalid or duplicate phandle in boot041 DT")
+    expected = {path: dict(node) for path, node in before.items()}
+    for (dwc3, _, _, _), dart0, phandle1 in zip(PORTS, DART0, phandles1):
+        phandle0 = _phandle(after.get(dart0, {}))
+        if phandle0 is None or phandle0 in phandles1:
+            raise ValueError("DART instance 0 phandle missing or invalid: " + dart0)
+        node = expected[dart0]
+        del node["status"], node["power-domains"]
+        node["phandle"] = struct.pack(">I", phandle0)
+        expected[dwc3]["iommus"] = struct.pack(">IIII", phandle0, SID0, phandle1, SID)
+    if expected != after:
+        differ = sorted(path for path in set(expected) | set(after)
+                        if expected.get(path) != after.get(path))
+        raise ValueError("DT delta differs from the boot041 two-DART contract: " + ", ".join(differ[:6]))

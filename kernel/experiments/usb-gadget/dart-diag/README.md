@@ -57,6 +57,13 @@ written down so the next step is one decision, not a search.
 
 ## Fix candidates (proposals, not in boot040)
 
+**After attempt 23 (2026-10-18):** the DART is version 2.4, so part 2 ran, and instance 1's
+v2.2 handler found nothing pending through the whole storm, while at the first bus error
+instance 0 (not in the DT) held the pending fault (`pend 1`, a stream-0 block at
+`0x3ffff35800`): the row "instance 1 did not raise the line; a stream bit on dart0" of the
+table below. **boot041 takes candidate A** (DT only; `../README.md`, section boot041, and
+`native/boot/boot041-two-darts-2026-10-18.md`); B stays in the Image as boot040 shipped it.
+
 * **A. Asahi's two-DART wiring (DT only):** enable `dart_usb0_0` (and the other ports'
   instance 0) and give each dwc3 `iommus = <&dartN_0 0>, <&dartN_1 1>`, as every Asahi
   generation does; the two-DART Stage-B variant already exists in
