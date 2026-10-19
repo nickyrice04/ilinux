@@ -5,6 +5,25 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-18 · M1: attempt 23 (boot040, the apple-dart fault made visible) offline readiness PASS (live NOT RUN)
+
+* **Discovered:** boot040's package is boot039's plus two kernel patches in the apple-dart fault path and a larger `/init`; the
+  Stage-B initramfs differs only in `/init`, which is a static aarch64 ELF. The patches' writes are limited to the DART's fault
+  acknowledgement registers (part 2 only when the DART reports version 2.2 or later, from REA behaviours untested on hardware);
+  `/init` reads the DART registers through `/dev/mem` read-only.
+* **Implemented:** nothing in Git except this entry and the coordination/AGENTS readiness text. Local and ignored: the record
+  `boot040-stage-b-attempt23.json` (33 pinned files), the wrapper `run-attempt23.py`, the capture script and the handoff watcher
+  (attempt 21's, renamed), the verified package in `build/native-boot040-download/`.
+* **Tested:** the release archive against Git before extraction (and GitHub's digest); `verify-package` (13 files); the
+  initramfs entry by entry against boot039's; `/init`'s ELF headers and strings; the Image's boot040 strings; the two patches and
+  the `/dev/mem` and bus-error code read; the launcher offline (default profile, exit 0); the reviewed 102 controller cases plus
+  the ramroot, USB, control-channel, kconfig and boot040 package suites; the reader's tests and dry run.
+* **Not verified:** everything native; `test_dart_diag.py` (needs the patched Asahi tree); the Image beyond its digest and
+  strings; whether the sibling DART instance answers a `/dev/mem` read; every v2.2 behaviour. Fresh policy checks NOT CHECKED.
+* **Next:** the human restarts the M1 (kept unlocked), re-seats the cable (and boots the M5 into the Boot Lab again if the gate
+  sees nothing), starts a recording before the launch (4K if possible) and then starts attempt 23; accept the macOS accessory
+  prompt. One boot, the reader started right after the handoff, filmed to 10 minutes after it.
+
 ## 2026-10-18 · M5: boot040 published and attempt 23 handed off — the bulk-only USB port with the DART fault made visible (NOT RUN)
 
 * **Decided:** with the installer-built Omarchy desktop proven (attempt 22), the USB link is the

@@ -6,6 +6,39 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 23 / boot040 (the apple-dart fault made visible) offline PASS; live NOT RUN, 2026-10-18
+
+* **Intake (M5 handoff `c5ae860`, release target `d125b61`).** Public prerelease `native-j716c-boot040`: archive 18,921,232
+  bytes, SHA-256 `1d7f5c8d…66cf`, checked against Git **before extraction** (GitHub's asset digest equal); 14 regular members,
+  no unsafe path. The `verify-package` receipt (SHA256SUMS digest `4ee2f1f3…e4c9`, 13 files, clean client pin `57a9339`)
+  PASS. `Image` `a53d1d47…` (44,681,728 bytes), `kernel.config`, both DTBs and the generic files match the checklist's table.
+* **Independent review.** The Stage-B initramfs has 422 entries like boot039's and **only `/init` differs** (the M1's own
+  newc parse); `/init` (857,112 bytes) is a static aarch64 `EXEC` ELF with no `PT_INTERP` or `PT_DYNAMIC`, names `gser` and
+  `0x0139`, and none of `acm.`, `ecm.`, `eem.`, `ncm.`, `rndis.` nor the debugfs files whose reads write a select register.
+  The shipped `diag-init.c` (`58c68268…`) equals `init.c` at HEAD. **The two apple-dart patches were read in full** (107 and
+  256 lines). Part 1 reports and acknowledges an interrupt that arrives without the error flag, writing the same two
+  registers the unpatched handler writes on a recognised fault. Part 2 is gated on the DART's own version (PARAMS3 ≥ 2.2) and a
+  register window large enough for its blocks; it then writes the pending words, the protection status (all ones), the mask
+  (0) and one flush-unlock TLB command, and disables the line itself after 256 acknowledged interrupts. Translation, bypass,
+  TTBR and protection settings are untouched in both. **Every v2.2 behaviour comes from REA of the macOS driver and is
+  untested on hardware** (the M5 says so). In `/init`, the new code reads the DART registers through `/dev/mem` with
+  `O_RDONLY`, `PROT_READ` and 32-bit loads only, never a write, only for bases the kernel's own iommu link confirmed (plus
+  the table's sibling instance); the bus-error handler kills the log streamer (no restart) and repeats the snapshot; the other
+  writes are kmsg, configfs and mounts as in boot039. **Residual risk (the M5's own note):** a read of an unclocked sibling
+  register could stall the bus; the line before the read names it.
+* **The reader** is attempt 21's binary (`77677ee3…`), unchanged: its 15 tests PASS and its dry run exits 2 with nothing matched.
+* **Offline.** The launcher with the default `stage-b` profile exits 0 (`Package PASS`, `Mode: OFFLINE ONLY`). The reviewed 102
+  controller cases PASS (37 + 10 + 6 + 16 + 5 + 19 + 2 + 6 + 1), `test_ramroot.py` 44 (1 skipped), `test_usb_dt` 6 (all
+  skipped), `test_control_channel` 13 (3 skipped), `test_kconfig_guard` 7 (1 skipped), `test_boot040_package` 10 (all skipped:
+  they need the M5's `build/` directories). `test_dart_diag.py` needs the patched Asahi tree, which the M1 does not have, and
+  was not run. The packaged authorized key equals the repository's `authorized_keys`.
+* **What the run needs from the human:** a fresh M1 restart (kept unlocked), the cable re-seated (and the M5 booted into the
+  Boot Lab again if the read-only gate sees nothing), a recording started before the launch (4K if possible, or 1080p framed
+  so that the left two thirds of the console are as large as possible, because the evidence is in short lines), and the
+  human's start. **A macOS USB accessory prompt appears within seconds of the enumeration: accept it.** The reader starts
+  right after the handoff; stop 10 minutes after it, or earlier on a reset, a kernel panic or an M1 panic.
+* **NOT RUN:** native boot040 / attempt 23, and the fresh policy checks.
+
 ### Current M5 handoff — attempt 23 / boot040: attempt 21's bulk-only log port with the DART fault made visible (NOT RUN)
 
 * **Attempt 22 consumed:** the installer-built Omarchy desktop came up on boot035 and stayed up

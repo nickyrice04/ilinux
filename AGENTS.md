@@ -138,6 +138,15 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 23 / boot040 (attempt 21's bulk-only `gser` port with the
+apple-dart fault made visible) on handoff `c5ae860`: archive `1d7f5c8d…66cf` verified against Git before extraction (GitHub's digest
+equal), the Stage-B initramfs differs from boot039's only in `/init` (a static aarch64 ELF), the two apple-dart patches and the
+`/dev/mem` register snapshot read in full (reads only from user space; the kernel patches write only the DART's fault
+acknowledgement registers, part 2 only on a v2.2+ DART and untested on hardware), launcher `b14ec7a1…` offline run and the reviewed
+102 controller cases plus the suites PASS, the reader (attempt 21's binary) unchanged and re-tested. Needs a fresh M1 restart
+(unlocked), cable re-seat, a recording started before the launch (4K if possible) and the human's start; accept the macOS USB
+accessory prompt.
+
 Latest M1 native result: **attempt 22 (Omarchy itself, VM job 045, `--profile omarchy`): the first installer-built Omarchy
 desktop on the M5, up about 39 s after the handoff and stable for the filmed 10 minutes.** The 2.38 GB upload took 456.5 s (5.22 MB/s)
 with the 3 GiB client heap and no reset; the kernel unpacked the image and reached systemd within about 17 s; then Omarchy's own
