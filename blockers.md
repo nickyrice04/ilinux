@@ -18,7 +18,16 @@ Class-scope lookup of a function-local import in `mtp_probe.py` (and
 `pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
 M1's re-verification and the human's go.
 
-## Current blocker — attempt 23: the DMA fault is on the DART instance the Stage-B DT omits; Linux's only handler reads the other instance
+## Current blocker — attempt 24: the log link works one way; host-to-device data, a console, a network and SSH are untested
+
+Attempt 24 (boot041) streamed the M5's kernel log to the M1's read-only reader for the full ten minutes (218,079 bytes, no gap,
+fault count 0, `pend 0/0`, no BUSERR). Nothing yet shows the other direction: bulk OUT never carried a transfer (`1o h17 d0` all
+run), the reader never writes, and no network function (ECM, NCM) or SSH has run on this DT. Open: a bulk-OUT test (a read/write
+M1 client is new code, written and reviewed on the M5's request), ECM or NCM on boot041's DT (attempt 18's ACM + ECM stop may
+have shared the DART cause; Hypothesis), throughput, stability beyond ten minutes or under load, and more than one attached
+controller. Agents on the machine still need the link. See `native/boot/stage-b-2026-10-18-attempt24-result.md`.
+
+## Historical blocker — attempt 23: the DMA fault is on the DART instance the Stage-B DT omits; Linux's only handler reads the other instance (fixed by attempt 24)
 
 boot040 (attempt 23) repeated attempt 21's stop with the DART made visible. The USB DART is version 2.4; port 1's fault interrupt
 (IRQ 43) storms from kernel 3.93 s and the handler for the DT's instance 1 finds nothing pending every time until the kernel
@@ -26,8 +35,8 @@ disables the line; at the first bus error the register snapshot shows the siblin
 `en 0`) with `pend 1` and a stream block holding address `0x3ffff35800`, instance 1 with `pend 0`. Likely, not tested: the
 controller's DMA also goes through instance 0, which has no translation, so it faults there and wedges the IN endpoint (the M5's
 candidate A: Asahi's two-DART wiring). The capture stopped at 25,911 bytes; no endpoint-0 error. Open: that listing both
-instances fixes it, whether stream 0 carries data or descriptors, bulk OUT, and a stream that survives. See
-`native/boot/stage-b-2026-10-18-attempt23-result.md`.
+instances fixes it, whether stream 0 carries data or descriptors, bulk OUT, and a stream that survives. Attempt 24 listed both
+instances and the stall did not recur (one run). See `native/boot/stage-b-2026-10-18-attempt23-result.md`.
 
 ## Historical blocker — attempt 21: bulk-IN data stops after 36,909 bytes; the M5's dwc3 flags BUSERR and an apple-dart interrupt storm follows (explained by attempt 23)
 

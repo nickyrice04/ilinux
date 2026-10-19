@@ -6,7 +6,32 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 24 / boot041 (both DART instances per dwc3 core) offline PASS; live NOT RUN, 2026-10-19
+### Current M1 result — attempt 24 (boot041): both DART instances per dwc3 core remove the stall; the USB log streams for the full ten minutes
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 11.197 s, handoff 2026-10-19T03:38:34.430Z, 11:38:34 PM Eastern; no M1
+  panic). The panel was filmed in portrait for 600.8 s (to +594 s); the human powered the M5 off at +11 min 12 s.
+* **M1 side (read-only):** enumerated at +3.87 s, configuration 1 selected at once, the reader opened the interface at +4.05 s and
+  captured **218,079 bytes (2,580 intact records, kernel 0.065 to 604.261 s, heartbeats 000 to 119 with no gap)**; it stopped
+  itself at its 600 s limit (exit 0) with the device still enumerated. Seven 5 s read timeouts, all its own. No endpoint-0 error
+  on the iLinux device.
+* **M5 (capture and video):** all six DART instances are v2.4; both instances of every port were reset and bound to one table
+  (`both set up`; instance 0 now `en ffff`), and each shared fault line (IRQ 43, 44, 45) carries two handlers (screen). **Fault
+  count 0 and `pend 0/0` on all 357 port heartbeat lines; no `BUSERR`, no `translation fault`, no `nobody cared`, no oops.** Port 1's
+  queue read `q0` from 10 s on and the M5's byte counter matches the capture at all 117 later status lines (0 or 56 bytes, the
+  heartbeat line before it): nothing lost. Linux: PID 1 at 3.27 s, the 50-domain ladder at 45.056 s, heartbeats every 5.048 s to
+  119. The new risk (Linux programming instance 0 for the first time) did not freeze the SoC.
+* **Reading:** the Image is byte-identical to boot040's and the gadget unchanged, so the six-node DT change removed the stall
+  (**Confirmed as a comparison, one passing run**); the cause is **Likely** candidate A, the unprogrammed sibling instance.
+  Hypothesis: attempt 18's ACM + ECM stop may share it.
+* **Not established:** bulk OUT (the reader never writes), a console, ECM, NCM or SSH, throughput, stability beyond ten minutes or
+  under load, more than one attached controller.
+* **For the M5 (proposals, not authorization):** the Omarchy root with the SSH link, or a bulk-OUT test first (a read/write client
+  is new M1 code, on request with the M5's brief); reconsider ECM or NCM on boot041's DT; keep `pend a/b` and `dart<N>`; write the
+  `/proc/interrupts` table through `/dev/kmsg` so the capture has it too.
+* Report: `native/boot/stage-b-2026-10-18-attempt24-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed E1 probe
+  is still **NOT RUN**. Attempt 24 is consumed; no retry.
+
+### Historical M1 readiness — attempt 24 / boot041 (both DART instances per dwc3 core) offline PASS (consumed: attempt 24 ran), 2026-10-19
 
 * **Intake (M5 handoff `b5ef90d`, release target `88d392c`).** Public prerelease `native-j716c-boot041`: archive 18,926,067
   bytes, SHA-256 `ab49e307…4d28`, checked against Git **before extraction** (GitHub's asset digest equal); 14 regular members, no
@@ -39,7 +64,7 @@ older plan disagree, this file wins for ownership and order of work.
   kernel panic or an M1 panic. **The m1n1 screen shows the Mac's serial-number line before the handoff: never transcribe or share it.**
 * **NOT RUN:** native boot041 / attempt 24, and the fresh policy checks.
 
-### Current M5 handoff — attempt 24 / boot041: boot040 with both DART instances per dwc3 core (NOT RUN)
+### Consumed M5 handoff — attempt 24 / boot041: boot040 with both DART instances per dwc3 core (ran 2026-10-18; see the M1 result above)
 
 * **Attempt 23 consumed:** the USB DART is version 2.4; at the first bus error the fault was
   pending on instance 0, which the Stage-B DT left out, so Linux had never set it up and had no

@@ -5,6 +5,27 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M1: attempt 24 ran: both DART instances per dwc3 core removed the stall; the USB log streamed for the full ten minutes
+
+* **Discovered:** with the DT listing both DART instances per controller (`<dart0 0>, <dart1 1>`), attempts 21 and 23's stall did
+  not occur: the M1's read-only reader captured 218,079 bytes (2,580 intact records, kernel 0.065 to 604.261 s, heartbeats 000 to
+  119 with no gap) and the M5's byte counter matched the capture at every status line. The DART fault-interrupt count was 0 and
+  both pending words `pend 0/0` on all 357 port heartbeat lines; no `BUSERR`, no `translation fault`, no `nobody cared`. All six
+  DART instances are v2.4, both instances of each port were set up (`both set up`), and each shared fault line shows two
+  handlers on the screen's `/proc/interrupts` table. Linux programming DART instance 0 for the first time on this chip did not
+  freeze the SoC. The 50-domain ladder completed at 45.056 s.
+* **Implemented:** nothing in Git except this entry, the report and the coordination/AGENTS/blockers text. Local and ignored:
+  the wrapper `run-attempt24.py`, the capture script, the handoff watcher and a read-only monitor (plus a quieter one made
+  mid-run).
+* **Tested / measured (live, one attempt):** controller exit 0 in 11.197 s, handoff 03:38:34.430Z; enumeration +3.866 s, reader
+  open +4.05 s, 218,079 bytes, seven 5 s read timeouts (the reader's own), reader limit at +604.6 s; the video (600.8 s, portrait)
+  read at 20, 50, 66, 590 and 600.5 s; no M1 panic.
+* **Not verified:** bulk OUT; a console or network; throughput; stability beyond ten minutes or under load; two controllers at
+  once; which stream carries which DMA; whether attempt 18's ACM + ECM stop shared the cause. Fresh policy checks NOT CHECKED. The
+  fixed E1 probe is still NOT RUN.
+* **Next:** the M5 agent's call (the Omarchy root with the SSH link, or a bulk-OUT test; a read/write M1 client only on the M5's
+  brief); the M1 does the offline intake of whatever it publishes next, and any further attempt only on the human's go.
+
 ## 2026-10-19 · M1: attempt 24 (boot041, both DART instances per dwc3 core) offline readiness PASS (live NOT RUN)
 
 * **Discovered:** boot041 is boot040 with one device-tree change (each dwc3 core gets `iommus = <dart0 0>, <dart1 1>` and

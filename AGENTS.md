@@ -138,7 +138,17 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 24 / boot041 (boot040 with both DART instances per dwc3 core
+Latest M1 native result: **attempt 24 (boot041, boot040 with both DART instances per dwc3 core): the USB log streamed for the full
+ten minutes.** The M1's read-only reader captured 218,079 bytes (2,580 intact records, kernel 0.065 to 604.3 s, heartbeats 000 to 119
+with no gap, the M5's byte counter matching the capture at every status line) with the DART fault-interrupt count 0 and `pend 0/0` on
+all 357 port heartbeat lines, no `BUSERR`, no `translation fault`, no `nobody cared`. All six DART instances are v2.4, both instances of
+each port were set up (`both set up`; Linux programming instance 0 for the first time did not freeze the SoC), and each shared fault
+line shows two handlers; the 50-domain ladder completed at 45.056 s. The Image is byte-identical to boot040's, so the DT change removed
+the stall (Confirmed as a comparison, one passing run; Likely candidate A). Host-to-device data, a console, a network and SSH are
+untested (the reader never writes). Controller exit 0 in 11.197 s, no M1 panic. See
+`native/boot/stage-b-2026-10-18-attempt24-result.md`. The fixed E1 probe is still NOT RUN.
+
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for attempt 24 / boot041 (boot040 with both DART instances per dwc3 core
 in the Stage-B DT) on handoff `b5ef90d`: archive `ab49e307…4d28` verified against Git before extraction (GitHub's digest equal), the
 Image byte-identical to boot040's, the M1's own property-level diff of the two Stage-B DTs finds exactly six nodes changed (the three
 instance-0 DART nodes enabled, the three controllers' `iommus` extended), the Stage-B initramfs differs from boot040's only in `/init`
