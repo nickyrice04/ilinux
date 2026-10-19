@@ -5,6 +5,28 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M5: attempt 26 handed off — the M5's keyboard, switched on over SSH, on boot042 (NOT RUN)
+
+* **Decided:** attempt 25 gave the M5 SSH, the clock, web access and Claude Code but no input of its own. Attempt 26 adds the
+  internal keyboard. The user decided (2026-10-19) that it is keyboard-only: the launcher's storage guard
+  (`fdt.check_stage_b`) refuses an enabled NVMe node, and read-only storage is attempt 27, behind a separate launcher change
+  the user reviews before it is applied (`decisions.md`).
+* **Built (VM job 050, boot042):** boot041's tree plus dockchannel-hid 0001 and 0002; the keyboard path
+  (`APPLE_RTKIT_HELPER`, `APPLE_DOCKCHANNEL`, `HID_DOCKCHANNEL`, `HID_APPLE`) and the storage drivers (`NVME_APPLE`,
+  `NVME_CORE`, `APPLE_SART`) as modules, `HIDRAW` on; the Stage-B DT gains the MTP nodes and the MTP's DART (streams 0-4). Image
+  `0b6df395…b69c` (44,616,192 bytes); the package carries no storage. Omarchy root: attempt 25's with its four fixes
+  (deviations 25-31) and the keyboard modules, 2,435,320,732 bytes, `565644be…bf6f`, pinned in `omarchy-root-manifest.json` (private).
+* **Reviewed and committed:** the packager's boot042 entry (16 lines extended, 9 added, none removed; the user approved the edit),
+  its package test (9) and mutation check (25 of 25), the DT and config rules (`boot042_modules.py`, 10 tests), job 045's changes,
+  and the storage set kept apart for attempt 27. A clean export rebuilds the same archive.
+* **Tested (offline and VM, never on the M5):** `ilinux-j716c-boot042.tar.gz` 18,877,362 bytes, SHA-256 `a2e57c0c…a781`
+  (`SHA256SUMS` `60299703…3ccd`); the committed launcher (`b14ec7a1…`, unchanged) passes it with the image (upload 2,480,000,463
+  bytes, about 8 minutes, deadline 900 s); 265 tests in 17 suites pass; `mutate_mtp_input.py` 36 of 36 caught.
+* **Not verified:** everything on the M5. Unknown: whether resetting the MTP's DART disturbs the firmware iBoot started, whether the
+  MTP answers RTKit's wake, the DockChannel doorbell, which stream the MTP uses.
+* **Next:** the human AirDrops the image; M1 readiness; one filmed attempt 26 with the keyboard steps. Then the storage launcher
+  change for attempt 27.
+
 ## 2026-10-19 · M1: attempt 25 ran: SSH, the clock step, web access through the M1 and a signed-in Claude Code worked on the M5 over the USB link
 
 * **Discovered:** the first data from the M1 to the M5 (bulk OUT) works: SSH over interface 1 as `omarchy` (new host key equal to the

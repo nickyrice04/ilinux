@@ -181,7 +181,7 @@ user's decision, 2026-10-19).
 
 ## Package
 
-**Packaged (2026-10-19, uncommitted) in the ignored `build/native-boot042/`.** The boot042 entry in
+**Packaged (2026-10-19) in the ignored `build/native-boot042/` and published as the prerelease `native-j716c-boot042`.** The boot042 entry in
 `native/boot/make-package.py` went in with the user's approval, additive only, as boot036 to boot041 each
 added theirs: the name joins the `--name` choices and the 14 cumulative lists boot041 is in, and the baseline
 map gets boot042 → boot041 (16 lines extended); 9 lines are new: the allowed changes (`Image`, the Stage-B DT,
@@ -204,14 +204,14 @@ storage: no module or script, and an Image with no NVMe, SART or nvme-core code.
 | `test_boot042_rule.py` | 10 of 10 |
 | `mutate_boot042.py` (after `mutate_mtp_input.py`) | 25 mutants, 25 caught: 20 in `boot042_modules.py` (the DT rule and its streams, the config delta, the revealed lines and kept drivers, the Image digest and its markers, each check of `check_package`) and 5 in the packager entry (the call, wider allowed changes, another baseline, the record's fields and history) |
 | `mutate_mtp_input.py` with the entry | 36 mutants, 36 caught, as without it (the entry repeats none of its targets) |
-| every other `native/boot` suite (the repository, boot042's records and pin in place) | all pass: 265 tests in 17 suites; four suites (`test_dapf_guard_adt.py`, `test_framebuffer_fixup.py`, `test_launcher_adt.py`, `test_protocol.py`) need m1n1's Python client and cannot start here, as before |
+| every other `native/boot` suite (the repository, boot042's records and pin in place) | all pass: 265 tests in 17 suites; four files do not run on this Mac, as before: `test_dapf_guard_adt.py`, `test_launcher_adt.py` and `test_protocol.py` need m1n1's Python client, and `test_framebuffer_fixup.py` is a command-line tool that needs an m1n1 build and its arguments |
 | the committed launcher's offline run (`b14ec7a1…`) from the repository, `--profile omarchy`, the job 045 image, with boot042's records and pin in `native/boot/` | **exit 0**, the seven lines of the checklist; upload 2,480,000,463 bytes, 496.0 s at 5 MB/s (475.1 s at attempt 22's measured 5.22 MB/s), deadline 900 s |
 
 Not run here: the M1's `verify-package` receipt (it needs the M1's m1n1 client pin) and the launcher's
-prepared-DT check (`Hardware DT`, at launch). The handoff's records, the root's pin and the pin-bound
-`test_ramroot.py` change have been in `native/boot/` since 19:35, put there by another session (byte for byte
-the files above and `kernel/experiments/boot042-modules/handoff/test_ramroot-boot042.diff`; this session left
-them as the user asked). Left for the handoff: the prerelease, the checklist and the coordination files.
+prepared-DT check (`Hardware DT`, at launch). At the handoff (2026-10-19) the coordinating session copied the
+records and the root's pin into `native/boot/`, applied the pin-bound `test_ramroot.py` change, published the
+prerelease (target `a1cc21a`; GitHub's digest and a fresh download both match `a2e57c0c…a781`) and made the
+draft the attempt-26 checklist, `tools/m1n1-client/stage-b-instructions.md`.
 
 ## NOT RUN / Unknown
 
@@ -246,16 +246,17 @@ The packaged files are extracted to `build/native-boot042/verified/` for the pac
 ## Files
 
 * New: this report; `kernel/experiments/boot042-modules/` (`check_config_delta.py`, `check_facts.py`,
-  `module_sets.py`, `handoff/`: what is left for the handoff); `kernel/experiments/nvme-ans3/storage-ro/`;
+  `module_sets.py`, `handoff/`: how it was packaged); `kernel/experiments/nvme-ans3/storage-ro/`;
   `native/boot/boot042_modules.py`, `test_boot042_rule.py`, `test_boot042_package.py`, `mutate_boot042.py`,
   `boot041-package-manifest.json` (boot041's record, the packager's baseline for boot042);
   `virtualization/jobs/050-boot042-keyboard/`; job 045's `test-wait-usb-host.sh` and its new link-overlay
-  files; `tools/m1n1-client/stage-b-attempt26-draft.md`.
+  files; the checklist, `tools/m1n1-client/stage-b-instructions.md` (first the draft `stage-b-attempt26-draft.md`).
 * Changed: `native/boot/make-package.py` (the boot042 entry, with the user's approval: 16 lines extended with
   the name, 9 added); `native/boot/mtp_input.py` (an optional `sids` argument; boot037's behaviour unchanged);
   job 045's `link.sh`, `run.sh` and link test; `omarchy-arm64/omarchy-root-report-2026-10-17.md` (deviations
   22 and 25-31); `kernel/experiments/mtp-input/README.md`.
-* Untouched: `native/boot/launch.py`, `fdt.py`, `package-manifest.json`, `omarchy-root-manifest.json`,
-  `archive-sha256.txt`, `intake-manifest-sha256.txt`, `test_ramroot.py` (the records, the pin and the
-  pin-bound test change wait for the handoff), `tools/m1n1-client/stage-b-instructions.md`, the controller
-  files.
+* Changed at the handoff: `native/boot/package-manifest.json`, `archive-sha256.txt` and
+  `intake-manifest-sha256.txt` (boot042's), `omarchy-root-manifest.json` (the pin for boot042's Image),
+  `test_ramroot.py` (its one pin-bound assertion) and `tools/m1n1-client/stage-b-instructions.md` (the
+  attempt-26 checklist).
+* Untouched: `native/boot/launch.py` (`b14ec7a1…`), `fdt.py` (`ee577a08…`) and the other controller files.

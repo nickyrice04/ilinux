@@ -304,15 +304,18 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Latest M5 handoff: **attempt 25, Omarchy itself with the USB link and Claude Code,
-on boot041 (NOT RUN)**. boot041's package (attempt 24's link, unchanged) with the
-launcher's `omarchy` profile and the job 045 root built with the link: two
-`gser` interfaces (the journal and an SSH byte pipe for `omarchy`, key-only),
-the M1's web relay, a clock helper, Claude Code installed signed out and
-Omarchy's passwordless-sudo grant (user-approved). Image 2,434,354,327 bytes,
-`b8eae454…66c1`, pinned in `native/boot/omarchy-root-manifest.json`; it reaches
-the M1 privately. First test of data from the M1 to the M5. Offline launcher
-check and all suites PASS. See `tools/m1n1-client/stage-b-instructions.md`.
+Latest M5 handoff: **attempt 26, the M5's keyboard switched on over SSH, on boot042
+(NOT RUN)**. boot042 is boot041 with the MTP keyboard path and the storage drivers built
+as modules, and the MTP nodes and its DART in the Stage-B DT; m1n1, the generic DT and both
+initramfs are boot041's. The one change at boot is the DART driver's reset of the MTP's
+DART; then `sudo ilinux-keyboard` loads four modules from the SSH session one at a time,
+each with its own go/no-go, and the human types on the M5. The Omarchy root is attempt 25's
+with its four fixes and the keyboard modules (2,435,320,732 bytes, `565644be…bf6f`, pinned
+in `native/boot/omarchy-root-manifest.json`); it reaches the M1 privately. No storage in
+this attempt: the launcher refuses an enabled NVMe node, and read-only storage is attempt
+27, behind a separate launcher change the user reviews (`decisions.md`, 2026-10-19).
+Prerelease `native-j716c-boot042` (`a2e57c0c…a781`); launcher unchanged (`b14ec7a1…`);
+offline launcher check and all suites PASS. See `tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder

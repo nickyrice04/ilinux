@@ -6,6 +6,29 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt 26: the M5's keyboard, switched on over SSH, on boot042 (NOT RUN)
+
+* **Attempt 25 consumed:** SSH, the clock step, web access through the M1 and a signed-in Claude Code worked on the M5
+  over the USB link (see the M1 result below). The machine still has no input of its own.
+* **Attempt 26 = boot042** (prerelease `native-j716c-boot042`, 18,877,362 bytes, SHA-256 `a2e57c0c…a781`, its
+  `SHA256SUMS` `60299703…3ccd`) **with the launcher's `omarchy` profile** (unchanged, `b14ec7a1…`) **and the Omarchy root
+  for boot042's Image** (VM job 045 with `LINK=1 CLAUDE=1 NOPASSWD=1`: attempt 25's root, its four fixes and the keyboard
+  modules; 2,435,320,732 bytes, SHA-256 `565644bed5aa2d2c7ab594868447c74a33fd9317c6269c3c52570eef86d3bf6f`, pinned in
+  `native/boot/omarchy-root-manifest.json`). boot042 is boot041 with three files changed (`Image`, `kernel.config`, the
+  Stage-B DT): the MTP keyboard path and the storage drivers are modules, and the DT gains the MTP nodes and the MTP's DART.
+* **One hardware change at boot:** the built-in DART driver probes the MTP's DART and resets it. Everything else waits for
+  the SSH session: `sudo ilinux-keyboard` loads four modules one at a time, each with its own go/no-go, and the human types
+  on the M5.
+* **No storage in this attempt** (user decision, 2026-10-19; `decisions.md`): the launcher's guard refuses an enabled NVMe
+  node, and the package keeps it disabled with no storage code in its Image. Read-only storage is attempt 27, behind a
+  separate launcher change the user reviews before it is applied.
+* **Offline:** the committed launcher passes boot042 with the image; 265 tests in 17 suites pass; the packager's boot042
+  entry has a package test (9) and a mutation check (25 of 25).
+* **The image travels privately:** the human AirDrops it to the M1 (`build/ramroot045-boot042/`, ignored). Never commit or
+  publish it.
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 26): the offline intake (package, delta, image, launcher
+  run), then one filmed boot with the reader on the journal, the SSH session and the keyboard steps.
+
 ### Current M1 result — attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041): the first data from the M1 to the M5 works; SSH, the clock step, web access through the M1 and a signed-in Claude Code on the M5 all ran
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 476.492 s, upload 473.0 s at 5.24 MB/s, handoff 2026-10-19T04:52:29.303Z,

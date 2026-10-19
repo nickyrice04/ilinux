@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot041",
+  "package": "ilinux-j716c-boot042",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
-  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038; USB control channel: gadget stack built in, dwc3 peripheral cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear initramfs (kernel/experiments/usb-gadget); job-041; boot040's Image byte for byte (the apple-dart fault-report patches of kernel/experiments/usb-gadget/dart-diag, parts 1 and 2) and its bulk-only gser log port; after attempt 23 the Stage-B DT gives each dwc3 core both DART instances of its port, iommus = <dart0 0>, <dart1 1>, as Asahi wires them (instance 0 enabled without power-domains, with a new phandle; nothing else in the DT changes); /init keeps boot040's DART lines and names both instances, says at bind whether the kernel set them up on one table, and shows both pending-fault words in the short [usbN] lines; config, m1n1 and the generic files identical to boot040; job-041",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038; USB control channel: gadget stack built in, dwc3 peripheral cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear initramfs (kernel/experiments/usb-gadget); job-041; boot041's tree, DT wiring and diagnostic initramfs; the MTP keyboard path (kernel/experiments/mtp-input: driver-contracts dockchannel-hid 0001 + patches/0002 ring transport) built as loadable modules, loaded over SSH one at a time, with HIDRAW built in; the storage drivers (NVMe, SART) also built as modules, none of them in this package: they, the nvme-core read-only patch and the load script are attempt 27's separate set, and the Image has none of their code; the Stage-B DT adds the MTP nodes with DART streams 0-4 and keeps the NVMe node disabled; job-050",
   "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
   "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
   "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
@@ -12,8 +12,8 @@
   "m1n1_dt_pointer_offset": 1140024,
   "files": {
     "Image": {
-      "size": 44681728,
-      "sha256": "a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9"
+      "size": 44616192,
+      "sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c"
     },
     "t6050-j716c.dtb": {
       "size": 61326,
@@ -24,12 +24,12 @@
       "sha256": "15565c4bc7371dd40ce6387305af40391140fda5a871e9012aebd65e95162618"
     },
     "kernel.config": {
-      "size": 321820,
-      "sha256": "caa8e71a095aca35024688ced8025a8cc03925e641e3988587627d7f5f3e3887"
+      "size": 321837,
+      "sha256": "4f137b37f299d12da7b051e3185532cb34c80482c4f6aee7f6148c37bd9f09f9"
     },
     "t6050-j716c-stage-b.dtb": {
-      "size": 61995,
-      "sha256": "b053f248be2980e39beda4e6e001457ad7074344dc789872a4952e92773f232a"
+      "size": 63539,
+      "sha256": "17c55af9eb39ea799e254335176e9748193237dce3735f59cd286a63ea0a0405"
     },
     "initramfs-stage-b.cpio.gz": {
       "size": 2403156,
@@ -60,7 +60,7 @@
       "sha256": "7adc98d7d1fe419ab18bdb906e43eada58ede32c4059bb142682fd78d61e6e18"
     }
   },
-  "early_framebuffer_descriptor_offset": 35313552,
+  "early_framebuffer_descriptor_offset": 35215248,
   "control_channel_authorized_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK2+YOyTltYHJHc63FMW4MAp5xqsciXaCiYFSfVn3Ed8 ilinux-m1-control",
   "control_channel_function": {
     "configfs": "gser.GS0",
@@ -71,13 +71,93 @@
       "bulk OUT"
     ]
   },
+  "modules_instead_of_built_in": {
+    "config_delta": {
+      "APPLE_DOCKCHANNEL": [
+        "y",
+        "m"
+      ],
+      "HID_DOCKCHANNEL": [
+        "y",
+        "m"
+      ],
+      "APPLE_RTKIT_HELPER": [
+        "n",
+        "m"
+      ],
+      "HID_APPLE": [
+        "n",
+        "m"
+      ],
+      "HID_MAGICMOUSE": [
+        "n",
+        "m"
+      ],
+      "HIDRAW": [
+        "n",
+        "y"
+      ],
+      "NVME_APPLE": [
+        "y",
+        "m"
+      ],
+      "NVME_CORE": [
+        "y",
+        "m"
+      ],
+      "APPLE_SART": [
+        "y",
+        "m"
+      ]
+    },
+    "kept": {
+      "APPLE_DART": "y",
+      "APPLE_MAILBOX": "y",
+      "APPLE_RTKIT": "y",
+      "BLK_DEV_NVME": "m",
+      "HID": "y",
+      "MODULES": "y",
+      "MODULE_UNLOAD": "y",
+      "USB_CONFIGFS": "y",
+      "USB_LIBCOMPOSITE": "y"
+    },
+    "image_as_job_050": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
+    "contract": "native/boot/boot042_modules.py"
+  },
+  "mtp_input": {
+    "dt_nodes": [
+      "/soc/mtp@294600000",
+      "/soc/mbox@294608000",
+      "/soc/fifo@294b14000",
+      "/soc/fifo@294b14000/input@8000",
+      "/soc/fifo@294b14000/input@8000/multi-touch",
+      "/soc/fifo@294b14000/input@8000/keyboard",
+      "/soc/fifo@294b14000/input@8000/stm",
+      "/soc/fifo@294b14000/input@8000/actuator",
+      "/soc/fifo@294b14000/input@8000/tp_accel",
+      "/soc/fifo@294b14000/input@8000/tp-accel"
+    ],
+    "dart": "/soc/iommu@294800000",
+    "stream_ids": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "modules_loaded_over_ssh": [
+      "apple-rtkit-helper",
+      "apple-dockchannel",
+      "hid-apple",
+      "dockchannel-hid"
+    ]
+  },
   "dart_diagnostics": {
     "kernel_patches": [
       "kernel/experiments/usb-gadget/dart-diag/dart-diag.patch",
       "kernel/experiments/usb-gadget/dart-diag/dart-diag-2-gen22.patch"
     ],
     "apple_dart_c_after": "b3eb0da83235164e2d514c106ec134d6e24c335ba6e36e0124534fb60ca9b288",
-    "image_as_boot040": "a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9",
     "init_reads_dart_registers": "through /dev/mem, 32-bit loads, instances 0 and 1 of each port's dart-usbN, both layouts by PARAMS3 version; the pending-fault word of both every heartbeat"
   },
   "dart_wiring": {
@@ -92,6 +172,6 @@
       "/soc/usb@2aa280000",
       "/soc/usb@382280000"
     ],
-    "contract": "native/boot/usb_dt.py check_both_darts_delta"
+    "contract": "boot041's (native/boot/usb_dt.py check_both_darts_delta), unchanged"
   }
 }
