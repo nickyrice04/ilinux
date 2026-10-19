@@ -1,0 +1,183 @@
+#!/bin/bash
+# ilinux-storage-ro [--transport apple|pci] [--modules DIR] [--read-mib N]   (storage set; NOT in the attempt-26 image)
+# Switches the internal SSD on from the SSH session, read-only by construction, one module at a time, and
+# reports the controller's identity, the partition table and one short read. Run as root (sudo).
+#   --transport apple (the M5: apple-sart, nvme-core, nvme-apple) or pci (the VM test: nvme-core, nvme)
+#   --modules DIR      the storage set's modules and SHA256SUMS (default /usr/local/lib/ilinux/storage-set)
+#   --read-mib N       how much the short read reads from the start of the disk (default 16)
+# Steps; each prints PASS or FAIL, the first FAIL stops the run with "RESULT: FAIL at step N: ...":
+#   0  preconditions: boot042's kernel; the modules' digests; nvme-core is the build whose read-only
+#      mode cannot be turned off (a load that asks for ilinux_read_only=0 fails; insmod applies no
+#      modprobe option anyway); no NVMe module loaded and no NVMe block device yet; nothing mounted
+#      from one; no fstab or crypttab line names one; with udev running, the storage set's rule
+#      (udisks ignores NVMe devices);
+#      for the apple transport, the controller's device-tree node enabled
+#   1  apple-sart (apple transport): the SART bound
+#   2  nvme-core: loaded, and /sys/module/nvme_core/parameters/ilinux_read_only is Y before any
+#      controller exists (else nvme-core is unloaded again and the run stops)
+#   3  nvme-apple (or nvme): the controller bound, its namespace present
+#   4  read-only: the disk and every partition read-only (sysfs, BLKROGET), nothing mounted from it
+#   5  identity: model, firmware revision, capacity, block size (the serial number is never read)
+#   6  partition table: label type and each partition's start, size, type and name (no UUIDs)
+#   7  a short read: the first N MiB twice with O_DIRECT, timed; whether both reads agree (no digest shown)
+#   8  still read-only and nothing mounted; the kernel's refusal count; RESULT
+# The script opens block devices for reading only, loads only these modules with insmod, and changes
+# nothing else. Unloading would shut the controller down; power the machine off instead.
+set -u
+TRANSPORT=apple MODDIR=/usr/local/lib/ilinux/storage-set READ_MIB=16
+while [ $# -gt 0 ]; do
+    case "$1" in
+    --transport) TRANSPORT=${2:?}; shift ;;
+    --modules) MODDIR=${2:?}; shift ;;
+    --read-mib) READ_MIB=${2:?}; shift ;;
+    *) echo "usage: $0 [--transport apple|pci] [--modules DIR] [--read-mib N]" >&2; exit 2 ;;
+    esac
+    shift
+done
+case "$TRANSPORT" in
+apple) MODS="apple-sart nvme-core nvme-apple" ;;
+pci) MODS="nvme-core nvme" ;;
+*) echo "--transport is apple or pci" >&2; exit 2 ;;
+esac
+DT=/sys/firmware/devicetree/base
+NVMEN=$DT/soc/nvme@45dcc0000
+SARTN=$DT/soc/iommu@41dc50000
+step=0
+say() { printf '%s\n' "$*"; }
+fail() { say "  FAIL: $*"; say "RESULT: FAIL at step $step: $*"; exit 1; }
+pass() { say "  PASS: $*"; }
+klines() { dmesg 2> /dev/null | wc -l; }
+knew() { dmesg 2> /dev/null | tail -n +"$(($1 + 1))" | sed 's/^/    kernel: /'; }
+mod_loaded() { [ -d "/sys/module/$(echo "$1" | tr - _)" ]; }
+nvme_disks() { ls -d /sys/block/nvme* 2> /dev/null; }
+nvme_mounts() { findmnt -rn -o SOURCE,TARGET 2> /dev/null | grep -E '^/dev/nvme' || true; }
+ro_report() {  # every NVMe block device and partition: path and its ro flag; returns 1 if any is writable
+    local b p rc=0
+    for b in $(nvme_disks); do
+        for p in "$b" "$b"/"$(basename "$b")"p*; do
+            [ -e "$p/ro" ] || continue
+            say "    /dev/$(basename "$p"): ro=$(cat "$p/ro")"
+            [ "$(cat "$p/ro")" = 1 ] || rc=1
+        done
+    done
+    return $rc
+}
+
+say "ilinux-storage-ro: the internal SSD, read-only, transport $TRANSPORT ($(date -u +%FT%TZ))"
+[ "$(id -u)" = 0 ] || { say "RESULT: FAIL at step 0: run as root"; exit 1; }
+
+step=0; say "step 0: preconditions"
+grep -q ' (ilinux@boot042) ' /proc/version || fail "this kernel is not boot042's (job 050): $(cut -c1-100 /proc/version)"
+[ -r "$MODDIR/SHA256SUMS" ] || fail "no $MODDIR/SHA256SUMS"
+(cd "$MODDIR" && for m in $MODS; do grep "  $m.ko\$" SHA256SUMS; done | sha256sum -c --quiet -) 2>&1 | sed 's/^/    /'
+[ "${PIPESTATUS[0]}" = 0 ] || fail "a storage module does not match its digest"
+for m in $MODS; do
+    [ "$(modinfo -F vermagic "$MODDIR/$m.ko" 2> /dev/null)" = "$(modinfo -F vermagic "$MODDIR/nvme-core.ko" 2> /dev/null)" ] || fail "$m.ko: no vermagic"
+done
+modinfo -p "$MODDIR/nvme-core.ko" 2> /dev/null | grep -q '^ilinux_read_only:.*always on: a load that asks for 0 fails' ||
+    fail "this nvme-core.ko is not the build whose read-only mode cannot be turned off"
+modinfo -p "$MODDIR/nvme-core.ko" 2> /dev/null | grep -q 'control build' && fail "this nvme-core.ko is the VM control build"
+grep -q -E '(^| )nvme_core\.ilinux_read_only=' /proc/cmdline && fail "the kernel command line sets nvme_core.ilinux_read_only"
+for m in $MODS; do mod_loaded "$m" && fail "$m is loaded already"; done
+[ -z "$(nvme_disks)" ] || fail "an NVMe block device exists already: $(nvme_disks | tr '\n' ' ')"
+[ -z "$(nvme_mounts)" ] || fail "something is mounted from an NVMe device"
+grep -s -v '^[[:space:]]*#' /etc/fstab /etc/crypttab | grep -q -E 'nvme|PARTUUID|PARTLABEL' &&
+    fail "/etc/fstab or /etc/crypttab names a device this set could bring up"
+if pidof systemd-udevd > /dev/null 2>&1; then
+    [ -r /etc/udev/rules.d/60-ilinux-nvme-readonly.rules ] || fail "udev runs but the storage set's rule is not installed"
+    say "    udev: /etc/udev/rules.d/60-ilinux-nvme-readonly.rules in place"
+else
+    say "    udev: not running here (no automatic mounting either)"
+fi
+if [ "$TRANSPORT" = apple ]; then
+    [ -d "$NVMEN" ] || fail "no /soc/nvme@45dcc0000 in the device tree"
+    st=$(tr -d '\0' < "$NVMEN/status" 2> /dev/null || echo okay)
+    [ "$st" = okay ] || [ "$st" = ok ] ||
+        fail "the controller's node is '$st' in this device tree (the committed launcher requires a disabled NVMe node; this set needs a package and launcher that enable it)"
+fi
+pass "boot042, the $TRANSPORT modules' digests, nvme-core read-only by default, no NVMe device, mount or table entry yet"
+
+if [ "$TRANSPORT" = apple ]; then
+    step=1; say "step 1: apple-sart"
+    k=$(klines)
+    insmod "$MODDIR/apple-sart.ko" 2>&1 | sed 's/^/    insmod: /'
+    mod_loaded apple-sart || { knew "$k"; fail "apple-sart did not load"; }
+    for _ in $(seq 50); do
+        for d in /sys/bus/platform/devices/*; do
+            [ "$(readlink -f "$d/of_node" 2> /dev/null)" = "$(readlink -f "$SARTN")" ] && [ -e "$d/driver" ] && sart=$d
+        done
+        [ -n "${sart:-}" ] && break; sleep 0.1
+    done
+    knew "$k"
+    [ -n "${sart:-}" ] || fail "the SART is not bound"
+    pass "$(basename "$sart") bound"
+fi
+
+step=2; say "step 2: nvme-core (read-only mode)"
+k=$(klines)
+insmod "$MODDIR/nvme-core.ko" 2>&1 | sed 's/^/    insmod: /'
+mod_loaded nvme-core || { knew "$k"; fail "nvme-core did not load"; }
+knew "$k"
+ro=$(cat /sys/module/nvme_core/parameters/ilinux_read_only 2> /dev/null)
+if [ "$ro" != Y ]; then
+    rmmod nvme_core 2> /dev/null
+    fail "nvme-core's ilinux_read_only is '$ro', not Y: unloaded again before any controller"
+fi
+dmesg 2> /dev/null | tail -n +"$((k + 1))" | grep -q 'iLinux read-only mode' || fail "nvme-core did not announce its read-only mode"
+pass "nvme-core loaded, ilinux_read_only=Y"
+
+step=3; t=${TRANSPORT/apple/nvme-apple}; t=${t/pci/nvme}; say "step 3: $t (the controller)"
+k=$(klines)
+insmod "$MODDIR/$t.ko" 2>&1 | sed 's/^/    insmod: /'
+mod_loaded "$t" || { knew "$k"; fail "$t did not load"; }
+for _ in $(seq 300); do [ -e /sys/block/nvme0n1 ] && break; sleep 0.1; done
+sleep 1
+knew "$k"
+[ -e /sys/block/nvme0n1 ] || fail "no namespace (nvme0n1) within 30 s"
+pass "controller up, namespace nvme0n1"
+
+step=4; say "step 4: read-only"
+ro_report || fail "a block device is writable"
+for p in /dev/nvme0n1 /dev/nvme0n1p*; do
+    [ -b "$p" ] || continue
+    [ "$(blockdev --getro "$p")" = 1 ] || fail "$p: BLKROGET says writable"
+done
+[ -z "$(nvme_mounts)" ] || fail "something mounted an NVMe device: $(nvme_mounts | tr '\n' ' ')"
+pass "the disk and every partition read-only; nothing mounted"
+
+step=5; say "step 5: identity"
+c=/sys/class/nvme/nvme0
+say "    model: $(cat "$c/model" 2> /dev/null | sed 's/ *$//')"
+say "    firmware: $(cat "$c/firmware_rev" 2> /dev/null | sed 's/ *$//')"
+say "    state: $(cat "$c/state" 2> /dev/null), transport: $(cat "$c/transport" 2> /dev/null)"
+sectors=$(cat /sys/block/nvme0n1/size); lbs=$(cat /sys/block/nvme0n1/queue/logical_block_size)
+say "    capacity: $((sectors * 512)) bytes ($((sectors * 512 / 1000000000)) GB), logical block $lbs bytes"
+[ "$sectors" -gt 0 ] || fail "the namespace has no capacity"
+pass "identity read (the serial number is not read)"
+
+step=6; say "step 6: partition table"
+dump=$(sfdisk -d /dev/nvme0n1 2>&1) || fail "sfdisk could not read the table: $(echo "$dump" | head -2 | tr '\n' ' ')"
+echo "$dump" | grep -v -E '^(label-id|device):' | sed -E 's/, *uuid=[0-9A-Fa-f-]+//; s/^/    /'
+n=$(echo "$dump" | grep -c '^/dev/nvme0n1p' || true)
+pass "$(echo "$dump" | sed -n 's/^label: //p') table, $n partitions (UUIDs left out)"
+
+step=7; say "step 7: a short read (${READ_MIB} MiB from the start, twice, O_DIRECT)"
+sums=
+for i in 1 2; do
+    t0=$(date +%s.%N)
+    s=$(dd if=/dev/nvme0n1 bs=1M count="$READ_MIB" iflag=direct status=none | sha256sum) || fail "read $i failed"
+    t1=$(date +%s.%N)
+    say "    read $i: $READ_MIB MiB in $(awk -v a="$t0" -v b="$t1" 'BEGIN {printf "%.3f s, %.1f MB/s", b - a, '"$READ_MIB"' * 1.048576 / (b - a)}')"
+    sums="$sums ${s%% *}"
+done
+set -- $sums
+[ "$1" = "$2" ] || fail "the two reads differ"
+pass "both reads agree"
+
+step=8; say "step 8: still read-only"
+ro_report || fail "a block device became writable"
+[ -z "$(nvme_mounts)" ] || fail "something mounted an NVMe device"
+r=$(dmesg 2> /dev/null | grep -c 'iLinux read-only: refused' || true)
+say "    kernel refusals so far: $r"
+pass "read-only, nothing mounted"
+say "RESULT: PASS: the internal SSD is up read-only ($TRANSPORT transport); identity, table and a $READ_MIB MiB read done; nothing written"

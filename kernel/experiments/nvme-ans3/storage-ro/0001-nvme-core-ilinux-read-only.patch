@@ -1,0 +1,207 @@
+nvme-core: iLinux read-only mode for an internal drive's first bring-up (never booted)
+
+Applies on the pinned Asahi tree (77cb8f24); touches drivers/nvme/host/core.c
+only, so it changes nvme-core.ko and nothing built into the kernel when
+NVME_CORE is a module (boot042).
+
+For the first runs of the M5's internal SSD the host must never change it.
+In this build nvme-core always:
+
+  - makes every namespace read-only (nvme_ns_is_readonly(), the one place all
+    three set_disk_ro() calls ask), so writes through the block device fail
+    with EPERM and file systems mount read-only or not at all;
+  - refuses in nvme_setup_cmd(), before the transport maps data or submits
+    anything, every request that is not a read and every passthrough command
+    outside a short allowlist: on a namespace Read alone; on the admin queue
+    queue creation and deletion, Identify, Get Log Page, Get Features, Abort,
+    Asynchronous Event Request, Keep Alive, Doorbell Buffer Config, and Set
+    Features for the features the driver sets itself, never with Save. The
+    request ends with BLK_STS_NOTSUPP (EOPNOTSUPP) and a rate-limited
+    "iLinux read-only: refused ..." line names it.
+
+nvme_setup_cmd() is the call every transport makes for every request
+(nvme-apple's and nvme-pci's queue_rq, block-layer I/O, user and io_uring
+passthrough, the driver's own admin commands), so the check covers each path
+to a controller; the asynchronous event request, which nvme-pci and
+nvme-apple submit directly, is on the allowlist. The block layer's own
+read-only flag alone would not be enough: since 5.x bio_check_ro() only
+warns, so dirty page-cache writeback on a read-only block device still
+reaches the driver.
+
+The mode cannot be turned off. The module parameter ilinux_read_only only
+reports it: 0444, so not writable once the module is loaded, and a load that
+asks for 0 (modprobe, insmod, a modprobe.d option, the kernel command line)
+fails with EPERM, so no NVMe driver binds at all. The root that loads this
+module has passwordless sudo; without this refusal "modprobe nvme-core
+ilinux_read_only=0" would have been enough to write. Only a build with the
+ILINUX_RO_CONTROL define, made for the VM control test (which shows that
+the guarded run's refusals are this mode's) and never part of the storage
+set, accepts 0.
+
+Not for upstream (our own bring-up policy; written by an AI agent, see
+kernel/patches/t6050/README.md on Asahi's policy).
+
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -107,6 +107,53 @@
+ 	"disable protection information if it has an offset");
+ 
+ /*
++ * iLinux, not for upstream: read-only operation, for bringing up a drive whose
++ * data must not change. Every namespace is read-only, and nvme_setup_cmd()
++ * refuses, before it reaches any controller, every command that is not a read
++ * or one of the admin commands that set a controller up or report on it
++ * (nvme_ilinux_ro_allowed()). The parameter only reports the mode: it is 0444,
++ * so it cannot be written once the module is loaded, and a load that asks for
++ * it off (modprobe, insmod, modprobe.d or the kernel command line) fails with
++ * EPERM. Only a build with ILINUX_RO_CONTROL, made for the VM control test and
++ * never shipped, accepts ilinux_read_only=0.
++ */
++static bool ilinux_read_only = true;
++
++static int ilinux_read_only_set(const char *val, const struct kernel_param *kp)
++{
++	bool on = true;
++	int ret;
++
++	if (val) {
++		ret = kstrtobool(val, &on);
++		if (ret)
++			return ret;
++	}
++#ifndef ILINUX_RO_CONTROL
++	if (!on) {
++		pr_err("nvme_core: iLinux read-only mode cannot be turned off in this build\n");
++		return -EPERM;
++	}
++#endif
++	ilinux_read_only = on;
++	return 0;
++}
++
++static const struct kernel_param_ops ilinux_read_only_ops = {
++	.flags	= KERNEL_PARAM_OPS_FL_NOARG,
++	.set	= ilinux_read_only_set,
++	.get	= param_get_bool,
++};
++module_param_cb(ilinux_read_only, &ilinux_read_only_ops, &ilinux_read_only, 0444);
++#ifdef ILINUX_RO_CONTROL
++MODULE_PARM_DESC(ilinux_read_only,
++	"iLinux VM control build, never shipped: every namespace read-only unless 0 at load (default on)");
++#else
++MODULE_PARM_DESC(ilinux_read_only,
++	"iLinux: every namespace read-only; only reads and controller setup commands reach a controller (always on: a load that asks for 0 fails)");
++#endif
++
++/*
+  * nvme_wq - hosts nvme related works that are not reset or delete
+  * nvme_reset_wq - hosts nvme reset works
+  * nvme_delete_wq - hosts nvme delete works
+@@ -1083,6 +1130,69 @@
+ }
+ EXPORT_SYMBOL_GPL(nvme_cleanup_cmd);
+ 
++/*
++ * iLinux read-only mode (ilinux_read_only): the commands that may still reach a
++ * controller. On a namespace (ns set): Read alone, from the block layer or as a
++ * passthrough command. On the admin queue (ns NULL): queue creation and
++ * deletion, Identify, Get Log Page, Get Features, Abort, Asynchronous Event
++ * Request, Keep Alive, Doorbell Buffer Config, and Set Features only for the
++ * features this driver sets up itself (power state, number of queues, async
++ * events, autonomous power states, host memory buffer, timestamp, host
++ * behavior), never with Save. Everything else is refused: Write, Write Zeroes,
++ * Dataset Management, Flush, zone commands, Format NVM, Sanitize, firmware
++ * download and commit, namespace management and attachment, security
++ * commands, directives, self-tests and vendor commands among them.
++ */
++static bool nvme_ilinux_ro_allowed(struct nvme_ns *ns, struct request *req,
++		struct nvme_command *cmd)
++{
++	u32 cdw10;
++
++	switch (req_op(req)) {
++	case REQ_OP_READ:
++		return true;
++	case REQ_OP_DRV_IN:
++	case REQ_OP_DRV_OUT:
++		break;
++	default:
++		return false;
++	}
++
++	if (ns)
++		return cmd->common.opcode == nvme_cmd_read;
++
++	switch (cmd->common.opcode) {
++	case nvme_admin_delete_sq:
++	case nvme_admin_create_sq:
++	case nvme_admin_get_log_page:
++	case nvme_admin_delete_cq:
++	case nvme_admin_create_cq:
++	case nvme_admin_identify:
++	case nvme_admin_abort_cmd:
++	case nvme_admin_get_features:
++	case nvme_admin_async_event:
++	case nvme_admin_keep_alive:
++	case nvme_admin_dbbuf:
++		return true;
++	case nvme_admin_set_features:
++		cdw10 = le32_to_cpu(cmd->common.cdw10);
++		if (cdw10 & BIT(31))	/* SV: keep the value across power cycles */
++			return false;
++		switch (cdw10 & 0xff) {
++		case NVME_FEAT_POWER_MGMT:
++		case NVME_FEAT_NUM_QUEUES:
++		case NVME_FEAT_ASYNC_EVENT:
++		case NVME_FEAT_AUTO_PST:
++		case NVME_FEAT_HOST_MEM_BUF:
++		case NVME_FEAT_TIMESTAMP:
++		case NVME_FEAT_HOST_BEHAVIOR:
++			return true;
++		}
++		return false;
++	}
++	return false;
++}
++
+ blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req)
+ {
+ 	struct nvme_command *cmd = nvme_req(req)->cmd;
+@@ -1091,6 +1201,18 @@
+ 	if (!(req->rq_flags & RQF_DONTPREP))
+ 		nvme_clear_nvme_request(req);
+ 
++	if (unlikely(ilinux_read_only) && !nvme_ilinux_ro_allowed(ns, req, cmd)) {
++		if (blk_rq_is_passthrough(req))
++			dev_warn_ratelimited(nvme_req(req)->ctrl->device,
++				"iLinux read-only: refused %s command, opcode 0x%02x\n",
++				ns ? "I/O" : "admin", cmd->common.opcode);
++		else
++			dev_warn_ratelimited(nvme_req(req)->ctrl->device,
++				"iLinux read-only: refused %s request\n",
++				blk_op_str(req_op(req)));
++		return BLK_STS_NOTSUPP;
++	}
++
+ 	switch (req_op(req)) {
+ 	case REQ_OP_DRV_IN:
+ 	case REQ_OP_DRV_OUT:
+@@ -2165,7 +2287,8 @@
+ 
+ static bool nvme_ns_is_readonly(struct nvme_ns *ns, struct nvme_ns_info *info)
+ {
+-	return info->is_readonly || test_bit(NVME_NS_FORCE_RO, &ns->flags);
++	return ilinux_read_only || info->is_readonly ||
++		test_bit(NVME_NS_FORCE_RO, &ns->flags);
+ }
+ 
+ static inline bool nvme_first_scan(struct gendisk *disk)
+@@ -5447,6 +5570,8 @@
+ 	result = nvme_init_auth();
+ 	if (result)
+ 		goto destroy_ns_chr;
++	if (ilinux_read_only)
++		pr_info("nvme_core: iLinux read-only mode: every namespace read-only, only reads and controller setup commands reach a controller\n");
+ 	return 0;
+ 
+ destroy_ns_chr:

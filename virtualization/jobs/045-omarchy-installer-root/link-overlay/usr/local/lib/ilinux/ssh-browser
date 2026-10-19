@@ -1,0 +1,11 @@
+#!/bin/sh
+# ssh-browser URL (job 045 LINK=1, attempt 26): $BROWSER in SSH login shells (/etc/profile.d/ilinux-ssh-browser.sh).
+# Attempt 25: Claude Code, started over SSH, opened its sign-in page through Omarchy's browser launcher in
+# Chromium on the M5's own screen, where nobody could use it. From an SSH session a page is opened on the
+# second computer instead, so this prints the address there and opens nothing on the M5.
+{
+    echo "ssh-browser: not opening a browser on the M5's screen from an SSH session."
+    echo "Open this address on the second computer instead:"
+    for url in "$@"; do echo "  $url"; done
+} >&2
+exit 0

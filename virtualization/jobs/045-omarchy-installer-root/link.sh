@@ -85,6 +85,32 @@ stage_link() {
     fromlo etc/sudoers.d/ilinux-clock 0440
     record added "the clock helper /usr/local/lib/ilinux/set-clock and one sudo rule for it (/etc/sudoers.d/ilinux-clock: omarchy, no password, no arguments): the M5 has no clock source in this path (no RTC driver, no route for NTP), so every boot starts with a wrong clock and TLS fails; the M1 sends its clock over SSH right after connecting, before any web access"
 
+    # Attempt 25's findings (native/boot/stage-b-2026-10-19-attempt25-result.md, "For the M5").
+    # 1. Claude Code, started over SSH, opened its sign-in page in Chromium on the M5's own screen, through
+    #    the BROWSER Omarchy's interactive shell sets (omarchy-launch-browser).
+    fromlo etc/profile.d/ilinux-ssh-browser.sh 0644
+    fromlo usr/local/lib/ilinux/ssh-browser 0755
+    grep -q 'export BROWSER="${BROWSER:-omarchy-launch-browser}"' "$C/usr/share/omarchy/default/bash/envs" ||
+        { echo "Omarchy's bash envs no longer keep a BROWSER that is already set"; return 1; }
+    record added "SSH sessions open no browser on the M5 (/etc/profile.d/ilinux-ssh-browser.sh: in a login shell with SSH_CONNECTION set, BROWSER=/usr/local/lib/ilinux/ssh-browser, which prints the address and opens nothing; Omarchy's default/bash/envs keeps a BROWSER that is already set): in attempt 25, claude started over SSH opened its sign-in page in Chromium on the M5's screen, where nobody could use it; the desktop session has no SSH_CONNECTION and keeps Omarchy's omarchy-launch-browser"
+    # 2. archlinux-keyring-wkd-sync starts right after the clock step and fails every 300 s (gpg's WKD
+    #    lookups use no proxy and the M5 has no route): 75% of attempt 25's journal.
+    [ -e "$C/usr/lib/systemd/system/archlinux-keyring-wkd-sync.timer" ] ||
+        { echo "no archlinux-keyring-wkd-sync.timer in the root"; return 1; }
+    systemctl --root="$C" mask archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service > /dev/null 2>&1
+    [ "$(readlink "$C/etc/systemd/system/archlinux-keyring-wkd-sync.timer")" = /dev/null ]
+    record changed "archlinux-keyring-wkd-sync.timer and .service masked: the clock step makes the timer fire at once, and gpg's WKD lookups cannot reach the web here (no route; they ignore the proxy), so the unit failed and was restarted every 300 s, about 1,200 journal lines each time, 75% of attempt 25's journal; the keyring itself is the one the image's first boot makes"
+    # 3. On the ports with no cable, sshd -i timed out after its 45 s login grace and was restarted, three
+    #    journal lines every 47 s per port.
+    fromlo usr/local/lib/ilinux/wait-usb-host 0755
+    fromlo etc/systemd/system/ilinux-sshd-tty@.service.d/20-ilinux-wait-host.conf 0644
+    record changed "sshd on a USB port starts only once a host has configured that port (ilinux-sshd-tty@.service.d/20-ilinux-wait-host.conf: ExecStartPre /usr/local/lib/ilinux/wait-usb-host, silent while it waits, TimeoutStartSec=infinity; SuccessExitStatus=3, the login grace time's exit since OpenSSH 9.8): in attempt 25 the two uncabled ports restarted sshd 19 times each, three journal lines per 47 s; on the cabled port nothing changes once the M1 has selected the configuration"
+    # 4. Chromium's component updater fetched about 31 MB through the M1's relay at its first run.
+    fromlo etc/chromium/policies/managed/ilinux-component-updates.json 0644
+    grep -a -q '/etc/chromium/policies' "$C/usr/lib/chromium/chromium" ||
+        { echo "the chromium binary does not read /etc/chromium/policies"; return 1; }
+    record added "Chromium's component updates off (/etc/chromium/policies/managed/ilinux-component-updates.json: ComponentUpdatesEnabled false, Chromium's managed policy): in attempt 25 its updater fetched about 31 MB of components through the M1's relay, which carries the M5's whole web"
+
     # Checks on the files as the root's own tools read them. sshd needs a host key to test its
     # configuration, so a throwaway one in the chroot's /tmp (a tmpfs that goes with chroot_down).
     chroot_up "$C"
@@ -94,6 +120,10 @@ stage_link() {
     chroot "$C" /usr/bin/sshd -T -h /tmp/hostkey-check -C user=omarchy,host=m5,addr=127.0.0.1 > "$OUT/build/sshd-T-omarchy.txt" 2>&1
     chroot "$C" bash -n /usr/local/lib/ilinux/set-clock
     chroot "$C" sh -n /usr/local/lib/ilinux/usb-gadget.sh
+    chroot "$C" sh -n /usr/local/lib/ilinux/wait-usb-host
+    chroot "$C" sh -n /usr/local/lib/ilinux/ssh-browser
+    chroot "$C" sh -n /etc/profile.d/ilinux-ssh-browser.sh
+    chroot "$C" python3 -I -c 'import json, sys; json.load(open(sys.argv[1]))' /etc/chromium/policies/managed/ilinux-component-updates.json
     chroot_down "$C"
     grep -i -E '^(authorizedkeysfile|passwordauthentication|kbdinteractiveauthentication|permitrootlogin|pubkeyauthentication|usepam|logingracetime|clientaliveinterval|clientalivecountmax|setenv|hostkey) ' \
         "$OUT/build/sshd-T-omarchy.txt" | tee "$OUT/build/sshd-effective.txt"
@@ -103,6 +133,75 @@ stage_link() {
         "$C/etc/systemd/system/ilinux-sshd-tty@.service" "$C/etc/systemd/system/ilinux-ssh-hostkey.service" \
         > "$OUT/build/link-units-verify.txt" 2>&1 || true
     [ ! -e "$C/etc/ssh/ssh_host_ed25519_key" ] && [ ! -e "$C/tmp/hostkey-check" ]
+    if [ -n "$MODULES" ]; then stage_modules; fi
+}
+
+# stage_modules (LINK=1 with MODULES, attempt 26): boot042's keyboard modules (job 050's export,
+# MODULES=<its export/modules>) under /usr/lib/modules/<release>, indexed by the root's own depmod, kept
+# from loading at boot by a blacklist, and ilinux-keyboard, which loads them over SSH one at a time. The
+# trackpad and storage modules of the same build are never put here.
+stage_modules() {
+    log "modules: boot042's keyboard path, loaded only by ilinux-keyboard"
+    local man=$MODULES/manifest.json krel vermagic d n names
+    [ -f "$man" ] || { echo "no $man (MODULES must be job 050's export/modules)"; return 1; }
+    krel=$(python3 -I -c 'import json, sys; print(json.load(open(sys.argv[1]))["kernel_release"])' "$man")
+    vermagic=$(python3 -I -c 'import json, sys; print(json.load(open(sys.argv[1]))["vermagic"])' "$man")
+    [ "$(python3 -I -c 'import json, sys; print(json.load(open(sys.argv[1]))["image_sha256"])' "$man")" = "$IMAGE_SHA" ] ||
+        { echo "the modules in $MODULES are not for the Image $IMAGE_SHA"; return 1; }
+    strings -n 20 "$KERNEL" | grep -qxF "$vermagic" || { echo "vermagic '$vermagic' is not the Image's"; return 1; }
+    d=$C/usr/lib/modules/$krel
+    [ ! -e "$d" ] || { echo "$d exists already"; return 1; }
+    install -d -m 0755 "$C/usr/lib/modules"      # the root has no kernel package, so no modules directory
+    cp -a "$MODULES/keyboard-root/usr/lib/modules/$krel" "$C/usr/lib/modules/$krel"
+    (cd "$C" && sha256sum -c --quiet "$MODULES/keyboard-root/SHA256SUMS")
+    chroot "$C" depmod -a "$krel"
+    names=$(sed -E 's#^([^:]*/)?([^/:]+)\.ko:.*#\2#' "$d/modules.dep" | sort | tr '\n' ' ')
+    echo "modules.dep: $names" >> "$OUT/build/modules.txt"
+    for n in apple-rtkit-helper apple-dockchannel dockchannel-hid hid-apple; do
+        case " $names " in *" $n "*) ;; *) echo "depmod did not index $n"; return 1 ;; esac
+    done
+    if find "$C/usr/lib/modules" -name 'nvme*.ko*' -o -name 'apple-sart*.ko*' -o -name 'hid-magicmouse*.ko*' | grep -q .; then
+        echo "a storage or trackpad module is in the root"; return 1
+    fi
+    # What udev's coldplug asks for at boot, for the MTP nodes of boot042's DT (of_modalias(): name, type,
+    # each compatible): each alias resolves to its module before the blacklist is in place and to nothing
+    # after it (kmod applies a blacklist to every lookup by alias; -b also to module names); the modules
+    # still resolve by name, as ilinux-keyboard loads them. modprobe dry runs in the chroot (its /proc,
+    # /sys and /dev mounted, as kmod reads /proc/cmdline); the outputs are kept.
+    local alias want mp=$OUT/build/modules-modprobe.txt
+    : > "$mp"
+    chroot_up "$C"
+    for pass in before after; do
+        [ "$pass" = after ] && fromlo etc/modprobe.d/ilinux-boot042.conf 0644
+        for alias in 'of:NmtpT(null)Capple,t6050-mtpCapple,t6050-rtk-helper-asc4Capple,mtpCapple,rtk-helper-asc4=apple-rtkit-helper' \
+                     'of:NfifoT(null)Capple,t6050-dockchannelCapple,dockchannel=apple-dockchannel' \
+                     'of:NinputT(null)Capple,t6050-dockchannel-hidCapple,dockchannel-hid=dockchannel-hid'; do
+            want=${alias##*=}; alias=${alias%=*}
+            { echo "== $pass the blacklist: modprobe -n -v -S $krel '$alias'"; chroot "$C" modprobe -n -v -S "$krel" "$alias" 2>&1; } >> "$mp" || true
+            n=$(chroot "$C" modprobe -n -v -S "$krel" "$alias" 2>&1 | grep -c "^insmod .*/$want\.ko" || true)
+            if [ "$pass" = before ]; then
+                [ "$n" -ge 1 ] || { chroot_down "$C"; cat "$mp"; echo "the alias $alias does not resolve to $want"; return 1; }
+            else
+                [ "$n" = 0 ] || { chroot_down "$C"; cat "$mp"; echo "the blacklist does not stop $alias"; return 1; }
+                echo "coldplug $alias: resolved to $want without the blacklist, to nothing with it" >> "$OUT/build/modules.txt"
+            fi
+        done
+    done
+    for n in apple-rtkit-helper apple-dockchannel hid-apple dockchannel-hid; do
+        { echo "== by name: modprobe -n -v -S $krel $n"; chroot "$C" modprobe -n -v -S "$krel" "$n" 2>&1; } >> "$mp" || true
+        chroot "$C" modprobe -n -v -S "$krel" "$n" 2>&1 | grep -q "^insmod .*/$n\.ko" ||
+            { chroot_down "$C"; cat "$mp"; echo "modprobe $n does not resolve by name"; return 1; }
+    done
+    chroot_down "$C"
+    fromlo usr/local/bin/ilinux-keyboard 0755
+    chroot "$C" bash -n /usr/local/bin/ilinux-keyboard
+    install -d -m 0755 "$C/usr/share/ilinux"   # ramroot.sh writes build-info.txt here later
+    { echo "kernel_release $krel"; echo "vermagic $vermagic"; echo "image_sha256 $IMAGE_SHA"
+      sed 's/^/sha256 /' "$MODULES/keyboard-root/SHA256SUMS"; } > "$C/usr/share/ilinux/keyboard-modules.txt"
+    cat "$OUT/build/modules.txt" "$C/usr/share/ilinux/keyboard-modules.txt"
+    record added "boot042's keyboard modules for $krel (apple-rtkit-helper, apple-dockchannel, dockchannel-hid with the MTP ring transport, hid-apple; job 050's build, digests in /usr/share/ilinux/keyboard-modules.txt) under /usr/lib/modules/$krel, indexed by the root's depmod: boot042 builds the keyboard path as modules so that nothing of it runs at boot. Omarchy's linux-modules-cleanup keeps this directory because it is the running kernel's (%v)"
+    record added "/etc/modprobe.d/ilinux-boot042.conf blacklists the four keyboard modules: udev's coldplug, which loads modules by device aliases at every boot, must not start the keyboard path (checked: the MTP nodes' aliases load nothing with the blacklist, the modules still load by name)"
+    record added "/usr/local/bin/ilinux-keyboard: run over SSH (sudo), it loads the keyboard modules one at a time with a check after each (kernel log, binding, the ring, the keyboard interface, the input device, typing on the M5), stops at the first failure and changes nothing else"
 }
 
 stage_claude() {

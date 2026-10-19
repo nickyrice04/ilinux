@@ -75,10 +75,11 @@ def _phandle(node):
     return struct.unpack(">I", value)[0]
 
 
-def new_nodes(aic, handle):
+def new_nodes(aic, handle, sids=SIDS):
     """The exact property dict of every new node. `aic` is the AIC phandle (bytes), `handle`
-    maps mtp, mbox, dock and dart to their phandle values."""
-    iommus = b"".join(cells(handle["dart"], sid) for sid in SIDS)
+    maps mtp, mbox, dock and dart to their phandle values, `sids` the MTP's stream ids (boot037:
+    SIDS; boot042: boot042_modules.SIDS)."""
+    iommus = b"".join(cells(handle["dart"], sid) for sid in sids)
     nodes = {
         MTP: {
             "compatible": strings("apple,t6050-mtp", "apple,t6050-rtk-helper-asc4",
@@ -134,8 +135,9 @@ def new_nodes(aic, handle):
     return nodes
 
 
-def check_delta(before, after):
-    """Raise unless `after` is exactly `before` (boot036 Stage-B) plus the boot037 DT delta."""
+def check_delta(before, after, sids=SIDS):
+    """Raise unless `after` is exactly `before` (boot036 Stage-B) plus the boot037 DT delta (with
+    `sids` as the MTP's stream ids; boot042 applies the same delta to boot041's DT)."""
     if _phandle(before.get(AIC, {})) is None:
         raise ValueError("AIC phandle missing")
     aic = before[AIC]["phandle"]
@@ -160,7 +162,7 @@ def check_delta(before, after):
     del expected[DART]["status"]
     expected[DART]["apple,dma-range"] = cells(*DMA_RANGE)
     expected[DART]["phandle"] = cells(handle["dart"])
-    expected.update(new_nodes(aic, handle))
+    expected.update(new_nodes(aic, handle, sids))
     expected["/aliases"]["keyboard"] = strings(KEYBOARD)
     if expected != after:
         differ = sorted(path for path in set(expected) | set(after) if expected.get(path) != after.get(path))

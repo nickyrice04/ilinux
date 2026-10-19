@@ -1673,3 +1673,20 @@ confirming it directly in the session that builds the image. It uses Omarchy's o
 writes it, so Omarchy's bar shows its indicator and its own `--disable` revokes it for the rest of a
 boot. The image lives only in RAM, is offline except through the M1's relay, and accepts only the
 M1's key over SSH. Nothing grants root to any other account. Recorded as deviation 24 of job 045.
+
+## 2026-10-19 · Attempt 26 is keyboard-only; read-only storage waits for a reviewed launcher change
+
+The launcher refuses any Stage-B device tree whose NVMe node, or any of its three cpufreq
+controllers, is not `status = "disabled"` (`check_stage_b` in `native/boot/fdt.py`). The check runs
+on the package's tree, on the tree m1n1 prepares and in `make-package.py`, and it is what keeps
+Linux's storage driver from binding to the internal SSD in a launcher-driven boot. Attempt 26 was
+first scoped as keyboard plus read-only storage, which a tree with storage disabled cannot deliver.
+
+The user decided on 2026-10-19 that attempt 26 is keyboard-only and that storage follows as attempt
+27 behind a separate launcher change that the user reviews before it is applied. The recommendation
+the user accepted: a keyboard problem then cannot be mistaken for a storage-controller problem, the
+NVMe controller has never run natively, and loosening a safety guard is not bundled into another
+attempt. Until the user approves that change, every shipped Stage-B tree keeps the NVMe node and
+the cpufreq controllers disabled, and the committed launcher stays byte-identical so every
+handoff's digest pins hold. Storage is prepared in full offline (modules, a write refusal in
+nvme-core, a virtual-disk test, a read-only load script) and kept out of the attempt-26 package.

@@ -337,6 +337,16 @@ matches macOS byte for byte.
 
 ## 7. Hardware experiments (NOT RUN)
 
+**2026-10-19, attempt 26 (prepared, NOT RUN): E2 now runs as boot042 over SSH, and E1 is no longer needed
+first.** boot042 (`native/boot/boot042-keyboard-modules-2026-10-19.md`, VM job 050) builds this driver and
+its helpers as modules on boot041's tree, so they load one at a time from the Omarchy root's SSH session
+(`ilinux-keyboard`, job 045's link overlay) after the USB link is up; module parameters such as
+`mtp_poll_ms=100` are passed to `modprobe` there, so the launcher's fixed arguments no longer matter. The
+DT gives the MTP DART streams 0-4 instead of 1 (the ADT remaps 1-4 to 0, and apple-dart's reset clears a
+t8110 remap), and `ilinux-keyboard` checks the DART's probe line (16 KiB pages, not locked) before loading
+anything, which answers E1's register-base and lock questions in the attempt itself. The table below is
+the original plan.
+
 All need the user's approval; the M1 agent runs them with the existing lab procedure
 (`m1-instructions.md`). Order and what each result decides:
 

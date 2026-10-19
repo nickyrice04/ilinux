@@ -173,9 +173,27 @@ and the VM test). Without them the job builds the root above, unchanged.
 | 19 | added | The operator's public key for `omarchy` (`/etc/ssh/authorized_keys.d/omarchy`, 0644); none for root | Key-only logins as the desktop user; sshd reads the file as that user |
 | 20 | added | `/etc/environment` with the M1's proxy (`HTTPS_PROXY=http://127.0.0.1:3128` …) | The web reaches the M5 only through the SSH session's reverse-forwarded proxy; set for SSH logins and the desktop session |
 | 21 | added | `/usr/local/lib/ilinux/set-clock` and its sudo rule (`omarchy`, no password, no arguments) | No clock source: every boot starts wrong, and TLS fails until the M1 sets it |
-| 22 | added | Claude Code 2.1.303, installed by running Omarchy's own wrapper once (`mise use -g claude`), signed out | `claude` starts without a first-use download |
+| 22 | added | Claude Code, installed by running Omarchy's own wrapper once (`mise use -g claude`), signed out: the release current at build time (2.1.303 in attempt 25's image, 2.1.304 in attempt 26's) | `claude` starts without a first-use download |
 | 23 | changed | mise's download store (`~/.cache/mise/downloads-cas`, 127 MB) left out | A second copy of the binary, in RAM and in every upload |
 | 24 | changed | Passwordless sudo for `omarchy` (`NOPASSWD=1`, **user-approved 2026-10-18**): Omarchy's own permanent grant, as `omarchy-sudo-passwordless permanent` writes it, `/etc/sudoers.d/99-omarchy-permanent-nopasswd-1000` (root:root 0440, exactly `omarchy ALL=(ALL) NOPASSWD: ALL`). Nothing for root or any other account; the clock rule of 21 stays, so the clock step survives a revocation | Agents inside Omarchy need sudo for pacman, loading modules and driver work, and the image has no password. The root is RAM-only, offline except through the M1's relay, and SSH takes only the operator's key. Reversible with Omarchy's own `omarchy-sudo-passwordless --disable`; boot cleanup and the settings package's hook remove only timed grants. The bar shows Omarchy's red passwordless-sudo indicator while it is on |
+
+**Attempt 26 (2026-10-19): attempt 25's four findings, in every `LINK=1` root from now on, and boot042's
+keyboard modules, only with `MODULES`** (the attempt-26 image: `LINK=1 CLAUDE=1 NOPASSWD=1
+MODULES=<job 050's export/modules>`, for boot042's Image; the preparation report is
+`native/boot/boot042-keyboard-modules-2026-10-19.md`).
+
+| # | Kind | Deviation | Forced by |
+|---|---|---|---|
+| 25 | added | SSH login shells get `BROWSER=/usr/local/lib/ilinux/ssh-browser` (`/etc/profile.d/ilinux-ssh-browser.sh`, only when `SSH_CONNECTION` is set), which prints the address and opens nothing; Omarchy's `default/bash/envs` keeps a `BROWSER` that is already set, and the desktop session keeps Omarchy's `omarchy-launch-browser` | Attempt 25: `claude` started over SSH opened its sign-in page in Chromium on the M5's own screen, where nobody could use it |
+| 26 | changed | `archlinux-keyring-wkd-sync.timer` and `.service` masked | Attempt 25: the clock step fires the timer at once, gpg's WKD lookups cannot reach the web here (no route; they use no proxy), and the unit failed and restarted every 300 s, about 1,200 journal lines each time, 75 % of the journal |
+| 27 | changed | sshd on a USB port starts only once a host has configured that port (`ilinux-sshd-tty@.service.d/20-ilinux-wait-host.conf`: `ExecStartPre=/usr/local/lib/ilinux/wait-usb-host`, silent while it waits, `TimeoutStartSec=infinity`; `SuccessExitStatus=3`, the login grace time's exit since OpenSSH 9.8) | Attempt 25: the two ports without a cable restarted sshd 19 times each, three journal lines per 47 s; on the cabled port nothing changes once the M1 has selected the configuration |
+| 28 | added | Chromium's component updates off (`/etc/chromium/policies/managed/ilinux-component-updates.json`: `ComponentUpdatesEnabled` false) | Attempt 25: the updater fetched about 31 MB through the M1's relay, which carries the M5's whole web |
+| 29 | added | boot042's keyboard modules (apple-rtkit-helper, apple-dockchannel, dockchannel-hid with the MTP ring transport, hid-apple; job 050's build, digests in `/usr/share/ilinux/keyboard-modules.txt`) under `/usr/lib/modules/<release>`, indexed by the root's own `depmod`; Omarchy's `linux-modules-cleanup` keeps the directory, which is the running kernel's | boot042 builds the keyboard path as modules so that nothing of it runs at boot; attempt 26 loads them over SSH |
+| 30 | added | `/etc/modprobe.d/ilinux-boot042.conf`: the four keyboard modules blacklisted (checked at build: the MTP nodes' aliases resolve to their modules without it and to nothing with it; the modules still load by name) | udev's coldplug loads modules by the aliases of the devices it finds at every boot and must not start the keyboard path |
+| 31 | added | `/usr/local/bin/ilinux-keyboard`: run over SSH with sudo, it loads the keyboard modules one at a time with a check after each (kernel log, binding, the ring, the keyboard interface, the input device, typing on the M5), stops at the first failure and changes nothing else | Attempt 26's procedure: one module at a time, after the link is up |
+
+No storage module is in any of these roots (the storage set of `kernel/experiments/nvme-ans3/storage-ro/`
+is kept apart; the stage refuses a root that holds one).
 
 Deviation 15's side effect (job 048, from Qt's source): Qt no longer counts a window as hidden
 when Hyprland stops sending it frame callbacks (a window on another workspace, behind the lock).

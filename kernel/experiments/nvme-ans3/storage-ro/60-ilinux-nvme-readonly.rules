@@ -1,0 +1,7 @@
+# Storage set (for an attempt after 26; NOT in the attempt-26 image): every NVMe block device and partition
+# stays read-only and out of every automatic tool. nvme-core's ilinux_read_only already makes each one
+# read-only as it appears and refuses every media-changing command; this rule adds the per-device flag,
+# keeps udisks (and with it the desktop's volume monitor) from offering or mounting them, and keeps
+# systemd from treating them as ready for mounts or checks. Sorted before 60-persistent-storage.rules,
+# 80-udisks2.rules and 99-systemd.rules, which read these values.
+ACTION=="add|change", SUBSYSTEM=="block", KERNEL=="nvme[0-9]*n[0-9]*", ENV{UDISKS_IGNORE}="1", ENV{UDISKS_AUTO}="0", ENV{SYSTEMD_READY}="0", RUN+="/usr/bin/blockdev --setro $devnode"

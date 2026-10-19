@@ -1,0 +1,30 @@
+#!/bin/sh
+# wait-usb-host TTY (job 045 LINK=1, attempt 26): ilinux-sshd-tty@TTY.service's ExecStartPre. Returns once
+# a USB host has configured the gadget whose SSH byte pipe is /dev/TTY (the UDC's state is "configured",
+# or "suspended", which a host reaches only from configured), checking every second and logging nothing.
+# Attempt 25: on the two ports with no cable, sshd -i sat out its 45 s login grace time, exited with
+# status 3 and was restarted, 19 times each, three journal lines every 47 s. A port no host has
+# configured cannot carry a connection, so its sshd now starts only when one has; on the cabled port
+# nothing changes once the M1 has selected the configuration (macOS: after the accessory prompt).
+# Gives up (exit 1, so the unit fails and is retried after RestartSec) only if no gadget owns TTY,
+# which happens only while a gadget is being torn down.
+# WAIT_USB_HOST_ROOT (tests only, test-wait-usb-host.sh; the unit sets none): a directory standing in for /.
+set -u
+tty=${1:?usage: wait-usb-host ttyGS<n>}
+n=${tty#ttyGS}
+R=${WAIT_USB_HOST_ROOT:-}
+CFG=$R/sys/kernel/config/usb_gadget
+udc=
+for g in "$CFG"/ilinux-*; do
+    [ "$(cat "$g/functions/gser.ssh/port_num" 2> /dev/null)" = "$n" ] || continue
+    udc=$(cat "$g/UDC" 2> /dev/null)
+    break
+done
+[ -n "$udc" ] || { echo "no bound gadget has /dev/$tty as its SSH pipe" >&2; exit 1; }
+while :; do
+    case "$(cat "$R/sys/class/udc/$udc/state" 2> /dev/null)" in
+    configured|suspended) exit 0 ;;
+    esac
+    [ -e "$R/sys/class/udc/$udc" ] || { echo "UDC $udc is gone" >&2; exit 1; }
+    sleep 1
+done

@@ -282,6 +282,65 @@ else
     say "sudo: only the clock helper without arguments ($(echo "$out" | tr '\n' ' ' | cut -c1-140))"
 fi
 
+# ---- attempt 25's findings (attempt 26 image) ------------------------------------------------------------------
+# 1. An SSH login shell, as the human's interactive session is, opens no browser on the M5: BROWSER is the
+#    printing stand-in, the desktop session keeps Omarchy's, and no Chromium starts.
+if [ -e /etc/profile.d/ilinux-ssh-browser.sh ]; then
+    m5 browser 'bash -lic '\''echo "BROWSER=$BROWSER"; "$BROWSER" https://example.invalid/ilinux-browser-test; echo "browser exit $?"'\'' 2>&1' ||
+        fail "the browser session failed: $(tail -3 /tmp/ssh-browser.err | tr '\n' ' ')"
+    case "$out" in *"BROWSER=/usr/local/lib/ilinux/ssh-browser"*) ;; *) fail "an SSH login shell's BROWSER is not the stand-in: $(echo "$out" | grep '^BROWSER=')" ;; esac
+    case "$out" in *"not opening a browser on the M5"*"https://example.invalid/ilinux-browser-test"*"browser exit 0"*) ;;
+        *) fail "the stand-in did not print the address: $(echo "$out" | tr '\n' ' ' | cut -c1-200)" ;; esac
+    sleep 3
+    pgrep -u "$U" -f 'example\.invalid/ilinux-browser-test' > /dev/null && fail "a browser started on the desktop with the address"
+    journalctl -b -q --no-pager -o cat 2> /dev/null | grep -q 'uwsm-app.*example\.invalid' && fail "the desktop launched a browser for the address"
+    deskb=$(as_desktop sh -c 'echo "${BROWSER:-unset}"')
+    [ "$deskb" != /usr/local/lib/ilinux/ssh-browser ] || fail "the desktop session got the SSH stand-in as BROWSER"
+    say "attempt 25 fix 1: an SSH login shell's BROWSER is /usr/local/lib/ilinux/ssh-browser, which printed the address and opened nothing (no process and no uwsm-app launch with it); the desktop session's BROWSER: $deskb"
+    # 2. archlinux-keyring-wkd-sync stays quiet through this boot's two clock steps.
+    [ "$(systemctl is-enabled archlinux-keyring-wkd-sync.timer 2>&1)" = masked ] &&
+        [ "$(systemctl is-enabled archlinux-keyring-wkd-sync.service 2>&1)" = masked ] || fail "archlinux-keyring-wkd-sync is not masked"
+    n=$(journalctl -b -q --no-pager -o cat -u archlinux-keyring-wkd-sync.service 2> /dev/null | grep -c . || true)
+    [ "$n" = 0 ] || fail "archlinux-keyring-wkd-sync logged $n lines this boot"
+    # 3. sshd on the pipe waits for a configured host (the drop-in is in effect), and its login grace exit is clean.
+    case "$(systemctl show -p ExecStartPre --value "$sunit")" in *wait-usb-host*) ;; *) fail "$sunit has no wait-usb-host ExecStartPre" ;; esac
+    [ "$(systemctl show -p TimeoutStartUSec --value "$sunit")" = infinity ] || fail "$sunit has a start timeout"
+    case " $(systemctl show -p SuccessExitStatus --value "$sunit") " in *" 3 "*) ;; *) fail "status 3 is not a success for $sunit" ;; esac
+    # 4. Chromium's component updates are off by managed policy.
+    python3 -I -c 'import json, sys; assert json.load(open(sys.argv[1])) == {"ComponentUpdatesEnabled": False}' \
+        /etc/chromium/policies/managed/ilinux-component-updates.json || fail "the Chromium policy file is not the expected one"
+    say "attempt 25 fixes 2-4: wkd-sync masked and silent through the clock steps; $sunit: ExecStartPre wait-usb-host, no start timeout, status 3 a success; Chromium policy ComponentUpdatesEnabled false"
+fi
+
+# ---- boot042's keyboard modules (MODULES): in place, not loaded at boot, loadable by name; ilinux-keyboard stops
+# at its first check here, where the device tree has no MTP ---------------------------------------------------------
+KM=/usr/share/ilinux/keyboard-modules.txt
+if [ -r "$KM" ]; then
+    krel=$(sed -n 's/^kernel_release //p' "$KM")
+    [ "$(uname -r)" = "$krel" ] || fail "the modules are for $krel, this kernel is $(uname -r)"
+    (cd / && sed -n 's/^sha256 //p' "$KM" | sha256sum -c --quiet -) || fail "a keyboard module does not match its digest"
+    [ -s "/usr/lib/modules/$krel/modules.dep" ] || fail "no modules.dep for $krel (linux-modules-cleanup?)"
+    systemctl is-failed -q linux-modules-cleanup.service && fail "Omarchy's linux-modules-cleanup failed"
+    kms="apple_rtkit_helper apple_dockchannel hid_apple dockchannel_hid"
+    for m in $kms; do [ ! -d "/sys/module/$m" ] || fail "$m was loaded at boot"; done
+    m5 keyboard 'sudo -n /usr/local/bin/ilinux-keyboard --no-typing 2>&1; echo "keyboard exit $?"' || true
+    case "$out" in *"RESULT: FAIL at step 0: no /soc/mtp@294600000 in the device tree"*"keyboard exit 1"*) ;;
+        *) fail "ilinux-keyboard did not stop at its first check: $(echo "$out" | tail -4 | tr '\n' ' ')" ;; esac
+    for m in $kms; do [ ! -d "/sys/module/$m" ] || fail "ilinux-keyboard loaded $m although step 0 failed"; done
+    say "keyboard modules: $krel, digests equal, none loaded at boot, linux-modules-cleanup kept them; ilinux-keyboard over SSH: $(echo "$out" | grep '^RESULT' | cut -c1-110)"
+    k0=$(dmesg | wc -l)
+    for m in apple_rtkit_helper apple_dockchannel hid_apple dockchannel_hid; do modprobe "$m" || fail "modprobe $m failed"; done
+    for m in $kms; do [ -d "/sys/module/$m" ] || fail "$m did not load"; done
+    loadedmods=$(lsmod | awk 'NR > 1 {print $1}' | grep -x -E 'apple_rtkit_helper|apple_dockchannel|hid_apple|dockchannel_hid' | tr '\n' ' ')
+    for m in dockchannel_hid hid_apple apple_dockchannel apple_rtkit_helper; do modprobe -r "$m" || fail "modprobe -r $m failed"; done
+    for m in $kms; do [ ! -d "/sys/module/$m" ] || fail "$m did not unload"; done
+    kbad=$(dmesg | tail -n +"$((k0 + 1))" | grep -i -E 'error|fail|oops|call trace|taint' || true)
+    [ -z "$kbad" ] || fail "loading the keyboard modules logged: $(echo "$kbad" | head -3 | tr '\n' ' ')"
+    m5 kstatus 'sudo -n /usr/local/bin/ilinux-keyboard --status 2>&1; echo "status exit $?"' || true
+    case "$out" in *"status exit 0"*) ;; *) fail "ilinux-keyboard --status failed: $(echo "$out" | tail -2 | tr '\n' ' ')" ;; esac
+    say "keyboard modules load on this Image by name and unload ($loadedmods), with no kernel complaint and nothing to bind here; --status: $(echo "$out" | grep -c '^module ') modules listed"
+fi
+
 # ---- the desktop session has the proxy environment ----------------------------------------------------------
 hpid=$(pgrep -u "$U" -x Hyprland | head -1)
 [ -n "$hpid" ] || fail "no Hyprland process"
@@ -317,6 +376,16 @@ for i in 1 2 3 4 5 6 7 8 9 10; do
 done
 [ "$out" = RECOVERED ] || fail "no session after the refused handshake"
 say "key-only: a login without a key is refused ($(grep -o 'Permission denied ([a-z,-]*)' /tmp/ssh-nokey.err | tail -1)); the next session worked after $(since "$t1") s (try $i)"
+
+# attempt 25 fix 3, the exit status: sshd's login grace time ends with status 3, now a clean end (no
+# "Failed with result" after it); the refused handshake above and the banner syncs cause such ends
+if [ -e /etc/systemd/system/ilinux-sshd-tty@.service.d/20-ilinux-wait-host.conf ]; then
+    g=$(journalctl -b -q --no-pager -o cat -u "$sunit" 2> /dev/null)
+    n3=$(echo "$g" | grep -A1 'status=3/' | grep -c "Failed with result" || true)
+    nd=$(echo "$g" | grep -c 'Deactivated successfully' || true)
+    [ "$n3" = 0 ] || fail "a login grace exit (status 3) still ends $sunit as failed ($n3 times)"
+    say "attempt 25 fix 3: $sunit: $nd clean ends (status 3 counted a success), no failed result after a grace exit; $(echo "$g" | grep -c 'status=255/') session ends with status 255 (sshd's ordinary disconnect, unchanged)"
+fi
 
 mine=$(systemctl --failed --no-legend --plain | awk '{print $1}' | grep '^ilinux-' | tr '\n' ' ')
 [ -z "$mine" ] || fail "failed ilinux units: $mine"

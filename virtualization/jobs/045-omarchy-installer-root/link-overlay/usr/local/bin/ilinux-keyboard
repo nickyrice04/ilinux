@@ -1,0 +1,222 @@
+#!/bin/bash
+# ilinux-keyboard [--poll MS] [--type-seconds S] [--no-typing] | --status (job 045 LINK=1 with MODULES, attempt 26)
+# Switches the M5's internal keyboard on from the SSH session, one module at a time, after the USB link is
+# up; run as root (sudo ilinux-keyboard). boot042 builds the keyboard path as modules and the image blocks
+# their automatic loading (/etc/modprobe.d/ilinux-boot042.conf), so nothing of it has run since boot except
+# the probe of the MTP's DART (apple-dart is built in for the USB DARTs).
+#   0  preconditions: boot042's kernel and modules (digests), the MTP nodes in the device tree, the MTP
+#      DART bound with no fault since boot, none of the keyboard modules loaded yet (or, on a rerun, only
+#      those an earlier run loaded)
+#   1  apple-rtkit-helper: binds mtp@294600000, sets the MTP CPU running, wakes or boots its RTKit
+#   2  apple-dockchannel:  binds fifo@294b14000, creates input@8000
+#   3  hid-apple:          the Apple HID driver, so the keyboard does not start on hid-generic
+#   4  dockchannel-hid:    binds input@8000, registers the ring 100 ms after the first DockChannel
+#                          message, creates the interfaces the MTP announces; --poll MS adds its debug
+#                          drain timer (mtp_poll_ms)
+#   5  input devices:      the keyboard's input device and Hyprland's view of it
+#   6  typing on the M5:   the human types "omarchy" and Enter on the M5's own keyboard; only the number of
+#                          key presses and whether that word and Enter came are reported (nothing typed is
+#                          printed or kept)
+# Each step prints its kernel log lines and PASS or FAIL; the first FAIL stops the run (exit 1) with
+# "RESULT: FAIL at step N"; all steps: "RESULT: PASS". Reruns skip what is already loaded and bound.
+# --status prints the state and changes nothing. Unloading apple-rtkit-helper stops the MTP CPU: power the
+# M5 off instead (the attempt's recovery).
+set -u
+POLL= TYPE_SECONDS=90 TYPING=1 STATUS=0
+while [ $# -gt 0 ]; do
+    case "$1" in
+    --poll) POLL=${2:?--poll MS}; shift ;;
+    --type-seconds) TYPE_SECONDS=${2:?--type-seconds S}; shift ;;
+    --no-typing) TYPING=0 ;;
+    --status) STATUS=1 ;;
+    *) echo "usage: $0 [--poll MS] [--type-seconds S] [--no-typing] | --status" >&2; exit 2 ;;
+    esac
+    shift
+done
+DT=/sys/firmware/devicetree/base
+MTP=$DT/soc/mtp@294600000
+FIFO=$DT/soc/fifo@294b14000
+HIDN=$FIFO/input@8000
+DARTN=$DT/soc/iommu@294800000
+INFO=/usr/share/ilinux/keyboard-modules.txt
+MODS="apple_rtkit_helper apple_dockchannel hid_apple dockchannel_hid"
+step=0
+say() { printf '%s\n' "$*"; }
+fail() { say "  FAIL: $*"; say "RESULT: FAIL at step $step: $*"; exit 1; }
+pass() { say "  PASS: $*"; }
+klines() { dmesg 2> /dev/null | wc -l; }
+# kernel log lines since line $1, indented; the M5's journal on interface 0 has them too
+knew() { dmesg 2> /dev/null | tail -n +"$(($1 + 1))" | sed 's/^/    kernel: /'; }
+# kernel log lines since $1 that report a problem. Not counted: the DART probe's "fault IRQ" identity, and
+# the coprocessor's own log that RTKit forwards ("RTKit: syslog message: …"), which is printed but is the
+# firmware's wording, not a kernel error (an RTKit crash is reported separately and is counted)
+kbad() {
+    dmesg 2> /dev/null | tail -n +"$(($1 + 1))" | grep -i -E 'error|fail|crash|timed out|timeout|oops|call trace|bug:|warning:|unable to|fault' |
+        grep -v -E 'fault IRQ|fault layout|RTKit: syslog message|ring registration failed: .* \(draining anyway\)$' || true
+}
+# platform device of a DT node (by its of_node link), or nothing (also for a node that does not exist)
+dev_of() {
+    local d node o
+    [ -d "$1" ] || return 0
+    node=$(readlink -f "$1")
+    for d in /sys/bus/platform/devices/*; do
+        o=$(readlink -f "$d/of_node" 2> /dev/null) || continue
+        [ -n "$o" ] && [ "$o" = "$node" ] && { echo "$d"; return; }
+    done
+}
+driver_of() { [ -n "$1" ] && [ -e "$1/driver" ] && basename "$(readlink -f "$1/driver")"; }
+loaded() { [ -d "/sys/module/$1" ]; }
+wait_bound() {  # wait_bound NODE SECONDS: the bound platform device of NODE within SECONDS
+    local i d
+    for i in $(seq $(($2 * 10))); do
+        d=$(dev_of "$1")
+        [ -n "$d" ] && [ -e "$d/driver" ] && { echo "$d"; return 0; }
+        sleep 0.1
+    done
+    return 1
+}
+# load NAME [PARAMS]: modprobe by name (the image's blacklist only stops loading by alias)
+load() {
+    local name=$1; shift
+    if loaded "$name"; then say "  $name: already loaded"; return 0; fi
+    modprobe "$name" "$@" 2>&1 | sed 's/^/    modprobe: /'
+    loaded "$name"
+}
+
+if [ "$STATUS" = 1 ]; then
+    say "kernel $(uname -r): $(cut -d' ' -f1-3 /proc/version)"
+    for m in $MODS; do loaded "$m" && say "module $m: loaded" || say "module $m: not loaded"; done
+    for n in "$DARTN" "$MTP" "$FIFO" "$HIDN"; do
+        d=$(dev_of "$n"); say "${n#"$DT"}: ${d:+$(basename "$d")} driver ${d:+$(driver_of "$d")}"
+    done
+    grep -B1 -A6 -i 'kbd' /proc/bus/input/devices 2> /dev/null | grep -E '^(N|S|H):' | sed 's/^/input: /'
+    exit 0
+fi
+
+say "ilinux-keyboard: switching on the M5's keyboard path, one module at a time ($(date -u +%FT%TZ))"
+[ "$(id -u)" = 0 ] || { say "RESULT: FAIL at step 0: run as root (sudo $0)"; exit 1; }
+
+step=0; say "step 0: preconditions"
+[ -r "$INFO" ] || fail "$INFO is missing: this image was built without the keyboard modules"
+krel=$(sed -n 's/^kernel_release //p' "$INFO")
+[ "$(uname -r)" = "$krel" ] || fail "running kernel $(uname -r), the modules are for $krel"
+grep -q ' (ilinux@boot042) ' /proc/version || fail "this kernel is not boot042's (job 050): $(cut -c1-120 /proc/version)"
+(cd / && sed -n 's/^sha256 //p' "$INFO" | sha256sum -c --quiet -) 2>&1 | sed 's/^/    /'
+[ "${PIPESTATUS[0]}" = 0 ] || fail "a keyboard module does not match the image's digests"
+for n in "$MTP" "$FIFO" "$HIDN" "$HIDN/keyboard" "$DARTN"; do [ -d "$n" ] || fail "no ${n#"$DT"} in the device tree"; done
+[ "$(tr -d '\0' < "$DT/aliases/keyboard" 2> /dev/null)" = /soc/fifo@294b14000/input@8000/keyboard ] || fail "the keyboard alias is not the MTP keyboard node"
+dart=$(dev_of "$DARTN")
+[ "$(driver_of "$dart")" = apple-dart ] || fail "the MTP DART ${dart:+$(basename "$dart") }is not bound to apple-dart"
+dmesg 2> /dev/null | grep -F "${dart##*/}" | sed 's/^/    kernel: /'
+dmesg 2> /dev/null | grep -F "${dart##*/}" | grep -i -E 'fault|error' | grep -v -E 'fault IRQ|fault layout' | grep -q . &&
+    fail "the MTP DART reported a fault or error since boot (lines above)"
+# The probe's own summary: 16 KiB pages (its PARAMS read sensibly, so its registers are where the DT says)
+# and not locked (Linux reset it and owns its tables; a locked DART keeps the bootloader's and takes one
+# stream, while this DT gives the MTP five)
+init=$(dmesg 2> /dev/null | grep -F "${dart##*/}" | grep -o 'DART \[pagesize [^]]*\] initialized' | tail -1)
+[ -n "$init" ] || fail "no 'initialized' line from the MTP DART's probe"
+case "$init" in *"pagesize 4000,"*"locked: 0,"*) ;; *) fail "the MTP DART is not unlocked with 16 KiB pages: $init" ;; esac
+for m in $MODS; do loaded "$m" && say "    module $m is loaded (an earlier run)"; done
+pass "boot042 ($krel), module digests, MTP nodes and keyboard alias, MTP DART ${dart##*/} bound with no fault since boot"
+
+step=1; say "step 1: apple-rtkit-helper (mtp@294600000: RTKit, the MTP CPU)"
+k=$(klines)
+load apple_rtkit_helper || { knew "$k"; fail "apple-rtkit-helper did not load"; }
+d=$(wait_bound "$MTP" 10) || { knew "$k"; fail "mtp@294600000 is not bound after 10 s"; }
+sleep 1
+knew "$k"
+[ -z "$(kbad "$k")" ] || fail "kernel log reports a problem (lines above)"
+pass "$(basename "$d") bound to $(driver_of "$d")"
+
+step=2; say "step 2: apple-dockchannel (fifo@294b14000, creates input@8000)"
+k=$(klines)
+load apple_dockchannel || { knew "$k"; fail "apple-dockchannel did not load"; }
+d=$(wait_bound "$FIFO" 10) || { knew "$k"; fail "fifo@294b14000 is not bound after 10 s"; }
+for _ in $(seq 50); do [ -n "$(dev_of "$HIDN")" ] && break; sleep 0.1; done
+h=$(dev_of "$HIDN")
+knew "$k"
+[ -n "$h" ] || fail "input@8000 was not created"
+[ -z "$(kbad "$k")" ] || fail "kernel log reports a problem (lines above)"
+pass "$(basename "$d") bound to $(driver_of "$d"); child $(basename "$h") created"
+
+step=3; say "step 3: hid-apple"
+k=$(klines)
+load hid_apple || { knew "$k"; fail "hid-apple did not load"; }
+knew "$k"
+pass "hid-apple loaded"
+
+step=4; say "step 4: dockchannel-hid (input@8000: the ring, the MTP's interfaces)${POLL:+, mtp_poll_ms=$POLL}"
+k=$(klines)
+load dockchannel_hid ${POLL:+mtp_poll_ms=$POLL} || { knew "$k"; fail "dockchannel-hid did not load"; }
+h=$(wait_bound "$HIDN" 10) || { knew "$k"; fail "input@8000 is not bound after 10 s (the helper not ready?)"; }
+for _ in $(seq 150); do dmesg 2> /dev/null | tail -n +"$((k + 1))" | grep -q 'Interface keyboard is now ready' && break; sleep 0.1; done
+knew "$k"
+log=$(dmesg 2> /dev/null | tail -n +"$((k + 1))")
+echo "$log" | grep -q 'Initialized, awaiting packets' || fail "dockchannel-hid did not initialize"
+echo "$log" | grep -q 'Ring registered' ||
+    fail "the ring was not registered within 15 s (no DockChannel message from the MTP, or no acknowledgement); retry: sudo modprobe -r dockchannel-hid; sudo $0 --poll 100"
+echo "$log" | grep -q 'New interface keyboard' ||
+    fail "the ring is registered but no keyboard interface came within 15 s; retry: sudo modprobe -r dockchannel-hid; sudo $0 --poll 100"
+echo "$log" | grep -q 'Interface keyboard is now ready' || fail "the keyboard interface did not become ready within 15 s"
+[ -z "$(kbad "$k")" ] || say "  note: problem lines above (the keyboard is up; they go into the report)"
+pass "ring registered, keyboard interface ready ($(echo "$log" | grep -o 'New interface [a-z_-]*' | sed 's/New interface //' | tr '\n' ' '))"
+
+step=5; say "step 5: input devices"
+ev=
+for _ in $(seq 50); do
+    for s in /sys/class/input/event*; do
+        p=$(readlink -f "$s/device")
+        case "$p" in "$(readlink -f "$h")"/*) ;; *) continue ;; esac
+        caps=$(cat "$s/device/capabilities/key" 2> /dev/null | tr ' ' '\n' | grep -c -v '^0$')
+        [ "${caps:-0}" -ge 2 ] && grep -q . "$s/device/name" && ev=${s##*/} && break
+    done
+    [ -n "$ev" ] && break
+    sleep 0.1
+done
+for s in /sys/class/input/event*; do
+    case "$(readlink -f "$s/device")" in "$(readlink -f "$h")"/*) say "    /dev/input/${s##*/}: $(cat "$s/device/name")" ;; esac
+done
+for hd in /sys/bus/hid/devices/*; do
+    case "$(readlink -f "$hd")" in "$(readlink -f "$h")"/*) say "    hid ${hd##*/}: driver $(driver_of "$hd" || echo none)" ;; esac
+done
+[ -n "$ev" ] || fail "no keyboard input device under $(basename "$h")"
+hsig=$(ls /run/user/1000/hypr 2> /dev/null | head -1)
+if [ -n "$hsig" ]; then
+    hk=$(timeout 10 runuser -u omarchy -- env XDG_RUNTIME_DIR=/run/user/1000 HYPRLAND_INSTANCE_SIGNATURE="$hsig" hyprctl devices 2> /dev/null |
+        sed -n '/^Keyboards:/,$p' | grep -E '^[[:space:]]+Keyboard at' -A1 | grep -v -E 'Keyboard at|^--' | sed 's/^[[:space:]]*/    hyprland keyboard: /')
+    [ -n "$hk" ] && say "$hk" || say "    hyprland: no answer from hyprctl within 10 s (not a failure)"
+fi
+pass "keyboard input device /dev/input/$ev ($(cat "/sys/class/input/$ev/device/name"))"
+
+if [ "$TYPING" = 0 ]; then say "RESULT: PASS (steps 0-5; typing not tested)"; exit 0; fi
+step=6; say "step 6: typing on the M5 itself"
+say "  >>> On the M5's own keyboard, type:  omarchy  then Enter  (within $TYPE_SECONDS s)"
+out=$(timeout $((TYPE_SECONDS + 5)) python3 -I - "/dev/input/$ev" "$TYPE_SECONDS" <<'PY'
+import os, select, struct, sys, time
+# struct input_event on 64-bit Linux: timeval (two longs), type u16, code u16, value s32
+fmt = "llHHi"; size = struct.calcsize(fmt)
+want = [24, 50, 30, 19, 46, 35, 21]          # KEY_O M A R C H Y (US positions)
+fd = os.open(sys.argv[1], os.O_RDONLY | os.O_NONBLOCK)   # no grab: the desktop still gets every key
+end = time.monotonic() + float(sys.argv[2])
+presses, seq, enter = 0, [], False
+while time.monotonic() < end and not enter:
+    if not select.select([fd], [], [], 0.5)[0]:
+        continue
+    data = os.read(fd, size * 64)
+    for i in range(0, len(data) - size + 1, size):
+        _, _, etype, code, value = struct.unpack_from(fmt, data, i)
+        if etype == 1 and value == 1:        # EV_KEY, pressed
+            presses += 1
+            if code in (28, 96):             # KEY_ENTER, KEY_KPENTER
+                enter = True
+                break
+            seq.append(code)
+print(presses, int(enter), int(seq[-len(want):] == want))
+PY
+)
+read -r presses enter word <<< "${out:-0 0 0}"
+say "    key presses: $presses; Enter: $([ "$enter" = 1 ] && echo yes || echo no); the word as on a US layout: $([ "$word" = 1 ] && echo yes || echo no)"
+[ "${presses:-0}" -ge 3 ] && [ "$enter" = 1 ] || fail "no typing came from the M5's keyboard within $TYPE_SECONDS s"
+pass "the M5's keyboard delivers key presses to Linux ($presses, Enter included)"
+say "  >>> Now open a terminal on the M5 (Super+Return) and type a line: it should appear on the M5's screen."
+say "RESULT: PASS: the keyboard path is up (modules loaded one at a time, keyboard on /dev/input/$ev, typing received)"

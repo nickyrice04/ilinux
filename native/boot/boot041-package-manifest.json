@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "package": "ilinux-j716c-boot041",
+  "target": "Mac17,6 / J716c / t6050",
+  "native_tested": false,
+  "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038; USB control channel: gadget stack built in, dwc3 peripheral cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear initramfs (kernel/experiments/usb-gadget); job-041; boot040's Image byte for byte (the apple-dart fault-report patches of kernel/experiments/usb-gadget/dart-diag, parts 1 and 2) and its bulk-only gser log port; after attempt 23 the Stage-B DT gives each dwc3 core both DART instances of its port, iommus = <dart0 0>, <dart1 1>, as Asahi wires them (instance 0 enabled without power-domains, with a new phandle; nothing else in the DT changes); /init keeps boot040's DART lines and names both instances, says at bind whether the kernel set them up on one table, and shows both pending-fault words in the short [usbN] lines; config, m1n1 and the generic files identical to boot040; job-041",
+  "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
+  "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
+  "m1n1_version_offset": 526824,
+  "m1n1_dt_pointer_offset": 1140024,
+  "files": {
+    "Image": {
+      "size": 44681728,
+      "sha256": "a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9"
+    },
+    "t6050-j716c.dtb": {
+      "size": 61326,
+      "sha256": "5d6fe64812b05e8c5d42ce3b97e3ede4c675e7a9a59d8fcf85d6906ef8daac9e"
+    },
+    "initramfs.cpio.gz": {
+      "size": 302448,
+      "sha256": "15565c4bc7371dd40ce6387305af40391140fda5a871e9012aebd65e95162618"
+    },
+    "kernel.config": {
+      "size": 321820,
+      "sha256": "caa8e71a095aca35024688ced8025a8cc03925e641e3988587627d7f5f3e3887"
+    },
+    "t6050-j716c-stage-b.dtb": {
+      "size": 61995,
+      "sha256": "b053f248be2980e39beda4e6e001457ad7074344dc789872a4952e92773f232a"
+    },
+    "initramfs-stage-b.cpio.gz": {
+      "size": 2403156,
+      "sha256": "2731488005ce2136bc1170915235fefdc4f14db1291a5c4c80cc7040098f403c"
+    },
+    "m1n1.bin": {
+      "size": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "m1n1-build-config.h": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "m1n1-LICENSE": {
+      "size": 17984,
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+    },
+    "m1n1-revision.txt": {
+      "size": 41,
+      "sha256": "e125d21d1ec9f861d9fd1d2908f2e7ecdf24379401fd08861ec1f64e4cea2985"
+    },
+    "diag-init.c": {
+      "size": 56086,
+      "sha256": "2e2e99231176e49275f06e952af64f2c6d893802c3e862ca00122d01d2404810"
+    },
+    "toolchain.txt": {
+      "size": 450,
+      "sha256": "7adc98d7d1fe419ab18bdb906e43eada58ede32c4059bb142682fd78d61e6e18"
+    }
+  },
+  "early_framebuffer_descriptor_offset": 35313552,
+  "control_channel_authorized_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK2+YOyTltYHJHc63FMW4MAp5xqsciXaCiYFSfVn3Ed8 ilinux-m1-control",
+  "control_channel_function": {
+    "configfs": "gser.GS0",
+    "bcdDevice": "0x0139",
+    "interface_class": "0xff",
+    "endpoints": [
+      "bulk IN",
+      "bulk OUT"
+    ]
+  },
+  "dart_diagnostics": {
+    "kernel_patches": [
+      "kernel/experiments/usb-gadget/dart-diag/dart-diag.patch",
+      "kernel/experiments/usb-gadget/dart-diag/dart-diag-2-gen22.patch"
+    ],
+    "apple_dart_c_after": "b3eb0da83235164e2d514c106ec134d6e24c335ba6e36e0124534fb60ca9b288",
+    "image_as_boot040": "a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9",
+    "init_reads_dart_registers": "through /dev/mem, 32-bit loads, instances 0 and 1 of each port's dart-usbN, both layouts by PARAMS3 version; the pending-fault word of both every heartbeat"
+  },
+  "dart_wiring": {
+    "iommus": "<dart0 0>, <dart1 1>",
+    "dart_instance_0_enabled": [
+      "/soc/iommu@2a2f00000",
+      "/soc/iommu@2aaf00000",
+      "/soc/iommu@382f00000"
+    ],
+    "dwc3_cores": [
+      "/soc/usb@2a2280000",
+      "/soc/usb@2aa280000",
+      "/soc/usb@382280000"
+    ],
+    "contract": "native/boot/usb_dt.py check_both_darts_delta"
+  }
+}

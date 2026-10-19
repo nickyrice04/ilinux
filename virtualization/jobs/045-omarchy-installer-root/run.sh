@@ -32,6 +32,9 @@
 # (Claude Code through Omarchy's own mise wrapper, signed out), NOPASSWD=1 (Omarchy's permanent
 # passwordless-sudo grant for the user; stage 4 tests it). Another kernel: KERNEL_NAME,
 # KERNEL, IMAGE_SHA and KTREE (e.g. boot040: build/native-boot040/verified/Image).
+# MODULES=<job 050's export/modules> (with LINK=1; attempt 26): boot042's keyboard modules under
+# /usr/lib/modules, blacklisted from loading at boot, and ilinux-keyboard, which loads them over SSH;
+# link.sh's stage_link also carries attempt 25's four fixes (see its comments).
 set -euo pipefail
 J=/mnt/job
 OUT=$J/out
@@ -57,6 +60,9 @@ CLAUDE=${CLAUDE:-0}
 # NOPASSWD=1 (user-approved 2026-10-18 for the attempt-24 image): Omarchy's own permanent
 # passwordless-sudo grant for the user, as omarchy-sudo-passwordless permanent writes it.
 NOPASSWD=${NOPASSWD:-0}
+# MODULES (attempt 26): the directory of job 050's module sets (its manifest.json and keyboard-root/).
+MODULES=${MODULES:-}
+[ -z "$MODULES" ] || [ "$LINK" = 1 ] || { echo "MODULES needs LINK=1 (the modules are loaded over the link)"; exit 1; }
 W=/var/tmp/ilinux-045          # the work disk (/dev/vdb, btrfs): cache, keyrings, roots
 R=$W/@root                     # the installed Omarchy (a subvolume, never changed after stage 1)
 C=$W/@ramroot                  # its snapshot, made into the RAM root
