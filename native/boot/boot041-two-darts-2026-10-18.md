@@ -1,7 +1,7 @@
 # boot041: boot040 with both DART instances per dwc3 core in the Stage-B DT, prepared offline
 
-2026-10-18 (UTC 2026-10-19), M5 side session. **Native boot041 NOT RUN. Not committed, not
-released.** It builds on `boot040-dart-fault-2026-10-18.md` and the attempt-23 result
+2026-10-18 (UTC 2026-10-19), M5 side session. **Native boot041 NOT RUN.** Committed at `88d392c`, published
+as the prerelease `native-j716c-boot041` (GitHub's asset digest verified) and handed off as attempt 24. It builds on `boot040-dart-fault-2026-10-18.md` and the attempt-23 result
 (`stage-b-2026-10-18-attempt23-result.md`). Labels: Confirmed / Likely / Hypothesis / Unknown;
 "Confirmed" means by source, VM or package check, never on the M5's hardware.
 
@@ -33,8 +33,7 @@ released.** It builds on `boot040-dart-fault-2026-10-18.md` and the attempt-23 r
 * **Package** `ilinux-j716c-boot041.tar.gz`: 18,926,067 bytes, SHA-256
   `ab49e307239a600f0652ea180ee15aa2b153ddf3c28e910bf8b5f97317944d28`; SHA256SUMS digest
   `593c449265c2cbd930f0c57db95939af59f37191c0d8934b4ff1146e34f280a1`. Records in
-  `build/native-boot041/records/` (`native/boot/package-manifest.json`, `archive-sha256.txt` and
-  `intake-manifest-sha256.txt` are untouched: still attempt 23's).
+  `build/native-boot041/records/`, copied to `native/boot/` at the attempt-24 handoff.
 * **Checks:** job 041 PASS (kernel facts incl. the boot041 ones, the status fixture 53 checks plain and
   under ASan+UBSan, the DT with exactly its three expected schema findings, the Image equal to
   boot040's); `selftest/run-vz.sh both` PASS (liveness; dummy_hcd self-test 27 present + 16 absent);
@@ -133,8 +132,8 @@ test Image and the job-041 kernel tree that jobs 045 and 046 read are byte-ident
 
 ## NOT RUN / Unknown
 
-* **NOT RUN:** native boot041, its release, its handoff and the M1's readiness for it. Nothing committed
-  or pushed.
+* **NOT RUN:** native boot041 (attempt 24) and the M1's readiness for it. The release and the handoff
+  are done (2026-10-19).
 * **Unknown:** whether programming instance 0 stops the stall; which stream instance 0 carries in device
   mode (stream 0 by attempt 23's pending bit and Asahi; stream 1 by macOS's programming); whether
   instance 0's reset and writes are safe on this chip (Likely); what raised attempt 23's storm on
@@ -157,8 +156,8 @@ python3 -I native/boot/test_boot041_package.py
 
 * New: `native/boot/test_boot041_package.py`, `native/boot/boot040-package-manifest.json` (the boot040
   manifest as the boot041 baseline, equal to `native/boot/package-manifest.json`, `71cecb07…`), this
-  report, `tools/m1n1-client/stage-b-boot041-draft.md` (draft checklist; the attempt number is left to
-  the handoff).
+  report; the draft checklist became `tools/m1n1-client/stage-b-instructions.md` (attempt 24) at the
+  handoff.
 * Changed: `native/boot/usb_dt.py` (`both_darts_amendment`, `check_both_darts_delta`),
   `native/boot/test_usb_dt.py`, `native/boot/make-package.py` (boot041 entry), `native/boot/control_channel.py`
   (`check_dart_both_init`), `native/boot/test_control_channel.py`; `kernel/experiments/usb-gadget/init.c`,

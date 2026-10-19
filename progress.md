@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M5: boot041 published and attempt 24 handed off — both DART instances per USB controller (NOT RUN)
+
+* **Decided:** attempt 23 showed the stall's fault pending on the DART instance the Stage-B DT
+  left out, so boot041 gives each dwc3 core both instances, as Asahi's device trees do, and
+  changes nothing else the hardware sees.
+* **Reviewed and committed** (`88d392c`, boot041's 17 files): the DT differs from boot040 by
+  exactly the two-DART change, the Stage-B initramfs only in `/init`, everything else byte-identical
+  (the Image included); no private key in the archive, only the M1's public key.
+* **Published:** prerelease `native-j716c-boot041`, 18,926,067 bytes, SHA-256 `ab49e307…4d28`;
+  GitHub's asset digest and a fresh download equal the local archive.
+* **Tested (offline, clean copy of main):** the committed launcher passes the package; the delta
+  check passes; all native/boot, USB, package, kconfig and MTP suites PASS; VM job 041, liveness and
+  the dummy_hcd self-test PASS (boot041 session).
+* **Handed off:** the records point at boot041; the attempt-24 checklist (from boot041's draft),
+  coordination, README, AGENTS and roadmap row 2.
+* **Next:** M1 readiness and one filmed attempt 24. If the link carries data, the Omarchy root with
+  the SSH link and Claude Code (built and VM-tested, pinned to the same Image) on boot041's package.
+
 ## 2026-10-18 · M1: attempt 23 ran: the USB DART is version 2.4, and at the first bus error the sibling DART instance the DT omits holds the fault
 
 * **Discovered:** the t6050 USB DART reports version 2.4 (PARAMS3 `0x2a2a0204`), so part 2 of boot040's kernel patch ran on

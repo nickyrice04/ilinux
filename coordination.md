@@ -6,6 +6,32 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt 24 / boot041: boot040 with both DART instances per dwc3 core (NOT RUN)
+
+* **Attempt 23 consumed:** the USB DART is version 2.4; at the first bus error the fault was
+  pending on instance 0, which the Stage-B DT left out, so Linux had never set it up and had no
+  handler for it on the shared fault interrupt.
+* **Attempt 24 = boot041**, with the launcher's default `stage-b` profile, the diagnostic
+  initramfs and the M1's existing reader, as in attempts 21 and 23. The Stage-B DT gives each of
+  the three dwc3 cores both instances (`<dart0 0>, <dart1 1>`, as Asahi's device trees do) and
+  enables instance 0; `/init` adds both instances to the identity line, a setup line at bind and
+  both instances' pending-fault state in the short line. The kernel Image, config and m1n1 are
+  boot040's byte for byte (packager-enforced), so the Omarchy root pinned to that Image stays
+  usable.
+* **Release:** prerelease `native-j716c-boot041` at `88d392c`: archive 18,926,067 bytes, SHA-256
+  `ab49e307239a600f0652ea180ee15aa2b153ddf3c28e910bf8b5f97317944d28` (GitHub's asset digest and a
+  fresh download equal it); SHA256SUMS digest `593c4492…80a1`. The handoff records in
+  `native/boot/` point at boot041.
+* **Offline:** the committed launcher (`b14ec7a1…`, unchanged) passes the package; the
+  boot040-to-boot041 delta check passes; VM job 041, generic-VM liveness, the dummy_hcd self-test
+  (1,928 log lines over bulk IN) and all suites PASS on a clean copy of main.
+* **What decides it:** `: both set up` at bind, then whether the bulk log keeps flowing with
+  `pend 0/0` and no bus error for ten minutes. If it does, the next attempt is the Omarchy root
+  with the SSH link on boot041's package.
+* **M1 next:** `tools/m1n1-client/stage-b-instructions.md` (attempt 24): download and verify
+  boot041, the delta check against attempt 23's boot040 download, the reader re-check, then one
+  filmed boot with the reader started right after the handoff.
+
 ### Current M1 result — attempt 23 (boot040): the USB DART is version 2.4, instance 1's fault line finds nothing pending, and at the first bus error the sibling instance the DT omits holds the fault (candidate A)
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 10.965 s, handoff 2026-10-19T02:17:46.781Z, 10:17:47 PM Eastern; no M1
@@ -65,7 +91,7 @@ older plan disagree, this file wins for ownership and order of work.
   right after the handoff; stop 10 minutes after it, or earlier on a reset, a kernel panic or an M1 panic.
 * **NOT RUN:** native boot040 / attempt 23, and the fresh policy checks.
 
-### Consumed M5 handoff — attempt 23 / boot040: attempt 21's bulk-only log port with the DART fault made visible (ran 2026-10-18; see the M1 result above)
+### Consumed M5 handoff — attempt 23 / boot040: attempt 21's bulk-only log port with the DART fault made visible (ran 2026-10-18; see the M1 result above; superseded by attempt 24)
 
 * **Attempt 22 consumed:** the installer-built Omarchy desktop came up on boot035 and stayed up
   for the filmed ten minutes, view-only. Agents on the machine need the USB link next.

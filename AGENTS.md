@@ -263,17 +263,15 @@ Historical M1 milestone: boot035 / attempt 16 offline readiness PASS on handoff 
 One filmed RAM attempt (M1 freshly restarted, 180 s bound) and Macintosh HD return next;
 native/live NOT RUN at readiness.
 
-Latest M5 handoff: **attempt 23, boot040: attempt 21's bulk-only USB log port
-with the DART fault made visible (NOT RUN)**. Same link as attempt 21 (one
-`gser` per controller, read by the M1's existing reader); the Image adds the
-apple-dart fault reporting and, on a DART of version 2.2 or later, reporting
-and acknowledgement in that version's fault layout (from the REA of this Mac's
-DART driver; translation and protection unchanged); `/init` adds the failing
-DMA address, the DART per port, a read-only register snapshot and short
-per-port lines. Prerelease `native-j716c-boot040` (`1d7f5c8d…66cf`, GitHub's
-digest verified); launcher unchanged (`b14ec7a1…`); VM job 041, liveness, the
-dummy_hcd self-test and all suites PASS. See
-`tools/m1n1-client/stage-b-instructions.md`.
+Latest M5 handoff: **attempt 24, boot041: boot040 with both DART instances per
+dwc3 core (NOT RUN)**. Attempt 23 found the stall's fault pending on the DART
+instance the Stage-B DT left out; boot041 gives each USB controller both
+instances (`<dart0 0>, <dart1 1>`, as Asahi's DTs do) and keeps boot040's kernel
+Image, config, m1n1 and diagnostics, adding both instances to the per-port
+lines. Prerelease `native-j716c-boot041` (`ab49e307…4d28`, GitHub's digest
+verified); launcher unchanged (`b14ec7a1…`); VM job 041, liveness, the dummy_hcd
+self-test and all suites PASS. If the link carries data, the Omarchy root with
+the SSH link follows. See `tools/m1n1-client/stage-b-instructions.md`.
 
 Latest M1 native result: **attempt 15 (boot034) outlived attempt 14's 8.8 s reset**:
 sync_state kept domains on, PID 1 and heartbeats ran, a 17-step release ladder

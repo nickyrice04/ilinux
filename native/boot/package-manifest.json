@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "package": "ilinux-j716c-boot040",
+  "package": "ilinux-j716c-boot041",
   "target": "Mac17,6 / J716c / t6050",
   "native_tested": false,
   "linux_base": "77cb8f24c2381a8abb7272d7bbdec548d6426a8a",
-  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038; USB control channel: gadget stack built in, dwc3 peripheral cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear initramfs (kernel/experiments/usb-gadget); job-041; boot039's bulk-only gser log port unchanged; DART fault diagnostics after attempt 21: the Image adds kernel/experiments/usb-gadget/dart-diag (part 1: the apple-dart t8110 fault handler reports and acknowledges an interrupt it does not recognise and names each instance at probe; part 2: a DART whose PARAMS3 reports version 2.2 or later is reported and acknowledged in that version's fault layout, with a bound of 256 acknowledged interrupts; translation and protection untouched), /init adds the dwc3 bus-error address, the DART identity and a read-only DART register snapshot per port (both layouts), short [usbN] lines and the streamer stop at the first bus error; config and DT identical to boot039; job-041",
+  "linux_patches": "kernel/patches/t6050/0001-0007 plus kernel/experiments/early-framebuffer/apply.py; job-024; kernel/experiments/aic-t6050/t6050-bringup.patch; job-025; kernel/experiments/deferred-probe/apply.py; job-027; kernel/experiments/schedule-boundary/apply.py; job-028; kernel/experiments/context-display/apply.py; job-029; kernel/experiments/probe-path/apply.py; job-030; kernel/experiments/gpio-handoff/apply.py; job-031; kernel/experiments/gpio-reserved/apply.py; job-032; Stage-B gpio-reserved-ranges; kernel/experiments/scheduler-ram-only/apply.py; job-033; kernel/experiments/genpd-sync-state/apply.py; job-036; Stage-B DT without the SMC-owned smc_i2cm0-6 power domains; job-038; USB control channel: gadget stack built in, dwc3 peripheral cores with ATC 0-2 domains left to m1n1, EEM gadget + dropbear initramfs (kernel/experiments/usb-gadget); job-041; boot040's Image byte for byte (the apple-dart fault-report patches of kernel/experiments/usb-gadget/dart-diag, parts 1 and 2) and its bulk-only gser log port; after attempt 23 the Stage-B DT gives each dwc3 core both DART instances of its port, iommus = <dart0 0>, <dart1 1>, as Asahi wires them (instance 0 enabled without power-domains, with a new phandle; nothing else in the DT changes); /init keeps boot040's DART lines and names both instances, says at bind whether the kernel set them up on one table, and shows both pending-fault words in the short [usbN] lines; config, m1n1 and the generic files identical to boot040; job-041",
   "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
   "m1n1_build": "make -j6 ARCH= BUILDSTD=1; no appended payload; no local patches",
   "m1n1_version_marker": "##m1n1_ver##ilinux-57a9339-boot021",
@@ -28,12 +28,12 @@
       "sha256": "caa8e71a095aca35024688ced8025a8cc03925e641e3988587627d7f5f3e3887"
     },
     "t6050-j716c-stage-b.dtb": {
-      "size": 62043,
-      "sha256": "a676087bda3cffa178604ca0cf128558d9ab2a620073314d054c79a685ecefa5"
+      "size": 61995,
+      "sha256": "b053f248be2980e39beda4e6e001457ad7074344dc789872a4952e92773f232a"
     },
     "initramfs-stage-b.cpio.gz": {
-      "size": 2402470,
-      "sha256": "59bc2afcb1db341bad739efdddef43b097011aed04f70e678f76e9ccc5acaad6"
+      "size": 2403156,
+      "sha256": "2731488005ce2136bc1170915235fefdc4f14db1291a5c4c80cc7040098f403c"
     },
     "m1n1.bin": {
       "size": 3932160,
@@ -52,8 +52,8 @@
       "sha256": "e125d21d1ec9f861d9fd1d2908f2e7ecdf24379401fd08861ec1f64e4cea2985"
     },
     "diag-init.c": {
-      "size": 45907,
-      "sha256": "58c68268b2f05ad2d5f5f1e25478814ec019211a405342e7c9cc256c359e22de"
+      "size": 56086,
+      "sha256": "2e2e99231176e49275f06e952af64f2c6d893802c3e862ca00122d01d2404810"
     },
     "toolchain.txt": {
       "size": 450,
@@ -76,10 +76,22 @@
       "kernel/experiments/usb-gadget/dart-diag/dart-diag.patch",
       "kernel/experiments/usb-gadget/dart-diag/dart-diag-2-gen22.patch"
     ],
-    "apple_dart_c_before": "f48a05cf9ae17cc1871211cfd7a634f75d3bcdc131c0d7e896a8c8a80451a845",
-    "apple_dart_c_after_part1": "1ed5acf9588650cf9fb7dbba950433c60bbf30d8d0aa3c54f6a4345484db6f29",
     "apple_dart_c_after": "b3eb0da83235164e2d514c106ec134d6e24c335ba6e36e0124534fb60ca9b288",
-    "v2_2_layout_source": "kernel/experiments/usb-gadget/dart-diag/rea-dart-2026-10-18.md",
-    "init_reads_dart_registers": "through /dev/mem, 32-bit loads, instances 0 and 1 of each port's dart-usbN, both layouts by PARAMS3 version"
+    "image_as_boot040": "a53d1d47467480d4b56d87c7b1365e9a5c28fd9ee9e5f0164a3e734f85526ad9",
+    "init_reads_dart_registers": "through /dev/mem, 32-bit loads, instances 0 and 1 of each port's dart-usbN, both layouts by PARAMS3 version; the pending-fault word of both every heartbeat"
+  },
+  "dart_wiring": {
+    "iommus": "<dart0 0>, <dart1 1>",
+    "dart_instance_0_enabled": [
+      "/soc/iommu@2a2f00000",
+      "/soc/iommu@2aaf00000",
+      "/soc/iommu@382f00000"
+    ],
+    "dwc3_cores": [
+      "/soc/usb@2a2280000",
+      "/soc/usb@2aa280000",
+      "/soc/usb@382280000"
+    ],
+    "contract": "native/boot/usb_dt.py check_both_darts_delta"
   }
 }
