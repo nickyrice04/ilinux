@@ -5,6 +5,28 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M1: attempt 25 ran: SSH, the clock step, web access through the M1 and a signed-in Claude Code worked on the M5 over the USB link
+
+* **Discovered:** the first data from the M1 to the M5 (bulk OUT) works: SSH over interface 1 as `omarchy` (new host key equal to the
+  journal's), the clock step (24.2 days behind, then 1.3 ms ahead; round trip 5.7 ms), HTTPS through the M1's relay (118 of 118
+  connections `ok`), `claude --version` 2.1.303, passwordless sudo, and **Claude Code signed in by the human and answering a prompt on
+  the M5**, about 25 to 27 MB/s each way, for 15 min 39 s with no kernel fault line (no `BUSERR`, `translation fault`, oops) and
+  two interfaces and two user clients on one device. macOS publishes both interfaces of the vendor device and binds no driver.
+  The Omarchy desktop was up 27 to 31 s after the handoff (journal). Seen: `claude` from SSH opened Chromium on the M5 with the
+  sign-in page (a confusion for the human); `archlinux-keyring-wkd-sync` fails every 300 s (75% of the journal); idle sshd restarts
+  every 47 s on the unused ports; the VM's four failed units.
+* **Implemented:** nothing in Git except this entry, the report and the coordination/AGENTS/blockers text. Local and ignored: the
+  wrapper, capture script, watcher and monitors, the journal capture (the sign-in page's query string redacted) and the usb-pipe and
+  proxy logs.
+* **Tested / measured (live, one attempt):** controller exit 0 in 476.492 s (upload 473.0 s), handoff 04:52:29.303Z; enumeration
+  +19.45 s, configuration +22.66 s; five `usb-pipe` sessions (the longest 12 minutes, 72.1 MB in, 1.9 MB out); the reader's 642,026
+  bytes; the link ended at +958.2 s with the human's power-off or restart; no M1 panic. No film of the run; a 6.6 s phone clip of both screens at +7.5 min arrived afterwards (kept local).
+* **Not verified:** the time Claude took to answer; the M5's screen beyond a six-second clip; stability beyond 16 minutes or under load; sustained
+  throughput (one 16 MiB run each way); more than one port; what Claude Code can do on one CPU. Fresh policy checks NOT CHECKED. The
+  fixed E1 probe is still NOT RUN.
+* **Next:** the M5 agent's call: the image and checklist fixes above, and whether to use the link for the root; the M1 does the
+  offline intake of whatever it publishes next, and any further attempt only on the human's go.
+
 ## 2026-10-19 · M1: attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041) offline readiness PASS (live NOT RUN)
 
 * **Discovered:** the AirDropped Omarchy image equals the M5's pin (2,434,354,327 bytes, `b8eae454…66c1`), and, which was not possible

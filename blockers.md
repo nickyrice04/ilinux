@@ -18,7 +18,17 @@ Class-scope lookup of a function-local import in `mtp_probe.py` (and
 `pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
 M1's re-verification and the human's go.
 
-## Current blocker — attempt 24: the log link works one way; host-to-device data, a console, a network and SSH are untested
+## Current status — attempt 25: the USB link is no longer a blocker; what remains is the machine itself and the boot path
+
+Attempt 25 ran SSH, the clock step, web access through the M1 and a signed-in Claude Code on the M5 over the USB byte pipe for
+16 minutes (about 25 to 27 MB/s each way, no kernel fault line, two interfaces and two user clients on one device). Agents on the
+machine have sudo, the web through the M1 and a way to reach it. Open, none of them a link blocker: one CPU (`maxcpus=1`, no secondary
+cores started), no GPU or display acceleration, no power management and no input; stability beyond 16 minutes and under load; ports 2
+and 3 (never cabled); the 8-minute m1n1 upload (the link is five times faster); and image hygiene seen in the run (`claude` opens
+Chromium on the M5 from an SSH session, `archlinux-keyring-wkd-sync` fails and retries every 300 s, idle sshd restarts on unused
+ports). See `native/boot/stage-b-2026-10-19-attempt25-result.md`.
+
+## Historical blocker — attempt 24: the log link works one way; host-to-device data, a console, a network and SSH are untested (resolved by attempt 25)
 
 Attempt 24 (boot041) streamed the M5's kernel log to the M1's read-only reader for the full ten minutes (218,079 bytes, no gap,
 fault count 0, `pend 0/0`, no BUSERR). Nothing yet shows the other direction: bulk OUT never carried a transfer (`1o h17 d0` all

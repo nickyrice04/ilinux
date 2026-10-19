@@ -138,7 +138,17 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 25 (Omarchy itself with the USB link and Claude Code on
+Latest M1 native result: **attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041): the first data from the M1 to the
+M5 works, and SSH, the clock step, web access through the M1 and a signed-in Claude Code ran on the M5.** Over the USB byte pipe: SSH
+as `omarchy` (a new host key per boot, equal to the journal's), the clock step (24.2 days behind, then 1.3 ms ahead), HTTPS through the
+M1's relay (118 of 118 connections ok), passwordless sudo, and Claude Code signed in by the human and answering a prompt, at about 25
+to 27 MB/s each way, for 15 min 39 s with no kernel fault line, two interfaces and two user clients on one device; the Omarchy desktop
+was up 27 to 31 s after the handoff (journal). Seen: `claude` started from SSH opened Chromium on the M5 (a sign-in confusion),
+`archlinux-keyring-wkd-sync` fails every 300 s (75% of the journal), idle sshd restarts on unused ports. The link ended at +958 s when the
+human powered the M5 off or restarted it; no film of the run (a 6.6 s phone clip of both screens arrived afterwards). Controller exit 0 in 476.492 s, no M1 panic. See
+`native/boot/stage-b-2026-10-19-attempt25-result.md`. The fixed E1 probe is still NOT RUN.
+
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for attempt 25 (Omarchy itself with the USB link and Claude Code on
 boot041, launcher `--profile omarchy`) on handoff `38e91fb`: the boot041 archive re-verified against Git and the launcher unchanged
 (`b14ec7a1…`); the privately delivered image `b8eae454…66c1` (2,434,354,327 bytes) equals the pin and, which the earlier Omarchy images
 could not be, **was read from the image itself** with this Mac's own `tar`: no SSH host or user private key, no keyring, credentials,

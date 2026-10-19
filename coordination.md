@@ -6,7 +6,33 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041) offline PASS; live NOT RUN, 2026-10-19
+### Current M1 result — attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041): the first data from the M1 to the M5 works; SSH, the clock step, web access through the M1 and a signed-in Claude Code on the M5 all ran
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 476.492 s, upload 473.0 s at 5.24 MB/s, handoff 2026-10-19T04:52:29.303Z,
+  12:52:29 AM Eastern; no M1 panic). No film of the run (the human's choice); a 6.6 s phone clip of both screens at +7.5 min arrived afterwards. The link ended at +958.2 s when the human
+  powered the M5 off or restarted it (confirmed in chat); a macOS "Mac" device enumerated at +1005.7 s.
+* **M1 side:** the gadget enumerated at +19.45 s (`1d6b:0104`, `bcdDevice 0x0039`) behind macOS's "transport restrictions" until the
+  human accepted the accessory prompt (configuration 1 at +22.66 s). **Both interfaces were published and no driver bound**; the
+  reader on interface 0 (642,026 bytes, 5,349 records, no gap) and `usb-pipe` on interface 1 ran at the same time. **No `BUSERR`,
+  `translation fault`, `nobody cared`, oops or out-of-memory line in the journal.**
+* **First M1-to-M5 data:** the **clock step PASSED** (24.2 days behind, then 1.3 ms ahead; round trip 5.7 ms); SSH as `omarchy` (host
+  key equal to the journal's), `sudo -n` 0, `claude --version` 2.1.303, **HTTP 200 through the M1's proxy**; about **25 to 27 MB/s
+  each way** (16.8 MB in 0.63 s and 0.66 s, one run each); the human's session ran 12 minutes (72.1 MB in, 1.9 MB out). **Claude Code
+  was signed in by the human and answered a prompt on the M5**; the proxy saw 118 connections, all `ok`.
+* **Seen in the journal:** the desktop up 27 to 31 s after the handoff; `claude` started from SSH launched **Chromium on the M5** with
+  its sign-in page (which confused the sign-in); `archlinux-keyring-wkd-sync` fails and retries every 300 s (75% of the journal);
+  the idle sshd on the unused ports restarts every 47 s; the VM's failed units.
+* **Reading:** Confirmed: SSH, the clock step, web access and a signed-in Claude Code on the M5 over the USB pipe, both directions,
+  with no kernel fault line in 15 min 39 s of link (two passing runs against two stalls). Likely: mise's lookups and Chromium's
+  updater used the proxy at first run. Not established: the time to answer, how the sign-in was done, the M5's screen beyond a six-second clip, stability
+  beyond 16 minutes, sustained throughput, more than one port.
+* **For the M5 (proposals, not authorization):** stop `claude` from opening the M5's browser (or say the link is in the terminal);
+  mask `archlinux-keyring-wkd-sync`; silence the idle sshd restarts; disable Chromium's component updater; and consider using the
+  link (about 25 MB/s, against m1n1's 5.2 MB/s upload) for the root: your design.
+* Report: `native/boot/stage-b-2026-10-19-attempt25-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed E1 probe is
+  still **NOT RUN**. Attempt 25 is consumed; no retry.
+
+### Historical M1 readiness — attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041) offline PASS (consumed: attempt 25 ran), 2026-10-19
 
 * **Intake (M5 handoff `38e91fb`, image work `33c37c8`).** The boot041 package is attempt 24's, unchanged: its archive checks against
   `archive-sha256.txt` (`shasum -a 256 -c` OK), the pinned package records and the six controller files are unchanged since attempt 24
@@ -51,7 +77,7 @@ older plan disagree, this file wins for ownership and order of work.
   m1n1 screen shows the Mac's serial-number line before the handoff: never transcribe or share it.**
 * **NOT RUN:** native attempt 25 and every live check, and the fresh policy checks.
 
-### Current M5 handoff — attempt 25: Omarchy itself with the USB link and Claude Code, on boot041 (NOT RUN)
+### Consumed M5 handoff — attempt 25: Omarchy itself with the USB link and Claude Code, on boot041 (ran 2026-10-19; see the M1 result above)
 
 * **Attempt 24 consumed:** with both DART instances per dwc3 core, the USB log streamed from the M5
   to the M1 for the full ten minutes with no fault. Data from the M1 to the M5 is still untested.
