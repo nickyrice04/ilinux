@@ -18,7 +18,18 @@ Class-scope lookup of a function-local import in `mtp_probe.py` (and
 `pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
 M1's re-verification and the human's go.
 
-## Current blocker — attempt 21: bulk-IN data stops after 36,909 bytes; the M5's dwc3 flags BUSERR and an apple-dart interrupt storm follows
+## Current blocker — attempt 23: the DMA fault is on the DART instance the Stage-B DT omits; Linux's only handler reads the other instance
+
+boot040 (attempt 23) repeated attempt 21's stop with the DART made visible. The USB DART is version 2.4; port 1's fault interrupt
+(IRQ 43) storms from kernel 3.93 s and the handler for the DT's instance 1 finds nothing pending every time until the kernel
+disables the line; at the first bus error the register snapshot shows the sibling instance 0 (not in the DT, never programmed:
+`en 0`) with `pend 1` and a stream block holding address `0x3ffff35800`, instance 1 with `pend 0`. Likely, not tested: the
+controller's DMA also goes through instance 0, which has no translation, so it faults there and wedges the IN endpoint (the M5's
+candidate A: Asahi's two-DART wiring). The capture stopped at 25,911 bytes; no endpoint-0 error. Open: that listing both
+instances fixes it, whether stream 0 carries data or descriptors, bulk OUT, and a stream that survives. See
+`native/boot/stage-b-2026-10-18-attempt23-result.md`.
+
+## Historical blocker — attempt 21: bulk-IN data stops after 36,909 bytes; the M5's dwc3 flags BUSERR and an apple-dart interrupt storm follows (explained by attempt 23)
 
 boot039's bulk-only function enumerated (+3.88 s), macOS configured it (+8.05 s) and published its vendor interface with no driver
 bound, and the M1's read-only reader opened it and read 36,909 bytes (476 intact records of the M5's early kernel log); the stream

@@ -5,6 +5,26 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-18 · M1: attempt 23 ran: the USB DART is version 2.4, and at the first bus error the sibling DART instance the DT omits holds the fault
+
+* **Discovered:** the t6050 USB DART reports version 2.4 (PARAMS3 `0x2a2a0204`), so part 2 of boot040's kernel patch ran on
+  hardware. Port 1's fault interrupt (Linux IRQ 43) stormed at about 54 kHz from kernel 3.93 s; instance 1's v2.2-layout
+  handler found nothing pending every time (`PENDING 0 MASK 0 PROT_STATUS 0 CTRL 0`) until the kernel disabled the line after
+  100,000 interrupts. At the first bus error the register snapshot shows instance 0 (not in the DT, never programmed) with
+  `pend 1` and a stream block holding address `0x3ffff35800`, instance 1 with `pend 0`: the M5's candidate A (two-DART
+  wiring). The `/dev/mem` read of the sibling instance did not stall. The reader captured 25,911 bytes (the streamer stops
+  at the first bus error by design); no endpoint-0 error.
+* **Implemented:** nothing in Git except this entry, the report and the coordination/AGENTS/blockers text. Local and ignored:
+  the wrapper `run-attempt23.py`, the capture script, the handoff watcher and a read-only monitor (attempt 21's, renamed).
+* **Tested / measured (live, one attempt):** controller exit 0 in 10.965 s, handoff 02:17:46.781Z; enumeration +3.886 s,
+  reader open +4.0 s, 25,911 bytes, 41 timed-out reads, the M5 powered off at +215.7 s; the video (130 s, portrait) read
+  at 14, 21, 70 and 129.5 s; no M1 panic.
+* **Not verified:** that candidate A fixes the stall; whether stream 0 on instance 0 carries the data or the descriptors; why
+  the dwc3's `GBUSERRADDR` reads 0; bulk OUT. Digits of the long register words and the block address are good to about one.
+  Fresh policy checks NOT CHECKED. The fixed E1 probe is still NOT RUN.
+* **Next:** the M5 agent's call: candidate A in the Stage-B DT (both DART instances per dwc3); the M1 does the offline intake of
+  whatever it publishes next, and any further attempt only on the human's go.
+
 ## 2026-10-18 · M1: attempt 23 (boot040, the apple-dart fault made visible) offline readiness PASS (live NOT RUN)
 
 * **Discovered:** boot040's package is boot039's plus two kernel patches in the apple-dart fault path and a larger `/init`; the

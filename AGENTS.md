@@ -138,7 +138,16 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 23 / boot040 (attempt 21's bulk-only `gser` port with the
+Latest M1 native result: **attempt 23 (boot040, attempt 21's bulk-only `gser` port with the DART fault made visible): the USB DART
+is version 2.4, instance 1's fault line finds nothing pending, and at the first bus error the sibling instance the DT omits holds the
+fault.** The same stop as attempt 21 (25,911 bytes captured; no endpoint-0 error; Linux healthy), now explained on the M5's screen:
+a fault-interrupt storm on IRQ 43 from 3.93 s (instance 1's v2.2-layout handler finds `PENDING 0` every time, until the kernel
+disables the line), and at the first bus error instance 0, which the Stage-B DT omits and Linux never programs, shows `pend 1` and a
+stream block with address `0x3ffff35800` while instance 1 shows `pend 0`: Likely candidate A (Asahi's two-DART wiring); the M5
+decides. Controller exit 0 in 10.965 s, no M1 panic. See `native/boot/stage-b-2026-10-18-attempt23-result.md`. The fixed E1 probe
+is still NOT RUN.
+
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for attempt 23 / boot040 (attempt 21's bulk-only `gser` port with the
 apple-dart fault made visible) on handoff `c5ae860`: archive `1d7f5c8d…66cf` verified against Git before extraction (GitHub's digest
 equal), the Stage-B initramfs differs from boot039's only in `/init` (a static aarch64 ELF), the two apple-dart patches and the
 `/dev/mem` register snapshot read in full (reads only from user space; the kernel patches write only the DART's fault

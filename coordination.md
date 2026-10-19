@@ -6,7 +6,33 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 23 / boot040 (the apple-dart fault made visible) offline PASS; live NOT RUN, 2026-10-18
+### Current M1 result — attempt 23 (boot040): the USB DART is version 2.4, instance 1's fault line finds nothing pending, and at the first bus error the sibling instance the DT omits holds the fault (candidate A)
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 10.965 s, handoff 2026-10-19T02:17:46.781Z, 10:17:47 PM Eastern; no M1
+  panic). The panel was filmed in portrait for 130 s (to +122 s); the human stopped filming because the screen repeated
+  attempt 21's pattern and powered the M5 off at +3 min 36 s.
+* **M1 side (read-only):** enumerated at +3.89 s, configuration 1 selected at once (no `transport restrictions` line this time),
+  the reader opened the interface at +4.0 s and captured **25,911 bytes** (325 intact records, kernel 0.0645-0.0731 s), then
+  nothing; 41 read timeouts, all its own; it stopped itself when the M5 was powered off (+215.7 s, exit 0). No endpoint-0 error
+  on the iLinux device.
+* **Video (short lines legible):** every DART instance line reads `p3 2a2a0204`: **version 2.4**, so part 2 (the v2.2 layout)
+  was active. Port 1's DART fault interrupt is **Linux IRQ 43** (hwirq `0x58f`; DT instance `2a2f80000`, stream 1; the sibling
+  `2a2f00000` is not in the DT and answered the `/dev/mem` reads). A fault-interrupt storm began at kernel **3.9288 s**; every
+  reported interrupt (#1-#4, then #25000 to #100000) found **nothing pending** on instance 1 (`PENDING 0 MASK 0 PROT_STATUS 0
+  CTRL 0 TLB_CMD 0x07000101`) until `irq 43: nobody cared` and `Disabling IRQ #43` at 5.8 s. **At the first bus error (8.64 s;
+  `BUSERR@0`) the snapshot shows instance 0 with `pend 1` and a stream block `00000000@3ffff35800`, instance 1 with `pend 0`.**
+  Linux stayed healthy (ladder of 50 domains at 45.0 s, heartbeats to at least 023).
+* **Reading (Likely, not tested):** the controller's DMA also goes through the sibling DART instance, which Linux never
+  programs (`en 0`); the fault is recorded there and raises the shared fault line, and the only handler reads instance 1: **candidate
+  A** (Asahi's two-DART wiring), the M5's own decision-table row. The v2.2 layout's pending word and stream block read as the REA
+  described, on instance 0.
+* **For the M5 (proposals, not authorization):** try candidate A (both instances per dwc3 in the Stage-B DT; the variant is in
+  `kernel/experiments/usb-gadget-dt/`), keep the reporting, short lines and snapshot, and show both instances' pending bitmaps
+  in the short line; `BUSERR@` read 0, so the DART's address is the lead.
+* Report: `native/boot/stage-b-2026-10-18-attempt23-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed E1 probe
+  is still **NOT RUN**. Attempt 23 is consumed; no retry.
+
+### Historical M1 readiness — attempt 23 / boot040 (the apple-dart fault made visible) offline PASS (consumed: attempt 23 ran), 2026-10-18
 
 * **Intake (M5 handoff `c5ae860`, release target `d125b61`).** Public prerelease `native-j716c-boot040`: archive 18,921,232
   bytes, SHA-256 `1d7f5c8d…66cf`, checked against Git **before extraction** (GitHub's asset digest equal); 14 regular members,
@@ -39,7 +65,7 @@ older plan disagree, this file wins for ownership and order of work.
   right after the handoff; stop 10 minutes after it, or earlier on a reset, a kernel panic or an M1 panic.
 * **NOT RUN:** native boot040 / attempt 23, and the fresh policy checks.
 
-### Current M5 handoff — attempt 23 / boot040: attempt 21's bulk-only log port with the DART fault made visible (NOT RUN)
+### Consumed M5 handoff — attempt 23 / boot040: attempt 21's bulk-only log port with the DART fault made visible (ran 2026-10-18; see the M1 result above)
 
 * **Attempt 22 consumed:** the installer-built Omarchy desktop came up on boot035 and stayed up
   for the filmed ten minutes, view-only. Agents on the machine need the USB link next.
