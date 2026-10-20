@@ -8,6 +8,10 @@ Menu after-check incomplete; deadline overrun and local collector mistake are
 recorded in `native/boot/stage-b-2026-10-20-attempt27-result.md`. Do not run this
 historical checklist again without a new reviewed scope and human start.
 
+Current planning: [CPU, Wi-Fi and storage after attempt 27](../../native/boot/post-attempt27-plan-2026-10-20.md).
+M5 is preparing the next CPU experiment; no new pinned package or live command
+is ready. Preserve the current receipts and await the new handoff.
+
 **Historical preboot handoff (published 2026-10-20):** M1: this is
 an offline intake request until the handoff is committed/pushed, the two private
 images match the records, and the human explicitly starts the attempt. Do not

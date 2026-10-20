@@ -1820,3 +1820,25 @@ key-parser/dependency error and roughly one-minute desktop-window overrun are
 reported explicitly; future collection needs checked prerequisites and an
 independent deadline. One launch/send consumed, no retry authorized by success.
 Evidence: `native/boot/stage-b-2026-10-20-attempt27-result.md`.
+
+### 2026-10-20 · Prioritize a usable CPU, independent Wi-Fi and persistent storage
+
+The user's post-attempt-27 direction makes these the acceptance targets before
+moving their main development/REA workflow into native Omarchy. Retain
+macOS-class measured performance and efficiency as the goal; an agent login,
+clean typing or a core count alone does not satisfy it. Include graphics latency
+because the software renderer directly affects responsiveness and CPU energy.
+
+Prepare the bounded CPU-frequency baseline/experiment first, using the existing
+offline-tested candidate. This proposed attempt-28 scope supersedes the old
+storage-attempt-28 ordering; it does not authorize live DVFS or change a launcher.
+Keep SMP entry diagnostics, N1 transport work and read-only storage preparation
+separate, and select later attempts by evidence/readiness. Do not copy the
+macOS SPTM sequence or assume a mask-only change enables secondary cores.
+
+Distinguish persistent Linux storage from reading encrypted macOS volumes.
+Stage selected authorized research inputs privately; public Git receives only
+permitted findings and original implementation. Preserve the existing entry,
+original macOS and waiver of repeated routine policy checks. Current plan:
+`native/boot/post-attempt27-plan-2026-10-20.md`. No new boot package, hardware
+test, partition/write target or native installation is approved by this review.

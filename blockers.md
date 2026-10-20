@@ -3,6 +3,28 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
+## Current workstation acceptance blockers — 2026-10-20
+
+The user wants full CPU performance/efficiency, independent built-in Wi-Fi
+and fast persistent storage before moving their main work into native Omarchy.
+See `native/boot/post-attempt27-plan-2026-10-20.md`. The next preparation is the
+separate CPU experiment; the old storage-attempt-28 assignment is superseded.
+
+* **CPU:** one online core; actual clock unmeasured. cpufreq candidate tested
+  offline but not integrated into a reviewed/pinned boot profile. SMP compiled,
+  secondary entry unresolved; known mask correction is not a complete fix.
+  Power/thermal telemetry, idle retention and scheduling remain separate work.
+* **Desktop:** software rendering and severe reported menu/app delay. A six-second
+  1% busy sample proves neither frame latency nor low power with `idle=nop`.
+* **Wi-Fi:** N1 PCIe/DART/ACIPC transport and WLAN integration not demonstrated
+  natively. The working M1 relay is not independent built-in Wi-Fi.
+* **Storage:** real ANS path untested; read-only VM tests do not establish it.
+  RAM-root work is ephemeral. Writes/persistence need a separately defined
+  target; APFS and hardware-bound unlock are additional macOS-file dependencies.
+
+Attempt 28 is not ready for a restart. No new policy check, launcher allowance
+or hardware experiment follows from this planning update.
+
 ## Current status — attempt 27 delivery works; desktop latency remains open
 
 The first native two-stage transition PASS: verified root transfer 28.1 MB/s,

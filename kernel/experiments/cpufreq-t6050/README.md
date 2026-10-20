@@ -1,8 +1,10 @@
 # T6050 CPU frequency experiment: offline candidate
 
-2026-10-19. **No hardware action, production launcher edit, attempt assignment,
-or deployment authorization.** Attempt 27 remains two-stage Omarchy delivery;
-attempt 28 remains the separately reviewed read-only storage track. This is an
+2026-10-19 candidate; planning update 2026-10-20. **No hardware action,
+production launcher edit or deployment authorization.** Attempt 27 completed.
+The [current plan](../../../native/boot/post-attempt27-plan-2026-10-20.md)
+proposes CPU work before storage, superseding the prior storage-attempt-28
+assignment. This candidate is not yet a pinned boot package. This is an
 original downstream experiment, not an upstream contribution. No Apple code,
 pseudocode or extracted bytes are included.
 

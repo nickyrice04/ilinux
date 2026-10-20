@@ -1,5 +1,13 @@
 # Storage set for attempt 27: the internal SSD, read-only by construction (prepared offline)
 
+**Planning update, 2026-10-20:** the attempt labels below describe the original
+storage proposal. Attempt 27 instead completed two-stage Omarchy delivery; the
+[current workstation plan](../../../../native/boot/post-attempt27-plan-2026-10-20.md)
+prioritizes a CPU experiment next. Storage remains offline, with no live
+allowance. Rebase/review its launcher design for paired two-stage images before
+assigning an attempt. VM refusal tests establish specific software behavior,
+not real ANS support or a guarantee against bugs in experimental drivers.
+
 2026-10-19, M5 side session (attempt-26 preparation). **Never run on the M5. Not part of the attempt-26
 package, image or checklist: nothing there can load or bind storage.** The user's decision (2026-10-19):
 attempt 26 is the keyboard alone; storage follows as attempt 27, with a separate launcher change the user

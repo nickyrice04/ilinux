@@ -6,6 +6,24 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 review and user priorities — 2026-10-20
+
+Reviewed M1 `cf4e739` and the user's subsequent menu/app-delay observations.
+Current planning order: `native/boot/post-attempt27-plan-2026-10-20.md`.
+Prepare a separate CPU baseline/bounded-frequency handoff next; all-core
+startup, independent N1 Wi-Fi and persistent SSD work remain core acceptance
+targets. The earlier fixed storage-attempt-28 assignment is superseded by this
+proposal, not by an applied launcher change. Attempt 28 is not ready to run.
+
+M5 owns offline integration/planning. M1 has no new live task; retain the
+attempt-27 receipts and await a new pinned handoff. Do not replay its consumed
+checklist. Existing unreviewed jobs047/048 and kernel-config files remain
+untouched. No new subagent was started for this review. Keep artifacts private,
+routine policy checks waived and every hardware path separately attributable.
+For the next collector, enforce verified-key prerequisites and an independent
+observation deadline. Native CPU/Wi-Fi/storage performance is still unmeasured
+in a matched parity comparison; no new hardware test was performed here.
+
 ### Current M1 result — attempt 27 native two-stage switch and return, 2026-10-20
 
 **Attempt 27 consumed: one native two-stage boot and one root send PASS.**

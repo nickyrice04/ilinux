@@ -5,6 +5,33 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M5: attempt 27 reviewed; CPU-first workstation plan recorded
+
+* **Reviewed:** M1 `cf4e739`, offline cpufreq/job051, recovered SMP findings,
+  N1 ACIPC work, read-only storage tests, boot042 configuration and the user's
+  successful typing/continued menu, terminal and file-manager delay.
+* **Finding:** two-stage delivery and automatic keyboard work. One CPU and
+  software rendering remain; attempt 27's actual clock and energy are unmeasured. SMP is
+  already compiled. The start-mask defect cannot explain first-cluster entry
+  failure. A higher clock/all-core count cannot alone prove desktop or energy
+  parity. Existing SSD candidates do not establish macOS-file access.
+  Recovered attempt 20's 2.65 GHz estimate and CPU/memory numbers as separate
+  native evidence; the old 604–617 ns large-working-set chase warrants a
+  controlled repeat, not attribution to low frequency without measurement.
+* **Implemented:** updated planning/status documents and corrected the obsolete
+  no-native-boot scorecard. CPU-frequency preparation now precedes the queued
+  storage experiment; CPU, independent Wi-Fi and persistent storage are the
+  user's acceptance targets for moving their main REA workflow into Omarchy.
+* **Validation:** documentation/evidence review only; no new compile, benchmark,
+  REA execution, module load, hardware access, launcher or image change. Existing
+  offline tests retain their recorded scope. Unreviewed jobs047/048 preserved.
+  New/updated local links resolve across the 15 documentation files;
+  whitespace checks and added-text private-path/key/token pattern checks pass.
+* **Next:** prepare the exact separate CPU profile, paired images and bounded
+  measurement/collector fixes described in
+  `native/boot/post-attempt27-plan-2026-10-20.md`. Attempt 28 is proposed, not
+  ready or authorized to run. M1 awaits the new handoff; no restart yet.
+
 ## 2026-10-20 · M1: attempt 27 native two-stage delivery, keyboard and return
 
 **Attempt 27 consumed: one native two-stage boot and one root send PASS.**

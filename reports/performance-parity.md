@@ -4,29 +4,43 @@ Reference: macOS 26.6.2 on MacBook Pro Mac17,6 (M5 Max), run
 `benchmarks/results/macos-2026-10-11-ac-lpm/`. The run was on AC power, and
 macOS reported "Low Power Mode: Yes" for AC (see `env-*.txt`).
 
-Linux status: **no native Linux boots on t6050**. Every native-Linux cell is
-therefore "Unsupported", which is distinct from "slow", and parity is not
-computed. VM results will be added in a separate section and never counted
-as native parity.
+Linux status, **2026-10-20:** Omarchy runs natively on t6050 with one CPU,
+software graphics, a RAM root, USB/SSH and the internal keyboard.
+[Attempt 27](../native/boot/stage-b-2026-10-20-attempt27-result.md) verified the
+two-stage delivery and automatic keyboard startup; menu/app latency remains
+large. Its idle sample is not a clock, frame-rate or energy measurement.
+Native DVFS, all-core execution, internal SSD and built-in Wi-Fi remain
+unvalidated. Earlier native diagnostic benchmarks are not yet reconciled here
+into a matched macOS comparison. Blank cells therefore mean **no matched
+native result in this scorecard**, not that Linux cannot boot or run CPU code.
+VM results below remain separate and never count as native parity.
+
+The [post-attempt-27 plan](../native/boot/post-attempt27-plan-2026-10-20.md)
+prioritizes CPU capability/efficiency, independent Wi-Fi and persistent storage.
+The reference above is specifically an AC Low Power Mode run, not a measured
+normal-mode reference. Retain that distinction when establishing the user's
+everyday macOS performance target.
 
 Parity formula: higher-is-better `linux/macos × 100%`; lower-is-better
 `macos/linux × 100%`. It's computed only with identical benchmark code,
-model files and precision.
+model files and precision, with comparable core placement, power/thermal
+conditions and documented compiler/build settings. Record uncertainty and
+measurement boundaries, especially for energy and durable I/O.
 
 ## Scorecard
 
 | Subsystem | Metric (same code on both OSes) | macOS baseline | Native Linux | Parity | Status / confidence |
 |---|---|---|---|---|---|
-| CPU single-core | `cpubench fma` 1 thread, P core | 124.6 GFLOP/s | n/a | n/a | Unsupported (no boot) |
-| | `cpubench intmix` / `sort` / `sgemm` 1 thread | 21.0 Gop/s / 23.3 Melem/s / 60.2 GFLOP/s | n/a | n/a | Unsupported |
-| CPU multicore | `cpubench fma` 18 threads | 1623 GFLOP/s | n/a | n/a | Unsupported |
-| | `intmix` / `sort` / `sgemm` 18 threads | 258.6 Gop/s / 373 Melem/s / 641 GFLOP/s | n/a | n/a | Unsupported |
-| CPU P vs M placement | QoS background vs ui (FMA, 1 thread) | 33.0 vs 124.6 GFLOP/s (26%) | n/a | n/a | Linux design ready (`omarchy-qos`) |
+| CPU single-core | `cpubench fma` 1 thread, P core | 124.6 GFLOP/s | n/a | n/a | Native CPU works; matched rate/core comparison pending |
+| | `cpubench intmix` / `sort` / `sgemm` 1 thread | 21.0 Gop/s / 23.3 Melem/s / 60.2 GFLOP/s | n/a | n/a | Matched comparison pending |
+| CPU multicore | `cpubench fma` 18 threads | 1623 GFLOP/s | n/a | n/a | Unavailable: only one CPU online |
+| | `intmix` / `sort` / `sgemm` 18 threads | 258.6 Gop/s / 373 Melem/s / 641 GFLOP/s | n/a | n/a | Unavailable: secondary startup unresolved |
+| CPU P vs M placement | QoS background vs ui (FMA, 1 thread) | 33.0 vs 124.6 GFLOP/s (26%) | n/a | n/a | Requires native cross-cluster operation; QoS design alone is insufficient |
 | Matrix unit (SME) | `sme_f32` 1 thread / 18 threads | 2.17 / 3.23 TFLOP/s | n/a | n/a | Kernel supports SME-only CPUs; untested here |
 | | `sme_i8` 1 thread / 18 threads | 4.34 / 6.46 TOPS | n/a | n/a | |
 | OS overheads | `getppid` syscall | 85.4 ns | n/a | n/a | lower is better |
 | | pipe ping-pong round trip (ui / bg) | 3.69 / 9.84 µs | n/a | n/a | lower is better |
-| Unified memory, CPU | STREAM copy 1 / 18 threads | 140 / 377 GB/s | n/a | n/a | Unsupported |
+| Unified memory, CPU | STREAM copy 1 / 18 threads | 140 / 377 GB/s | n/a | n/a | Matched single-core result pending; all-core unavailable |
 | | STREAM triad 18 threads | 351 GB/s | n/a | n/a | |
 | | DRAM latency, 2 GiB random chase (DMP active) | 112 ns | n/a | n/a | lower is better |
 | | anon page first-touch (16 KiB pages) | 31.5 GB/s, 1.92 M faults/s | n/a | n/a | |
@@ -35,9 +49,9 @@ model files and precision.
 | | MPS GEMM FP32 n=4096 | 14.8 TFLOP/s | n/a | n/a | |
 | GPU memory | copy bandwidth (shared buffers) | 537 GB/s | n/a | n/a | |
 | GPU latency | empty dispatch round trip (median) | 149 µs | n/a | n/a | lower is better |
-| GPU graphics | not yet measured (Metal render benchmark TBD) | — | n/a | n/a | |
+| GPU graphics | not yet measured (Metal render benchmark TBD) | — | n/a | n/a | Native software desktop works; GPU acceleration unavailable |
 | Neural Engine | Core ML FP16, 1×1-conv stack / FFN stack (all ops planned on ANE via MLComputePlan) | **14.0 / 7.1 TFLOP/s** at ANE ≈ 3.6 W | n/a | n/a | Unsupported (no Linux driver; exclave-mediated) |
-| SSD | sequential read 1 / 4 threads | 11.0 / 13.3 GB/s | n/a | n/a | Unsupported (no ANS3 driver) |
+| SSD | sequential read 1 / 4 threads | 11.0 / 13.3 GB/s | n/a | n/a | ANS candidate exists; real-controller validation NOT RUN |
 | | sequential write (with full flush) | 11.2 GB/s | n/a | n/a | |
 | | 4K random read QD1 / QD8 / QD32 | 17.4 K / 133 K / 253 K IOPS | n/a | n/a | |
 | | 4K random read QD1 latency p50 / p99 | 56 / 72 µs | n/a | n/a | lower is better |
@@ -45,6 +59,7 @@ model files and precision.
 | LLM inference (GPU) | llama.cpp Metal, synthetic Llama-3-8B Q4_K_M, pp512 / pp2048 / tg128 | 2909 / 2649 / 98.6 t/s | n/a | n/a | Unsupported (no GPU) |
 | LLM inference (CPU) | llama.cpp `-ngl 0` (uses Accelerate BLAS + op offload; see note) | see results JSON | n/a | n/a | Portable pure-CPU rerun planned |
 | Power efficiency | `powermon` (IOReport, no root): idle CPU / DRAM / GPU | 0.65 / 0.32 / 0.15 W | n/a | n/a | macOS measurable; no Linux equivalent yet |
+| Built-in Wi-Fi | LAN throughput, latency, reconnect and power save | Matched reference pending | n/a | n/a | N1 native transport unavailable; USB relay excluded |
 
 
 
@@ -90,6 +105,28 @@ on raw throughput. The ANE remains the efficiency leader.
 
 Linux parity for energy needs a Linux-side energy source (PMGR/SMC counters).
 That doesn't exist yet (B-008).
+
+## Earlier native diagnostic measurements, not a matched parity run
+
+[Attempt 20](../native/boot/stage-b-2026-10-16-attempt20-result.md) recorded
+these on-screen results on one unidentified core while software rendering
+and the status display competed for it. Build: GCC 16.1.1,
+`-O3 -march=armv8.4-a`; older image/session than attempt 27. Preserve them as
+native evidence without treating them as current clock measurements or filling
+the parity column against the differently configured macOS reference.
+
+| Diagnostic | Recorded result | Limitation |
+|---|---|---|
+| Dependent-instruction clock estimate | 2.65 GHz | Assumed instruction latency; not an independent clock counter |
+| Assembly FMA, one thread | 29.8 GFLOP/s | Core class and competing-renderer impact unresolved |
+| STREAM copy, one thread | 28.2 GB/s | 3 × 128 MiB arrays; not an all-core or matched comparison |
+| Random chase, 32 / 128 MiB | 604 / 617 ns | Cause unresolved; repeat with short controlled samples |
+| Same-core pipe round trip | 3.99 µs | Both processes on the one CPU; no cross-core result |
+
+Attempt 26 separately measured approximately 0.47 s per screen update.
+Attempt 27's clean typing and short 1% busy sample neither repeat that timing
+nor explain the older memory-latency result. The CPU experiment should preserve
+these questions alongside frequency and core-start work.
 
 ## Linux in a VM on the same machine (separate track, not native parity)
 

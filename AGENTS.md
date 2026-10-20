@@ -99,6 +99,19 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Current direction — CPU, Wi-Fi and storage before workstation use, 2026-10-20
+
+After attempt 27, the user prioritizes full CPU performance/efficiency,
+independent built-in Wi-Fi/browser access and fast persistent storage before
+moving their main development/REA workflow into Omarchy. The current plan is
+`native/boot/post-attempt27-plan-2026-10-20.md`: prepare the separate CPU
+baseline/bounded-frequency experiment first; SMP startup, N1 and read-only
+storage preparation continue as distinct tracks. This supersedes the old fixed
+storage-attempt-28 ordering. Attempt 28 is proposed, not packaged or authorized
+to run. No launcher allowance has changed. Graphics latency and idle/thermal
+work remain necessary for responsiveness and efficiency. Direct access to
+macOS files is separate from NVMe support. Routine policy rechecks stay waived.
+
 ### Latest M1 native result — attempt 27, 2026-10-20
 
 **Attempt 27 consumed: one native two-stage boot and one root send PASS.**

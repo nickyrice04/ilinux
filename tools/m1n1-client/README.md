@@ -1,10 +1,12 @@
 # Second-machine m1n1 client
 
-Current next handoff: [Stage B instructions](stage-b-instructions.md).
-Stage A P_NOP and macOS return passed. The Linux launcher now uses the same
-shared `usb_identity.py` selector with `--device auto`; pull all controller
-files together. Linux has not booted. Prepare/check offline, then await the
-user's Stage B approval before any live launch.
+Current status, 2026-10-20: **attempt 27 consumed**, native Omarchy, two-stage
+delivery, second USB/SSH link and automatic keyboard startup PASS; desktop
+latency remains large. The [Stage B instructions](stage-b-instructions.md)
+are historical and must not be replayed. Read the
+[current workstation plan](../../native/boot/post-attempt27-plan-2026-10-20.md)
+and retain the verified files/receipts while M5 prepares a separate CPU handoff.
+No new live attempt is ready. The sections below record original client setup.
 
 Prepared 2026-10-13 on the second macOS computer. This is client preparation,
 not authorization to install a boot entry, change security or boot the M5.

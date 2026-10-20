@@ -1,5 +1,10 @@
 # Resuming the main and side-session work
 
+**Historical recovery plan.** Attempt 27 has now completed. The user's
+post-attempt-27 CPU/Wi-Fi/storage priorities and proposed CPU-first ordering
+are in [the current plan](post-attempt27-plan-2026-10-20.md), which supersedes
+the fixed storage-attempt-28 assignment below. No new live allowance follows.
+
 2026-10-19. Baseline `75411ec`; the remote main branch matches. Existing
 uncommitted work was preserved. The user approved commit/push of the reviewed
 attempt-27 handoff and separate offline CPU/SMP work on 2026-10-20. Hardware

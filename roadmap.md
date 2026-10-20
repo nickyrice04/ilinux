@@ -5,6 +5,30 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
+## Current direction — after native attempt 27, 2026-10-20
+
+**Omarchy boots natively with USB/SSH and automatic keyboard startup.**
+Two-stage delivery works; the user can type without extra letters but menus
+and applications remain slow. One CPU, software graphics and a RAM root remain.
+The current [workstation plan](native/boot/post-attempt27-plan-2026-10-20.md)
+supersedes the historical attempt assignments below.
+
+1. Prepare the separate CPU baseline/bounded-frequency experiment, proposed
+   for attempt 28. The module passed offline tests; integration, exact paired
+   images, measurement runner and independent M1 intake still precede a restart.
+2. Resolve one-secondary entry, then cross-cluster/all-18-core operation,
+   scheduling, telemetry and idle/thermal behavior. Measure desktop latency
+   alongside CPU progress; CPU count is not a substitute for graphics work.
+3. Continue N1 PCIe/DART/ACIPC research toward independent Wi-Fi and a browser,
+   and rebase the read-only ANS experiment for two-stage delivery. Later native
+   ordering follows readiness/results; do not hold ready work for full CPU parity.
+4. Establish persistent Linux storage and matched CPU, networking, SSD and
+   energy measurements before moving the user's main REA workflow into Omarchy.
+   Access to existing encrypted macOS files is a separate dependency.
+
+No new live attempt or launcher allowance is ready/authorized by this plan.
+Attempt 27 is consumed. Keep the current entry and routine policy-check waiver.
+
 ## Phase 0 — Foundations (session 1)
 
 | # | Item | Status |
@@ -47,7 +71,8 @@ survey is not the next dependency. No proprietary code is copied into Linux.
 
 ## Phase 3 — Native deployment (separate explicit authorization required)
 
-Updated 2026-10-15 after attempt 15. Native Linux reaches diagnostic PID 1 on
+Historical path, recorded 2026-10-15 after attempt 15; the current direction
+above supersedes its attempt/status assignments. Native Linux reached diagnostic PID 1 on
 one CPU (attempts 14–15). Attempt 14 reset 5.6 s after genpd's bulk power-off;
 boot034 removed that and ran ≥ 27.6 s, then reset 5.7 s after releasing the
 last of the SMC-owned `smc_i2cm` domains, which no Asahi device tree exposes.
@@ -77,9 +102,11 @@ Iterate per subsystem with the Observe → Investigate → Compare → Design �
 Implement → Test → Benchmark → Iterate loop, scored in
 `reports/performance-parity.md`.
 
-For this exact M5, the largest remaining native gaps are (1) stable Linux
-userspace and usable access, (2) all-core operation plus safe idle/DVFS and
-thermal control, and (3) native G17 graphics/display/media acceleration.
+For this exact M5, native userspace and the USB/SSH control channel now work.
+Current priorities are full CPU capability/efficiency, independent built-in
+Wi-Fi and persistent SSD access, with graphics latency measured alongside them.
+G17 graphics/display acceleration remains important to interactive performance
+and energy. Other hardware follows the user's workstation acceptance targets.
 Stage B deliberately uses `idle=nop`, one CPU and no cpufreq: it tests liveness,
 not efficiency. Removing those restrictions requires independent evidence.
 The [current Asahi M5 table](https://asahilinux.org/docs/platform/feature-support/m5/)
