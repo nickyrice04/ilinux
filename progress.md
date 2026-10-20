@@ -17,9 +17,10 @@ measured, still unsupported, and next.
   0.47 s, the key release waits behind it and the terminal's 250 ms auto-repeat fires about 14 times per tap (134 to 152 characters for
   10 taps, seven runs). **`repeat_delay` 1000 ms gives 10 of 10 and halves the CPU per tap**; animations off changes nothing; three
   leaked `omarchy-menu-select` pollers cost 7 to 12% idle CPU; a small window shortens the frame, not the CPU per tap.
-* **Implemented:** nothing in Git except this entry, the report and the coordination/AGENTS/blockers text. Local and ignored: the
-  wrapper, capture script, watcher and monitor, the two journal captures, the usb-pipe and proxy logs, and the measurement scripts
-  (`keytiming.py`, `inspect_m5.py`, `frame_probe.py`, `ab_m5.py`, `ab2_m5.py`).
+* **Implemented:** this entry, the report and the coordination/AGENTS/blockers text, then (a follow-up commit) the measurement scripts
+  as `tools/m1n1-client/m5-probes/` (read-only `keytiming.py`, `inspect_desktop.py`, `frame_probe.py`; runtime-only `tap_ab.py`,
+  `tap_ab_repeat.py`; a README and `test_m5_probes.py`, 8 tests, 27 mutations caught; small edits after the run, not re-run on the M5).
+  Local and ignored: the wrapper, capture script, watcher and monitor, the two journal captures, the usb-pipe and proxy logs.
 * **Tested / measured (live, one attempt plus two A/B runs the human approved in chat; runtime-only, restored):** controller exit 0 in
   476.856 s (upload 473.4 s), handoff 00:39:17.261Z; enumeration +19.67 s with no accessory prompt; 22 `usb-pipe` sessions (303 KB in,
   212 KB out); the journal's 205,394 bytes; the link ended at +3,813.8 s with the human's power-off or restart, and a macOS "Mac" device

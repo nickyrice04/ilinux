@@ -74,7 +74,8 @@ personal data. The review frames were deleted.
 
 **What the M1 did on the M5 (all through the SSH byte pipe):** read-only checks at the start (the checklist's session checks);
 `sudo ilinux-keyboard` (steps 0 to 5); step 6's reader on its own after a rerun of the script failed (below); then a set of
-measurement tools written for this run (local and ignored: `keytiming.py`, `inspect_m5.py`, `frame_probe.py`, `ab_m5.py`, `ab2_m5.py`):
+measurement tools written for this run (committed afterwards, with small edits, as `tools/m1n1-client/m5-probes/`: `keytiming.py`,
+`inspect_desktop.py` (was `inspect_m5.py`), `frame_probe.py`, `tap_ab.py` (was `ab_m5.py`), `tap_ab_repeat.py` (was `ab2_m5.py`)):
 
 * `keytiming.py` (as root, **read-only**): reads `/dev/input/event0` without grabbing it and `/proc`; prints each key event with its kernel
   timestamp and its delivery lag, the CPU's busy share every 0.1 s and which processes used the CPU every 0.25 s (its own cost: about 1%).
@@ -290,7 +291,10 @@ under sustained load; ports 2 and 3 (never cabled); fresh policy checks.
   6. **The early boot lines:** the `cs` always-on flag is the DT generator's own conservative guess and the hardware refuses it: revisit it
      (and `afr`, `nub_spmi_a2`, which are also off at boot but come on) when the GPU is next on the list; the `kvm_arch_timer` line means
      the guest-virtual-timer interrupt is missing or zero in the DT's timer description (Likely).
-  7. **Tooling:** the measurement scripts are local and ignored; if the M5 agent wants them (a read-only key and CPU timer, and the
-     runtime-only tap A/B), the human can have them committed under `tools/m1n1-client/` after review.
+  7. **Tooling:** the measurement scripts are in `tools/m1n1-client/m5-probes/` (a read-only key and CPU timer, two read-only
+     desktop inspectors, and two runtime-only tap A/B scripts that need the human's approval for each run), with a README, the Hyprland
+     Lua calls that worked on this image, and an offline test (`python3 -I tools/m1n1-client/test_m5_probes.py`).
 
 No media, capture, `ioreg` dumps or identifiers are committed; the human's phone photo and clip stay local. Earlier reports are unchanged.
+The probe scripts were committed after the run with small edits (tightened refusals, two path and output fixes) that were not re-run on the M5;
+see `tools/m1n1-client/m5-probes/README.md`.

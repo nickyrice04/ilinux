@@ -47,8 +47,8 @@ older plan disagree, this file wins for ownership and order of work.
   `omarchy-menu-select` pollers; (3) cut the cost of a frame (the overlay and wallpaper layers, `render:cm_enabled`, window sizes, damage
   on the `simpledrm` path; animations are not it); (4) the structural work the human's question points at: SMP, the CPU's speed state, a
   display/GPU driver (agents over SSH work now but share the same slow CPU); (5) `ilinux-keyboard` rerun at step 4, the idle sshd restart
-  on the cabled port, `ufw`; (6) revisit the `cs` always-on flag and the `kvm_arch_timer` line; (7) the measurement scripts are local and
-  ignored; they can be committed under `tools/m1n1-client/` if wanted.
+  on the cabled port, `ufw`; (6) revisit the `cs` always-on flag and the `kvm_arch_timer` line; (7) the measurement scripts are in
+  `tools/m1n1-client/m5-probes/` (README, offline test `test_m5_probes.py`; small edits after the run, not re-run on the M5).
 * Report: `native/boot/stage-b-2026-10-19-attempt26-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed E1 probe is
   still **NOT RUN**. Attempt 26 is consumed; no retry.
 

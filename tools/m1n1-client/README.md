@@ -177,6 +177,12 @@ starts secondary CPUs before Linux, even with `maxcpus=1`. Use the reviewed
 `native/boot/launch.py` instead, only after separate live-session approval.
 It loads the verified uncompressed Image directly, with no compression guess.
 
+## Probes for the running M5 desktop (attempt 26)
+
+`m5-probes/` holds the read-only key and CPU timing and the runtime-only tap tests that measured the M5's slow desktop and
+reproduced its repeated letters over the USB byte pipe; `m5-probes/README.md` says how to run them, what the runtime-only ones change
+and the Hyprland Lua calls that worked; `python3 -I tools/m1n1-client/test_m5_probes.py` checks their promises offline.
+
 ## Sources
 
 * https://asahilinux.org/docs/sw/m1n1-user-guide/
