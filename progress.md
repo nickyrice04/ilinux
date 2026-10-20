@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M1: attempt 26 ran: the M5's keyboard works and types; every screen update costs the one CPU about half a second, which is the lag and the repeated letters
+
+* **Discovered:** the MTP keyboard path works end to end over the SSH-driven bring-up (`sudo ilinux-keyboard` steps 0 to 5 PASS in 1.4 s:
+  RTKit wake, DockChannel FIFO, `hid-apple`, a 2 MiB ring transport, `/dev/input/event0` "Apple MTP keyboard"; the human typed 49 keys,
+  `omarchy` arrived as on a US layout); the MTP DART's reset at boot disturbed nothing; the link and SSH held 63 min 34 s (22 SSH sessions,
+  no kernel fault line); the attempt-25 image fixes work. The human found the desktop unusably slow (menus about 2 s, repeated letters)
+  and asked whether CPU work should come first. **Measured:** the keyboard path is clean (taps seen once, 44 to 88 ms, no kernel repeat,
+  read within 5.2 ms) but the one CPU stays at 91 to 100% for 0.8 to 6 s after almost every key: Hyprland draws the 3456×2160 screen in
+  software (libLLVM and Mesa gallium mapped; a full-screen wallpaper and notification overlay, a bar, a dock), a frame costs about
+  0.47 s, the key release waits behind it and the terminal's 250 ms auto-repeat fires about 14 times per tap (134 to 152 characters for
+  10 taps, seven runs). **`repeat_delay` 1000 ms gives 10 of 10 and halves the CPU per tap**; animations off changes nothing; three
+  leaked `omarchy-menu-select` pollers cost 7 to 12% idle CPU; a small window shortens the frame, not the CPU per tap.
+* **Implemented:** nothing in Git except this entry, the report and the coordination/AGENTS/blockers text. Local and ignored: the
+  wrapper, capture script, watcher and monitor, the two journal captures, the usb-pipe and proxy logs, and the measurement scripts
+  (`keytiming.py`, `inspect_m5.py`, `frame_probe.py`, `ab_m5.py`, `ab2_m5.py`).
+* **Tested / measured (live, one attempt plus two A/B runs the human approved in chat; runtime-only, restored):** controller exit 0 in
+  476.856 s (upload 473.4 s), handoff 00:39:17.261Z; enumeration +19.67 s with no accessory prompt; 22 `usb-pipe` sessions (303 KB in,
+  212 KB out); the journal's 205,394 bytes; the link ended at +3,813.8 s with the human's power-off or restart, and a macOS "Mac" device
+  enumerated 31.5 s later; no M1 panic. No film; a 33.6 s phone clip and a photo of the early boot lines (kept local).
+* **Not verified:** the effect of `render:cm_enabled`, a solid background or removing the overlay layers; the trackpad (no driver);
+  why the keybindings selector never finishes; sustained load; ports 2 and 3; the early `cs` and `kvm_arch_timer` lines (unchanged since
+  attempt 19, effect unknown). Fresh policy checks NOT CHECKED. The fixed E1 probe is still NOT RUN.
+* **Next:** the M5 agent's call; proposals in the report: ship a longer repeat delay, fix the leaked pollers, cut the cost of a frame,
+  then SMP, the CPU's speed state and a display/GPU driver. Storage stays attempt 27 (a launcher change the user reviews first). The M1
+  does the offline intake of whatever is published next; any further attempt only on the human's go.
+
 ## 2026-10-19 · M1: attempt 26 (the M5's keyboard, switched on over SSH, on boot042) offline readiness PASS (live NOT RUN)
 
 * **Discovered:** the boot042 package matches Git (archive before extraction, receipt, `SHA256SUMS`), differs from boot041 in exactly

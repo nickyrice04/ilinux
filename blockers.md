@@ -18,7 +18,19 @@ Class-scope lookup of a function-local import in `mtp_probe.py` (and
 `pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
 M1's re-verification and the human's go.
 
-## Current status — attempt 25: the USB link is no longer a blocker; what remains is the machine itself and the boot path
+## Current status — attempt 26: the keyboard works; the blocker is the desktop's speed (one slow CPU, software drawing), not the input path
+
+Attempt 26 switched the M5's own keyboard on over SSH (RTKit, DockChannel, `hid-apple`, a 2 MiB ring, `/dev/input/event0`) and ran 63 min
+34 s with no kernel fault line. Typing works but the desktop is unusable: after almost every key the one CPU runs at 91 to 100% for 0.8
+to 6 s, because Hyprland draws the 3456×2160 screen in software (a frame costs about 0.47 s); the key release waits behind the frame, so
+the terminal's 250 ms auto-repeat fires about 14 times per tap. A stopgap is verified: `input.repeat_delay` 1000 ms gives 10 of 10
+characters and half the CPU per tap; animations off changed nothing. Open: a cheaper frame (the full-screen wallpaper and notification
+overlay layers, damage on the `simpledrm` path), SMP, the CPU's speed state and a display/GPU driver (the structural fix; `roadmap.md`
+Phase 3 and later); the leaked `omarchy-menu-select` pollers (7 to 12% idle CPU); the trackpad (no driver on `multi-touch`); no storage
+(attempt 27); the early `cs` power-domain and `kvm_arch_timer` errors (unchanged since attempt 19, effect still unknown). See
+`native/boot/stage-b-2026-10-19-attempt26-result.md`.
+
+## Historical status — attempt 25: the USB link is no longer a blocker; what remains is the machine itself and the boot path (superseded by attempt 26)
 
 Attempt 25 ran SSH, the clock step, web access through the M1 and a signed-in Claude Code on the M5 over the USB byte pipe for
 16 minutes (about 25 to 27 MB/s each way, no kernel fault line, two interfaces and two user clients on one device). Agents on the

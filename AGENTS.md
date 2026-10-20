@@ -138,7 +138,18 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
-Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 26 (the M5's keyboard, switched on over SSH, on boot042,
+Latest M1 native result: **attempt 26 (the M5's keyboard, on boot042): the keyboard switches on over SSH and types on the M5, and the
+desktop's slowness is measured and explained.** `sudo ilinux-keyboard` steps 0 to 5 PASS in 1.4 s (RTKit wake of the MTP, DockChannel,
+`hid-apple`, a 2 MiB ring transport, five interfaces, `/dev/input/event0` "Apple MTP keyboard"; step 6: 49 presses, Enter, `omarchy` as on
+a US layout; no trackpad device); the MTP DART's reset at boot disturbed nothing; the link and SSH held **63 min 34 s** (22 SSH sessions,
+no kernel fault line) until the human powered the M5 off or restarted it; the attempt-25 image fixes work. The human found the desktop
+unusably slow (menus about 2 s, repeated letters). Measured: the keyboard path is clean (each tap seen once, 44 to 88 ms, no kernel
+repeat on letters), but every screen update costs the one CPU about 0.47 s (Hyprland draws the 3456×2160 screen in software), the key
+release waits behind it and the terminal's 250 ms auto-repeat fires about 14 times per tap (134 to 152 characters for 10 taps, seven
+runs); **a 1000 ms repeat delay gives exactly 10 of 10 and halves the CPU per tap**; animations off changed nothing. Controller exit 0
+in 476.856 s, no M1 panic. See `native/boot/stage-b-2026-10-19-attempt26-result.md`. The fixed E1 probe is still NOT RUN.
+
+Historical M1 milestone: offline readiness PASS (live NOT RUN) for attempt 26 (the M5's keyboard, switched on over SSH, on boot042,
 launcher `--profile omarchy`) on handoff `b8c877c`: the boot042 archive verified against Git before extraction (GitHub's digest equal)
 and its receipt clean; it differs from boot041 in exactly `Image`, `kernel.config` and the Stage-B DT, and the M1's own diff of the two
 DTs finds exactly ten new MTP nodes and two changed ones with the NVMe node still disabled and every USB node unchanged; the

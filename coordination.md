@@ -6,7 +6,53 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 readiness — attempt 26 (the M5's keyboard, switched on over SSH, on boot042) offline PASS; live NOT RUN, 2026-10-19
+### Current M1 result — attempt 26 (the M5's keyboard, on boot042): the keyboard switches on over SSH and types on the M5; every screen update costs the one CPU about half a second, which is the lag and, reproduced on demand, the repeated letters
+
+* **One RAM attempt consumed, controller PASS** (exit 0 in 476.856 s, upload 473.4 s at 5.24 MB/s, handoff 2026-10-20T00:39:17.261Z =
+  8:39:17 PM Eastern 2026-10-19; no M1 panic). No film of the run; the human sent a 33.6 s phone clip of the M5's screen (the slow
+  response) and a photo of the early boot lines, both kept local. The M5 ran **63 min 34 s** until the human powered it off or restarted
+  it (confirmed in chat); a macOS "Mac" device enumerated 31.5 s later.
+* **Go/no-go PASS:** `Hardware DT PASS` for the MTP nodes; the MTP DART probed at kernel 0.070 s (v2.4, unlocked, initialized) with no
+  freeze, reset or fault line.
+* **M1 side:** enumerated +19.67 s, configuration 1 five ms later with no "transport restrictions" line; both interfaces, no driver
+  bound; the reader (two runs, 205,394 bytes, 2,222 records) and 22 `usb-pipe` sessions (303 KB to the M5, 212 KB from it) over
+  **63 min 14 s with no kernel fault line**; the host log's 730 device lines are read timeouts, the enumeration, Chrome's refused open
+  and the final disconnect.
+* **The keyboard (the headline):** `sudo ilinux-keyboard` steps 0 to 5 PASS in 1.4 s (kernel 114.09 to 115.47 s): RTKit wake (firmware
+  `AppleMTPFirmwareMac-5340.61.4~502`), the DockChannel FIFO, `hid-apple`, the ring transport (2 MiB at iova `0x100ffc00000`), five
+  interfaces, `/dev/input/event0` "Apple MTP keyboard", Hyprland sees it; step 6 with the human: 49 presses, Enter, `omarchy` as on a
+  US layout. No trackpad device (no driver on `multi-touch`, `actuator`, `tp-accel`). A rerun of the script fails at step 4 (it reads
+  only new kernel lines; nothing was unloaded).
+* **Attempt-25 fixes verified:** `BROWSER` no-op, `archlinux-keyring-wkd-sync` masked (0 lines), no Chromium (0 lines; no Google CDN at the
+  proxy), the unused ports' sshd quiet; clock step 25.0 days to 2.3 ms; web through the M1 (the proxy also carried the weather widget
+  every 30 minutes).
+* **Human-reported:** the keyboard works but everything is so slow it would be unusable: the Super+Space and Super+K menus take about
+  2 s, Super+Return opens a terminal slowly, `omarchy` came out as "ooooooomarchy", `hello` repeated letters; Hyprland's tiling works. They
+  ask whether CPU optimization should come before using an agent on the device, and asked that this be stated to the M5 agent.
+* **Measured** (read-only kernel key timing and `/proc` for 20 presses; then two A/B runs the human approved, runtime-only and
+  restored): every tap reached the kernel once (44 to 88 ms, no kernel repeat on any letter, read within 5.2 ms); the CPU then stays at
+  91 to 100% for 0.8 to 6 s after almost every key (user 86 to 95%), Hyprland's main thread 19 s of 250 s, the terminal 0.11 s in its
+  whole life; Hyprland has libLLVM and Mesa gallium mapped (software) and draws a full-screen wallpaper, a full-screen notification
+  overlay, a bar and a dock; **a screen update costs about 0.47 s and the key release waits behind it, longer than the 250 ms repeat
+  delay, so the terminal repeats about 14 times per tap: 134 to 152 characters for 10 taps (seven runs)**; **`repeat_delay` 1000 ms: exactly
+  10 of 10 (two runs) and half the CPU per tap (0.53 s against 1.12 s)**; animations off: no change; stopping three leaked
+  `omarchy-menu-select` pollers (7 to 12% idle CPU): frames about 9% faster; a 600×400 floating terminal: frame 0.2 s but about 0.55 s of
+  CPU per tap.
+* **Reading:** Confirmed: the MTP keyboard path works end to end; the keyboard is not the cause of the lag or the repeats; the repeated
+  letters are reproduced and explained; animations are not the cost. Likely: software rendering at 3456×2160 on the boot CPU; the `cs`
+  always-on guess (the human's photo; unchanged since attempt 19) matters for the GPU later. Hypothesis: the fixed per-frame cost is the
+  full-screen layers or the present to `simpledrm`; the boot CPU is efficiency-class. Not established: `render:cm_enabled`, a solid
+  background or removing the overlay; the trackpad; why the keybindings selector never finishes; sustained load; ports 2 and 3.
+* **For the M5 (proposals, not authorization), in order:** (1) ship `input.repeat_delay` 800 to 1000 ms (verified); (2) fix the leaked
+  `omarchy-menu-select` pollers; (3) cut the cost of a frame (the overlay and wallpaper layers, `render:cm_enabled`, window sizes, damage
+  on the `simpledrm` path; animations are not it); (4) the structural work the human's question points at: SMP, the CPU's speed state, a
+  display/GPU driver (agents over SSH work now but share the same slow CPU); (5) `ilinux-keyboard` rerun at step 4, the idle sshd restart
+  on the cabled port, `ufw`; (6) revisit the `cs` always-on flag and the `kvm_arch_timer` line; (7) the measurement scripts are local and
+  ignored; they can be committed under `tools/m1n1-client/` if wanted.
+* Report: `native/boot/stage-b-2026-10-19-attempt26-result.md`. Fresh policy/default checks **NOT CHECKED**. The fixed E1 probe is
+  still **NOT RUN**. Attempt 26 is consumed; no retry.
+
+### Historical M1 readiness — attempt 26 (the M5's keyboard, switched on over SSH, on boot042) offline PASS (consumed: attempt 26 ran), 2026-10-19
 
 * **Intake (M5 handoff `b8c877c`, release target `a1cc21a`).** Public prerelease `native-j716c-boot042`: archive 18,877,362 bytes,
   SHA-256 `a2e57c0c…a781`, checked against Git **before extraction** (GitHub's asset digest equal); 14 regular members, no unsafe
@@ -47,7 +93,7 @@ older plan disagree, this file wins for ownership and order of work.
   Claude sign-in is optional. **The m1n1 screen shows the Mac's serial-number line before the handoff: never transcribe or share it.**
 * **NOT RUN:** native attempt 26 and every live check, and the fresh policy checks.
 
-### Current M5 handoff — attempt 26: the M5's keyboard, switched on over SSH, on boot042 (NOT RUN)
+### Consumed M5 handoff — attempt 26: the M5's keyboard, switched on over SSH, on boot042 (ran 2026-10-19; see the M1 result above)
 
 * **Attempt 25 consumed:** SSH, the clock step, web access through the M1 and a signed-in Claude Code worked on the M5
   over the USB link (see the M1 result below). The machine still has no input of its own.
