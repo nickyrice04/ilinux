@@ -10,8 +10,9 @@ and fast persistent storage before moving their main work into native Omarchy.
 See `native/boot/post-attempt27-plan-2026-10-20.md`. The next preparation is the
 separate CPU experiment; the old storage-attempt-28 assignment is superseded.
 
-* **CPU:** one online core; actual clock unmeasured. cpufreq candidate tested
-  offline but not integrated into a reviewed/pinned boot profile. SMP compiled,
+* **CPU:** one online core; actual clock unmeasured. cpufreq candidate built
+  into a separately pinned no-write observation profile for attempt 28. Native
+  command/OPP mapping and usable thermal telemetry precede the first increase. SMP compiled,
   secondary entry unresolved; known mask correction is not a complete fix.
   Power/thermal telemetry, idle retention and scheduling remain separate work.
 * **Desktop:** software rendering and severe reported menu/app delay. A six-second
@@ -22,8 +23,11 @@ separate CPU experiment; the old storage-attempt-28 assignment is superseded.
   RAM-root work is ephemeral. Writes/persistence need a separately defined
   target; APFS and hardware-bound unlock are additional macOS-file dependencies.
 
-Attempt 28 is not ready for a restart. No new policy check, launcher allowance
-or hardware experiment follows from this planning update.
+Attempt 28 build/controller tests pass; exact-pair VM boot validation PASS;
+the first harness-only failure is retained in the validation record.
+M1 intake of both new images and human start precede a restart. Native/live
+checks remain NOT RUN. Follow `tools/m1n1-client/attempt28-instructions.md`;
+there is no new policy/settings change or routine check.
 
 ## Current status — attempt 27 delivery works; desktop latency remains open
 

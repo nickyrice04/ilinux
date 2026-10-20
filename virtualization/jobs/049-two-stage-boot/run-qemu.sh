@@ -23,7 +23,7 @@
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 cd "$HERE/../../.."
-OUT=$HERE/out
+OUT=${JOB_OUT:-$HERE/out}
 V=$OUT/vm
 QEMU=${QEMU:-$PWD/../apple-silicon-linux-research/virtualization/qemu/runtime/bin/qemu-system-aarch64}
 IMAGE=${KERNEL_TEST:-$PWD/virtualization/jobs/041-usb-gadget/out/build/Image-test}
@@ -37,6 +37,11 @@ FB_SIZE=$((FB_STRIDE * FB_H))
 # The launcher's RAM-root arguments, then what the pinned m1n1 appends on M4 and later; the VM adds
 # console=hvc0 for the markers (job 045's boot test does the same).
 CMDLINE="console=tty0 console=hvc0 rdinit=/init ro maxcpus=1 nr_cpus=1 cpufreq.off=1 pd_ignore_unused clk_ignore_unused quiet idle=nop arm64.nowfxt"
+# An explicit CPU-observation test uses the actual experiment governor argument.
+# This VM has no Apple DVFS controller; its MMIO behavior remains untested.
+if [ "${CPU_OBSERVE_TEST:-0}" = 1 ]; then
+    CMDLINE=${CMDLINE/cpufreq.off=1/cpufreq.default_governor=userspace}
+fi
 NEGATIVES=${NEGATIVES:-1}
 [ "$NEGATIVES" = 1 ] || CMDLINE="$CMDLINE ilinux049.negatives=0"
 MEM=${MEM:-32G}
@@ -192,6 +197,9 @@ expect "^ILINUX049-LINK-UP [0-9.]+ udc dummy_udc.0 configured; ilinux-sshd-tty@t
     "^ILINUX049-FAILED-UNITS [0-9.]+ $(ere "$FAILED_UNITS") \$" \
     "^ILINUX049-DONE [0-9.]+ pass" || status=1
 if grep -a -q -E 'ILINUX049-FAIL |Kernel panic' "$LOG"; then echo "  UNEXPECTED: FAIL or panic"; status=1; fi
+if grep -q 'cpufreq.default_governor=userspace' "$V/qemu-setup.txt"; then
+    expect '^ILINUX049-CPU28-ASSETS [0-9.]+ verified; virtual hardware refused; no module load or DVFS writes$' || status=1
+fi
 shots="receiving desktop"
 [ "$negatives" = 1 ] && shots="neg1-other-image neg2-short neg3-corrupt $shots"
 for s in $shots; do

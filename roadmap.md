@@ -13,9 +13,11 @@ and applications remain slow. One CPU, software graphics and a RAM root remain.
 The current [workstation plan](native/boot/post-attempt27-plan-2026-10-20.md)
 supersedes the historical attempt assignments below.
 
-1. Prepare the separate CPU baseline/bounded-frequency experiment, proposed
-   for attempt 28. The module passed offline tests; integration, exact paired
-   images, measurement runner and independent M1 intake still precede a restart.
+1. Finish intake of the prepared attempt-28 CPU observation package. Its
+   separate launcher, exact pair and bounded collector keep writes disabled.
+   Establish boot-state mapping/telemetry before selecting a frequency cap.
+   [Validation](native/boot/attempt28/validation.md) records the offline limits;
+   M1 readiness and human start precede the native attempt.
 2. Resolve one-secondary entry, then cross-cluster/all-18-core operation,
    scheduling, telemetry and idle/thermal behavior. Measure desktop latency
    alongside CPU progress; CPU count is not a substitute for graphics work.
@@ -26,7 +28,8 @@ supersedes the historical attempt assignments below.
    energy measurements before moving the user's main REA workflow into Omarchy.
    Access to existing encrypted macOS files is a separate dependency.
 
-No new live attempt or launcher allowance is ready/authorized by this plan.
+The user authorized attempt-28 preparation/publication; native/live remains
+NOT RUN. Use the [M1 handoff](tools/m1n1-client/attempt28-instructions.md).
 Attempt 27 is consumed. Keep the current entry and routine policy-check waiver.
 
 ## Phase 0 — Foundations (session 1)

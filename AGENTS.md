@@ -99,18 +99,26 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-### Current direction — CPU, Wi-Fi and storage before workstation use, 2026-10-20
+### Current work — attempt 28 CPU observation, 2026-10-20
 
-After attempt 27, the user prioritizes full CPU performance/efficiency,
-independent built-in Wi-Fi/browser access and fast persistent storage before
-moving their main development/REA workflow into Omarchy. The current plan is
-`native/boot/post-attempt27-plan-2026-10-20.md`: prepare the separate CPU
-baseline/bounded-frequency experiment first; SMP startup, N1 and read-only
-storage preparation continue as distinct tracks. This supersedes the old fixed
-storage-attempt-28 ordering. Attempt 28 is proposed, not packaged or authorized
-to run. No launcher allowance has changed. Graphics latency and idle/thermal
-work remain necessary for responsiveness and efficiency. Direct access to
-macOS files is separate from NVMe support. Routine policy rechecks stay waived.
+The user authorized preparing, offline-testing and publishing the CPU attempt.
+Job052 built the exact two-stage pair and boot042-compatible module; exact-pair
+VM boot validation PASS, with the first harness-only failure retained in the
+validation record. The separate `cpu-observe` launcher integrates
+the reviewed DT with exact payload/prepared-tree guards and userspace governor.
+Its collector explicitly loads with writes disabled/cap zero, identifies the
+actual boot core and gathers short CPU/memory/thermal observations. No live
+frequency request, SMP or storage is included. Native attempt 28 is NOT RUN.
+M1 next: `tools/m1n1-client/attempt28-instructions.md`; exact pins/results in
+`native/boot/attempt28/`. Offline readiness and human start precede a restart.
+Keep the existing entry, Macintosh HD intact/default/Full, and routine policy
+checks waived. Public Git receives no images, keys or Apple artifacts.
+
+CPU performance/efficiency, independent built-in Wi-Fi and persistent storage
+remain the user's workstation acceptance targets. CPU-clock changes cannot
+alone prove desktop or energy parity; graphics, idle/thermal and SMP work
+remain. The old storage-attempt-28 assignment is superseded. Preserve the other
+agents' unreviewed jobs047/048 and kernel-config files.
 
 ### Latest M1 native result — attempt 27, 2026-10-20
 

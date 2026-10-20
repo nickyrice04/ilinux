@@ -3,7 +3,7 @@
 
 Synthetic data and fake transports only; nothing opens USB or touches a target. The
 Stage-B tests run every case through the reviewed launcher as well (its git object,
-checked against the digest that tools/m1n1-client/stage-b-instructions.md pins) and
+checked against the recorded historical digest below) and
 require identical requests, uploads, printed lines and errors. The RAM-root tests do the
 same against the committed launcher that attempts 19 and 20 ran.
 """
@@ -280,8 +280,8 @@ class ReviewedStageBTests(unittest.TestCase):
 class StageBUnchangedTests(unittest.TestCase):
     """The same facts without git: Stage-B stays the default and keeps its fixed values."""
 
-    def test_exactly_three_profiles(self):
-        self.assertEqual(sorted(launch.PROFILES), ["omarchy", "ramroot", "stage-b"])
+    def test_only_the_reviewed_four_profiles(self):
+        self.assertEqual(sorted(launch.PROFILES), ["cpu-observe", "omarchy", "ramroot", "stage-b"])
         self.assertEqual(launch.PROFILES["stage-b"],
                          ("initramfs-stage-b.cpio.gz", STAGE_B_ARGS, "diagnostic", STAGE_B_CONFIRM, 180, False, None))
         self.assertEqual(RAMROOT, ("ramroot.cpio.zst", RAMROOT_ARGS, "RAM-root", RAMROOT_CONFIRM, 300, True, None))
@@ -345,7 +345,7 @@ class StageBUnchangedTests(unittest.TestCase):
                         OMARCHY._replace(deadline=300)):
             with self.subTest(profile=profile):
                 log, lines, error = run_session(launch, {}, profile)
-                self.assertEqual(error, "ValueError: unknown launch profile; only stage-b, ramroot and omarchy exist")
+                self.assertEqual(error, "ValueError: unknown launch profile")
                 self.assertEqual((log, lines), ([], []))
                 with patch.object(launch.subprocess, "check_output") as git, self.assertRaises(ValueError):
                     launch.connect_and_launch("auto", Path("/fake-client"), {}, {}, profile)

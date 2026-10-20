@@ -15,6 +15,8 @@ cd "$(dirname "$0")/../../.."
 T=$(mktemp -d "${TMPDIR:-/tmp}/ilinux049-launcher.XXXXXX")
 trap 'rm -rf "$T"' EXIT
 mkdir -p "$T/native/boot" "$T/tools/m1n1-client"
+mkdir -p "$T/kernel/experiments/usb-gadget-dt"
+cp kernel/experiments/usb-gadget-dt/fdtedit.py "$T/kernel/experiments/usb-gadget-dt/"
 cp native/boot/*.py native/boot/*.json "$T/native/boot/"
 cp tools/m1n1-client/usb_identity.py "$T/tools/m1n1-client/"
 cp "$RECORD" "$T/native/boot/ramroot-manifest.json"

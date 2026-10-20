@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "profile": "ramroot",
+  "file": "ramroot.cpio.zst",
+  "size": 60671683,
+  "sha256": "65ea381524f266c78da0f98d42451f46fd48c94455d0734f1f6022c1d8f08c39",
+  "image_sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
+  "source": "VM job052 attempt28 stage one; attempt27 files with the new root pin",
+  "stage2": {
+    "size": 2469319544,
+    "sha256": "59a7383e4b6cd47712e5dc05998ab34a58d511edc0b7ee016b267a15d4fb2b78",
+    "image_sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
+    "entries": 215521,
+    "unpacked_bytes_16k": 11012784128
+  },
+  "native_tested": false
+}

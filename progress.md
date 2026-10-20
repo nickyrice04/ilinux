@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+
+## 2026-10-20 · M5: attempt 28 CPU observation ready for M1 offline intake
+
+* **Implemented:** dedicated `cpu-observe` profile with exact Image/DT/stage-one
+  pins, final prepared-tree CPU/OPP checks and userspace governor at registration.
+  Job052 adds the no-write module, one-shot CPU/memory collector and bounded
+  pointer chase to the working attempt-27 root; stage one is repinned. No change
+  to boot042 Image/config, installed m1n1, existing boot entry or macOS settings.
+* **Measured/tested offline:** module W=1 clean; 16 sanitizer cases and six
+  regression mutants; 296 controller VM tests, 12 collector, 11 M1 deadline/key,
+  19 CPU-profile host, 45 old-profile, 8 pair and 18 sender cases pass. Exact
+  shipping optimized chase executes in VM; exact pair/embedded pins verify.
+* **VM results:** bad/short/corrupt transfers refused; valid transfer,
+  root switch, Omarchy, second SSH and inherited image checks passed. Overall
+  first-run verdict FAIL because the VM probe did not expect the identity
+  guard's `struct.error` for QEMU's four-byte CPU reg. No module was loaded.
+  Probe corrected; fresh normal-path run PASS at +366.95 s, including CPU
+  assets and virtual-hardware refusal before module load. Original failed
+  verdict/evidence retained; no failed run is relabeled PASS.
+* **Scope/next:** native attempt 28 and CPU initialization remain NOT RUN.
+  No frequency/voltage writes, extra cores, storage or efficiency claim. M1
+  handoff is `tools/m1n1-client/attempt28-instructions.md`; exact pins and all
+  failures/limits are in `native/boot/attempt28/validation.md`. Publish the reviewed handoff,
+  then M1 independently verifies the two private images before human
+  start. Routine policy rechecks remain waived; unrelated jobs047/048 untouched.
+
 ## 2026-10-20 · M5: attempt 27 reviewed; CPU-first workstation plan recorded
 
 * **Reviewed:** M1 `cf4e739`, offline cpufreq/job051, recovered SMP findings,

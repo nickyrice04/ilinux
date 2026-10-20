@@ -1842,3 +1842,28 @@ permitted findings and original implementation. Preserve the existing entry,
 original macOS and waiver of repeated routine policy checks. Current plan:
 `native/boot/post-attempt27-plan-2026-10-20.md`. No new boot package, hardware
 test, partition/write target or native installation is approved by this review.
+
+
+### 2026-10-20 · Attempt 28 observes CPU state before selecting a frequency increase
+
+The user authorized the CPU experiment, offline tests and M1 handoff push.
+Package the first no-write stage of the post-attempt-27 plan: actual boot-core
+identity, requested command/OPP mapping, short independent CPU/memory work and
+available thermal observations. Current mapping and monitoring are not yet
+native-validated, so no defensible live frequency cap is selected in this run.
+Do not let historical assumptions about a low clock determine the answer.
+
+Use a separate `cpu-observe` profile with exact DT/Image/stage-one pins,
+prepared-tree controller/OPP validation and fixed userspace governor selected
+before registration. Preserve the working one-core/two-stage/keyboard/USB path,
+idle restrictions and disabled NVMe. The explicit-load module has immutable
+writes=false/cap=0. No DVFS/voltage write, module reload, secondary startup,
+storage probe or desktop-setting experiment is added. Unknown policy state is
+an informative diagnostic outcome; a command value is not an actual clock.
+
+The next handoff also fixes attempt27's collection mistakes: verify stage two's
+unique journal key before observation SSH, enforce one monotonic deadline with
+remote and local process bounds, and require a human-visible return timer.
+Keep native/live NOT RUN until the human starts after M1 offline intake.
+No repeat boot-policy check, original macOS/settings change, raw-data upload
+or proprietary code publication. Exact scope: `tools/m1n1-client/attempt28-instructions.md`.

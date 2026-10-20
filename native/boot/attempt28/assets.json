@@ -1,0 +1,14 @@
+{
+  "attempt": 28,
+  "frequency_writes": false,
+  "kernel": "7.1.9-g863199d8b4a3-dirty",
+  "compiler_flags": "-O3 -march=armv8.4-a; pthread for existing CPU/memory benchmarks",
+  "sha256": {
+    "apple-soc-cpufreq.ko": "67faac4a459a6af68923f8974f95b696226941126fb0a0d713377cc0071c0d17",
+    "chase_short": "7c880b2af9f0b89befea66badb08306298c3f0563c249279e86ddc77fa618bb6",
+    "cpubench": "10e3f1dd819a780f563be11d82ded4cd12c27150509a78d69a9303f048d5bf16",
+    "measurement.py": "8bc2c0f81cc823d8a12989b16e66ccd4a14006fe27532656fc505b4a8c860ac1",
+    "membench": "63a1edf6dd12b62b937601ec4ff0f4ef403a701f90446f7b1665609edb117445",
+    "observe28.py": "dee25ee12d17af155afa6164b2ab392167da980c237f2aba9d06e8f45bdb2db6"
+  }
+}

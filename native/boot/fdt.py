@@ -99,15 +99,19 @@ def check_framebuffer(tree, prepared=False):
         raise ValueError("boot framebuffer geometry/format/range invalid")
 
 
-def check_stage_b(blob, prepared=False):
+def check_stage_b(blob, prepared=False, cpu_reference=None):
     tree = properties(blob)
     if "apple,j716c" not in strings(tree["/"].get("compatible", b"")):
         raise ValueError("DT is not J716c")
+    allowed_cpu = set()
+    if cpu_reference is not None:
+        import cpu_observe
+        allowed_cpu = cpu_observe.check_tree(tree, cpu_reference)
     disabled = []
     for path, node in tree.items():
         comps = strings(node["compatible"]) if "compatible" in node else []
         if any("nvme" in c or "cluster-cpufreq" in c for c in comps):
-            if node.get("status") != b"disabled\0":
+            if path not in allowed_cpu and node.get("status") != b"disabled\0":
                 raise ValueError("storage or cpufreq enabled: " + path)
             disabled.append(path)
     if len(disabled) != 4:

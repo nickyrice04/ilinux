@@ -20,6 +20,7 @@ from fdt import check_stage_b
 import dapf_guard
 import entry_guard
 import gpio_guard
+import cpu_observe
 sys.path.insert(0, str(HERE.parents[1] / "tools/m1n1-client"))
 import usb_identity
 
@@ -52,6 +53,9 @@ PROFILES = {
     # ~1.03 GB for an initrd; 3 GiB holds this one with ~0.8 GB to spare.
     "omarchy": Profile("ramroot.cpio.zst", RAMROOT_BOOTARGS, "Omarchy RAM-root", OMARCHY_CONFIRM, 900,
                        True, 3 * 1024**3),
+    "cpu-observe": Profile("ramroot.cpio.zst",
+        RAMROOT_BOOTARGS.replace("cpufreq.off=1", "cpufreq.default_governor=userspace"),
+        "CPU observation stage one", "BOOT-J716C-CPU-OBSERVE-28", 300, True, None),
 }
 STAGE_B = PROFILES["stage-b"]
 PROXY_RATES = (5e6, 4e6)   # observed m1n1 USB proxy upload rates, bytes/s (roadmap.md, Phase 3)
@@ -166,12 +170,14 @@ def ensure_no_secondaries(proxy):
 
 def check_profile(profile):
     if profile not in PROFILES.values():
-        raise ValueError("unknown launch profile; only stage-b, ramroot and omarchy exist")
+        raise ValueError("unknown launch profile")
 
 
 def launch_session(iface, proxy, utils_factory, manifest, files, profile=STAGE_B):
     """Transport-injected to test failure paths without physical hardware."""
     check_profile(profile)
+    if profile is PROFILES["cpu-observe"]:
+        cpu_observe.check_payloads(files)
     proxy.nop()
     if proxy.get_chipid() != 0x6050:
         raise ValueError("target chip is not t6050")
@@ -230,7 +236,8 @@ def launch_session(iface, proxy, utils_factory, manifest, files, profile=STAGE_B
     magic, total = struct.unpack(">II", header)
     if magic != 0xD00DFEED or not 40 <= total <= 2 * 1024 * 1024:
         raise ValueError("invalid prepared DT size")
-    tree = check_stage_b(iface.readmem(prepared, total), prepared=True)
+    tree = check_stage_b(iface.readmem(prepared, total), prepared=True,
+                        cpu_reference=dtb if profile is PROFILES["cpu-observe"] else None)
     args = tree.get("/chosen", {}).get("bootargs", b"").rstrip(b"\0").decode("ascii").split()
     fixed = profile.bootargs.split()
     if args[:len(fixed)] != fixed:
@@ -308,7 +315,7 @@ def main(argv=None):
     parser.add_argument("--package", type=Path, required=True)
     parser.add_argument("--profile", choices=sorted(PROFILES), default="stage-b",
                         help="stage-b (default): diagnostic initramfs; ramroot: job 039's RAM root; "
-                             "omarchy: job 045's Omarchy root (2.34 GB, about 7.5 min of upload)")
+                             "omarchy: direct large-root upload; cpu-observe: attempt28 paired stage one")
     parser.add_argument("--ramroot", type=Path, help="ramroot/omarchy profile: the recorded ramroot.cpio.zst")
     parser.add_argument("--operator-key", type=Path,
                         help="ramroot/omarchy profile, optional: OpenSSH public key file for root")
@@ -318,6 +325,8 @@ def main(argv=None):
     parser.add_argument("--m1n1", type=Path, default=HERE.parents[1] / "third_party/m1n1")
     args = parser.parse_args(argv)
     profile = PROFILES[args.profile]
+    if profile is PROFILES["cpu-observe"] and args.operator_key is not None:
+        parser.error("CPU observation uses only the image's pinned operator key")
     if profile is STAGE_B and (args.ramroot is not None or args.operator_key is not None):
         parser.error("--ramroot and --operator-key require --profile ramroot or omarchy")
     if profile is not STAGE_B and args.ramroot is None:
@@ -330,7 +339,8 @@ def main(argv=None):
     print("Package PASS: all files match the repository manifest.")
     if profile is not STAGE_B:
         files = dict(files)
-        record_file = OMARCHY_RECORD if profile is PROFILES["omarchy"] else RAMROOT_RECORD
+        record_file = (cpu_observe.RECORDS / "ramroot-manifest.json" if profile is PROFILES["cpu-observe"]
+                       else OMARCHY_RECORD if profile is PROFILES["omarchy"] else RAMROOT_RECORD)
         record, image = verify_ramroot(args.ramroot, files["Image"], record_file)
         print("RAM root PASS: %s bytes match %s (%s)." % (
             format(record["size"], ","), record_file.name, record["source"]))
@@ -342,6 +352,11 @@ def main(argv=None):
         else:
             print("Operator key: none; only keys built into the image can log in.")
         files[profile.initrd] = ramroot_initrd(image, overlay)
+        if profile is PROFILES["cpu-observe"]:
+            files["t6050-j716c-stage-b.dtb"] = cpu_observe.prepare_dt(files["t6050-j716c-stage-b.dtb"])
+            check_stage_b(files["t6050-j716c-stage-b.dtb"], cpu_reference=files["t6050-j716c-stage-b.dtb"])
+            cpu_observe.check_payloads(files)
+            print("CPU observation PASS: pinned DT; userspace governor; explicit no-write module load only.")
     print("Mode:", "LIVE RAM LAUNCH" if args.launch else "OFFLINE ONLY; USB not opened")
     print("Boot arguments:", profile.bootargs)
     if profile is not STAGE_B:

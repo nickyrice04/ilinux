@@ -1,12 +1,13 @@
 # T6050 CPU frequency experiment: offline candidate
 
-2026-10-19 candidate; planning update 2026-10-20. **No hardware action,
-production launcher edit or deployment authorization.** Attempt 27 completed.
-The [current plan](../../../native/boot/post-attempt27-plan-2026-10-20.md)
-proposes CPU work before storage, superseding the prior storage-attempt-28
-assignment. This candidate is not yet a pinned boot package. This is an
-original downstream experiment, not an upstream contribution. No Apple code,
-pseudocode or extracted bytes are included.
+2026-10-19 driver candidate; **attempt-28 integration prepared 2026-10-20**.
+The user authorized the CPU package and M1 handoff. Attempt 28 is explicitly
+command-state observation with writes disabled, retaining one core and the
+working two-stage root. See [exact validation/pins](../../../native/boot/attempt28/validation.md)
+and [M1 instructions](../../../tools/m1n1-client/attempt28-instructions.md).
+Native initialization/transitions remain NOT RUN; M1 intake and human start
+precede a reboot. No macOS setting or volume changes. This is original
+downstream work; no Apple code, pseudocode or extracted bytes are published.
 
 The first objective is to determine whether a bounded request can change the
 single boot core's useful throughput. It does not require starting secondary
@@ -75,15 +76,19 @@ SHA-256 `17c55af9eb39ea799e254335176e9748193237dce3735f59cd286a63ea0a0405`.
 The new single compatible is `apple,t6050-cluster-cpufreq`: removing the t8112
 fallback prevents an old module selecting its unknown t6050 STATUS layout.
 All three tables are prepared, but this driver only permits one online CPU;
-no offline sibling cluster is exercised. The candidate is **not** in a boot
-package or image. The committed launcher continues to reject it.
+no offline sibling cluster is exercised. Attempt 28 includes this exact candidate through its separate `cpu-observe`
+profile; all earlier profiles continue to reject it.
 
-`allowance_model.py` is only a unit-tested proposal for the unprepared input-DT
-exception and removal of `cpufreq.off=1`. It is deliberately not an executable
-launcher. Integration still needs exact Image/module/root pins, final prepared
-DT checks, live hardware checks and a human-reviewed separate profile. It must
-preserve the existing single-core/idle/storage/USB/MTP safeguards. A two-stage
-root and its stage-one image must be pinned together before any attempt.
+`allowance_model.py` remains a historical unit-tested input-DT proposal.
+The actual integrated gates are `native/boot/cpu_observe.py` and the explicit
+profile in `launch.py`: exact payload pins, final prepared DT validation,
+one-core/idle/storage/USB/MTP safeguards and a fixed userspace governor.
+The shipping module is outside module autoload indices and loads only through
+the bounded collector with `ilinux_enable_writes=0 ilinux_max_pstate=0`.
+Job052 rebuilds the same driver source against boot042 and adds the collector
+and short CPU/memory workloads to the exact attempt-27 root. It also repins
+stage one. Its new module digest is in `native/boot/attempt28/assets.json`;
+the job051 pins below remain the historical offline build, not the new image.
 
 ## Reproduction and validation
 
@@ -145,7 +150,8 @@ frequency or thermal/power/efficiency result follows from these offline tests.
    Unload/reload is needed to alter immutable parameters. Unloading does not
    restore a prior speed state. A default governor can request transitions at
    registration once writes are enabled; its requests remain cap-bounded.
-   Switch to the userspace governor for the controlled measurements.
+   Select userspace at boot before registration, as attempt 28 now does; do
+   not rely on changing governor after a write-enabled load.
 5. Request a single reviewed state. Capture command readback separately
    from workload rate. Compare the existing `cpubench freq -t 1 -r 3 -s 0.2 -c 0`
    estimator (dependent ADDs, assumes one-cycle latency), an independent fixed

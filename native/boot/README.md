@@ -1,4 +1,4 @@
-# J716c native handoff — attempt 27 consumed; CPU preparation next
+# J716c native handoff — attempt 28 CPU observation
 
 **Native attempt 27 completed on 2026-10-20.** Two-stage delivery, Omarchy,
 the second USB/SSH link and automatic keyboard startup passed. The user typed
@@ -6,10 +6,11 @@ without extra letters but menus/apps remain slow. Read the
 [native result](stage-b-2026-10-20-attempt27-result.md) and
 [current workstation plan](post-attempt27-plan-2026-10-20.md).
 
-M1: the [Stage B checklist](../../tools/m1n1-client/stage-b-instructions.md)
-is consumed. Retain the files/receipts and await a new pinned handoff. Proposed
-attempt 28 is separate CPU baseline/bounded-frequency work; it is not yet a
-ready package or live authorization. No restart is needed for this review.
+M1: use the new [attempt-28 checklist](../../tools/m1n1-client/attempt28-instructions.md)
+and [validation/pins](attempt28/validation.md). The CPU observation package
+adds a separate launcher profile and bounded collector with frequency writes
+disabled. First independently verify both private images, then await the human
+start. Native attempt 28 remains NOT RUN; attempt 27 is consumed.
 
 [Attempt 26](stage-b-2026-10-19-attempt26-result.md) already booted Omarchy
 natively, established USB/SSH, enabled the internal keyboard manually and ran
@@ -24,17 +25,19 @@ automatic keyboard startup. Menu cleanup remains inconclusive; consult the
 result for all qualifications rather than assuming every image fix passed.
 
 The [boot042 package](boot042-keyboard-modules-2026-10-19.md), installed boot021
-m1n1, client pin and launcher remain unchanged. Keep Macintosh HD at Full
+m1n1 and client pin remain unchanged. The new launcher adds only the separate
+CPU observation profile with exact input/prepared-tree checks. Keep Macintosh HD at Full
 Security and as the default. No security, volume, firmware, bootloader or host
-network-setting changes. NVMe and cpufreq remain disabled; only one CPU is
-online. The CPU-first plan supersedes the old storage-attempt-28 assignment;
-storage and CPU work still need separate reviewed launcher profiles. Routine
+network-setting changes. NVMe remains disabled; only one CPU is online.
+CPU observation explicitly permits command reads through a no-write module;
+older profiles continue disabling cpufreq. Storage is a separate later attempt. Routine
 policy rechecks remain waived; Full/Permissive are last reported, not newly
 verified by this review.
 
 `package-manifest.json`, `archive-sha256.txt` and `intake-manifest-sha256.txt`
 still describe `native-j716c-boot042`. `ramroot-manifest.json` describes stage
-one; `omarchy-root-manifest.json` describes stage two. Both images, test
+one for attempt 27; `omarchy-root-manifest.json` describes that older stage two.
+Attempt 28 uses the separate manifests under `attempt28/`. Both images, test
 overlays, raw diagnostics and proprietary artifacts stay out of this public
 repository and Releases.
 

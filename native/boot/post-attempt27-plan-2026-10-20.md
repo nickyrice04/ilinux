@@ -1,5 +1,13 @@
 # After attempt 27: make this M5 a usable Linux workstation
 
+**2026-10-20 implementation update:** the user authorized CPU experiment
+preparation and publication. Attempt 28 now implements the no-write first
+stage of this plan: exact profile/image pairing and bounded collection.
+Frequency increases remain deferred until the command/state/thermal evidence
+is observed. See [validation](attempt28/validation.md) and
+[M1 handoff](../../tools/m1n1-client/attempt28-instructions.md).
+
+
 2026-10-20. Based on M1 report `cf4e739`, the user's subsequent desktop
 observations, and the existing offline CPU, storage and N1 work. This is the
 current planning order, superseding the earlier fixed assignment of storage

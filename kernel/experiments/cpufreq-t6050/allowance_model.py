@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Offline review model, never imported by the live launcher.
 
-This is only the proposed *unprepared input DT* gate. Final live ADT validation,
-post-m1n1 DT validation, image pins, profile selection and argv handling still
-require a separately reviewed launcher implementation.
+This historical proposal covers only the *unprepared input DT* gate. The
+attempt-28 integration now lives in native/boot/cpu_observe.py and launch.py,
+with exact image pins, final prepared-tree validation and userspace governor.
 """
 import hashlib
 from pathlib import Path
@@ -38,5 +38,5 @@ def candidate_bootargs(base_args):
     for required in ("maxcpus=1", "nr_cpus=1", "idle=nop", "arm64.nowfxt"):
         if tokens.count(required) != 1:
             raise ValueError("single-core and idle guard missing or duplicated")
-    # Build-review proposal only. The production launcher remains unchanged.
+    # Historical build-review proposal only; not the attempt-28 boot arguments.
     return " ".join(t for t in tokens if t != "cpufreq.off=1")

@@ -6,23 +6,27 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M5 review and user priorities — 2026-10-20
+### Current M5 handoff preparation — attempt 28 CPU observation, 2026-10-20
 
-Reviewed M1 `cf4e739` and the user's subsequent menu/app-delay observations.
-Current planning order: `native/boot/post-attempt27-plan-2026-10-20.md`.
-Prepare a separate CPU baseline/bounded-frequency handoff next; all-core
-startup, independent N1 Wi-Fi and persistent SSD work remain core acceptance
-targets. The earlier fixed storage-attempt-28 assignment is superseded by this
-proposal, not by an applied launcher change. Attempt 28 is not ready to run.
+User authorized the CPU experiment's offline preparation and push. M5 owns
+job052 image/module/benchmark build, the dedicated `cpu-observe` launcher,
+no-write collector, VM validation and M1 checklist. Build and offline driver/
+controller tests pass; exact-pair VM boot validation PASS;
+the first harness-only failure is retained in the validation record. Exact pins and
+limits: `native/boot/attempt28/validation.md`. M1 follows
+`tools/m1n1-client/attempt28-instructions.md` after publication and private
+transfer of both images. Record independent offline readiness with native/live
+NOT RUN; human start is required for the one boot/send. Do not replay attempt27.
 
-M5 owns offline integration/planning. M1 has no new live task; retain the
-attempt-27 receipts and await a new pinned handoff. Do not replay its consumed
-checklist. Existing unreviewed jobs047/048 and kernel-config files remain
-untouched. No new subagent was started for this review. Keep artifacts private,
-routine policy checks waived and every hardware path separately attributable.
-For the next collector, enforce verified-key prerequisites and an independent
-observation deadline. Native CPU/Wi-Fi/storage performance is still unmeasured
-in a matched parity comparison; no new hardware test was performed here.
+Attempt 28 identifies the boot core and requested state and samples short
+CPU/memory/desktop behavior. Module writes are explicitly disabled; unknown
+OPP/no telemetry is evidence, not permission for a live frequency request.
+SMP, N1 and read-only storage remain separate tracks; storage is no longer
+attempt 28. CPU/independent Wi-Fi/persistent SSD/efficiency remain the goal.
+Key verification gates observation SSH, and one fixed window starts at switch.
+Original macOS/boot settings remain intact; routine policy checks stay waived.
+No new subagents were started. Existing unreviewed jobs047/048 and kernel-config
+work are untouched. Images, test overlays and raw diagnostics remain private.
 
 ### Current M1 result — attempt 27 native two-stage switch and return, 2026-10-20
 

@@ -109,6 +109,34 @@ assert "omarchy.weather" not in [e["id"] for entries in layout.values() for e in
 [ "$(cat /sys/devices/system/cpu/online)" = 0 ] || fail "expected one online CPU"
 mark IMAGE-FIXES "repeat_delay=1000; runtime weather absent; keyboard enabled and skipped without MTP; online CPU 0"
 
+# Optional attempt-28 payload: validate the shipped assets and exercise its
+# refusal on virtual hardware. Never pretend this VM has Apple DVFS registers.
+if [ -d /usr/local/lib/ilinux-cpu28 ]; then
+    python3 -I - > "$RES/cpu28-assets.txt" 2>&1 <<'PY'
+import importlib.util, struct
+from pathlib import Path
+p = Path('/usr/local/lib/ilinux-cpu28/observe28.py')
+s = importlib.util.spec_from_file_location('observe28', p)
+m = importlib.util.module_from_spec(s); s.loader.exec_module(m)
+assert m.verify_assets()['frequency_writes'] is False
+try:
+    m.identity()
+except (OSError, ValueError):
+    pass
+except struct.error:
+    # QEMU's synthetic CPU reg uses one cell; the pinned t6050 tree uses two.
+    # This is a refusal before any module load, though the native CLI currently
+    # reports this malformed/non-native layout as a traceback rather than JSON.
+    assert len(Path('/sys/devices/system/cpu/cpu0/of_node/reg').read_bytes()) == 4
+else:
+    raise AssertionError('virtual hardware passed the native identity gate')
+assert not Path('/sys/module/apple_soc_cpufreq').exists()
+print('assets verified; virtual hardware refused before module load')
+PY
+    [ "$?" = 0 ] || fail "CPU observation asset/virtual-hardware refusal check"
+    mark CPU28-ASSETS "verified; virtual hardware refused; no module load or DVFS writes"
+fi
+
 # ---- the record ------------------------------------------------------------------------------------------------
 journalctl -b -o short-monotonic --no-pager > "$RES/journal.txt" 2>&1
 systemctl --failed --no-pager --plain > "$RES/failed-units.txt" 2>&1

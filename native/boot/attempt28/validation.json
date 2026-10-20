@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "attempt": 28,
+  "base_commit": "a6ad886446e257a82b14297f2848143313fc72d5",
+  "native": "NOT RUN",
+  "frequency_writes": false,
+  "hardware_scope": "one boot core; command register observation only",
+  "build": {
+    "guest_exit": 0,
+    "start_utc": "2026-10-20T20:41:50Z",
+    "end_utc": "2026-10-20T20:51:12Z",
+    "gcc": "16.1.1 20260430",
+    "binutils": "2.46.0",
+    "python": "3.14.8",
+    "zstd": "1.5.7",
+    "target_kernel": "7.1.9-g863199d8b4a3-dirty"
+  },
+  "tests": {
+    "driver_sanitizer_cases": 16,
+    "regression_mutants_rejected": 6,
+    "controller_vm_methods": 296,
+    "controller_vm_skips": 0,
+    "native_collector_methods": 12,
+    "m1_collector_methods": 11,
+    "cpu_profile_host_methods": 19,
+    "old_profiles_host_methods": 45,
+    "pair_methods": 8,
+    "sender_methods": 18,
+    "legacy_dt_allowance_snapshot_methods": 12,
+    "optimized_chase_vm_samples": 12
+  },
+  "two_stage_vm": {
+    "status": "PASS fresh normal path; prior full-run harness failure documented",
+    "native_mmio_emulated": false,
+    "first_full_run": {
+      "overall": "FAIL test harness refusal exception",
+      "negative_transfers": "PASS wrong/short/corrupt",
+      "switch_desktop_second_ssh_inherited_checks": "PASS",
+      "module_loaded": false,
+      "desktop_ready_s": 677.06,
+      "second_ssh_s": 703.56,
+      "diagnosis": "QEMU four-byte CPU reg raises struct.error; expected refusal before module load; test probe corrected"
+    },
+    "normal_run": {
+      "overall": "PASS",
+      "root_receive_s": 311.7,
+      "root_MB_per_s": 7.9,
+      "unpack_s": 9.7,
+      "desktop_ready_s": 340.37,
+      "second_ssh_s": 366.87,
+      "done_s": 366.95,
+      "used_mib": 15273,
+      "cpu_assets": "PASS",
+      "native_identity_gate": "virtual hardware refused before module load",
+      "module_loaded": false,
+      "failed_units": [
+        "omarchy-provision-hardware.service",
+        "ufw.service"
+      ]
+    }
+  },
+  "rea": "reused existing byte-cross-checked findings; no new decompilation",
+  "macos_changes": false,
+  "security_volume_changes": false,
+  "artifacts_public": false
+}
