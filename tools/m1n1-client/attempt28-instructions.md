@@ -1,5 +1,14 @@
 # Attempt 28 — CPU observation in the working two-stage Omarchy boot
 
+**CONSUMED, 2026-10-20: one launch, one root send and one no-write CPU load.**
+Native observation PASS (`OBSERVED_WITH_POLICY`, writes=false); desktop delay
+persists and the human explicitly asks that memory be investigated. Return to
+Macintosh HD confirmed inside the fixed window. See
+`native/boot/stage-b-2026-10-20-attempt28-result.md`. Do not replay this historical
+checklist without a newly reviewed scope and human start.
+
+## Historical preboot checklist
+
 **Native attempt 28 and live CPU checks: NOT RUN.** Read the published
 [validation record](../../native/boot/attempt28/validation.md) and the exact
 [stage-one](../../native/boot/attempt28/ramroot-manifest.json),

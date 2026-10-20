@@ -99,7 +99,25 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-### Latest M1 offline readiness — attempt 28, 2026-10-20
+### Latest M1 native result — attempt 28, 2026-10-20
+
+**Attempt 28 consumed: one launch/send, no-write CPU observation PASS.**
+Execution `f5f11c1`; actual CPU0 MPIDR `0x40000`, part `0x068`, DT
+`apple,sotra-m`. Module load once, writes=0/cap=0, policy0 userspace; raw command
+`0x0000000000400106`, requested p-state 6, mapped 2.652 GHz. Dependent-ADD estimate
+2.650/2.651 GHz before/after (assumption-based, not clock telemetry). Thermal,
+energy and power data unavailable. **Human asks M5 to investigate memory as a
+possible slowness factor:** 32/128 MiB chase medians 331.582/333.914 ns before,
+331.790/337.458 ns after; distinct protocol from attempt 20, no matched macOS
+comparison. Typing accurate; massive unusable app delay remains. Menu pollers
+zero before/after; no kernel fault line or M1 panic. Macintosh HD return
+confirmed at window +560 s, within the fixed 600 s; all run processes stopped.
+No frequency/voltage write, retry, SMP, storage, Wi-Fi or settings change.
+Fresh policy checks waived; last reported Full/Permissive retained. Evidence:
+`native/boot/stage-b-2026-10-20-attempt28-result.md`.
+
+
+### Historical M1 offline readiness — attempt 28, 2026-10-20
 
 M1 pulled published handoff **`7c757eb`** and independently verified both new
 images: stage one **60,671,683 bytes / `65ea3815…08c39`**, root
@@ -116,7 +134,7 @@ No frequency/voltage writes, SMP, storage, Wi-Fi or setup action. Evidence:
 `native/boot/attempt28-m1-offline-2026-10-20.md`.
 
 
-### Current work — attempt 28 CPU observation, 2026-10-20
+### Historical preparation — attempt 28 CPU observation, 2026-10-20
 
 The user authorized preparing, offline-testing and publishing the CPU attempt.
 Job052 built the exact two-stage pair and boot042-compatible module; exact-pair
@@ -137,7 +155,7 @@ alone prove desktop or energy parity; graphics, idle/thermal and SMP work
 remain. The old storage-attempt-28 assignment is superseded. Preserve the other
 agents' unreviewed jobs047/048 and kernel-config files.
 
-### Latest M1 native result — attempt 27, 2026-10-20
+### Historical M1 native result — attempt 27, 2026-10-20
 
 **Attempt 27 consumed: one native two-stage boot and one root send PASS.**
 On execution handoff `f4b44f0`, stage one received the 2,435,460,021-byte root

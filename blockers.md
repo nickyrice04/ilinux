@@ -3,6 +3,20 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
+## Latest native evidence — attempt 28, 2026-10-20
+
+The explicit no-write CPU module initializes: policy0/userspace, command
+`0x0000000000400106`, p-state 6 mapped to 2.652 GHz; short dependent-ADD
+estimate 2.650/2.651 GHz. Actual core identity is now observed, not assumed.
+No thermal zones, energy or power data; no frequency transition was tested.
+**User explicitly flags memory as a possible app-slowness factor.** The new
+32/128 MiB dependent-load medians are about 332–337 ns, requiring matching
+macOS/core/protocol evidence and causal testing before attribution. Old chase
+protocol numbers are not a direct comparison. Desktop delay remains massive;
+typing accurate, menu pollers zero before/after this sequence. One attempt/send,
+no faults or retry, return within +560/600 s. See
+`native/boot/stage-b-2026-10-20-attempt28-result.md`.
+
 ## Current workstation acceptance blockers — 2026-10-20
 
 The user wants full CPU performance/efficiency, independent built-in Wi-Fi
@@ -10,9 +24,10 @@ and fast persistent storage before moving their main work into native Omarchy.
 See `native/boot/post-attempt27-plan-2026-10-20.md`. The next preparation is the
 separate CPU experiment; the old storage-attempt-28 assignment is superseded.
 
-* **CPU:** one online core; actual clock unmeasured. cpufreq candidate built
-  into a separately pinned no-write observation profile for attempt 28. Native
-  command/OPP mapping and usable thermal telemetry precede the first increase. SMP compiled,
+* **CPU:** one online core; native command/OPP observation now passes and the
+  short clock estimate is about 2.65 GHz. Requested-state mapping is not clock
+  telemetry. Usable thermal observation and an explicit reviewed cap still
+  precede a first increase. SMP compiled,
   secondary entry unresolved; known mask correction is not a complete fix.
   Power/thermal telemetry, idle retention and scheduling remain separate work.
 * **Desktop:** software rendering and severe reported menu/app delay. A six-second
@@ -28,11 +43,10 @@ the first harness-only failure is retained in the validation record.
 M1 intake on `7c757eb` is now PASS: exact new pair/embedded pins and assets,
 13 package files, 15 source pins, 154 test methods PASS / 2 legacy fixture
 SKIPS, helper/key/SSH checks PASS. Offline blockers: none for this scope.
-Native/live/module checks remain NOT RUN; actual boot-core state, policy and
-thermal data remain unknown. See `native/boot/attempt28-m1-offline-2026-10-20.md`.
-Fresh M1 restart/cable procedure and explicit human start still precede one
-attempt under `tools/m1n1-client/attempt28-instructions.md`; no new policy/
-settings change or repeated routine check.
+That preboot record is historical: native attempt 28 is now consumed, with
+core/state/policy observed and thermal data absent. No live frequency write or
+additional attempt ran. See the latest result above; no new policy/settings
+change or repeated routine check.
 
 ## Current status — attempt 27 delivery works; desktop latency remains open
 

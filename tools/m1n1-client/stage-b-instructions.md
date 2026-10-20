@@ -1,5 +1,10 @@
 # Current native handoff — attempt 28 CPU observation
 
+**Attempt 28 is consumed.** Native no-write CPU observation and return PASS;
+application latency remains severe, with memory explicitly flagged for M5 review.
+Read `native/boot/stage-b-2026-10-20-attempt28-result.md`; the checklist below
+is historical and must not be replayed without a new scope/human start.
+
 M1: follow **[attempt28-instructions.md](attempt28-instructions.md)** and
 [its validation/pins](../../native/boot/attempt28/validation.md).
 Read the complete new checklist before any command. It uses the new

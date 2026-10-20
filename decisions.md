@@ -1885,3 +1885,22 @@ writes=false/cap=0, checked root key before collection and the fixed switch-time
 deadline/human return timer. Unknown OPP or absent telemetry permits no added
 experiment. Waived routine policy rechecks remain waived; no restart or boot/
 security/volume change is implied by readiness publication.
+
+
+### 2026-10-20 · Keep memory in the post-attempt-28 diagnosis; no automatic frequency increase
+
+Attempt 28 initializes the no-write CPU policy and observes command p-state 6
+mapped to 2.652 GHz, agreeing with a short 2.650/2.651 GHz dependent-ADD estimate
+under its stated assumption. The user still finds application response unusable,
+with accurate typing, and explicitly asks the M5 agent to consider memory.
+Preserve the new cache/working-set chase data as native evidence; do not compare
+its roughly 332–337 ns larger-working-set result directly with the older
+attempt-20 protocol or attribute GUI latency without a matched baseline.
+
+No thermal/energy/power telemetry is available. Policy initialization does not
+select or authorize a frequency cap/transition. Memory/cache/translation and
+software rendering remain separate investigation targets alongside CPU state;
+M5 reviews the data offline before choosing the next scope. One boot/send/load,
+no retry, no frequency/voltage/settings/storage/SMP action. Human return was
+within +560/600 s; no deadline extension. Exact evidence:
+`native/boot/stage-b-2026-10-20-attempt28-result.md`.

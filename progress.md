@@ -5,6 +5,35 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M1: attempt 28 CPU policy observation and bounded return PASS
+
+**Attempt 28 consumed: one launch/send, no-write CPU observation PASS.**
+Execution `f5f11c1`; actual CPU0 MPIDR `0x40000`, part `0x068`, DT
+`apple,sotra-m`. Module load once, writes=0/cap=0, policy0 userspace; raw command
+`0x0000000000400106`, requested p-state 6, mapped 2.652 GHz. Dependent-ADD estimate
+2.650/2.651 GHz before/after (assumption-based, not clock telemetry). Thermal,
+energy and power data unavailable. **Human asks M5 to investigate memory as a
+possible slowness factor:** 32/128 MiB chase medians 331.582/333.914 ns before,
+331.790/337.458 ns after; distinct protocol from attempt 20, no matched macOS
+comparison. Typing accurate; massive unusable app delay remains. Menu pollers
+zero before/after; no kernel fault line or M1 panic. Macintosh HD return
+confirmed at window +560 s, within the fixed 600 s; all run processes stopped.
+No frequency/voltage write, retry, SMP, storage, Wi-Fi or settings change.
+Fresh policy checks waived; last reported Full/Permissive retained. Evidence:
+`native/boot/stage-b-2026-10-20-attempt28-result.md`.
+
+* Controller exit 0 / 22.179 s; root received 85.0 s at 29.1 MB/s, unpacked
+  19.5 s, switched, second link/key verified. Three reviewed key-gated
+  collections exit 0 (CPU and desktop before/after), no forwarding or clock step.
+* Runtime verifies all six CPU asset hashes; no-write load succeeded and both
+  short work sets completed in about 20.50 s. Tables/units/limits in the report.
+* Stage-one/second readers exit 0; 59,672 / 206,798 raw bytes. Return recorded
+  21:53:49.633 UTC, deadline 21:54:29.622 UTC; no overrun or rearming.
+* Native frequency transitions, thermal safety, efficiency, matched macOS
+  performance and causes of app latency remain unproven. Next is M5 offline
+  review, explicitly considering cache/memory as well as CPU/rendering.
+
+
 ## 2026-10-20 · M1: attempt 28 CPU-observation offline ready
 
 M1 pulled published handoff **`7c757eb`** and independently verified both new
