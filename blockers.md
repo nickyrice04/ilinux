@@ -18,6 +18,13 @@ Class-scope lookup of a function-local import in `mtp_probe.py` (and
 `pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
 M1's re-verification and the human's go.
 
+## Attempt-27 preboot update — 2026-10-20
+
+M1 offline intake `eff1716` PASS; user confirms its restart. The user explicitly
+omits further routine policy checks: they are no longer a preboot blocker.
+No fresh policy result is claimed. Next is the human's existing Boot Lab proxy
+boot and M1's bounded attempt-27 launch. Native outcomes remain NOT RUN.
+
 ## Current status — attempt 26: the keyboard works; the blocker is the desktop's speed (one slow CPU, software drawing), not the input path
 
 Attempt 26 switched the M5's own keyboard on over SSH (RTKit, DockChannel, `hid-apple`, a 2 MiB ring, `/dev/input/event0`) and ran 63 min

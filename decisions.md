@@ -1787,3 +1787,18 @@ proxy suite passes under the existing bundled OpenSSL runtime. No host install
 or TLS-verification relaxation. Native readiness still requires the fresh M1
 restart/cable/unlocked procedure, fresh read-only M5 protection/default check
 and human start. Keep CPU/SMP/storage work separate from the two-stage delivery.
+
+
+### 2026-10-20 · Omit repeated routine boot-policy checks
+
+The user explicitly declines another routine security-policy check, citing the
+many prior original Full/lab Permissive results. The user also confirms that
+the M1 has restarted. This supersedes the repeated policy-check prerequisites
+in earlier handoffs for this attempt; the M1 agent must not block or ask again
+for them. No fresh result is claimed, and no boot policy/default/volume change
+is made. M1's independent image/package verification remains complete and the
+normal launcher identity/DT/integrity checks remain intact.
+
+The human may now select the existing iLinux Boot Lab entry and wait at
+`Running proxy...`; the M1 follows the one-attempt checklist. Native attempt
+27 and live outcomes are still NOT RUN until the actual launch and observations.

@@ -149,7 +149,9 @@ The first native test sends once. Intentional bad transfers are VM tests only.
 A refusal/failure, stalled progress, reset, panic or hardware fault ends this
 attempt; preserve evidence and return to Macintosh HD. A missing second link
 is recorded separately from a visible desktop, without reloading drivers or
-retrying. Keep Macintosh HD Full/default and lab Permissive, checked read-only.
+retrying. Keep Macintosh HD Full/default and lab Permissive. On 2026-10-20 the user
+omitted further routine policy rechecks; the last reported policies are retained
+without claiming fresh verification.
 
 No claim of GPU support, all-core operation, DVFS, power efficiency, trackpad
 support or macOS performance parity follows from this delivery test. The

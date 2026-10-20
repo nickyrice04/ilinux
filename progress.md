@@ -5,6 +5,19 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M5: M1 readiness reviewed; user confirms restart and omits routine policy rechecks
+
+* **Reviewed:** M1 `eff1716`: both exact images and embedded pin, boot042,
+  offline launcher/sender and helpers PASS; 215 methods PASS, 2 legacy fixtures
+  SKIPPED with documented runtime/handshake limits. `c52b079` changes tests only.
+* **User direction:** M1 restart done. Do not repeat routine boot-policy checks
+  before/after this attempt. Retain last reported original Full/lab Permissive
+  without claiming a fresh verification; change no policy/default/volume setting.
+* **Next:** human shuts down the M5, holds power, selects the existing iLinux
+  Boot Lab entry, and waits at `Running proxy...`. M1 pulls the updated checklist,
+  reseats the direct cable and performs the bounded attempt-27 launch/transfer.
+  Macintosh HD stays the default. Native attempt 27/live checks remain NOT RUN.
+
 ## 2026-10-20 · M1: attempt 27 pair verified; offline ready with test limits
 
 * Pulled published handoff through **`4b63b82`** (includes `37fd9b5`). Both

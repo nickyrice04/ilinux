@@ -6,6 +6,19 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current handoff — M1 intake PASS and restart done; routine policy rechecks omitted
+
+2026-10-20: M5 reviewed M1's published `eff1716` report and the two test-only
+fixes in `c52b079`. Both images and boot042 match; runtime transport/launcher
+unchanged. The user confirms the M1 restart and explicitly declines additional
+routine policy checks. Do not block or ask again for those checks; no fresh
+verification is claimed. Last reported policies are original Full/lab Permissive.
+Next: human selects the existing iLinux Boot Lab entry and waits at
+`Running proxy...`; M1 pulls this update and follows the attempt-27 checklist.
+Keep Macintosh HD as default and make no settings/volume/firmware changes.
+Native attempt 27/live checks remain NOT RUN. This supersedes older preboot
+policy-check and M1-restart prerequisites in the historical entries below.
+
 ### Current M1 offline readiness — attempt 27 two-stage pair verified, 2026-10-20
 
 * Pulled published handoff through **`4b63b82`** (includes `37fd9b5`). Both

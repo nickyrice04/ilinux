@@ -99,6 +99,17 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Current user direction — 2026-10-20, attempt 27 ready for the existing proxy
+
+M1 offline intake `eff1716` PASS with documented test limits; the user confirms
+its restart is done. The user explicitly declines further routine boot-policy
+checks. Do not ask again or block on them. Last reported original Full/lab
+Permissive are retained as reported, not newly verified. Keep Macintosh HD as
+default and change no policy/volume/firmware settings. The next human action is
+to boot the existing iLinux Boot Lab entry to `Running proxy...`; the M1 then
+follows the one-attempt checklist. Native attempt 27/live checks remain NOT RUN.
+This paragraph supersedes older routine-check/restart prerequisites below.
+
 Latest M1 milestone (2026-10-20): **attempt 27 offline ready with documented
 test limits**, both privately transferred images match the published pair;
 boot042/intake/launcher/client/helper digests and offline SSH entries PASS.

@@ -100,9 +100,10 @@ this checklist and the validation report. The private key remains on the M1.
 
 Record sanitized offline readiness in `progress.md` and `coordination.md`, with
 native boot/live checks **NOT RUN**, and stop for the human. Do not publish raw
-receipts without reviewing them for identifiers. Fresh post-return M5 policy
-checks still need confirmation: original Full, lab Permissive, original default.
-Use the existing read-only helper; no settings changes.
+receipts without reviewing them for identifiers. On 2026-10-20 the user declined
+further routine policy checks; do not block this attempt on another check.
+Last reported policies are original Full and lab Permissive; no fresh policy
+verification is claimed. Keep Macintosh HD as the default; no settings changes.
 
 ## One human-started attempt
 
@@ -265,8 +266,9 @@ Observe for up to ten minutes after reaching the desktop; end earlier if the
 loss of keyboard/link, or abnormal thermal behavior. A reset or M1 panic ends
 the attempt with no relaunch. Stop this run's reader/proxy/session, then the
 human returns the M5 to Macintosh HD using the established power-off/startup
-options procedure. Confirm original Full, lab Permissive and original default
-through the existing read-only checks after return; no policy changes.
+options procedure. Routine post-return policy rechecks are also omitted per
+the user's 2026-10-20 instruction. Record the return without inventing a fresh
+policy result; no policy or default-startup changes.
 
 Report exact Git/package/image pins, upload and transfer timings, verification
 and unpack results, disappearance/re-enumeration times, desktop first frame,

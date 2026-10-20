@@ -1,5 +1,9 @@
 # M1 offline intake — attempt 27 two-stage delivery
 
+**Subsequent user direction, 2026-10-20:** M1 restart confirmed done; routine
+policy rechecks declined. Those prerequisites below are historical and no longer
+block this attempt. No fresh policy result is claimed. Use the current checklist.
+
 2026-10-20. Reviewed handoff **`4b63b82`** (includes published `37fd9b5`).
 **Both transferred files PASS. Offline intake complete with test limits below.**
 Native attempt 27, live checks and stage-two transfer are **NOT RUN**.
