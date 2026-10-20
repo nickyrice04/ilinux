@@ -6,7 +6,37 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 native result — attempt29 consumed, 2026-10-20
+### M5 handoff — attempt30 desktop latency, 2026-10-20
+
+**Attempt30 offline preparation PASS; M1 intake pending; native/live NOT RUN.**
+Reviewed M1 attempt29 (`1b1153d`): normal sampled memory attributes and actual
+huge backing did not explain persistent desktop delay. Keep the working
+attempt28 pair/boot042; transfer only the new **163,840-byte desktop30.tar**
+(`26a36600…1f07`). Original Wayland controls, main-thread software CPU samples,
+process CPU seconds and IPC observations precede one 45s human menu/typing test.
+No frequency, renderer-policy, module, extra-core, storage or boot/settings change.
+
+Three REA CPU-policy dossiers/443 instruction words cross-checked; two whole-
+function decompilations rejected. Only bounded behavioral evidence informed
+original Linux measurement code. Exact retained Omarchy userspace passed VM
+client/sampler sanitizers, three phases, RAM-only receiver/native-identity and
+retry refusals; **129 Python methods PASS**. Full-damage callback medians
+132.142/129.039ms versus small-damage 18.249/20.781ms in the VM only. No native
+speedup, efficiency or parity claim. Preliminary color-management A/B gave no
+useful gain; that setting change was rejected. All known limitations and failed
+harness iterations retained in `native/boot/attempt30/validation.md`.
+
+M1 next: `tools/m1n1-client/attempt30-instructions.md`, offline intake and
+published readiness, then one human-started filmed boot with fixed 600s root-
+switch return window. Retain both existing images; do not replay earlier
+collectors. Preserve Macintosh HD/default/Full Security and current Boot Lab;
+routine policy checks remain waived. Other agents' jobs047/048 untouched.
+
+Ownership: M5 prepares code/evidence and handoff; M1 independently verifies,
+then controls the one human-started boot and records sanitized results. No
+concurrent hardware experiments or reuse of consumed attempt29 allowance.
+
+### Latest completed M1 native result — attempt29 consumed, 2026-10-20
 
 **Attempt29 consumed: one native memory-observation boot/root send/bundle load PASS.**
 Execution `41e34a6`; final `MEMORY_OBSERVED`, no frequency or global VM writes,

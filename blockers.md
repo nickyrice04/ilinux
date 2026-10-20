@@ -1,6 +1,38 @@
 # Blockers
 
-## Current status — attempt29 memory observations do not resolve desktop delay
+## Current preparation — attempt30 isolates desktop stalls
+
+**Attempt30 offline preparation PASS; M1 intake pending; native/live NOT RUN.**
+Reviewed M1 attempt29 (`1b1153d`): normal sampled memory attributes and actual
+huge backing did not explain persistent desktop delay. Keep the working
+attempt28 pair/boot042; transfer only the new **163,840-byte desktop30.tar**
+(`26a36600…1f07`). Original Wayland controls, main-thread software CPU samples,
+process CPU seconds and IPC observations precede one 45s human menu/typing test.
+No frequency, renderer-policy, module, extra-core, storage or boot/settings change.
+
+Three REA CPU-policy dossiers/443 instruction words cross-checked; two whole-
+function decompilations rejected. Only bounded behavioral evidence informed
+original Linux measurement code. Exact retained Omarchy userspace passed VM
+client/sampler sanitizers, three phases, RAM-only receiver/native-identity and
+retry refusals; **129 Python methods PASS**. Full-damage callback medians
+132.142/129.039ms versus small-damage 18.249/20.781ms in the VM only. No native
+speedup, efficiency or parity claim. Preliminary color-management A/B gave no
+useful gain; that setting change was rejected. All known limitations and failed
+harness iterations retained in `native/boot/attempt30/validation.md`.
+
+M1 next: `tools/m1n1-client/attempt30-instructions.md`, offline intake and
+published readiness, then one human-started filmed boot with fixed 600s root-
+switch return window. Retain both existing images; do not replay earlier
+collectors. Preserve Macintosh HD/default/Full Security and current Boot Lab;
+routine policy checks remain waived. Other agents' jobs047/048 untouched.
+
+Native CPU parity still requires secondary-core entry/coherency/timer/IPI,
+bounded DVFS and thermal observation, then calibrated scheduler capacity and
+frequency invariance. GPU rendering is a separate constraint; simply raising
+clocks cannot promise macOS-class latency or efficiency. Native measurements
+select the next change; this handoff is not a performance repair.
+
+## Completed evidence — attempt29 memory observations do not resolve desktop delay
 
 **Attempt29 consumed: one native memory-observation boot/root send/bundle load PASS.**
 Execution `41e34a6`; final `MEMORY_OBSERVED`, no frequency or global VM writes,
@@ -29,7 +61,7 @@ the result. No source/gate repair or target retry occurred.
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
-## Current preparation — attempt29 isolates memory effects
+## Historical preparation — attempt29 isolates memory effects
 
 Offline bundle and launcher validation PASS; native memory29 readings remain
 NOT RUN. Before selecting a CPU/fabric change, inspect live architectural cache

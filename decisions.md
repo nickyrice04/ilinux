@@ -1972,3 +1972,30 @@ and clock/QoS/compiler/thermal limits. No global THP or clock change is selected
 M5 reviews offline before proposing any controlled follow-up, SMP/core or
 renderer work. Keep the existing installed entry, original macOS and waived
 routine policy checks. No automatic retry or additional setup.
+
+
+### 2026-10-20 · Attempt30 attributes GUI stalls before changing CPU or rendering policy
+
+The user requests investigation, REA and execution of an attempt30 plan after
+accurate but severely delayed typing/application use. Preserve the working
+native image pair. Attempt29's sampled cacheability and huge backing did not
+identify a memory-controller fault; one M core/software rendering remain.
+
+Three CPU-policy REA entries distinguish work-interval feedback, performance
+requests and scheduler preferences. Two rejected decompilations are excluded
+from implementation evidence beyond independently verified bounded call facts.
+Original Linux instrumentation measures compositor CPU time, frame callbacks,
+main-thread software CPU samples and IPC response during controls and human use.
+It does not copy Apple policy, write hardware registers or claim equivalence.
+
+A preliminary VM color-management A/B showed no useful gain, so that proposed
+setting change is dropped. Exact-root VM callbacks differ sharply between tiny
+and full damage, supporting native causal observation without relabeling VM
+results as hardware performance. All samples/outliers and limits are retained.
+
+Choose a distinct desktop-latency profile, one RAM-only 163,840-byte bundle and
+fixed 600s return window. No CPU28/memory29 module, renderer, idle, DVFS, extra
+core, storage, Wi-Fi, security or volume change. M1 verifies offline then the
+human starts the existing Boot Lab entry. Routine policy checks remain waived.
+Stop after this observation; follow the README outcome table for the next
+change. No native speedup or power/thermal/parity claim is established today.

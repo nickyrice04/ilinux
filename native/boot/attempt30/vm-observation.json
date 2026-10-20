@@ -1,0 +1,611 @@
+{
+  "kind": "VM_ONLY",
+  "native": "NOT RUN",
+  "attempt": 30,
+  "job": "054-desktop-latency",
+  "configuration": {
+    "vm_cpus": 12,
+    "memory_gib": 24,
+    "tested_affinity_cpu": 0,
+    "software_renderer": true,
+    "LP_NUM_THREADS": 0,
+    "resolution": [
+      3456,
+      2160
+    ],
+    "scale": 1,
+    "kernel_input": "Image-7.1.6-vzrun2-pkg",
+    "kernel_image_sha256": "531703d08410781dafa1d46da51aa2f1d18676b39cb42134b3a9d7a52f7d8486",
+    "root_sha256": "59a7383e4b6cd47712e5dc05998ab34a58d511edc0b7ee016b267a15d4fb2b78",
+    "hyprland_sha256": "a9e57097798b2e815c8e91a0a4472d287573c4f7ce177b72a5b0907562a68da9",
+    "hyprland_upstream_commit": "efb50993780079460b0cbed1363e2166a2de1d9f"
+  },
+  "packages": [
+    "hyprland 0.56.2-7",
+    "mesa 1:26.2.4-1",
+    "wayland 1.26.0-1",
+    "aquamarine 0.15.1-1.3"
+  ],
+  "compiler": "cc (GCC) 16.1.1 20260430",
+  "protocol_xml_sha256": "7ba7f9c8473deee674cb1f154a18abd0bb0cc072604fc055b0c15e459fc4c7df",
+  "phases": [
+    {
+      "event": "phase",
+      "name": "vm-exact-root-1",
+      "wall_s": 2.050570209,
+      "compositor_process_cpu_s": 1.5699999999999998,
+      "ipc_roundtrip_ms": [
+        0.3603749999996353,
+        51.725042000001054,
+        46.9102079999999,
+        26.1748329999989,
+        53.02758400000229,
+        29.886999999998665,
+        31.6025840000016,
+        0.15575000000112027,
+        85.59716699999953,
+        28.743874999999974,
+        34.43208399999875,
+        29.79887500000089,
+        29.28641699999801,
+        24.28520799999845,
+        36.68975000000074,
+        35.58908400000149
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 2.039192,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 12,
+          "llvm": 6,
+          "anonymous_executable": 107,
+          "other_executable_file": 1,
+          "unmapped": 30
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 0.206375
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 2.844916,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 283.732917,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 126.222458,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 153.838167,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 129.929458,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 131.6955,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 64.764333,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.814292,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.7205,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 19.683667,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 13.957584,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.518875,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 138.1745,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 128.7985,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 134.478334,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 129.805292,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 129.335708,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 123.712042,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 137.325542,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 135.359292,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 2046.254667
+        }
+      ],
+      "cell_callback_summary_ms": {
+        "count": 8,
+        "median": 18.248979499999997,
+        "min": 13.957584,
+        "max": 131.6955
+      },
+      "full_callback_summary_ms": {
+        "count": 8,
+        "median": 132.141813,
+        "min": 123.712042,
+        "max": 138.1745
+      }
+    },
+    {
+      "event": "phase",
+      "name": "vm-exact-root-2",
+      "wall_s": 2.412350001,
+      "compositor_process_cpu_s": 1.92,
+      "ipc_roundtrip_ms": [
+        93.70637500000001,
+        109.99716699999951,
+        84.18216699999803,
+        21.846375000002638,
+        51.10783299999966,
+        31.203165999997395,
+        28.67625000000018,
+        35.29891699999865,
+        38.76754099999857,
+        101.81845899999686,
+        22.383292000000665,
+        29.506416000000257,
+        24.654208000001177,
+        31.547124999999454,
+        33.90637499999727,
+        37.48866600000156,
+        28.724750000002075
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 2.410358,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 15,
+          "llvm": 7,
+          "anonymous_executable": 157,
+          "other_executable_file": 2,
+          "unmapped": 10
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 303.257667
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 56.532584,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 229.879959,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 153.628583,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 131.226084,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 128.915334,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 135.343625,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 138.80775,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 9.453667,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 13.530625,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 17.048792,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 14.852,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 24.513625,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 122.22925,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 122.484459,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 129.552709,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 124.686041,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 131.561541,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 133.953,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 137.5185,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 128.525083,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 2407.908918
+        }
+      ],
+      "cell_callback_summary_ms": {
+        "count": 8,
+        "median": 20.781208499999998,
+        "min": 9.453667,
+        "max": 138.80775
+      },
+      "full_callback_summary_ms": {
+        "count": 8,
+        "median": 129.038896,
+        "min": 122.22925,
+        "max": 137.5185
+      }
+    },
+    {
+      "event": "phase",
+      "name": "vm-short-observation",
+      "wall_s": 2.013097250999998,
+      "compositor_process_cpu_s": 0.21999999999999975,
+      "ipc_roundtrip_ms": [
+        1.2365420000008953,
+        103.09966699999862,
+        1.0941250000016112,
+        0.10604200000230435,
+        0.12004199999893217,
+        0.16766599999940013,
+        0.10070900000158645,
+        0.1309159999998144,
+        0.1387080000014862,
+        0.14733399999755648,
+        0.12375000000020009,
+        0.14958299999889846,
+        0.1603750000001014,
+        0.19283299999983683,
+        0.12220800000051213,
+        0.1490420000003212,
+        0.16387499999837019,
+        0.20866700000254923,
+        0.12537499999965007
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 2.009214,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 0,
+          "llvm": 0,
+          "anonymous_executable": 21,
+          "other_executable_file": 0,
+          "unmapped": 0
+        }
+      },
+      "frames": []
+    }
+  ],
+  "clock_estimates": [
+    {
+      "event": "clock_estimate",
+      "label": "vm-before",
+      "results": [
+        {
+          "bench": "cpu",
+          "kernel": "freq",
+          "threads": 1,
+          "qos": "none",
+          "reps": 3,
+          "unit": "GHz(est)",
+          "aggregate_median": 4.068,
+          "aggregate_min": 3.95,
+          "aggregate_max": 4.143,
+          "per_thread_median": 4.068,
+          "cpus_last_rep": "0>0"
+        }
+      ],
+      "limitation": "Assumes one cycle per dependent ADD; not clock or power telemetry."
+    },
+    {
+      "event": "clock_estimate",
+      "label": "vm-after",
+      "results": [
+        {
+          "bench": "cpu",
+          "kernel": "freq",
+          "threads": 1,
+          "qos": "none",
+          "reps": 3,
+          "unit": "GHz(est)",
+          "aggregate_median": 4.54,
+          "aggregate_min": 4.33,
+          "aggregate_max": 4.554,
+          "per_thread_median": 4.54,
+          "cpus_last_rep": "0>0"
+        }
+      ],
+      "limitation": "Assumes one cycle per dependent ADD; not clock or power telemetry."
+    }
+  ],
+  "limitations": [
+    "VM CPU placement/clock, kernel and virtual display differ from native hardware.",
+    "No native timing, energy, thermal, hardware compatibility or parity claim.",
+    "Callback latency is not physical presentation or keyboard latency.",
+    "Short observation phase had no human interaction.",
+    "Samples cover main thread; CPU seconds cover entire compositor process.",
+    "Anonymous executable samples are not automatically attributed to Mesa; unmapped samples retained."
+  ]
+}

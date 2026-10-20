@@ -1,0 +1,24 @@
+{
+  "provider": "ghidra",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "targets": [
+    {
+      "id": "cpu30-notify",
+      "artifact": "AppleT6050CLPC.macho",
+      "sha256": "a14918a7232a0e645e42f9482cdf3aa3cd98b8371a69833059a89a0471f1e79f",
+      "address": "0xfffffe00097c9908"
+    },
+    {
+      "id": "cpu30-raise",
+      "artifact": "AppleT6050CLPC.macho",
+      "sha256": "a14918a7232a0e645e42f9482cdf3aa3cd98b8371a69833059a89a0471f1e79f",
+      "address": "0xfffffe00097cef80"
+    },
+    {
+      "id": "cpu30-preference",
+      "artifact": "AppleT6050CLPC.macho",
+      "sha256": "a14918a7232a0e645e42f9482cdf3aa3cd98b8371a69833059a89a0471f1e79f",
+      "address": "0xfffffe00097c7d5c"
+    }
+  ]
+}

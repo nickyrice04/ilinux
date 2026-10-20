@@ -1,17 +1,19 @@
-# Current native handoff — attempt29 consumed; wait for a new scope
+# Current native handoff — attempt30 desktop latency
 
-**Do not replay attempt29 or earlier checklists.** Its one authorized native
-boot/root send/memory bundle load completed on execution commit `41e34a6`.
-Final `MEMORY_OBSERVED`; no frequency/global VM writes, CPU28 module unloaded.
-The human returned to Macintosh HD within +321.424/600 seconds.
+Follow [attempt30's checklist](attempt30-instructions.md).
+**M5 offline preparation PASS; M1 intake pending; native/live NOT RUN.**
 
-Read [the sanitized result](../../native/boot/stage-b-2026-10-20-attempt29-result.md)
-and [full native memory data](../../native/boot/attempt29/native-observation.json).
-M5 reviews the memory/locality evidence and persistent application delay offline.
-No new live attempt, retry, setup, policy/default/volume or hardware change is
-selected. Routine policy checks remain waived. Keep boot042, installed boot021,
-client `57a9339` and the retained exact attempt28 pair unchanged.
+Attempt29 is consumed. Its memory observations did not explain persistent
+application/typing delay. Attempt30 adds an original userspace frame workload,
+software CPU sampler and IPC observation, with one 45s human interaction window.
+This measures the cause; no native speedup or CPU-policy change is claimed.
 
-[Attempt29's source-pinned checklist](attempt29-instructions.md) is retained
-unchanged for provenance; its pre-execution NOT RUN heading is historical.
-Follow a new reviewed handoff and human start before any later native operation.
+Privately receive only `desktop30.tar` (163,840 bytes); retain the exact attempt28
+stage one/root and boot042. Use `desktop-latency` and its new confirmation token.
+No CPU/memory module, renderer, frequency, core-start, storage, Wi-Fi, security,
+volume or installed-m1n1 change. No replay of earlier collectors/checklists.
+
+M1 verifies pins/package/pair/bundle/tests and publishes sanitized offline
+readiness with native/live NOT RUN. Then the human starts one filmed boot via
+the existing Boot Lab entry. Fixed600s root-switch window and Macintosh HD
+return; routine policy checks remain waived. Do not restart until M1 is ready.

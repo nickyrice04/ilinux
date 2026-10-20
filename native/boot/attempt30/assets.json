@@ -1,0 +1,11 @@
+{
+  "attempt": 30,
+  "modules_loaded": false,
+  "frequency_writes": false,
+  "renderer_changes": false,
+  "sha256": {
+    "frameprobe": "985db443f7dc3a62a0f5ea524bcd8ba5c19ac3440d3ae38e13cdfb936f7f2d86",
+    "samplecpu": "b72096d8a8c7d323417d19cd8aec37d7750b15df765a6e36a8e6f5c320df593e",
+    "collect.py": "47e3c827d597aa2b619c29a7cc1e936eabfea434a6cca42387a792c34f964c7b"
+  }
+}
