@@ -6,6 +6,34 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Active continuation — side-session completion before attempt 27
+
+2026-10-19, baseline `75411ec` (remote main matches). Codex parent owns job045
+image completion, job049 integration and shared status records; CPU subagent
+owns `kernel/experiments/cpufreq-t6050/` and job051; SMP subagent owns
+`reverse-engineering/findings/cpu-startup-2026-10-19/`. Shared build VM jobs run
+serially under the vm lock. Preserve inherited working changes and old images.
+The user approved commit/push of the reviewed handoff and separate offline
+CPU/SMP work on 2026-10-20. No launcher allowances, hardware experiments or
+settings changes are part of that approval.
+Completion: job045 desktop/link VM run PASS, candidate root `5eaa2fdb…6d345`
+preserved with a local candidate manifest under `build/resume-2026-10-19/root-candidate/`.
+Job051 compile/sanitizer/Python/narrow-schema checks PASS; CPU native NOT RUN.
+SMP handoff written. Both VM jobs stopped and released the lock. Detailed
+results and unresolved services: `native/boot/subagent-review-2026-10-19.md`.
+Job049 pairing and both new-pair VM runs are now PASS. Current stage one
+`84c01f53…06ed3`, root `5eaa2fdb…6d345`; both records updated together. Exact
+results: `native/boot/attempt27-two-stage-validation.md`; current M1 checklist:
+`tools/m1n1-client/stage-b-instructions.md`. Two private transfer files are in
+ignored `build/attempt27-transfer/`. All VM runs are stopped; no lock held.
+Commit/publication review is approved (2026-10-20). Next: M1 pulls the published
+handoff, privately receives and verifies both images, and records offline
+readiness. Then a fresh M1 restart, cable re-seat and unlocked/open-lid procedure,
+fresh read-only M5 policy/default confirmation and the human's start. Keep the
+M5 in macOS until readiness. Native attempt 27/live checks NOT RUN. No settings
+change or hardware experiment. Storage stays 28; CPU/SMP work stays separate.
+
+
 ### Current M1 result — attempt 26 (the M5's keyboard, on boot042): the keyboard switches on over SSH and types on the M5; every screen update costs the one CPU about half a second, which is the lag and, reproduced on demand, the repeated letters
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 476.856 s, upload 473.4 s at 5.24 MB/s, handoff 2026-10-20T00:39:17.261Z =

@@ -29,6 +29,8 @@ both the gadget (the M5) and its host (the M1). Report: `native/boot/usb-ssh-lin
   `1d6b:0104` device, `bcdDevice 0039`, two vendor interfaces with bulk endpoints only; the journal
   streams on interface 0; `ilinux-sshd-tty@ttyGS1` runs `sshd -i` in a network namespace with only its
   own loopback; `ssh` with the `usb-pipe` ProxyCommand logs in, sees the proxy variables, and fetches
-  an HTTPS page that only the M1 side can reach through the reverse-forwarded CONNECT proxy; 2 MiB each
+  an HTTPS page that only the M1 side can reach through the reverse-forwarded CONNECT proxy; the same key
+  logs in as `omarchy` too and fetches that page (sshd opens `/etc/ssh/authorized_keys.d/omarchy` as
+  omarchy, so the file must be readable by that user, as job 039 installs it); 2 MiB each
   way with equal digests; a wrong key is refused; a client killed mid-session is replaced after
   `ClientAlive` and the next session works.

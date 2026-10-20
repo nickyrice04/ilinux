@@ -1,0 +1,41 @@
+# omarchy-shell-menu-abandon-request.patch (VM job 045, desktop.sh; attempt 26's finding 2): Omarchy's shell menu
+# plugin (/usr/share/omarchy/shell/plugins/menu/Menu.qml) finishes a select/input request that a newer request
+# or route replaces, so the omarchy-menu-select waiting for it (a 50 ms sleep loop until its done file appears)
+# ends with no selection, as it does when Escape cancels the request. Without this, a second
+# omarchy-menu-select (Super+K twice) or the root menu summoned over one (Super+Space) drops the first request's
+# done file and its poller runs until the session ends: attempt 26 found three on the M5, 7 to 12 % of the one
+# CPU. The build applies it with patch(1) after a dry run; made against Omarchy's shell at 9480d1b (2026-10-11),
+# checked against the installed omarchy-dev at build time.
+--- a/usr/share/omarchy/shell/plugins/menu/Menu.qml
++++ b/usr/share/omarchy/shell/plugins/menu/Menu.qml
+@@ -140,4 +140,18 @@
+     }
+     resultProc.running = true
++  }
++
++  // A new request or route that replaces an active select/input request (a second omarchy-menu-select
++  // while one is showing, or the menu summoned over it) tells the omarchy-menu-select that waits for the
++  // replaced request, polling its done file every 50 ms, that the request is over, as Escape does for the
++  // current one: without that it polls until the session ends. iLinux RAM root (VM job 045): attempt 26
++  // found three such pollers alive on the M5 after ten minutes of use, 7 to 12 % of the one CPU.
++  function abandonRequest() {
++    if (!root.requestActive || !root.doneFile) return
++    var staleDoneFile = root.doneFile
++    root.requestActive = false
++    root.selectionFile = ""
++    root.doneFile = ""
++    Quickshell.execDetached(["bash", "-c", ": > " + Util.shellQuote(staleDoneFile)])
+   }
+ 
+@@ -881,4 +895,5 @@
+ 
+   function openExistingMenu(initialMenu) {
++    root.abandonRequest()
+     requestSerial += 1
+     mode = "menu"
+@@ -905,4 +920,5 @@
+ 
+   function openDmenu(payload) {
++    root.abandonRequest()
+     requestSerial += 1
+     mode = payload.mode === "input" ? "input" : "select"

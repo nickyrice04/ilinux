@@ -1,9 +1,10 @@
 #!/bin/bash
-# ilinux-keyboard [--poll MS] [--type-seconds S] [--no-typing] | --status (job 045 LINK=1 with MODULES, attempt 26)
-# Switches the M5's internal keyboard on from the SSH session, one module at a time, after the USB link is
-# up; run as root (sudo ilinux-keyboard). boot042 builds the keyboard path as modules and the image blocks
-# their automatic loading (/etc/modprobe.d/ilinux-boot042.conf), so nothing of it has run since boot except
-# the probe of the MTP's DART (apple-dart is built in for the USB DARTs).
+# ilinux-keyboard [--poll MS] [--type-seconds S] [--no-typing] | --status (job 045 LINK=1 with MODULES, attempts 26-27)
+# Switches the M5's internal keyboard on, one module at a time: at boot as ilinux-keyboard.service (steps 0 to
+# 5, --no-typing; attempt 27) and from the SSH session as sudo ilinux-keyboard (attempt 26's way, and the typing
+# test). boot042 builds the keyboard path as modules and the image blocks their automatic loading
+# (/etc/modprobe.d/ilinux-boot042.conf), so nothing of it runs until this script loads them by name; before
+# that only the MTP's DART has been probed (apple-dart is built in for the USB DARTs).
 #   0  preconditions: boot042's kernel and modules (digests), the MTP nodes in the device tree, the MTP
 #      DART bound with no fault since boot, none of the keyboard modules loaded yet (or, on a rerun, only
 #      those an earlier run loaded)
@@ -18,7 +19,10 @@
 #                          key presses and whether that word and Enter came are reported (nothing typed is
 #                          printed or kept)
 # Each step prints its kernel log lines and PASS or FAIL; the first FAIL stops the run (exit 1) with
-# "RESULT: FAIL at step N"; all steps: "RESULT: PASS". Reruns skip what is already loaded and bound.
+# "RESULT: FAIL at step N"; all steps: "RESULT: PASS". A rerun (after the boot unit, or a second run over SSH)
+# passes steps 0 to 5 on what is loaded: steps 1, 2 and 5 read the device state anyway, and step 4 reads it
+# when dockchannel-hid was loaded by an earlier run (a loaded driver prints no new kernel lines; attempt 26's
+# rerun failed there with the keyboard working), then only step 6 is new.
 # --status prints the state and changes nothing. Unloading apple-rtkit-helper stops the MTP CPU: power the
 # M5 off instead (the attempt's recovery).
 set -u
@@ -90,6 +94,9 @@ if [ "$STATUS" = 1 ]; then
         d=$(dev_of "$n"); say "${n#"$DT"}: ${d:+$(basename "$d")} driver ${d:+$(driver_of "$d")}"
     done
     grep -B1 -A6 -i 'kbd' /proc/bus/input/devices 2> /dev/null | grep -E '^(N|S|H):' | sed 's/^/input: /'
+    if [ -e /etc/systemd/system/ilinux-keyboard.service ]; then
+        say "unit ilinux-keyboard.service: $(systemctl show -p ActiveState,SubState,Result,ConditionResult ilinux-keyboard.service 2> /dev/null | tr '\n' ' ')"
+    fi
     exit 0
 fi
 
@@ -147,19 +154,43 @@ pass "hid-apple loaded"
 
 step=4; say "step 4: dockchannel-hid (input@8000: the ring, the MTP's interfaces)${POLL:+, mtp_poll_ms=$POLL}"
 k=$(klines)
+# hid_devices DEV: the HID devices under the platform device DEV, "<id> <driver>" each (dockchannel-hid creates
+# one per MTP interface when the MTP reports it ready; the keyboard's binds to hid-apple, driver name "apple")
+hid_devices() {
+    local hd
+    for hd in /sys/bus/hid/devices/*; do
+        case "$(readlink -f "$hd")" in "$(readlink -f "$1")"/*) echo "${hd##*/} $(driver_of "$hd" || echo none)" ;; esac
+    done
+}
+rerun=0
+loaded dockchannel_hid && rerun=1
 load dockchannel_hid ${POLL:+mtp_poll_ms=$POLL} || { knew "$k"; fail "dockchannel-hid did not load"; }
 h=$(wait_bound "$HIDN" 10) || { knew "$k"; fail "input@8000 is not bound after 10 s (the helper not ready?)"; }
-for _ in $(seq 150); do dmesg 2> /dev/null | tail -n +"$((k + 1))" | grep -q 'Interface keyboard is now ready' && break; sleep 0.1; done
-knew "$k"
-log=$(dmesg 2> /dev/null | tail -n +"$((k + 1))")
-echo "$log" | grep -q 'Initialized, awaiting packets' || fail "dockchannel-hid did not initialize"
-echo "$log" | grep -q 'Ring registered' ||
-    fail "the ring was not registered within 15 s (no DockChannel message from the MTP, or no acknowledgement); retry: sudo modprobe -r dockchannel-hid; sudo $0 --poll 100"
-echo "$log" | grep -q 'New interface keyboard' ||
-    fail "the ring is registered but no keyboard interface came within 15 s; retry: sudo modprobe -r dockchannel-hid; sudo $0 --poll 100"
-echo "$log" | grep -q 'Interface keyboard is now ready' || fail "the keyboard interface did not become ready within 15 s"
-[ -z "$(kbad "$k")" ] || say "  note: problem lines above (the keyboard is up; they go into the report)"
-pass "ring registered, keyboard interface ready ($(echo "$log" | grep -o 'New interface [a-z_-]*' | sed 's/New interface //' | tr '\n' ' '))"
+if [ "$rerun" = 1 ]; then
+    # An earlier run (ilinux-keyboard.service at boot, or this script) loaded the driver, which prints nothing
+    # new, so the device state is the evidence: input@8000 bound (above) and the keyboard interface's HID
+    # device on hid-apple under it, as a fresh load leaves them. The kernel lines of that load are shown.
+    for _ in $(seq 150); do hid_devices "$h" | grep -q ' apple$' && break; sleep 0.1; done
+    hids=$(hid_devices "$h")
+    knew "$k"
+    [ -z "$hids" ] || echo "$hids" | sed 's/^/    hid: /'
+    dmesg 2> /dev/null | grep -E 'Initialized, awaiting packets|Ring registered|Interface keyboard is now ready' | tail -3 | sed 's/^/    kernel (earlier run): /'
+    echo "$hids" | grep -q ' apple$' ||
+        fail "dockchannel-hid was loaded by an earlier run, but no keyboard HID device (driver apple) exists under $(basename "$h") within 15 s; retry: sudo modprobe -r dockchannel-hid; sudo $0 --poll 100"
+    pass "already up from an earlier run: $(basename "$h") bound to $(driver_of "$h"), keyboard HID device $(echo "$hids" | awk '$2 == "apple" {print $1; exit}') on hid-apple"
+else
+    for _ in $(seq 150); do dmesg 2> /dev/null | tail -n +"$((k + 1))" | grep -q 'Interface keyboard is now ready' && break; sleep 0.1; done
+    knew "$k"
+    log=$(dmesg 2> /dev/null | tail -n +"$((k + 1))")
+    echo "$log" | grep -q 'Initialized, awaiting packets' || fail "dockchannel-hid did not initialize"
+    echo "$log" | grep -q 'Ring registered' ||
+        fail "the ring was not registered within 15 s (no DockChannel message from the MTP, or no acknowledgement); retry: sudo modprobe -r dockchannel-hid; sudo $0 --poll 100"
+    echo "$log" | grep -q 'New interface keyboard' ||
+        fail "the ring is registered but no keyboard interface came within 15 s; retry: sudo modprobe -r dockchannel-hid; sudo $0 --poll 100"
+    echo "$log" | grep -q 'Interface keyboard is now ready' || fail "the keyboard interface did not become ready within 15 s"
+    [ -z "$(kbad "$k")" ] || say "  note: problem lines above (the keyboard is up; they go into the report)"
+    pass "ring registered, keyboard interface ready ($(echo "$log" | grep -o 'New interface [a-z_-]*' | sed 's/New interface //' | tr '\n' ' '))"
+fi
 
 step=5; say "step 5: input devices"
 ev=

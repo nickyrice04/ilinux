@@ -179,6 +179,31 @@ fi
 grep -q 'banner after' /tmp/usb-pipe.log || fail "usb-pipe saw no banner: $(tail -3 /tmp/usb-pipe.log)"
 say "usb-pipe: $(grep 'banner after' /tmp/usb-pipe.log | tail -1 | cut -d' ' -f2-)"
 
+# ---- the desktop user: the same key, as omarchy ------------------------------------------------
+# sshd opens a user's AuthorizedKeysFile, here /etc/ssh/authorized_keys.d/omarchy, with that user's uid
+# (OpenSSH auth2-pubkey.c, temporarily_use_uid), so omarchy must be able to read the file. Runs where the
+# root authorizes the test key for omarchy: job 046's base does, as job 039 authorizes the operator's key
+# for root and omarchy; the partial test's extras authorize root only.
+kf=/etc/ssh/authorized_keys.d/omarchy
+pub=$(ssh-keygen -y -f "$T/test-key" 2> /dev/null | cut -d' ' -f1,2)
+if [ -n "$pub" ] && grep -qF "$pub" "$kf" 2> /dev/null; then
+    kmode=$(stat -c '%a %U:%G' "$kf")
+    ocmd='echo SSH-OK "$(id -un)@$(uname -n)" "uid=$(id -u)" "HOME=$HOME" "$HTTPS_PROXY"'
+    [ $FULL = 0 ] || ocmd="$ocmd"'; curl -sS --cacert /usr/local/lib/ilinux-test/cert.pem https://web.test:8443/hello.txt'
+    t1=$(date +%s.%N)
+    if ! out=$(ssh -F /tmp/ssh-config -o User=omarchy m5 "$ocmd" 2> /tmp/ssh-omarchy.err); then
+        sleep 1   # for the sshd's reason to reach the journal
+        fail "ssh as omarchy failed ($kf is $kmode): $(grep -i -E 'denied|refused' /tmp/ssh-omarchy.err | tail -1); sshd: $(journalctl -b --no-pager -o cat -u "$sunit" 2> /dev/null | grep -E 'Could not open|bad ownership|Authentication refused|not allowed' | tail -2 | tr '\n' ' ')"
+    fi
+    say "ssh as omarchy ($(awk -v a="$t1" -v b="$(date +%s.%N)" 'BEGIN {printf "%.1f", b - a}') s, $kf is $kmode): $(echo "$out" | tr '\n' ' ')"
+    case "$out" in *"SSH-OK omarchy@"*) ;; *) fail "no SSH-OK as omarchy" ;; esac
+    if [ $FULL = 1 ]; then
+        case "$out" in *HELLO-FROM-THE-M1-SIDE*) ;; *) fail "the HTTPS fetch as omarchy through the forwarded proxy did not return the page" ;; esac
+    fi
+else
+    say "omarchy: this root does not authorize the test key for omarchy; no login as omarchy"
+fi
+
 # ---- integrity through the pipe: 2 MiB each way ---------------------------------------------
 head -c 2097152 /dev/urandom > /tmp/up.bin
 t1=$(date +%s.%N)

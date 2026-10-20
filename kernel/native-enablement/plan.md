@@ -1,5 +1,13 @@
 # Native Linux enablement plan: Apple M5 Max (t6050), MacBook Pro Mac17,6 / J716c
 
+> Current continuation (2026-10-19): native Omarchy, keyboard and USB/SSH now
+> work (attempt 26). The detailed sections below contain historical hypotheses.
+> Use `native/boot/resume-plan-2026-10-19.md` for attempt ordering and
+> `reverse-engineering/findings/cpu-startup-2026-10-19/README.md` for corrected
+> SMP evidence. In particular, neither raw reset-vector ownership nor a
+> DT-only route to reliable all-core Linux has been established.
+
+
 * **Date:** 2026-10-11
 * **Machine:** chip-id 0x6050; mBoot-18000.161.10 (macOS 26.6.2); 3 clusters
   (M0, M1 = 6 M cores each; P = 6 P cores); AIC rev 11; DART t8110; ANS

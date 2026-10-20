@@ -275,10 +275,13 @@ ssh-keygen -lf "$W/hostkey/ssh_host_ed25519_key.pub" > "$OUT/ssh-host-key-finger
 # Operator public keys for the native image: out/authorized_keys (gitignored) when present, else
 # the M1's own public key, which job 041 ships in the Stage-B initramfs the same way. root and
 # omarchy get the same keys (sshd reads /etc/ssh/authorized_keys.d/<user>); public keys only.
+# sshd opens that file with the uid of the user logging in, so the files are 0644 and root-owned
+# (at 0600 every omarchy login was refused: VM job 046). root's too: it holds the same keys as
+# omarchy's, so 0600 would hide nothing.
 AUTH=$OUT/authorized_keys
 [ -s "$AUTH" ] || AUTH=/mnt/ilinux/kernel/experiments/usb-gadget/authorized_keys
 if [ -s "$AUTH" ]; then
-    for u in root omarchy; do install -D -m 0600 "$AUTH" "$R/etc/ssh/authorized_keys.d/$u"; done
+    for u in root omarchy; do install -D -m 0644 "$AUTH" "$R/etc/ssh/authorized_keys.d/$u"; done
     ssh-keygen -lf "$AUTH" > "$OUT/authorized-keys-fingerprints.txt"
 fi
 chroot "$R" sshd -t

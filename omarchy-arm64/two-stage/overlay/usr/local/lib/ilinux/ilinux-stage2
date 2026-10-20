@@ -1,0 +1,261 @@
+#!/bin/bash
+# ilinux-stage2: stage one of the two-stage boot (VM job 049). Stage one is a small RAM root that m1n1
+# uploads through the launcher's ramroot profile; it brings up the USB link (job 039's gadget and sshd
+# on the byte pipe) and waits. The M1 then sends stage two, the Omarchy root (job 045, 2.4 GB), over
+# SSH on that pipe at the link's speed instead of m1n1's. This script checks it against the pin this
+# image carries (/etc/ilinux/stage2-pin: size and SHA-256 from native/boot/omarchy-root-manifest.json
+# at build time), unpacks it into RAM and soft-reboots into it: systemd stops stage one's services,
+# switches the root to /run/nextroot and starts the Omarchy root's own systemd there.
+#
+#   ilinux-stage2 receive SIZE SHA256   the M1's command (tools/m1n1-client/m5-stage2.py), as root over
+#                                       the byte pipe. SIZE and SHA256 are what the M1 offers; they must
+#                                       equal the pin before a byte is read. Then the image on stdin,
+#                                       status lines ("ilinux-stage2 ...") on stdout.
+#   ilinux-stage2 switch                ilinux-stage2-switch.service: unpack the verified image, check
+#                                       it; on success the unit's SuccessAction soft-reboots into it
+#   ilinux-stage2 status                the state, for a human over SSH
+#
+# Exit status of receive: 0 the image is verified and unpacked and the soft-reboot is under way;
+# 2 usage; 3 refused before the transfer (not the pinned image, busy, not enough memory, no pin);
+# 4 the transfer or the check failed; 5 the unpack or the switch failed.
+# Whatever fails, stage one stays up and waits for the next attempt; the reason goes to the journal
+# (ilinux-stage2, which interface 0 carries to the M1), to the M1's session and to the panel
+# (stage1-screen reads /run/ilinux-stage2/).
+#
+# Why a soft-reboot: systemd 262 refuses switch-root outside an initrd ("Not in initrd, refusing
+# switch-root operation"), while soft-reboot switches a running system into /run/nextroot when that
+# holds an OS tree, after stopping all units (so the USB gadget is torn down cleanly and the Omarchy
+# root creates its own). /run/nextroot is a tmpfs mount, so the new root is an ordinary mount, as job
+# 039's /init makes it for a root the kernel unpacked (bubblewrap needs pivot_root).
+set -u
+export LC_ALL=C
+PIN=/etc/ilinux/stage2-pin
+S=/run/ilinux-stage2                     # lock, state, log
+IN=$S/incoming                           # a tmpfs of its own for the compressed image
+IMG=$IN/stage2.cpio.zst
+NEXT=/run/nextroot                       # where systemd's soft-reboot looks for the next root
+UNIT=ilinux-stage2-switch.service
+# VM tests only: the test overlay may add this; the delivered image has no such file.
+HOOK=/usr/local/lib/ilinux-test/stage2-hook
+
+up() { local u _; read -r u _ < /proc/uptime; echo "$u"; }
+commas() { local n=$1 s=; while [ ${#n} -gt 3 ]; do s=",${n: -3}$s"; n=${n:0:${#n}-3}; done; echo "$n$s"; }
+gib() { awk -v b="$1" 'BEGIN { printf "%.1f", b / 1073741824 }'; }
+rate() { awk -v b="$1" -v s="$2" 'BEGIN { if (s <= 0) s = 0.001; printf "%.1f", b / s / 1e6 }'; }
+
+mkdir -p "$S"
+chmod 0700 "$S"
+
+# log [PRIORITY] TEXT: the journal and the panel's event list
+log() {
+    local prio=info
+    case $1 in info|notice|warning|err) prio=$1; shift ;; esac
+    logger -t ilinux-stage2 -p "user.$prio" -- "$*" 2> /dev/null || true
+    printf '%s %s\n' "$(up)" "$*" >> "$S/log"
+}
+# out TEXT: a status line for the M1's session (ignored when the session is gone)
+out() { printf 'ilinux-stage2 %s\n' "$*" 2> /dev/null || true; }
+# state PHASE DETAIL: what the panel shows and what receive relays to the M1
+state() {
+    printf 'phase=%s\nsince=%s\npid=%s\ndetail=%s\n' "$1" "$(up)" "$$" "$2" > "$S/state.$$" &&
+        mv -f "$S/state.$$" "$S/state"
+}
+# last TEXT: the outcome of the last attempt, kept until the next one ends
+last() { printf '%s %s\n' "$(up)" "$*" > "$S/last.$$" && mv -f "$S/last.$$" "$S/last"; }
+read_state() {
+    PHASE= DETAIL=
+    local k v
+    while IFS='=' read -r k v; do
+        case $k in phase) PHASE=$v ;; detail) DETAIL=$v ;; esac
+    done < "$S/state" 2> /dev/null
+}
+
+read_pin() {
+    PIN_SIZE= PIN_SHA= PIN_IMAGE= PIN_ENTRIES= PIN_UNPACKED= PIN_SOURCE=
+    [ -r "$PIN" ] || return 1
+    local k v
+    while IFS='=' read -r k v; do
+        case $k in
+        size) PIN_SIZE=$v ;;
+        sha256) PIN_SHA=$v ;;
+        image_sha256) PIN_IMAGE=$v ;;
+        entries) PIN_ENTRIES=$v ;;
+        unpacked_bytes_16k) PIN_UNPACKED=$v ;;
+        source) PIN_SOURCE=$v ;;
+        esac
+    done < "$PIN"
+    [[ $PIN_SIZE =~ ^[1-9][0-9]{0,11}$ && $PIN_SHA =~ ^[0-9a-f]{64}$ && $PIN_IMAGE =~ ^[0-9a-f]{64}$ &&
+       $PIN_ENTRIES =~ ^[1-9][0-9]{0,8}$ && $PIN_UNPACKED =~ ^[1-9][0-9]{0,13}$ ]]
+}
+
+# Undo a half-done attempt: the incoming image, a half-unpacked next root, the stamp
+clean() {
+    rm -f "$S/verified"
+    mountpoint -q "$IN" && umount "$IN"
+    mountpoint -q "$NEXT" && umount -R "$NEXT"
+    return 0
+}
+
+waiting_detail() { echo "waiting for stage two from the M1 ($(commas "$PIN_SIZE") bytes, SHA-256 ${PIN_SHA:0:12}...${PIN_SHA: -4})"; }
+
+# refuse TEXT: before any byte of the image was read (exit 3)
+refuse() {
+    log warning "refused: $*"
+    last "REFUSED: $*"
+    out "refused: $*"
+    exit 3
+}
+# fail STATUS TEXT: an attempt that started failed; stage one cleans up and waits again
+fail() {
+    local status=$1; shift
+    log err "stage two not used: $*"
+    last "FAILED: $*"
+    clean
+    read_pin > /dev/null 2>&1 && state waiting "$(waiting_detail)" || state waiting "waiting (no valid pin)"
+    out "failed: $*"
+    exit "$status"
+}
+
+receive() {
+    # The session may vanish (cable, Ctrl-C on the M1): finish, report to the journal and the panel.
+    trap '' PIPE HUP
+    [ $# = 2 ] || { out "refused: usage: ilinux-stage2 receive SIZE SHA256"; exit 2; }
+    read_pin || refuse "this stage one has no valid pin ($PIN)"
+    local size=$1 sha=$2
+    if [ "$size" != "$PIN_SIZE" ] || [ "$sha" != "$PIN_SHA" ]; then
+        refuse "the M1 offers $(commas "${size:0:14}") bytes with SHA-256 ${sha:0:16}..., but this stage one is pinned to $(commas "$PIN_SIZE") bytes with SHA-256 ${PIN_SHA:0:16}... (send the pinned image, or rebuild stage one for the new one)"
+    fi
+    exec 9> "$S/lock"
+    flock -n 9 || refuse "busy: another transfer or the switch to stage two is running"
+    [ ! -e "$S/verified" ] || refuse "busy: a verified stage two is waiting to be unpacked"
+    clean
+    local avail need
+    avail=$(awk '/^MemAvailable:/ { printf "%.0f", $2 * 1024 }' /proc/meminfo)
+    need=$((PIN_SIZE + PIN_UNPACKED + 1073741824))
+    [ "${avail:-0}" -ge "$need" ] ||
+        refuse "not enough memory: $(gib "$avail") GiB available, $(gib "$need") GiB needed (image, unpacked root in 16 KiB pages, 1 GiB spare)"
+    mkdir -p "$IN"
+    mount -t tmpfs -o "size=$(( (PIN_SIZE / 1048576 + 2) * 1048576 )),mode=0700" ilinux-stage2-incoming "$IN" ||
+        fail 4 "cannot mount a tmpfs for the incoming image"
+    rm -f "$S/sha"
+    local t0 t1 got have
+    t0=$(up)
+    state receiving "receiving $(commas "$PIN_SIZE") bytes from the M1"
+    log "receiving stage two: $(commas "$PIN_SIZE") bytes, SHA-256 $PIN_SHA ($PIN_SOURCE)"
+    out "ready $PIN_SIZE $PIN_SHA"
+    # At most one byte more than the pin, so a longer stream is caught without filling RAM; the
+    # SHA-256 is taken on the way in.
+    dd iflag=fullblock,count_bytes bs=1M count=$((PIN_SIZE + 1)) status=none | tee "$IMG" | sha256sum > "$S/sha"
+    local rc=("${PIPESTATUS[@]}")
+    t1=$(up)
+    got=$(stat -c %s "$IMG" 2> /dev/null || echo 0)
+    # A failure on this side (the tmpfs full, a write error) leaves the image short too: name it first.
+    if [ "${rc[0]}${rc[1]}${rc[2]}" != 000 ]; then
+        fail 4 "the receiving pipeline failed after $(commas "$got") of $(commas "$PIN_SIZE") bytes (dd ${rc[0]}, tee ${rc[1]}, sha256sum ${rc[2]}; the incoming tmpfs has $(df -B1 --output=avail "$IN" 2> /dev/null | tail -n 1 | tr -d ' ') bytes free)"
+    fi
+    if [ "$got" -lt "$PIN_SIZE" ]; then
+        fail 4 "the transfer ended after $(commas "$got") of $(commas "$PIN_SIZE") bytes ($(awk -v t="$t0" -v u="$t1" 'BEGIN { printf "%.1f", u - t }') s; the M1's session closed early)"
+    fi
+    [ "$got" = "$PIN_SIZE" ] || fail 4 "the M1 sent more than the pinned $(commas "$PIN_SIZE") bytes"
+    local seconds mbps
+    seconds=$(awk -v t="$t0" -v u="$t1" 'BEGIN { printf "%.1f", u - t }')
+    mbps=$(rate "$got" "$seconds")
+    log "received $(commas "$got") bytes in $seconds s ($mbps MB/s)"
+    out "received $got bytes in $seconds s ($mbps MB/s)"
+    state verifying "checking the SHA-256 against the pin"
+    read -r have _ < "$S/sha"
+    [ "$have" = "$PIN_SHA" ] || fail 4 "SHA-256 $have of the received image differs from the pin $PIN_SHA"
+    [ "$(head -c 4 "$IMG" | od -A n -t x1 | tr -d ' \n')" = 28b52ffd ] || fail 4 "the received image is not a zstd frame"
+    log "verified: size and SHA-256 equal the pin"
+    out "verified $PIN_SHA"
+    echo "$PIN_SIZE $PIN_SHA" > "$S/verified"
+    state queued "verified ($seconds s at $mbps MB/s); unpacking next"
+    # The switch runs as its own unit, so it finishes even if this session goes away now.
+    flock -u 9
+    exec 9>&-
+    systemctl start --no-block "$UNIT" || fail 5 "cannot start $UNIT"
+    local seen= end=$((SECONDS + 1200)) active
+    while [ "$SECONDS" -lt "$end" ]; do
+        read_state
+        case $PHASE in
+        waiting)   # the switch failed, cleaned up and said why in last
+            out "failed: $(cut -d' ' -f2- "$S/last" 2> /dev/null | sed 's/^FAILED: //')"
+            exit 5 ;;
+        esac
+        if [ "$PHASE: $DETAIL" != "$seen" ]; then
+            seen="$PHASE: $DETAIL"
+            out "$seen"
+        fi
+        [ "$PHASE" = switching ] && exit 0
+        active=$(systemctl show -p ActiveState --value "$UNIT" 2> /dev/null)
+        if [ "$active" = failed ]; then
+            sleep 1
+            read_state
+            [ "$PHASE" = switching ] && exit 0
+            out "failed: $UNIT failed ($(systemctl show -p Result --value "$UNIT" 2> /dev/null)); see the journal"
+            exit 5
+        fi
+        sleep 0.5
+    done
+    out "failed: no result from $UNIT within 1200 s"
+    exit 5
+}
+
+switch() {
+    exec 9> "$S/lock"
+    flock -w 60 9 || { log err "switch: the lock stayed busy"; exit 1; }
+    read_pin || fail 1 "this stage one has no valid pin ($PIN)"
+    local vsize= vsha=
+    [ -f "$S/verified" ] && read -r vsize vsha < "$S/verified"
+    [ "$vsize" = "$PIN_SIZE" ] && [ "$vsha" = "$PIN_SHA" ] && [ "$(stat -c %s "$IMG" 2> /dev/null)" = "$PIN_SIZE" ] ||
+        fail 1 "no verified stage two is waiting"
+    local t0 t1 entries used
+    t0=$(up)
+    state unpacking "unpacking $(commas "$PIN_SIZE") bytes into RAM ($NEXT, about $(gib "$PIN_UNPACKED") GiB)"
+    log "unpacking stage two into $NEXT"
+    mkdir -p "$NEXT"
+    # The size limit rootfs would have had (half of RAM): the Omarchy root runs in it as it ran in rootfs.
+    mount -t tmpfs -o mode=0755 ilinux-stage2-root "$NEXT" || fail 1 "cannot mount a tmpfs on $NEXT"
+    if ! bsdtar -x -p --numeric-owner -f "$IMG" -C "$NEXT" 2> "$S/unpack.err"; then
+        fail 1 "unpacking failed: $(tail -n 1 "$S/unpack.err" | cut -c1-160)"
+    fi
+    t1=$(up)
+    entries=$(find "$NEXT" -mindepth 1 -printf . | wc -c)
+    [ "$entries" = "$PIN_ENTRIES" ] || fail 1 "the unpacked root has $entries entries, the pin says $PIN_ENTRIES"
+    for f in init usr/lib/systemd/systemd; do
+        [ -x "$NEXT/$f" ] || fail 1 "the unpacked root has no executable /$f"
+    done
+    [ -e "$NEXT/etc/os-release" ] || [ -e "$NEXT/usr/lib/os-release" ] ||
+        fail 1 "the unpacked root has no os-release, so systemd would not switch into it"
+    used=$(df -B1 --output=used "$NEXT" | tail -n 1 | tr -d ' ')
+    rm -f "$IMG" "$S/verified"
+    umount "$IN"
+    log "unpacked: $(commas "$entries") entries, $(gib "$used") GiB in RAM, in $(awk -v t="$t0" -v u="$t1" 'BEGIN { printf "%.1f", u - t }') s"
+    if [ -x "$HOOK" ]; then
+        local said
+        said=$("$HOOK" "$NEXT" 2>&1) || fail 1 "the VM test hook failed: ${said:0:120}"
+        log warning "VM test hook $HOOK (present only in a test overlay): ${said:0:160}"
+    fi
+    last "OK: stage two verified and unpacked; switched at kernel time $(up) s"
+    state switching "soft-reboot into stage two: $(commas "$entries") entries, $(gib "$used") GiB, unpacked in $(awk -v t="$t0" -v u="$t1" 'BEGIN { printf "%.1f", u - t }') s"
+    log notice "switching to stage two: soft-reboot into $NEXT (the unit's SuccessAction)"
+    # Two seconds for the M1's session to read this before stage one's units stop; then this unit ends
+    # and systemd soft-reboots (ilinux-stage2-switch.service: SuccessAction=soft-reboot).
+    sleep 2
+}
+
+status() {
+    read_pin && echo "pin: $(commas "$PIN_SIZE") bytes, SHA-256 $PIN_SHA, $(commas "$PIN_ENTRIES") entries, $(gib "$PIN_UNPACKED") GiB unpacked ($PIN_SOURCE)" ||
+        echo "pin: none or invalid ($PIN)"
+    read_state
+    echo "state: ${PHASE:-none}: ${DETAIL:-}"
+    [ -r "$S/last" ] && echo "last attempt: $(cut -d' ' -f2- "$S/last")"
+    findmnt -n -o TARGET,FSTYPE,SIZE,USED "$IN" "$NEXT" 2> /dev/null || true
+}
+
+case ${1:-} in
+receive) shift; receive "$@" ;;
+switch) switch ;;
+status) status ;;
+*) echo "usage: ilinux-stage2 receive SIZE SHA256 | switch | status" >&2; exit 2 ;;
+esac

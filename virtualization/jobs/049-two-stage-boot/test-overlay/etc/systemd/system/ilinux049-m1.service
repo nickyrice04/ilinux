@@ -1,0 +1,8 @@
+# VM test only (job 049, appended by run-qemu.sh): the M1's part against stage one (m1-stage1.sh).
+[Unit]
+Description=VM test: the M1 against stage one (refusals, then the transfer)
+After=ilinux-ssh-hostkey.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/lib/ilinux-test/m1-stage1.sh

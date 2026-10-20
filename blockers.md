@@ -27,8 +27,21 @@ the terminal's 250 ms auto-repeat fires about 14 times per tap. A stopgap is ver
 characters and half the CPU per tap; animations off changed nothing. Open: a cheaper frame (the full-screen wallpaper and notification
 overlay layers, damage on the `simpledrm` path), SMP, the CPU's speed state and a display/GPU driver (the structural fix; `roadmap.md`
 Phase 3 and later); the leaked `omarchy-menu-select` pollers (7 to 12% idle CPU); the trackpad (no driver on `multi-touch`); no storage
-(attempt 27); the early `cs` power-domain and `kvm_arch_timer` errors (unchanged since attempt 19, effect still unknown). See
+(attempt 28, after attempt 27's two-stage delivery); the early `cs` power-domain and `kvm_arch_timer` errors (unchanged since attempt 19, effect still unknown). See
 `native/boot/stage-b-2026-10-19-attempt26-result.md`.
+
+Offline continuation, 2026-10-19: menu-poller cleanup, repeat delay, keyboard
+service/rerun and weather/SSH changes now pass job045's VM checks in candidate
+root `5eaa2fdb…6d345`; native ordering is still untested. The cpufreq experiment
+compiles and passes its offline tests, with no measured native speed, power or
+thermal result. SMP evidence confirms the start-mask stride problem but leaves
+raw entry unknown. Job049 has now passed both rejection/switch and fresh normal-path VM runs
+on the new pair. Commit/publication review was approved on 2026-10-20.
+Attempt 27 still needs M1 intake,
+fresh read-only policy/default confirmation and the human's start. Native USB
+rebind and automatic keyboard startup remain untested. The VM also retains earlier hardware-provisioning, UFW and document
+portal failures. See `native/boot/subagent-review-2026-10-19.md` and
+`native/boot/attempt27-two-stage-validation.md`.
 
 ## Historical status — attempt 25: the USB link is no longer a blocker; what remains is the machine itself and the boot path (superseded by attempt 26)
 

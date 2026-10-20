@@ -2,12 +2,12 @@
   "schema": 1,
   "profile": "omarchy",
   "file": "ramroot.cpio.zst",
-  "size": 2435320732,
-  "sha256": "565644bed5aa2d2c7ab594868447c74a33fd9317c6269c3c52570eef86d3bf6f",
+  "size": 2435460021,
+  "sha256": "5eaa2fdb52dcbbaf20b4a9780f7d23e625535e3f5386f1659ed332fb7826d345",
   "image_sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
-  "source": "VM job 045 with the USB link, Claude Code, passwordless sudo and boot042's keyboard modules, 2026-10-19T22:08:01Z",
-  "build": "virtualization/jobs/045-omarchy-installer-root/host-run.sh with LINK=1 CLAUDE=1 NOPASSWD=1 MODULES=<job 050's export/modules> for boot042's Image (out/job.env); Omarchy's own installer with the edge aarch64 runtime (omarchy-dev, omarchy-settings-dev 4.0.0.r7028.g33783b1-1), 865 packages, then ramroot.sh with deviations 1-31 (16-24 as attempt 25's image, 22 with Claude Code 2.1.304; 25-28, attempt 25's findings: SSH login shells get a BROWSER that prints the address, archlinux-keyring-wkd-sync masked, sshd on a USB port waits until a host has configured it, Chromium's component updates off; 29-31: boot042's four keyboard modules under /usr/lib/modules, blacklisted from automatic loading, and ilinux-keyboard, which loads them over SSH one at a time; no storage module); zstd --ultra -22 --long=27; 8,815,328,206 bytes unpacked, 11,064,229,888 in 16 KiB pages",
-  "vm_tested": "QEMU TCG, one vCPU, the boot042 Image and the M5's root compatible: SDDM autologin, uwsm, Hyprland and Quickshell; desktop ready 208.50 s and first run done 211.00 s after kernel start; menu, Chromium and Obsidian rendered; 13,971 MiB in use at the settled desktop; over job 046's dummy_hcd link: SSH as omarchy, key-only, the host key equal to the journal's, the clock step, HTTPS through the reverse-forwarded proxy, claude --version without a download, signed out, passwordless sudo and its revocation; attempt 25's fixes (no browser from an SSH login shell, wkd-sync masked and silent through two clock steps, the sshd drop-in in effect with grace exits clean, the Chromium policy); the keyboard modules present with their digests, not loaded at boot, loadable by name, and ilinux-keyboard stopping at its first check where the device tree has no MTP",
+  "source": "VM job045, attempt27 image fixes for boot042; built 2026-10-20T02:57:20Z",
+  "build": "boot042; LINK=1 CLAUDE=1 NOPASSWD=1; keyboard modules; attempt26 desktop/keyboard/SSH fixes; zstd --ultra -22 --long=27; see native/boot/subagent-review-2026-10-19.md",
+  "vm_tested": "Job045 exact-boot042 desktop/link run PASS (946.3 seconds probe wall, 18 SSH logins, image fixes). Job049 full rejection/switch and fresh timing runs PASS with stage one 84c01f53...06ed3; see native/boot/attempt27-two-stage-validation.md for timings and test-kernel limits.",
   "native_tested": false,
   "private": "holds no SSH host key (made at each boot), private key, pacman keyring, password or token, but the build's machine-id, the M1's public key and a passwordless sudo grant for omarchy: never commit or publish the image itself"
 }

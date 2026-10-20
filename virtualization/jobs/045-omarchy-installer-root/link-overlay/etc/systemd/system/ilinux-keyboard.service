@@ -1,0 +1,26 @@
+# VM job 045 (LINK=1 with MODULES), attempt 27: the M5's internal keyboard switched on at boot. Attempt 26 proved
+# ilinux-keyboard's steps 0 to 5 over SSH on the hardware (1.4 s; no fault in the 63 minutes that followed), so
+# this unit runs the same steps, with no typing step, once the device tree has the MTP's node, and needs nothing
+# of the USB link. The four modules stay blacklisted from automatic loading (/etc/modprobe.d/ilinux-boot042.conf):
+# the script loads them by name, one at a time, and stops at the first failing check. A failure leaves the
+# system up (a oneshot nothing depends on, no restart) and says why in the journal (ilinux-keyboard); a rerun
+# over SSH (sudo ilinux-keyboard) then passes steps 0 to 5 on what is loaded and adds the typing step, and the
+# retry the script names (modprobe -r dockchannel-hid, then --poll 100) is still the human's over SSH.
+[Unit]
+Description=The M5's internal keyboard: boot042's MTP modules, loaded by name (RAM root)
+Documentation=file:/usr/local/bin/ilinux-keyboard
+# Only where the device tree has the MTP (the M5 with boot042's Stage-B DT). Elsewhere (a VM, another package)
+# the unit is skipped, the reason in the journal, and nothing is loaded.
+ConditionPathIsDirectory=/sys/firmware/devicetree/base/soc/mtp@294600000
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/ilinux-keyboard --no-typing
+SyslogIdentifier=ilinux-keyboard
+# The script's own waits add up to about 70 s at most (binding 10 s per device, the ring and the interfaces
+# 15 s, the input device 5 s, hyprctl 10 s).
+TimeoutStartSec=120
+
+[Install]
+WantedBy=multi-user.target

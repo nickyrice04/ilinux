@@ -35,6 +35,10 @@
 # MODULES=<job 050's export/modules> (with LINK=1; attempt 26): boot042's keyboard modules under
 # /usr/lib/modules, blacklisted from loading at boot, and ilinux-keyboard, which loads them over SSH;
 # link.sh's stage_link also carries attempt 25's four fixes (see its comments).
+# Attempt 27 (attempt 26's findings): desktop.sh (every root: Hyprland's repeat delay 1000 ms, the shell menu's
+# replaced requests finished so omarchy-menu-select pollers end, the weather widget off), link.sh (LINK=1:
+# sshd's grace time 180 s and a session's end a clean unit end; with MODULES: ilinux-keyboard passes on a
+# rerun and ilinux-keyboard.service runs its steps 0-5 at boot where the device tree has the MTP).
 set -euo pipefail
 J=/mnt/job
 OUT=$J/out

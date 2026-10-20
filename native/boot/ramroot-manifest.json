@@ -2,12 +2,19 @@
   "schema": 1,
   "profile": "ramroot",
   "file": "ramroot.cpio.zst",
-  "size": 182420823,
-  "sha256": "67f257327ce308531b0c338babb8b644928cae8148bb34467042cca13cbad3f7",
-  "image_sha256": "1131a1af5e4d5cfa3206c5eb0afe1a6d72d86a2761a8d906b592e33556882579",
-  "source": "VM job 039 run 33, 2026-10-17T00:53Z",
-  "build": "virtualization/jobs/039-omarchy-ram-root/host-run.sh; zstd --ultra -22 --long=27; 304 Arch Linux ARM packages plus the repository's cpubench and membench built in; image and digest kept in out/runs/run33/",
-  "vm_tested": "QEMU TCG, one vCPU, the boot035 Image: Hyprland desktop with wallpaper on simpledrm with llvmpipe 82.7 s after kernel start under start-hyprland (no warning), 0 failed units, the live status screen's counter advancing, all eleven benchmark steps finished",
+  "size": 59630835,
+  "sha256": "84c01f536516b85939f6ead55e37d0a9fa4838414edb84e033aef221f6006ed3",
+  "image_sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
+  "source": "VM job049, attempt27 stage one for boot042; built 2026-10-20T03:35:39Z",
+  "build": "115 Arch Linux ARM packages; existing RAM-root layer and two-stage receiver; exact stage-two pin below; zstd --ultra -22 --long=27; see native/boot/attempt27-two-stage-validation.md",
+  "stage2": {
+    "size": 2435460021,
+    "sha256": "5eaa2fdb52dcbbaf20b4a9780f7d23e625535e3f5386f1659ed332fb7826d345",
+    "image_sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
+    "entries": 215513,
+    "unpacked_bytes_16k": 11012489216
+  },
+  "vm_tested": "Job049 full rejection/switch run and fresh normal-path timing run PASS on this exact pair. Wrong image, truncated/corrupt transfer refused; desktop, second gadget, journal/SSH and image-fix checks passed. See native/boot/attempt27-two-stage-validation.md for timings and test-kernel limits.",
   "native_tested": false,
-  "private": "holds the image's SSH host key: never commit or publish the image itself"
+  "private": "No host/private key or password; per-boot host key; empty machine-id; operator public key for root and omarchy. Keep the image local/private; never publish it."
 }

@@ -1,0 +1,32 @@
+# Explicit package set for stage one of the two-stage boot (VM job 049): job 039's RAM root
+# (omarchy-arm64/ram-root/packages.txt) without its seat, compositor and desktop group, plus
+# libarchive for bsdtar, which unpacks stage two (a zstd-compressed newc cpio). pacman resolves the
+# dependencies from the official Arch Linux ARM repositories (core, extra, alarm) only. The
+# resolved list with versions is written to out/stage1-packages.txt by every build.
+
+# init, login and base tools (job 039's list, unchanged)
+filesystem
+systemd
+systemd-sysvcompat
+dbus-broker-units
+bash
+coreutils
+util-linux
+procps-ng
+iproute2
+iputils
+shadow
+sed
+grep
+gawk
+findutils
+less
+kmod
+
+# access over the USB link (job 039's)
+openssh
+
+# stage two: zstd (also a systemd dependency) and bsdtar; kbd's console fonts for the panel
+zstd
+libarchive
+kbd

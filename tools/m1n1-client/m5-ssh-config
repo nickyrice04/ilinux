@@ -84,3 +84,45 @@ Host m5o-port2
 
 Host m5o-port3
     ProxyCommand build/control/usb-pipe --port 3 --log build/native-intake/usb-pipe.log
+
+# ssh -F tools/m1n1-client/m5-ssh-config m5s       (two-stage boot, stage one: VM job 049)
+#
+# Stage one of the two-stage boot: a small RAM root that the launcher's ramroot profile uploads,
+# with job 039's gadget and byte pipe. python3 -I tools/m1n1-client/m5-stage2.py uses this entry to
+# send it stage two (the Omarchy root); a shell here is for diagnosis (ilinux-stage2 status). The
+# login is root (stage one authorizes the M1's key for root and omarchy, as job 039 does). The host
+# key is made at every boot (the image holds no private key), so it goes to its own file under its
+# own name: clear that file before each boot (rm -f build/control/known_hosts-stage1). The panel and
+# the journal (ilinux-ssh-hostkey, on interface 0) show the boot's fingerprint. No port forwarding:
+# stage one needs no web access. After the switch the Omarchy root answers on the same pipe: m5o.
+Host m5s m5s-port1 m5s-port2 m5s-port3
+    HostName m5
+    HostKeyAlias m5-stage1
+    User root
+    IdentityFile build/control/m1-control
+    IdentitiesOnly yes
+    UserKnownHostsFile build/control/known_hosts-stage1
+    StrictHostKeyChecking accept-new
+    UpdateHostKeys no
+    ClearAllForwardings yes
+    ConnectTimeout 45
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+    ControlMaster no
+    ForwardAgent no
+    ForwardX11 no
+    GSSAPIAuthentication no
+    PreferredAuthentications publickey
+    LogLevel INFO
+
+Host m5s
+    ProxyCommand build/control/usb-pipe --log build/native-intake/usb-pipe.log
+
+Host m5s-port1
+    ProxyCommand build/control/usb-pipe --port 1 --log build/native-intake/usb-pipe.log
+
+Host m5s-port2
+    ProxyCommand build/control/usb-pipe --port 2 --log build/native-intake/usb-pipe.log
+
+Host m5s-port3
+    ProxyCommand build/control/usb-pipe --port 3 --log build/native-intake/usb-pipe.log

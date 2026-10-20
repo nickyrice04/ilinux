@@ -1,0 +1,27 @@
+#!/bin/bash
+# VM test only (job 049): ilinux-stage2 switch runs this, when the test overlay put it here, after it
+# has verified and unpacked stage two into NEXTROOT and before the soft-reboot (the delivered stage one
+# has no such file; the switch logs every use). It adds the test's stage-two probe to the unpacked
+# root, as job 045's boot test appended its probe to the same image: a unit that follows Omarchy's
+# boot to the desktop, then plays the M1 against stage two's own link (SSH as omarchy on the byte
+# pipe), plus what that needs (the M1's tools, the Linux usb-pipe, the VM key). Nothing of the image
+# itself is changed. serial-getty@hvc0 is masked so that no login prompt shares the test console.
+set -eu
+N=${1:?usage: stage2-hook NEXTROOT}
+T=/usr/local/lib/ilinux-test
+D=$N/usr/local/lib/ilinux049
+mkdir -p "$D"
+cp -R "$T/stage2/." "$D/"
+cp "$T/common.sh" "$D/"
+cp -R "$T/m1" "$D/m1"
+rm -rf "$D/m1/build"
+install -m 0755 "$T/usb-pipe" "$D/usb-pipe"
+install -d -m 0700 "$D/keys"
+install -m 0600 "$T/keys/id_ed25519" "$D/keys/id_ed25519"
+install -m 0644 "$T/keys/id_ed25519.pub" "$D/keys/id_ed25519.pub"
+chmod 0755 "$D/stage2-probe.sh"
+install -m 0644 "$D/ilinux049-stage2.service" "$N/etc/systemd/system/ilinux049-stage2.service"
+mkdir -p "$N/etc/systemd/system/multi-user.target.wants"
+ln -sf /etc/systemd/system/ilinux049-stage2.service "$N/etc/systemd/system/multi-user.target.wants/ilinux049-stage2.service"
+ln -sf /dev/null "$N/etc/systemd/system/serial-getty@hvc0.service"
+echo "VM test hook: added $(cd "$D" && find . -type f | wc -l) files under /usr/local/lib/ilinux049 and ilinux049-stage2.service to the next root"

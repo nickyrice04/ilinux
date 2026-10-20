@@ -1,174 +1,277 @@
-# Stage B — attempt 26: the M5's keyboard, switched on over SSH, on boot042
+# Stage B — attempt 27: two-stage Omarchy boot on boot042
 
-**M5 handoff, 2026-10-19.** Pull latest main with `git pull --ff-only`, preserving local work and stopping on
-divergence. Read `coordination.md`, this file, `native/boot/boot042-keyboard-modules-2026-10-19.md` (what
-boot042 is and how it was checked) and `native/boot/stage-b-2026-10-19-attempt25-result.md`. Attempt 25 is
-consumed: SSH, the clock step, web access through the M1 and a signed-in Claude Code worked on the M5 over the
-USB link; the machine still has no input of its own. Where this file says "as attempt 25" or names one of
-attempt 25's steps, read that step in attempt 25's checklist,
-`git show 38e91fb:tools/m1n1-client/stage-b-instructions.md` (the last version before this handoff).
-**Native attempt 26 / live checks NOT RUN at this handoff.** Labels:
-Confirmed / Likely / Hypothesis / Unknown; "Confirmed" means in code, offline or in a VM, never on the M5.
+**Handoff approved for publication on 2026-10-20; native attempt 27 and live checks NOT RUN.** M1: this is
+an offline intake request until the handoff is committed/pushed, the two private
+images match the records, and the human explicitly starts the attempt. Do not
+restart the M5 based on a draft. Attempt 26 is consumed; its result is in
+`native/boot/stage-b-2026-10-19-attempt26-result.md`.
 
-**Continue the existing installation.** Installed boot021 m1n1 and the clean client pin remain unchanged.
-Do not repeat provisioning, Stage A, Recovery, macOS installation, `bputil`, `kmutil` changes, partitioning
-or m1n1 installation. Keep Macintosh HD at Full Security and as default. No volume, security or
-network-settings changes. Install nothing. **No storage in this attempt** (storage is attempt 27, with its own
-launcher change): the package keeps the NVMe node disabled (the committed launcher requires it), its kernel has
-no storage driver at all, and the image holds no storage module. Nothing in this attempt can read, write or
-mount the internal drive.
+Continue the existing installation: installed boot021 m1n1 and client pin
+`57a9339ffd1876e78297b17d34dece8cff8fa1ba`, unchanged boot042 package, existing
+iLinux Boot Lab entry. Keep Macintosh HD at Full Security and as the default.
+No Recovery setup, installer, volume/partition, boot policy, firmware, m1n1,
+network-setting or host-package changes. Storage is attempt 28, separately
+reviewed. This attempt keeps NVMe disabled and supplies no storage modules;
+`nr_cpus=1`, `cpufreq.off=1`, `idle=nop arm64.nowfxt` remain.
 
-## What changes and why
+## What is being tested
 
-Attempt 25 brought SSH, the clock step, web access and Claude Code to Omarchy on the M5. The machine still
-has no input of its own. Attempt 26 adds the internal keyboard, and does it the way later hardware work
-should go: a kernel whose drivers for new hardware are modules, loaded from the SSH session one at a time,
-each checked before the next.
+Stage one (59,630,835 bytes) goes through m1n1. The M1 then sends the Omarchy root
+(2,435,460,021 bytes) through the established USB SSH pipe. Stage one verifies
+its exact size/hash, unpacks into RAM and soft-reboots into it, keeping the same
+kernel. The USB gadget disappears during the switch and must return.
 
-| | Attempt 25 | **Attempt 26** |
-|---|---|---|
-| Package | boot041 | **boot042**: boot041 with three files changed (`Image`, `kernel.config`, `t6050-j716c-stage-b.dtb`); m1n1, the generic DT, both initramfs and `diag-init.c` byte-identical |
-| Kernel | boot040's Image | boot041's tree plus dockchannel-hid 0001 and 0002 (the M4/M5 ring transport); **the keyboard path and the storage drivers are modules**, so none of them runs at boot; `HIDRAW` on. Image `0b6df395…b69c`, 44,616,192 bytes |
-| Stage-B DT | boot041's | boot041's **plus the MTP nodes** (the RTKit helper, its mailbox, the DockChannel FIFO and its HID child with six interface nodes, the keyboard alias) **and the MTP's DART enabled**, on streams 0-4. USB part and the disabled NVMe node unchanged |
-| Initrd | job 045's root for boot040's Image | **job 045's root for boot042's Image**: attempt 25's root plus the four keyboard modules (blacklisted from automatic loading), `ilinux-keyboard`, and attempt 25's four fixes. 2,435,320,732 bytes, SHA-256 `565644bed5aa2d2c7ab594868447c74a33fd9317c6269c3c52570eef86d3bf6f`, built 2026-10-19T22:08:01Z, pinned for boot042's Image `0b6df395…b69c` |
-| Launcher | `--profile omarchy`, `b14ec7a1…` | **unchanged** (`b14ec7a1…`), `--profile omarchy` |
-| USB link, clock, web, Claude Code, sudo | as attempt 25 | **as attempt 25**, with fixes: an SSH session opens no browser on the M5 (Claude Code's sign-in link is printed in the terminal), `archlinux-keyring-wkd-sync` masked, sshd on an uncabled port waits silently, Chromium's component updates off |
-| **New at boot** | — | **one hardware change: the built-in DART driver probes the MTP's DART and resets it** (all its streams disabled). The MTP mailbox binds to the built-in mailbox driver without touching a register. Nothing else new runs until the keyboard steps |
-| **New over SSH** | — | `sudo ilinux-keyboard`: apple-rtkit-helper, apple-dockchannel, hid-apple, dockchannel-hid, then the input device and typing on the M5, each with its own go/no-go |
+The root includes the attempt-26 fixes: repeat delay 1000 ms, cleanup of replaced
+menu requests, automatic keyboard startup, a keyboard-check rerun fix, disabled
+weather, and a 180-second SSH login grace period. Native keyboard loading at
+startup is new timing; attempt 26 proved only the manual path. GPU, trackpad,
+frequency scaling, extra cores, storage and efficiency are not enabled here.
+See `native/boot/attempt27-two-stage-validation.md` for exact evidence and limits.
 
-## Offline intake before the human restarts (M1)
+## Offline intake on the M1
 
-1. **The boot042 package**: download the prerelease `native-j716c-boot042`, check it against Git **before
-   extraction** (`archive-sha256.txt`), extract, `verify-package` receipt as for boot041. Expect the archive `a2e57c0ccddcd7c8e60affac0ffa033deb9db1639119a7aa93faaedea276a781` (18,877,362 bytes) and `SHA256SUMS` `60299703efd91bdaca8772d5924c123f38b461738a1c3f65424f1b6529ff3ccd`, as `native/boot/archive-sha256.txt` and `intake-manifest-sha256.txt` record them.
-2. **The delta against attempt 24/25's boot041 download** (the M1's own diff): exactly `Image`,
-   `kernel.config` and `t6050-j716c-stage-b.dtb` differ; the M1's property-level diff of the two Stage-B DTs
-   finds exactly ten new nodes (`/soc/mtp@294600000`, `/soc/mbox@294608000`, `/soc/fifo@294b14000`, its
-   `input@8000` and the six interface nodes under it) and two changed (`/soc/iommu@294800000`: `status`
-   removed, `phandle` and `apple,dma-range = <0x100 0x4000 0x0 0xffff0000>` added; `/aliases`: `keyboard`);
-   every USB node and `/soc/nvme@45dcc0000` (still `status = "disabled"`) unchanged. `kernel.config` differs
-   by exactly the nine symbols of the report's table, plus two `is not set` lines (`HID_CP2112`, `HID_FT260`)
-   that `HIDRAW` makes visible.
-3. **The image arrives privately**, as attempt 25's (AirDrop into the ignored `build/ramroot045-boot042/`,
-   never the repository root, never committed, uploaded or published). Check its size and SHA-256 against
-   `native/boot/omarchy-root-manifest.json` (the pin names boot042's Image).
+Run from the repository root. Preserve local work; use `git pull --ff-only`
+and stop on divergence. Record `git rev-parse HEAD`. Read `coordination.md`,
+this checklist and the validation report. The private key remains on the M1.
+
+1. Reverify the existing boot042 package against Git. No new release is needed:
+   archive SHA-256 `a2e57c0ccddcd7c8e60affac0ffa033deb9db1639119a7aa93faaedea276a781`,
+   18,877,362 bytes; SHA256SUMS digest
+   `60299703efd91bdaca8772d5924c123f38b461738a1c3f65424f1b6529ff3ccd`.
 
    ```sh
-   mkdir -p build/ramroot045-boot042
-   mv ~/Downloads/ramroot.cpio.zst build/ramroot045-boot042/ramroot.cpio.zst
-   stat -f '%z' build/ramroot045-boot042/ramroot.cpio.zst    # expect 2435320732
-   shasum -a 256 build/ramroot045-boot042/ramroot.cpio.zst   # expect 565644bed5aa2d2c7ab594868447c74a33fd9317c6269c3c52570eef86d3bf6f
+   mkdir -p build/native-intake/attempt27 build/attempt27
+   tools/m1n1-client/run.sh tools/m1n1-client/verify-package.py \
+     build/native-boot042-download/ilinux-j716c-boot042 \
+     --manifest-sha256 60299703efd91bdaca8772d5924c123f38b461738a1c3f65424f1b6529ff3ccd \
+     > build/native-intake/attempt27/package-receipt.json
    ```
 
-   It holds what attempt 25's held (the build's machine-id, the M1's public key, Omarchy's passwordless sudo
-   grant for `omarchy`; no private key, password, keyring or token) plus the four keyboard modules and
-   `ilinux-keyboard`; keep it private the same way.
-4. **Offline launcher run and the suites** (no USB opened):
+2. The human privately transfers **both new files**. Place them at
+   `build/attempt27/stage1.cpio.zst` and `build/attempt27/ramroot.cpio.zst`.
+   Preserve the old images. Never put an image, test overlay, raw journal, private
+   key or proprietary artifact in Git or a Release. A file with the old root's
+   `565644be…` hash is not this attempt's root.
 
    ```sh
-   python3 -I native/boot/launch.py --package build/native-boot042-download/ilinux-j716c-boot042 \
-     --profile omarchy --ramroot build/ramroot045-boot042/ramroot.cpio.zst
+   python3 -I tools/m1n1-client/verify-two-stage.py \
+     --stage1 build/attempt27/stage1.cpio.zst \
+     --stage2 build/attempt27/ramroot.cpio.zst \
+     > build/native-intake/attempt27/pair-receipt.json
    ```
 
-   Expect (exit 0), the RAM-root line naming the pin's source:
+   Require exit 0 and `status: PASS`. This hashes both images and reads only the
+   embedded pin with `/usr/bin/tar`, extracting nothing to disk or running it.
+   Expected stage one `84c01f536516b85939f6ead55e37d0a9fa4838414edb84e033aef221f6006ed3`;
+   root `5eaa2fdb52dcbbaf20b4a9780f7d23e625535e3f5386f1659ed332fb7826d345`;
+   embedded count 215,513, unpacked bytes in 16 KiB pages 11,012,489,216.
+   The panel retains the build-time source label `candidate only`; identify
+   the approved pair by the published size/hash records and verification receipt.
 
-   ```text
-   Package PASS: all files match the repository manifest.
-   RAM root PASS: 2,435,320,732 bytes match omarchy-root-manifest.json (VM job 045 with the USB link, Claude Code, passwordless sudo and boot042's keyboard modules, 2026-10-19T22:08:01Z).
-   Operator key: none; only keys built into the image can log in.
-   Mode: OFFLINE ONLY; USB not opened
-   Boot arguments: console=tty0 rdinit=/init ro maxcpus=1 nr_cpus=1 cpufreq.off=1 pd_ignore_unused clk_ignore_unused quiet
-   m1n1 must append: idle=nop arm64.nowfxt
-   Upload estimate: 2,480,000,463 bytes (Image 44,616,192, initrd 2,435,320,732, DT 63,539): 496.0 s at 5 MB/s, 620.0 s at 4 MB/s (Inferred: size / observed proxy rate). Deadline 900 s.
+3. Check the unchanged launcher and sender without opening USB:
+
+   ```sh
+   python3 -I native/boot/launch.py \
+     --package build/native-boot042-download/ilinux-j716c-boot042 \
+     --profile ramroot --ramroot build/attempt27/stage1.cpio.zst
+   python3 -I tools/m1n1-client/m5-stage2.py \
+     --image build/attempt27/ramroot.cpio.zst --dry-run
+   python3 -I tools/m1n1-client/test_verify_two_stage.py
+   python3 -I tools/m1n1-client/test_m5_stage2.py
+   python3 -I native/boot/test_ramroot.py
    ```
 
-   plus attempt 25's suites (`test_ramroot.py`, `test_usb_pipe.py`, `test_connect_proxy.py`, `test_m5_clock.py`)
-   and the controller suites.
-5. **usb-pipe, the reader, the SSH config**: unchanged from attempt 25 (re-run its step 4 and step 5's
-   `ssh -G` check; `rm -f build/control/known_hosts-omarchy` before the boot).
+   Require package and RAM root PASS, OFFLINE ONLY, sender `dry run: no session
+   opened`, and all tests passing (8 / 18 / 45 locally). Record skips if the M1
+   lacks the old boot035/040 fixtures; their absence is not a passing test.
+   Launcher SHA-256 stays
+   `b14ec7a1d6957197d808609a9c4888995598e23ce4c63707db2a58476a9e0740`.
+   Upload estimate is 104,310,566 bytes, 20.9 s at 5 MB/s, deadline 300 s.
+   That is an estimate, not a native measurement. Do not pass `--operator-key`.
 
-Prepare fresh ignored readiness records, push sanitized readiness in `progress.md` and `coordination.md`
-keeping live checks NOT RUN, and tell the human when ready.
+4. Reuse the M1's tested reader, `usb-pipe`, proxy and key from attempt 26.
+   Recheck their recorded digests and the key's public half against
+   `kernel/experiments/usb-gadget/authorized_keys`. Re-run the existing link,
+   proxy and clock suites if these inputs changed. The known socket-close race
+   in `test_usb_pipe` must be recorded if seen, not hidden by a passing rerun.
+   Confirm the SSH entries with `ssh -G -F tools/m1n1-client/m5-ssh-config m5s`
+   and `m5o`: stage one is root with its own known_hosts file, stage two is
+   omarchy with a separate file. Only one SSH session at a time on interface 1.
 
-## The boot (as attempt 25), with one new go/no-go at boot
+Record sanitized offline readiness in `progress.md` and `coordination.md`, with
+native boot/live checks **NOT RUN**, and stop for the human. Do not publish raw
+receipts without reviewing them for identifiers. Fresh post-return M5 policy
+checks still need confirmation: original Full, lab Permissive, original default.
+Use the existing read-only helper; no settings changes.
 
-Steps 1-6 of attempt 25 unchanged: a fresh M1 restart, cable re-seated, `caffeinate -i`, the read-only
-gate, a **30-minute recording** started before the launch, then once:
+## One human-started attempt
+
+Both Macs on power; the same direct cable. Use the established fresh-M1-restart,
+cable-reseat and unlocked/open-lid procedure, `caffeinate -i`, and film the M5
+from before launch through return. The human shuts down the M5, holds power for
+startup options and chooses the **existing** iLinux Boot Lab entry for this boot.
+Do not change the default startup disk. Wait for `Running proxy...`.
+
+Before the launch, on the M1, run the existing read-only discovery gate:
+
+```sh
+tools/m1n1-client/run.sh tools/m1n1-client/usb-check.py
+```
+
+Stop on ambiguity or a failed gate. Clear only the two lab known_hosts files
+from the preceding boot (new keys are generated for both stages):
+
+```sh
+rm -f build/control/known_hosts-stage1 build/control/known_hosts-omarchy
+```
+
+Launch **once**, keeping the existing controller identity/DT checks intact:
 
 ```sh
 tools/m1n1-client/run.sh native/boot/launch.py \
   --package build/native-boot042-download/ilinux-j716c-boot042 \
-  --profile omarchy --ramroot build/ramroot045-boot042/ramroot.cpio.zst \
-  --launch --device auto --confirm BOOT-J716C-OMARCHY-ROOT
+  --profile ramroot --ramroot build/attempt27/stage1.cpio.zst \
+  --launch --device auto --confirm BOOT-J716C-RAM-ROOT
 ```
 
-**Go/no-go 1, before the handoff (the launcher's own check):** `Hardware DT PASS` after m1n1 has prepared
-the DT. This is the first time m1n1 sees the MTP nodes (it fills the keyboard node's country code and
-layout from the ADT through the `keyboard` alias). A `STOP` here ends the attempt with nothing handed off:
-record the line, no retry.
+Record the exit, upload duration and handoff time. Do not transcribe the
+m1n1 serial-number line. Require `Hardware DT PASS`; any STOP ends the attempt.
 
-**Go/no-go 2, at boot (the one new hardware change):** the DART driver resets the MTP's DART at about 2-3 s
-of kernel time, before the USB controllers bind. **Go** when, as in attempt 25, the gadget enumerates on
-the M1 (about 20 s after the handoff), the desktop comes up (27-31 s) and the journal on interface 0 shows
-the MTP DART's probe lines (`apple-dart 294800000.iommu: … DART [pagesize 4000, … locked: 0, …]
-initialized`) and no fault line for `294800000.iommu`. **No-go** when the M5 freezes, resets, or shows a
-fault for that DART: no keyboard steps; note the time (video and journal), keep the clip running, then
-**recover by power-cycling the M5** (hold the power button about 10 s until it is off, press it again, boot
-Macintosh HD as after every attempt). No relaunch.
-
-Then attempt 25's link steps 4-7 (reader on interface 0, the proxy, `m5-clock.py`, the SSH session's
-checks). Add to the session's checks:
+After handoff, start the established interface-0 journal reader (own terminal):
 
 ```sh
-echo "$BROWSER"                                            # /usr/local/lib/ilinux/ssh-browser
-systemctl is-enabled archlinux-keyring-wkd-sync.timer      # masked
-systemctl status --no-pager 'ilinux-sshd-tty@*' | grep -E '^\S|Active:'   # uncabled ports: activating (start-pre), no restarts
-sudo ilinux-keyboard --status                              # all four keyboard modules: not loaded
+build/control/bulk-log-reader \
+  --out build/native-intake/attempt27/stage1-journal.txt --wait 120 --seconds 1800
 ```
 
-Claude Code's sign-in (attempt 25's steps 8-9) is optional this time; if run, the M5's screen must not open
-a browser (fix 1): the link is printed in the terminal, opened on the M1.
+Stage one should show its status screen and `WAITING FOR STAGE TWO`. Check the
+MTP DART probe and absence of faults in the journal, and compare the stage-one
+host-key fingerprint on the panel with the journal. No storage/CPU probe.
+If stage one or its link never arrives within 120 seconds, record it and stop.
+Accept the ordinary accessory prompt if shown; change no accessory setting.
 
-## The keyboard, one module at a time (new)
+Then, with no other SSH session open, send the root. This command deliberately
+writes its output to a file without a pipeline, preserving its exit status:
 
-One command runs the steps in order and stops at the first failure: `sudo ilinux-keyboard` in the SSH
-session. It prints each step's kernel log lines and `PASS` or `FAIL`, and at the end `RESULT: PASS` or
-`RESULT: FAIL at step N: …`. **Record its whole output** (it holds no identifier; the typing test prints
-only counts). Each step is its own go/no-go:
+```sh
+python3 -I tools/m1n1-client/m5-stage2.py \
+  --image build/attempt27/ramroot.cpio.zst \
+  > build/native-intake/attempt27/stage2-send.log 2>&1
+printf 'sender exit %s\n' "$?"
+```
 
-| Step | What it does on the M5 | Go | No-go: stop there, record, then |
-|---|---|---|---|
-| 0 | checks only: boot042, the module digests, the MTP nodes and alias, the MTP DART bound, unlocked, 16 KiB pages, no fault since boot, no keyboard module loaded | `PASS` | nothing was loaded: report the line; end the keyboard part |
-| 1 | `apple-rtkit-helper`: binds `mtp@294600000`; the DART gets the MTP's five streams on one table; the MTP CPU's run bit is set and RTKit wakes or boots it | bound, no error, crash or fault line | the MTP did not answer or crashed: end the keyboard part; if the M5 hangs or the link drops, power-cycle (above) |
-| 2 | `apple-dockchannel`: binds `fifo@294b14000` (masks and acknowledges its interrupts), creates `input@8000` | bound, child created | end the keyboard part |
-| 3 | `hid-apple`: Apple's key mapping, loaded first so the keyboard does not start on hid-generic | loaded | end the keyboard part |
-| 4 | `dockchannel-hid`: binds `input@8000`, allocates the 2 MiB ring through the MTP DART, registers it 100 ms after the first DockChannel message (`0xC1`, then `0x91`), creates the interfaces the MTP announces | `Ring registered`, `New interface keyboard`, `Interface keyboard is now ready` | **one retry** if the ring is registered but no keyboard interface came, or no ring at all: `sudo modprobe -r dockchannel-hid`, then `sudo ilinux-keyboard --poll 100` (the driver's debug timer drains the ring every 100 ms, in case no doorbell arrives). Any other failure: end the keyboard part |
-| 5 | the keyboard's input device under `input@8000`, and Hyprland's device list | an event device with key capabilities | end the keyboard part |
-| 6 | **the human types `omarchy` and Enter on the M5's own keyboard** within 90 s; the script counts key presses and checks Enter came (nothing typed is printed) | `PASS` with the count | not typed in time: run `sudo ilinux-keyboard` again (steps 0-5 pass again and only step 6 repeats) |
+Watch the file in another terminal (`tail -f`) and the panel. Require the exact
+root hash to verify, then `switching`. Sender exit 0 means the switch was
+requested, **not** that Omarchy or the second USB link succeeded. Compare
+`ssh-keygen -l -f build/control/known_hosts-stage1` with the panel/journal key.
+Record transfer bytes, seconds, rate and unpack time separately.
 
-**Then the human uses the keyboard on the M5:** Super+Return opens a terminal on the M5's screen; type a line
-there (not a password, nothing personal) and confirm on the video that it appears. That is the attempt's
-headline result.
+For this first native two-stage attempt, send once. On refusal, corruption,
+unpack failure, stalled progress for 60 seconds, or no switch within 10 minutes
+of starting the sender: capture the reason and end the attempt; no automatic
+retry, alternate image, driver unload, fallback polling, or launcher edit.
+Do not reproduce the VM's intentional failure tests on hardware.
 
-**Stop rules for the keyboard part:** no module is unloaded (unloading the helper stops the MTP CPU); no step
-is forced past a `FAIL` except step 4's one retry; a hang, reset or lost link ends the attempt (power-cycle).
-The trackpad is not part of this attempt: if the MTP announces it, its interface fails to open for want of
-firmware, which is expected.
+## After the switch: desktop, link and image fixes
 
-## What to record (sanitized, local in `build/native-intake/`)
+The reader may end when stage one's gadget disappears. Once it has exited,
+start it again on interface 0 with a **new** output file:
 
-As attempt 25 (upload time, controller exit, the video's times, `ioreg` without serial strings, the reader's
-byte count, `usb-pipe.log`, `m5-clock.py`'s lines), plus: the launcher's `Hardware DT PASS` line; the MTP
-DART's probe lines from the journal; `ilinux-keyboard`'s full output, including any retry; whether typing
-appeared on the M5's screen; the uncabled ports' sshd states; the journal's size per minute (attempt 25's
-noise sources should be gone). Not recorded: the m1n1 serial-number line, anything typed beyond the test
-word, the Claude sign-in link, code or account.
+```sh
+build/control/bulk-log-reader \
+  --out build/native-intake/attempt27/stage2-journal.txt --wait 120 --seconds 1800
+```
 
-## What the attempt tests, in order
+The journal retains stage one's records; stage two prints its new host key.
+If it keeps saying `STILL IN STAGE ONE` after a minute, record the failed switch
+and stop. Allow up to 180 seconds after `switching` for desktop/link observation.
+A missing second USB link is a recorded failure of that part: film any desktop
+and keyboard behavior without relaunching or changing drivers.
 
-1. m1n1's preparation of the MTP nodes (the launcher's prepared-DT check, go/no-go 1).
-2. The MTP DART's reset at boot, the only new hardware write before the SSH session (go/no-go 2), and that
-   attempt 25's desktop and link still come up.
-3. Attempt 25's four fixes: no browser from SSH, no wkd-sync noise, silent uncabled ports, no component
-   updates through the relay.
-4. Over SSH, one module at a time: the MTP's RTKit wake (1), the DockChannel FIFO (2), hid-apple (3), the
-   ring transport's handshake and the keyboard interface (4), the input device (5), and typing on the M5 (6).
+If the link returns, run the established local proxy in a separate terminal,
+then the clock helper and an `m5o` session, sequentially:
+
+```sh
+python3 -I tools/m1n1-client/connect-proxy.py --log build/native-intake/attempt27/proxy.log
+# Another terminal, after the proxy is listening:
+python3 -I tools/m1n1-client/m5-clock.py
+ssh-keygen -l -f build/control/known_hosts-omarchy
+ssh -F tools/m1n1-client/m5-ssh-config m5o
+```
+
+Compare stage two's key with its journal. In the M5 session, collect:
+
+```sh
+uname -r
+cat /sys/devices/system/cpu/online
+findmnt -n -o SOURCE,FSTYPE,SIZE,USED /
+systemctl show -p SoftRebootsCount
+cat /usr/share/ilinux/build-info.txt
+systemctl --failed --no-pager
+systemctl --user --failed --no-pager
+systemctl status ilinux-keyboard.service --no-pager
+sudo ilinux-keyboard --status
+journalctl -b -u ilinux-keyboard.service --no-pager
+```
+
+Expect one CPU (`0`), `ilinux-stage2-root tmpfs`, `SoftRebootsCount=1`, build
+`2026-10-20T02:57:20Z`, kernel boot042, and an active/exited successful keyboard
+unit. Known unresolved VM failures are hardware provisioning, UFW and the user
+document portal; record any difference, do not dismiss other errors as known.
+
+Read the effective shell layout from that same user session:
+
+```sh
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+OMARCHY_SHELL_IPC_TIMEOUT=20s timeout 25 omarchy-shell shell listShellConfig
+```
+
+Require valid JSON with `version: 1` and a nonempty `bar.layout`, with no
+`omarchy.weather` item in any section. A timeout or empty response is inconclusive,
+not evidence that weather is disabled. Keep the output local; publish the result.
+
+If automatic keyboard startup succeeded with all four modules bound, run
+`sudo ilinux-keyboard --no-typing` once to verify the rerun path. If it failed,
+preserve the journal; do not manually repair it in this attempt. Ask the human
+to open a terminal, type `omarchy` then Enter, and report missing/repeated keys
+and visible response delay. Inspect available input devices; do not assume
+trackpad support. No long key capture or sensitive typing.
+
+After closing the interactive SSH session, the existing read-only probes can
+capture the session's effective options and CPU/rendering baseline:
+
+```sh
+ssh -F tools/m1n1-client/m5-ssh-config m5o 'python3 -I -' \
+  < tools/m1n1-client/m5-probes/inspect_desktop.py \
+  > build/native-intake/attempt27/desktop-before.txt
+ssh -F tools/m1n1-client/m5-ssh-config m5o 'python3 -I -' \
+  < tools/m1n1-client/m5-probes/frame_probe.py \
+  > build/native-intake/attempt27/frame.txt
+```
+
+With the human, open Super+K twice, then the root menu with Super+Space, then
+close it. Repeat `inspect_desktop.py` to `desktop-after.txt` and check for
+leftover `omarchy-menu-select` pollers. Record the effective repeat delay 1000,
+weather configuration/request absence during the observed window, and SSH
+journal behavior. Do not run the old A/B input-injection scripts, stop unrelated
+processes, change render settings, install packages or start sustained benchmarks.
+No frequency is claimed from requested-state fields. An agent login is possible
+but signing in or changing the installation is separate from this test.
+
+## End and report
+
+Observe for up to ten minutes after reaching the desktop; end earlier if the
+20-minute overall limit after the kernel handoff is reached. Stop on a reset, panic, fault, unexplained
+loss of keyboard/link, or abnormal thermal behavior. A reset or M1 panic ends
+the attempt with no relaunch. Stop this run's reader/proxy/session, then the
+human returns the M5 to Macintosh HD using the established power-off/startup
+options procedure. Confirm original Full, lab Permissive and original default
+through the existing read-only checks after return; no policy changes.
+
+Report exact Git/package/image pins, upload and transfer timings, verification
+and unpack results, disappearance/re-enumeration times, desktop first frame,
+automatic keyboard/rerun/typing results, repeat/menu/weather findings, failed
+units, faults and return. Keep raw journals, videos, host identifiers and all
+account data local in ignored `build/`. Publish only sanitized observations;
+unobserved checks remain NOT RUN. This measures delivery and image behavior,
+not GPU acceleration, all-core performance or macOS-level efficiency.

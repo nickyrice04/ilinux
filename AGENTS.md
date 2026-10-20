@@ -99,6 +99,34 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Active continuation — 2026-10-19
+
+Current baseline is `75411ec`, attempt 26 on boot042: native Omarchy, USB/SSH
+and keyboard, with the reported 63-minute run. Older "latest" paragraphs below
+are historical. Attempt 27 is two-stage delivery plus image fixes; storage is
+attempt 28 behind its separate reviewed launcher change. CPU-frequency and SMP
+work are offline and must not be bundled into attempt 27.
+
+The interrupted side-session work is complete; the user approved committing
+and pushing the reviewed handoff and separate offline CPU/SMP work on 2026-10-20: job045 image
+rebuild and VM desktop/link PASS (root `5eaa2fdb…6d345`); job051 frequency
+module compile, 16 sanitizer cases, six regression mutations, 12 Python methods
+and narrow DT/schema checks PASS; recovered SMP findings written. Exact results
+and limits: `native/boot/subagent-review-2026-10-19.md`; ordering:
+`native/boot/resume-plan-2026-10-19.md`. CPU speed state remains unmeasured;
+rendering latency is measured. No boot/settings/hardware changes.
+Job049 is now paired/retested: stage one `84c01f53…06ed3` with that root.
+Both full rejection/switch and fresh normal-path VM runs PASS; the handoff and
+both public pin records are prepared. Evidence and precise limits:
+`native/boot/attempt27-two-stage-validation.md`; M1 steps:
+`tools/m1n1-client/stage-b-instructions.md`. Both private images are staged in
+ignored `build/attempt27-transfer/`. Commit/publication review is approved.
+Next: independent M1 offline intake of the published handoff and both private
+images; then its fresh restart, cable re-seat and unlocked/open-lid procedure,
+fresh read-only M5 policy/default confirmation and the human's start.
+Native attempt 27/live checks NOT RUN; keep the M5 in macOS until readiness.
+
+
 See `progress.md`. As of 2026-10-14:
 
 Latest M5 result: Boot034 / attempt 15 prepared after reviewing M1 attempt 14 (`a4269bb`) and the

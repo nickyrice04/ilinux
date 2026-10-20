@@ -132,7 +132,7 @@ install -m 0600 "$W/keys/wrong-key" "$R/usr/local/lib/ilinux-test/wrong-key"
 install -m 0644 "$W/keys/test-key.pub" "$R/usr/local/lib/ilinux-test/test-key.pub"
 install -m 0644 "$OUT/build/cert.pem" "$R/usr/local/lib/ilinux-test/cert.pem"
 install -m 0600 "$OUT/build/key.pem" "$R/usr/local/lib/ilinux-test/key.pem"
-for u in root omarchy; do install -D -m 0600 "$W/keys/test-key.pub" "$R/etc/ssh/authorized_keys.d/$u"; done
+for u in root omarchy; do install -D -m 0644 "$W/keys/test-key.pub" "$R/etc/ssh/authorized_keys.d/$u"; done   # as job 039 installs the operator's keys
 install -m 0600 "$OUT/build/host-key" "$R/etc/ssh/ssh_host_ed25519_key"
 install -m 0644 "$OUT/build/host-key.pub" "$R/etc/ssh/ssh_host_ed25519_key.pub"
 grep -q '^Include /etc/ssh/sshd_config.d/\*.conf' "$R/etc/ssh/sshd_config" ||
@@ -164,7 +164,7 @@ cat "$OUT/build/sshd-effective.txt"
   chroot "$R" python3 -I /usr/local/lib/ilinux-test/connect-proxy.py --help > /dev/null && echo "connect-proxy.py --help: ok"
   chroot "$R" id omarchy
   chroot "$R" getent passwd root omarchy sshd
-  ls -ld "$R/usr/share/empty.sshd" "$R/etc/ssh/sshd_config" "$R/usr/lib/systemd/systemd"; } > "$OUT/build/root-facts.txt" 2>&1 || true
+  ls -ld "$R/usr/share/empty.sshd" "$R/etc/ssh/sshd_config" "$R/usr/lib/systemd/systemd" "$R"/etc/ssh/authorized_keys.d/*; } > "$OUT/build/root-facts.txt" 2>&1 || true
 cat "$OUT/build/root-facts.txt"
 chroot_down "$R"
 # What the boot never reads (as prune.sh does for the RAM root): the image is unpacked into the

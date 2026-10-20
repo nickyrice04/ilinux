@@ -19,8 +19,11 @@
 # SSH and from the desktop session, as Omarchy's own --active sees it; else the clock rule's limits), the
 # desktop session's proxy environment, then, with the grant, Omarchy's --disable on this boot's copy in RAM
 # (the shipped image file is not touched) and the clock step again through the helper's own rule, and
-# last that SSH offers public keys only. Run by ilinux045-probe once the desktop has settled; "[link]"
-# lines, console markers (ILINUX045-LINK), exit 0 on PASS.
+# attempt 26's findings (the attempt-27 image: Hyprland's repeat delay, the menu's replaced requests ending their
+# omarchy-menu-select pollers, ilinux-keyboard.service skipped here and its command failing cleanly as a unit,
+# sshd's grace time and session ends, the weather widget off), and last that SSH offers public keys only (a
+# refused handshake holds the pipe for the grace time). Run by ilinux045-probe once the desktop has settled;
+# "[link]" lines, console markers (ILINUX045-LINK), exit 0 on PASS.
 set -u
 T=/usr/local/lib/ilinux045-link
 U=omarchy
@@ -306,10 +309,19 @@ if [ -e /etc/profile.d/ilinux-ssh-browser.sh ]; then
     case "$(systemctl show -p ExecStartPre --value "$sunit")" in *wait-usb-host*) ;; *) fail "$sunit has no wait-usb-host ExecStartPre" ;; esac
     [ "$(systemctl show -p TimeoutStartUSec --value "$sunit")" = infinity ] || fail "$sunit has a start timeout"
     case " $(systemctl show -p SuccessExitStatus --value "$sunit") " in *" 3 "*) ;; *) fail "status 3 is not a success for $sunit" ;; esac
+    # attempt 26's finding 5 (attempt 27 image): the grace time 180 s and a session's end (255) a clean end
+    if [ -e /etc/ssh/sshd_config.d/24-ilinux-login-grace.conf ]; then
+        lg=$(sshd -T -C user=omarchy,host=m5,addr=127.0.0.1 2> /dev/null | awk 'tolower($1) == "logingracetime" {print $2}')
+        [ "$lg" = 180 ] || fail "sshd's effective LoginGraceTime is '$lg', not 180 (24-ilinux-login-grace.conf before 25-ilinux-usb-pipe.conf)"
+        case " $(systemctl show -p SuccessExitStatus --value "$sunit") " in *" 255 "*) ;; *) fail "status 255 is not a success for $sunit" ;; esac
+        grace="LoginGraceTime $lg, status 255 a success"
+    else
+        grace="LoginGraceTime $(sshd -T -C user=omarchy,host=m5,addr=127.0.0.1 2> /dev/null | awk 'tolower($1) == "logingracetime" {print $2}')"
+    fi
     # 4. Chromium's component updates are off by managed policy.
     python3 -I -c 'import json, sys; assert json.load(open(sys.argv[1])) == {"ComponentUpdatesEnabled": False}' \
         /etc/chromium/policies/managed/ilinux-component-updates.json || fail "the Chromium policy file is not the expected one"
-    say "attempt 25 fixes 2-4: wkd-sync masked and silent through the clock steps; $sunit: ExecStartPre wait-usb-host, no start timeout, status 3 a success; Chromium policy ComponentUpdatesEnabled false"
+    say "attempt 25 fixes 2-4: wkd-sync masked and silent through the clock steps; $sunit: ExecStartPre wait-usb-host, no start timeout, status 3 a success, $grace; Chromium policy ComponentUpdatesEnabled false"
 fi
 
 # ---- boot042's keyboard modules (MODULES): in place, not loaded at boot, loadable by name; ilinux-keyboard stops
@@ -341,6 +353,127 @@ if [ -r "$KM" ]; then
     say "keyboard modules load on this Image by name and unload ($loadedmods), with no kernel complaint and nothing to bind here; --status: $(echo "$out" | grep -c '^module ') modules listed"
 fi
 
+# ---- attempt 26's findings (attempt 27 image) ---------------------------------------------------------------------
+# The session's environment for Omarchy's own IPC clients and Hyprland's socket (the probe's way: hyprctl gives up
+# after 5 s, Hyprland under TCG answers between frames that take seconds). OMARCHY_SHELL_IPC_TIMEOUT is
+# omarchy-shell's own knob (default 2 s), raised for TCG.
+HRUN=/run/user/1000
+hsig() { local d; d=$(ls -td "$HRUN"/hypr/*/ 2> /dev/null | head -1); d=${d%/}; echo "${d##*/}"; }
+hwl() { local w; w=$(ls -t "$HRUN"/wayland-[0-9]* 2> /dev/null | grep -v '\.lock$' | head -1); echo "${w##*/}"; }
+as_session() {
+    setpriv --reuid=1000 --regid=1000 --init-groups env -i HOME=/home/$U USER=$U LOGNAME=$U XDG_RUNTIME_DIR=$HRUN \
+        DBUS_SESSION_BUS_ADDRESS=unix:path=$HRUN/bus WAYLAND_DISPLAY="$(hwl)" HYPRLAND_INSTANCE_SIGNATURE="$(hsig)" \
+        OMARCHY_PATH=/usr/share/omarchy OMARCHY_SHELL_IPC_TIMEOUT=60s LANG=en_US.UTF-8 \
+        PATH=/home/$U/.local/bin:/usr/local/bin:/usr/bin "$@"
+}
+# hypr [-j] REQUEST: what hyprctl [-j] REQUEST asks, over Hyprland's request socket, up to 120 s
+hypr() {
+    local f=
+    while [ "${1:-}" = -j ]; do f=j; shift; done
+    printf '%s/%s' "$f" "$*" | as_session timeout 150 socat -t 120 - "UNIX-CONNECT:$HRUN/hypr/$(hsig)/.socket.sock" 2> /dev/null
+}
+hypr_int() {   # hypr_int OPTION: the "int" of hyprctl -j getoption OPTION
+    hypr -j "getoption $1" | python3 -I -c 'import json, sys; print(json.loads(sys.stdin.read())["int"])' 2> /dev/null
+}
+# 1. The key-repeat delay, as Hyprland runs with it (the toggle file is loaded after Omarchy's and the user's input.lua).
+if [ -e /home/$U/.local/state/omarchy/toggles/hypr/ilinux-repeat-delay.lua ]; then
+    rd=$(hypr_int input:repeat_delay); rr=$(hypr_int input:repeat_rate)
+    [ "$rd" = 1000 ] || fail "Hyprland's input:repeat_delay is '$rd', not 1000"
+    [ "$rr" = 40 ] || fail "Hyprland's input:repeat_rate is '$rr', not Omarchy's 40"
+    say "attempt 26 fix 1: Hyprland runs with input:repeat_delay $rd ms (Omarchy ships 250) and repeat_rate $rr (Omarchy's), from ~/.local/state/omarchy/toggles/hypr/ilinux-repeat-delay.lua"
+fi
+# 2. The menu's replaced requests: a second omarchy-menu-select over a showing one, then the root menu over the
+#    second. Each poller must end with no selection (exit 1) once its request is replaced; attempt 26's never did.
+MQML=/usr/share/omarchy/shell/plugins/menu/Menu.qml
+if grep -q '^  function abandonRequest() {$' "$MQML" 2> /dev/null; then
+    [ "$(grep -c '^    root.abandonRequest()$' "$MQML")" = 2 ] || fail "Menu.qml has $(grep -c 'root.abandonRequest()' "$MQML") abandonRequest calls, not 2"
+    [ "$(pgrep -u 1000 -f -c 'omarchy-menu-select' || true)" = 0 ] || fail "omarchy-menu-select processes exist before the test"
+    menu_layer() { hypr -j layers | grep -q '"namespace": "omarchy-menu"'; }
+    as_session omarchy-menu-select 'iLinux test 1' alpha beta gamma -- --width 400 > /tmp/menu-select-1.out 2> /tmp/menu-select-1.err &
+    p1=$!
+    for _ in $(seq 36); do kill -0 "$p1" 2> /dev/null || break; menu_layer && break; sleep 5; done
+    kill -0 "$p1" 2> /dev/null || { wait "$p1"; fail "the first omarchy-menu-select ended (exit $?) before anything replaced it: $(tail -2 /tmp/menu-select-1.err | tr '\n' ' ')"; }
+    menu_layer || { kill "$p1" 2> /dev/null; fail "the first omarchy-menu-select did not show the menu within 180 s: $(tail -2 /tmp/menu-select-1.err | tr '\n' ' ')"; }
+    t2=$(up)
+    as_session omarchy-menu-select 'iLinux test 2' one two -- --width 400 > /tmp/menu-select-2.out 2> /tmp/menu-select-2.err &
+    p2=$!
+    for _ in $(seq 120); do kill -0 "$p1" 2> /dev/null || break; sleep 1; done
+    if kill -0 "$p1" 2> /dev/null; then kill "$p1" "$p2" 2> /dev/null; fail "the first omarchy-menu-select still waits 120 s after a second request replaced it (attempt 26's leak)"; fi
+    wait "$p1"; rc1=$?
+    d1=$(since "$t2")
+    [ "$rc1" = 1 ] && [ ! -s /tmp/menu-select-1.out ] || { kill "$p2" 2> /dev/null; fail "the replaced select exited $rc1 with output '$(cat /tmp/menu-select-1.out)' (expected 1 and nothing): $(tail -2 /tmp/menu-select-1.err | tr '\n' ' ')"; }
+    for _ in $(seq 36); do kill -0 "$p2" 2> /dev/null || break; menu_layer && break; sleep 5; done
+    kill -0 "$p2" 2> /dev/null || { wait "$p2"; fail "the second omarchy-menu-select ended (exit $?) before anything replaced it: $(tail -2 /tmp/menu-select-2.err | tr '\n' ' ')"; }
+    t3=$(up)
+    as_session timeout 150 omarchy-menu summon root > /tmp/menu-root.out 2>&1 || { kill "$p2" 2> /dev/null; fail "omarchy-menu summon root failed: $(tr '\n' ' ' < /tmp/menu-root.out | cut -c1-120)"; }
+    for _ in $(seq 120); do kill -0 "$p2" 2> /dev/null || break; sleep 1; done
+    if kill -0 "$p2" 2> /dev/null; then kill "$p2" 2> /dev/null; fail "the second omarchy-menu-select still waits 120 s after the root menu replaced it"; fi
+    wait "$p2"; rc2=$?
+    d2=$(since "$t3")
+    [ "$rc2" = 1 ] && [ ! -s /tmp/menu-select-2.out ] || fail "the select the root menu replaced exited $rc2 with output '$(cat /tmp/menu-select-2.out)' (expected 1 and nothing)"
+    as_session timeout 150 omarchy-menu close > /dev/null 2>&1 || true
+    sleep 5
+    left=$(pgrep -u 1000 -f -c 'omarchy-menu-select' || true)
+    [ "$left" = 0 ] || fail "$left omarchy-menu-select processes are left after the menu test"
+    say "attempt 26 fix 2: a second omarchy-menu-select ended the first (exit $rc1, no selection) $d1 s after it was sent, the root menu ended the second (exit $rc2) after $d2 s; no omarchy-menu-select left (Menu.qml: abandonRequest in openDmenu and openExistingMenu)"
+fi
+# 4. ilinux-keyboard.service: enabled; skipped here (no MTP node in this device tree) with the reason in the journal;
+#    its command, run as a unit of its own under the same identifier, fails at step 0, says why in the journal,
+#    loads nothing, and the system stays up.
+if [ -e /etc/systemd/system/ilinux-keyboard.service ]; then
+    [ "$(systemctl is-enabled ilinux-keyboard.service 2>&1)" = enabled ] || fail "ilinux-keyboard.service is not enabled: $(systemctl is-enabled ilinux-keyboard.service 2>&1)"
+    kact=$(systemctl show -p ActiveState --value ilinux-keyboard.service)
+    kcond=$(systemctl show -p ConditionResult --value ilinux-keyboard.service)
+    [ "$kact" = inactive ] && [ "$kcond" = no ] || fail "ilinux-keyboard.service: ActiveState $kact, ConditionResult $kcond (expected inactive and no: this device tree has no MTP node)"
+    systemctl is-failed -q ilinux-keyboard.service && fail "ilinux-keyboard.service is failed where it should be skipped"
+    kskip=$(journalctl -b -q --no-pager -o cat -u ilinux-keyboard.service 2> /dev/null | grep -i 'condition' | tail -1 | cut -c1-110)
+    kms2="apple_rtkit_helper apple_dockchannel hid_apple dockchannel_hid"
+    systemd-run --unit=ilinux045-keyboard-unit --wait --collect --quiet -p SyslogIdentifier=ilinux-keyboard \
+        /usr/local/bin/ilinux-keyboard --no-typing > /tmp/keyboard-unit.out 2>&1
+    krc=$?
+    kj=$(journalctl -b -q --no-pager -o cat -t ilinux-keyboard 2> /dev/null)
+    echo "$kj" | grep -q 'RESULT: FAIL at step 0: no /soc/mtp@294600000 in the device tree' ||
+        fail "the unit's failure and its reason are not in the journal under ilinux-keyboard: $(echo "$kj" | tail -3 | tr '\n' ' ' | cut -c1-200)"
+    journalctl -b -q --no-pager -o cat -u ilinux045-keyboard-unit.service 2> /dev/null | grep -q 'status=1/FAILURE' ||
+        fail "the unit's run did not end with exit status 1: $(journalctl -b -q --no-pager -o cat -u ilinux045-keyboard-unit.service | tail -3 | tr '\n' ' ')"
+    for m in $kms2; do [ ! -d "/sys/module/$m" ] || fail "the unit's run loaded $m although step 0 failed"; done
+    systemctl is-system-running > /tmp/running.txt 2>&1 || true   # degraded is this root's normal state (ufw, provision-hardware)
+    say "attempt 26 fix 4: ilinux-keyboard.service enabled, $kact, condition unmet here ($kcond; journal: ${kskip:-no condition line}); its command as a unit: systemd-run exit $krc, status 1, journal under ilinux-keyboard: $(echo "$kj" | grep '^RESULT' | tail -1 | cut -c1-90); nothing loaded; the system is $(cat /tmp/running.txt)"
+fi
+# 6. The weather widget is off: not in the bar layout the shell runs with, and no fetch of it this boot.
+if [ -e /home/$U/.config/omarchy/shell.json ]; then
+    nw=$(python3 -I -c 'import json, sys
+c = json.load(open(sys.argv[1])); ids = [e["id"] for s in c["bar"]["layout"].values() for e in s]
+assert "omarchy.weather" not in ids, ids; assert c["version"] == 1; print(len(ids))' /home/$U/.config/omarchy/shell.json 2>&1) ||
+        fail "the user's shell.json still carries omarchy.weather, or is not version 1: $nw"
+    effnote="runtime shell configuration NOT VERIFIED"
+    if as_session timeout 150 omarchy-shell shell listShellConfig > /tmp/weather-effective.json 2> /tmp/weather-effective.err; then
+        python3 -I -c 'import json, sys
+try:
+    c = json.load(open(sys.argv[1])); assert c["version"] == 1
+    layout = c["bar"]["layout"]; assert isinstance(layout, dict) and layout
+    ids = [e["id"] for entries in layout.values() for e in entries]
+except (ValueError, KeyError, TypeError, AssertionError):
+    sys.exit(2)
+sys.exit(1 if "omarchy.weather" in ids else 0)' /tmp/weather-effective.json
+        erc=$?
+        [ "$erc" != 1 ] || fail "the running shell's parsed effective layout still has omarchy.weather"
+        if [ "$erc" = 0 ]; then
+            effnote="runtime shell configuration verified: parsed version-1 layout has no weather"
+        else
+            effnote="runtime shell configuration NOT VERIFIED: IPC output is not expected JSON"
+        fi
+    else
+        effnote="runtime shell configuration NOT VERIFIED: IPC failed or timed out"
+    fi
+    pgrep -u 1000 -f 'wttr\.in|open-meteo' > /dev/null && fail "a weather fetch is running"
+    [ -f /tmp/proxy.log ] || fail "proxy request log is missing"
+    weather_requests=$(grep -c -E 'wttr\.in|open-meteo' /tmp/proxy.log || true)
+    [ "$weather_requests" = 0 ] || fail "$weather_requests weather requests observed in the proxy log"
+    say "attempt 26 fix 6: installed configuration has $nw bar widgets and no omarchy.weather; $effnote; no running weather fetch or matching proxy request observed in this test window"
+
+fi
+
 # ---- the desktop session has the proxy environment ----------------------------------------------------------
 hpid=$(pgrep -u "$U" -x Hyprland | head -1)
 [ -n "$hpid" ] || fail "no Hyprland process"
@@ -369,13 +502,18 @@ if timeout 300 ssh -F /tmp/link-ssh-config -o BatchMode=yes -o PubkeyAuthenticat
     fail "a login without a key succeeded"
 fi
 grep -q 'Permission denied (publickey)' /tmp/ssh-nokey.err || fail "the refusal does not name publickey alone: $(tail -2 /tmp/ssh-nokey.err | tr '\n' ' ')"
+# sshd cannot see the refused client go away (no hang-up on the pipe), so the port is held until its login grace
+# time ends: 45 s on job 039's configuration, 180 s with 24-ilinux-login-grace.conf. Tries until then plus margin.
 t1=$(up)
-for i in 1 2 3 4 5 6 7 8 9 10; do
+i=0
+while :; do
+    i=$((i + 1))
     m5 recover 'echo RECOVERED' && [ "$out" = RECOVERED ] && break
+    [ "$(since "$t1" | cut -d. -f1)" -lt 420 ] || break
     sleep 10
 done
-[ "$out" = RECOVERED ] || fail "no session after the refused handshake"
-say "key-only: a login without a key is refused ($(grep -o 'Permission denied ([a-z,-]*)' /tmp/ssh-nokey.err | tail -1)); the next session worked after $(since "$t1") s (try $i)"
+[ "$out" = RECOVERED ] || fail "no session within $(since "$t1") s after the refused handshake"
+say "key-only: a login without a key is refused ($(grep -o 'Permission denied ([a-z,-]*)' /tmp/ssh-nokey.err | tail -1)); the next session worked after $(since "$t1") s (try $i; the pipe is held until sshd's login grace time ends)"
 
 # attempt 25 fix 3, the exit status: sshd's login grace time ends with status 3, now a clean end (no
 # "Failed with result" after it); the refused handshake above and the banner syncs cause such ends
@@ -384,7 +522,13 @@ if [ -e /etc/systemd/system/ilinux-sshd-tty@.service.d/20-ilinux-wait-host.conf 
     n3=$(echo "$g" | grep -A1 'status=3/' | grep -c "Failed with result" || true)
     nd=$(echo "$g" | grep -c 'Deactivated successfully' || true)
     [ "$n3" = 0 ] || fail "a login grace exit (status 3) still ends $sunit as failed ($n3 times)"
-    say "attempt 25 fix 3: $sunit: $nd clean ends (status 3 counted a success), no failed result after a grace exit; $(echo "$g" | grep -c 'status=255/') session ends with status 255 (sshd's ordinary disconnect, unchanged)"
+    nfail=$(echo "$g" | grep -c 'Failed with result' || true)
+    if [ -e /etc/systemd/system/ilinux-sshd-tty@.service.d/30-ilinux-session-end.conf ]; then
+        [ "$nfail" = 0 ] || fail "$sunit ended as failed $nfail times this boot (a session's end, status 255, should be a clean end now): $(echo "$g" | grep -B1 'Failed with result' | head -4 | tr '\n' ' ')"
+        say "attempt 25 fix 3 and attempt 26 fix 5: $sunit: $nd clean ends, 0 failed results this boot (status 3, the grace exit, and 255, a session's end, are successes); $(echo "$g" | grep -c 'Accepted publickey for omarchy') sessions"
+    else
+        say "attempt 25 fix 3: $sunit: $nd clean ends (status 3 counted a success), no failed result after a grace exit; $(echo "$g" | grep -c 'status=255/') session ends with status 255 (sshd's ordinary disconnect, unchanged)"
+    fi
 fi
 
 mine=$(systemctl --failed --no-legend --plain | awk '{print $1}' | grep '^ilinux-' | tr '\n' ' ')

@@ -1,0 +1,21 @@
+# Two-stage boot, stage one (VM job 049): the M5's panel shows the link, the stage-two pin, the transfer
+# and the outcome of the last attempt (usb-gadget, ilinux-stage2). tty1 on the framebuffer console;
+# getty@tty1 is masked, as in job 039's RAM root.
+[Unit]
+Description=Two-stage boot: stage one's status on the panel (tty1)
+After=systemd-user-sessions.service
+Conflicts=getty@tty1.service
+
+[Service]
+ExecStart=/usr/local/lib/ilinux/stage1-screen
+StandardInput=null
+StandardOutput=tty
+StandardError=journal
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

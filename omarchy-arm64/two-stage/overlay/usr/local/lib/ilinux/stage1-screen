@@ -1,0 +1,186 @@
+#!/bin/bash
+# stage1-screen: what stage one of the two-stage boot shows on the M5's panel (tty1 on the framebuffer
+# console; the M5 has no input, so this screen is the human's only view of the M5 until stage two). Run
+# by ilinux-stage1-screen.service, redrawn once a second: the time since kernel start, the USB link per
+# controller (gadget, cable, sshd on the byte pipe), this boot's SSH host key, the stage-two pin, the
+# state of the transfer (waiting, receiving with progress and rate, checking, unpacking, switching) and
+# the outcome of the last attempt, in red when it failed, with the reason. Reads only: the files
+# ilinux-stage2 writes under /run/ilinux-stage2/, configfs, sysfs and /proc. Integer arithmetic and
+# helpers that set variables instead of forking subshells; one short process per second (stat or df)
+# at most, so the transfer keeps the one CPU.
+set -u
+export LC_ALL=C
+S=/run/ilinux-stage2
+PIN=/etc/ilinux/stage2-pin
+IN=$S/incoming/stage2.cpio.zst
+NEXT=/run/nextroot
+CFG=/sys/kernel/config/usb_gadget
+CG='/sys/fs/cgroup/system.slice/system-ilinux\x2dsshd\x2dtty.slice'
+
+# A 16x32 font (216 x 69 characters on the 3456x2234 panel); the kernel has only 8x16 built in.
+setfont latarcyrheb-sun32 2> /dev/null || setfont solar24x32 2> /dev/null || true
+setterm --blank 0 --powersave off --powerdown 0 2> /dev/null || true
+printf '\e[?25l\e[2J'
+
+R=$'\e[0m' B=$'\e[1m' DIM=$'\e[2m'
+RED=$'\e[1;97;41m' GRN=$'\e[1;30;42m' YEL=$'\e[1;30;43m' CYN=$'\e[1;30;46m'
+# Helpers set a variable (no subshell): N (1,234,567), CS (uptime text -> centiseconds),
+# CLK (centiseconds -> h:mm:ss), D1 (tenths -> x.y)
+commas() { local n=$1 s=; while [ ${#n} -gt 3 ]; do s=",${n: -3}$s"; n=${n:0:${#n}-3}; done; N=$n$s; }
+cs() { local v=$1 i d; case $v in *.*) ;; *) v=$v.00 ;; esac; i=${v%.*} d=${v#*.}00; CS=$((10#$i * 100 + 10#${d:0:2})); }
+clock() { local t=$(( $1 / 100 )); printf -v CLK '%d:%02d:%02d' $((t / 3600)) $((t % 3600 / 60)) $((t % 60)); }
+dec1() { printf -v D1 '%d.%d' $(( $1 / 10 )) $(( $1 % 10 )); }
+frame=
+line() { frame+="$*"$'\e[K\n'; }
+
+PIN_SIZE= PIN_SHA= PIN_UNPACKED= PIN_SOURCE=
+if [ -r "$PIN" ]; then
+    while IFS='=' read -r k v; do
+        case $k in size) PIN_SIZE=$v ;; sha256) PIN_SHA=$v ;; unpacked_bytes_16k) PIN_UNPACKED=$v ;; source) PIN_SOURCE=$v ;; esac
+    done < "$PIN"
+fi
+hostkey=
+prev_bytes= prev_t= rate=0   # rate in tenths of MB/s, smoothed
+
+while :; do
+    read -r up _ < /proc/uptime
+    cs "$up"; now=$CS
+    frame=
+    clock "$now"
+    line "${CYN} iLinux two-stage boot: stage one ${R}   kernel time ${B}${CLK}${R}"
+    line ""
+    # The USB link: one gadget per device-mode controller (job 039's usb-gadget.sh)
+    any=
+    for g in "$CFG"/ilinux-*; do
+        [ -d "$g/functions/gser.ssh" ] || continue
+        any=1
+        udc=$(< "$g/UDC")
+        product=$(< "$g/strings/0x409/product")
+        cable=unbound
+        [ -n "$udc" ] && [ -r "/sys/class/udc/$udc/state" ] && cable=$(< "/sys/class/udc/$udc/state")
+        n=$(< "$g/functions/gser.ssh/port_num")
+        sshd="sshd not running on ttyGS$n"
+        procs=
+        read -r procs < "$CG/ilinux-sshd-tty@ttyGS$n.service/cgroup.procs" 2> /dev/null   # cgroupfs sizes read 0
+        [ -n "$procs" ] && sshd="sshd waiting on ttyGS$n"
+        c=$DIM
+        [ "$cable" = configured ] && c=$GRN
+        line "  USB   ${product##*, }  ${udc:-no UDC}: ${c} ${cable} ${R}  $sshd"
+    done
+    [ -n "$any" ] || line "  USB   no gadget yet (waiting for a device-mode controller)"
+    if [ -z "$hostkey" ] && [ -s /etc/ssh/ssh_host_ed25519_key.pub ]; then
+        hostkey=$(ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub 2> /dev/null)
+        hostkey=${hostkey#* }
+        hostkey=${hostkey%% *}
+    fi
+    line "  SSH   host key of this boot: ${hostkey:-(not made yet)}"
+    if [ -n "$PIN_SIZE" ]; then
+        commas "$PIN_SIZE"
+        line "  PIN   stage two: $N bytes, SHA-256 ${PIN_SHA:0:16}...${PIN_SHA: -8}"
+        line "        ${DIM}${PIN_SOURCE:0:190}${R}"
+    else
+        line "  ${RED} PIN   none: this stage one cannot accept a stage two ${R}"
+    fi
+    avail=0
+    while read -r k v _; do [ "$k" = MemAvailable: ] && { avail=$v; break; }; done < /proc/meminfo
+    dec1 $(( avail * 10 / 1048576 ))
+    line "  RAM   $D1 GiB available"
+    line ""
+
+    phase=waiting detail="waiting for stage two from the M1" since=$up pid=
+    if [ -r "$S/state" ]; then
+        while IFS='=' read -r k v; do
+            case $k in phase) phase=$v ;; detail) detail=$v ;; since) since=$v ;; pid) pid=$v ;; esac
+        done < "$S/state"
+    fi
+    # A receiver whose session was cut while it read leaves its state behind: say so.
+    case $phase in receiving|verifying)
+        [ -n "$pid" ] && [ -d "/proc/$pid" ] || { phase=waiting; detail="the last transfer stopped without a result"; } ;;
+    esac
+    case $since in ''|*[!0-9.]*) since=$up ;; esac
+    cs "$since"
+    el=$(( (now - CS) / 100 ))
+    case $phase in
+    receiving)
+        bytes=$(stat -c %s "$IN" 2> /dev/null || echo 0)
+        if [ -n "$prev_t" ] && [ "$now" -gt "$prev_t" ] && [ "$bytes" -ge "$prev_bytes" ]; then
+            x=$(( (bytes - prev_bytes) / 1000 / (now - prev_t) ))   # bytes per centisecond / 1000 = tenths of MB/s
+            if [ "$rate" -gt 0 ]; then rate=$(( (7 * rate + 3 * x) / 10 )); else rate=$x; fi
+        fi
+        prev_bytes=$bytes prev_t=$now
+        size=${PIN_SIZE:-1}
+        pm=$(( bytes * 1000 / size ))
+        left=
+        [ "$rate" -gt 0 ] && left=", about $(( (size - bytes) / (rate * 100000) )) s left"
+        commas "$bytes"; got=$N
+        commas "$size"
+        dec1 "$pm"; pct=$D1
+        dec1 "$rate"
+        line "  ${YEL} RECEIVING STAGE TWO ${R}  $got of $N bytes ($pct %), $D1 MB/s, ${el} s${left}"
+        fill=$(( pm * 150 / 1000 ))
+        printf -v bar '%*s' "$fill" ''
+        printf -v rest '%*s' $(( 150 - fill )) ''
+        line "  [${bar// /#}${rest// /.}]"
+        ;;
+    verifying|queued)
+        prev_t= rate=0
+        line "  ${YEL} CHECKING ${R}  $detail"
+        ;;
+    unpacking)
+        used=$(df -B1 --output=used "$NEXT" 2> /dev/null)
+        used=${used##*$'\n'}
+        used=${used// /}
+        commas "${PIN_UNPACKED:-0}"
+        line "  ${YEL} UNPACKING STAGE TWO INTO RAM ${R}  ${el} s, about $(( ${used:-0} * 100 / ${PIN_UNPACKED:-1} )) % of $N bytes"
+        ;;
+    switching)
+        line "  ${GRN} SWITCHING TO STAGE TWO ${R}  $detail"
+        line "  Omarchy's own boot follows (SDDM, Hyprland); the USB device disconnects and comes back."
+        # The soft-reboot takes seconds; still here a minute later means systemd fell back to stage one
+        # (it does when /run/nextroot is not an OS tree it will use) and this screen was started again.
+        if [ "$el" -ge 60 ]; then
+            line "  ${RED} STILL IN STAGE ONE ${el} s LATER: THE SOFT-REBOOT FELL BACK TO STAGE ONE ${R}"
+            line "  systemd's reason is in the journal (USB interface 0). Stage one stays up: send again from the M1."
+        fi
+        ;;
+    *)
+        prev_t= rate=0
+        line "  ${B}WAITING FOR STAGE TWO${R}  ${detail}"
+        line "  On the M1, from the repository root: python3 -I tools/m1n1-client/m5-stage2.py"
+        ;;
+    esac
+    line ""
+    lt=
+    [ -r "$S/last" ] && read -r lt lmsg < "$S/last"
+    case $lt in ''|*[!0-9.]*) lt= ;; esac
+    if [ -n "$lt" ]; then
+        cs "$lt"; clock "$CS"
+        case $lmsg in
+        FAILED:*|REFUSED:*)
+            line "  ${RED} LAST ATTEMPT (kernel time $CLK) ${R}"
+            msg=$lmsg
+            for _ in 1 2 3; do   # the reason, over up to three lines
+                [ -n "$msg" ] || break
+                line "  ${B}${msg:0:200}${R}"
+                msg=${msg:200}
+            done
+            line "  Stage one stays up: send again from the M1 when the cause is fixed."
+            ;;
+        *) line "  Last attempt (kernel time $CLK): ${lmsg:0:190}" ;;
+        esac
+        line ""
+    fi
+    line "  ${DIM}Events (journal tag ilinux-stage2, also on USB interface 0):${R}"
+    if [ -r "$S/log" ]; then
+        mapfile -t ev < "$S/log"
+        first=$(( ${#ev[@]} > 8 ? ${#ev[@]} - 8 : 0 ))
+        for e in "${ev[@]:first}"; do
+            case ${e%% *} in ''|*[!0-9.]*) continue ;; esac   # only "<uptime> <text>" lines
+            cs "${e%% *}"; clock "$CS"
+            e=${e#* }
+            line "    $CLK  ${e:0:195}"
+        done
+    fi
+    printf '\e[H%s\e[J' "$frame"
+    sleep 1
+done

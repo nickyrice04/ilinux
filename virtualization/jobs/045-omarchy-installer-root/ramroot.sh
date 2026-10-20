@@ -80,6 +80,11 @@ stage_ramroot() {
     install -m 0644 -o 1000 -g 1000 /dev/null "$C/home/omarchy/.local/state/omarchy/indicators/stay-awake"
     record changed "Omarchy's Stay Awake toggle on (~/.local/state/omarchy/indicators/stay-awake, what omarchy-toggle-idle stay-awake writes): with no input device the idle chain (screensaver, lock, display off) would leave the M5's panel dark with no way to wake it"
 
+    # Attempt 26's desktop findings (desktop.sh): the key-repeat delay, the menu plugin's replaced requests,
+    # the weather widget. Nothing of the link; recorded there.
+    . "$J/desktop.sh"
+    stage_desktop
+
     # The build options (link.sh): the USB link to the M1, Claude Code ready to start, and Omarchy's
     # passwordless-sudo grant for the user.
     if [ "$LINK" = 1 ] || [ "$CLAUDE" = 1 ] || [ "$NOPASSWD" = 1 ]; then . "$J/link.sh"; fi

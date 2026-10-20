@@ -111,6 +111,15 @@ stage_link() {
         { echo "the chromium binary does not read /etc/chromium/policies"; return 1; }
     record added "Chromium's component updates off (/etc/chromium/policies/managed/ilinux-component-updates.json: ComponentUpdatesEnabled false, Chromium's managed policy): in attempt 25 its updater fetched about 31 MB of components through the M1's relay, which carries the M5's whole web"
 
+    # Attempt 26's finding (native/boot/stage-b-2026-10-19-attempt26-result.md, "Return and next handoff", 5).
+    # 5. On the cabled port the idle sshd ran out its 45 s login grace time and was restarted every 47 s (four
+    #    journal lines each time, 67 times in 63 minutes), and every session's end (sshd's exit 255) was logged
+    #    as a failure of the unit. The grace time's two jobs on this pipe (recycling the idle sshd, freeing the
+    #    port after a stalled handshake) make 0 wrong and a long value costly; see the files.
+    fromlo etc/ssh/sshd_config.d/24-ilinux-login-grace.conf 0644
+    fromlo etc/systemd/system/ilinux-sshd-tty@.service.d/30-ilinux-session-end.conf 0644
+    record changed "sshd on the byte pipe: LoginGraceTime 180 (sshd_config.d/24-ilinux-login-grace.conf, read before job 039's 25-ilinux-usb-pipe.conf's 45, which stays as committed: sshd keeps the first value) and the ordinary end of a session, sshd's exit 255, a clean end of ilinux-sshd-tty@.service (ilinux-sshd-tty@.service.d/30-ilinux-session-end.conf: SuccessExitStatus=255, merged with deviation 27's 3): in attempt 26 the idle sshd on the cabled port ran out its grace time and was restarted every 47 s, four journal lines each time (67 times in 63 minutes), and each of the 22 session ends was logged as a failure. 180 s cuts the idle cycle to a quarter and still frees the port three minutes after a handshake that stalled (a refused key, a killed ssh; bulk endpoints carry no hang-up, so only the grace time ends such an sshd), where 0 would hold the only control channel until the next boot"
+
     # Checks on the files as the root's own tools read them. sshd needs a host key to test its
     # configuration, so a throwaway one in the chroot's /tmp (a tmpfs that goes with chroot_down).
     chroot_up "$C"
@@ -129,6 +138,8 @@ stage_link() {
         "$OUT/build/sshd-T-omarchy.txt" | tee "$OUT/build/sshd-effective.txt"
     grep -q -i -x 'passwordauthentication no' "$OUT/build/sshd-effective.txt"
     grep -q -i -E '^authorizedkeysfile .*/etc/ssh/authorized_keys\.d/(%u|omarchy)( |$)' "$OUT/build/sshd-effective.txt"
+    grep -q -i -x 'logingracetime 180' "$OUT/build/sshd-effective.txt" ||
+        { echo "sshd's effective LoginGraceTime is not 180 (24-ilinux-login-grace.conf must be read before 25-ilinux-usb-pipe.conf)"; return 1; }
     systemd-analyze --root="$C" verify "$C/etc/systemd/system/ilinux-usb-gadget@.service" \
         "$C/etc/systemd/system/ilinux-sshd-tty@.service" "$C/etc/systemd/system/ilinux-ssh-hostkey.service" \
         > "$OUT/build/link-units-verify.txt" 2>&1 || true
@@ -195,6 +206,14 @@ stage_modules() {
     chroot_down "$C"
     fromlo usr/local/bin/ilinux-keyboard 0755
     chroot "$C" bash -n /usr/local/bin/ilinux-keyboard
+    # Attempt 27: the same steps 0 to 5 at boot, as a unit, where the device tree has the MTP node (attempt 26's
+    # finding 4: the keyboard should work without the SSH session); a rerun over SSH passes on the loaded modules.
+    fromlo etc/systemd/system/ilinux-keyboard.service 0644
+    systemctl --root="$C" enable ilinux-keyboard.service > /dev/null 2>&1
+    [ -L "$C/etc/systemd/system/multi-user.target.wants/ilinux-keyboard.service" ] || { echo "ilinux-keyboard.service is not enabled"; return 1; }
+    grep -q -x 'ConditionPathIsDirectory=/sys/firmware/devicetree/base/soc/mtp@294600000' "$C/etc/systemd/system/ilinux-keyboard.service"
+    grep -q -x 'ExecStart=/usr/local/bin/ilinux-keyboard --no-typing' "$C/etc/systemd/system/ilinux-keyboard.service"
+    systemd-analyze --root="$C" verify "$C/etc/systemd/system/ilinux-keyboard.service" > "$OUT/build/keyboard-unit-verify.txt" 2>&1 || true
     install -d -m 0755 "$C/usr/share/ilinux"   # ramroot.sh writes build-info.txt here later
     { echo "kernel_release $krel"; echo "vermagic $vermagic"; echo "image_sha256 $IMAGE_SHA"
       sed 's/^/sha256 /' "$MODULES/keyboard-root/SHA256SUMS"; } > "$C/usr/share/ilinux/keyboard-modules.txt"
@@ -202,6 +221,8 @@ stage_modules() {
     record added "boot042's keyboard modules for $krel (apple-rtkit-helper, apple-dockchannel, dockchannel-hid with the MTP ring transport, hid-apple; job 050's build, digests in /usr/share/ilinux/keyboard-modules.txt) under /usr/lib/modules/$krel, indexed by the root's depmod: boot042 builds the keyboard path as modules so that nothing of it runs at boot. Omarchy's linux-modules-cleanup keeps this directory because it is the running kernel's (%v)"
     record added "/etc/modprobe.d/ilinux-boot042.conf blacklists the four keyboard modules: udev's coldplug, which loads modules by device aliases at every boot, must not start the keyboard path (checked: the MTP nodes' aliases load nothing with the blacklist, the modules still load by name)"
     record added "/usr/local/bin/ilinux-keyboard: run over SSH (sudo), it loads the keyboard modules one at a time with a check after each (kernel log, binding, the ring, the keyboard interface, the input device, typing on the M5), stops at the first failure and changes nothing else"
+    record changed "ilinux-keyboard passes steps 0 to 5 on a rerun: step 4 reads the device state when dockchannel-hid was loaded by an earlier run (input@8000 bound, the keyboard interface's HID device on hid-apple under it, which the driver creates when the MTP reports the interface ready), where it read only kernel lines newer than the step, which a loaded driver never prints again (attempt 26: a rerun failed at step 4 with the keyboard working); a fresh load keeps every kernel-line check; --status also shows the unit's state"
+    record added "ilinux-keyboard.service, enabled: at boot, once the device tree has the MTP node (ConditionPathIsDirectory on /sys/firmware/devicetree/base/soc/mtp@294600000; elsewhere the unit is skipped with the reason in the journal), it runs ilinux-keyboard --no-typing, steps 0 to 5 as attempt 26 ran them over SSH (1.4 s, no fault in 63 minutes), so the keyboard works without the SSH session; the modules stay blacklisted and are loaded by name, one at a time; a oneshot nothing depends on, no restart, output to the journal as ilinux-keyboard, so a failure leaves the system up and says why; the human's rerun and typing test over SSH is unchanged"
 }
 
 stage_claude() {

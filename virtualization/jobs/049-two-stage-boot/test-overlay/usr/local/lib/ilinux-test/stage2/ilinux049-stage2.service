@@ -1,0 +1,9 @@
+# VM test only (job 049, added to the unpacked stage two by the test hook): follow Omarchy's boot to
+# the desktop after the switch, then check stage two's own USB link as the M1 uses it; markers on the
+# virtio console, files on the 9p results share.
+[Unit]
+Description=VM test: stage two after the switch (desktop, link)
+
+[Service]
+Type=simple
+ExecStart=/usr/local/lib/ilinux049/stage2-probe.sh

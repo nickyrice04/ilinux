@@ -1690,3 +1690,85 @@ attempt. Until the user approves that change, every shipped Stage-B tree keeps t
 the cpufreq controllers disabled, and the committed launcher stays byte-identical so every
 handoff's digest pins hold. Storage is prepared in full offline (modules, a write refusal in
 nvme-core, a virtual-disk test, a read-only load script) and kept out of the attempt-26 package.
+
+## 2026-10-19 · Attempt 27 is the two-stage boot with attempt 26's fixes; read-only storage moves to attempt 28; the CPU track starts offline
+
+Attempt 26 switched the M5's keyboard on and ran for 63 minutes with no fault, and it measured
+where the slowness is: one core, at the speed state the firmware left it in, draws the 3456×2160
+screen in software at about 0.47 s per update, which is also why the terminal repeated letters (the
+key release waited behind a frame longer than the 250 ms repeat delay). The keyboard path itself is
+clean. The user accepted on 2026-10-19 the order below, chosen so that every later attempt costs as
+little as possible and the real limit, the CPU, is worked on at once:
+
+* **Attempt 27 = the two-stage boot** (VM job 049: a 60 MB stage one through m1n1, the Omarchy root
+  over the USB link at the link's speed instead of m1n1's, about 2 minutes of transfer instead of 8)
+  **with the attempt-26 fixes in the Omarchy root** (repeat delay 1000 ms, the leaked menu pollers,
+  the keyboard switched on at boot by the proven steps, the idle sshd noise). No new hardware step:
+  the keyboard path ran in attempt 26 and the delivery change is in software; the gadget's second
+  bind on the same controller after the switch is the one thing the VM could not exercise.
+* **Attempt 28 = read-only storage**, behind the launcher change the user reviews (design in
+  `build/launcher-ro-storage/REVIEW.md`), unchanged in substance from the 2026-10-19 decision above,
+  one attempt later. The first native use of the SSD controller stays its own attempt.
+* **The CPU track starts now, offline, in parallel:** frequency scaling for the boot core (the
+  device-tree nodes exist and are disabled; the launcher's guard refuses them enabled, as it refuses
+  NVMe, so it needs its own reviewed allowance), and the facts on how macOS starts the other 17 cores
+  (m1n1 cannot start them on this chip; cause unknown), from this Mac's own binaries under the
+  decompile-freely rule. Neither touches the launcher or runs on hardware until reviewed.
+* **Deferred:** the trackpad, the M5's own network, the desktop's drawing cost beyond cheap runtime
+  tests, and the five early boot lines (harmless until the GPU).
+
+The agent over SSH works today and does not need the desktop; it shares the slow core, so heavy
+work on the M5 waits for the CPU track. The desktop stays slow until that track lands.
+
+### Continuation review, 2026-10-19: evidence limits and completion
+
+The resumed work retains the attempt ordering above. Job045's new root passed
+its exact-kernel VM desktop/link checks; job051's experimental CPU module passed
+compilation, sanitizer and narrow DT/schema checks; SMP behavior findings are
+written. Work is uncommitted, as requested in the main-agent handoff. Results,
+pins and unresolved issues are in `native/boot/subagent-review-2026-10-19.md`.
+The next integration step is a new stage-one/root pairing and repeated job049
+tests before the attempt-27 handoff; old tests name the preceding root.
+
+Several earlier statements need qualification. The CPU's actual clock is
+unmeasured; requested state is not clock telemetry. Frequency scaling and SMP
+are worthwhile but cannot be assumed to remove serialized rendering costs or
+replace GPU/display support. Automatic keyboard loading changes timing from
+the successful manual path and must be checked natively. Early power-domain
+and timer errors have unresolved effects, not an established harmless status.
+Transfer-time estimates are not full-size native two-stage measurements.
+No proprietary binaries or raw REA output are added to public artifacts.
+
+
+### Attempt-27 integration, 2026-10-19: exact pair, bounded first native switch
+
+The new root and rebuilt stage one passed job049's full failure/switch test and
+an independent normal-path boot. Both manifest records move together; the M1
+checks their agreement with the stage-one embedded pin before any launch.
+Existing launcher/boot042/boot021 pins are unchanged. Native tests remain NOT RUN.
+
+For the first native two-stage boot, the checklist permits one image send and
+records a failed switch or missing second USB link without automatic retries
+or driver repair. The deliberate bad transfers remain VM-only checks. This
+keeps the first native transition attributable and bounded; it does not remove
+the receiver's tested recovery behavior. Automatic keyboard loading is also
+observed explicitly because its timing differs from attempt 26's manual path.
+
+Publish only reviewed source, sanitized findings and image hashes after the
+user's commit review. Private images are transferred directly to the M1; no new
+GitHub release is required. Inherited kernel-config/compositing experiments
+(jobs047/048) are outside the publication scope. Exact evidence and scope:
+`native/boot/attempt27-two-stage-validation.md`.
+
+
+### 2026-10-20 · Publication approved; M1 intake precedes the restart for attempt 27
+
+The user approved committing the reviewed handoff, pushing it to the existing
+public repository, and keeping offline CPU/SMP work in a separate commit.
+Images remain private. This closes the commit-review gate recorded above.
+
+The M1 first pulls and verifies the handoff, boot042 and both privately
+transferred images. After offline readiness, use the established fresh-M1-
+restart/cable-reseat procedure before the next human-started attempt. Keep the
+M5 in macOS while intake is pending. Native attempt 27/live checks remain
+NOT RUN; no policy, volume, firmware or bootloader change is authorized here.

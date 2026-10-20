@@ -1,0 +1,16 @@
+# Two-stage boot, stage one (VM job 049): unpack the stage two that ilinux-stage2 receive verified into a
+# tmpfs at /run/nextroot, check it, then soft-reboot into it. Started by ilinux-stage2 receive (the M1's
+# SSH command) once the image's size and SHA-256 equal the pin, so it completes even if that session ends.
+# On failure it cleans up and stage one waits for the next attempt (the reason: journal and panel).
+# The soft-reboot is this unit's SuccessAction, so it starts only after the unit has ended well: a
+# switch script that called systemctl soft-reboot itself was still running when the soft-reboot stopped
+# it, and its "failed" state was carried into stage two (VM job 049).
+[Unit]
+Description=Two-stage boot: unpack the verified stage two and switch into it
+After=systemd-journald.service
+SuccessAction=soft-reboot
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/ilinux/ilinux-stage2 switch
+TimeoutStartSec=20min

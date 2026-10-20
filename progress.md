@@ -5,6 +5,80 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M5: user approved the attempt-27 handoff and separate offline CPU/SMP publication
+
+* **Approved:** commit and push the reviewed source, findings and image pins;
+  private images remain local. Attempt-27 delivery/image work and offline
+  CPU/SMP research are separate commits. Unreviewed jobs047/048 and the
+  kernel-config experiment remain outside this scope.
+* **Verification:** the same pair retains both job049 VM passes, 8 intake,
+  18 sender and 45 launcher tests; final transfer-copy hashes, embedded pin,
+  offline launcher and sender dry-run matched. No code or image changed in
+  the publication step. No settings or hardware action.
+* **Next:** M1 pulls this handoff and verifies both privately delivered images
+  and boot042, records offline readiness, then follows the fresh-M1-restart,
+  cable-reseat and unlocked/open-lid procedure. Fresh read-only M5 policy/default
+  confirmation and the human's start are still required. Keep the M5 in macOS
+  until readiness. Native attempt 27/live checks remain **NOT RUN**.
+
+## 2026-10-19 · M5: attempt-27 pair and M1 handoff prepared, both VM runs PASS, uncommitted
+
+* **Built:** stage one `84c01f53…06ed3`, 59,630,835 bytes, pinned to the new
+  root `5eaa2fdb…6d345`, 2,435,460,021 bytes. Public records updated together;
+  both private files staged locally for transfer. Boot042/package/launcher
+  unchanged. No host settings or hardware changes.
+* **Implemented:** independent offline pair verification (hash both files and
+  compare the embedded root/kernel/count/size pin), eight tests, and additional
+  post-switch runtime image-fix checks. The M1 checklist now describes one
+  bounded transfer/switch attempt, both-stage key checks, reconnection,
+  automatic keyboard/rerun/typing, image-fix observations and safe return.
+* **Tested:** 8 intake, 18 sender and 45 launcher tests PASS. Job049 full
+  wrong-image/truncated/corrupt-transfer and successful-switch run PASS;
+  independent fresh normal-path timing run PASS on the same pair. Omarchy
+  desktop, second gadget, journal, SSH/sudo, one soft-reboot and effective image
+  fixes verified. Screenshots inspected. Known failed services remain, listed
+  in the report. Original images and both runs' raw evidence preserved locally.
+* **Limits:** job049 uses the dummy_hcd test kernel, not native Apple USB; the
+  image separately passed job045 on exact boot042. No native attempt 27,
+  automatic MTP startup, DVFS, SMP or efficiency result is claimed.
+* **Next:** user review before commit/push, then independent M1 offline intake,
+  fresh read-only policy/default confirmation and human-started attempt 27.
+  Storage is 28; offline CPU/SMP work stays separate. No restart yet. Exact
+  pins, timings, source scope and checklist:
+  `native/boot/attempt27-two-stage-validation.md`.
+
+## 2026-10-19 · M5: interrupted image, CPU-frequency and SMP side sessions completed offline, uncommitted
+
+* **Recovered:** current baseline `75411ec`, attempt 26. Preserved inherited
+  changes and the preceding job045 image/results. The plan keeps two-stage
+  delivery at attempt 27 and read-only storage at 28; CPU work stays separate.
+* **Implemented:** finished the image's repeat-delay, menu-poller, weather,
+  keyboard-service/rerun and SSH fixes. Corrected the draft's assumption that
+  the installer had no user shell configuration and a false-positive weather
+  runtime test. Reviewed the original command-only t6050 frequency experiment:
+  default no writes, unknown-state refusal, explicit cap and board/CPU gates.
+  Recovered the SMP register-group/start-mask findings and documented the
+  unresolved raw-boot entry contract.
+* **Built/tested:** job045 root `5eaa2fdb…6d345`, 2,435,460,021 bytes; exact
+  boot042 kernel, QEMU TCG one vCPU, full desktop/link PASS in 946.3 s probe
+  wall time, 18 SSH logins, menu/Chromium/Obsidian rendered, no coredumps.
+  Effective repeat delay, both menu cancellation paths, parsed weather
+  configuration and absent-keyboard handling passed. Host SHA independently
+  matched. Job051 module W=1 compile, 16 ASan/UBSan callback cases, six
+  rejected regression mutations, 12 Python methods and narrow DT/schema checks
+  PASS. Fixed a schema path warning and verified an empty-log rerun.
+* **Limits:** all these checks are offline. Native automatic keyboard ordering,
+  two-stage USB reconnect, DVFS speed/thermals/power and SMP remain untested.
+  The image retains the preceding run's failed hardware-provisioning, UFW and
+  document-portal services. Neither CPU requested state nor more cores would
+  establish measured efficiency or GPU acceleration.
+* **Next:** job049 must be rebuilt/pinned to this root and its rejection/full
+  switch tests repeated before the attempt-27 handoff. Old stage-one evidence
+  applies to the old root. No commit/push or hardware/settings changes;
+  commit review still required. See
+  `native/boot/subagent-review-2026-10-19.md` for pins, evidence and limitations,
+  and `native/boot/resume-plan-2026-10-19.md` for the updated sequence.
+
 ## 2026-10-19 · M1: attempt 26 ran: the M5's keyboard works and types; every screen update costs the one CPU about half a second, which is the lag and the repeated letters
 
 * **Discovered:** the MTP keyboard path works end to end over the SSH-driven bring-up (`sudo ilinux-keyboard` steps 0 to 5 PASS in 1.4 s:

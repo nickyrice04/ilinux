@@ -65,6 +65,7 @@ expect "M5 side: ilinux-usb-gadget@dummy_udc.0.service active; gser.log on ttyGS
     "log port: [1-9][0-9]* journal lines over /dev/ttyUSB[0-9]" \
     "ssh 1 (.* s): SSH-OK root@ilinux-m5-test http://127.0.0.1:3128 http://127.0.0.1:3128 NO_PROXY=localhost,127.0.0.1,::1 HELLO-FROM-THE-M1-SIDE direct: " \
     "proxy: .*CONNECT web.test:8443 -> 127.0.0.1:8443 .* ok" "usb-pipe: banner after [0-9]* ms: SSH-2.0-OpenSSH" \
+    "ssh as omarchy (.* s, /etc/ssh/authorized_keys.d/omarchy is .*): SSH-OK omarchy@ilinux-m5-test uid=1000 HOME=/home/omarchy http://127.0.0.1:3128 HELLO-FROM-THE-M1-SIDE" \
     "transfer: 2 MiB up in .* s and 2 MiB down in .* s, digests equal" "wrong key refused: .*Permission denied" \
     "killed a client mid-session" "recovered from the abandoned handshake on try [1-6]" "recovered from the vanished client on try [1-6]" "no failed ilinux units" "^\[selftest\] PASS" || status=1
 reject "\[selftest\] FAIL" "Kernel panic" "direct: HELLO" "usb-pipe: write to the device failed" || status=1
