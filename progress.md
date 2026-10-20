@@ -5,6 +5,23 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M5: reviewed work committed and pushed; M1 offline intake next
+
+* **Published:** offline CPU/SMP research `3483816`; attempt-27 delivery,
+  image fixes, paired pins and M1 checklist `37fd9b5`. GitHub main was fetched
+  after the push and matched the local handoff commit. Existing GitHub CLI
+  authentication carried the HTTPS push; no saved authentication or remote
+  settings changed. Images and raw evidence remain private.
+* **Next:** privately transfer `stage1.cpio.zst` and `ramroot.cpio.zst` from
+  `build/attempt27-transfer/` to the M1. Its agent pulls main, reads
+  `tools/m1n1-client/stage-b-instructions.md`, verifies both files/package and
+  publishes sanitized offline readiness. Only then do the fresh M1 restart
+  and cable/unlocked procedure before the human-started attempt. Keep the M5
+  in macOS until readiness and read-only policy/default confirmation.
+* **Still NOT RUN:** native attempt 27/live checks, automatic MTP startup after
+  the root switch, DVFS/SMP and efficiency measurements. No boot/settings or
+  hardware action was performed. Unreviewed kernel-config/jobs047/048 remain local.
+
 ## 2026-10-20 · M5: user approved the attempt-27 handoff and separate offline CPU/SMP publication
 
 * **Approved:** commit and push the reviewed source, findings and image pins;

@@ -120,7 +120,8 @@ Both full rejection/switch and fresh normal-path VM runs PASS; the handoff and
 both public pin records are prepared. Evidence and precise limits:
 `native/boot/attempt27-two-stage-validation.md`; M1 steps:
 `tools/m1n1-client/stage-b-instructions.md`. Both private images are staged in
-ignored `build/attempt27-transfer/`. Commit/publication review is approved.
+ignored `build/attempt27-transfer/`. Published on 2026-10-20: offline CPU/SMP
+`3483816`, attempt-27 handoff `37fd9b5`; GitHub main verified after push.
 Next: independent M1 offline intake of the published handoff and both private
 images; then its fresh restart, cable re-seat and unlocked/open-lid procedure,
 fresh read-only M5 policy/default confirmation and the human's start.

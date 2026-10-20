@@ -26,7 +26,8 @@ Job049 pairing and both new-pair VM runs are now PASS. Current stage one
 results: `native/boot/attempt27-two-stage-validation.md`; current M1 checklist:
 `tools/m1n1-client/stage-b-instructions.md`. Two private transfer files are in
 ignored `build/attempt27-transfer/`. All VM runs are stopped; no lock held.
-Commit/publication review is approved (2026-10-20). Next: M1 pulls the published
+Published on 2026-10-20: CPU/SMP `3483816`, attempt-27 handoff `37fd9b5`;
+GitHub main matched after push. Next: M1 pulls the published
 handoff, privately receives and verifies both images, and records offline
 readiness. Then a fresh M1 restart, cable re-seat and unlocked/open-lid procedure,
 fresh read-only M5 policy/default confirmation and the human's start. Keep the
