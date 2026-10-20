@@ -5,6 +5,25 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-19 · M1: attempt 26 (the M5's keyboard, switched on over SSH, on boot042) offline readiness PASS (live NOT RUN)
+
+* **Discovered:** the boot042 package matches Git (archive before extraction, receipt, `SHA256SUMS`), differs from boot041 in exactly
+  `Image`, `kernel.config` and the Stage-B DT, and the M1's own diff of the two DTs finds exactly ten new MTP nodes and two changed
+  nodes, with the NVMe node still disabled and every USB node unchanged; the config differs by exactly the nine reported symbols. The
+  AirDropped image equals the pin and, read from the image itself, holds exactly four kernel modules (the keyboard path), no storage
+  module, no private key or credential, and eighteen lab files byte-identical to Git. `ilinux-keyboard` (root over SSH, 222 lines)
+  loads the four modules by name one at a time, checks the kernel log after each and never unloads.
+* **Implemented:** nothing in Git except this entry and the coordination/AGENTS text. Local and ignored: the launch record,
+  `run-attempt26.py` (attempt 25's wrapper with four lines changed), the capture script, the handoff watcher and a read-only
+  monitor that also watches the keyboard-path lines.
+* **Tested (offline):** the launcher's `omarchy` profile exits 0 with exactly the seven expected lines; the 102 controller cases,
+  `test_ramroot` (45), `test_connect_proxy` (16), `test_m5_clock` (13) PASS and the boot042 suites pass or skip without the M5's
+  `build/`; `test_usb_pipe` passed 14 of 15 on its first run and 15 of 15 on a rerun (one test is timing-sensitive: 3 of 25 isolated
+  runs; code and test unchanged since attempt 25).
+* **Not verified:** everything on hardware: m1n1's handling of the MTP nodes, the MTP DART's reset at boot, the RTKit wake, the
+  DockChannel FIFO, the ring transport, the keyboard and typing. Fresh policy checks NOT CHECKED. The fixed E1 probe is still NOT RUN.
+* **Next:** the human's cable re-seat, a recording of at least the keyboard steps and their start; one attempt, no retry.
+
 ## 2026-10-19 · M5: attempt 26 handed off — the M5's keyboard, switched on over SSH, on boot042 (NOT RUN)
 
 * **Decided:** attempt 25 gave the M5 SSH, the clock, web access and Claude Code but no input of its own. Attempt 26 adds the

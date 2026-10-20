@@ -138,6 +138,18 @@ locked RVBAR, secondary watchdog) are mapped against our path in
 `native/boot/attempt15-review-2026-10-15.md`; `roadmap.md` Phase 3 is now the
 path to a native Omarchy boot.
 
+Latest M1 milestone: offline readiness PASS (live NOT RUN) for attempt 26 (the M5's keyboard, switched on over SSH, on boot042,
+launcher `--profile omarchy`) on handoff `b8c877c`: the boot042 archive verified against Git before extraction (GitHub's digest equal)
+and its receipt clean; it differs from boot041 in exactly `Image`, `kernel.config` and the Stage-B DT, and the M1's own diff of the two
+DTs finds exactly ten new MTP nodes and two changed ones with the NVMe node still disabled and every USB node unchanged; the
+privately delivered image `565644be…bf6f` (2,435,320,732 bytes) equals the pin and, read from the image itself, holds exactly four
+kernel modules (the keyboard path) and no storage module, no private key or credential, and eighteen lab files byte-identical to Git;
+`ilinux-keyboard` (root over SSH) was read in full. The offline launcher run (exactly the seven expected lines) and the 102 controller
+cases PASS, `test_usb_pipe` 14 of 15 then 15 of 15 (one test is timing-sensitive; code unchanged). New and untested on hardware: m1n1's
+handling of the MTP nodes, the MTP DART's reset at boot, then over SSH the RTKit wake, the DockChannel FIFO, the ring transport, the
+keyboard and typing on the M5; no storage. Needs the cable re-seat, a recording (typing on the M5's screen is the headline result) and
+the human's start; the serial-number line on the m1n1 screen is never shared.
+
 Latest M1 native result: **attempt 25 (Omarchy itself with the USB link and Claude Code, on boot041): the first data from the M1 to the
 M5 works, and SSH, the clock step, web access through the M1 and a signed-in Claude Code ran on the M5.** Over the USB byte pipe: SSH
 as `omarchy` (a new host key per boot, equal to the journal's), the clock step (24.2 days behind, then 1.3 ms ahead), HTTPS through the

@@ -6,6 +6,47 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 readiness — attempt 26 (the M5's keyboard, switched on over SSH, on boot042) offline PASS; live NOT RUN, 2026-10-19
+
+* **Intake (M5 handoff `b8c877c`, release target `a1cc21a`).** Public prerelease `native-j716c-boot042`: archive 18,877,362 bytes,
+  SHA-256 `a2e57c0c…a781`, checked against Git **before extraction** (GitHub's asset digest equal); 14 regular members, no unsafe
+  path or special entry. The `verify-package` receipt (SHA256SUMS digest `60299703…3ccd`, 13 files, clean client pin `57a9339`) PASS.
+* **Independent delta against the M1's own boot041 download:** byte-identical: both initramfs, `diag-init.c`, m1n1 and its
+  records, the generic DT; different: `Image` (`0b6df395…b69c`), `kernel.config` and the Stage-B DT. **The M1's own property-level
+  diff of the two Stage-B DTs** (361 to 371 nodes): ten new nodes (`/soc/mtp@294600000`, `/soc/mbox@294608000`,
+  `/soc/fifo@294b14000`, its `input@8000` and six interface nodes) and two changed (`/soc/iommu@294800000`: `status` removed,
+  `phandle` and `apple,dma-range` added; `/aliases`: `keyboard`); `/soc/nvme@45dcc0000` is still disabled and every USB node is
+  unchanged. `kernel.config` differs by exactly the report's nine symbols, plus `HID_CP2112` and `HID_FT260` as "not set".
+* **The image** (AirDropped; it arrived in the repository root and was moved into the ignored `build/ramroot045-boot042/`):
+  2,435,320,732 bytes, SHA-256 `565644be…bf6f`, equal to the pin, and **read from the image itself**: no private key, credentials,
+  history or Wi-Fi secret; passwords locked; the authorized key equal to the M1's; **exactly four kernel modules**
+  (apple-rtkit-helper, apple-dockchannel, hid-apple, dockchannel-hid; vermagic equal to the kernel release; digests equal to the
+  image's own list, which `ilinux-keyboard` checks) and **no storage module** (the only nvme-named files are Arch's userland
+  libraries and an Omarchy script); eighteen lab files **byte-identical to Git**, including the new `ilinux-keyboard`, the modprobe
+  blacklist, the `ssh-browser` and `wait-usb-host` helpers and the Chromium policy; `archlinux-keyring-wkd-sync` masked. The four
+  modules' digests have no independent source in Git: they are the image's own.
+* **`ilinux-keyboard` read in full** (222 lines, root over SSH): step 0 only checks (kernel, digests, the MTP nodes, the MTP DART
+  bound, unlocked, no fault); steps 1 to 4 `modprobe` the four modules by name and check the kernel log after each, stopping at the
+  first failure; step 5 reads the input devices; step 6 reads key presses (no grab) and prints counts only. It writes nothing but
+  the module loads and never unloads anything.
+* **Offline.** The launcher with `--profile omarchy --ramroot …` exits 0 with exactly the seven expected lines (`RAM root PASS:
+  2,435,320,732 bytes`, upload estimate 2,480,000,463 bytes, 496.0 s at 5 MB/s, deadline 900 s); `launch.py` (`b14ec7a1…`) and the
+  other controller files are unchanged. The reviewed 102 controller cases PASS; `test_ramroot` 45 (2 skipped), `test_connect_proxy`
+  16, `test_m5_clock` 13; `test_boot042_package` 9, `test_boot042_rule` 10 and `test_mtp_input` 33 pass or skip without the M5's
+  `build/`. **`test_usb_pipe` passed 14 of 15 on its first run and 15 of 15 on a rerun:** `test_device_end_closes_the_session` is
+  timing-sensitive (3 of 25 isolated runs fail on the label "the device ended", because the test closes ssh's side at once and the
+  end can read "ssh closed the session"); the sources and the test are unchanged since attempt 25, and both outcomes exit 0 with the
+  same data. `usb-pipe`, the reader, the proxy, the clock tool and the SSH config are attempt 25's files and binaries.
+* **New and untested on this hardware:** m1n1's handling of the MTP nodes (the launcher's `Hardware DT PASS`, go/no-go 1); the MTP
+  DART's reset at boot (go/no-go 2: a freeze, a reset or a fault line for `294800000.iommu` is a no-go, recovered by power-cycling
+  the M5); then, over SSH only, the MTP's RTKit wake, the DockChannel FIFO, hid-apple, the ring transport, the keyboard and typing on
+  the M5. No storage anywhere.
+* **What the run needs from the human:** a fresh M1 restart (**done**), the cable re-seated, and a **recording**, since the headline
+  result is typing visible on the M5's screen (the checklist asks for 30 minutes; at least the keyboard steps), and the human's
+  start; accept the macOS USB accessory prompt. Step 6 needs the human at the M5's own keyboard within 90 s once the M1 says go; the
+  Claude sign-in is optional. **The m1n1 screen shows the Mac's serial-number line before the handoff: never transcribe or share it.**
+* **NOT RUN:** native attempt 26 and every live check, and the fresh policy checks.
+
 ### Current M5 handoff — attempt 26: the M5's keyboard, switched on over SSH, on boot042 (NOT RUN)
 
 * **Attempt 25 consumed:** SSH, the clock step, web access through the M1 and a signed-in Claude Code worked on the M5
