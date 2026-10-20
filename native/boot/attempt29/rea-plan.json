@@ -1,0 +1,36 @@
+{
+  "targets": [
+    {
+      "id": "memory29-dcs",
+      "artifact": "AppleT6050PMGR.macho",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "address": "0xfffffe00098806d0"
+    },
+    {
+      "id": "memory29-clock",
+      "artifact": "ApplePMGR.macho",
+      "sha256": "a74c641b1445c3347d72840a95a08cdff344a14fed8700c2ff9fb75a0a4d0b0f",
+      "address": "0xfffffe00094a5ac4"
+    },
+    {
+      "id": "memory29-socread",
+      "artifact": "ApplePMGR.macho",
+      "sha256": "a74c641b1445c3347d72840a95a08cdff344a14fed8700c2ff9fb75a0a4d0b0f",
+      "address": "0xfffffe0009499c7c"
+    },
+    {
+      "id": "memory29-socwrite",
+      "artifact": "ApplePMGR.macho",
+      "sha256": "a74c641b1445c3347d72840a95a08cdff344a14fed8700c2ff9fb75a0a4d0b0f",
+      "address": "0xfffffe0009499cbc"
+    },
+    {
+      "id": "memory29-reggroups",
+      "artifact": "AppleT6050PMGR.macho",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "address": "0xfffffe000987f094"
+    }
+  ],
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093"
+}

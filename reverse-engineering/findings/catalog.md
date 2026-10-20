@@ -695,3 +695,15 @@ not a validated root cause for today's stack. Missing decode fences remain.
 | Confidence | **Confirmed** (build, dtbs_check, driver of_match matching) |
 | Correction | A first version of this finding reported "248 DT schema warnings." That was a grep error: the filter matched any log line containing `t6050`, catching warnings for other Apple SoC DTBs (t6022/t6031/t6030…) whose allowed-enum text lists `apple,t6050-*`. Attributed by dtb-path prefix, our DT has none. The `run.sh` filter is fixed. |
 | Linux mapping | `virtualization/jobs/020-t6050-full-build/`; DT audit in `kernel/experiments/t6050-dt` / patch 0007; `kernel/native-enablement/first-boot-plan.md` |
+
+
+## 2026-10-20 · Attempt29 memory/DCS investigation
+
+Five REA/Ghidra driver dossiers, 265 LLVM/carrier-verified instruction words,
+with three rejected whole-function pseudocode gates. The DCS request path is
+separate from CPU DVFS; its physical mapping and runtime memory-clock effects
+remain unknown. Same-source macOS reference tests show strong QoS/placement
+variation. Original architectural observer and per-allocation memory experiment
+are offline-tested, native NOT RUN. See
+[`kernel/experiments/memory29/README.md`](../../kernel/experiments/memory29/README.md)
+and [`native/boot/attempt29/`](../../native/boot/attempt29/validation.md).

@@ -6,6 +6,29 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt29 memory isolation, 2026-10-20
+
+Attempt28 (`ee44dca`) observed CPU0/sotra-m near 2.65 GHz with no frequency
+writes; memory and desktop latency remain open. The next package preserves its
+exact two-stage images and boot042. A 143,360-byte original diagnostic bundle
+arrives into /run over verified SSH: architectural MMU/cache/stack-PTE reads,
+pre/post clock estimates, unchanged chase28 and a locality/page-advice matrix.
+No CPU-frequency or memory-controller writes, extra cores, storage or settings.
+
+Five REA driver dossiers completed; 265 instruction words cross-checked with
+LLVM/carrier bytes. Three pseudocode gates rejected; only bounded instruction/
+call facts retained. macOS reference results depend strongly on QoS/placement;
+there is no matched OS performance/efficiency ratio. Final module W=1,
+sanitizer/optimized matrices, 315 controller, 13 helper and 12 bundle/decoder
+methods PASS. Exact-kernel VM shipping-module refusal and separate VM-only
+snapshot positive control PASS; that control never ships. Native NOT RUN.
+
+M1 next: `tools/m1n1-client/attempt29-instructions.md`; pins and limits in
+`native/boot/attempt29/`. Privately transfer only `memory29.tar`; retain both
+attempt28 images. Offline intake then human start, fixed600s switch-time window
+and Macintosh HD return. Original macOS/default/security/volumes unchanged;
+routine policy checks waived. Other agents' jobs047/048 remain untouched.
+
 ### Current M1 native result — attempt 28, 2026-10-20
 
 **Attempt 28 consumed: one launch/send, no-write CPU observation PASS.**

@@ -1,0 +1,52 @@
+{
+  "scope": "offline; native attempt29 NOT RUN",
+  "kernel_sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
+  "bundle": {
+    "attempt": 29,
+    "size_bytes": 143360,
+    "sha256": "561b6395d1ef9b6fcd2e8bfd8fcadaac0d449b2f952acd50d8d56913ff04f714"
+  },
+  "module_build": "W=1 clean, exact boot042 kernel",
+  "tests": {
+    "controller_methods": 315,
+    "m1_helper_methods": 13,
+    "decoder_and_bundle_methods": 12,
+    "linux_sanitizer_rows": 48,
+    "linux_optimized_rows": 48,
+    "native_hardware_tests": "NOT RUN"
+  },
+  "vm_module_refusal": "ENODEV before native snapshot",
+  "vm_only_control": {
+    "mmu": true,
+    "dcache": true,
+    "icache": true,
+    "tg0": 2,
+    "tg1": 1,
+    "irgn0": 1,
+    "orgn0": 1,
+    "sh0": 3,
+    "irgn1": 1,
+    "orgn1": 1,
+    "sh1": 3,
+    "sample_page_index": 0,
+    "sample_page_attribute": 255,
+    "normal_index": 0,
+    "normal_attribute": 255,
+    "sample_page_shareability": 3,
+    "sample_page_valid": true,
+    "sample_mapping_level": 3,
+    "page_shift": 14,
+    "ctr_hex": "0x99444c004",
+    "clidr_hex": "0x80000023",
+    "scope": "one insmod userspace stack page; not every userspace PTE"
+  },
+  "vm_only_control_not_in_shipping_bundle": true,
+  "rea_function_dossiers": 5,
+  "rea_verified_instruction_words": 265,
+  "limitations": [
+    "VM control is not native compatibility",
+    "No native frequency/memory-controller writes or performance improvement claimed",
+    "Actual huge backing in generic build VM was zero",
+    "Whole-function pseudocode rejected for three REA targets; two helpers require manual interpretation"
+  ]
+}

@@ -1904,3 +1904,26 @@ M5 reviews the data offline before choosing the next scope. One boot/send/load,
 no retry, no frequency/voltage/settings/storage/SMP action. Human return was
 within +560/600 s; no deadline extension. Exact evidence:
 `native/boot/stage-b-2026-10-20-attempt28-result.md`.
+
+
+### 2026-10-20 · Attempt29 tests memory locality/translation before choosing a hardware clock change
+
+The user requests continued REA and execution of the next-attempt plan after
+M1's successful attempt28 observation, including memory as a slowness factor.
+Keep the functioning two-stage boot and add one small verified RAM-only bundle.
+Inspect architectural cache/table-walk attributes and a locked loader stack PTE;
+compare global/page-local access and per-allocation base/huge advice while
+recording backing, faults, context switches and CPU-placement boundaries.
+
+REA's DCS path is separate from CPU DVFS, but rejected whole-function pseudocode
+and unresolved mapping cannot justify a memory-controller register poke. The
+macOS QoS controls also show why a single default-OS number is not a matched
+comparison. No frequency, voltage, memory-controller, global VM or rendering
+change is selected; no thermal headroom or performance gain is claimed.
+
+Use a distinct memory-observe confirmation and fixed600s return window, one
+explicit read-only architectural module load and no CPU28 module load. M1
+intake/human start precedes execution. Preserve original macOS, boot/security/
+volume settings and the waived routine-policy checks. Public Git contains only
+original code, sanitized evidence and behavioral REA findings; private inputs,
+images and the VM-only identity-bypass control remain excluded.

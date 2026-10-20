@@ -1,35 +1,13 @@
-# Current native handoff — attempt 28 CPU observation
+# Current native handoff — attempt29 memory isolation
 
-**Attempt 28 is consumed.** Native no-write CPU observation and return PASS;
-application latency remains severe, with memory explicitly flagged for M5 review.
-Read `native/boot/stage-b-2026-10-20-attempt28-result.md`; the checklist below
-is historical and must not be replayed without a new scope/human start.
+Follow [attempt29-instructions.md](attempt29-instructions.md).
 
-M1: follow **[attempt28-instructions.md](attempt28-instructions.md)** and
-[its validation/pins](../../native/boot/attempt28/validation.md).
-Read the complete new checklist before any command. It uses the new
-`cpu-observe` profile and **two new private images**. The old `ramroot` profile
-and attempt-27 files are not this CPU experiment.
+Attempt28 is consumed and its result is recorded in
+`native/boot/stage-b-2026-10-20-attempt28-result.md`. Keep its exact working
+stage-one/root pair, boot042, installed boot021 and existing Boot Lab entry.
+The only additional private transfer is the small pinned memory29 bundle.
 
-The user authorized CPU preparation, offline testing and publication. First
-verify the published commit, unchanged boot042 package and both new images,
-then report offline readiness with native/live **NOT RUN**. Wait for the human
-to start the M5's existing iLinux Boot Lab entry before the one boot/send.
-No native attempt is started by pulling the repository.
-
-Attempt 28 identifies the actual boot core, observes its command state through
-an explicitly no-write driver, and runs short CPU/memory/desktop measurements.
-It keeps one core, the working USB/keyboard path, the RAM root, existing idle
-restrictions and disabled storage. No frequency/voltage increase, SMP, Wi-Fi,
-SSD or agent setup is part of this attempt. Do not add a live experiment if
-collection succeeds or its state mapping is unfamiliar.
-
-Keep Macintosh HD intact, at Full Security and as the default. No boot policy,
-Recovery, installer, volume, firmware or installed-m1n1 change. Repeated routine
-policy checks remain waived; the previous policy values are last reported.
-
-Attempt 27 is consumed. Its [result](../../native/boot/stage-b-2026-10-20-attempt27-result.md)
-records successful delivery/typing, remaining delay, the key-parser mistake
-and deadline overrun. Its old checklist is retained in Git at
-`a6ad886:tools/m1n1-client/stage-b-instructions.md`; do not replay it. The old
-storage-attempt-28 assignment is superseded by the separate CPU observation.
+Offline validation is ready; **native attempt29 NOT RUN**. M1 verifies and
+publishes readiness before the human restarts. Do not replay old checklists,
+load the CPU28 module, change boot/security/volume settings, or repeat waived
+routine policy checks. Use one new attempt and return by the fixed deadline.

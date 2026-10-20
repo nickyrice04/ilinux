@@ -138,4 +138,25 @@ class CpuObserveTests(unittest.TestCase):
         self.assertEqual(log,[])
 
 
+class MemoryObserveTests(CpuObserveTests):
+    # Inherit every DT/payload/refusal test, substituting only the profile under
+    # test while production cpu-observe remains untouched.
+    def setUp(self):
+        self.original = launch.PROFILES['cpu-observe']
+        launch.PROFILES['cpu-observe'] = launch.PROFILES['memory-observe']
+    def tearDown(self):
+        launch.PROFILES['cpu-observe'] = self.original
+    def test_exact_boot_arguments(self):
+        p=launch.PROFILES['memory-observe']
+        self.assertEqual(p.bootargs,self.original.bootargs)
+        self.assertEqual(p.confirm,'BOOT-J716C-MEMORY-OBSERVE-29')
+        self.assertEqual(p.deadline,300)
+    def test_requires_specific_confirmation_before_package_or_usb(self):
+        result,out,err,launches=run_main(launch,[
+            '--package','/fake','--profile','memory-observe','--ramroot','/fake/root',
+            '--launch','--device','auto','--confirm','BOOT-J716C-CPU-OBSERVE-28'])
+        self.assertEqual((result,out,launches),('exit 2','',[]))
+        self.assertIn('BOOT-J716C-MEMORY-OBSERVE-29',err[0])
+
+
 if __name__ == '__main__': unittest.main()

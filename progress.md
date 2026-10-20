@@ -5,6 +5,31 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M5: attempt29 memory isolation prepared after attempt28
+
+* **Reviewed:** M1 `ee44dca`: state6/2.652GHz mapping, ~2.65GHz estimate,
+  one M core, ~332–337ns larger chase, no thermal/energy data, accurate input
+  but unusable app delay. User explicitly requests memory investigation.
+* **Measured:** same-source macOS chase and new CPU-placement-tagged matrix;
+  QoS has large effects (default/background separate CPU estimates4.597/1.337GHz).
+  Unmatched placement/frequency means no defensible OS parity ratio.
+* **REA:** five bounded memory/DCS-related dossiers; 265 original instruction
+  words independently verified. Two broad XNU queries cancelled; three driver
+  pseudocode gates reject cross-boundary code. Publish only behavior/provenance,
+  not Apple code. DCS is a separate request path; physical mapping remains open.
+* **Implemented:** guarded architectural observer, per-allocation huge/base
+  and global/page-local matrix, bounded RAM-only receiver/collector, distinct
+  memory-observe token and M1 checklist. Reuse attempt28 images, one small bundle.
+* **Tested:** final module W=1; ASan/UBSan and optimized48-row matrices; 315
+  controller, 13 M1 helper, 12 bundle/decoder methods PASS. Actual receiver and
+  no-retry checks PASS. Exact boot042 diskless VM refuses shipping module;
+  separate VM-only control exercises the locked PTE read and decoder. Earlier
+  compile/harness failures retained in `native/boot/attempt29/validation.md`.
+* **Next:** publish, M1 verifies small private bundle and retained image pair,
+  then one human-started native attempt29. Native/live NOT RUN. No DVFS/DRAM
+  writes, SMP, storage, settings or measured native improvement. Unrelated
+  jobs047/048 preserved. Routine policy rechecks remain waived.
+
 ## 2026-10-20 · M1: attempt 28 CPU policy observation and bounded return PASS
 
 **Attempt 28 consumed: one launch/send, no-write CPU observation PASS.**

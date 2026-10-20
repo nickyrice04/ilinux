@@ -1,0 +1,293 @@
+{
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "results": [
+    {
+      "evidence_id": "ev_f281856782088a5ce6d12340604722c23fd06e22b232eed10b6567f33cf8723c",
+      "member": "com.apple.driver.AppleT6050PMGR",
+      "function": "__ZN14AppleT6050PMGR16_setDCSPerfStateENS_12DcsPerfStateE",
+      "body_anchors": [
+        {
+          "start": "0xfffffe00098806d0",
+          "end_inclusive": "0xfffffe00098807ff",
+          "carrier_offset": 42452688,
+          "derived_offset": 20336,
+          "bytes": 304,
+          "sha256": "a5261d5741afcd26c6ca70696d0c0e0c0befa240f96b4b88fafae74e11ce7de8"
+        }
+      ],
+      "assembly_instructions": 76,
+      "original_bytes_verified": true,
+      "pcode_operations": 57,
+      "pcode_outside_body": 1,
+      "outside_addresses": [
+        "0xfffffe0009499d00"
+      ],
+      "pseudocode_gate": "rejected_cross_boundary",
+      "decompiler_warning_classes": [
+        "bad_instruction_or_truncated_control_flow"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "memory29-dcs",
+      "llvm_instruction_words_verified": 76,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_a5ccfd347dd6c610e44de139524168836e8b22f56515074280742bac7b945b0d",
+      "member": "com.apple.driver.ApplePMGR",
+      "function": "__ZN9ApplePMGR18_getClockReqMemoryEjPv",
+      "body_anchors": [
+        {
+          "start": "0xfffffe00094a5ac4",
+          "end_inclusive": "0xfffffe00094a5c5f",
+          "carrier_offset": 38410948,
+          "derived_offset": 266180,
+          "bytes": 412,
+          "sha256": "1f1208e864d7dd7e2a8715ef5513438457cdd81045d36a9ee4ea1e0e1bd432d4"
+        }
+      ],
+      "assembly_instructions": 103,
+      "original_bytes_verified": true,
+      "pcode_operations": 583,
+      "pcode_outside_body": 446,
+      "outside_addresses": [
+        "0xfffffe00094a5c6c",
+        "0xfffffe00094a5c70",
+        "0xfffffe00094a5c80",
+        "0xfffffe00094a5c84",
+        "0xfffffe00094a5c88",
+        "0xfffffe00094a5c8c",
+        "0xfffffe00094a5c9c",
+        "0xfffffe00094a5ca0",
+        "0xfffffe00094a5ca4",
+        "0xfffffe00094a5cac",
+        "0xfffffe00094a5cb0",
+        "0xfffffe00094a5cb8",
+        "0xfffffe00094a5cbc",
+        "0xfffffe00094a5cc0",
+        "0xfffffe00094a5cc4",
+        "0xfffffe00094a5ccc",
+        "0xfffffe00094a5cd4",
+        "0xfffffe00094a5cd8",
+        "0xfffffe00094a5cdc",
+        "0xfffffe00094a5ce0",
+        "0xfffffe00094a5ce8",
+        "0xfffffe00094a5cf0",
+        "0xfffffe00094a5cf4",
+        "0xfffffe00094a5cf8",
+        "0xfffffe00094a5d04",
+        "0xfffffe00094a5d14",
+        "0xfffffe00094a5d20",
+        "0xfffffe00094a5d24",
+        "0xfffffe00094a5d28",
+        "0xfffffe00094a5d2c",
+        "0xfffffe00094a5d3c",
+        "0xfffffe00094a5d50",
+        "0xfffffe00094a5d54",
+        "0xfffffe00094a5d58",
+        "0xfffffe00094a5d5c",
+        "0xfffffe00094a5d6c",
+        "0xfffffe00094a5d70",
+        "0xfffffe00094a5d78",
+        "0xfffffe00094a5d7c",
+        "0xfffffe00094a5d84",
+        "0xfffffe00094a5d88",
+        "0xfffffe00094a5d8c",
+        "0xfffffe00094a5d90",
+        "0xfffffe00094a5d98",
+        "0xfffffe00094a5da0",
+        "0xfffffe00094a5da4",
+        "0xfffffe00094a5da8",
+        "0xfffffe00094a5dac",
+        "0xfffffe00094a5db4",
+        "0xfffffe00094a5dbc",
+        "0xfffffe00094a5dc0",
+        "0xfffffe00094a5dc4",
+        "0xfffffe00094a5dd0",
+        "0xfffffe00094a5de0",
+        "0xfffffe00094a5dec",
+        "0xfffffe00094a5df0",
+        "0xfffffe00094a5df4",
+        "0xfffffe00094a5df8",
+        "0xfffffe00094a5e18",
+        "0xfffffe00094a5e1c",
+        "0xfffffe00094a5e20",
+        "0xfffffe00094a5e2c",
+        "0xfffffe00094a5e30",
+        "0xfffffe00094a5e34",
+        "0xfffffe00094a5e38",
+        "0xfffffe00094a5e3c",
+        "0xfffffe00094a5e44",
+        "0xfffffe00094a5e4c",
+        "0xfffffe00094a5e50",
+        "0xfffffe00094a5e54",
+        "0xfffffe00094a5e58",
+        "0xfffffe00094a5e60",
+        "0xfffffe00094a5e64",
+        "0xfffffe00094a5e68",
+        "0xfffffe00094a5e6c",
+        "0xfffffe00094a5e70",
+        "0xfffffe00094a5e74",
+        "0xfffffe00094a5e78",
+        "0xfffffe00094a5e80",
+        "0xfffffe00094a5e84",
+        "0xfffffe00094a5e88",
+        "0xfffffe00094a5e8c",
+        "0xfffffe00094a5e90",
+        "0xfffffe00094a5e94",
+        "0xfffffe00094a5e98",
+        "0xfffffe00094a5e9c",
+        "0xfffffe00094a5ea0",
+        "0xfffffe00094a5ea4",
+        "0xfffffe00094a5ea8",
+        "0xfffffe00094a5ebc",
+        "0xfffffe00094a5ec0",
+        "0xfffffe00094a5ec4",
+        "0xfffffe00094a5ec8",
+        "0xfffffe00094a5ecc",
+        "0xfffffe00094a5ed0",
+        "0xfffffe00094a5ed4",
+        "0xfffffe00094a5ed8",
+        "0xfffffe00094a5edc",
+        "0xfffffe00094a5ee0",
+        "0xfffffe00094a5ee4",
+        "0xfffffe00094a5ee8",
+        "0xfffffe00094a5eec",
+        "0xfffffe00094a5ef0",
+        "0xfffffe00094a5efc",
+        "0xfffffe00094a5f00",
+        "0xfffffe00094a5f0c",
+        "0xfffffe00094a5f10",
+        "0xfffffe00094a5f20",
+        "0xfffffe00094a5f24",
+        "0xfffffe00094a5f28",
+        "0xfffffe00094a5f2c",
+        "0xfffffe00094a5f30",
+        "0xfffffe00094a5f3c",
+        "0xfffffe00094a5f40",
+        "0xfffffe00094a5f44",
+        "0xfffffe00094a5f48",
+        "0xfffffe00094a5f4c",
+        "0xfffffe00094a5f50",
+        "0xfffffe00094a5f54"
+      ],
+      "pseudocode_gate": "rejected_cross_boundary",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "memory29-clock",
+      "llvm_instruction_words_verified": 103,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_c06d694d36e65e578b8a08f84c6911cfb4fa30ba4d0fc32cc671a79a5bdbaf4d",
+      "member": "com.apple.driver.ApplePMGR",
+      "function": "__ZN9ApplePMGR21readMPMGRClkGenSOCRegEj",
+      "body_anchors": [
+        {
+          "start": "0xfffffe0009499c7c",
+          "end_inclusive": "0xfffffe0009499cbb",
+          "carrier_offset": 38362236,
+          "derived_offset": 217468,
+          "bytes": 64,
+          "sha256": "17d6b2f7ff0acbf38ddb38066a3f3b31d8b36fe8f63e976b8af0a455cb069d3c"
+        }
+      ],
+      "assembly_instructions": 16,
+      "original_bytes_verified": true,
+      "pcode_operations": 7,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [
+        "unresolved_indirect_jump"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "memory29-socread",
+      "llvm_instruction_words_verified": 16,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_fc14275a066fcf38305ff34a02399bda56719bc9fd58fb84f7850d62b91339e5",
+      "member": "com.apple.driver.ApplePMGR",
+      "function": "__ZN9ApplePMGR22writeMPMGRClkGenSOCRegEjj",
+      "body_anchors": [
+        {
+          "start": "0xfffffe0009499cbc",
+          "end_inclusive": "0xfffffe0009499cff",
+          "carrier_offset": 38362300,
+          "derived_offset": 217532,
+          "bytes": 68,
+          "sha256": "e4c1dfd455ab69fda00d5b60a5e16a7271d6bb832accb6ff7c866f2149cda585"
+        }
+      ],
+      "assembly_instructions": 17,
+      "original_bytes_verified": true,
+      "pcode_operations": 7,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [
+        "unresolved_indirect_jump"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "memory29-socwrite",
+      "llvm_instruction_words_verified": 17,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_6ddceb962aec91ddc9b76979748c8df49e3265bb0a158eafd4c5cdac3f4f3433",
+      "member": "com.apple.driver.AppleT6050PMGR",
+      "function": "__ZN14AppleT6050PMGR13initRegGroupsEv",
+      "body_anchors": [
+        {
+          "start": "0xfffffe000987f094",
+          "end_inclusive": "0xfffffe000987f167",
+          "carrier_offset": 42446996,
+          "derived_offset": 14644,
+          "bytes": 212,
+          "sha256": "d2246aa6b61fa1c125f989d3d276a50f57ed275c8614bdcf9c0355d3ec99804b"
+        }
+      ],
+      "assembly_instructions": 53,
+      "original_bytes_verified": true,
+      "pcode_operations": 1,
+      "pcode_outside_body": 1,
+      "outside_addresses": [
+        "0xfffffe000947d5d0"
+      ],
+      "pseudocode_gate": "rejected_cross_boundary",
+      "decompiler_warning_classes": [
+        "bad_instruction_or_truncated_control_flow",
+        "provider_removed_blocks"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "memory29-reggroups",
+      "llvm_instruction_words_verified": 53,
+      "llvm_unknown_instructions": []
+    }
+  ],
+  "limits": [
+    "Static consistency only, not semantic or runtime equivalence",
+    "Rejected pseudocode cannot guide implementation; manual gates are not passes"
+  ]
+}

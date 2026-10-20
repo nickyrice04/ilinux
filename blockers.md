@@ -3,6 +3,21 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
+## Current preparation — attempt29 isolates memory effects
+
+Offline bundle and launcher validation PASS; native memory29 readings remain
+NOT RUN. Before selecting a CPU/fabric change, inspect live architectural cache
+attributes and page/locality effects on the observed CPU0. The macOS reference
+is highly QoS/placement-dependent, so attempt28's large-load latency does not
+alone prove an OS memory fault. DCS request path identified by bounded REA;
+physical register mapping and actual memory-clock telemetry remain unknown.
+
+M1 follows `tools/m1n1-client/attempt29-instructions.md`, receiving only the
+143,360-byte new bundle and retaining the working attempt28 image pair. M1
+readiness and human start precede reboot. No native speedup or parity claim.
+SMP/performance-core entry, graphics, thermal/idle, N1 and persistence remain
+open. Original macOS/boot settings unchanged; routine checks stay waived.
+
 ## Latest native evidence — attempt 28, 2026-10-20
 
 The explicit no-write CPU module initializes: policy0/userspace, command
