@@ -1945,3 +1945,30 @@ allocation advice only; CPU28 remains unloaded, no clock/controller/global VM
 or settings change. A hint is not huge backing and a page-local result is not
 pure TLB attribution. Preserve fixed600s return and waived routine policy checks.
 Evidence: `native/boot/attempt29-m1-offline-2026-10-20.md`.
+
+
+### 2026-10-20 · Consume attempt29; normal sampled attributes and huge backing do not identify desktop causality
+
+**Attempt29 consumed: one native memory-observation boot/root send/bundle load PASS.**
+Execution `41e34a6`; final `MEMORY_OBSERVED`, no frequency or global VM writes,
+CPU28 module unloaded, one CPU. Sampled MMU/cache/stack attributes normal;
+32/128 MiB huge-advice allocations report full huge backing. Global-random
+base/huge medians 335.221/331.144 ns and 350.004/339.354 ns; page-local about 90–95 ns.
+All 48 samples retained with backing/fault/switch/placement counters; no matched
+macOS or desktop-causality claim. CPU estimate 2.651/2.649 GHz, no thermal/energy
+telemetry. Human: accurate typing, massive application delay remains; zero menu
+pollers before/after. No kernel fault or M1 panic observed. Macintosh HD return
+confirmed at +321.424/600 s; owned processes ended. No retry, settings, policy,
+volume, frequency/controller/global-VM, SMP, Wi-Fi or storage operation. Routine
+policy checks waived; last reported Full/Permissive/default retained. Evidence:
+`native/boot/stage-b-2026-10-20-attempt29-result.md`; full sanitized 48-sample data:
+`native/boot/attempt29/native-observation.json`.
+
+The human authorized the one filmed run after readiness. Reused pair/boot042
+and explicit architectural bundle completed without loading CPU28. The page-
+local layout changes cache and translation locality together; AnonHugePages
+is measured backing, not proof of a hardware-TLB mechanism. Preserve all 48 rows
+and clock/QoS/compiler/thermal limits. No global THP or clock change is selected.
+M5 reviews offline before proposing any controlled follow-up, SMP/core or
+renderer work. Keep the existing installed entry, original macOS and waived
+routine policy checks. No automatic retry or additional setup.

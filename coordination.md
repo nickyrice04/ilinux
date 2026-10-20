@@ -6,7 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 offline readiness — attempt29 memory isolation, 2026-10-20
+### Current M1 native result — attempt29 consumed, 2026-10-20
+
+**Attempt29 consumed: one native memory-observation boot/root send/bundle load PASS.**
+Execution `41e34a6`; final `MEMORY_OBSERVED`, no frequency or global VM writes,
+CPU28 module unloaded, one CPU. Sampled MMU/cache/stack attributes normal;
+32/128 MiB huge-advice allocations report full huge backing. Global-random
+base/huge medians 335.221/331.144 ns and 350.004/339.354 ns; page-local about 90–95 ns.
+All 48 samples retained with backing/fault/switch/placement counters; no matched
+macOS or desktop-causality claim. CPU estimate 2.651/2.649 GHz, no thermal/energy
+telemetry. Human: accurate typing, massive application delay remains; zero menu
+pollers before/after. No kernel fault or M1 panic observed. Macintosh HD return
+confirmed at +321.424/600 s; owned processes ended. No retry, settings, policy,
+volume, frequency/controller/global-VM, SMP, Wi-Fi or storage operation. Routine
+policy checks waived; last reported Full/Permissive/default retained. Evidence:
+`native/boot/stage-b-2026-10-20-attempt29-result.md`; full sanitized 48-sample data:
+`native/boot/attempt29/native-observation.json`.
+
+M5 next: review normal attributes, actual huge backing and locality separately;
+no live repeat or global memory policy change. Keep software rendering, actual
+boot-core/SMP and memory/DCS lifecycle as distinct offline investigations.
+The source-pinned attempt29 checklist is retained unchanged for provenance;
+this current result supersedes its NOT RUN heading and prevents replay.
+
+
+### Historical M1 offline readiness — attempt29 memory isolation, 2026-10-20
 
 M1 pulled handoff **`b828d42`** and verified the supplied **143,360-byte**
 `memory29.tar`, SHA-256 **`561b6395…4f714`**: exactly four regular members,
@@ -29,7 +53,7 @@ attempt29 checklist is itself source-pinned; readiness publication leaves it
 and the complete source-pin set unchanged. No live work starts from this report.
 
 
-### Current M5 handoff — attempt29 memory isolation, 2026-10-20
+### Historical M5 handoff — attempt29 memory isolation, 2026-10-20
 
 Attempt28 (`ee44dca`) observed CPU0/sotra-m near 2.65 GHz with no frequency
 writes; memory and desktop latency remain open. The next package preserves its

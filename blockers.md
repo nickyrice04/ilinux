@@ -1,5 +1,31 @@
 # Blockers
 
+## Current status — attempt29 memory observations do not resolve desktop delay
+
+**Attempt29 consumed: one native memory-observation boot/root send/bundle load PASS.**
+Execution `41e34a6`; final `MEMORY_OBSERVED`, no frequency or global VM writes,
+CPU28 module unloaded, one CPU. Sampled MMU/cache/stack attributes normal;
+32/128 MiB huge-advice allocations report full huge backing. Global-random
+base/huge medians 335.221/331.144 ns and 350.004/339.354 ns; page-local about 90–95 ns.
+All 48 samples retained with backing/fault/switch/placement counters; no matched
+macOS or desktop-causality claim. CPU estimate 2.651/2.649 GHz, no thermal/energy
+telemetry. Human: accurate typing, massive application delay remains; zero menu
+pollers before/after. No kernel fault or M1 panic observed. Macintosh HD return
+confirmed at +321.424/600 s; owned processes ended. No retry, settings, policy,
+volume, frequency/controller/global-VM, SMP, Wi-Fi or storage operation. Routine
+policy checks waived; last reported Full/Permissive/default retained. Evidence:
+`native/boot/stage-b-2026-10-20-attempt29-result.md`; full sanitized 48-sample data:
+`native/boot/attempt29/native-observation.json`.
+
+Normal sampled cacheability and actual larger huge backing do not prove whole-
+system memory health or isolate TLB/cache/controller causes. Small fixed-order
+base/huge differences need controlled replication before attribution. One core,
+software rendering, absent power/thermal data, independent N1 Wi-Fi and ANS
+storage remain open. The diagnostics need no on-boot repair; the attempt is
+consumed. Preserve the two local parsing mistakes and userspace warnings in
+the result. No source/gate repair or target retry occurred.
+
+
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
