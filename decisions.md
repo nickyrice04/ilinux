@@ -1772,3 +1772,18 @@ transferred images. After offline readiness, use the established fresh-M1-
 restart/cable-reseat procedure before the next human-started attempt. Keep the
 M5 in macOS while intake is pending. Native attempt 27/live checks remain
 NOT RUN; no policy, volume, firmware or bootloader change is authorized here.
+
+### 2026-10-20 · M1 accepts the verified pair while retaining test failures and coverage limits
+
+Both privately transferred files equal the public pair pins, including the
+embedded root/kernel/count/size metadata; boot042 and the launcher remain
+unchanged. Record offline readiness without a live launch. Preserve initial
+test failures: the stale source-label spacing assertion is corrected, and the
+known USB test close race is made deterministic by waiting for device EOF
+before closing SSH stdin. Neither changes production transport or launcher.
+Two absent legacy fixtures remain skipped; macOS sshd cases are handshake-only.
+The system LibreSSL TLS handshake fails without the proxy too; the unchanged
+proxy suite passes under the existing bundled OpenSSL runtime. No host install
+or TLS-verification relaxation. Native readiness still requires the fresh M1
+restart/cable/unlocked procedure, fresh read-only M5 protection/default check
+and human start. Keep CPU/SMP/storage work separate from the two-stage delivery.

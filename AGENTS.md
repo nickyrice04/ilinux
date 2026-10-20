@@ -99,6 +99,16 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+Latest M1 milestone (2026-10-20): **attempt 27 offline ready with documented
+test limits**, both privately transferred images match the published pair;
+boot042/intake/launcher/client/helper digests and offline SSH entries PASS.
+215 methods PASS, 2 legacy-fixture skips; initial assertion/race and system
+LibreSSL TLS failure documented, two test-only fixes, proxy suite PASS on bundled
+OpenSSL. See `native/boot/attempt27-m1-offline-2026-10-20.md`. **Native/live NOT
+RUN, attempts=0.** Next: fresh M1 restart/cable/unlocked procedure, fresh read-only
+M5 Full/Permissive/original-default checks and human start. No settings/storage/
+DVFS/SMP action. Both images remain private in ignored build/attempt27.
+
 ### Active continuation — 2026-10-19
 
 Current baseline is `75411ec`, attempt 26 on boot042: native Omarchy, USB/SSH

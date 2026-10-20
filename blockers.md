@@ -37,8 +37,12 @@ compiles and passes its offline tests, with no measured native speed, power or
 thermal result. SMP evidence confirms the start-mask stride problem but leaves
 raw entry unknown. Job049 has now passed both rejection/switch and fresh normal-path VM runs
 on the new pair. Commit/publication review was approved on 2026-10-20.
-Attempt 27 still needs M1 intake,
-fresh read-only policy/default confirmation and the human's start. Native USB
+M1 offline attempt-27 intake now passes with documented test limits (215 methods
+pass, two legacy-fixture skips; system LibreSSL test limitation, bundled OpenSSL
+proxy pass; test-only source-label and device-EOF race fixes). Both image hashes
+and embedded pairing agree. Still needs fresh M1 restart/cable procedure, fresh
+read-only M5 policy/default confirmation and the human's start. Native/live NOT
+RUN. See `native/boot/attempt27-m1-offline-2026-10-20.md`. Native USB
 rebind and automatic keyboard startup remain untested. The VM also retains earlier hardware-provisioning, UFW and document
 portal failures. See `native/boot/subagent-review-2026-10-19.md` and
 `native/boot/attempt27-two-stage-validation.md`.

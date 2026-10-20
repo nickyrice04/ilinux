@@ -5,6 +5,42 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M1: attempt 27 pair verified; offline ready with test limits
+
+* Pulled published handoff through **`4b63b82`** (includes `37fd9b5`). Both
+  files supplied at the repository root match the published size/hash before
+  being moved into ignored `build/attempt27/`; prior images preserved.
+  Stage one **59,630,835 bytes / `84c01f53…06ed3`**, root **2,435,460,021 bytes /
+  `5eaa2fdb…6d345`**. Pair verifier PASS, embedded kernel/root/count/16-KiB-size
+  pin agrees with Git: 215,513 entries / 11,012,489,216 bytes.
+* Retained boot042 archive and **13-file intake PASS**. Clean client remains
+  pinned `57a9339`; installed boot021 and launcher **`b14ec7a1…e0740`** unchanged.
+  Exact seven-line RAM-root offline launcher and sender dry-run PASS; neither
+  USB nor an M5 SSH session opened. Upload 104,310,566 bytes/300s bound is an estimate.
+* **215 test methods PASS, 2 SKIPPED** after two test-only fixes: controller 102,
+  pair 8, sender 18, RAM-root 43/45 (legacy boot035/040 fixtures absent), USB-pipe 15,
+  proxy 16 on bundled Python/OpenSSL, clock 13. Initial source-label assertion
+  and known socket-close race preserved in logs; optional-space assertion and
+  deterministic device-EOF wait fix only tests, not launcher/transport behavior.
+* System Python 3.9/LibreSSL proxy TLS test fails even in a direct no-proxy
+  handshake; unchanged proxy suite passes on bundled Python 3.12/OpenSSL 3.5.8.
+  macOS unprivileged sshd cases report handshake-only coverage; ResourceWarnings
+  retained. No runtime install, TLS-policy weakening or global setting change.
+* Reader/USB-pipe binaries and source/proxy/clock digests equal attempt 26;
+  derived public key matches authorized_keys. Offline SSH config checks PASS:
+  root/m5s and omarchy/m5o have separate known_hosts, no stage-one forwarding,
+  intended stage-two loopback relay. Existing host keys retained for now.
+* Sanitized report: `native/boot/attempt27-m1-offline-2026-10-20.md`.
+  Private receipts/logs/readiness record under `build/native-intake/attempt27/`.
+  M1 checked hashes/embedded pin, not full image extraction or native behavior;
+  M5's VM/content evidence is separate.
+* **Offline ready with documented test limits. Native attempt 27/live checks/
+  stage-two transfer NOT RUN; attempts=0.** Next: fresh M1 restart, cable re-seat,
+  power/unlocked/open lid/recording, fresh read-only M5 original Full/lab
+  Permissive/original-default confirmation, then human start. Keep M5 in macOS
+  until then. No storage, DVFS/SMP or settings change; storage remains attempt 28.
+
+
 ## 2026-10-20 · M5: reviewed work committed and pushed; M1 offline intake next
 
 * **Published:** offline CPU/SMP research `3483816`; attempt-27 delivery,
