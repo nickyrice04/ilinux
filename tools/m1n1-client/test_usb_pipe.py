@@ -206,6 +206,9 @@ class RelayTests(unittest.TestCase):
         try:
             t.device.sendall(b"bye")
             t.device.shutdown(socket.SHUT_WR)
+            # finish() closes ssh's stdin too. Let device EOF win first so
+            # the assertion tests device shutdown rather than two racing ends.
+            self.assertEqual(t.proc.wait(timeout=5), 0)
             rc, out, err = t.finish()
             self.assertEqual(rc, 0, err)
             self.assertEqual(out, b"bye")

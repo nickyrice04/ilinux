@@ -722,7 +722,7 @@ class RamrootFileTests(unittest.TestCase):
         self.refuse("not a zstd frame")
 
     def test_repository_records(self):
-        """Each RAM-root profile reads its own pin; job 045's is the attempt-26 image, VM-tested on boot042."""
+        """Each RAM-root profile reads its own pin; job 045's image is VM-tested on boot042."""
         for name, path in (("ramroot", HERE / "ramroot-manifest.json"),
                            ("omarchy", HERE / "omarchy-root-manifest.json")):
             with self.subTest(profile=name):
@@ -735,7 +735,7 @@ class RamrootFileTests(unittest.TestCase):
                     self.assertRegex(record[key], "^[0-9a-f]{64}$")
         self.assertEqual(OMARCHY_RECORD["image_sha256"], BOOT042_IMAGE_SHA256)   # built for boot042's Image
         self.assertGreater(OMARCHY_RECORD["size"], 1024**3)   # the full root: the 3 GiB heap is why the profile exists
-        self.assertTrue(OMARCHY_RECORD["source"].startswith("VM job 045"))
+        self.assertRegex(OMARCHY_RECORD["source"], r"^VM job ?045\b")
         self.assertEqual((launch.RAMROOT_RECORD.name, launch.OMARCHY_RECORD.name),
                          ("ramroot-manifest.json", "omarchy-root-manifest.json"))
 
