@@ -6,6 +6,29 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 offline readiness — attempt29 memory isolation, 2026-10-20
+
+M1 pulled handoff **`b828d42`** and verified the supplied **143,360-byte**
+`memory29.tar`, SHA-256 **`561b6395…4f714`**: exactly four regular members,
+all member/manifest hashes PASS, collector byte-identical to Git. Verified and
+moved the bundle into ignored build/attempt29; retained attempt28 pair freshly
+rehashed with embedded pins PASS. Boot042 13 files, all30 new source pins,
+new memory-observe offline launcher/sender, client `57a9339`, eleven helper
+pins and SSH/key/no-forwarding checks PASS. **106 M1 methods PASS / 2 absent
+legacy-fixture SKIPS**, no fixes needed. **Native/live/module/collection NOT
+RUN; launches=0, root/bundle sends=0; no real window armed.** Next: fresh M1
+restart/cable/power/unlocked/recording procedure and explicit human start.
+Routine policy checks waived; no boot/settings/volume or hardware change.
+Evidence: `native/boot/attempt29-m1-offline-2026-10-20.md`.
+
+One later native memory collection only: CPU28 module remains unloaded, bundle
+received only into verified tmpfs, root journal-key gate before collection,
+fixed600s switch-time deadline and human return timer. No memory-controller or
+frequency operation is selected. Do not replay consumed attempts27/28. The
+attempt29 checklist is itself source-pinned; readiness publication leaves it
+and the complete source-pin set unchanged. No live work starts from this report.
+
+
 ### Current M5 handoff — attempt29 memory isolation, 2026-10-20
 
 Attempt28 (`ee44dca`) observed CPU0/sotra-m near 2.65 GHz with no frequency

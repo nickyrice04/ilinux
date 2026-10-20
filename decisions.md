@@ -1927,3 +1927,21 @@ intake/human start precedes execution. Preserve original macOS, boot/security/
 volume settings and the waived routine-policy checks. Public Git contains only
 original code, sanitized evidence and behavioral REA findings; private inputs,
 images and the VM-only identity-bypass control remain excluded.
+
+
+### 2026-10-20 · Accept M1 attempt29 offline intake while preserving native unknowns
+
+The supplied small bundle equals the published hash; all four regular members
+and embedded asset hashes verify, with collector source byte-identical to Git.
+Retained attempt28 pair, boot042, all30 source pins and helper/key checks pass;
+106 requested M1 methods pass, two absent legacy fixtures remain skipped.
+No code/test repair, extraction/execution of the archive or live connection
+was needed. M5's separate VM/macOS/REA claims and retained failures are not
+relabeled as independently repeated M1 or native results.
+
+Stop at readiness: launches/root sends/bundle sends zero, no real window armed.
+The later human-started run permits architectural observation and local
+allocation advice only; CPU28 remains unloaded, no clock/controller/global VM
+or settings change. A hint is not huge backing and a page-local result is not
+pure TLB attribution. Preserve fixed600s return and waived routine policy checks.
+Evidence: `native/boot/attempt29-m1-offline-2026-10-20.md`.

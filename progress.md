@@ -5,6 +5,30 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M1: attempt29 memory bundle verified; offline ready
+
+M1 pulled handoff **`b828d42`** and verified the supplied **143,360-byte**
+`memory29.tar`, SHA-256 **`561b6395…4f714`**: exactly four regular members,
+all member/manifest hashes PASS, collector byte-identical to Git. Verified and
+moved the bundle into ignored build/attempt29; retained attempt28 pair freshly
+rehashed with embedded pins PASS. Boot042 13 files, all30 new source pins,
+new memory-observe offline launcher/sender, client `57a9339`, eleven helper
+pins and SSH/key/no-forwarding checks PASS. **106 M1 methods PASS / 2 absent
+legacy-fixture SKIPS**, no fixes needed. **Native/live/module/collection NOT
+RUN; launches=0, root/bundle sends=0; no real window armed.** Next: fresh M1
+restart/cable/power/unlocked/recording procedure and explicit human start.
+Routine policy checks waived; no boot/settings/volume or hardware change.
+Evidence: `native/boot/attempt29-m1-offline-2026-10-20.md`.
+
+* Tests: two observation profiles 38, earlier profiles 43 PASS / 2 SKIP,
+  bundle/decoder 12, M1 collector 13. All four suite processes exit0.
+* Native architectural values, actual huge backing and memory matrix remain
+  unobserved. M5's macOS/REA/VM evidence and failures remain separately labeled;
+  no native speedup, memory-fault attribution or OS parity claim.
+* Both existing images and prior run evidence preserved; no bundle member
+  extracted/executed on M1, no USB/M5 SSH session or real deadline window.
+
+
 ## 2026-10-20 · M5: attempt29 memory isolation prepared after attempt28
 
 * **Reviewed:** M1 `ee44dca`: state6/2.652GHz mapping, ~2.65GHz estimate,

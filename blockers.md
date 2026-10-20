@@ -14,7 +14,12 @@ physical register mapping and actual memory-clock telemetry remain unknown.
 
 M1 follows `tools/m1n1-client/attempt29-instructions.md`, receiving only the
 143,360-byte new bundle and retaining the working attempt28 image pair. M1
-readiness and human start precede reboot. No native speedup or parity claim.
+readiness on `b828d42` now PASS: exact bundle/four member hashes, retained
+pair/package, source pins, 106 methods PASS / 2 legacy-fixture skips, helper/key
+checks. Offline blockers: none for this scope. Native readings still NOT RUN;
+no real window armed. Fresh M1 restart/cable procedure and human start precede
+one attempt. See `native/boot/attempt29-m1-offline-2026-10-20.md`.
+No native speedup or parity claim.
 SMP/performance-core entry, graphics, thermal/idle, N1 and persistence remain
 open. Original macOS/boot settings unchanged; routine checks stay waived.
 
