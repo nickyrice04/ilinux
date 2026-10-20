@@ -25,9 +25,14 @@ separate CPU experiment; the old storage-attempt-28 assignment is superseded.
 
 Attempt 28 build/controller tests pass; exact-pair VM boot validation PASS;
 the first harness-only failure is retained in the validation record.
-M1 intake of both new images and human start precede a restart. Native/live
-checks remain NOT RUN. Follow `tools/m1n1-client/attempt28-instructions.md`;
-there is no new policy/settings change or routine check.
+M1 intake on `7c757eb` is now PASS: exact new pair/embedded pins and assets,
+13 package files, 15 source pins, 154 test methods PASS / 2 legacy fixture
+SKIPS, helper/key/SSH checks PASS. Offline blockers: none for this scope.
+Native/live/module checks remain NOT RUN; actual boot-core state, policy and
+thermal data remain unknown. See `native/boot/attempt28-m1-offline-2026-10-20.md`.
+Fresh M1 restart/cable procedure and explicit human start still precede one
+attempt under `tools/m1n1-client/attempt28-instructions.md`; no new policy/
+settings change or repeated routine check.
 
 ## Current status — attempt 27 delivery works; desktop latency remains open
 

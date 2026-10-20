@@ -1867,3 +1867,21 @@ remote and local process bounds, and require a human-visible return timer.
 Keep native/live NOT RUN until the human starts after M1 offline intake.
 No repeat boot-policy check, original macOS/settings change, raw-data upload
 or proprietary code publication. Exact scope: `tools/m1n1-client/attempt28-instructions.md`.
+
+
+### 2026-10-20 · M1 accepts attempt-28 offline readiness without claiming a native clock
+
+The published pair, embedded CPU asset manifest, boot042 package, source pins
+and requested independent M1 tests pass; retain two absent old-profile fixtures
+as skips. Current CPU-profile exact-payload/fake-handoff tests executed. Keep
+M5's earlier VM harness failure and fresh normal-path pass distinct from these
+M1 results and from native module initialization. No source repair or live
+request was made during intake. Evidence:
+`native/boot/attempt28-m1-offline-2026-10-20.md`.
+
+Stop at offline readiness: attempts/sends zero, live checks NOT RUN, no real
+observation window armed. The one human-started observation keeps immutable
+writes=false/cap=0, checked root key before collection and the fixed switch-time
+deadline/human return timer. Unknown OPP or absent telemetry permits no added
+experiment. Waived routine policy rechecks remain waived; no restart or boot/
+security/volume change is implied by readiness publication.

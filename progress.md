@@ -5,6 +5,32 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M1: attempt 28 CPU-observation offline ready
+
+M1 pulled published handoff **`7c757eb`** and independently verified both new
+images: stage one **60,671,683 bytes / `65ea3815…08c39`**, root
+**2,469,319,544 bytes / `59a7383e…fb2b78`**, embedded pairing and byte-identical
+CPU asset manifest. Boot042's 13 files, all 15 source pins, cpu-observe offline
+launcher/sender, clean `57a9339` client, helper/key/no-forwarding checks PASS.
+**154 M1 test methods PASS, 2 old boot035/040 fixture SKIPS**; no production or
+test source changes. Native attempt 28, live target-version checks, CPU module
+load and measurements **NOT RUN; attempts=0, sends=0**. No real window armed.
+Offline ready with documented limits; next is the fresh M1 restart/cable/power/
+unlocked/recording procedure and explicit human start. Routine policy rechecks
+remain waived; Macintosh HD/default/security and all volume settings unchanged.
+No frequency/voltage writes, SMP, storage, Wi-Fi or setup action. Evidence:
+`native/boot/attempt28-m1-offline-2026-10-20.md`.
+
+* Tests: CPU profile 19, earlier profiles 43 PASS / 2 SKIP, native collector 12,
+  M1 key/deadline collector 11, pair 8, sender 18, launcher/ADT 43 PASS.
+* Old fixtures remain absent; inherited helper test limits and M5's initial VM
+  harness failure remain documented, not relabeled. Initial local receipt-status
+  assertion corrected only the intake harness; no checksum/test failure.
+* CPU module initialization, actual MPIDR/requested OPP, independent short
+  work/memory estimates and any thermal data still need the authorized native
+  observation. No restart, USB connection, module load or frequency request yet.
+
+
 
 ## 2026-10-20 · M5: attempt 28 CPU observation ready for M1 offline intake
 
