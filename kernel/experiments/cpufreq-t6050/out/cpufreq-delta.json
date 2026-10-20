@@ -1,0 +1,271 @@
+{
+ "base_sha256": "17c55af9eb39ea799e254335176e9748193237dce3735f59cd286a63ea0a0405",
+ "base_known_as": "boot042 Stage-B (job 050)",
+ "out_sha256": "aa9731d1ba8246a9441a85dcbf59bf65cfe82c7a8d33439e9d2cdc40cb0ee725",
+ "out_size": 63383,
+ "controllers_enabled": [
+  "/soc/performance-controller@210e20000",
+  "/soc/performance-controller@211e20000",
+  "/soc/performance-controller@212e20000"
+ ],
+ "opp_level": "row + 2 (was row + 1)",
+ "levels": {
+  "0": [
+   {
+    "opp": "opp01",
+    "hz": 1344000000,
+    "level": 2
+   },
+   {
+    "opp": "opp02",
+    "hz": 1644000000,
+    "level": 3
+   },
+   {
+    "opp": "opp03",
+    "hz": 1992000000,
+    "level": 4
+   },
+   {
+    "opp": "opp04",
+    "hz": 2304000000,
+    "level": 5
+   },
+   {
+    "opp": "opp05",
+    "hz": 2652000000,
+    "level": 6
+   },
+   {
+    "opp": "opp06",
+    "hz": 2964000000,
+    "level": 7
+   },
+   {
+    "opp": "opp07",
+    "hz": 3240000000,
+    "level": 8
+   },
+   {
+    "opp": "opp08",
+    "hz": 3504000000,
+    "level": 9
+   },
+   {
+    "opp": "opp09",
+    "hz": 3696000000,
+    "level": 10
+   },
+   {
+    "opp": "opp10",
+    "hz": 3876000000,
+    "level": 11
+   },
+   {
+    "opp": "opp11",
+    "hz": 4044000000,
+    "level": 12
+   },
+   {
+    "opp": "opp12",
+    "hz": 4176000000,
+    "level": 13
+   },
+   {
+    "opp": "opp13",
+    "hz": 4284000000,
+    "level": 14
+   },
+   {
+    "opp": "opp14",
+    "hz": 4308000000,
+    "level": 15
+   },
+   {
+    "opp": "opp15",
+    "hz": 4380000000,
+    "level": 16
+   }
+  ],
+  "1": [
+   {
+    "opp": "opp01",
+    "hz": 1344000000,
+    "level": 2
+   },
+   {
+    "opp": "opp02",
+    "hz": 1644000000,
+    "level": 3
+   },
+   {
+    "opp": "opp03",
+    "hz": 1992000000,
+    "level": 4
+   },
+   {
+    "opp": "opp04",
+    "hz": 2304000000,
+    "level": 5
+   },
+   {
+    "opp": "opp05",
+    "hz": 2652000000,
+    "level": 6
+   },
+   {
+    "opp": "opp06",
+    "hz": 2964000000,
+    "level": 7
+   },
+   {
+    "opp": "opp07",
+    "hz": 3240000000,
+    "level": 8
+   },
+   {
+    "opp": "opp08",
+    "hz": 3504000000,
+    "level": 9
+   },
+   {
+    "opp": "opp09",
+    "hz": 3696000000,
+    "level": 10
+   },
+   {
+    "opp": "opp10",
+    "hz": 3876000000,
+    "level": 11
+   },
+   {
+    "opp": "opp11",
+    "hz": 4044000000,
+    "level": 12
+   },
+   {
+    "opp": "opp12",
+    "hz": 4176000000,
+    "level": 13
+   },
+   {
+    "opp": "opp13",
+    "hz": 4284000000,
+    "level": 14
+   },
+   {
+    "opp": "opp14",
+    "hz": 4308000000,
+    "level": 15
+   },
+   {
+    "opp": "opp15",
+    "hz": 4380000000,
+    "level": 16
+   }
+  ],
+  "2": [
+   {
+    "opp": "opp01",
+    "hz": 1308000000,
+    "level": 2
+   },
+   {
+    "opp": "opp02",
+    "hz": 1620000000,
+    "level": 3
+   },
+   {
+    "opp": "opp03",
+    "hz": 1980000000,
+    "level": 4
+   },
+   {
+    "opp": "opp04",
+    "hz": 2292000000,
+    "level": 5
+   },
+   {
+    "opp": "opp05",
+    "hz": 2580000000,
+    "level": 6
+   },
+   {
+    "opp": "opp06",
+    "hz": 2880000000,
+    "level": 7
+   },
+   {
+    "opp": "opp07",
+    "hz": 3180000000,
+    "level": 8
+   },
+   {
+    "opp": "opp08",
+    "hz": 3432000000,
+    "level": 9
+   },
+   {
+    "opp": "opp09",
+    "hz": 3648000000,
+    "level": 10
+   },
+   {
+    "opp": "opp10",
+    "hz": 3828000000,
+    "level": 11
+   },
+   {
+    "opp": "opp11",
+    "hz": 3984000000,
+    "level": 12
+   },
+   {
+    "opp": "opp12",
+    "hz": 4104000000,
+    "level": 13
+   },
+   {
+    "opp": "opp13",
+    "hz": 4188000000,
+    "level": 14
+   },
+   {
+    "opp": "opp14",
+    "hz": 4236000000,
+    "level": 15
+   },
+   {
+    "opp": "opp15",
+    "hz": 4284000000,
+    "level": 16
+   },
+   {
+    "opp": "opp16",
+    "hz": 4308000000,
+    "level": 17
+   },
+   {
+    "opp": "opp17",
+    "hz": 4332000000,
+    "level": 18
+   },
+   {
+    "opp": "opp18",
+    "hz": 4428000000,
+    "level": 19
+   },
+   {
+    "opp": "opp19",
+    "hz": 4512000000,
+    "level": 20
+   },
+   {
+    "opp": "opp20",
+    "hz": 4608000000,
+    "level": 21
+   }
+  ]
+ },
+ "nvme_status": "disabled"
+}

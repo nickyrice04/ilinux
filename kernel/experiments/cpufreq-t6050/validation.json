@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-19",
+  "scope": "Offline candidate only; no deployment or hardware execution",
+  "base": "boot042",
+  "base_source_sha256": "e4efe79b653dc07c18a2bacc607fe69f8144ead11bf10cd4ef9407396ca808d2",
+  "base_dtb_sha256": "17c55af9eb39ea799e254335176e9748193237dce3735f59cd286a63ea0a0405",
+  "candidate_dtb_sha256": "aa9731d1ba8246a9441a85dcbf59bf65cfe82c7a8d33439e9d2cdc40cb0ee725",
+  "candidate_dtb_size": 63383,
+  "patch_sha256": "71dce67c5a913d4f9a76c6af401542ad8e193ff20eea2f0b571a627c538040f9",
+  "host_checks": {
+    "test_make_cpufreq_dt": {
+      "status": "PASS",
+      "methods": 5
+    },
+    "test_allowance": {
+      "status": "PASS",
+      "methods": 5
+    },
+    "test_measurement": {
+      "status": "PASS",
+      "methods": 2
+    },
+    "patch_fuzz_zero_dry_run": "PASS",
+    "python_syntax": "PASS",
+    "shell_syntax": "PASS",
+    "public_hygiene": "PASS"
+  },
+  "vm_checks": {
+    "status": "PASS",
+    "recipe": "virtualization/jobs/051-cpufreq-t6050/run.sh",
+    "start_utc": "2026-10-20T03:26:55Z",
+    "end_utc": "2026-10-20T03:26:57Z",
+    "exit_code": 0,
+    "vm_kernel": "Linux 7.1.6-vzrun2 aarch64",
+    "target_vermagic": "7.1.9-g863199d8b4a3-dirty SMP preempt mod_unload aarch64",
+    "compiler": "GCC 16.1.1 20260430",
+    "binutils": "2.46.0",
+    "dtc": "1.8.1",
+    "python": "3.14.8",
+    "build": "external module against exact boot042 generated headers and Module.symvers; W=1",
+    "build_warning_error_lines": 0,
+    "callback_cases": 16,
+    "callback_sanitizers": [
+      "AddressSanitizer",
+      "UndefinedBehaviorSanitizer"
+    ],
+    "regression_mutants_rejected": 6,
+    "python_methods": 12,
+    "dtc_warning_bytes": 0,
+    "schema_document_warning_bytes": 0,
+    "cpufreq_schema_warning_bytes": 0,
+    "full_board_schema_claim": false,
+    "base_image_unchanged": true,
+    "base_config_unchanged": true,
+    "module_loaded": false,
+    "module_sha256": "97e358b27e94be5efd0d3d7d2c1c99ff314e22da9c2586de713dd8299ee17054",
+    "module_size": 84824,
+    "base_image_sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
+    "base_config_sha256": "4f137b37f299d12da7b051e3185532cb34c80482c4f6aee7f6148c37bd9f09f9",
+    "notes": [
+      "First run compiled/tested successfully but dt-doc-validate warned of an $id/path mismatch. Recipe now stages schema under its matching cpufreq path and treats any schema-document warning as failure. First outputs preserved locally under ignored out/runs/first-schema-path-warning/.",
+      "Python suites emit an inherited ResourceWarning from the unchanged ADT loader; all tests pass.",
+      "No physical register access or native boot."
+    ]
+  },
+  "native": {
+    "status": "NOT RUN",
+    "measured_frequency": null,
+    "power_watts": null,
+    "thermal_validation": null,
+    "efficiency": null
+  },
+  "production_launcher_changed": false,
+  "host_boot_changes": false
+}

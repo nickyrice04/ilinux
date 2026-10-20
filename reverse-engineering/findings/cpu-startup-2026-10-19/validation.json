@@ -1,0 +1,129 @@
+{
+  "date": "2026-10-19",
+  "scope": "offline static recovery; no new REA execution, VM or hardware access",
+  "artifacts": [
+    {
+      "artifact": "AppleT6050PMGR",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "bytes": 125768
+    },
+    {
+      "artifact": "ApplePMGR",
+      "sha256": "a74c641b1445c3347d72840a95a08cdff344a14fed8700c2ff9fb75a0a4d0b0f",
+      "bytes": 760600
+    },
+    {
+      "artifact": "AppleARMPlatform",
+      "sha256": "f8cba09002b9aa694750fcbd53370611801cce67cb030ccb5b8413cbb8fe6932",
+      "bytes": 815112
+    },
+    {
+      "artifact": "kernel.release.t6050",
+      "sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "bytes": 17168528
+    },
+    {
+      "artifact": "sptm.t6050.bin",
+      "sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "bytes": 1376288
+    }
+  ],
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "register_group_recheck": {
+    "function": "AppleT6050PMGR::initRegGroups",
+    "virtual_address": "0xfffffe000987f094",
+    "bytes_checked": 212,
+    "derived_file_offset": "0x3934",
+    "carrier_file_offset": "0x287b094",
+    "carrier_member_bytes_equal": true,
+    "method": "bounded ARM64 wide-immediate/add/direct-branch dataflow; helper signature and saved helper assembly cross-check",
+    "calls": [
+      {
+        "callsite": "0xfffffe000987f0b4",
+        "function_offset": "0x20",
+        "group": 2,
+        "map": 0,
+        "offset": "0x20000"
+      },
+      {
+        "callsite": "0xfffffe000987f0c8",
+        "function_offset": "0x34",
+        "group": 3,
+        "map": 0,
+        "offset": "0x100000"
+      },
+      {
+        "callsite": "0xfffffe000987f0e4",
+        "function_offset": "0x50",
+        "group": 8,
+        "map": 0,
+        "offset": "0x88000"
+      },
+      {
+        "callsite": "0xfffffe000987f0fc",
+        "function_offset": "0x68",
+        "group": 22,
+        "map": 1,
+        "offset": "0x35000"
+      },
+      {
+        "callsite": "0xfffffe000987f110",
+        "function_offset": "0x7c",
+        "group": 32,
+        "map": 113,
+        "offset": "0x1000"
+      },
+      {
+        "callsite": "0xfffffe000987f124",
+        "function_offset": "0x90",
+        "group": 34,
+        "map": 129,
+        "offset": "0x700000"
+      },
+      {
+        "callsite": "0xfffffe000987f138",
+        "function_offset": "0xa4",
+        "group": 35,
+        "map": 129,
+        "offset": "0x900000"
+      },
+      {
+        "callsite": "0xfffffe000987f164",
+        "function_offset": "0xd0",
+        "group": 36,
+        "map": 129,
+        "offset": "0x100000"
+      }
+    ],
+    "misc_cores_physical_base": "0x280688000",
+    "cluster_control_physical_base": "0x280620000"
+  },
+  "adt": {
+    "sha256": "6f143434d2f05310067559f8fa3836ae564dd9934ebc5912660f2a9f5a8a73af",
+    "cluster_width_position": [
+      [
+        6,
+        0
+      ],
+      [
+        6,
+        6
+      ],
+      [
+        6,
+        12
+      ]
+    ],
+    "pmgr_reg0_bus_base": "0x80600000",
+    "pmgr_reg0_physical_base": "0x280600000",
+    "pmgr_reg0_size": "0x1fc000",
+    "old_start_stride_distinct_bits": 14,
+    "descriptor_start_stride_distinct_bits": 18
+  },
+  "existing_start_bit_test": "PASS on 2026-10-19: 18 descriptor bits, four historical alias pairs, validation cases",
+  "limits": [
+    "Address arithmetic and static behavior only; no physical CPU entry or register safety established.",
+    "SPTM/XNU artifacts do not establish the raw custom-boot reset ABI.",
+    "No whole-function pseudocode correctness is inferred."
+  ]
+}

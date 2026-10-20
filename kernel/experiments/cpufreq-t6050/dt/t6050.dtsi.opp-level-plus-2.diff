@@ -1,0 +1,397 @@
+--- a/kernel/experiments/t6050-dt/out/t6050.dtsi
++++ b/kernel/experiments/t6050-dt/out/t6050.dtsi
+@@ -396,8 +396,10 @@
+ 
+ 	/*
+ 	 * Cluster 0 DVFS states from ADT pmgr voltage-states22(-sram), selected by
+-	 * pmgr acc-clusters.  opp-level = table index + 1 (HYPOTHESIS, M1-M3
+-	 * convention); opp-microvolt = core rail, only used by the energy model.
++	 * pmgr acc-clusters.  opp-level = table index + 2: macOS 26.6.2 writes DVFS
++	 * CMD[4:0] = 2 + perf-state index for the CPU domains (AppleT6050PMGR::
++	 * getPerfStateTableIndex, LIKELY; M1-M3 Linux DTs use index + 1).
++	 * opp-microvolt = core rail, only used by the energy model.
+ 	 * clock-latency-ns is a PLACEHOLDER (not measured).
+ 	 */
+ 	cluster0_opp: opp-table-0 {
+@@ -406,91 +408,91 @@
+ 
+ 		opp01 {
+ 			opp-hz = /bits/ 64 <1344000000>;
+-			opp-level = <1>;
++			opp-level = <2>;
+ 			opp-microvolt = <600000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp02 {
+ 			opp-hz = /bits/ 64 <1644000000>;
+-			opp-level = <2>;
++			opp-level = <3>;
+ 			opp-microvolt = <635000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp03 {
+ 			opp-hz = /bits/ 64 <1992000000>;
+-			opp-level = <3>;
++			opp-level = <4>;
+ 			opp-microvolt = <665000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp04 {
+ 			opp-hz = /bits/ 64 <2304000000>;
+-			opp-level = <4>;
++			opp-level = <5>;
+ 			opp-microvolt = <690000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp05 {
+ 			opp-hz = /bits/ 64 <2652000000>;
+-			opp-level = <5>;
++			opp-level = <6>;
+ 			opp-microvolt = <740000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp06 {
+ 			opp-hz = /bits/ 64 <2964000000>;
+-			opp-level = <6>;
++			opp-level = <7>;
+ 			opp-microvolt = <760000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp07 {
+ 			opp-hz = /bits/ 64 <3240000000>;
+-			opp-level = <7>;
++			opp-level = <8>;
+ 			opp-microvolt = <800000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp08 {
+ 			opp-hz = /bits/ 64 <3504000000>;
+-			opp-level = <8>;
++			opp-level = <9>;
+ 			opp-microvolt = <840000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp09 {
+ 			opp-hz = /bits/ 64 <3696000000>;
+-			opp-level = <9>;
++			opp-level = <10>;
+ 			opp-microvolt = <880000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp10 {
+ 			opp-hz = /bits/ 64 <3876000000>;
+-			opp-level = <10>;
++			opp-level = <11>;
+ 			opp-microvolt = <900000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp11 {
+ 			opp-hz = /bits/ 64 <4044000000>;
+-			opp-level = <11>;
++			opp-level = <12>;
+ 			opp-microvolt = <970000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp12 {
+ 			opp-hz = /bits/ 64 <4176000000>;
+-			opp-level = <12>;
++			opp-level = <13>;
+ 			opp-microvolt = <995000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp13 {
+ 			opp-hz = /bits/ 64 <4284000000>;
+-			opp-level = <13>;
++			opp-level = <14>;
+ 			opp-microvolt = <1015000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp14 {
+ 			opp-hz = /bits/ 64 <4308000000>;
+-			opp-level = <14>;
++			opp-level = <15>;
+ 			opp-microvolt = <1015000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp15 {
+ 			opp-hz = /bits/ 64 <4380000000>;
+-			opp-level = <15>;
++			opp-level = <16>;
+ 			opp-microvolt = <1015000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+@@ -498,8 +500,10 @@
+ 
+ 	/*
+ 	 * Cluster 1 DVFS states from ADT pmgr voltage-states23(-sram), selected by
+-	 * pmgr acc-clusters.  opp-level = table index + 1 (HYPOTHESIS, M1-M3
+-	 * convention); opp-microvolt = core rail, only used by the energy model.
++	 * pmgr acc-clusters.  opp-level = table index + 2: macOS 26.6.2 writes DVFS
++	 * CMD[4:0] = 2 + perf-state index for the CPU domains (AppleT6050PMGR::
++	 * getPerfStateTableIndex, LIKELY; M1-M3 Linux DTs use index + 1).
++	 * opp-microvolt = core rail, only used by the energy model.
+ 	 * clock-latency-ns is a PLACEHOLDER (not measured).
+ 	 */
+ 	cluster1_opp: opp-table-1 {
+@@ -508,91 +512,91 @@
+ 
+ 		opp01 {
+ 			opp-hz = /bits/ 64 <1344000000>;
+-			opp-level = <1>;
++			opp-level = <2>;
+ 			opp-microvolt = <600000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp02 {
+ 			opp-hz = /bits/ 64 <1644000000>;
+-			opp-level = <2>;
++			opp-level = <3>;
+ 			opp-microvolt = <635000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp03 {
+ 			opp-hz = /bits/ 64 <1992000000>;
+-			opp-level = <3>;
++			opp-level = <4>;
+ 			opp-microvolt = <665000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp04 {
+ 			opp-hz = /bits/ 64 <2304000000>;
+-			opp-level = <4>;
++			opp-level = <5>;
+ 			opp-microvolt = <690000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp05 {
+ 			opp-hz = /bits/ 64 <2652000000>;
+-			opp-level = <5>;
++			opp-level = <6>;
+ 			opp-microvolt = <740000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp06 {
+ 			opp-hz = /bits/ 64 <2964000000>;
+-			opp-level = <6>;
++			opp-level = <7>;
+ 			opp-microvolt = <760000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp07 {
+ 			opp-hz = /bits/ 64 <3240000000>;
+-			opp-level = <7>;
++			opp-level = <8>;
+ 			opp-microvolt = <800000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp08 {
+ 			opp-hz = /bits/ 64 <3504000000>;
+-			opp-level = <8>;
++			opp-level = <9>;
+ 			opp-microvolt = <840000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp09 {
+ 			opp-hz = /bits/ 64 <3696000000>;
+-			opp-level = <9>;
++			opp-level = <10>;
+ 			opp-microvolt = <880000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp10 {
+ 			opp-hz = /bits/ 64 <3876000000>;
+-			opp-level = <10>;
++			opp-level = <11>;
+ 			opp-microvolt = <900000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp11 {
+ 			opp-hz = /bits/ 64 <4044000000>;
+-			opp-level = <11>;
++			opp-level = <12>;
+ 			opp-microvolt = <970000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp12 {
+ 			opp-hz = /bits/ 64 <4176000000>;
+-			opp-level = <12>;
++			opp-level = <13>;
+ 			opp-microvolt = <1005000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp13 {
+ 			opp-hz = /bits/ 64 <4284000000>;
+-			opp-level = <13>;
++			opp-level = <14>;
+ 			opp-microvolt = <1025000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp14 {
+ 			opp-hz = /bits/ 64 <4308000000>;
+-			opp-level = <14>;
++			opp-level = <15>;
+ 			opp-microvolt = <1025000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp15 {
+ 			opp-hz = /bits/ 64 <4380000000>;
+-			opp-level = <15>;
++			opp-level = <16>;
+ 			opp-microvolt = <1025000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+@@ -600,8 +604,10 @@
+ 
+ 	/*
+ 	 * Cluster 2 DVFS states from ADT pmgr voltage-states5(-sram), selected by
+-	 * pmgr acc-clusters.  opp-level = table index + 1 (HYPOTHESIS, M1-M3
+-	 * convention); opp-microvolt = core rail, only used by the energy model.
++	 * pmgr acc-clusters.  opp-level = table index + 2: macOS 26.6.2 writes DVFS
++	 * CMD[4:0] = 2 + perf-state index for the CPU domains (AppleT6050PMGR::
++	 * getPerfStateTableIndex, LIKELY; M1-M3 Linux DTs use index + 1).
++	 * opp-microvolt = core rail, only used by the energy model.
+ 	 * clock-latency-ns is a PLACEHOLDER (not measured).
+ 	 */
+ 	cluster2_opp: opp-table-2 {
+@@ -610,121 +616,121 @@
+ 
+ 		opp01 {
+ 			opp-hz = /bits/ 64 <1308000000>;
+-			opp-level = <1>;
++			opp-level = <2>;
+ 			opp-microvolt = <625000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp02 {
+ 			opp-hz = /bits/ 64 <1620000000>;
+-			opp-level = <2>;
++			opp-level = <3>;
+ 			opp-microvolt = <675000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp03 {
+ 			opp-hz = /bits/ 64 <1980000000>;
+-			opp-level = <3>;
++			opp-level = <4>;
+ 			opp-microvolt = <700000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp04 {
+ 			opp-hz = /bits/ 64 <2292000000>;
+-			opp-level = <4>;
++			opp-level = <5>;
+ 			opp-microvolt = <735000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp05 {
+ 			opp-hz = /bits/ 64 <2580000000>;
+-			opp-level = <5>;
++			opp-level = <6>;
+ 			opp-microvolt = <775000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp06 {
+ 			opp-hz = /bits/ 64 <2880000000>;
+-			opp-level = <6>;
++			opp-level = <7>;
+ 			opp-microvolt = <810000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp07 {
+ 			opp-hz = /bits/ 64 <3180000000>;
+-			opp-level = <7>;
++			opp-level = <8>;
+ 			opp-microvolt = <840000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp08 {
+ 			opp-hz = /bits/ 64 <3432000000>;
+-			opp-level = <8>;
++			opp-level = <9>;
+ 			opp-microvolt = <875000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp09 {
+ 			opp-hz = /bits/ 64 <3648000000>;
+-			opp-level = <9>;
++			opp-level = <10>;
+ 			opp-microvolt = <890000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp10 {
+ 			opp-hz = /bits/ 64 <3828000000>;
+-			opp-level = <10>;
++			opp-level = <11>;
+ 			opp-microvolt = <925000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp11 {
+ 			opp-hz = /bits/ 64 <3984000000>;
+-			opp-level = <11>;
++			opp-level = <12>;
+ 			opp-microvolt = <960000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp12 {
+ 			opp-hz = /bits/ 64 <4104000000>;
+-			opp-level = <12>;
++			opp-level = <13>;
+ 			opp-microvolt = <980000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp13 {
+ 			opp-hz = /bits/ 64 <4188000000>;
+-			opp-level = <13>;
++			opp-level = <14>;
+ 			opp-microvolt = <1030000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp14 {
+ 			opp-hz = /bits/ 64 <4236000000>;
+-			opp-level = <14>;
++			opp-level = <15>;
+ 			opp-microvolt = <1030000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp15 {
+ 			opp-hz = /bits/ 64 <4284000000>;
+-			opp-level = <15>;
++			opp-level = <16>;
+ 			opp-microvolt = <1030000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp16 {
+ 			opp-hz = /bits/ 64 <4308000000>;
+-			opp-level = <16>;
++			opp-level = <17>;
+ 			opp-microvolt = <1030000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp17 {
+ 			opp-hz = /bits/ 64 <4332000000>;
+-			opp-level = <17>;
++			opp-level = <18>;
+ 			opp-microvolt = <1030000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp18 {
+ 			opp-hz = /bits/ 64 <4428000000>;
+-			opp-level = <18>;
++			opp-level = <19>;
+ 			opp-microvolt = <1030000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp19 {
+ 			opp-hz = /bits/ 64 <4512000000>;
+-			opp-level = <19>;
++			opp-level = <20>;
+ 			opp-microvolt = <1090000>;
+ 			clock-latency-ns = <50000>;
+ 		};
+ 		opp20 {
+ 			opp-hz = /bits/ 64 <4608000000>;
+-			opp-level = <20>;
++			opp-level = <21>;
+ 			opp-microvolt = <1090000>;
+ 			clock-latency-ns = <50000>;
+ 		};
