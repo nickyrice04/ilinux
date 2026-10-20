@@ -3,6 +3,24 @@
 Status legend: 🔴 hard blocker (no path today) · 🟠 blocked pending research or
 upstream work · 🟡 pending user approval or action · 🟢 resolved.
 
+## Current status — attempt 27 delivery works; desktop latency remains open
+
+The first native two-stage transition PASS: verified root transfer 28.1 MB/s,
+RAM unpack/switch, second USB link, SSH, automatic keyboard and single rerun.
+The human's `omarchy` typing had no extra letters with repeat delay 1000 ms,
+but application opening still has a massive delay. Runtime weather JSON PASS;
+menu-poller cleanup after the complete menu sequence is INCONCLUSIVE (no after
+snapshot). No new CPU-frequency or rendering-speed measurement. The prior
+single-CPU/software-drawing evidence still motivates separate CPU/display work;
+it does not establish this run's actual clock or a guaranteed fix.
+
+Known hardware-provisioning/UFW/document-portal failures remain. Stage one still
+logs unused-port sshd exits, and teardown has udev transaction conflicts despite
+a successful new gadget bind. Local key-parser/dependency error corrected;
+desktop timing cap overrun recorded. Human returned to Macintosh HD, run's M1
+processes stopped, no retry/settings change. Native storage, DVFS/SMP and next
+attempt NOT RUN. Details: `native/boot/stage-b-2026-10-20-attempt27-result.md`.
+
 ## 🟢 Resolved offline — the M1's macOS has no CDC-EEM driver (attempt 17)
 
 boot036's gadget was CDC-EEM; macOS 26.0.1 on the M1 never claims it (stub
@@ -18,14 +36,14 @@ Class-scope lookup of a function-local import in `mtp_probe.py` (and
 `pmgr_probe.py`). Fixed, with tests that build the live API. Rerun needs the
 M1's re-verification and the human's go.
 
-## Attempt-27 preboot update — 2026-10-20
+## Historical attempt-27 preboot update — 2026-10-20
 
 M1 offline intake `eff1716` PASS; user confirms its restart. The user explicitly
 omits further routine policy checks: they are no longer a preboot blocker.
 No fresh policy result is claimed. Next is the human's existing Boot Lab proxy
 boot and M1's bounded attempt-27 launch. Native outcomes remain NOT RUN.
 
-## Current status — attempt 26: the keyboard works; the blocker is the desktop's speed (one slow CPU, software drawing), not the input path
+## Historical status — attempt 26: the keyboard works; the blocker is the desktop's speed (one slow CPU, software drawing), not the input path
 
 Attempt 26 switched the M5's own keyboard on over SSH (RTKit, DockChannel, `hid-apple`, a 2 MiB ring, `/dev/input/event0`) and ran 63 min
 34 s with no kernel fault line. Typing works but the desktop is unusable: after almost every key the one CPU runs at 91 to 100% for 0.8

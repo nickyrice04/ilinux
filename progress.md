@@ -5,6 +5,34 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-20 · M1: attempt 27 native two-stage delivery, keyboard and return
+
+**Attempt 27 consumed: one native two-stage boot and one root send PASS.**
+On execution handoff `f4b44f0`, stage one received the 2,435,460,021-byte root
+at 28.1 MB/s in 86.8 s, verified it and unpacked it in 20.7 s; Omarchy, the
+second USB link, SSH and automatic keyboard startup worked. One already-loaded
+keyboard rerun PASS; human typed `omarchy` without extra letters, but application
+opening still has a massive delay. Effective repeat delay 1000 ms; weather
+runtime JSON PASS; final menu-poller check incomplete. No kernel fault line or
+M1 panic observed. Human returned to Macintosh HD. Desktop observation exceeded
+the ten-minute cap by roughly one minute; overall return was within twenty
+minutes. Raw video/evidence private. Fresh policy checks omitted per user:
+original Full/lab Permissive remain last reported, no settings/default/volume
+change. Boot042, installed boot021 and client `57a9339` unchanged. No retry;
+storage, DVFS/SMP and further setup NOT RUN. Details: `native/boot/stage-b-2026-10-20-attempt27-result.md`.
+
+* Controller exit 0 / 21.836 s; stage-two sender exit 0 / 108.8 s reported to
+  switch request. SoftRebootsCount=1, tmpfs root, expected build/kernel, one CPU.
+* Private 415.007 s video reviewed: waiting, receiving/unpack, root startup and
+  Omarchy/keybindings; it does not film the full desktop observation window.
+* Both run readers exited 0; stage-two capture 213,761 bytes. Owned proxy and
+  caffeinate stopped. No SSH session remains. No new sign-in or sustained test.
+* Readiness tests remain 215 PASS / 2 legacy-fixture SKIPS, with the documented
+  system TLS and test-only fixes; no test suite was rerun merely for this report.
+* Next: M5 reviews the response-delay blocker and evidence gaps. This report
+  authorizes no additional native attempt or CPU/storage/settings action.
+
+
 ## 2026-10-20 · M5: M1 readiness reviewed; user confirms restart and omits routine policy rechecks
 
 * **Reviewed:** M1 `eff1716`: both exact images and embedded pin, boot042,

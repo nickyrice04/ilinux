@@ -1,6 +1,14 @@
 # Stage B — attempt 27: two-stage Omarchy boot on boot042
 
-**Handoff approved for publication on 2026-10-20; native attempt 27 and live checks NOT RUN.** M1: this is
+**ATTEMPT 27 CONSUMED, 2026-10-20: one launcher invocation and one root send.**
+Native two-stage switch, Omarchy, second USB/SSH link, automatic keyboard and
+its single rerun PASS; human typed without extra letters but desktop latency
+remains large. Human returned to Macintosh HD. No retry or settings change.
+Menu after-check incomplete; deadline overrun and local collector mistake are
+recorded in `native/boot/stage-b-2026-10-20-attempt27-result.md`. Do not run this
+historical checklist again without a new reviewed scope and human start.
+
+**Historical preboot handoff (published 2026-10-20):** M1: this is
 an offline intake request until the handoff is committed/pushed, the two private
 images match the records, and the human explicitly starts the attempt. Do not
 restart the M5 based on a draft. Attempt 26 is consumed; its result is in

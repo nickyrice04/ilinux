@@ -6,7 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current handoff — M1 intake PASS and restart done; routine policy rechecks omitted
+### Current M1 result — attempt 27 native two-stage switch and return, 2026-10-20
+
+**Attempt 27 consumed: one native two-stage boot and one root send PASS.**
+On execution handoff `f4b44f0`, stage one received the 2,435,460,021-byte root
+at 28.1 MB/s in 86.8 s, verified it and unpacked it in 20.7 s; Omarchy, the
+second USB link, SSH and automatic keyboard startup worked. One already-loaded
+keyboard rerun PASS; human typed `omarchy` without extra letters, but application
+opening still has a massive delay. Effective repeat delay 1000 ms; weather
+runtime JSON PASS; final menu-poller check incomplete. No kernel fault line or
+M1 panic observed. Human returned to Macintosh HD. Desktop observation exceeded
+the ten-minute cap by roughly one minute; overall return was within twenty
+minutes. Raw video/evidence private. Fresh policy checks omitted per user:
+original Full/lab Permissive remain last reported, no settings/default/volume
+change. Boot042, installed boot021 and client `57a9339` unchanged. No retry;
+storage, DVFS/SMP and further setup NOT RUN. Details: `native/boot/stage-b-2026-10-20-attempt27-result.md`.
+
+M5 review next: keep desktop latency open, retain the three known failed units,
+stage-one unused-port sshd noise and teardown transaction warnings. Menu-cleanup
+coverage is incomplete. Read the report's local key-parser/dependency mistake
+and timing overrun before planning another run. No current live process or
+hardware experiment remains owned by this M1 session; a new attempt needs a new
+reviewed scope and human start.
+
+
+### Historical preboot handoff — M1 intake PASS and restart done; routine policy rechecks omitted
 
 2026-10-20: M5 reviewed M1's published `eff1716` report and the two test-only
 fixes in `c52b079`. Both images and boot042 match; runtime transport/launcher
@@ -19,7 +43,7 @@ Keep Macintosh HD as default and make no settings/volume/firmware changes.
 Native attempt 27/live checks remain NOT RUN. This supersedes older preboot
 policy-check and M1-restart prerequisites in the historical entries below.
 
-### Current M1 offline readiness — attempt 27 two-stage pair verified, 2026-10-20
+### Historical M1 offline readiness — attempt 27 two-stage pair verified, 2026-10-20
 
 * Pulled published handoff through **`4b63b82`** (includes `37fd9b5`). Both
   files supplied at the repository root match the published size/hash before
@@ -84,7 +108,7 @@ M5 in macOS until readiness. Native attempt 27/live checks NOT RUN. No settings
 change or hardware experiment. Storage stays 28; CPU/SMP work stays separate.
 
 
-### Current M1 result — attempt 26 (the M5's keyboard, on boot042): the keyboard switches on over SSH and types on the M5; every screen update costs the one CPU about half a second, which is the lag and, reproduced on demand, the repeated letters
+### Historical M1 result — attempt 26 (the M5's keyboard, on boot042): the keyboard switches on over SSH and types on the M5; every screen update costs the one CPU about half a second, which is the lag and, reproduced on demand, the repeated letters
 
 * **One RAM attempt consumed, controller PASS** (exit 0 in 476.856 s, upload 473.4 s at 5.24 MB/s, handoff 2026-10-20T00:39:17.261Z =
   8:39:17 PM Eastern 2026-10-19; no M1 panic). No film of the run; the human sent a 33.6 s phone clip of the M5's screen (the slow

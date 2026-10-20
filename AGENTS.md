@@ -99,7 +99,24 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-### Current user direction — 2026-10-20, attempt 27 ready for the existing proxy
+### Latest M1 native result — attempt 27, 2026-10-20
+
+**Attempt 27 consumed: one native two-stage boot and one root send PASS.**
+On execution handoff `f4b44f0`, stage one received the 2,435,460,021-byte root
+at 28.1 MB/s in 86.8 s, verified it and unpacked it in 20.7 s; Omarchy, the
+second USB link, SSH and automatic keyboard startup worked. One already-loaded
+keyboard rerun PASS; human typed `omarchy` without extra letters, but application
+opening still has a massive delay. Effective repeat delay 1000 ms; weather
+runtime JSON PASS; final menu-poller check incomplete. No kernel fault line or
+M1 panic observed. Human returned to Macintosh HD. Desktop observation exceeded
+the ten-minute cap by roughly one minute; overall return was within twenty
+minutes. Raw video/evidence private. Fresh policy checks omitted per user:
+original Full/lab Permissive remain last reported, no settings/default/volume
+change. Boot042, installed boot021 and client `57a9339` unchanged. No retry;
+storage, DVFS/SMP and further setup NOT RUN. Details: `native/boot/stage-b-2026-10-20-attempt27-result.md`.
+
+
+### Historical preboot direction — 2026-10-20, superseded by the result above
 
 M1 offline intake `eff1716` PASS with documented test limits; the user confirms
 its restart is done. The user explicitly declines further routine boot-policy
@@ -110,7 +127,7 @@ to boot the existing iLinux Boot Lab entry to `Running proxy...`; the M1 then
 follows the one-attempt checklist. Native attempt 27/live checks remain NOT RUN.
 This paragraph supersedes older routine-check/restart prerequisites below.
 
-Latest M1 milestone (2026-10-20): **attempt 27 offline ready with documented
+Historical offline milestone (2026-10-20): **attempt 27 offline ready with documented
 test limits**, both privately transferred images match the published pair;
 boot042/intake/launcher/client/helper digests and offline SSH entries PASS.
 215 methods PASS, 2 legacy-fixture skips; initial assertion/race and system
@@ -122,7 +139,7 @@ DVFS/SMP action. Both images remain private in ignored build/attempt27.
 
 ### Active continuation — 2026-10-19
 
-Current baseline is `75411ec`, attempt 26 on boot042: native Omarchy, USB/SSH
+Previous baseline is `75411ec`, attempt 26 on boot042: native Omarchy, USB/SSH
 and keyboard, with the reported 63-minute run. Older "latest" paragraphs below
 are historical. Attempt 27 is two-stage delivery plus image fixes; storage is
 attempt 28 behind its separate reviewed launcher change. CPU-frequency and SMP

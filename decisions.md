@@ -1802,3 +1802,21 @@ normal launcher identity/DT/integrity checks remain intact.
 The human may now select the existing iLinux Boot Lab entry and wait at
 `Running proxy...`; the M1 follows the one-attempt checklist. Native attempt
 27 and live outcomes are still NOT RUN until the actual launch and observations.
+
+
+### 2026-10-20 · Consume attempt 27 without bundling a desktop-performance experiment
+
+The one authorized native two-stage boot and one image send succeeded, with
+USB returning after the RAM-root switch and automatic keyboard/rerun passing.
+The human reports clean `omarchy` text but application opening remains very
+slow. Keep delivery/image results separate from desktop performance: no CPU
+frequency, SMP, storage, GPU, render-setting or agent-login experiment was added.
+Menu cleanup remains unconfirmed without its after snapshot. Preserve stage-one
+sshd noise, failed units and teardown warnings for M5 review.
+
+The human returned to Macintosh HD; fresh routine policy verification was
+omitted as already directed, with no new protection/default claim. Controller
+key-parser/dependency error and roughly one-minute desktop-window overrun are
+reported explicitly; future collection needs checked prerequisites and an
+independent deadline. One launch/send consumed, no retry authorized by success.
+Evidence: `native/boot/stage-b-2026-10-20-attempt27-result.md`.
