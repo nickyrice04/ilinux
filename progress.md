@@ -5,6 +5,25 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: 31B refused at RAM-bound preflight; safe return confirmed
+
+**Observed:** execution `a6ced17` after M5 handoff `7d505fd`; the single
+supervised 31B run returned **STOP / preflight / `ram_bounds`**, controller exit
+1 in 0.781 s, supervisor 1.192 s with no deadline. **Zero mutation requests,
+CPU-start writes attempted/acknowledged and completed requests.** No helper
+allocation/upload, CPU1 setup or start. Human confirmed usual Macintosh HD
+return at +57.883 s, within 90 s. No retry or further target command.
+
+**Tested:** 36 source pins, 13 boot042 package files and 46 offline Python
+methods PASS before the live run; production/test sources stayed unchanged.
+**Unknown:** actual rejected RAM bounds and cause. CPU1 entry, Linux/native
+SMP, renderer, performance and energy tests **NOT RUN**. Installed boot021,
+pinned client, macOS and settings unchanged; routine rechecks waived and
+protections remain last reported. **Next:** M5 reviews the range predicate and
+pinned BootArgs interpretation offline with a representative regression
+fixture. Keep the consumed receipts; another run requires separate review.
+Evidence: `native/boot/attempt31b-2026-10-21-result.md` and its sanitized JSON.
+
 ## 2026-10-21 · M1: CPU1 controller31B offline readiness PASS
 
 M1 pulled **`7d505fd`**; all **36** new source pins, boot042's **13** files,

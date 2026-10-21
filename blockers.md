@@ -1,6 +1,24 @@
 # Blockers
 
-## M1 controller31B offline gate PASS; CPU1 entry still unobserved
+## Current — 31B consumed at RAM-bound preflight; CPU1 entry unobserved
+
+One supervised run on `a6ced17` returned **STOP / preflight / `ram_bounds`**:
+controller exit 1 in 0.781 s, supervisor 1.192 s, no deadline. **Zero mutation
+requests, CPU-start writes attempted/acknowledged and completed requests.** No
+helper allocation/upload, CPU1 setup or start. Human Macintosh HD return
+confirmed at +57.883 s, within 90 s. No retry or further target command.
+
+The physical RAM-range predicate refused before full relocated-text/features/
+fresh-RAM checks and every explicit mutation. Actual bounds were not recorded;
+the exact failing numeric component is unknown. M5 must review the predicate
+and pinned BootArgs interpretation offline and add a representative regression
+fixture before selecting another reviewed observation/fix. This does not prove
+a hardware or CPU1 fault. Preserve receipts and the existing guard; frozen
+checklist readiness text is superseded. **CPU1 entry, Linux/native SMP and
+renderer tests NOT RUN.** macOS/settings unchanged; routine rechecks waived.
+Evidence: `native/boot/attempt31b-2026-10-21-result.md` and its sanitized JSON.
+
+## Historical M1 controller31B offline gate PASS; CPU1 entry unobserved
 
 M1 pulled **`7d505fd`**; all **36** new source pins, boot042's **13** files,
 exact boot021/192-byte helper/offline controller and clean client `57a9339`

@@ -99,7 +99,25 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-### Latest M1 offline readiness — CPU1 controller31B, 2026-10-21
+### Latest M1 native result — 31B consumed at preflight, 2026-10-21
+
+**31B consumed: STOP / preflight / `ram_bounds`**, execution `a6ced17` after
+handoff `7d505fd`. One supervisor run, controller exit 1 in 0.781 s; supervisor
+1.192 s, no deadline. **Zero mutation requests, CPU-start writes attempted or
+acknowledged, and completed requests.** No helper allocation/upload, CPU1 setup
+or start. CPU1 entry and Linux/native SMP/renderer tests **NOT RUN**. Human
+confirmed usual Macintosh HD return at +57.883 s, within 90 s. No retry,
+reconnect or further target command. Installed boot021/client `57a9339`, macOS,
+security/default/volume settings unchanged; routine rechecks waived and
+protections remain last reported. All 36 source pins and 46 offline methods
+passed before execution. Preserve consumed receipts. M5 next: offline review
+of the RAM-bound predicate and pinned BootArgs interpretation; actual rejected
+bounds were not recorded, so cause remains unknown. Do not relax the guard or
+infer CPU/RAM failure. Frozen source-pinned checklists are historical; this
+result supersedes their pre-execution readiness text. Evidence:
+`native/boot/attempt31b-2026-10-21-result.md` and its two sanitized JSON records.
+
+### Historical M1 offline readiness — CPU1 controller31B, 2026-10-21
 
 M1 pulled **`7d505fd`**; all **36** new source pins, boot042's **13** files,
 exact boot021/192-byte helper/offline controller and clean client `57a9339`

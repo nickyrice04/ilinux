@@ -2239,3 +2239,26 @@ Evidence: `native/boot/attempt31b-m1-offline-2026-10-21.md`.
 Retain exact write bounds and durable intent counts. Interrupted dispatch is
 unknown completion, never permission to retry. A successful parked-loop request
 is not Linux SMP or an automatic renderer/extra-core continuation.
+
+### 2026-10-21 · Consume 31B after RAM-bound refusal; review offline before another run
+
+**Decision:** preserve the once/consumed receipts and publish the exact STOP
+without retry, reconnect or a live guard edit. Execution `a6ced17` returned
+`STOP / preflight / ram_bounds`, exit 1, with zero mutation requests, CPU-start
+writes attempted/acknowledged and completed requests. No helper or CPU1 setup
+occurred. Human confirmed Macintosh HD return +57.883 s after command start.
+Controller 0.781 s; supervisor 1.192 s, no deadline.
+
+**Context:** 36 source pins and 46 offline methods passed, but the live RAM
+predicate refused. Actual rejected bounds were not recorded, so the cause and
+failing numeric component remain unknown. Internal census completion is
+inferred from control flow; the later full text/features/fresh-RAM checks were
+not reached. This supplies no CPU1-entry, RAM-fault or Linux SMP conclusion.
+
+**Consequences:** M5 reviews the bound assumption and pinned BootArgs parser
+offline with a regression fixture before proposing a separately reviewed next
+step. No blind guard relaxation or automatic second command. CPU1 entry,
+Linux/native SMP and renderer tests remain NOT RUN. Preserve installed boot021,
+client pin, macOS and settings; routine policy/default rechecks stay waived.
+Frozen checklists/readiness records remain for provenance and are superseded
+by current coordination and `native/boot/attempt31b-2026-10-21-result.md`.
