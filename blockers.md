@@ -1,5 +1,22 @@
 # Blockers
 
+## Current — native CPU1 entry unknown; recorder deployment is the next gate
+
+31D's no-record timeout is not a PC or zero-execution measurement. The new
+offline lab passes 110 VM methods and two independent assembler comparisons;
+its original 204-byte recorder avoids dependence on the normal C stack and
+console for initial telemetry. The classifier also handles the pinned binary's
+MPIDR-first publication. No native fix is established.
+
+Remaining concrete work: bounded native adapter, effective existing write-alias
+permission validation, exact RAM-code/cache publication, fixed-range record
+reads, complete failure-path coverage and independent review. Neither the
+instruction model nor the proposed Device-memory stack closes those gates.
+No restart is requested; M1 can verify the offline package. After entry, Linux
+two-core timer/IPI/coherency and renderer/memory measurements still precede
+cluster expansion. Storage and N1 transport remain independent native gaps.
+See `native/boot/attempt31e/validation.md` and `roadmap.md`.
+
 ## Current — 31D no reset record after console isolation and two starts
 
 **31D consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution

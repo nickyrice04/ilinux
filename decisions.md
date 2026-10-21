@@ -2397,3 +2397,40 @@ Console isolation did not establish arrival in this run. Preserve the partial
 evidence and three-second bound; no automatic retry, speculative power write,
 UART flush or time-limit extension. M5 reviews earlier-entry instrumentation
 and its deployment before another native command. Linux SMP remains separate.
+
+
+### 2026-10-21 · After 31D: improve evidence per boot; hold native31E
+
+**Decision:** build and validate the offline test system and an earlier
+stackless recorder before another native command. Do not repeat 31D unchanged,
+lengthen its timeout or guess additional power writes. Preserve all consumed
+controllers and receipts. Native31E remains HOLD; M1 receives offline-only
+instructions, with no reboot requested.
+
+**Evidence:** 31D saw no reset record after two acknowledged starts and console
+isolation. Public compiled instructions expose a valid MPIDR-first publication
+that the old observer rejects, although that defect did not cause 31D. Fresh
+REA of two bounded functions (96 byte/LLVM words) establishes no extra CPU1
+power write. The proposed Device-memory stack has unresolved entry-state and
+alternate-path assumptions; the preferred original recorder keeps the C stack
+intact and captures earlier state.
+
+**Validation:** 110 VM Python methods, 38 source pins, GNU/Clang byte-identical
+204-byte recorder and normal/sanitizer ordinary-STP tests PASS. Offline assembly
+comparison caught a real branch relocation mistake. See
+`native/boot/attempt31e/validation.md`; these passes do not establish native
+reset behavior, code permissions, coherence, SMP or macOS performance parity.
+
+**Next:** implement/review the bounded publication/observation adapter, then
+collect early entry plus conditional repeated timer requests in one native
+session. A healthy Linux two-core handoff should carry correctness, renderer,
+memory and link measurements together; separately reviewed storage initialization
+runs last. N1 work continues in parallel. Maximum utilization without measured
+latency/energy is not the acceptance criterion.
+
+**Helper workflow:** replace automatic M1 restarts in future reviewed handoffs
+with a health gate. Attempt30's recorded 20,933-second helper uptime shows a
+fresh restart was not a universal prerequisite. Keep a restart as recovery
+when helper health fails, and never reconnect/retry an uncertain target session.
+Routine policy checks remain waived; no boot/security/volume changes authorized
+or performed by this offline milestone.

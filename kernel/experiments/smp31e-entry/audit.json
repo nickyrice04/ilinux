@@ -1,0 +1,80 @@
+{
+  "result": "STATIC_ENTRY_AUDIT_PASS",
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "symbol_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11",
+  "frame_bytes": {
+    "reset_c": 32,
+    "uart_puts": 32,
+    "init_cpu": 48,
+    "debug_printf": 672,
+    "vsnprintf": 96,
+    "secondary_entry": 48
+  },
+  "reset_publication_order": [
+    "mpidr",
+    "stack",
+    "dsb_sy"
+  ],
+  "shared_padding": {
+    "start_offset": "0x90a28",
+    "end_offset": "0xa0000",
+    "zero_bytes": 62936
+  },
+  "candidate_stack": {
+    "bottom_offset": "0x94000",
+    "top_offset": "0xa0000",
+    "bytes": 49152,
+    "native_deployment_ready": false,
+    "reset_record_expected_stack_offset": "0x178000",
+    "relocations_checked": 1371,
+    "adr_adrp_references": []
+  },
+  "conditional_stack_audit": {
+    "ordinary_path_max_bytes": 976,
+    "formatting_path_max_bytes": 912,
+    "review_allowance_bytes": 2048,
+    "complete_hardware_bound": false,
+    "conditions": [
+      "CPU1 MMU off and known part 0x68",
+      "Original UART/dock iodev callbacks and UART RAM bases zero",
+      "No exceptions, recursive output, or arbitrary target dispatch",
+      "WFE parking; no deep WFI, reset, or Linux continuation"
+    ],
+    "device_memory_review": {
+      "build_flags": [
+        "-mstrict-align",
+        "-mgeneral-regs-only"
+      ],
+      "formatting_leaf_calls": [
+        "fmtint",
+        "fmtstr"
+      ],
+      "formatting_memcpy_calls": 0,
+      "complete_dynamic_alignment_proof": false,
+      "notes": [
+        "Public source uses byte accesses for formatting buffers/strings",
+        "Varargs and len storage have natural alignment under AAPCS64",
+        "The MMU-on console path can reach memcpy and is excluded",
+        "No live Device-memory stack approval from this conditional audit"
+      ]
+    }
+  },
+  "call_return_offsets": [
+    "0x32924",
+    "0x32934",
+    "0x32944",
+    "0x32954",
+    "0x32958",
+    "0x3296c",
+    "0x32970",
+    "0x15024",
+    "0x15064"
+  ],
+  "native_execution": "NOT RUN",
+  "limits": [
+    "Static source/image facts, not a reset emulator",
+    "Conditional path bound does not cover unexpected CPU1 MMU state or exceptions",
+    "No symbols/relocations/ADR references does not rule out computed range accesses",
+    "Shared Device-memory stack changes runtime layout; live use remains HOLD"
+  ]
+}

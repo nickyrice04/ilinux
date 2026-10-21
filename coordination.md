@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### 2026-10-21 · M5: 31D reviewed; offline CPU-entry lab and recorder ready, native HOLD
+
+31D acknowledged both starts but showed no CPU1 reset record in 171 samples;
+entry remains unverified. Fresh REA checked two functions / 96 byte-and-LLVM
+matched instruction words; no extra CPU1 power write was established. Exact
+public-image review found an MPIDR-first partial-publication observer defect;
+it did not trigger 31D. Original classifiers, bounded observer, entry interpreter,
+campaign replay and a **204-byte stackless recorder proposal** are implemented.
+
+**110 Python methods PASS** in ARM64 VM job 062; 38 source pins, GNU/Clang
+recorder byte equality and ordinary STP checks in normal/sanitizer builds PASS.
+Offline checks caught and fixed test scratch, assembly relocation, decoder and
+output-containment issues before any native use. M1 image-only intake: 77
+methods; full-symbol checks remain explicit VM-only evidence there.
+
+**Do not restart for this handoff. Native31E/CPU1/Linux SMP NOT RUN.** Next:
+implement/review the recorder's bounded RAM-code publication and observation
+adapter, then one richer conditional CPU1 session. Device-memory C-stack
+proposal remains held. Future M1 health checks replace automatic helper reboot;
+no routine policy recheck. Installed boot021/macOS/settings and consumed receipts
+remain intact. Current instructions: `tools/m1n1-client/attempt31e-instructions.md`;
+review/validation: `native/boot/attempt31e/`; strategy:
+`research/testing-strategy-31e.md`. No performance or efficiency gain claimed.
+
 ### Current M1 result — 31D consumed; no reset record seen, 2026-10-21
 
 **31D consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution

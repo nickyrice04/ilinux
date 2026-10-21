@@ -5,34 +5,40 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — after 31B preflight refusal, 2026-10-21
+## Current direction — after 31D; more evidence per reboot, 2026-10-21
 
-Native Omarchy still has one online CPU and software rendering. Attempt30
-and the subsequent VM tracing support prioritizing renderer concurrency;
-the full native physical-interaction delay and efficiency remain unresolved.
-M1's 31A report confirms that CPU0/CPU1 reset-vector mirrors match the installed
-entry. 31B refused before allocation/start: our RAM ceiling excluded this
-machine's high-address DRAM. The
-[current review and fix](native/boot/attempt31c/review.md) supersedes
-the older attempt assignments below.
+Native Omarchy still has one online CPU and software rendering. 31C and 31D
+passed the corrected RAM gate and acknowledged CPU1 startup writes, but entry
+remains unverified. Console isolation did not establish a fix. The
+[31E review](native/boot/attempt31e/review.md) and
+[testing strategy](research/testing-strategy-31e.md) supersede older assignments.
 
-1. CPU1-only start/park controller is implemented and offline-tested against
-   installed boot021 with corrected, independently cross-checked RAM bounds.
-   M1 completes [31C intake](tools/m1n1-client/attempt31c-instructions.md),
-   publishes readiness, then the human starts one existing Boot Lab session.
-   Verify identity, stack, arrival and two request completions; return to
-   Macintosh HD. No replacement bootloader. **Native31C remains NOT RUN.**
-2. After native entry evidence, prepare exact two-core Linux DT/spin-table
-   and launcher changes; validate timers, scheduler wakeups and coherency.
-3. Integrate one renderer worker, keep visual settings constant, and measure
-   native input/presentation latency alongside CPU/memory throughput. Then
-   expand cores under measured gates. Prior VM improvements are not native
-   performance predictions; busy idle is not an efficiency solution.
-4. Continue GPU, idle/thermal/DVFS, Wi-Fi and storage work toward an independent
-   workstation. CPU count alone cannot deliver macOS graphics or energy parity.
+1. **Stay offline until a more informative native campaign is ready.** Use
+   exact-instruction emulation, image/source audits, publication-interleaving
+   tests and historical/failure replay. The new early-recorder proposal leaves
+   the normal C stack intact; its native code-publication/controller path still
+   needs implementation and review. No complete M5 emulator is presumed.
+2. Prepare one CPU1 start session with early entry/MMU-state observations and
+   conditional repeated timer requests. Preserve uncertainty and stop after
+   faults; do not chain Linux from an unknown secondary state. M1 can run the
+   [offline intake](tools/m1n1-client/attempt31e-instructions.md) now; no reboot
+   is requested. Future M1 helper-health checks replace unconditional restarts.
+3. Once entry and a valid handoff are established, combine two-core Linux
+   timer/IPI/coherency tests, renderer threading, memory and USB-link measurement
+   in one healthy session. Then expand within/across clusters to all 18 cores,
+   with fixed-work throughput, tail latency, sustained thermals and energy per
+   task measurements. Core count alone is not performance or efficiency parity.
+4. Continue N1 transport/WLAN work and rebase read-only ANS storage for current
+   two-stage delivery in parallel. Storage initialization runs last under its
+   reviewed allowance; APFS/encryption and safe persistent Linux storage are
+   separate from raw NVMe speed. USB relay supports development meanwhile.
+5. Bring verified DVFS/idle behavior and native GPU acceleration into the
+   measured workstation plan. GPU support remains important for smooth desktop
+   operation and energy use even after CPU concurrency improves.
 
-31A and 31B are consumed, copy-only 31 held, and all macOS/security/default/volume state
-is preserved. Routine policy checks remain waived.
+31A–31D are consumed; copy-only 31 and native31E are held. macOS, installed
+boot021, security/default/volume state remain intact. Routine policy checks
+remain waived; all new offline results are distinct from native proof.
 
 ## Historical direction — after native attempt 27, 2026-10-20
 

@@ -1,0 +1,16 @@
+{
+  "experiment": "smp31b",
+  "result": "STOP",
+  "phase": "preflight",
+  "mutation_requests": 0,
+  "start_writes_attempted": 0,
+  "start_writes_acknowledged": 0,
+  "cpu1_arrival_verified": false,
+  "requests_completed": 0,
+  "counter_progress_verified": false,
+  "linux_boot": "NOT RUN",
+  "native_linux_smp": "NOT RUN",
+  "reason": "ram_bounds",
+  "controller_elapsed_seconds": 0.781,
+  "source_manifest_sha256": "ea37bdfe6a9f32531c07dcdada340465833e49f7d1ecb72e36c1fe3d814dbd14"
+}

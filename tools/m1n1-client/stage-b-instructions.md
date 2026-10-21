@@ -1,24 +1,22 @@
-# Current native handoff — 31D CPU1 diagnostic-console experiment
+# Current handoff — 31E offline preparation; native launch HOLD
 
-Read [attempt31d-instructions.md](attempt31d-instructions.md).
-31C is consumed: RAM gate passed, both CPU1 startup writes acknowledged,
-arrival timed out; usual Macintosh HD return confirmed. No Linux boot.
+Read [attempt31e-instructions.md](attempt31e-instructions.md).
+**Do not restart either Mac for this handoff.** 31D is consumed: both CPU1
+startup writes acknowledged, 171 samples without a reset record, arrival
+timeout and safe Macintosh HD return. CPU1's exact stopping point is unknown.
 
-31D tests a source-backed hypothesis: unbounded diagnostic UART output before
-the arrival flag. It zeros two diagnostic UART RAM variables, cache-publishes
-them before start, retains direct USB, and records partial CPU1 reset/spin
-identity. Existing installed boot021, unchanged start/request sequence, no
-code/RVBAR/power/security/volume change or new MMIO probe. No files to AirDrop.
+New work checks exact public bootloader instructions, partial-publication
+observers and conditional campaigns offline. Fresh REA checked two bounded
+macOS startup functions against 96 original-byte/LLVM instruction words; no
+additional CPU1 power write was established. No native fix or SMP success is
+claimed. The temporary Device-memory stack proposal remains held while an
+earlier recorder that preserves the ordinary C stack is designed and checked.
 
-M5 offline preparation PASS: 73 Python methods, actual client/parsers, compiled
-UART harness normal/ASan/UBSan, exact compiled-image binding audit. Fresh REA
-and independent byte/LLVM cross-checks inform the decision; no native fix is
-yet established. **M1 intake pending; native31D NOT RUN.**
+M1 runs the source-pinned offline intake, reports results and waits for a
+separate reviewed live procedure. No USB, target write, native receipt, retry,
+Linux continuation, installed-image or boot/security/volume change. Preserve
+all 31B–31D sources and receipts. Routine policy checks stay waived.
 
-Use `native/boot/attempt31d/source-sha256.txt`. M1 publishes offline readiness,
-then waits for a fresh human start and 90-second timer. One bounded CPU1 test,
-then immediately Macintosh HD, even on success. Preserve every prior receipt;
-no retry, reconnect or Linux continuation. Routine policy rechecks stay waived.
-
-Review: `native/boot/attempt31d/review.md`. CPU1 entry success precedes two-core
-Linux timer/IPI/coherency and renderer tests. Performance/efficiency are unproven.
+Future sessions use a helper-health gate rather than automatically restarting
+M1. The target's fresh-start and uncertain-state stop rules remain necessary.
+See `native/boot/attempt31e/review.md` and `research/testing-strategy-31e.md`.

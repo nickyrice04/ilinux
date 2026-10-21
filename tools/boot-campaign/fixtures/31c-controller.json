@@ -1,0 +1,30 @@
+{
+  "experiment": "smp31c",
+  "result": "STOP",
+  "phase": "cpu1_arrival",
+  "mutation_requests": 9,
+  "start_writes_attempted": 2,
+  "start_writes_acknowledged": 2,
+  "cpu1_arrival_verified": false,
+  "requests_completed": 0,
+  "counter_progress_verified": false,
+  "linux_boot": "NOT RUN",
+  "native_linux_smp": "NOT RUN",
+  "ram_check": {
+    "revision_supported": true,
+    "bootargs_revision": 3,
+    "revision_consistent": true,
+    "integer_fields": true,
+    "nonempty_u64": true,
+    "address_width": true,
+    "within_machine_dram": true,
+    "adt_within_usable": true,
+    "adt_read_complete": true,
+    "chosen_base_matches": true,
+    "chosen_size_matches": true,
+    "image_within_usable": true
+  },
+  "reason": "cpu1_arrival_timeout",
+  "controller_elapsed_seconds": 4.466,
+  "source_manifest_sha256": "b4021e4669e42732e4f1130f5a997451ecfdcbf94326a6bdd4bd63620cafe208"
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "source_kind": "synthetic",
+  "boot_label": "fixture-success",
+  "events": [
+    {
+      "stage": "fresh_identity",
+      "outcome": "pass",
+      "duration_ms": 10,
+      "source_kind": "synthetic",
+      "boot_label": "fixture-success",
+      "elapsed_ms": 10,
+      "checks": {
+        "image_pinned": true,
+        "model_matches": true,
+        "fresh_boot": true,
+        "only_cpu0_running": true,
+        "direct_usb": true
+      }
+    },
+    {
+      "stage": "ram_reset_snapshot",
+      "outcome": "pass",
+      "duration_ms": 10,
+      "source_kind": "synthetic",
+      "boot_label": "fixture-success",
+      "elapsed_ms": 20,
+      "checks": {
+        "usable_ram_valid": true,
+        "reset_mirror_captured": true,
+        "no_prior_request": true
+      }
+    },
+    {
+      "stage": "observer_setup",
+      "outcome": "pass",
+      "duration_ms": 10,
+      "source_kind": "synthetic",
+      "boot_label": "fixture-success",
+      "elapsed_ms": 30,
+      "checks": {
+        "bounded_observer_verified": true,
+        "publication_completed": true
+      }
+    },
+    {
+      "stage": "prestart_bundle",
+      "outcome": "pass",
+      "duration_ms": 10,
+      "source_kind": "synthetic",
+      "boot_label": "fixture-success",
+      "elapsed_ms": 40,
+      "checks": {
+        "cpu0_features_captured": true,
+        "counter_baseline_captured": true,
+        "ram_layout_captured": true
+      }
+    },
+    {
+      "stage": "cpu1_start",
+      "outcome": "pass",
+      "duration_ms": 10,
+      "source_kind": "synthetic",
+      "boot_label": "fixture-success",
+      "elapsed_ms": 50,
+      "checks": {
+        "exact_target": true,
+        "two_writes_acknowledged": true
+      },
+      "start_intent": true,
+      "writes_attempted": 2,
+      "writes_acknowledged": 2
+    },
+    {
+      "stage": "entry_trace",
+      "outcome": "timeout",
+      "duration_ms": 3000,
+      "source_kind": "synthetic",
+      "boot_label": "fixture-success",
+      "elapsed_ms": 3050,
+      "checks": {},
+      "observation": "early_marker_seen"
+    }
+  ]
+}
