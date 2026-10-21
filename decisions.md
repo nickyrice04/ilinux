@@ -2151,3 +2151,26 @@ waived; macOS/boot/security/default/volumes unchanged. Evidence:
 
 Matching mirrors still require entry/deployment review. Preserve the old31 hold;
 no image transfer, Linux launch or write-capable continuation is bundled.
+
+
+### 2026-10-21 · Consume census31A; review matching mirrors before a startup deployment
+
+**Census31A consumed**, execution `f105ed0`: one command, exit 0 in 1.155 s,
+**two guarded RVBAR reads / zero CPU starts**. CPU0 and CPU1 both locked,
+target class `vectors`, image offset `0x0`, mirror-only evidence. Result
+`CENSUS_COMPLETE_REVIEW_REQUIRED`; **native SMP, Linux boot and renderer NOT RUN**.
+Human returned to usual Macintosh HD; recorded +82.036 s from command start,
+within 90 s. No retries/reconnect/PMGR read/write, image transfer, chainload,
+CPU/module/renderer or boot/security/default/volume change. Existing proxy
+exception diagnostic counter read/cleared as documented; no hardware write.
+Owned caffeine stopped. Routine policy checks waived; protections remain last
+reported. Old copy31 HOLD; 31B needs separate RAM-entry/deployment review and
+native validation. Mirror equality is not execution proof or authorization.
+Evidence: `native/boot/attempt31a-2026-10-21-result.md`; exact sanitized JSON:
+`native/boot/attempt31a-census-2026-10-21.json`.
+
+No live patch, reset-vector programming or CPU-start function follows matching
+rows. Preserve the exact census schema and frozen source pins. M5 first selects
+a concrete reviewed RAM deployment with first-instruction/parking evidence;
+Linux two-core launcher/DT and timer/IPI/coherency checks follow separately.
+Keep existing macOS/default/protections and waived routine rechecks unchanged.

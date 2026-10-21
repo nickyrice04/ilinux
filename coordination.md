@@ -6,7 +6,28 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 offline readiness — census31A, 2026-10-21
+### Current M1 native result — census31A consumed, 2026-10-21
+
+**Census31A consumed**, execution `f105ed0`: one command, exit 0 in 1.155 s,
+**two guarded RVBAR reads / zero CPU starts**. CPU0 and CPU1 both locked,
+target class `vectors`, image offset `0x0`, mirror-only evidence. Result
+`CENSUS_COMPLETE_REVIEW_REQUIRED`; **native SMP, Linux boot and renderer NOT RUN**.
+Human returned to usual Macintosh HD; recorded +82.036 s from command start,
+within 90 s. No retries/reconnect/PMGR read/write, image transfer, chainload,
+CPU/module/renderer or boot/security/default/volume change. Existing proxy
+exception diagnostic counter read/cleared as documented; no hardware write.
+Owned caffeine stopped. Routine policy checks waived; protections remain last
+reported. Old copy31 HOLD; 31B needs separate RAM-entry/deployment review and
+native validation. Mirror equality is not execution proof or authorization.
+Evidence: `native/boot/attempt31a-2026-10-21-result.md`; exact sanitized JSON:
+`native/boot/attempt31a-census-2026-10-21.json`.
+
+The source-pinned stage-b/31A checklists remain unchanged for provenance.
+This current result supersedes their pre-execution readiness/NOT RUN text.
+Do not replay 31A or continue automatically to 31B. M5 owns the offline review.
+
+
+### Historical M1 offline readiness — census31A, 2026-10-21
 
 M1 pulled **`964aaac`** and independently verified all 31 SMP source pins,
 boot042's 13 files/declared boot021 revision and clean client `57a9339`.
@@ -21,7 +42,7 @@ waived; macOS/boot/security/default/volumes unchanged. Evidence:
 `native/boot/attempt31a-m1-offline-2026-10-21.md`.
 
 
-## Revised attempt31 — SMP preparation; census31A ready for M1 intake
+## Historical preparation — revised attempt31 / census31A intake
 
 2026-10-21. User authorized native SMP and renderer-threading development.
 Original guarded single-secondary startup candidate fully linked in the VM;

@@ -1,0 +1,25 @@
+{
+  "experiment": "smp31a",
+  "read_only_hardware": true,
+  "cpu_starts": 0,
+  "mmio_reads": 2,
+  "rows": [
+    {
+      "cpu_id": 0,
+      "locked": true,
+      "target_relation": "vectors",
+      "image_offset": "0x0",
+      "mirror_only": true
+    },
+    {
+      "cpu_id": 1,
+      "locked": true,
+      "target_relation": "vectors",
+      "image_offset": "0x0",
+      "mirror_only": true
+    }
+  ],
+  "result": "CENSUS_COMPLETE_REVIEW_REQUIRED",
+  "native_smp": "NOT RUN",
+  "linux_boot": "NOT RUN"
+}
