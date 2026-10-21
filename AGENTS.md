@@ -99,6 +99,32 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### 2026-10-21 · CPU1 controller 31B implemented and offline validated
+
+User authorized CPU1 controller implementation/testing and the M1 handoff.
+Original controller uses installed boot021, a 192-byte RAM helper, the existing
+CPU1 stack and exactly two startup-register writes. It verifies entry/identity
+and two bounded timer-request completions; no Linux launch or CPU-frequency
+change. Post-start reads/publication avoid global exception-guard changes and
+counter clearing. Exact relocated code, topology, source pins and one-use
+receipts gate execution. No chainload, reset-vector/installed-code rewrite,
+boot/security/default/volume change or extra core. macOS remains intact.
+
+46 Python methods PASS; GCC/Clang helpers byte-identical, actual ARM64 RAM
+helper execution PASS, pinned-client serialization PASS, actual secondary-loop
+normal/ASan/UBSan PASS, real ADT-parser fixture PASS. VM is not native proof.
+See `native/boot/attempt31b/validation.md` and job 059. Fresh REA was unnecessary:
+accepted PMGR behavioral evidence plus the exact public bootloader source
+support this experiment; rejected decompiler pseudocode was not used.
+
+**M5 preparation PASS; M1 intake pending; native 31B NOT RUN.** M1 follows
+`tools/m1n1-client/attempt31b-instructions.md`, publishes offline readiness,
+then waits for one human-started existing Boot Lab proxy session. Controller
+60s/supervisor 65s/human 90s bounds; immediate Macintosh HD return after outcome.
+No retry or automatic Linux continuation. Routine policy checks waived.
+31A consumed and old copy-only 31 held; Linux two-core/timer/IPI/coherence and renderer
+integration follow entry evidence, with performance/energy still unproven.
+
 ### 2026-10-21 · M5 reviewed 31A; select CPU1 entry/park experiment
 
 Reviewed M1 report `527defe`: CPU0/CPU1 locked mirrors match installed vectors;

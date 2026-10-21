@@ -1,18 +1,19 @@
-# Current native handoff — 31A reviewed; 31B planning only
+# Current native handoff — 31B CPU1 entry and request test
 
-Read [attempt31b-planning-update.md](attempt31b-planning-update.md).
-M1's census 31A is consumed and reviewed: both reset-vector mirrors match the
-installed entry; zero cores were started. Do not replay the census.
+Read [attempt31b-instructions.md](attempt31b-instructions.md).
+M5 offline preparation passes; M1 must verify the new source pins, retained
+boot042 package and tests, publish readiness, then wait for the human start.
+**Native 31B is NOT RUN.** Census 31A is consumed; do not replay it separately.
 
-The next selected experiment is CPU1-only entry and park-loop validation using
-the existing installed m1n1. Its RAM controller and bounded request path still
-need implementation and offline validation. **No new executable handoff is
-ready. Stay in macOS; do not restart or open the proxy for 31B yet.**
+Use the existing Boot Lab/installed boot021. A small RAM-only controller starts
+CPU1 once, verifies entry and two completed requests, then the human returns
+to Macintosh HD. No Linux launch, new root/image transfer, chainload,
+installation or security/default/volume change. Routine policy checks waived.
 
-The old copy-only 31 pair/profile/collector and full-image SMP candidate remain
-held. No Linux launch, chainload, installation, security/default/volume change
-or routine policy recheck is requested by this update.
+The new controller uploads a 192-byte original helper to an allocated 16 KiB RAM
+block and issues two CPU1 start writes. It is not a read-only census. The old
+copy-only 31 pair/profile and rebuilt m1n1 candidate remain held. Successful
+bootloader entry does not establish native Linux SMP, speed or efficiency.
 
-The 31A source manifest is historical and pins the previous version of this
-pointer. Its original handoff is retained at `964aaac`; do not rewrite its
-hashes or mistake it for a 31B release manifest.
+Use `native/boot/attempt31b/source-sha256.txt`. The 31A manifest remains historical
+and intentionally pins an older version of this pointer; do not regenerate it.

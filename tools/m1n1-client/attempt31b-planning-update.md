@@ -1,5 +1,10 @@
 # After census 31A: CPU1 entry and parking before Linux SMP
 
+**Superseded for execution:** the implemented controller and offline evidence
+are now in [attempt31b-instructions.md](attempt31b-instructions.md). Keep this
+document as the design record; its not-ready wording describes that earlier
+milestone. Native31B remains NOT RUN until the M1 publishes a result.
+
 2026-10-21. **Planning handoff only. Do not restart or run a target command.**
 31A is consumed; the previous copy-only 31 remains held. This update does not
 release a 31B executable or authorize another live session. Existing macOS,

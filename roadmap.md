@@ -15,10 +15,11 @@ entry. No secondary was started. The
 [current decision](tools/m1n1-client/attempt31b-planning-update.md) supersedes
 the older attempt assignments below.
 
-1. Implement and offline-test a bounded CPU1-only start/park controller using
-   installed boot021. Validate identity, dedicated stack, arrival and a
-   completed parked-loop request. No replacement bootloader is planned.
-   **31B is not ready for restart; M1 waits in macOS.**
+1. CPU1-only start/park controller is implemented and offline-tested against
+   installed boot021. M1 completes [31B intake](tools/m1n1-client/attempt31b-instructions.md),
+   publishes readiness, then the human starts one existing Boot Lab session.
+   Verify identity, stack, arrival and two request completions; return to
+   Macintosh HD. No replacement bootloader. **Native31B remains NOT RUN.**
 2. After native entry evidence, prepare exact two-core Linux DT/spin-table
    and launcher changes; validate timers, scheduler wakeups and coherency.
 3. Integrate one renderer worker, keep visual settings constant, and measure

@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-21",
+  "scope": "Offline software validation; native31B NOT RUN",
+  "hardware_target": {
+    "board": "J716c",
+    "soc": "t6050",
+    "start_cpu": 1,
+    "boot_cpu": 0
+  },
+  "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "installed_image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "controller_sha256": "9fea909adeb0bdef74a5c544af6c0b95f1ecda4740a95d4ff683c91238a6bced",
+  "helper": {
+    "bytes": 192,
+    "sha256": "dc046b303191b9a4fcb26a9e689fa4ec7b936dd1ae67dc5fd9b81c4edf4bf8aa",
+    "source_sha256": "9af219a23fe69f8efc7b9536dcfaeba6b6d224034762c97fbab712442b6e9991",
+    "compilers_identical": true,
+    "relocations": 0,
+    "privileged_entries_execution": "NOT RUN; instruction audit only"
+  },
+  "vm": {
+    "vcpus": 12,
+    "memory_gib": 24,
+    "kernel": "7.1.6-vzrun2 aarch64",
+    "gcc": "16.1.1 20260430",
+    "clang": "23.1.1",
+    "job_record": "vzjob: start=2026-10-21T19:35:17Z end=2026-10-21T19:35:20Z exit=0",
+    "assembly_flags": "-march=armv8-a; GCC and Clang --target=aarch64-linux-gnu",
+    "loop_flags": [
+      "-O2 -std=gnu11 -Wall -Wextra -Werror -pthread",
+      "-O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -pthread"
+    ]
+  },
+  "python_methods": {
+    "controller": 19,
+    "supervisor": 3,
+    "census": 11,
+    "layout_audit": 5,
+    "renderer": 8,
+    "total": 46,
+    "result": "PASS"
+  },
+  "vm_tests": {
+    "actual_ram_helper": "PASS",
+    "pinned_client_serialization": "PASS",
+    "actual_secondary_loop": "PASS",
+    "secondary_loop_asan_ubsan": "PASS",
+    "actual_adt_parser": "PASS"
+  },
+  "source_provenance": {
+    "src/start.S": "91de75024c12f034a046171e88c8be9377bb09e4bfe95bf1ac5ba3cdd1e423ea",
+    "src/startup.c": "c563ad48a6da509f4914624a38ea4ad6adea8d1220d707dce698c698b032f865",
+    "src/smp.c": "4b000be8d4e6437fc24351a57db5277785cc2e427045fb45d1750b158f2b8766",
+    "src/smp_asm.h": "2afe4c4ac4cd696a2d020fcef5621aa1ac66c2e7edcaaaef11f17df17cc696bd",
+    "src/memory.c": "a3a07cf06c0b16c0964c0e894a11914fd62900a1494b4e3cfaa184e2642b6609",
+    "src/memory.h": "2031598add8752e061b087935aefe0fa8cc69062bb9c97833308e300d9abb199",
+    "src/chickens.c": "1f0413af258ec3c76ded686429e1cb50abb5f528df77a0d546795b22455e19ef",
+    "src/exception.c": "b6b0cb29cdb73f249f56d72d5133096c651bbc89f4fdada89943fadb6459dfd5",
+    "src/proxy.c": "647a6e8468ef1ff0728a81eff46a831c88a14be610b3a4bad34a99fe8f26ea5c",
+    "src/uartproxy.c": "df56fad8349e9a8bc8489022750fb1216f31ef30858a84ac4a4f60370a1cf8f2",
+    "src/utils.c": "0361304388c7b42de38bc6be8717f25f48e59fb8c513712ee202c2d698a2ac5c",
+    "src/utils.h": "6477d2b03c7c59d337885b22add67322009df6cbe566481e3c967adf558910f4",
+    "proxyclient/m1n1/proxy.py": "7c30c574b7925de202b352ac752735159316d70d1d498dac561df783985d7f1b",
+    "proxyclient/m1n1/proxyutils.py": "f94ecb9a68b5e46fe64fc573170fc10c444e14157c829cf75d0551af747589b7"
+  },
+  "native": {
+    "cpu1_start": "NOT RUN",
+    "linux_smp": "NOT RUN",
+    "performance": "NOT RUN",
+    "energy": "NOT RUN"
+  },
+  "limits": [
+    "Synthetic MMIO/register/exception/WFE tests do not establish native entry or stability.",
+    "Existing secondary initialization and diagnostic behavior are inherited from installed boot021.",
+    "No VM result predicts physical desktop responsiveness or power."
+  ]
+}

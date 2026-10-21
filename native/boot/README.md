@@ -1,4 +1,13 @@
-# J716c native handoff — attempt 28 CPU observation
+# J716c native handoff — current attempt31B
+
+**Current:** use [31B CPU1 instructions](../../tools/m1n1-client/attempt31b-instructions.md)
+and [offline validation](attempt31b/validation.md). M5 preparation PASS; M1
+intake pending; native31B NOT RUN. Existing installed boot021, one CPU1 start
+and two bounded parked-loop requests, then Macintosh HD. No Linux launch or
+new boot image. Census31A and earlier attempts are consumed. The historical
+attempt28 directions below are context, not the next live command.
+
+## Historical handoff — attempt 28 CPU observation
 
 **Native attempt 27 completed on 2026-10-20.** Two-stage delivery, Omarchy,
 the second USB/SSH link and automatic keyboard startup passed. The user typed
