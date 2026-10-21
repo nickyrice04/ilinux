@@ -6,6 +6,22 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 offline readiness — attempt30, 2026-10-20
+
+M1 pulled **`cfebfb7`**, verified the 163,840-byte desktop30 bundle
+(`26a36600…1f07`), all four regular members, asset manifest and byte-identical
+collector source without extraction/execution. Retained attempt28 images freshly
+rehashed with embedded pins PASS; boot042 thirteen files and all 37 source pins
+PASS. Desktop-latency eight-line offline launcher and root sender dry-run PASS;
+clean client `57a9339`, eleven helper pins, SSH config/operator key and fresh
+no-forwarding config checks PASS. **127 methods PASS / 2 absent legacy-fixture
+SKIPS**, no source/test repairs. Native/live/latency NOT RUN; launches/root/
+bundle sends 0 and no real window armed. Human confirms M1 restart and proxy,
+cable/power/unlocked/lid/recording/timer. One new authorized run follows this
+published readiness; no earlier collector replay or module/settings operation.
+Evidence: `native/boot/attempt30-m1-offline-2026-10-20.md`.
+
+
 ### M5 handoff — attempt30 desktop latency, 2026-10-20
 
 **Attempt30 offline preparation PASS; M1 intake pending; native/live NOT RUN.**
