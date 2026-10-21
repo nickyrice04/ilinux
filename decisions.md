@@ -2459,3 +2459,23 @@ protection change or speculative write. Native31E/Linux SMP remain NOT RUN.
 Successful bootloader callbacks are not Linux SMP, throughput, or efficiency.
 Next physical evidence selects the two-core Linux correctness/performance batch
 or a more precise earlier-entry repair. Original C stack remains in use.
+
+
+### 2026-10-21 · Accept M1 image-only 31E intake before fresh human start
+
+M1 pulled **`a79a275`**; **112 source pins**, exact existing boot021 and
+**141 image-only Python methods PASS**, no skips/fixes. Both documented offline
+commands exit 0; additional retained-package intake verifies all 13 files.
+Clean client `57a9339`; source manifest `5be6295c…66d17a`. Symbol mode
+`reviewed_layout_only`; full-symbol checks explicitly **NOT RUN** on M1.
+Hardware operations 0, restart_ready false (expected), no real 31E receipts;
+prior 31B/31C/31D evidence digests unchanged. Human reports both machines ready.
+Publish before fresh human M5 lab start and independent 90 s timer. Healthy
+M1 requires no routine restart; no policy recheck. **Native31E/CPU1/Linux SMP
+NOT RUN/unverified; live attempts 0.** Installed entry/client/macOS/settings
+unchanged. No retry/reconnect or Linux continuation. Evidence:
+`native/boot/attempt31e-m1-offline-2026-10-21.md`.
+
+Retain the explicit full-symbol verification limit and M5 VM evidence as
+separate facts. The reviewed RAM recorder is conditional on native permission
+and publication gates; no protection change or automatic Linux continuation.

@@ -6,6 +6,22 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 offline readiness — 31E, 2026-10-21
+
+M1 pulled **`a79a275`**; **112 source pins**, exact existing boot021 and
+**141 image-only Python methods PASS**, no skips/fixes. Both documented offline
+commands exit 0; additional retained-package intake verifies all 13 files.
+Clean client `57a9339`; source manifest `5be6295c…66d17a`. Symbol mode
+`reviewed_layout_only`; full-symbol checks explicitly **NOT RUN** on M1.
+Hardware operations 0, restart_ready false (expected), no real 31E receipts;
+prior 31B/31C/31D evidence digests unchanged. Human reports both machines ready.
+Publish before fresh human M5 lab start and independent 90 s timer. Healthy
+M1 requires no routine restart; no policy recheck. **Native31E/CPU1/Linux SMP
+NOT RUN/unverified; live attempts 0.** Installed entry/client/macOS/settings
+unchanged. No retry/reconnect or Linux continuation. Evidence:
+`native/boot/attempt31e-m1-offline-2026-10-21.md`.
+
+
 ### 2026-10-21 · M5: native31E controller ready offline; M1 intake then one lab boot
 
 Implemented the original early CPU1 recorder's bounded native adapter. It
