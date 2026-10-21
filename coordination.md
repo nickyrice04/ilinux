@@ -6,6 +6,21 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 offline readiness — census31A, 2026-10-21
+
+M1 pulled **`964aaac`** and independently verified all 31 SMP source pins,
+boot042's 13 files/declared boot021 revision and clean client `57a9339`.
+Boot021 image SHA-256 `ff75f4a9…72664`; census offline PASS, no USB opened.
+**19 methods PASS** (11 census, 8 renderer), no skips/fixes. Native31A/live,
+CPU starts, SMP, Linux and renderer tests **NOT RUN**; live attempts/MMIO reads 0.
+Human has already reported M1 restart and M5 Running proxy and confirmed direct
+cable/power/unlocked/lid/90s timer. Publish before executing the authorized one
+census. No new image, startup candidate, CPU start, chainload or write operation.
+Old copy31 remains HOLD; 31B requires separate review. Routine policy rechecks
+waived; macOS/boot/security/default/volumes unchanged. Evidence:
+`native/boot/attempt31a-m1-offline-2026-10-21.md`.
+
+
 ## Revised attempt31 — SMP preparation; census31A ready for M1 intake
 
 2026-10-21. User authorized native SMP and renderer-threading development.

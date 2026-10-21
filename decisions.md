@@ -2133,3 +2133,21 @@ supersedes earlier next-boot/readiness wording below. Original macOS remains
 intact; routine policy rechecks remain waived.31B needs a reviewed RAM startup
 path, exact two-core DT/launcher and native timer/IPI/coherency checks before
 renderer integration or expansion. Other agents' jobs047/048 are untouched.
+
+
+### 2026-10-21 · Accept M1 census31A intake without a startup deployment
+
+M1 pulled **`964aaac`** and independently verified all 31 SMP source pins,
+boot042's 13 files/declared boot021 revision and clean client `57a9339`.
+Boot021 image SHA-256 `ff75f4a9…72664`; census offline PASS, no USB opened.
+**19 methods PASS** (11 census, 8 renderer), no skips/fixes. Native31A/live,
+CPU starts, SMP, Linux and renderer tests **NOT RUN**; live attempts/MMIO reads 0.
+Human has already reported M1 restart and M5 Running proxy and confirmed direct
+cable/power/unlocked/lid/90s timer. Publish before executing the authorized one
+census. No new image, startup candidate, CPU start, chainload or write operation.
+Old copy31 remains HOLD; 31B requires separate review. Routine policy rechecks
+waived; macOS/boot/security/default/volumes unchanged. Evidence:
+`native/boot/attempt31a-m1-offline-2026-10-21.md`.
+
+Matching mirrors still require entry/deployment review. Preserve the old31 hold;
+no image transfer, Linux launch or write-capable continuation is bundled.
