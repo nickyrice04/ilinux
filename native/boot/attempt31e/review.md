@@ -1,5 +1,7 @@
 # 31E preparation: improve observation before another native attempt
 
+> Historical offline-proposal milestone. Current native-controller scope and validation: [controller-review.md](controller-review.md) and [controller-validation.md](controller-validation.md).
+
 2026-10-21. **Offline work; native launch HOLD.** This is not a new executable
 native allowance. Preserve 31B, 31C and 31D sources, manifests and receipts.
 

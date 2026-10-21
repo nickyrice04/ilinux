@@ -5,6 +5,33 @@ measured, still unsupported, and next.
 
 ---
 
+### 2026-10-21 · M5: native31E controller ready offline; M1 intake then one lab boot
+
+Implemented the original early CPU1 recorder's bounded native adapter. It
+checks the existing code-write alias with 16 fixed translation probes, publishes
+body before hook, verifies both address views and the rest of the loaded text,
+and preserves partial recorder/reset/spin observations. New guard-free 32-bit
+startup helper performs the same two approved CPU1 writes without the old RPC's
+temporary global exception-guard window. Only verified arrival plus a complete
+record permits eight timer callbacks and a final park check. No Linux handoff.
+
+**181 unique Python methods PASS in ARM64 VM job 063; 141 in M1-style image-only
+host intake.** Real pinned client/BootArgs/ADT paths PASS for EL1, EL2/VHE and
+partial timeout. GNU/Clang helper byte equality, frame-store sanitizer tests,
+240 mutation-failure cases, 1,512 publication interleavings and 164 recorder
+instruction fault stops PASS. 112 source pins; independent publication and
+controller reviews complete. Native31E/CPU1/Linux SMP still **NOT RUN**.
+
+M1 next: pull, run `tools/m1n1-client/attempt31e-instructions.md` offline intake,
+publish readiness, then wait for the human's fresh M5 Boot Lab start. Existing
+boot021/package only; no AirDrop or installation. A healthy M1 needs no routine
+restart. One supervised session, 90-second human bound, immediate Macintosh HD
+return after any result. No repeated policy checks, retry/reconnect, protection
+change, volume/storage operation or macOS modification. Prior receipts frozen.
+Validation: `native/boot/attempt31e/controller-validation.md`. CPU1 entry remains
+unverified; next physical evidence determines the move to two-core Linux
+correctness/renderer/memory tests. No performance or efficiency gain claimed.
+
 ### 2026-10-21 · M5: 31D reviewed; offline CPU-entry lab and recorder ready, native HOLD
 
 31D acknowledged both starts but showed no CPU1 reset record in 171 samples;

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-2.0-or-later
-"""Source-pinned offline 31E intake. No native controller or USB import.
+"""Source-pinned offline 31E intake. No USB or live-controller invocation.
 
-Runs only fixed repository Python checks. A pass never permits a reboot or
-hardware operation. The symbol file is optional for M1's retained package.
+Runs only fixed repository Python checks. A pass records offline readiness; a fresh human start remains required for
+the separate native command. The symbol file is optional for M1's retained package.
 """
 import argparse
 import hashlib
@@ -16,6 +16,10 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = 'native/boot/attempt31e/source-sha256.txt'
 TESTS = (
+    'native/boot/test_smp31e.py',
+    'tools/m1n1-client/test_attempt31e_supervisor.py',
+    'kernel/experiments/smp31e-entry/test_permissions.py',
+    'kernel/experiments/smp31e-entry/test_telemetry.py',
     'tools/boot-campaign/test_campaign.py',
     'kernel/experiments/smp31e-entry/test_observe.py',
     'kernel/experiments/smp31e-entry/test_audit.py',
@@ -45,6 +49,62 @@ REQUIRED = set(TESTS) | set(FULL_SYMBOL_TESTS) | {
     'kernel/experiments/smp31e-emulator/recorder_check.py',
     'kernel/experiments/smp31e-observer/collector.py',
 }
+
+REQUIRED.update({
+    'kernel/experiments/smp31/audit_boot021.py',
+    'kernel/experiments/smp31/audit_console31d.py',
+    'kernel/experiments/smp31/boot021-ram-layout.json',
+    'kernel/experiments/smp31/memory_fixture31c.py',
+    'kernel/experiments/smp31/rea-validation.json',
+    'kernel/experiments/smp31/renderer.py',
+    'kernel/experiments/smp31/test_audit_boot021.py',
+    'kernel/experiments/smp31/test_client31b_vm.py',
+    'kernel/experiments/smp31/test_client31c_vm.py',
+    'kernel/experiments/smp31/test_client31d_vm.py',
+    'kernel/experiments/smp31/test_client31e_vm.py',
+    'kernel/experiments/smp31/test_parser_vm.py',
+    'kernel/experiments/smp31/test_renderer.py',
+    'kernel/experiments/smp31e-entry/permission_helper.S',
+    'kernel/experiments/smp31e-entry/permissions.py',
+    'kernel/experiments/smp31e-entry/start_helper.S',
+    'kernel/experiments/smp31e-entry/telemetry.py',
+    'kernel/experiments/usb-gadget-dt/fdtedit.py',
+    'native/boot/attempt31b/validation.json',
+    'native/boot/attempt31c/validation.json',
+    'native/boot/attempt31d/console-binding.json',
+    'native/boot/attempt31d/validation.json',
+    'native/boot/cpu_observe.py',
+    'native/boot/dapf_guard.py',
+    'native/boot/entry_guard.py',
+    'native/boot/fdt.py',
+    'native/boot/gpio_guard.py',
+    'native/boot/launch.py',
+    'native/boot/package-manifest.json',
+    'native/boot/smp31_census.py',
+    'native/boot/smp31b.py',
+    'native/boot/smp31c.py',
+    'native/boot/smp31d.py',
+    'native/boot/smp31e.py',
+    'native/boot/test_smp31_census.py',
+    'native/boot/test_smp31b.py',
+    'native/boot/test_smp31c.py',
+    'native/boot/test_smp31d.py',
+    'reverse-engineering/findings/cpu-startup-2026-10-21/validation.json',
+    'tools/m1n1-client/attempt31b-supervise.py',
+    'tools/m1n1-client/attempt31c-supervise.py',
+    'tools/m1n1-client/attempt31d-supervise.py',
+    'tools/m1n1-client/attempt31e-supervisor.py',
+    'tools/m1n1-client/pin_check.py',
+    'tools/m1n1-client/run.sh',
+    'tools/m1n1-client/test_attempt31b_supervise.py',
+    'tools/m1n1-client/test_attempt31c_supervise.py',
+    'tools/m1n1-client/test_attempt31d_supervise.py',
+    'tools/m1n1-client/usb_identity.py',
+    'tools/m1n1-client/verify-package.py',
+    'virtualization/jobs/059-smp31b/run.sh',
+    'virtualization/jobs/060-smp31c/run.sh',
+    'virtualization/jobs/061-smp31d/run.sh',
+})
 
 
 def need(condition, why):
@@ -120,6 +180,8 @@ def main():
              isinstance(recorder.get('scenarios'), list) and len(recorder['scenarios']) == 11,
              'recorder_model_contract')
         rows.append(dict(check='stackless_recorder_equivalence', result='PASS', scenarios=11))
+    run_check('native/boot/smp31e.py', ['--image', str(args.image.absolute())])
+    rows.append(dict(check='native_controller_offline_source_image_helper_check', result='PASS'))
     stdout, _ = run_check('kernel/experiments/smp31e-emulator/emulate.py', emulator_args)
     model = json.loads(stdout)
     symbol_mode = 'full_symbol_digest' if args.symbols is not None else 'reviewed_layout_only'
@@ -136,12 +198,12 @@ def main():
              row.get('symbol_validation') == symbol_mode for row in scenarios),
          'model_scenario_contract')
     need(source_pins() == (pins, digest), 'sources_changed_during_intake')
-    print(json.dumps(dict(result='OFFLINE_CHECKS_PASS_NATIVE_HOLD',
+    print(json.dumps(dict(result='OFFLINE_CHECKS_PASS_AWAIT_HUMAN_START',
         source_pins=pins, source_manifest_sha256=digest, unit_test_methods=total,
         checks=rows, instruction_model=model, native_31e='NOT RUN',
         full_symbol_checks='PASS' if args.symbols is not None else 'NOT RUN: symbol file not supplied',
         cpu1_entry='UNVERIFIED', linux_smp='NOT RUN',
-        restart_ready=False, hardware_operations=0), indent=2))
+        restart_ready=False, next_step='M1 publishes readiness; human starts the reviewed one-shot session', hardware_operations=0), indent=2))
 
 
 if __name__ == '__main__':

@@ -1,22 +1,19 @@
-# Current handoff — 31E offline preparation; native launch HOLD
+# Current handoff — 31E early CPU1 recorder
 
-Read [attempt31e-instructions.md](attempt31e-instructions.md).
-**Do not restart either Mac for this handoff.** 31D is consumed: both CPU1
-startup writes acknowledged, 171 samples without a reset record, arrival
-timeout and safe Macintosh HD return. CPU1's exact stopping point is unknown.
+Follow [attempt31e-instructions.md](attempt31e-instructions.md): offline intake,
+M1 readiness report, fresh human M5 lab start, exactly one supervised controller,
+then immediate Macintosh HD return. M1 does not need an automatic reboot if its
+helper-health checks pass. No new image transfer, installation or policy check.
 
-New work checks exact public bootloader instructions, partial-publication
-observers and conditional campaigns offline. Fresh REA checked two bounded
-macOS startup functions against 96 original-byte/LLVM instruction words; no
-additional CPU1 power write was established. No native fix or SMP success is
-claimed. The temporary Device-memory stack proposal remains held while an
-earlier recorder that preserves the ordinary C stack is designed and checked.
+31D is consumed. The new controller adds an original stackless recorder in
+loaded RAM through the existing writable alias, fixed translation/readback and
+cache-publication checks, and guard-free CPU1 startup stores. It preserves
+partial observations; only verified arrival plus a complete record permits
+eight bounded timer callbacks and a final park check. No Linux continuation,
+additional core, RVBAR change, security change or storage access.
 
-M1 runs the source-pinned offline intake, reports results and waits for a
-separate reviewed live procedure. No USB, target write, native receipt, retry,
-Linux continuation, installed-image or boot/security/volume change. Preserve
-all 31B–31D sources and receipts. Routine policy checks stay waived.
-
-Future sessions use a helper-health gate rather than automatically restarting
-M1. The target's fresh-start and uncertain-state stop rules remain necessary.
-See `native/boot/attempt31e/review.md` and `research/testing-strategy-31e.md`.
+Offline validation and review are in `native/boot/attempt31e/`:
+`controller-validation.md`, `controller-review.md`, `publication-review.md`.
+Native31E/CPU1/Linux SMP remain **NOT RUN** until the M1 reports this attempt.
+The older offline-only HOLD applies to the earlier proposal, superseded by
+this reviewed controller handoff. Preserve all consumed sources and receipts.

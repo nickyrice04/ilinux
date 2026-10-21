@@ -86,9 +86,23 @@ def memory(image):
     return mem
 
 
+def boundary_kind(instruction):
+    if instruction & 0xffffffe0 in ({0xd53800a0, 0xd5384240} | set(SCTLR_MRS)):
+        return 'system_register_read'
+    if instruction & 0xffc00000 == 0xf9000000:
+        return 'record_store'
+    if instruction == 0xd5033f9f:
+        return 'publication_barrier'
+    return None
+
+
+class BoundaryFault(e.Refused):
+    """Synthetic stop at one exact instruction boundary; no recovery model."""
+
+
 class RecorderMachine(e.Machine):
     """Additional exact recorder instruction forms; no generic device model."""
-    def __init__(self, image, mem, current_el, mpidr, fault=False):
+    def __init__(self, image, mem, current_el, mpidr, fault=False, *, fault_at=None):
         # Base model's public CPU1-only entry contract is unchanged. This
         # separate model explicitly tests the recorder's filtering paths.
         super().__init__(image, mem, 4, e.CPU1)
@@ -97,6 +111,17 @@ class RecorderMachine(e.Machine):
         e.integer(mpidr, 0, e.MASK64, 'synthetic_mpidr')
         e.need(type(fault) is bool, 'synthetic_fault')
         self.current_el, self.mpidr, self.fault = current_el, mpidr, fault
+        self.fault_at = fault_at
+        self.boundary_fault_seen = False
+        if fault_at is not None:
+            e.need(not fault and type(fault_at) is tuple and len(fault_at) == 2,
+                   'invalid_boundary_fault')
+            at, side = fault_at
+            e.need(type(at) is int and CODE_START <= at < CODE_START + CODE_BYTES
+                   and at % 4 == 0 and type(side) is str and side in ('before', 'after'),
+                   'invalid_boundary_fault')
+            e.need(boundary_kind(struct.unpack_from('<I', image, at)[0]) is not None,
+                   'boundary_instruction_not_supported')
         self.sctlr_attempts = 0
         self.sctlr_completed = 0
         self.phase_events = []
@@ -110,7 +135,11 @@ class RecorderMachine(e.Machine):
         return super().fetch()
 
     def step(self):
+        e.need(not self.boundary_fault_seen, 'boundary_model_already_stopped')
         offset, insn = self.fetch()
+        if self.fault_at == (offset, 'before'):
+            self.boundary_fault_seen = True
+            raise BoundaryFault('modeled_boundary_fault_before')
         in_recorder = CODE_START <= offset < CODE_START + CODE_BYTES
         rd, rn = insn & 31, (insn >> 5) & 31
         kind = None
@@ -157,6 +186,9 @@ class RecorderMachine(e.Machine):
         else:
             self.trace.append({'offset': hex(offset), 'instruction': kind})
             self.pc += 4
+        if self.fault_at == (offset, 'after'):
+            self.boundary_fault_seen = True
+            raise BoundaryFault('modeled_boundary_fault_after')
 
 
 def seed(machine, nzcv):
@@ -243,6 +275,66 @@ def run_case(prepared, case, max_steps=256, initial_nzcv=10):
             'native_execution': 'NOT RUN'}
 
 
+def _prefix_state(machine):
+    """Private synthetic snapshot for equality; raw values never enter reports."""
+    return (tuple(machine.x), machine.sp, machine.nzcv, machine.pc,
+            b''.join(machine.memory.read(e.BASE + RECORD + i, 16)
+                     for i in range(0, RECORD_BYTES, 16)),
+            tuple(machine.phase_events), tuple(machine.record_events),
+            machine.sctlr_attempts, machine.sctlr_completed,
+            tuple(tuple(sorted(event.items())) for event in machine.trace),
+            tuple(machine.memory.writes))
+
+
+def run_boundary_matrix(prepared, case, max_steps=256):
+    """Stop before and after every reached recorder MRS, STR and DSB.
+
+    Every stopped machine must equal the corresponding clean interpreter
+    prefix. DSB remains an event only: no real visibility, asynchronous-fault
+    delivery, exception recovery, or later continuation is inferred.
+    """
+    e.need(case in CASES and not CASES[case][2], 'unsupported_boundary_case')
+    current_el, mpidr, _ = CASES[case]
+    clean = RecorderMachine(prepared.derived, memory(prepared.derived), current_el, mpidr)
+    seed(clean, 10)
+    sites = []
+    e.integer(max_steps, 1, 4096, 'step_bound')
+    while clean.pc != e.BASE + 0x900:
+        e.need(len(clean.trace) < max_steps, 'step_limit')
+        offset, instruction = clean.fetch()
+        kind = boundary_kind(instruction) if CODE_START <= offset < CODE_START + CODE_BYTES else None
+        before = _prefix_state(clean) if kind else None
+        clean.step()
+        if kind:
+            sites.append((offset, kind, before, _prefix_state(clean)))
+    counts = {'system_register_read': 0, 'record_store': 0, 'publication_barrier': 0}
+    phases = set()
+    for offset, kind, before, after in sites:
+        for side, expected in (('before', before), ('after', after)):
+            machine = RecorderMachine(prepared.derived, memory(prepared.derived),
+                                      current_el, mpidr, fault_at=(offset, side))
+            seed(machine, 10)
+            try:
+                advance(machine, 0x900, max_steps)
+            except BoundaryFault as error:
+                e.need(str(error) == 'modeled_boundary_fault_' + side,
+                       'wrong_boundary_fault')
+            else:
+                raise e.Refused('boundary_fault_not_reached')
+            e.need(_prefix_state(machine) == expected, 'boundary_prefix_mismatch')
+            e.need(machine.boundary_fault_seen, 'boundary_stop_not_latched')
+            e.need(machine.sp == clean.sp and machine.x[30] == clean.x[30],
+                   'boundary_stack_or_lr_changed')
+            phases.add(machine.memory.read64(e.BASE + RECORD))
+            counts[kind] += 1
+    return {'case': case, 'result': 'MODELED_BOUNDARY_PREFIXES_PASS',
+            'instruction_boundaries': len(sites), 'stopped_cases': len(sites) * 2,
+            'fault_counts': counts, 'record_phases_at_stop': sorted(phases),
+            'all_prefix_states_equal': True, 'stack_lr_unchanged': True,
+            'exception_handler_modeled': False, 'physical_publication_modeled': False,
+            'native_execution': 'NOT RUN'}
+
+
 def check(image, symbols):
     prepared = prepare(image, symbols)
     return {'result': 'OFFLINE_RECORDER_EQUIVALENCE_PASS_NATIVE_HOLD',
@@ -251,6 +343,8 @@ def check(image, symbols):
             'derived_image_sha256': hashlib.sha256(prepared.derived).hexdigest(),
             'recorder_sha256': RECORDER_SHA, 'recorder_bytes': CODE_BYTES,
             'scenarios': [run_case(prepared, case) for case in CASES],
+            'boundary_fault_matrix': [run_boundary_matrix(prepared, case)
+                                      for case in CASES if not CASES[case][2]],
             'native_execution': 'NOT RUN', 'native_deployment_ready': False,
             'entry_authorized': False, 'hardware_model': False}
 

@@ -1,5 +1,7 @@
 # 31E offline validation — native launch remains held
 
+> Historical offline-proposal milestone. Current native-controller scope and validation: [controller-review.md](controller-review.md) and [controller-validation.md](controller-validation.md).
+
 2026-10-21. Tested checkout: `37f25cb` plus the source snapshot pinned by
 `native/boot/attempt31e/source-sha256.txt`. **38 pinned files**, manifest SHA-256
 `f6cb4ff15a2ce3cebe7af1d0d6aad04678a62af0de1f42b4f2c8ef0faca9d6bc`.

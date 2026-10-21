@@ -1,6 +1,21 @@
 # Blockers
 
-## Current — native CPU1 entry unknown; recorder deployment is the next gate
+## Current — native31E intake and physical CPU1 evidence pending
+
+The bounded recorder controller is implemented and independently reviewed.
+181 VM methods, real pinned-client/parser paths and independent GNU/Clang byte
+comparisons PASS. M1 must independently verify the 112-file source snapshot and
+publish readiness before the fresh human lab start. No additional offline
+implementation blocker is known. See `native/boot/attempt31e/controller-validation.md`.
+
+CPU0 translation/readback cannot prove CPU1 instruction visibility or incoming
+MMU/cache state. Those observations, then verified entry/timer callbacks/parking,
+are the next hardware gate. No Linux SMP or performance/efficiency result exists.
+After successful entry, prepare two-core Linux timer/IPI/coherency and renderer/
+memory measurements before cluster expansion. Storage and N1 remain separate gaps.
+
+## Historical — native adapter pending before this turn
+
 
 31D's no-record timeout is not a PC or zero-execution measurement. The new
 offline lab passes 110 VM methods and two independent assembler comparisons;

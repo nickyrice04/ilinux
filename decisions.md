@@ -2434,3 +2434,28 @@ fresh restart was not a universal prerequisite. Keep a restart as recovery
 when helper health fails, and never reconnect/retry an uncertain target session.
 Routine policy checks remain waived; no boot/security/volume changes authorized
 or performed by this offline milestone.
+
+
+### 2026-10-21 · Complete 31E as one bounded early-entry campaign
+
+**Decision:** ship the reviewed RAM-only recorder controller with fixed CPU0
+translation checks, body-before-hook publication/readback, partial observations,
+and conditional repeated timer requests. The two CPU1 start stores use an
+original guard-free helper: the previous proxy command temporarily changed a
+global exception guard while CPU1 could begin executing. Installed boot021,
+RVBAR, mappings, permissions, macOS and volumes remain unchanged.
+
+**Evidence/validation:** 181 VM Python methods; actual pinned-client serialization
+and real BootArgs/ADT success/partial-timeout paths; independent GNU/Clang byte
+matches for all new helpers; sanitizer checks and mutation/interleaving/fault
+models PASS. Independent reviewers found no remaining blocking software-ordering
+issue. Earlier REA did not establish another power operation, and none is added.
+See `native/boot/attempt31e/controller-validation.md` for exact scope and hashes.
+
+**Consequences:** M1 intake precedes one fresh human M5 Boot Lab start and immediate
+Macintosh HD return. A healthy M1 need not reboot. The native experiment may
+refuse permission/publication or still see no entry; neither permits a retry,
+protection change or speculative write. Native31E/Linux SMP remain NOT RUN.
+Successful bootloader callbacks are not Linux SMP, throughput, or efficiency.
+Next physical evidence selects the two-core Linux correctness/performance batch
+or a more precise earlier-entry repair. Original C stack remains in use.
