@@ -6,17 +6,31 @@ Inputs: `build/macos-drivers/members/AGXG17X.macho` (`e772f7d8…339b`, 3226 tex
 Rust GPU helper (`rust/src/gpu/`), which mirrors the asahi driver's firmware structures. Labels: Confirmed / Likely /
 Hypothesis / Unknown. The asahi DRM driver itself is not in the pinned clone; the m1n1 mirror is the comparison basis.
 
-## 1. Summary (honest assessment: not a near-term target)
+## 1. Scope, with 2026-10-21 corrections
 
-1. **Generation and firmware are both outside what Linux knows** (Confirmed): the asahi-mirrored code enumerates
+GPU enablement is now a critical native-performance track. The earlier
+person-month estimate and VM parity recommendation were not supported by a
+measured work breakdown and are withdrawn. This document does not establish
+that GPU enablement is impossible in the next development stages.
+
+The actual Asahi kernel branch was checked at
+[`94fb23346d522edf53722357c426a3e58030beea`](https://github.com/AsahiLinux/linux/tree/94fb23346d522edf53722357c426a3e58030beea/drivers/gpu/drm/asahi).
+`hw/mod.rs` enumerates G13/G14; `driver.rs` matches t8103/t8112/t600x/t602x
+and firmware-compat 12.3/12.4/13.5. No t6050/G17 handler is present there.
+This establishes the gap in that implementation, not the state of every fork.
+
+1. **Generation is outside the inspected implementation** (Confirmed): the asahi-mirrored code enumerates
    `GpuGen::G13` and `G14` only (`rust/src/gpu/hw/mod.rs`, hw tables for t8103/t600x/t8112/t602x) and knows initdata
    sizes only for (G13, 12.3/13.5), (G14G, 12.4/13.5) and (G14X, 13.5) (`rust_gpu_initdata_size`). The M5 runs **G17X**
    with the **macOS 26.6.2** firmware (`armfw_g17x.im4p` 3,159,161 B and `armfw1_g17x.im4p` 3,224,761 B on Preboot, one
-   per firmware role). Neither the generation-specific hardware tables nor the 26.x structure layouts exist.
+   per firmware role). The macOS release number does not identify a firmware ABI.
+   Generation-specific tables are missing; the actual firmware ABI must be
+   established before naming or implementing its structure version.
 2. **Two GPU firmware coprocessors** (Confirmed): `gfx-asc` (role `GFX`, `0x2102600000`) and `gfx1-asc` (role `GFX1`,
    `0x2102e00000`), each `iop,ascwrap-v6` with its own mailbox interrupts and the shared `mapper-gfx-asc` DART mapper; the
    `sgx` node carries both `gfx-data-*` and `gfx1-data-*` regions, the kext has `AGFIFirmwareRole` and `AGXG17CDevice`/
-   `AGXG17SDevice`. A Linux driver must boot and feed two firmware instances.
+   `AGXG17SDevice`. Whether both roles are required for a minimal basic draw is
+   **Unknown**; two nodes alone do not prove that requirement.
 3. **New blocks relative to G13/G14** (Confirmed as present, semantics Unknown): "Fender" (a GPU-side power/perf
    controller with its own register windows: `DFender CS/IVDM/MGPU Regs`, `GFenderCfg`, "Fender Scratch Region",
    `gpu-fender-idle-off-delay-ms`, "Fender Power Transition Regs (G16G only)" → introduced with G16/M4), "KSM" kick/
@@ -27,10 +41,11 @@ Hypothesis / Unknown. The asahi DRM driver itself is not in the pinned clone; th
 4. **Firmware ABI version string**: not in the kexts (`AGXFirmwareKextG17RTBuddy::getVersion(AGFIFirmwareRole)` reads it
    from the firmware image loaded by iBoot: "GFX firmware was not loaded by iBoot" is a fatal check). The AP side exposes
    `SCMBuildTime`, `AGXTraceCodeVersion` and pool/element sizes (§3) only.
-5. **Difficulty**: a new GPU generation (G15, G16 and G17 all unsupported upstream), a new UAT level, dual firmware,
-   KSM/Fender, a firmware ABI thirteen macOS versions newer than the last supported one, and a shader ISA generation
-   without a Mesa compiler. Expect multiple person-months for an experienced team with hardware tracing, before any
-   acceleration. The VM path (VirGL/Venus at 94–99% of native in this project) remains the realistic parity route.
+5. **Implementation gates:** establish boot-time firmware ownership, usable
+   address translation and shared-memory attributes; then a bounded completion
+   for one queue submission; then one checked render; then compositor support.
+   ISA/compiler differences require a current Mesa comparison. Neither a
+   compatible node nor a VM graphics score proves native acceleration.
 
 ## 2. ADT facts (Confirmed; values of most `gfx-*` properties are sanitized away)
 
@@ -71,7 +86,7 @@ m1n1's `kboot_gpu.c` (local tree) handles `/arm-io/sgx` only for T8103/T8112/T60
 | # | Item | Label |
 |---|---|---|
 | 1 | m1n1: t6050 in `kboot_gpu.c` (perf-state tables incl. `perf-states1..3`/`sram1..3`, the UAT regions, `gptbat`/`ttbat` handling), dual-ASC firmware region handoff (`gfx-data-*` and `gfx1-data-*`) | Likely required |
-| 2 | asahi driver: `hw/t6050` tables for G17X, a `V26_6` structure version for every firmware struct (initdata, channels, work/commands), dual-firmware boot, KSM kick queues, Fender power control, the GPTBAT UAT level | Confirmed (scope) |
+| 2 | asahi driver: G17X/t6050 hardware tables and verified firmware initdata/channel/command schemas; establish required firmware roles, KSM queues, power control and UAT mode before hardware writes | Missing tables confirmed; remaining interfaces require validation |
 | 3 | Firmware images: `armfw_g17x.im4p`/`armfw1_g17x.im4p` are the inputs for the structure work (im4p-wrapped, not opened here) | Confirmed |
 | 4 | Mesa: a G17 ISA backend/compiler; unknown delta from G13/G14 (`has-kf`, `procedural-antialiasing`, `metal-standard` hints only) | Unknown |
 | 5 | Without the SPTM, Linux programs the UAT itself (as on M1); whether the G17 UAT requires the GPTBAT indirection even in that mode is Unknown | Unknown |

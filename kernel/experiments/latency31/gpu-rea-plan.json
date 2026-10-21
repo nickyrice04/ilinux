@@ -1,0 +1,18 @@
+{
+  "provider": "ghidra",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "targets": [
+    {
+      "id": "gpu31-configure",
+      "artifact": "AGXG17X.macho",
+      "sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "address": "0xfffffe00089959ac"
+    },
+    {
+      "id": "gpu31-add-kicks",
+      "artifact": "AGXG17X.macho",
+      "sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "address": "0xfffffe0008986470"
+    }
+  ]
+}

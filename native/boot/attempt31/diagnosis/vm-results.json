@@ -1,0 +1,960 @@
+{
+  "context": "linux-vm-only",
+  "native_live": "NOT RUN",
+  "compositor_sha256": "b22fedff2f75a7a955bb881aa5c314d6e7028570f98204d981eb0012bf920c6e",
+  "original_commit": "efb50993780079460b0cbed1363e2166a2de1d9f",
+  "display": "headless 3456x2160@60 scale1; quarter-pixel control 1728x1080",
+  "real_workload": "installed Omarchy shell, three menu and foot actions, frameprobe",
+  "normal": {
+    "schema": 1,
+    "context": "linux-vm",
+    "trace_rows": 6105,
+    "active": {
+      "begin": {
+        "n": 182,
+        "median_ms": 0.014229499999999999,
+        "max_ms": 104.220734,
+        "wall_sum_ms": 120.616164,
+        "thread_cpu_sum_ms": 70.063158
+      },
+      "element": {
+        "n": 1282,
+        "median_ms": 0.007584,
+        "max_ms": 83.787116,
+        "wall_sum_ms": 113.77201099999999,
+        "thread_cpu_sum_ms": 69.053542
+      },
+      "end_render": {
+        "n": 182,
+        "median_ms": 219.801807,
+        "max_ms": 344.074201,
+        "wall_sum_ms": 35988.656509,
+        "thread_cpu_sum_ms": 30796.870697
+      },
+      "final_copy": {
+        "n": 182,
+        "median_ms": 168.02067,
+        "max_ms": 291.476851,
+        "wall_sum_ms": 27615.601973,
+        "thread_cpu_sum_ms": 22809.990029
+      },
+      "monitor": {
+        "n": 178,
+        "median_ms": 220.059148,
+        "max_ms": 345.581222,
+        "wall_sum_ms": 36036.653069,
+        "thread_cpu_sum_ms": 30833.002991
+      },
+      "output_commit": {
+        "n": 178,
+        "median_ms": 0.011834,
+        "max_ms": 0.039085,
+        "wall_sum_ms": 2.212208,
+        "thread_cpu_sum_ms": 2.199955
+      },
+      "primitive": {
+        "n": 178,
+        "median_ms": 168.08115099999998,
+        "max_ms": 291.456766,
+        "wall_sum_ms": 27593.357685,
+        "thread_cpu_sum_ms": 22807.970739
+      },
+      "scene": {
+        "n": 182,
+        "median_ms": 0.1172935,
+        "max_ms": 83.7977,
+        "wall_sum_ms": 119.128782,
+        "thread_cpu_sum_ms": 70.812328
+      },
+      "surface_buffer": {
+        "n": 393,
+        "median_ms": 0.156293,
+        "max_ms": 23.466558,
+        "wall_sum_ms": 160.713799,
+        "thread_cpu_sum_ms": 123.027148
+      },
+      "surface_commit": {
+        "n": 27,
+        "median_ms": 0.003042,
+        "max_ms": 85.063245,
+        "wall_sum_ms": 91.119523,
+        "thread_cpu_sum_ms": 45.948704
+      },
+      "texture": {
+        "n": 987,
+        "median_ms": 0.006417,
+        "max_ms": 2.827064,
+        "wall_sum_ms": 20.838909,
+        "thread_cpu_sum_ms": 18.744523
+      }
+    },
+    "terminal": [
+      {
+        "rep": 0,
+        "first_buffer_commit_received_ms": 811.633019,
+        "commits": 3,
+        "render_scope_occupied_ms_before_first_buffer": 785.125385
+      },
+      {
+        "rep": 1,
+        "first_buffer_commit_received_ms": 971.578034,
+        "commits": 3,
+        "render_scope_occupied_ms_before_first_buffer": 945.704639
+      },
+      {
+        "rep": 2,
+        "first_buffer_commit_received_ms": 975.764461,
+        "commits": 3,
+        "render_scope_occupied_ms_before_first_buffer": 952.60419
+      }
+    ],
+    "frames": [
+      {
+        "label": "native_pixels",
+        "stages": {
+          "begin": {
+            "n": 24,
+            "median_ms": 0.013958,
+            "max_ms": 0.019209,
+            "wall_sum_ms": 0.329711,
+            "thread_cpu_sum_ms": 0.329914
+          },
+          "element": {
+            "n": 165,
+            "median_ms": 0.007375,
+            "max_ms": 0.739878,
+            "wall_sum_ms": 4.126152,
+            "thread_cpu_sum_ms": 4.088043
+          },
+          "end_render": {
+            "n": 24,
+            "median_ms": 222.037532,
+            "max_ms": 272.751633,
+            "wall_sum_ms": 5685.020751,
+            "thread_cpu_sum_ms": 5109.210543
+          },
+          "final_copy": {
+            "n": 24,
+            "median_ms": 169.65528,
+            "max_ms": 220.727524,
+            "wall_sum_ms": 4436.611237,
+            "thread_cpu_sum_ms": 3864.607351
+          },
+          "monitor": {
+            "n": 24,
+            "median_ms": 222.09430350000002,
+            "max_ms": 272.794759,
+            "wall_sum_ms": 5686.28893,
+            "thread_cpu_sum_ms": 5110.456583
+          },
+          "output_commit": {
+            "n": 25,
+            "median_ms": 0.012209,
+            "max_ms": 0.016291,
+            "wall_sum_ms": 0.310791,
+            "thread_cpu_sum_ms": 0.31079
+          },
+          "primitive": {
+            "n": 24,
+            "median_ms": 169.6452385,
+            "max_ms": 220.719316,
+            "wall_sum_ms": 4436.340402,
+            "thread_cpu_sum_ms": 3864.350351
+          },
+          "scene": {
+            "n": 24,
+            "median_ms": 0.1267925,
+            "max_ms": 0.861588,
+            "wall_sum_ms": 4.356983,
+            "thread_cpu_sum_ms": 4.31892
+          },
+          "surface_buffer": {
+            "n": 68,
+            "median_ms": 0.2683555,
+            "max_ms": 5.14169,
+            "wall_sum_ms": 23.152009,
+            "thread_cpu_sum_ms": 19.984082
+          },
+          "surface_commit": {
+            "n": 1,
+            "median_ms": 0.043959,
+            "max_ms": 0.043959,
+            "wall_sum_ms": 0.043959,
+            "thread_cpu_sum_ms": 0.043583
+          },
+          "texture": {
+            "n": 141,
+            "median_ms": 0.008292,
+            "max_ms": 0.735587,
+            "wall_sum_ms": 3.730898,
+            "thread_cpu_sum_ms": 3.698499
+          }
+        },
+        "cell_median_ms": 247.6748715,
+        "full_median_ms": 250.2067965
+      },
+      {
+        "label": "quarter_pixels",
+        "stages": {
+          "begin": {
+            "n": 20,
+            "median_ms": 0.006375499999999999,
+            "max_ms": 0.04925,
+            "wall_sum_ms": 0.177502,
+            "thread_cpu_sum_ms": 0.171043
+          },
+          "element": {
+            "n": 133,
+            "median_ms": 0.008417,
+            "max_ms": 0.106084,
+            "wall_sum_ms": 1.426048,
+            "thread_cpu_sum_ms": 1.420132
+          },
+          "end_render": {
+            "n": 20,
+            "median_ms": 56.586527,
+            "max_ms": 72.044061,
+            "wall_sum_ms": 1091.907483,
+            "thread_cpu_sum_ms": 1088.118156
+          },
+          "final_copy": {
+            "n": 20,
+            "median_ms": 43.630078,
+            "max_ms": 57.464847,
+            "wall_sum_ms": 856.755449,
+            "thread_cpu_sum_ms": 853.632649
+          },
+          "monitor": {
+            "n": 20,
+            "median_ms": 56.6160275,
+            "max_ms": 72.185354,
+            "wall_sum_ms": 1092.644741,
+            "thread_cpu_sum_ms": 1088.84449
+          },
+          "output_commit": {
+            "n": 20,
+            "median_ms": 0.0082915,
+            "max_ms": 0.014666,
+            "wall_sum_ms": 0.183876,
+            "thread_cpu_sum_ms": 0.184002
+          },
+          "primitive": {
+            "n": 20,
+            "median_ms": 43.621995,
+            "max_ms": 57.454264,
+            "wall_sum_ms": 856.607616,
+            "thread_cpu_sum_ms": 853.493192
+          },
+          "scene": {
+            "n": 20,
+            "median_ms": 0.06950049999999999,
+            "max_ms": 0.252753,
+            "wall_sum_ms": 1.598266,
+            "thread_cpu_sum_ms": 1.59146
+          },
+          "surface_buffer": {
+            "n": 20,
+            "median_ms": 0.07860450000000001,
+            "max_ms": 2.310895,
+            "wall_sum_ms": 3.936119,
+            "thread_cpu_sum_ms": 3.248248
+          },
+          "surface_commit": {
+            "n": 1,
+            "median_ms": 0.083625,
+            "max_ms": 0.083625,
+            "wall_sum_ms": 0.083625,
+            "thread_cpu_sum_ms": 0.082625
+          },
+          "texture": {
+            "n": 113,
+            "median_ms": 0.007541,
+            "max_ms": 0.090001,
+            "wall_sum_ms": 1.091673,
+            "thread_cpu_sum_ms": 1.088121
+          }
+        },
+        "cell_median_ms": 56.52271399999999,
+        "full_median_ms": 56.805126
+      }
+    ],
+    "limitations": [
+      "CPU submission and callbacks are not physical presentation.",
+      "Nested categories overlap: do not sum across tags.",
+      "A first surface commit can be an empty configure handshake.",
+      "Direct command bypasses physical keyboard. No native hardware validation."
+    ]
+  },
+  "drain_diagnostic": {
+    "schema": 1,
+    "context": "linux-vm",
+    "trace_rows": 7615,
+    "active": {
+      "begin": {
+        "n": 189,
+        "median_ms": 0.014375,
+        "max_ms": 0.762475,
+        "wall_sum_ms": 5.818797,
+        "thread_cpu_sum_ms": 5.806749
+      },
+      "element": {
+        "n": 1313,
+        "median_ms": 0.007541,
+        "max_ms": 5.975531,
+        "wall_sum_ms": 33.523682,
+        "thread_cpu_sum_ms": 27.559981
+      },
+      "end_render": {
+        "n": 189,
+        "median_ms": 223.008255,
+        "max_ms": 323.656331,
+        "wall_sum_ms": 36676.093625,
+        "thread_cpu_sum_ms": 31182.927211
+      },
+      "final_copy": {
+        "n": 189,
+        "median_ms": 0.056126,
+        "max_ms": 0.126919,
+        "wall_sum_ms": 10.605394,
+        "thread_cpu_sum_ms": 10.547706
+      },
+      "final_drain": {
+        "n": 189,
+        "median_ms": 52.337784,
+        "max_ms": 104.583024,
+        "wall_sum_ms": 8378.201197,
+        "thread_cpu_sum_ms": 8000.15707
+      },
+      "monitor": {
+        "n": 185,
+        "median_ms": 223.196717,
+        "max_ms": 323.706874,
+        "wall_sum_ms": 36617.710054,
+        "thread_cpu_sum_ms": 31133.540322
+      },
+      "output_commit": {
+        "n": 185,
+        "median_ms": 0.012084,
+        "max_ms": 0.020418,
+        "wall_sum_ms": 2.222626,
+        "thread_cpu_sum_ms": 2.216494
+      },
+      "primitive": {
+        "n": 185,
+        "median_ms": 0.047418,
+        "max_ms": 0.106169,
+        "wall_sum_ms": 8.759265,
+        "thread_cpu_sum_ms": 8.725713
+      },
+      "scene": {
+        "n": 189,
+        "median_ms": 0.118586,
+        "max_ms": 6.881756,
+        "wall_sum_ms": 35.352766,
+        "thread_cpu_sum_ms": 29.368158
+      },
+      "scene_drain": {
+        "n": 189,
+        "median_ms": 170.088097,
+        "max_ms": 270.621766,
+        "wall_sum_ms": 28241.738427,
+        "thread_cpu_sum_ms": 23139.516893
+      },
+      "surface_buffer": {
+        "n": 398,
+        "median_ms": 0.159024,
+        "max_ms": 5.032733,
+        "wall_sum_ms": 146.086124,
+        "thread_cpu_sum_ms": 124.119169
+      },
+      "surface_commit": {
+        "n": 23,
+        "median_ms": 0.011625,
+        "max_ms": 7.174231,
+        "wall_sum_ms": 21.584733,
+        "thread_cpu_sum_ms": 12.505834
+      },
+      "texture": {
+        "n": 1011,
+        "median_ms": 0.006375,
+        "max_ms": 0.720264,
+        "wall_sum_ms": 18.694916,
+        "thread_cpu_sum_ms": 18.468083
+      }
+    },
+    "terminal": [
+      {
+        "rep": 0,
+        "first_buffer_commit_received_ms": 991.673491,
+        "commits": 3,
+        "render_scope_occupied_ms_before_first_buffer": 966.727976
+      },
+      {
+        "rep": 1,
+        "first_buffer_commit_received_ms": 995.191388,
+        "commits": 3,
+        "render_scope_occupied_ms_before_first_buffer": 971.553367
+      },
+      {
+        "rep": 2,
+        "first_buffer_commit_received_ms": 1000.505455,
+        "commits": 3,
+        "render_scope_occupied_ms_before_first_buffer": 972.904077
+      }
+    ],
+    "frames": [
+      {
+        "label": "native_pixels",
+        "stages": {
+          "begin": {
+            "n": 24,
+            "median_ms": 0.0130005,
+            "max_ms": 0.020376,
+            "wall_sum_ms": 0.319047,
+            "thread_cpu_sum_ms": 0.319999
+          },
+          "element": {
+            "n": 166,
+            "median_ms": 0.007353999999999999,
+            "max_ms": 0.712474,
+            "wall_sum_ms": 4.2012540000000005,
+            "thread_cpu_sum_ms": 4.187534
+          },
+          "end_render": {
+            "n": 24,
+            "median_ms": 226.2690935,
+            "max_ms": 276.896322,
+            "wall_sum_ms": 5843.547495,
+            "thread_cpu_sum_ms": 5220.710872
+          },
+          "final_copy": {
+            "n": 24,
+            "median_ms": 0.055605,
+            "max_ms": 0.069377,
+            "wall_sum_ms": 1.381736,
+            "thread_cpu_sum_ms": 1.381376
+          },
+          "final_drain": {
+            "n": 24,
+            "median_ms": 52.464771,
+            "max_ms": 52.745979,
+            "wall_sum_ms": 1259.23451,
+            "thread_cpu_sum_ms": 1255.339578
+          },
+          "monitor": {
+            "n": 24,
+            "median_ms": 226.31663600000002,
+            "max_ms": 276.945448,
+            "wall_sum_ms": 5844.737148,
+            "thread_cpu_sum_ms": 5221.880909
+          },
+          "output_commit": {
+            "n": 25,
+            "median_ms": 0.013292,
+            "max_ms": 0.017709,
+            "wall_sum_ms": 0.336468,
+            "thread_cpu_sum_ms": 0.333455
+          },
+          "primitive": {
+            "n": 24,
+            "median_ms": 0.046897,
+            "max_ms": 0.058667,
+            "wall_sum_ms": 1.162609,
+            "thread_cpu_sum_ms": 1.163291
+          },
+          "scene": {
+            "n": 24,
+            "median_ms": 0.1260865,
+            "max_ms": 0.82556,
+            "wall_sum_ms": 4.423097,
+            "thread_cpu_sum_ms": 4.406999
+          },
+          "scene_drain": {
+            "n": 24,
+            "median_ms": 173.7246155,
+            "max_ms": 224.202992,
+            "wall_sum_ms": 4578.052138,
+            "thread_cpu_sum_ms": 3959.163668
+          },
+          "surface_buffer": {
+            "n": 65,
+            "median_ms": 0.484302,
+            "max_ms": 2.085712,
+            "wall_sum_ms": 19.79281,
+            "thread_cpu_sum_ms": 19.640336
+          },
+          "surface_commit": {
+            "n": 1,
+            "median_ms": 0.042584,
+            "max_ms": 0.042584,
+            "wall_sum_ms": 0.042584,
+            "thread_cpu_sum_ms": 0.042417
+          },
+          "texture": {
+            "n": 142,
+            "median_ms": 0.0089585,
+            "max_ms": 0.706682,
+            "wall_sum_ms": 3.791884,
+            "thread_cpu_sum_ms": 3.804877
+          }
+        },
+        "cell_median_ms": 273.354555,
+        "full_median_ms": 252.79673300000002
+      },
+      {
+        "label": "quarter_pixels",
+        "stages": {
+          "begin": {
+            "n": 23,
+            "median_ms": 0.006125,
+            "max_ms": 0.033251,
+            "wall_sum_ms": 0.17463,
+            "thread_cpu_sum_ms": 0.174624
+          },
+          "element": {
+            "n": 145,
+            "median_ms": 0.008584,
+            "max_ms": 0.098335,
+            "wall_sum_ms": 1.516246,
+            "thread_cpu_sum_ms": 1.493835
+          },
+          "end_render": {
+            "n": 23,
+            "median_ms": 57.320901,
+            "max_ms": 74.166814,
+            "wall_sum_ms": 1196.587528,
+            "thread_cpu_sum_ms": 1190.42812
+          },
+          "final_copy": {
+            "n": 23,
+            "median_ms": 0.027793,
+            "max_ms": 0.061293,
+            "wall_sum_ms": 0.6805180000000001,
+            "thread_cpu_sum_ms": 0.680127
+          },
+          "final_drain": {
+            "n": 23,
+            "median_ms": 13.060124,
+            "max_ms": 14.301359,
+            "wall_sum_ms": 236.983024,
+            "thread_cpu_sum_ms": 236.273748
+          },
+          "monitor": {
+            "n": 23,
+            "median_ms": 57.35036,
+            "max_ms": 74.277774,
+            "wall_sum_ms": 1197.393004,
+            "thread_cpu_sum_ms": 1191.155618
+          },
+          "output_commit": {
+            "n": 23,
+            "median_ms": 0.007625,
+            "max_ms": 0.014417,
+            "wall_sum_ms": 0.193752,
+            "thread_cpu_sum_ms": 0.193752
+          },
+          "primitive": {
+            "n": 23,
+            "median_ms": 0.021543,
+            "max_ms": 0.051834,
+            "wall_sum_ms": 0.532678,
+            "thread_cpu_sum_ms": 0.534792
+          },
+          "scene": {
+            "n": 23,
+            "median_ms": 0.067168,
+            "max_ms": 0.230256,
+            "wall_sum_ms": 1.711037,
+            "thread_cpu_sum_ms": 1.68475
+          },
+          "scene_drain": {
+            "n": 23,
+            "median_ms": 44.113731,
+            "max_ms": 59.588489,
+            "wall_sum_ms": 956.960159,
+            "thread_cpu_sum_ms": 951.556327
+          },
+          "surface_buffer": {
+            "n": 20,
+            "median_ms": 0.0801475,
+            "max_ms": 1.95521,
+            "wall_sum_ms": 3.473664,
+            "thread_cpu_sum_ms": 2.845417
+          },
+          "surface_commit": {
+            "n": 1,
+            "median_ms": 0.102752,
+            "max_ms": 0.102752,
+            "wall_sum_ms": 0.102752,
+            "thread_cpu_sum_ms": 0.08775
+          },
+          "texture": {
+            "n": 122,
+            "median_ms": 0.0075,
+            "max_ms": 0.084127,
+            "wall_sum_ms": 1.119893,
+            "thread_cpu_sum_ms": 1.100503
+          }
+        },
+        "cell_median_ms": 28.178690000000003,
+        "full_median_ms": 57.596990500000004
+      }
+    ],
+    "limitations": [
+      "CPU submission and callbacks are not physical presentation.",
+      "Nested categories overlap: do not sum across tags.",
+      "A first surface commit can be an empty configure handshake.",
+      "Direct command bypasses physical keyboard. No native hardware validation."
+    ]
+  },
+  "renderer_parallel": {
+    "schema": 1,
+    "context": "linux-vm",
+    "trace_rows": 4900,
+    "active": {
+      "begin": {
+        "n": 180,
+        "median_ms": 0.011947,
+        "max_ms": 1.711319,
+        "wall_sum_ms": 8.48951,
+        "thread_cpu_sum_ms": 8.448215
+      },
+      "element": {
+        "n": 1136,
+        "median_ms": 0.0101755,
+        "max_ms": 56.086185,
+        "wall_sum_ms": 369.827161,
+        "thread_cpu_sum_ms": 263.951776
+      },
+      "end_render": {
+        "n": 180,
+        "median_ms": 45.002185,
+        "max_ms": 123.918556,
+        "wall_sum_ms": 6347.820361,
+        "thread_cpu_sum_ms": 280.784146
+      },
+      "final_copy": {
+        "n": 180,
+        "median_ms": 44.043662,
+        "max_ms": 68.481754,
+        "wall_sum_ms": 5973.082001,
+        "thread_cpu_sum_ms": 11.966185
+      },
+      "monitor": {
+        "n": 177,
+        "median_ms": 45.127834,
+        "max_ms": 124.011297,
+        "wall_sum_ms": 6299.309253,
+        "thread_cpu_sum_ms": 232.561272
+      },
+      "output_commit": {
+        "n": 175,
+        "median_ms": 0.009759,
+        "max_ms": 0.021631,
+        "wall_sum_ms": 1.79402,
+        "thread_cpu_sum_ms": 1.792423
+      },
+      "primitive": {
+        "n": 175,
+        "median_ms": 44.297556,
+        "max_ms": 68.444887,
+        "wall_sum_ms": 5971.161794,
+        "thread_cpu_sum_ms": 10.141728
+      },
+      "scene": {
+        "n": 180,
+        "median_ms": 0.11547450000000001,
+        "max_ms": 81.624895,
+        "wall_sum_ms": 371.604442,
+        "thread_cpu_sum_ms": 265.711374
+      },
+      "surface_buffer": {
+        "n": 116,
+        "median_ms": 2.1551774999999997,
+        "max_ms": 14.547043,
+        "wall_sum_ms": 550.096235,
+        "thread_cpu_sum_ms": 61.28746
+      },
+      "surface_commit": {
+        "n": 23,
+        "median_ms": 0.010425,
+        "max_ms": 46.463341,
+        "wall_sum_ms": 50.621437,
+        "thread_cpu_sum_ms": 50.231612
+      },
+      "texture": {
+        "n": 841,
+        "median_ms": 0.010434,
+        "max_ms": 34.562411,
+        "wall_sum_ms": 263.179888,
+        "thread_cpu_sum_ms": 158.104895
+      }
+    },
+    "terminal": [
+      {
+        "rep": 0,
+        "first_buffer_commit_received_ms": 42.282168,
+        "commits": 4,
+        "render_scope_occupied_ms_before_first_buffer": 0.0
+      },
+      {
+        "rep": 1,
+        "first_buffer_commit_received_ms": 42.437574,
+        "commits": 4,
+        "render_scope_occupied_ms_before_first_buffer": 0.0
+      },
+      {
+        "rep": 2,
+        "first_buffer_commit_received_ms": 42.136297,
+        "commits": 4,
+        "render_scope_occupied_ms_before_first_buffer": 0.0
+      }
+    ],
+    "frames": [
+      {
+        "label": "native_pixels",
+        "stages": {
+          "begin": {
+            "n": 23,
+            "median_ms": 0.011133,
+            "max_ms": 0.065929,
+            "wall_sum_ms": 0.304157,
+            "thread_cpu_sum_ms": 0.301794
+          },
+          "element": {
+            "n": 144,
+            "median_ms": 0.015303500000000001,
+            "max_ms": 30.312572,
+            "wall_sum_ms": 52.398118,
+            "thread_cpu_sum_ms": 52.049076
+          },
+          "end_render": {
+            "n": 23,
+            "median_ms": 45.139426,
+            "max_ms": 76.290055,
+            "wall_sum_ms": 1071.578217,
+            "thread_cpu_sum_ms": 54.089041
+          },
+          "final_copy": {
+            "n": 23,
+            "median_ms": 44.990519,
+            "max_ms": 62.482164,
+            "wall_sum_ms": 1018.578035,
+            "thread_cpu_sum_ms": 1.43917
+          },
+          "monitor": {
+            "n": 23,
+            "median_ms": 45.180542,
+            "max_ms": 76.450102,
+            "wall_sum_ms": 1072.558866,
+            "thread_cpu_sum_ms": 55.064628
+          },
+          "output_commit": {
+            "n": 23,
+            "median_ms": 0.009091,
+            "max_ms": 0.020392,
+            "wall_sum_ms": 0.231018,
+            "thread_cpu_sum_ms": 0.231251
+          },
+          "primitive": {
+            "n": 23,
+            "median_ms": 44.980803,
+            "max_ms": 62.465526,
+            "wall_sum_ms": 1018.354775,
+            "thread_cpu_sum_ms": 1.225206
+          },
+          "scene": {
+            "n": 23,
+            "median_ms": 0.117758,
+            "max_ms": 30.622409,
+            "wall_sum_ms": 52.60145,
+            "thread_cpu_sum_ms": 52.252211
+          },
+          "surface_buffer": {
+            "n": 20,
+            "median_ms": 13.8410425,
+            "max_ms": 14.319371,
+            "wall_sum_ms": 190.477145,
+            "thread_cpu_sum_ms": 10.358171
+          },
+          "surface_commit": {
+            "n": 1,
+            "median_ms": 0.120849,
+            "max_ms": 0.120849,
+            "wall_sum_ms": 0.120849,
+            "thread_cpu_sum_ms": 0.119291
+          },
+          "texture": {
+            "n": 121,
+            "median_ms": 0.017639,
+            "max_ms": 30.30273,
+            "wall_sum_ms": 51.873993999999996,
+            "thread_cpu_sum_ms": 51.532126
+          }
+        },
+        "cell_median_ms": 36.8709035,
+        "full_median_ms": 59.532438
+      },
+      {
+        "label": "quarter_pixels",
+        "stages": {
+          "begin": {
+            "n": 22,
+            "median_ms": 0.012153500000000001,
+            "max_ms": 0.241617,
+            "wall_sum_ms": 0.526929,
+            "thread_cpu_sum_ms": 0.521582
+          },
+          "element": {
+            "n": 141,
+            "median_ms": 0.009172,
+            "max_ms": 0.098356,
+            "wall_sum_ms": 1.707737,
+            "thread_cpu_sum_ms": 1.682421
+          },
+          "end_render": {
+            "n": 22,
+            "median_ms": 12.7411315,
+            "max_ms": 19.916329,
+            "wall_sum_ms": 281.585031,
+            "thread_cpu_sum_ms": 3.148128
+          },
+          "final_copy": {
+            "n": 22,
+            "median_ms": 12.6394405,
+            "max_ms": 19.648111,
+            "wall_sum_ms": 279.30783,
+            "thread_cpu_sum_ms": 0.908586
+          },
+          "monitor": {
+            "n": 21,
+            "median_ms": 12.78391,
+            "max_ms": 20.048832,
+            "wall_sum_ms": 282.688253,
+            "thread_cpu_sum_ms": 4.233793
+          },
+          "output_commit": {
+            "n": 21,
+            "median_ms": 0.005921,
+            "max_ms": 0.014802,
+            "wall_sum_ms": 0.150557,
+            "thread_cpu_sum_ms": 0.150709
+          },
+          "primitive": {
+            "n": 21,
+            "median_ms": 12.634271,
+            "max_ms": 19.63185,
+            "wall_sum_ms": 279.149727,
+            "thread_cpu_sum_ms": 0.75821
+          },
+          "scene": {
+            "n": 22,
+            "median_ms": 0.080219,
+            "max_ms": 0.232319,
+            "wall_sum_ms": 1.926137,
+            "thread_cpu_sum_ms": 1.89946
+          },
+          "surface_buffer": {
+            "n": 20,
+            "median_ms": 3.4633504999999998,
+            "max_ms": 3.843432,
+            "wall_sum_ms": 64.837983,
+            "thread_cpu_sum_ms": 3.043419
+          },
+          "surface_commit": {
+            "n": 1,
+            "median_ms": 0.095312,
+            "max_ms": 0.095312,
+            "wall_sum_ms": 0.095312,
+            "thread_cpu_sum_ms": 0.094458
+          },
+          "texture": {
+            "n": 117,
+            "median_ms": 0.007755,
+            "max_ms": 0.085932,
+            "wall_sum_ms": 1.181404,
+            "thread_cpu_sum_ms": 1.172211
+          }
+        },
+        "cell_median_ms": 16.659926,
+        "full_median_ms": 16.912945999999998
+      }
+    ],
+    "limitations": [
+      "CPU submission and callbacks are not physical presentation.",
+      "Nested categories overlap: do not sum across tags.",
+      "A first surface commit can be an empty configure handshake.",
+      "Direct command bypasses physical keyboard. No native hardware validation."
+    ]
+  },
+  "parallel_configuration": {
+    "compositor_cpu_mask": "0-5",
+    "LP_NUM_THREADS": 4,
+    "clients_cpu_mask": "0",
+    "client_LP_NUM_THREADS": 0,
+    "scope": "VM-only sensitivity; not a native SMP result"
+  },
+  "observer_control": {
+    "0": {
+      "cell": [
+        21.621927,
+        20.988395500000003,
+        18.865391
+      ],
+      "full": [
+        280.703192,
+        280.4154745,
+        269.43933649999997
+      ]
+    },
+    "1": {
+      "cell": [
+        19.51662,
+        21.885281,
+        21.072117499999997
+      ],
+      "full": [
+        279.37692749999997,
+        280.730841,
+        278.9799465
+      ]
+    }
+  },
+  "limitations": [
+    "Real-workload timings include scene/background activity; normal and drain runs are exploratory, not randomized.",
+    "Draining changes batching: use for attribution, never claim it is a speed fix.",
+    "The separate observer control has no shell/layers; it measures logging cost rather than real desktop latency.",
+    "Three runs per observer setting in fixed order, not a statistical native overhead bound.",
+    "Native keyboard/firmware, CPU throughput, DRAM controller, GPU, power and panel presentation remain unvalidated by this VM."
+  ],
+  "blur_control": [
+    {
+      "rep": 0,
+      "original": false,
+      "enabled": false,
+      "cell_median_ms": 109.66037,
+      "full_median_ms": 218.48533550000002
+    },
+    {
+      "rep": 1,
+      "original": false,
+      "enabled": 0,
+      "cell_median_ms": 109.52427700000001,
+      "full_median_ms": 217.7161405
+    },
+    {
+      "rep": 2,
+      "original": false,
+      "enabled": 0,
+      "cell_median_ms": 108.91740250000001,
+      "full_median_ms": 217.245418
+    },
+    {
+      "rep": 3,
+      "original": false,
+      "enabled": false,
+      "cell_median_ms": 108.8388715,
+      "full_median_ms": 216.898514
+    }
+  ]
+}

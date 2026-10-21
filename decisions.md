@@ -2089,3 +2089,16 @@ bandwidth or CPU functionality. Trace the original path and compare identical
 CPU/memory/software-rendering work before selecting another native change.
 Preserve the optional copy optimization without presenting its VM25% result as
 a fix for seconds of user-visible latency. No revised native trial is scheduled.
+
+### 2026-10-21 · Follow measured rendering occupancy; retain native hold
+
+The revised diagnostic implements event-loop timing, buffer-commit correlation,
+original CPU/RAM/pixel references and separate observer/drain controls. VM
+terminal delay is dominated by render-loop occupancy; draining identifies
+scene work as larger than the final pass. Threaded-renderer VM sensitivity
+shows a much larger improvement than a final-copy-only change. Prioritize
+native SMP with measured renderer threading and G17 interface validation.
+Native CPU/memory measurements and physical input/presentation timing still
+need a separately reviewed boot. Keep attempt31 held; do not relabel VM
+results as native fixes or lower visual quality as a parity claim. See
+`native/boot/attempt31/diagnosis/README.md`.

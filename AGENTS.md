@@ -109,6 +109,26 @@ latency and establish CPU/memory/software-rendering baselines first. No new
 native experiment is ready. Existing macOS/boot settings and waived routine
 policy checks remain unchanged. This notice supersedes earlier readiness text.
 
+### Offline latency diagnosis — 2026-10-21
+
+Attempt31 remains **HOLD**; no native images or boot instructions are released.
+Original compositor tracing and CPU/RAM/pixel references are implemented and
+VM-tested. In the real Omarchy VM workload, terminal first-buffer delays of
+812–976ms included785–953ms inside rendering. A separately gated drain split
+roughly174ms of scene work from52ms of final-pass work. Four configured renderer
+workers on six VM CPUs reduced terminal first-buffer delay to about42ms and
+full callbacks from250ms to60ms; clients stayed on one CPU. This is VM-only
+sensitivity, not native SMP or a prediction of physical presentation/energy.
+
+Native throughput/bandwidth and the entire physical3–5s interval remain open.
+Prioritize native SMP/renderer threading and verified G17 GPU interfaces over
+another copy-only trial. REA checked152 GPU instruction words; one decompiler
+boundary was rejected and the other has unresolved dispatch. No guessed GPU
+register sequence was deployed. Tests, references and limitations:
+`native/boot/attempt31/diagnosis/README.md`. M1 reads
+`tools/m1n1-client/attempt31-diagnosis-update.md` and keeps the current hold.
+
+
 ### Current M5 handoff — attempt31 final-copy experiment, 2026-10-21
 
 Reviewed attempt30 (`45952cc`): native compositor CPU near 97%, full callbacks

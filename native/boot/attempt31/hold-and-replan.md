@@ -7,6 +7,10 @@ Preserve its code, images, measurements and pins as an optional later comparison
 No revised native experiment is ready or authorized by this planning update.
 This hold supersedes the earlier handoff and its readiness instructions.
 
+Execution follow-up: [diagnosis and measured references](diagnosis/README.md),
+[original instrumentation](../../../kernel/experiments/latency31/README.md),
+and [M1 hold notice](../../../tools/m1n1-client/attempt31-diagnosis-update.md).
+
 ## What the evidence actually says
 
 * Attempt26's independent input reader measured kernel-event-to-reader lag

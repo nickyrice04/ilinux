@@ -1,0 +1,439 @@
+{
+  "schema": 1,
+  "context": "linux-vm",
+  "system": "Linux",
+  "release": "7.1.6-vzrun2",
+  "machine": "aarch64",
+  "compiler": "cc (GCC) 16.1.1 20260430",
+  "flags": [
+    "-O3",
+    "-march=armv8.4-a",
+    "-pthread"
+  ],
+  "page_size": 16384,
+  "sources": {
+    "cpubench": "2725e7df6b22bf771e5961318e3864746bf54bb658e405092a259cbca1676126",
+    "membench": "9680c9eb0bc318aaf6272996cb5f8283883043dee3352ae9e353015ccea7a07d",
+    "pixels": "fbd53a219bfa85b88d5b91b3deee01638812593c93e1e7ca18bf4f195c7a2d2d"
+  },
+  "samples": [
+    {
+      "placement": "affinity",
+      "kernel": "freq",
+      "rows": [
+        {
+          "bench": "cpu",
+          "kernel": "freq",
+          "threads": 1,
+          "qos": "none",
+          "reps": 5,
+          "unit": "GHz(est)",
+          "aggregate_median": 4.548,
+          "aggregate_min": 4.538,
+          "aggregate_max": 4.566,
+          "per_thread_median": 4.548,
+          "cpus_last_rep": "0>0"
+        }
+      ]
+    },
+    {
+      "placement": "affinity",
+      "kernel": "fma_asm",
+      "rows": [
+        {
+          "bench": "cpu",
+          "kernel": "fma_asm",
+          "threads": 1,
+          "qos": "none",
+          "reps": 5,
+          "unit": "GFLOP/s",
+          "aggregate_median": 139.913,
+          "aggregate_min": 139.575,
+          "aggregate_max": 140.793,
+          "per_thread_median": 139.913,
+          "cpus_last_rep": "0>0"
+        }
+      ]
+    },
+    {
+      "placement": "affinity",
+      "kernel": "intmix",
+      "rows": [
+        {
+          "bench": "cpu",
+          "kernel": "intmix",
+          "threads": 1,
+          "qos": "none",
+          "reps": 5,
+          "unit": "Gop/s",
+          "aggregate_median": 24.708,
+          "aggregate_min": 24.665,
+          "aggregate_max": 24.782,
+          "per_thread_median": 24.708,
+          "cpus_last_rep": "0>0"
+        }
+      ]
+    },
+    {
+      "placement": "affinity",
+      "kernel": "stream",
+      "array_mib": 16,
+      "rows": [
+        {
+          "bench": "mem",
+          "test": "stream_copy",
+          "threads": 1,
+          "array_MiB": 16,
+          "reps": 7,
+          "unit": "GB/s",
+          "best": 127.6,
+          "median": 125.53,
+          "worst": 116.56
+        },
+        {
+          "bench": "mem",
+          "test": "stream_scale",
+          "threads": 1,
+          "array_MiB": 16,
+          "reps": 7,
+          "unit": "GB/s",
+          "best": 127.08,
+          "median": 121.65,
+          "worst": 110.3
+        },
+        {
+          "bench": "mem",
+          "test": "stream_add",
+          "threads": 1,
+          "array_MiB": 16,
+          "reps": 7,
+          "unit": "GB/s",
+          "best": 128.9,
+          "median": 123.86,
+          "worst": 118.52
+        },
+        {
+          "bench": "mem",
+          "test": "stream_triad",
+          "threads": 1,
+          "array_MiB": 16,
+          "reps": 7,
+          "unit": "GB/s",
+          "best": 128.62,
+          "median": 126.21,
+          "worst": 121.92
+        }
+      ]
+    },
+    {
+      "placement": "affinity",
+      "kernel": "stream",
+      "array_mib": 128,
+      "rows": [
+        {
+          "bench": "mem",
+          "test": "stream_copy",
+          "threads": 1,
+          "array_MiB": 128,
+          "reps": 7,
+          "unit": "GB/s",
+          "best": 125.95,
+          "median": 125.62,
+          "worst": 123.41
+        },
+        {
+          "bench": "mem",
+          "test": "stream_scale",
+          "threads": 1,
+          "array_MiB": 128,
+          "reps": 7,
+          "unit": "GB/s",
+          "best": 124.7,
+          "median": 123.35,
+          "worst": 115.63
+        },
+        {
+          "bench": "mem",
+          "test": "stream_add",
+          "threads": 1,
+          "array_MiB": 128,
+          "reps": 7,
+          "unit": "GB/s",
+          "best": 130.43,
+          "median": 129.59,
+          "worst": 107.44
+        },
+        {
+          "bench": "mem",
+          "test": "stream_triad",
+          "threads": 1,
+          "array_MiB": 128,
+          "reps": 7,
+          "unit": "GB/s",
+          "best": 130.34,
+          "median": 129.41,
+          "worst": 101.03
+        }
+      ]
+    },
+    {
+      "placement": "affinity",
+      "kernel": "pixels",
+      "rows": [
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 0,
+          "warmup": true,
+          "wall_ns": 606959,
+          "cpu_ns": 605125,
+          "checksum": 4027497384457867840,
+          "minor_faults": 1,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 1,
+          "warmup": false,
+          "wall_ns": 472958,
+          "cpu_ns": 474333,
+          "checksum": 4027497384457867840,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 2,
+          "warmup": false,
+          "wall_ns": 484916,
+          "cpu_ns": 485959,
+          "checksum": 4027497384457867840,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 3,
+          "warmup": false,
+          "wall_ns": 494917,
+          "cpu_ns": 492876,
+          "checksum": 4027497384457867840,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 4,
+          "warmup": false,
+          "wall_ns": 617125,
+          "cpu_ns": 614124,
+          "checksum": 4027497384457867840,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 5,
+          "warmup": false,
+          "wall_ns": 603000,
+          "cpu_ns": 596457,
+          "checksum": 4027497384457867840,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 6,
+          "warmup": false,
+          "wall_ns": 563250,
+          "cpu_ns": 564041,
+          "checksum": 4027497384457867840,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 7,
+          "warmup": false,
+          "wall_ns": 601250,
+          "cpu_ns": 596750,
+          "checksum": 4027497384457867840,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "copy",
+          "width": 3456,
+          "height": 2160,
+          "rep": 8,
+          "warmup": false,
+          "wall_ns": 582625,
+          "cpu_ns": 569499,
+          "checksum": 4027497384457867840,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 0,
+          "warmup": true,
+          "wall_ns": 4322375,
+          "cpu_ns": 4297791,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 1
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 1,
+          "warmup": false,
+          "wall_ns": 3649125,
+          "cpu_ns": 3641585,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 2,
+          "warmup": false,
+          "wall_ns": 3667917,
+          "cpu_ns": 3659208,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 3,
+          "warmup": false,
+          "wall_ns": 3669666,
+          "cpu_ns": 3658250,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 4,
+          "warmup": false,
+          "wall_ns": 3662292,
+          "cpu_ns": 3642415,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 5,
+          "warmup": false,
+          "wall_ns": 3640541,
+          "cpu_ns": 3625085,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 6,
+          "warmup": false,
+          "wall_ns": 3577666,
+          "cpu_ns": 3567792,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 7,
+          "warmup": false,
+          "wall_ns": 3598833,
+          "cpu_ns": 3587999,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        },
+        {
+          "test": "alpha_over",
+          "width": 3456,
+          "height": 2160,
+          "rep": 8,
+          "warmup": false,
+          "wall_ns": 3605084,
+          "cpu_ns": 3596417,
+          "checksum": 4028588613247365552,
+          "minor_faults": 0,
+          "major_faults": 0,
+          "voluntary_switches": 0,
+          "involuntary_switches": 0
+        }
+      ]
+    }
+  ],
+  "limits": "One thread. QoS is not affinity. VM is not native Linux. Clock is an ADD estimate. No energy measurement."
+}
