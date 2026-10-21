@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-10-21",
+  "result": "OFFLINE_PASS_AWAIT_M1_INTAKE_AND_HUMAN_START",
+  "native_31f": "NOT RUN",
+  "linux_smp": "NOT RUN",
+  "hardware_operations": 0,
+  "source_pins": 138,
+  "source_manifest_sha256": "d5de4d4ba2372ec7cf0c0d4c509f8feeea07a096fc466cf18026ac2d8c3b0161",
+  "unique_python_methods_full": 217,
+  "unique_python_methods_image_only": 194,
+  "recorder_bytes": 168,
+  "recorder_sha256": "52f9d1b312725cdc9261e0fbf1c31991e9078a663827734b9ba54c9d171106bc",
+  "guest_exit": 0,
+  "guest_start_utc": "2026-10-21T23:04:10Z",
+  "guest_end_utc": "2026-10-21T23:04:15Z",
+  "toolchain": [
+    "gcc (GCC) 16.1.1 20260430",
+    "clang version 23.1.1",
+    "Python 3.14.8",
+    "Linux 7.1.6-vzrun2 aarch64"
+  ],
+  "code_sha256": {
+    "native/boot/smp31f.py": "ecea640ad36934ab211cbe82ae036286902d16d45b470c2dfe2bd9d499e161b0",
+    "native/boot/test_smp31f.py": "4e0cd6ca4d2d716aeed1d70c014b6d285074b3bb9461080529386769ac5e6a28",
+    "tools/m1n1-client/attempt31f-offline.py": "c56b7cd5212483ec6e50f2ffda338382d87a88a9560ece8abc16f55a88380ce0",
+    "tools/m1n1-client/attempt31f-supervisor.py": "2c479d0f8eca2211a6ea722284ef96eadd3e1e188f2a6d744fef8f4dc29962c0",
+    "kernel/experiments/smp31f-entry/builder.py": "30cab7327d313da90ac237e96fea8a73977d08482b1167fa772a36bae0b39fb4",
+    "kernel/experiments/smp31f-entry/telemetry.py": "237ac854b1c1752c76d9e0e9c81374681ecd2e910db6fe5cf9759cadb03d466a",
+    "kernel/experiments/smp31f-entry/permissions.py": "ffd0e057cae5409528cecb3346e8606733447295f8bc01b9c943dc102d5525ba",
+    "virtualization/jobs/064-smp31f/run.sh": "6e9ff2043f2818617baf6ffaa0bae5d4662c8a905056c33dc1edcb69ae492aa4"
+  },
+  "output_sha256": {
+    "intake.json": "ef6455c9f0518b7c8e0f65019dd5581d80768a9b1575740d85683b62cd51ee40",
+    "validation.log": "839530ceb11e152bcae4e1b56707d829633d0f3eb92ecc9095ccd4eb5544bc16",
+    "run.log": "417edd2ba8212fa2b22976c48b791b30036a53af67fc0a2aa9933a84072b08cc",
+    "entry-audit.json": "016ee6f15e4e6474e042872e5b1b236476a0c2ea3100f1b0f0daf5d780350817",
+    "topology-audit.json": "e75e2ffa625f7e4d1812cdcef004c690a6ef4b50ab1c5d2728338e45fde9bb43",
+    "recorder-gas.bin": "52f9d1b312725cdc9261e0fbf1c31991e9078a663827734b9ba54c9d171106bc",
+    "recorder-clang.bin": "52f9d1b312725cdc9261e0fbf1c31991e9078a663827734b9ba54c9d171106bc",
+    "permission-gas.bin": "44dfcab7a9c4aa49f7e18b4e635061f2c3f5da2bf1b928862785e8bd485ca0db",
+    "start-gas.bin": "7d94bfad2f4b776492b17a5c594fc0aefff7ceb865e289401dabc42a27de3e3f"
+  },
+  "limits": [
+    "No physical reset/cache/firmware simulation",
+    "CPU1 incoming EL and visibility unresolved",
+    "Topology capacities/power uncalibrated",
+    "No native performance or efficiency result"
+  ]
+}

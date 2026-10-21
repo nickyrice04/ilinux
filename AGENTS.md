@@ -99,6 +99,35 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### 2026-10-21 · M5: 31F vector-first entry campaign and heterogeneous-core audit
+
+31E is consumed: CPU0 publication/permissions passed but CPU1 entry remained
+unobserved. **31F is ready offline; native31F/Linux SMP NOT RUN.** The original
+168-byte vector-first recorder stores before system-register reads, retains
+unexpected identities, and commits EL/cache observations separately. It replays
+the original instruction; the vector also serves synchronous exceptions, so a
+marker alone is not reset provenance. Observe after the first start and stop
+before the second on progress/error; only verified arrival permits eight timer
+requests and final park. No speculative power writes or Linux continuation.
+
+**217 distinct VM Python methods PASS; 194 M1-style image-only methods PASS;
+138 source pins.** GNU/Clang byte equality, real pinned-client/parser paths,
+213 mutation failures, 2,838 interleavings, 332 instruction-boundary fault stops
+and two retained DT topology checks PASS. Review/validation:
+`native/boot/attempt31f/`. No native performance improvement is claimed.
+
+Exact topology: **12 Performance (ADT M, clusters0/1) +6 Super (ADT P, cluster2)**.
+CPU1 shares CPU0's Performance cluster. New offline auditor and bounded Linux
+sysfs collector preserve this mapping; current capacity/power numbers remain
+uncalibrated. See `research/cpu-topology31f.md` for class/cluster acceptance.
+
+M1 next: current `tools/m1n1-client/attempt31f-instructions.md`, offline intake,
+publish readiness, then wait for the human's fresh M5 lab start. Existing entry
+and package only; healthy M1 needs no reboot. One90-second-bounded session,
+immediate Macintosh HD return. No new transfer, installation, policy check,
+security/volume/storage operation or macOS modification. Old attempts frozen.
+
+
 ### Latest M1 native result — 31E publication PASS; no CPU1 record, 2026-10-21
 
 **31E consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution

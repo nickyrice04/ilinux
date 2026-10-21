@@ -2505,3 +2505,35 @@ Keep CPU0 code-publication success distinct from CPU1 telemetry publication.
 No record is not a zero-instruction or incoming-cache-state measurement.
 No automatic retry, security/mapping change or Linux continuation; M5 selects
 a separately reviewed observation from the retained partial evidence.
+
+
+### 2026-10-21 · 31F observes before identity reads; preserve heterogeneous topology
+
+**Decision:** use a separately reviewed vector-first original RAM recorder and
+bounded conditional CPU1 campaign, preserving the exact installed boot021,
+ordinary stack, mappings and two startup masks. 31E's CPU0 publication success
+narrows the blocker but does not establish secondary instruction visibility.
+The old pre-store identity filter could suppress useful evidence. Store first,
+record unfiltered identity, validate it in the controller, preserve partial
+progress and stop before a second store if any early progress appears.
+
+**Core policy:** this hardware has12 Performance +6 Super cores, three clusters
+of six. CPU1 is a same-cluster Performance target; heterogeneous scheduling is
+a later layer. Validate cluster1 and Super representatives before expanding to
+18 cores. Use measured capacities, frequency invariance, idle and energy/task;
+do not accept the template768/1024 capacities as measured equivalence. The new
+read-only collector and structural auditor prepare those checks without altering
+boot042 or broadening31F's native scope.
+
+**Validation:** 217 distinct VM methods, 194 image-only methods and138 source
+pins PASS. Independent assemblers match all helper bytes. Source/entry/controller
+reviews, bounded failure/interleaving models and real pinned-client integration
+pass. VM execution cannot emulate physical reset/cache visibility or prove SMP.
+The hook also serves a synchronous exception slot; marker != reset provenance.
+Existing REA findings do not justify another power operation, so none is added.
+
+**Next:** publish the fixed M1 intake/handoff, one fresh human-started lab session,
+then Macintosh HD return. Healthy M1 requires no routine reboot; no repeated
+policy checks or host/settings/storage changes. Next result chooses a precise
+entry repair or a reviewed two-core Linux correctness/rendering/memory batch.
+31F native and macOS performance/efficiency parity remain unverified.

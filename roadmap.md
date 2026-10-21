@@ -5,7 +5,35 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — after 31D; more evidence per reboot, 2026-10-21
+## Current direction — 31F and both CPU classes, 2026-10-21
+
+31E acknowledged both CPU1 starts and verified CPU0 recorder publication, but
+saw no entry record. Native Omarchy still has one online CPU and software
+rendering. **No new performance result is claimed.**
+
+1. Run the reviewed [31F handoff](tools/m1n1-client/attempt31f-instructions.md)
+   after M1 offline intake. It observes before system-register reads/identity
+   filtering, preserves unexpected identity and partial progress, and gates
+   eight timer callbacks on verified arrival. One bounded session, then return.
+2. On entry success, prepare a valid two-core Linux handoff and combine coherent
+   memory/timer/IPI correctness, input-to-frame tracing, renderer threads,
+   CPU/memory throughput and USB measurements in one healthy session.
+3. Validate representatives of all three six-wide clusters: **12 Performance
+   (M in clusters0/1), six Super (P in cluster2)**, then all18. Calibrate Linux
+   capacities, per-cluster DVFS, frequency invariance and idle behavior using
+   class-specific measurements. Acceptance includes responsiveness and energy
+   per task, not just18 online CPUs. [Topology evidence](research/cpu-topology31f.md).
+4. Continue N1 WLAN transport and separately reviewed read-only ANS storage;
+   shared macOS data access/APFS encryption is distinct from raw SSD bandwidth.
+5. Native GPU support remains required for efficient high-resolution rendering.
+   CPU concurrency alone cannot establish a macOS-equivalent desktop.
+
+The new instruction interpreter, publication/failure tests and VM job064 reduce
+avoidable boots. They are not an Apple firmware/cache emulator. M1 health checks
+replace automatic helper reboots; no routine policy rechecks. 31B–31E consumed;
+31F native NOT RUN. macOS and installed boot021 remain intact.
+
+## Historical direction — after 31D, superseded by 31F below
 
 Native Omarchy still has one online CPU and software rendering. 31C and 31D
 passed the corrected RAM gate and acknowledged CPU1 startup writes, but entry

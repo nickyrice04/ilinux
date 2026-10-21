@@ -1,0 +1,133 @@
+{
+  "adt_sha256": "6f143434d2f05310067559f8fa3836ae564dd9934ebc5912660f2a9f5a8a73af",
+  "core_counts": {
+    "Performance": 12,
+    "Super": 6
+  },
+  "cpu_count": 18,
+  "date": "2026-10-21",
+  "dtbs": [
+    {
+      "bytes": 61326,
+      "capacity_dmips_mhz_by_type": {
+        "M": 768,
+        "P": 1024
+      },
+      "capacity_validation": "UNCALIBRATED",
+      "cluster_cpufreq_status": {
+        "0": "okay",
+        "1": "okay",
+        "2": "okay"
+      },
+      "dynamic_power_coefficient_by_type": {
+        "M": 550,
+        "P": 1054
+      },
+      "power_model_validation": "UNCALIBRATED",
+      "runtime_online_cpu_ids": "NOT_OBSERVED",
+      "sha256": "5d6fe64812b05e8c5d42ce3b97e3ede4c675e7a9a59d8fcf85d6906ef8daac9e",
+      "structure": "PASS",
+      "template_enabled_cpu_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "bytes": 63539,
+      "capacity_dmips_mhz_by_type": {
+        "M": 768,
+        "P": 1024
+      },
+      "capacity_validation": "UNCALIBRATED",
+      "cluster_cpufreq_status": {
+        "0": "disabled",
+        "1": "disabled",
+        "2": "disabled"
+      },
+      "dynamic_power_coefficient_by_type": {
+        "M": 550,
+        "P": 1054
+      },
+      "power_model_validation": "UNCALIBRATED",
+      "runtime_online_cpu_ids": "NOT_OBSERVED",
+      "sha256": "17c55af9eb39ea799e254335176e9748193237dce3735f59cd286a63ea0a0405",
+      "structure": "PASS",
+      "template_enabled_cpu_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  ],
+  "hardware_operations": 0,
+  "legacy_four_bit_stride_collisions": [
+    {
+      "cpu_ids": [
+        4,
+        6
+      ],
+      "legacy_bit": 4
+    },
+    {
+      "cpu_ids": [
+        5,
+        7
+      ],
+      "legacy_bit": 5
+    },
+    {
+      "cpu_ids": [
+        10,
+        12
+      ],
+      "legacy_bit": 8
+    },
+    {
+      "cpu_ids": [
+        11,
+        13
+      ],
+      "legacy_bit": 9
+    }
+  ],
+  "native_smp_verified": false,
+  "python": "3.9.6",
+  "read_only": true,
+  "restart_authorized": false,
+  "runtime_capture": "synthetic fixtures only; native NOT RUN",
+  "schema": 1,
+  "scope": "t6050-j716c-offline-topology",
+  "test_methods_passed": 32,
+  "tests": "python3 -I kernel/experiments/cpu-topology31f/test_topology.py -v"
+}
