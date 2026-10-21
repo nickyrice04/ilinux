@@ -1,5 +1,23 @@
 # Blockers
 
+## Attempt31 candidate prepared; native effect remains open — 2026-10-21
+
+Original opt-in final-copy code reduces full-damage callback medians about 25%
+in a headless VM crossover and passes exact pixel/fallback checks. It does not
+resolve the native 256 ms tiny-damage floor, prove physical presentation or
+supply macOS-class CPU/GPU/energy performance. Both new images and instructions
+are under attempt31; the next gate is M1 intake and one human-started A/B.
+See `native/boot/attempt31/validation.md` for test scope and limitations.
+
+SMP reset-entry/state, thermal/idle and safe frequency policy, GPU acceleration,
+independent N1 Wi-Fi, ANS storage and read-only access to macOS files remain
+separate blockers. CPU0 is observed near 2.65 GHz, not proven stuck at a low
+speed. Anonymous executable samples are not yet identified rasterizer code.
+The earlier auxiliary-renderer warning interpretation is corrected in
+`native/boot/attempt30/vm-evidence-addendum.md`; those warnings do not prove
+failed display commits. Original macOS/security/volumes remain unchanged;
+routine policy checks remain waived. No native attempt31 result yet.
+
 ## Current evidence — attempt30 quantifies expensive desktop work; delay remains
 
 **Attempt30 consumed: one native desktop-latency boot/root send/userspace

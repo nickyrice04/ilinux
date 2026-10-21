@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "profile": "omarchy",
+  "file": "ramroot.cpio.zst",
+  "size": 2472878772,
+  "sha256": "e600aeb36c11f2ea1c8bd354e9ded8be69e3c2c4314daffc7383c49494f466c8",
+  "image_sha256": "0b6df39566f12bcd5957e649946125a7bb0f42f31690933dc9896a2565b9b69c",
+  "source": "Attempt28 root plus job055 opt-in original compositor final-copy experiment and collection assets",
+  "build": "No package upgrade; same login/config/kernel/modules; replaced Hyprland, added reviewed assets; zstd -19 --long=27",
+  "native_tested": false,
+  "entries": 215529,
+  "unpacked_bytes_16k": 11026333696
+}

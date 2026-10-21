@@ -6,6 +6,36 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 handoff — attempt31 final-copy experiment, 2026-10-21
+
+Reviewed attempt30 (`45952cc`): native compositor CPU near 97%, full callbacks
+about 515 ms, tiny callbacks about 256 ms; CPU estimate near 2.65 GHz. Original,
+default-off Hyprland final-copy optimization built and pixel-checked. VM
+headless crossover full medians 104.3 ms versus 78.3 ms (about 25% lower), no native
+speed/energy/parity claim. Exact packed-root fallback, identity refusal and
+independent cleanup checks PASS. Full-pair VM boot/desktop/second SSH link PASS
+(373s wall);143 final host tests PASS. Native/live NOT RUN; M1 intake pending.
+
+New matched pair: stage one 60,669,159 bytes (`6ffb37b9…91752`), root
+2,472,878,772 bytes (`e600aeb3…466c8`). Derived from attempt28; only compositor,
+experiment assets and stage-one pairing change. Boot042/DT, installed boot021,
+client57a9339, keyboard/login and one core retained. Never mix pairs. No CPU
+register/module, SMP, storage, Wi-Fi, macOS, security/default/volume change.
+
+M1 follows `tools/m1n1-client/attempt31-instructions.md`: privately receive both
+images, verify offline and publish readiness, then wait for human start. One
+crossover and 45s human test within the fixed 600s switch-to-return window; both
+collector and independent service reset the drawing option to0. The custom
+executable remains only in RAM until shutdown. Routine policy checks waived.
+See `native/boot/attempt31/validation.md` and `kernel/experiments/desktop31/PLAN.md`.
+
+Ownership: M5 owns this isolated compositor experiment and publication. M1
+owns independent intake, the human-started boot and sanitized reporting.
+Other agents' unreviewed jobs047/048 and kernel-config work remain untouched.
+No concurrent native experiments or replay of consumed attempts. After the
+candidate result, prioritize bounded secondary-core startup and the thermal/
+capacity prerequisites for CPU policy; GPU remains a separate parity blocker.
+
 ### Current M1 native result — attempt30 consumed, 2026-10-20
 
 **Attempt30 consumed: one native desktop-latency boot/root send/userspace

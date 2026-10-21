@@ -5,6 +5,41 @@ measured, still unsupported, and next.
 
 ---
 
+## attempt31 final-copy experiment, 2026-10-21
+
+Reviewed attempt30 (`45952cc`): native compositor CPU near 97%, full callbacks
+about 515 ms, tiny callbacks about 256 ms; CPU estimate near 2.65 GHz. Original,
+default-off Hyprland final-copy optimization built and pixel-checked. VM
+headless crossover full medians 104.3 ms versus 78.3 ms (about 25% lower), no native
+speed/energy/parity claim. Exact packed-root fallback, identity refusal and
+independent cleanup checks PASS. Full-pair VM boot/desktop/second SSH link PASS
+(373s wall);143 final host tests PASS. Native/live NOT RUN; M1 intake pending.
+
+New matched pair: stage one 60,669,159 bytes (`6ffb37b9…91752`), root
+2,472,878,772 bytes (`e600aeb3…466c8`). Derived from attempt28; only compositor,
+experiment assets and stage-one pairing change. Boot042/DT, installed boot021,
+client57a9339, keyboard/login and one core retained. Never mix pairs. No CPU
+register/module, SMP, storage, Wi-Fi, macOS, security/default/volume change.
+
+M1 follows `tools/m1n1-client/attempt31-instructions.md`: privately receive both
+images, verify offline and publish readiness, then wait for human start. One
+crossover and 45s human test within the fixed 600s switch-to-return window; both
+collector and independent service reset the drawing option to0. The custom
+executable remains only in RAM until shutdown. Routine policy checks waived.
+See `native/boot/attempt31/validation.md` and `kernel/experiments/desktop31/PLAN.md`.
+
+**Measured:** 64 GLES output comparisons zero differing bytes; three actual
+framebuffer-pair checks equal; 42 copies. FP16, resolution and rotation fallbacks
+retain original drawing. All quiet-run samples and separate packed-root sanity
+samples are retained. Native presentation/power are unmeasured. Existing REA
+facts reused; no new proprietary decompilation for this open-source path.
+
+**Next:** M1 intake and one native A/B; compare callbacks, process CPU, IPC and
+timed human actions. If copies are inactive, diagnose eligibility instead of
+claiming a speedup. If rendering improves but menus remain slow, isolate the
+remaining event-loop/presentation delay. Continue SMP entry-state research;
+CPU frequency alone cannot establish graphics or energy parity.
+
 ## 2026-10-20 · M1: attempt30 latency collection and Macintosh HD return complete
 
 **Attempt30 consumed: one native desktop-latency boot/root send/userspace

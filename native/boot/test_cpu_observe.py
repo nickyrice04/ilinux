@@ -180,4 +180,43 @@ class DesktopLatencyTests(CpuObserveTests):
         self.assertIn('BOOT-J716C-DESKTOP-LATENCY-30',err[0])
 
 
+class DesktopCopyTests(CpuObserveTests):
+    def test_old_and_new_pairs_cannot_cross_profiles(self):
+        old = super().payloads()
+        new = self.payloads()
+        cpu.check_payloads(old, attempt=28)
+        cpu.check_payloads(new, attempt=31)
+        for files, attempt in ((old, 31), (new, 28), (new, 32)):
+            with self.subTest(attempt=attempt), self.assertRaises(ValueError):
+                cpu.check_payloads(files, attempt=attempt)
+
+    def payloads(self):
+        files = super().payloads()
+        first = Path(__file__).resolve().parents[2] / 'virtualization/jobs/055-desktop-copy/out/images/stage1.cpio.zst'
+        alternate = Path(__file__).resolve().parents[2] / 'build/attempt31/stage1.cpio.zst'
+        if not first.is_file(): first = alternate
+        if not first.is_file(): self.skipTest('private attempt31 image absent')
+        files['ramroot.cpio.zst'] = first.read_bytes()
+        return files
+
+    # Inherit every DT/payload/refusal test, substituting only the profile under
+    # test while production cpu-observe remains untouched.
+    def setUp(self):
+        self.original = launch.PROFILES['cpu-observe']
+        launch.PROFILES['cpu-observe'] = launch.PROFILES['desktop-copy']
+    def tearDown(self):
+        launch.PROFILES['cpu-observe'] = self.original
+    def test_exact_boot_arguments(self):
+        p=launch.PROFILES['desktop-copy']
+        self.assertEqual(p.bootargs,self.original.bootargs)
+        self.assertEqual(p.confirm,'BOOT-J716C-DESKTOP-COPY-31')
+        self.assertEqual(p.deadline,300)
+    def test_requires_specific_confirmation_before_package_or_usb(self):
+        result,out,err,launches=run_main(launch,[
+            '--package','/fake','--profile','desktop-copy','--ramroot','/fake/root',
+            '--launch','--device','auto','--confirm','BOOT-J716C-CPU-OBSERVE-28'])
+        self.assertEqual((result,out,launches),('exit 2','',[]))
+        self.assertIn('BOOT-J716C-DESKTOP-COPY-31',err[0])
+
+
 if __name__ == '__main__': unittest.main()

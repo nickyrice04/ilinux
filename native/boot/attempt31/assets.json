@@ -1,0 +1,14 @@
+{
+  "attempt": 31,
+  "default_enabled": false,
+  "frequency_writes": false,
+  "base_hyprland_sha256": "a9e57097798b2e815c8e91a0a4472d287573c4f7ce177b72a5b0907562a68da9",
+  "sha256": {
+    "Hyprland-copy31": "76457da85a7a073c69cbfabcb9c9c9cb66c1a0ed4f3070fc628704032134c131",
+    "baseline.py": "47e3c827d597aa2b619c29a7cc1e936eabfea434a6cca42387a792c34f964c7b",
+    "collect.py": "fb6ac8e6d9877c180ebaa6f795250670173a0b89b567ea8fc0c29811c107de6f",
+    "frameprobe": "985db443f7dc3a62a0f5ea524bcd8ba5c19ac3440d3ae38e13cdfb936f7f2d86",
+    "restore.py": "569a1ea03abc7cc54b7396dab4d37f89fecf7503c89fec3266e2da6cf1808d32",
+    "samplecpu": "b72096d8a8c7d323417d19cd8aec37d7750b15df765a6e36a8e6f5c320df593e"
+  }
+}

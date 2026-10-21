@@ -281,7 +281,7 @@ class StageBUnchangedTests(unittest.TestCase):
     """The same facts without git: Stage-B stays the default and keeps its fixed values."""
 
     def test_only_the_reviewed_four_profiles(self):
-        self.assertEqual(sorted(launch.PROFILES), ["cpu-observe", "desktop-latency", "memory-observe", "omarchy", "ramroot", "stage-b"])
+        self.assertEqual(sorted(launch.PROFILES), ["cpu-observe", "desktop-copy", "desktop-latency", "memory-observe", "omarchy", "ramroot", "stage-b"])
         self.assertEqual(launch.PROFILES["stage-b"],
                          ("initramfs-stage-b.cpio.gz", STAGE_B_ARGS, "diagnostic", STAGE_B_CONFIRM, 180, False, None))
         self.assertEqual(RAMROOT, ("ramroot.cpio.zst", RAMROOT_ARGS, "RAM-root", RAMROOT_CONFIRM, 300, True, None))

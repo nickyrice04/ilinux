@@ -1,0 +1,4928 @@
+{
+  "date_utc": "2026-10-21",
+  "environment": "VZ 12 vCPU / 24 GiB; compositor and clients on vCPU0, LP_NUM_THREADS=0; software GL; headless output, no native hardware",
+  "root_base_sha256": "59a7383e4b6cd47712e5dc05998ab34a58d511edc0b7ee016b267a15d4fb2b78",
+  "candidate_sha256": "76457da85a7a073c69cbfabcb9c9c9cb66c1a0ed4f3070fc628704032134c131",
+  "upstream_hyprland": "efb50993780079460b0cbed1363e2166a2de1d9f",
+  "startup_settle_seconds": 25,
+  "crossover_order": [
+    0,
+    1,
+    1,
+    0
+  ],
+  "summary": [
+    {
+      "name": "copy31-mode0-run0",
+      "cpu_s": 1.3200000000000003,
+      "wall_s": 1.4586670829999946,
+      "median_callback_ms": {
+        "cell": 16.7216935,
+        "full": 104.344925
+      }
+    },
+    {
+      "name": "copy31-mode1-run1",
+      "cpu_s": 1.1900000000000004,
+      "wall_s": 1.3234598640000002,
+      "median_callback_ms": {
+        "cell": 16.71339,
+        "full": 78.378593
+      }
+    },
+    {
+      "name": "copy31-mode1-run2",
+      "cpu_s": 0.9900000000000002,
+      "wall_s": 1.124716166000006,
+      "median_callback_ms": {
+        "cell": 16.7297415,
+        "full": 78.2882075
+      }
+    },
+    {
+      "name": "copy31-mode0-run3",
+      "cpu_s": 1.299999999999999,
+      "wall_s": 1.4386109519999977,
+      "median_callback_ms": {
+        "cell": 16.758007,
+        "full": 104.1928185
+      }
+    },
+    {
+      "name": "fallback-fp16",
+      "cpu_s": 1.3599999999999994,
+      "wall_s": 1.4611966629999955,
+      "median_callback_ms": {
+        "cell": 16.8718205,
+        "full": 98.9177075
+      }
+    },
+    {
+      "name": "fallback-resized",
+      "cpu_s": 0.3699999999999992,
+      "wall_s": 0.5021149929999993,
+      "median_callback_ms": {
+        "cell": 15.693228000000001,
+        "full": 26.041408
+      }
+    },
+    {
+      "name": "fallback-rotated",
+      "cpu_s": 0.3699999999999992,
+      "wall_s": 0.5060444149999981,
+      "median_callback_ms": {
+        "cell": 16.372097,
+        "full": 26.459262000000003
+      }
+    }
+  ],
+  "phases": [
+    {
+      "event": "phase",
+      "monotonic_s": 47.351557708,
+      "name": "copy31-mode0-run0",
+      "wall_s": 1.4586670829999946,
+      "compositor_process_cpu_s": 1.3200000000000003,
+      "ipc_roundtrip_ms": [
+        1.2765130000005342,
+        167.14494200000019,
+        103.10118999999673,
+        0.9648469999987697,
+        38.00033999999641,
+        0.10358500000506865,
+        103.5596559999945,
+        103.47525600000296,
+        103.86004099999724
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 1.448917,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 5,
+          "llvm": 2,
+          "anonymous_executable": 82,
+          "other_executable_file": 2,
+          "unmapped": 41
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 1.035633
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 6.068036,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 239.986162,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 104.005174,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 103.761969,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 2.505905,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 19.255767,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 17.133185,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.809148,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.697136,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.746251,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.655951,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 15.582787,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 127.210091,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.298449,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.383198,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.494993,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.354478,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.10402,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.301812,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.335372,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 1453.81596
+        }
+      ]
+    },
+    {
+      "event": "phase",
+      "monotonic_s": 49.677024785,
+      "name": "copy31-mode1-run1",
+      "wall_s": 1.3234598640000002,
+      "compositor_process_cpu_s": 1.1900000000000004,
+      "ipc_roundtrip_ms": [
+        1.3493539999984705,
+        235.5629850000014,
+        28.28383599999995,
+        0.15770199999565193,
+        0.14701900000346768,
+        67.65703200000672,
+        51.86591300000032,
+        51.75597100000573,
+        51.67225600000336
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 1.313353,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 10,
+          "llvm": 3,
+          "anonymous_executable": 84,
+          "other_executable_file": 1,
+          "unmapped": 20
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 0.729401
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 5.72443,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 308.463846,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 133.060377,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 78.233963,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 2.466038,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 17.009922,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.660435,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 20.082163,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 15.988932,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.904386,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.766345,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.216507,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 100.532102,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.4048,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.49184,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.225608,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.469478,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.13516,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.352386,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.131835,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 1318.615578
+        }
+      ]
+    },
+    {
+      "event": "phase",
+      "monotonic_s": 51.808284412,
+      "name": "copy31-mode1-run2",
+      "wall_s": 1.124716166000006,
+      "compositor_process_cpu_s": 0.9900000000000002,
+      "ipc_roundtrip_ms": [
+        0.9481199999967771,
+        87.72905699999711,
+        55.258578000000114,
+        1.1467120000006048,
+        17.05927800000495,
+        55.795750999998006,
+        51.62167900000014,
+        51.56998399999679
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 1.12093,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 3,
+          "llvm": 0,
+          "anonymous_executable": 95,
+          "other_executable_file": 1,
+          "unmapped": 0
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 0.5004
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 5.493925,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 166.502516,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 77.739493,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 77.539198,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 2.459326,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 17.707953,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 19.115558,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.31478,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.630487,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.955595,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.828996,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 14.715281,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 103.651397,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.331149,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.1687,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.350031,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.137466,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.225594,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.245266,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 78.987902,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 1120.61033
+        }
+      ]
+    },
+    {
+      "event": "phase",
+      "monotonic_s": 54.252392298,
+      "name": "copy31-mode0-run3",
+      "wall_s": 1.4386109519999977,
+      "compositor_process_cpu_s": 1.299999999999999,
+      "ipc_roundtrip_ms": [
+        1.290382000000534,
+        140.85123599999605,
+        101.89305299999774,
+        2.8345289999975876,
+        40.95748000000299,
+        0.1856539999991469,
+        102.50532499999565,
+        3.4901370000000043,
+        103.19037300000389
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 1.434331,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 11,
+          "llvm": 0,
+          "anonymous_executable": 118,
+          "other_executable_file": 1,
+          "unmapped": 0
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 0.472914
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 5.779361,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 218.427586,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 103.491539,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 103.290657,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 2.461474,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 19.169489,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.783949,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.732065,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 17.008881,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 13.976798,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 20.152056,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 14.573328,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 131.357509,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.555159,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.026865,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 103.952638,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.277859,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.107778,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.033995,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 104.47241,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 1434.079707
+        }
+      ]
+    },
+    {
+      "event": "phase",
+      "monotonic_s": 58.726388787,
+      "name": "fallback-fp16",
+      "wall_s": 1.4611966629999955,
+      "compositor_process_cpu_s": 1.3599999999999994,
+      "ipc_roundtrip_ms": [
+        1.3986319999972352,
+        204.27792299999936,
+        91.41978099999903,
+        1.3976950000014199,
+        47.21082799999721,
+        92.7336729999979,
+        92.91125299999692,
+        92.84996399999557
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 1.451779,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 12,
+          "llvm": 12,
+          "anonymous_executable": 37,
+          "other_executable_file": 1,
+          "unmapped": 72
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 0.555831
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 5.521546,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 281.80413,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 98.256348,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 98.112263,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 32.788169,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 3.952466,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 19.919256,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 15.964458,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 17.048755,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.694886,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 15.735915,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 18.82176,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 117.692772,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 98.888125,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 98.849777,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 99.081984,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 98.819466,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 98.96586,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 98.880879,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 98.94729,
+          "width": 3456,
+          "height": 2160
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 1456.631974
+        }
+      ]
+    },
+    {
+      "event": "phase",
+      "monotonic_s": 61.339877146,
+      "name": "fallback-resized",
+      "wall_s": 0.5021149929999993,
+      "compositor_process_cpu_s": 0.3699999999999992,
+      "ipc_roundtrip_ms": [
+        1.449379000000306,
+        5.4725490000038235,
+        0.11715200000139703,
+        29.452937000002066,
+        25.560246000004838
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 0.492269,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 1,
+          "llvm": 0,
+          "anonymous_executable": 35,
+          "other_executable_file": 0,
+          "unmapped": 0
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 0.560478
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 1.624544,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 74.140762,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 27.481895,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 25.89021,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 0.686625,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 20.652172,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 15.558481,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 14.117139,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 20.403626,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 13.624379,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 19.675105,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 15.827975,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 53.990513,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 30.176502,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 26.890682,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 25.947807,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 25.983457,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 25.863515,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 25.863057,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 26.099359,
+          "width": 1728,
+          "height": 1080
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 497.396952
+        }
+      ]
+    },
+    {
+      "event": "phase",
+      "monotonic_s": 63.878599675,
+      "name": "fallback-rotated",
+      "wall_s": 0.5060444149999981,
+      "compositor_process_cpu_s": 0.3699999999999992,
+      "ipc_roundtrip_ms": [
+        0.9577690000028838,
+        5.7759760000024585,
+        0.13978100000144877,
+        22.0459230000003,
+        4.072174000000928
+      ],
+      "cpu_samples": {
+        "status": "sampled",
+        "event": "software_cpu_clock",
+        "period_ns": 10000000,
+        "wall_s": 0.497037,
+        "lost": 0,
+        "categories": {
+          "compositor": 0,
+          "mesa": 5,
+          "llvm": 0,
+          "anonymous_executable": 31,
+          "other_executable_file": 0,
+          "unmapped": 0
+        }
+      },
+      "frames": [
+        {
+          "event": "configured",
+          "elapsed_ms": 0.534759
+        },
+        {
+          "event": "frame",
+          "index": 0,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 1.791167,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 1,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 74.316353,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 2,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 28.035778,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 3,
+          "warmup": true,
+          "damage": "cell",
+          "callback_ms": 26.28493,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 4,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 0.693492,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 5,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 20.571388,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 6,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 15.922451,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 7,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.860228,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 8,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.733108,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 9,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 13.703569,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 10,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 20.106354,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 11,
+          "warmup": false,
+          "damage": "cell",
+          "callback_ms": 16.011086,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 12,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 54.890704,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 13,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 30.472997,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 14,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 27.268896,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 15,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 26.44056,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 16,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 26.345924,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 17,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 26.438186,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 18,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 26.477964,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "frame",
+          "index": 19,
+          "warmup": false,
+          "damage": "full",
+          "callback_ms": 26.306728,
+          "width": 1080,
+          "height": 1728
+        },
+        {
+          "event": "done",
+          "frames": 20,
+          "elapsed_ms": 502.139919
+        }
+      ]
+    }
+  ],
+  "copy_path": [
+    {
+      "calls": 1,
+      "copies": 0,
+      "enabled": 0,
+      "eligible": 0,
+      "cm_or_shader": 0,
+      "dir": 0,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 120,
+      "copies": 0,
+      "enabled": 0,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 240,
+      "copies": 0,
+      "enabled": 0,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 360,
+      "copies": 0,
+      "enabled": 0,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 480,
+      "copies": 0,
+      "enabled": 0,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 600,
+      "copies": 0,
+      "enabled": 0,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 720,
+      "copies": 0,
+      "enabled": 0,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 779,
+      "copies": 0,
+      "enabled": 1,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "parity": 1,
+      "gl_error": 0,
+      "pair_count": 1
+    },
+    {
+      "parity": 1,
+      "gl_error": 0,
+      "pair_count": 2
+    },
+    {
+      "parity": 1,
+      "gl_error": 0,
+      "pair_count": 3
+    },
+    {
+      "calls": 821,
+      "copies": 42,
+      "enabled": 0,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 840,
+      "copies": 42,
+      "enabled": 0,
+      "eligible": 1,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 842,
+      "copies": 42,
+      "enabled": 1,
+      "eligible": 0,
+      "cm_or_shader": 1,
+      "dir": 1,
+      "srcfmt": 1211384385,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 863,
+      "copies": 42,
+      "enabled": 0,
+      "eligible": 0,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 865,
+      "copies": 42,
+      "enabled": 1,
+      "eligible": 0,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 886,
+      "copies": 42,
+      "enabled": 0,
+      "eligible": 0,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    },
+    {
+      "calls": 888,
+      "copies": 42,
+      "enabled": 1,
+      "eligible": 0,
+      "cm_or_shader": 0,
+      "dir": 1,
+      "srcfmt": 875713112,
+      "dstfmt": 875713112
+    }
+  ],
+  "isolated_gles": [
+    {
+      "kind": "renderer",
+      "renderer": "llvmpipe (LLVM 23.1.1, 128 bits)"
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 0,
+      "ms": 50.329459
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 1,
+      "ms": 50.481333
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 2,
+      "ms": 50.30075
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 3,
+      "ms": 51.60325
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 4,
+      "ms": 53.64075
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 5,
+      "ms": 50.428834
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 0,
+      "ms": 0.45525
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 1,
+      "ms": 0.469417
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 2,
+      "ms": 0.4535
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 3,
+      "ms": 0.462958
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 4,
+      "ms": 0.45325
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 5,
+      "ms": 0.461917
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 0,
+      "ms": 0.452791
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 1,
+      "ms": 0.474917
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 2,
+      "ms": 0.462708
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 3,
+      "ms": 0.452583
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 4,
+      "ms": 0.464333
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 5,
+      "ms": 0.452167
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 0,
+      "ms": 51.225584
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 1,
+      "ms": 50.253459
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 2,
+      "ms": 50.27475
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 3,
+      "ms": 50.248666
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 4,
+      "ms": 50.19525
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 5,
+      "ms": 50.1775
+    }
+  ],
+  "presentation_measured": false,
+  "native_tested": false,
+  "power_measured": false,
+  "packed_image_check": {
+    "purpose": "Correctness, startup and cleanup only; host archive verification overlapped, timing is not a benchmark",
+    "phases": [
+      {
+        "event": "phase",
+        "monotonic_s": 48.395507993,
+        "name": "copy31-mode0-run0",
+        "wall_s": 1.5299325090000053,
+        "compositor_process_cpu_s": 1.3999999999999995,
+        "ipc_roundtrip_ms": [
+          0.5270110000026307,
+          154.18641499999808,
+          7.323425000002715,
+          7.066503000004332,
+          2.7584960000055503,
+          42.334310000001096,
+          11.180670999998199,
+          7.643362000003151,
+          7.895288999996808,
+          12.025411999999847,
+          11.305440000001,
+          8.006104999999764,
+          8.065440999999396
+        ],
+        "cpu_samples": {
+          "status": "sampled",
+          "event": "software_cpu_clock",
+          "period_ns": 10000000,
+          "wall_s": 1.519999,
+          "lost": 0,
+          "categories": {
+            "compositor": 0,
+            "mesa": 10,
+            "llvm": 2,
+            "anonymous_executable": 86,
+            "other_executable_file": 0,
+            "unmapped": 42
+          }
+        },
+        "frames": [
+          {
+            "event": "configured",
+            "elapsed_ms": 0.312143
+          },
+          {
+            "event": "frame",
+            "index": 0,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 2.787591,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 1,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 245.814232,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 2,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 112.683148,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 3,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 112.465564,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 4,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 2.357981,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 5,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 18.041127,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 6,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 18.827651,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 7,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 15.672779,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 8,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.230358,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 9,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.200207,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 10,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.262117,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 11,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.506456,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 12,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 127.890409,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 13,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 113.525521,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 14,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 112.991501,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 15,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 113.294924,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 16,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 113.423876,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 17,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 113.282974,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 18,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 113.39684,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 19,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 113.410337,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "done",
+            "frames": 20,
+            "elapsed_ms": 1527.109206
+          }
+        ]
+      },
+      {
+        "event": "phase",
+        "monotonic_s": 50.777575669,
+        "name": "copy31-mode1-run1",
+        "wall_s": 1.375351987000002,
+        "compositor_process_cpu_s": 1.2400000000000002,
+        "ipc_roundtrip_ms": [
+          0.6055130000035547,
+          226.82659100000535,
+          38.78800000000382,
+          1.534605999999883,
+          0.09788099999497035,
+          74.06490399999655,
+          64.80874300000039,
+          64.52040400000669,
+          65.43498500000311
+        ],
+        "cpu_samples": {
+          "status": "sampled",
+          "event": "software_cpu_clock",
+          "period_ns": 10000000,
+          "wall_s": 1.373098,
+          "lost": 0,
+          "categories": {
+            "compositor": 0,
+            "mesa": 18,
+            "llvm": 4,
+            "anonymous_executable": 86,
+            "other_executable_file": 3,
+            "unmapped": 14
+          }
+        },
+        "frames": [
+          {
+            "event": "configured",
+            "elapsed_ms": 0.230785
+          },
+          {
+            "event": "frame",
+            "index": 0,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 2.48475,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 1,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 318.728531,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 2,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 144.028672,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 3,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 84.367479,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 4,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 2.720951,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 5,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 19.714952,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 6,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 14.491736,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 7,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 18.999095,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 8,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 15.41772,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 9,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.472422,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 10,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 15.548882,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 11,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.497352,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 12,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 96.257441,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 13,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 84.602451,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 14,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 85.054732,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 15,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 85.05327,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 16,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 84.708557,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 17,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 85.074191,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 18,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 84.671352,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 19,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 84.573194,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "done",
+            "frames": 20,
+            "elapsed_ms": 1372.474627
+          }
+        ]
+      },
+      {
+        "event": "phase",
+        "monotonic_s": 52.953528483,
+        "name": "copy31-mode1-run2",
+        "wall_s": 1.170485160999995,
+        "compositor_process_cpu_s": 1.0299999999999994,
+        "ipc_roundtrip_ms": [
+          0.6927020000020434,
+          75.99669700000078,
+          66.98163499999765,
+          1.7698399999943604,
+          15.754769999993812,
+          67.46035399999784,
+          64.2892490000051,
+          63.71492199999551
+        ],
+        "cpu_samples": {
+          "status": "sampled",
+          "event": "software_cpu_clock",
+          "period_ns": 10000000,
+          "wall_s": 1.168314,
+          "lost": 0,
+          "categories": {
+            "compositor": 1,
+            "mesa": 9,
+            "llvm": 0,
+            "anonymous_executable": 94,
+            "other_executable_file": 0,
+            "unmapped": 0
+          }
+        },
+        "frames": [
+          {
+            "event": "configured",
+            "elapsed_ms": 0.216863
+          },
+          {
+            "event": "frame",
+            "index": 0,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 2.449271,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 1,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 165.889007,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 2,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 84.078862,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 3,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 84.270892,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 4,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 2.737127,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 5,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 22.273858,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 6,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 15.109564,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 7,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.497606,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 8,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 14.784519,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 9,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 18.431171,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 10,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.124639,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 11,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 12.885254,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 12,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 103.617346,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 13,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 84.996107,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 14,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 84.923026,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 15,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 85.776456,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 16,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 84.958711,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 17,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 85.056962,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 18,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 85.358949,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 19,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 85.381691,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "done",
+            "frames": 20,
+            "elapsed_ms": 1167.392134
+          }
+        ]
+      },
+      {
+        "event": "phase",
+        "monotonic_s": 55.469257085,
+        "name": "copy31-mode0-run3",
+        "wall_s": 1.5102798489999998,
+        "compositor_process_cpu_s": 1.3800000000000008,
+        "ipc_roundtrip_ms": [
+          0.6977279999986763,
+          128.23551099999975,
+          6.056604999997717,
+          11.682783000004804,
+          1.8014370000045687,
+          38.665866000002325,
+          9.165668000001403,
+          12.302189999999769,
+          9.929400000004307,
+          6.2612819999969815,
+          8.775104000001477,
+          12.446935999996356,
+          5.972540999998444
+        ],
+        "cpu_samples": {
+          "status": "sampled",
+          "event": "software_cpu_clock",
+          "period_ns": 10000000,
+          "wall_s": 1.507822,
+          "lost": 0,
+          "categories": {
+            "compositor": 0,
+            "mesa": 10,
+            "llvm": 0,
+            "anonymous_executable": 128,
+            "other_executable_file": 0,
+            "unmapped": 0
+          }
+        },
+        "frames": [
+          {
+            "event": "configured",
+            "elapsed_ms": 0.223954
+          },
+          {
+            "event": "frame",
+            "index": 0,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 2.462368,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 1,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 221.359256,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 2,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 112.589099,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 3,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 112.560479,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 4,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 2.744355,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 5,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 22.177291,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 6,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 15.155114,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 7,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.522735,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 8,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 15.838783,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 9,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.985254,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 10,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.527667,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 11,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 12.011079,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 12,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 133.336889,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 13,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 112.992708,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 14,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 112.954762,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 15,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 114.157905,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 16,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 113.965815,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 17,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 112.646875,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 18,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 113.712196,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 19,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 114.619257,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "done",
+            "frames": 20,
+            "elapsed_ms": 1507.048684
+          }
+        ]
+      },
+      {
+        "event": "phase",
+        "monotonic_s": 60.009236235,
+        "name": "fallback-fp16",
+        "wall_s": 1.5215775479999962,
+        "compositor_process_cpu_s": 1.42,
+        "ipc_roundtrip_ms": [
+          0.7426430000023743,
+          196.13666300000432,
+          5.6244959999958155,
+          2.620726000003515,
+          0.1145749999977852,
+          56.754918999999404,
+          0.7130119999985141,
+          5.942621999999176,
+          2.4134230000001367,
+          103.03236500000423,
+          96.98580900000309
+        ],
+        "cpu_samples": {
+          "status": "sampled",
+          "event": "software_cpu_clock",
+          "period_ns": 10000000,
+          "wall_s": 1.511313,
+          "lost": 0,
+          "categories": {
+            "compositor": 2,
+            "mesa": 11,
+            "llvm": 11,
+            "anonymous_executable": 45,
+            "other_executable_file": 1,
+            "unmapped": 72
+          }
+        },
+        "frames": [
+          {
+            "event": "configured",
+            "elapsed_ms": 0.243891
+          },
+          {
+            "event": "frame",
+            "index": 0,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 2.433248,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 1,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 293.0672,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 2,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 106.338116,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 3,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 106.993713,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 4,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 36.372454,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 5,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 4.418827,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 6,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 22.269333,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 7,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 14.07477,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 8,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.955417,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 9,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 13.467244,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 10,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 21.577293,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 11,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 14.361,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 12,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 121.622806,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 13,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 107.146898,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 14,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 107.015269,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 15,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 104.504699,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 16,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 103.991361,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 17,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 103.855704,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 18,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 103.716772,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "frame",
+            "index": 19,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 103.390459,
+            "width": 3456,
+            "height": 2160
+          },
+          {
+            "event": "done",
+            "frames": 20,
+            "elapsed_ms": 1518.322692
+          }
+        ]
+      },
+      {
+        "event": "phase",
+        "monotonic_s": 62.64152073,
+        "name": "fallback-resized",
+        "wall_s": 0.5113136800000007,
+        "compositor_process_cpu_s": 0.3800000000000008,
+        "ipc_roundtrip_ms": [
+          1.0048600000018837,
+          26.91421099999758,
+          0.10696399999687856,
+          0.12372200000498879,
+          25.438684000000933
+        ],
+        "cpu_samples": {
+          "status": "sampled",
+          "event": "software_cpu_clock",
+          "period_ns": 10000000,
+          "wall_s": 0.502113,
+          "lost": 0,
+          "categories": {
+            "compositor": 0,
+            "mesa": 1,
+            "llvm": 0,
+            "anonymous_executable": 35,
+            "other_executable_file": 0,
+            "unmapped": 0
+          }
+        },
+        "frames": [
+          {
+            "event": "configured",
+            "elapsed_ms": 0.546824
+          },
+          {
+            "event": "frame",
+            "index": 0,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 1.849107,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 1,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 73.353829,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 2,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 27.800935,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 3,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 27.060692,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 4,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 0.616356,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 5,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 22.223349,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 6,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 15.919775,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 7,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.237565,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 8,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.561434,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 9,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 16.310948,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 10,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.231062,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 11,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 13.360854,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 12,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 58.692734,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 13,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 30.336679,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 14,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 27.678089,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 15,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 26.613578,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 16,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 26.885031,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 17,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 26.867356,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 18,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 26.88032,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "frame",
+            "index": 19,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 27.051062,
+            "width": 1728,
+            "height": 1080
+          },
+          {
+            "event": "done",
+            "frames": 20,
+            "elapsed_ms": 507.292655
+          }
+        ]
+      },
+      {
+        "event": "phase",
+        "monotonic_s": 65.185987386,
+        "name": "fallback-rotated",
+        "wall_s": 0.5144255719999933,
+        "compositor_process_cpu_s": 0.370000000000001,
+        "ipc_roundtrip_ms": [
+          2.4599980000061805,
+          6.730739999994739,
+          0.15083600000309616,
+          0.6085969999958252,
+          9.889336000000526
+        ],
+        "cpu_samples": {
+          "status": "sampled",
+          "event": "software_cpu_clock",
+          "period_ns": 10000000,
+          "wall_s": 0.505184,
+          "lost": 0,
+          "categories": {
+            "compositor": 0,
+            "mesa": 0,
+            "llvm": 0,
+            "anonymous_executable": 37,
+            "other_executable_file": 0,
+            "unmapped": 0
+          }
+        },
+        "frames": [
+          {
+            "event": "configured",
+            "elapsed_ms": 0.486081
+          },
+          {
+            "event": "frame",
+            "index": 0,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 1.950493,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 1,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 73.127156,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 2,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 28.117647,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 3,
+            "warmup": true,
+            "damage": "cell",
+            "callback_ms": 27.103931,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 4,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 0.699999,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 5,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 23.839965,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 6,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 13.853012,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 7,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.985609,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 8,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 11.055811,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 9,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 17.559609,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 10,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 22.887392,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 11,
+            "warmup": false,
+            "damage": "cell",
+            "callback_ms": 13.711804,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 12,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 56.589482,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 13,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 30.759345,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 14,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 27.937222,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 15,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 27.018134,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 16,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 26.923937,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 17,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 26.922311,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 18,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 27.058773,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "frame",
+            "index": 19,
+            "warmup": false,
+            "damage": "full",
+            "callback_ms": 27.083322,
+            "width": 1080,
+            "height": 1728
+          },
+          {
+            "event": "done",
+            "frames": 20,
+            "elapsed_ms": 508.595576
+          }
+        ]
+      }
+    ],
+    "native_identity_refusal_before_start_marker": true,
+    "independent_exec_stop_post_reset": true,
+    "automated_pixel_and_fallback_assertions": true
+  },
+  "sanitizer_gles": [
+    {
+      "kind": "renderer",
+      "renderer": "llvmpipe (LLVM 23.1.1, 128 bits)"
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 0,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 0,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 0,
+      "rgb_destination": 1,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 67,
+      "height": 49,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 0,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 1,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 2,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 3,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 4,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 5,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 6,
+      "different_bytes": 0
+    },
+    {
+      "kind": "parity",
+      "width": 3456,
+      "height": 2160,
+      "flip": 1,
+      "rgb_destination": 1,
+      "rect": 7,
+      "different_bytes": 0
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 0,
+      "ms": 50.672375
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 1,
+      "ms": 50.78475
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 2,
+      "ms": 50.788292
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 3,
+      "ms": 50.836791
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 4,
+      "ms": 51.461292
+    },
+    {
+      "kind": "timing",
+      "round": 0,
+      "mode": 0,
+      "index": 5,
+      "ms": 59.519917
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 0,
+      "ms": 0.890208
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 1,
+      "ms": 0.852958
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 2,
+      "ms": 0.829833
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 3,
+      "ms": 0.838875
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 4,
+      "ms": 0.767083
+    },
+    {
+      "kind": "timing",
+      "round": 1,
+      "mode": 1,
+      "index": 5,
+      "ms": 0.788291
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 0,
+      "ms": 0.886542
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 1,
+      "ms": 0.822458
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 2,
+      "ms": 0.804334
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 3,
+      "ms": 0.820792
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 4,
+      "ms": 0.81675
+    },
+    {
+      "kind": "timing",
+      "round": 2,
+      "mode": 1,
+      "index": 5,
+      "ms": 0.703583
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 0,
+      "ms": 50.68975
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 1,
+      "ms": 51.869916
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 2,
+      "ms": 51.589042
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 3,
+      "ms": 51.560958
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 4,
+      "ms": 51.218792
+    },
+    {
+      "kind": "timing",
+      "round": 3,
+      "mode": 0,
+      "index": 5,
+      "ms": 51.42825
+    }
+  ],
+  "toolchain": [
+    "cc (GCC) 16.1.1 20260430",
+    "cmake version 4.4.4",
+    "Linux 7.1.6-vzrun2 aarch64",
+    "mesa 1:26.2.4-1",
+    "llvm-libs 23.1.1-1",
+    "wayland 1.26.0-1",
+    "hyprutils 0.14.2-1",
+    "aquamarine 0.15.1-1.1",
+    "hyprwayland-scanner 0.4.6-1",
+    "b518eec7a22e56ffa238b072c07f47efa7cea97f"
+  ],
+  "full_pair_boot": {
+    "status": "PASS",
+    "qemu": "11.1.1",
+    "accel": "HVF",
+    "vcpus": 1,
+    "memory_gib": 32,
+    "framebuffer": [
+      3456,
+      2234,
+      "x2r10g10b10"
+    ],
+    "native_hardware": false,
+    "negative_transfers_rerun": false,
+    "root_transfer_seconds": 312.0,
+    "root_transfer_MBps": 7.9,
+    "root_unpack_seconds": 9.6,
+    "desktop_ready_kernel_seconds": 342.81,
+    "second_link_verified_kernel_seconds": 369.31,
+    "done_kernel_seconds": 369.39,
+    "wall_seconds": 373.0,
+    "root_switches": 1,
+    "expected_failed_units": [
+      "omarchy-provision-hardware.service",
+      "ufw.service"
+    ],
+    "captured_framebuffer_visually_inspected": true,
+    "kernel_sha256": "a1ecd7f899097dc70870678281e3b99b69120412e5bad7bad01e55b43b1a6bbc",
+    "root_sha256": "e600aeb36c11f2ea1c8bd354e9ded8be69e3c2c4314daffc7383c49494f466c8",
+    "stage1_sha256": "6ffb37b98be5b207bf6922993c9c77dd145a7b7109dfafd323e8bb7e549d1752"
+  }
+}

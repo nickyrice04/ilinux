@@ -64,6 +64,9 @@ PROFILES = {
     "desktop-latency": Profile("ramroot.cpio.zst",
         RAMROOT_BOOTARGS.replace("cpufreq.off=1", "cpufreq.default_governor=userspace"),
         "Desktop latency stage one", "BOOT-J716C-DESKTOP-LATENCY-30", 300, True, None),
+    "desktop-copy": Profile("ramroot.cpio.zst",
+        RAMROOT_BOOTARGS.replace("cpufreq.off=1", "cpufreq.default_governor=userspace"),
+        "Desktop copy A/B stage one", "BOOT-J716C-DESKTOP-COPY-31", 300, True, None),
 }
 STAGE_B = PROFILES["stage-b"]
 PROXY_RATES = (5e6, 4e6)   # observed m1n1 USB proxy upload rates, bytes/s (roadmap.md, Phase 3)
@@ -184,8 +187,8 @@ def check_profile(profile):
 def launch_session(iface, proxy, utils_factory, manifest, files, profile=STAGE_B):
     """Transport-injected to test failure paths without physical hardware."""
     check_profile(profile)
-    if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"]):
-        cpu_observe.check_payloads(files)
+    if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"], PROFILES["desktop-copy"]):
+        cpu_observe.check_payloads(files, attempt=31 if profile is PROFILES["desktop-copy"] else 28)
     proxy.nop()
     if proxy.get_chipid() != 0x6050:
         raise ValueError("target chip is not t6050")
@@ -245,7 +248,7 @@ def launch_session(iface, proxy, utils_factory, manifest, files, profile=STAGE_B
     if magic != 0xD00DFEED or not 40 <= total <= 2 * 1024 * 1024:
         raise ValueError("invalid prepared DT size")
     tree = check_stage_b(iface.readmem(prepared, total), prepared=True,
-                        cpu_reference=dtb if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"]) else None)
+                        cpu_reference=dtb if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"], PROFILES["desktop-copy"]) else None)
     args = tree.get("/chosen", {}).get("bootargs", b"").rstrip(b"\0").decode("ascii").split()
     fixed = profile.bootargs.split()
     if args[:len(fixed)] != fixed:
@@ -323,7 +326,7 @@ def main(argv=None):
     parser.add_argument("--package", type=Path, required=True)
     parser.add_argument("--profile", choices=sorted(PROFILES), default="stage-b",
                         help="stage-b (default): diagnostic initramfs; ramroot: job 039's RAM root; "
-                             "omarchy: direct large-root upload; cpu-observe/memory-observe/desktop-latency: pinned attempt28 paired stage one")
+                             "omarchy: direct large-root upload; cpu-observe/memory-observe/desktop-latency: pinned attempt28 stage one; desktop-copy: attempt31 pair")
     parser.add_argument("--ramroot", type=Path, help="ramroot/omarchy profile: the recorded ramroot.cpio.zst")
     parser.add_argument("--operator-key", type=Path,
                         help="ramroot/omarchy profile, optional: OpenSSH public key file for root")
@@ -333,7 +336,7 @@ def main(argv=None):
     parser.add_argument("--m1n1", type=Path, default=HERE.parents[1] / "third_party/m1n1")
     args = parser.parse_args(argv)
     profile = PROFILES[args.profile]
-    if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"]) and args.operator_key is not None:
+    if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"], PROFILES["desktop-copy"]) and args.operator_key is not None:
         parser.error("CPU observation uses only the image's pinned operator key")
     if profile is STAGE_B and (args.ramroot is not None or args.operator_key is not None):
         parser.error("--ramroot and --operator-key require --profile ramroot or omarchy")
@@ -347,7 +350,8 @@ def main(argv=None):
     print("Package PASS: all files match the repository manifest.")
     if profile is not STAGE_B:
         files = dict(files)
-        record_file = (cpu_observe.RECORDS / "ramroot-manifest.json" if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"])
+        record_file = (HERE / "attempt31" / "ramroot-manifest.json" if profile is PROFILES["desktop-copy"] else
+                       cpu_observe.RECORDS / "ramroot-manifest.json" if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"], PROFILES["desktop-copy"])
                        else OMARCHY_RECORD if profile is PROFILES["omarchy"] else RAMROOT_RECORD)
         record, image = verify_ramroot(args.ramroot, files["Image"], record_file)
         print("RAM root PASS: %s bytes match %s (%s)." % (
@@ -360,11 +364,13 @@ def main(argv=None):
         else:
             print("Operator key: none; only keys built into the image can log in.")
         files[profile.initrd] = ramroot_initrd(image, overlay)
-        if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"]):
+        if profile in (PROFILES["cpu-observe"], PROFILES["memory-observe"], PROFILES["desktop-latency"], PROFILES["desktop-copy"]):
             files["t6050-j716c-stage-b.dtb"] = cpu_observe.prepare_dt(files["t6050-j716c-stage-b.dtb"])
             check_stage_b(files["t6050-j716c-stage-b.dtb"], cpu_reference=files["t6050-j716c-stage-b.dtb"])
-            cpu_observe.check_payloads(files)
-            if profile is PROFILES["desktop-latency"]:
+            cpu_observe.check_payloads(files, attempt=31 if profile is PROFILES["desktop-copy"] else 28)
+            if profile is PROFILES["desktop-copy"]:
+                print("Desktop copy PASS: attempt31 pair, unchanged CPU observation DT; opt-in RAM-only compositor crossover and rollback, no module or CPU changes.")
+            elif profile is PROFILES["desktop-latency"]:
                 print("Desktop latency PASS: attempt28 pair/DT; RAM-only userspace profiling, no module or policy changes.")
             elif profile is PROFILES["memory-observe"]:
                 print("Memory observation PASS: attempt28 pair/DT; no automatic module load; RAM-only diagnostic follows SSH.")

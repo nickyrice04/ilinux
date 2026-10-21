@@ -66,9 +66,11 @@ Reference bytes are pinned, so a caller cannot supply a permissive contract.
     return set(CONTROLLERS)
 
 
-def check_payloads(files):
+def check_payloads(files, attempt=28):
     import json
-    record = json.loads((RECORDS / "ramroot-manifest.json").read_text())
+    if attempt not in (28, 31):
+        raise ValueError("unreviewed CPU-DT payload profile")
+    record = json.loads((HERE / ("attempt%d" % attempt) / "ramroot-manifest.json").read_text())
     for name, expected in (("Image", IMAGE_SHA), ("t6050-j716c-stage-b.dtb", DT_SHA),
                            ("ramroot.cpio.zst", record["sha256"])):
         if hashlib.sha256(files[name]).hexdigest() != expected:

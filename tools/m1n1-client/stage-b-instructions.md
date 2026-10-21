@@ -1,18 +1,18 @@
-# Current native handoff — attempt30 consumed; wait for new scope
+# Current native handoff — attempt31 final-copy experiment
 
-**Do not replay attempt30 or older checklists.** One authorized desktop-latency
-boot/root send/userspace bundle collection completed on `6e49687`.
-Final `LATENCY_OBSERVED`; no frequency, renderer or module change.
-Macintosh HD return confirmed at +223.531/600 seconds.
+**Attempt30 is consumed; do not replay it.** The next scoped candidate is
+[attempt31](attempt31-instructions.md), with a new matched stage-one/root pair.
+Read its [offline validation](../../native/boot/attempt31/validation.md) and
+[detailed plan](../../kernel/experiments/desktop31/PLAN.md).
 
-Read [the native result](../../native/boot/stage-b-2026-10-20-attempt30-result.md)
-and [all sanitized samples](../../native/boot/attempt30/native-observation.json).
-M5 next: offline draw/event-loop/generated-code attribution review, preserving
-human timing and preparation limits. No new live run, retry or policy change.
-Keep attempt28 images, boot042, installed boot021/client `57a9339` and existing
-entry. Macintosh HD/default/Full and lab Permissive remain last reported;
-routine checks waived, no settings/volume/firmware changes.
+M1 privately receives both new images, runs offline intake, publishes readiness
+with native/live NOT RUN and launch/send counts0, then waits for human start.
+The original drawing branch is the default. One bounded crossover and45s human
+phase test the candidate; independent cleanup resets it. Fixed600s root-switch
+return window. Keep the existing Boot Lab entry, boot042, installed boot021 and
+client57a9339. No CPU/module/SMP/storage/Wi-Fi or boot/security/volume changes.
+Macintosh HD remains intact/default/Full; routine policy checks are waived.
 
-[The source-pinned attempt30 checklist](attempt30-instructions.md) is retained
-unchanged for provenance; its NOT RUN heading is historical. A new reviewed
-handoff and explicit human start precede any later native operation.
+Attempt30's [result](../../native/boot/stage-b-2026-10-20-attempt30-result.md)
+and [checklist](attempt30-instructions.md) remain historical evidence. VM
+improvement is not native speed, energy savings or macOS parity.

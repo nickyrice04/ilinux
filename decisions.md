@@ -2045,3 +2045,29 @@ thread anonymous mappings are not proven rasterizer code; precise action and
 presentation timing remain open. No blind renderer/clock change, extra core,
 retry or additional setup. Preserve Macintosh HD, installed entry and waiver
 of routine policy checks. M5 reviews offline before a separately scoped run.
+
+
+### 2026-10-21 · Attempt31: remove verified redundant drawing before changing CPU policy
+
+Attempt30's controlled workloads saturate the compositor on one CPU, while
+clock estimates remain near 2.65 GHz. Select an original, narrow framebuffer-copy
+optimization with byte-equality and fallback evidence. Keep color settings,
+input, login, kernel, CPU topology and clock behavior unchanged. Reuse validated
+REA behavioral facts; public Hyprland source answers this immediate question.
+The measured VM gain supports a native experiment, not a parity claim.
+
+Ship a newly pinned pair derived from attempt28. The compositor is default off;
+a single bounded off/on/on/off crossover and 45s human phase enable it temporarily.
+Both the main collector and independent ExecStopPost reset the original draw
+path, with M1 checking both receipts. Package metadata remains that of the base
+root; executable hashes identify the custom build. Reject the earlier idea of
+restarting an obsolete custom desktop service absent from the retained root.
+No native installation or persistent setting change occurs.
+
+Keep full-pair transport validation separate from3456x2160 headless copy tests,
+callbacks separate from visible presentation, and process CPU separate from
+energy. Correct the earlier inference about Aquamarine warnings; do not discard
+failed harness runs or cherry-pick startup-contaminated timings. M1 verifies
+both new images and publishes readiness before human start. No routine policy
+check or additional boot/security/volume action. SMP, thermal/frequency, GPU,
+Wi-Fi and storage remain on the detailed plan after this bounded experiment.
