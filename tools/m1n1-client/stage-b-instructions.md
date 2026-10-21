@@ -1,25 +1,22 @@
-# Current handoff — 31F vector-first CPU entry and core topology
+# Current handoff — 31G CPU1 power-state and entry observations
 
-31E is consumed; **31F native execution is NOT RUN**. Follow
-[attempt31f-instructions.md](attempt31f-instructions.md): offline intake,
+31F is consumed. **Native31G/CPU1/Linux SMP NOT RUN.** Follow only
+[attempt31g-instructions.md](attempt31g-instructions.md): offline intake,
 publish M1 readiness, fresh human M5 lab start, one supervised controller,
 then immediate Macintosh HD return. A healthy M1 needs no routine restart.
-No new image transfer, installation, security change or policy-check loop.
+No image transfer, installation, security change or policy-check loop.
 
-31E verified CPU0 code publication but observed no CPU1 record. The new original
-168-byte recorder writes a marker before system-register reads or identity
-filtering, then records identity, EL and cache state in separate phases. It
-replays the original vector instruction. Unexpected identities and partial
-progress are retained; progress before the second startup store stops it.
-Only verified CPU1 arrival and a complete record allow eight timer callbacks
-and a final park check. No Linux continuation or additional CPU start.
+31G retains the existing vector recorder and CPU1 start addresses/masks,
+adds strict live topology/power-domain binding, and at most8 fixed-width
+power-state reads. This distinguishes power-state observations from code-entry
+observations; neither acknowledged starts nor an active PS field prove CPU1
+execution. No PS writes or additional cores. Unexpected state/error stops.
 
-The exact topology is 12 Performance cores (two ADT M clusters) and 6 Super
-cores (one ADT P cluster). CPU1 is in CPU0's Performance cluster. Current
-Linux capacity numbers are uncalibrated; core entry does not prove scheduler,
-frequency, memory, GPU or efficiency parity.
+REA and safe macOS topology collection also identified the later-cluster
+four-core-mask assumption: this machine has12 Performance cores (ADT M) and6
+Super cores (ADT P), in three clusters of6. An original table-driven planner
+covers all18, but native operations remain limited to CPU1.
 
-Review and validation: `native/boot/attempt31f/`. The instruction model cannot
-prove physical reset, firmware or cache visibility. Vector+0 also serves a
-synchronous exception slot, so a marker alone does not prove reset provenance.
-Preserve installed boot021, all consumed sources/receipts and macOS.
+Review/validation: `native/boot/attempt31g/` and
+`research/native31g-reset-routing.md`. Preserve installed boot021 and all
+consumed sources/receipts. VM tests do not emulate Apple firmware/power/reset.

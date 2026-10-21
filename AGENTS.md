@@ -99,6 +99,36 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### 2026-10-21 · M5: 31G ready offline — power/entry evidence and all18 topology routing
+
+31F consumed at `f2d9035`; no CPU1 marker despite CPU0 publication. **31G is
+ready offline; native31G/CPU1/Linux SMP NOT RUN.** Fresh REA and safe read-only
+macOS topology collection confirm CPU1's existing start address/mask. They also
+identify the four-core stride assumption for later clusters: this machine's
+12 Performance (ADT M) +6 Super (ADT P) cores occupy three six-core clusters.
+An original `acc-cores`/die-local-ordinal planner now validates all18 routes;
+only CPU1 is permitted in the native controller.
+
+31G adds live ADT binding and at most8 fixed32-bit CPU0/CPU1 power-state reads
+around the unchanged two CPU1 starts. Existing recorder/reset/spin evidence
+remains. Partial reads persist; first fault stops; no PS writes or extra cores.
+An overdue observation is distinct from natural arrival expiry, preventing
+extra reads after a deadline. Power status is not code-entry/reset proof.
+
+**255 full-symbol VM methods /232 image-only methods PASS;166 source pins.**
+Actual pinned-client/ADT parser paths,11 invalid-binding cases,222 mutation
+fault/lost-ack scenarios,all8 PS read failures, GNU/Clang/Python helper equality
+and two guard-page width harnesses PASS. VM job065 guest exit0. Details:
+`native/boot/attempt31g/validation.json` and controller review; REA findings:
+`research/native31g-reset-routing.md`. No native speedup claimed.
+
+M1 next: `tools/m1n1-client/attempt31g-instructions.md`, offline intake, publish
+readiness, then wait for the human's fresh M5 lab start. Existing boot021 and
+boot042 package; no transfer/install/security/volume change, routine M1 reboot
+or policy check. One supervised90-second-bounded session, then Macintosh HD.
+Consumed controllers/receipts preserved. M5 owns next evidence interpretation;
+M1 owns intake/live capture only. Unrelated Omarchy work remains untouched.
+
 ### Latest M1 native result — 31F vector published; no marker, 2026-10-21
 
 **31F consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution

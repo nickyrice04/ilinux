@@ -2582,3 +2582,30 @@ The mistaken return-selection button is corrected by the human, not treated
 as a hardware recovery incident. Preserve CPU0 publication success separately
 from unobserved CPU1 progress. No automatic retry, timeout extension, mapping/
 protection change, speculative power write or Linux continuation.
+
+
+### 2026-10-21 · 31G: observe power before changing the CPU1 release sequence
+
+**Decision:** Keep CPU1's start writes unchanged. Add fixed, live-ADT-bound
+CPU0/CPU1 PS observations and preserve the vector/reset/spin campaign. The
+latest REA plus safe topology read proves CPU1's address/mask association;
+a speculative +0xc write or PMGR power-control change is unjustified.
+
+**Implementation:** Original planner uses `acc-cores` and nonunique
+`die-cluster-id` ordinals, rejecting missing or conflicting data. It fixes the
+later-cluster four-core-stride assumption for six-core t6050 clusters without
+starting them. The controller permits at most8 PS reads; guarded baseline
+before CPU1, guard-free32-bit reads after starts, and final pair only on natural
+arrival expiry or verified park. An in-flight observation deadline is a
+separate STOP with no trailing reads. All read intents/partial fields persist.
+
+**Validation:** 255 full-symbol /232 image-only methods, actual pinned parser/
+wire paths, independent GNU/Clang assembly and guard-page width harnesses PASS
+in existing VM job065.166 pins. Native31G and Linux SMP NOT RUN. This is a
+hardware discrimination experiment, not a performance repair claim or firmware
+emulator. No PS writes, extra cores, security changes or macOS modifications.
+
+**Next:** M1 follows attempt31g instructions, publishes readiness, waits for
+fresh human M5 start, performs one bounded controller run, and returns to
+Macintosh HD. No unchanged retry. Use combined power/entry evidence to choose
+the next original implementation; preserve all consumed evidence.

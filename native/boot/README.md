@@ -1,13 +1,12 @@
-# J716c native handoff — current attempt31C
+# J716c native handoff — current attempt31G
 
-**Current:** use [31C CPU1 instructions](../../tools/m1n1-client/attempt31c-instructions.md)
-and [31B review/31C validation](attempt31c/review.md). M5 preparation PASS; M1
-intake pending; native31C NOT RUN. 31B stopped before allocation/start because
-of the RAM-range gate; 31C checks the actual high-address memory map.
-Existing installed boot021, one CPU1 start
-and two bounded parked-loop requests, then Macintosh HD. No Linux launch or
-new boot image. Census31A, 31B and earlier attempts are consumed. The historical
-attempt28 directions below are context, not the next live command.
+**Current:** [31G instructions](../../tools/m1n1-client/attempt31g-instructions.md)
+and [review](attempt31g/controller-review.md). M5 offline preparation PASS;
+M1 intake pending; native31G NOT RUN. 31F is consumed with no observed CPU1
+entry. 31G adds bounded power-state observations to the unchanged CPU1 start
+sequence and validates all18 topology routes. One supervised diagnostic
+session, then Macintosh HD. No Linux launch or new boot image. Existing
+installation/security remain intact; historical directions below are context.
 
 ## Historical handoff — attempt 28 CPU observation
 

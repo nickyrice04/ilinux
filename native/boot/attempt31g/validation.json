@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-21",
+  "baseline_commit": "f2d9035",
+  "result": "OFFLINE_PASS_NATIVE_NOT_RUN",
+  "job": "virtualization/jobs/065-smp31g/run.sh",
+  "guest_exit": 0,
+  "source_pins": 166,
+  "source_manifest_sha256": "a06d3c201818a046b7964147a171d1d6c50e5b4d78a47dbdcd40584b321a4532",
+  "full_symbol_test_methods": 255,
+  "image_only_test_methods": 232,
+  "full_symbol_checks": "PASS",
+  "real_client_cases": [
+    "EL1_success",
+    "EL2_VHE_success",
+    "partial_recorder_timeout"
+  ],
+  "actual_pinned_ADT_parser": true,
+  "live_binding_mutation_refusals": 11,
+  "mutation_fault_or_lost_ack_scenarios": 222,
+  "power_read_failure_positions": 8,
+  "all18_topology_routes": "PASS",
+  "acc_core_mutation_bytes_refused": 144,
+  "read32_helper": {
+    "size": 16,
+    "offset": 384,
+    "sha256": "c2316a02024b7ce2dfed2d4640c5c57abdce4bab81c9c4380a2d8cb3bbcb4dcd",
+    "GNU_Clang_Python_byte_equality": "PASS",
+    "guard_page_width_harness_GCC": "PASS",
+    "guard_page_width_harness_Clang": "PASS"
+  },
+  "retained_recorder_byte_equality": "PASS",
+  "retained_permission_start_helpers": "PASS",
+  "retained_DTB_topology_checks": 2,
+  "publication_line_size_model": [
+    64,
+    128,
+    256
+  ],
+  "toolchain": [
+    "gcc (GCC) 16.1.1 20260430",
+    "clang version 23.1.1",
+    "Python 3.14.8",
+    "Linux 7.1.6-vzrun2 aarch64"
+  ],
+  "build_flags": "-march=armv8.2-a; C width harness -O2 -std=c11 -Wall -Wextra -Werror",
+  "target_hardware_operations": 0,
+  "native31g": "NOT RUN",
+  "cpu1_entry": "UNVERIFIED",
+  "linux_smp": "NOT RUN",
+  "macos_performance_parity": "NOT ESTABLISHED",
+  "physical_reset_or_firmware_emulation": false,
+  "evidence_sha256": {
+    "run.log": "203bbbcd49b55285a2bb0f5e3f68719f987c5834b0002fac14dbe5fe74a7dd6a",
+    "validation.log": "2af4daf28635b55103958af810697bb058aa7637dcb744944d7f9ee45a7431b6",
+    "intake.json": "a930920d348041cc619d7f65468ddc0d0f223db3f13d0e1c50f7a2fb18685caf",
+    "intake-image-only.json": "05d6699baecb08067de199c816ab74dc10d0b12815b7a15f15766dd579f5b803",
+    "publication-audit.json": "8b72376285c8202a1f2453e6692cf8bec1900adad29fc5c5088a0634bf4c13b6",
+    "topology-audit.json": "e75e2ffa625f7e4d1812cdcef004c690a6ef4b50ab1c5d2728338e45fde9bb43"
+  }
+}

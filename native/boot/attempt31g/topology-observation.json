@@ -1,0 +1,350 @@
+{
+  "read_only": true,
+  "source": "local_IODeviceTree_safe_topology_ordinals",
+  "edt_property_ver": 2,
+  "topology": [
+    {
+      "cpu-id": 0,
+      "reg": 0,
+      "cluster-id": 0,
+      "die-cluster-id": 0,
+      "cluster-core-id": 0
+    },
+    {
+      "cpu-id": 1,
+      "reg": 1,
+      "cluster-id": 0,
+      "die-cluster-id": 0,
+      "cluster-core-id": 1
+    },
+    {
+      "cpu-id": 2,
+      "reg": 2,
+      "cluster-id": 0,
+      "die-cluster-id": 0,
+      "cluster-core-id": 2
+    },
+    {
+      "cpu-id": 3,
+      "reg": 3,
+      "cluster-id": 0,
+      "die-cluster-id": 0,
+      "cluster-core-id": 3
+    },
+    {
+      "cpu-id": 4,
+      "reg": 4,
+      "cluster-id": 0,
+      "die-cluster-id": 0,
+      "cluster-core-id": 4
+    },
+    {
+      "cpu-id": 5,
+      "reg": 5,
+      "cluster-id": 0,
+      "die-cluster-id": 0,
+      "cluster-core-id": 5
+    },
+    {
+      "cpu-id": 6,
+      "reg": 256,
+      "cluster-id": 1,
+      "die-cluster-id": 1,
+      "cluster-core-id": 0
+    },
+    {
+      "cpu-id": 7,
+      "reg": 257,
+      "cluster-id": 1,
+      "die-cluster-id": 1,
+      "cluster-core-id": 1
+    },
+    {
+      "cpu-id": 8,
+      "reg": 258,
+      "cluster-id": 1,
+      "die-cluster-id": 1,
+      "cluster-core-id": 2
+    },
+    {
+      "cpu-id": 9,
+      "reg": 259,
+      "cluster-id": 1,
+      "die-cluster-id": 1,
+      "cluster-core-id": 3
+    },
+    {
+      "cpu-id": 10,
+      "reg": 260,
+      "cluster-id": 1,
+      "die-cluster-id": 1,
+      "cluster-core-id": 4
+    },
+    {
+      "cpu-id": 11,
+      "reg": 261,
+      "cluster-id": 1,
+      "die-cluster-id": 1,
+      "cluster-core-id": 5
+    },
+    {
+      "cpu-id": 12,
+      "reg": 512,
+      "cluster-id": 2,
+      "die-cluster-id": 2,
+      "cluster-core-id": 0
+    },
+    {
+      "cpu-id": 13,
+      "reg": 513,
+      "cluster-id": 2,
+      "die-cluster-id": 2,
+      "cluster-core-id": 1
+    },
+    {
+      "cpu-id": 14,
+      "reg": 514,
+      "cluster-id": 2,
+      "die-cluster-id": 2,
+      "cluster-core-id": 2
+    },
+    {
+      "cpu-id": 15,
+      "reg": 515,
+      "cluster-id": 2,
+      "die-cluster-id": 2,
+      "cluster-core-id": 3
+    },
+    {
+      "cpu-id": 16,
+      "reg": 516,
+      "cluster-id": 2,
+      "die-cluster-id": 2,
+      "cluster-core-id": 4
+    },
+    {
+      "cpu-id": 17,
+      "reg": 517,
+      "cluster-id": 2,
+      "die-cluster-id": 2,
+      "cluster-core-id": 5
+    }
+  ],
+  "startup_plan": [
+    {
+      "cpu_id": 0,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 0,
+      "local_core": 0,
+      "die_start_mask": 1,
+      "cluster_start_offset": 8,
+      "cluster_start_mask": 1,
+      "legacy_die_mask_matches": true
+    },
+    {
+      "cpu_id": 1,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 0,
+      "local_core": 1,
+      "die_start_mask": 2,
+      "cluster_start_offset": 8,
+      "cluster_start_mask": 2,
+      "legacy_die_mask_matches": true
+    },
+    {
+      "cpu_id": 2,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 0,
+      "local_core": 2,
+      "die_start_mask": 4,
+      "cluster_start_offset": 8,
+      "cluster_start_mask": 4,
+      "legacy_die_mask_matches": true
+    },
+    {
+      "cpu_id": 3,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 0,
+      "local_core": 3,
+      "die_start_mask": 8,
+      "cluster_start_offset": 8,
+      "cluster_start_mask": 8,
+      "legacy_die_mask_matches": true
+    },
+    {
+      "cpu_id": 4,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 0,
+      "local_core": 4,
+      "die_start_mask": 16,
+      "cluster_start_offset": 8,
+      "cluster_start_mask": 16,
+      "legacy_die_mask_matches": true
+    },
+    {
+      "cpu_id": 5,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 0,
+      "local_core": 5,
+      "die_start_mask": 32,
+      "cluster_start_offset": 8,
+      "cluster_start_mask": 32,
+      "legacy_die_mask_matches": true
+    },
+    {
+      "cpu_id": 6,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 1,
+      "local_core": 0,
+      "die_start_mask": 64,
+      "cluster_start_offset": 12,
+      "cluster_start_mask": 1,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 7,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 1,
+      "local_core": 1,
+      "die_start_mask": 128,
+      "cluster_start_offset": 12,
+      "cluster_start_mask": 2,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 8,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 1,
+      "local_core": 2,
+      "die_start_mask": 256,
+      "cluster_start_offset": 12,
+      "cluster_start_mask": 4,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 9,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 1,
+      "local_core": 3,
+      "die_start_mask": 512,
+      "cluster_start_offset": 12,
+      "cluster_start_mask": 8,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 10,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 1,
+      "local_core": 4,
+      "die_start_mask": 1024,
+      "cluster_start_offset": 12,
+      "cluster_start_mask": 16,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 11,
+      "adt_type": "M",
+      "macos_class": "Performance",
+      "cluster": 1,
+      "local_core": 5,
+      "die_start_mask": 2048,
+      "cluster_start_offset": 12,
+      "cluster_start_mask": 32,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 12,
+      "adt_type": "P",
+      "macos_class": "Super",
+      "cluster": 2,
+      "local_core": 0,
+      "die_start_mask": 4096,
+      "cluster_start_offset": 16,
+      "cluster_start_mask": 1,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 13,
+      "adt_type": "P",
+      "macos_class": "Super",
+      "cluster": 2,
+      "local_core": 1,
+      "die_start_mask": 8192,
+      "cluster_start_offset": 16,
+      "cluster_start_mask": 2,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 14,
+      "adt_type": "P",
+      "macos_class": "Super",
+      "cluster": 2,
+      "local_core": 2,
+      "die_start_mask": 16384,
+      "cluster_start_offset": 16,
+      "cluster_start_mask": 4,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 15,
+      "adt_type": "P",
+      "macos_class": "Super",
+      "cluster": 2,
+      "local_core": 3,
+      "die_start_mask": 32768,
+      "cluster_start_offset": 16,
+      "cluster_start_mask": 8,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 16,
+      "adt_type": "P",
+      "macos_class": "Super",
+      "cluster": 2,
+      "local_core": 4,
+      "die_start_mask": 65536,
+      "cluster_start_offset": 16,
+      "cluster_start_mask": 16,
+      "legacy_die_mask_matches": false
+    },
+    {
+      "cpu_id": 17,
+      "adt_type": "P",
+      "macos_class": "Super",
+      "cluster": 2,
+      "local_core": 5,
+      "die_start_mask": 131072,
+      "cluster_start_offset": 16,
+      "cluster_start_mask": 32,
+      "legacy_die_mask_matches": false
+    }
+  ],
+  "hardware_writes": 0,
+  "cpu1_current_start_mapping_matches": true,
+  "later_cluster_legacy_die_mask_mismatch_cpu_ids": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+  ],
+  "native_smp": "NOT RUN"
+}

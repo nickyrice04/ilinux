@@ -1,5 +1,20 @@
 # Blockers
 
+## Current — CPU1 execution unresolved; 31G observes power separately
+
+31F remains the latest native evidence. Neither acknowledged start stores nor
+CPU0 recorder readback establishes physical release, effective reset target or
+CPU1 instruction visibility. 31G is offline-ready, native NOT RUN, and adds
+bounded per-domain PS observations plus live topology binding. It will not
+claim an active PS encoding proves execution. No CPU1 address/mask change is
+supported by the fresh REA/observed topology.
+
+The later-cluster four-core-mask assumption is addressed by an original table
+planner tested across all18 cores; that does not solve CPU1 or authorize an
+additional core. All-core scheduling, coherence, frequency/energy calibration,
+GPU acceleration and macOS-equivalent efficiency remain unverified. Next:
+M1 offline intake and one supervised session under attempt31g instructions.
+
 ## Current — 31F no first marker; effective entry/visibility unresolved
 
 **31F consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution
