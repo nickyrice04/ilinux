@@ -1,0 +1,46 @@
+{
+  "result": "OFFLINE_LAYOUT_VERIFIED",
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "symbol_table_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11",
+  "source_sha256": {
+    "start.S": "91de75024c12f034a046171e88c8be9377bb09e4bfe95bf1ac5ba3cdd1e423ea",
+    "smp.c": "4b000be8d4e6437fc24351a57db5277785cc2e427045fb45d1750b158f2b8766",
+    "startup.c": "c563ad48a6da509f4914624a38ea4ad6adea8d1220d707dce698c698b032f865",
+    "memory.c": "a3a07cf06c0b16c0964c0e894a11914fd62900a1494b4e3cfaa184e2642b6609",
+    "utils.c": "0361304388c7b42de38bc6be8717f25f48e59fb8c513712ee202c2d698a2ac5c",
+    "proxy.c": "647a6e8468ef1ff0728a81eff46a831c88a14be610b3a4bad34a99fe8f26ea5c",
+    "smp_asm.h": "2afe4c4ac4cd696a2d020fcef5621aa1ac66c2e7edcaaaef11f17df17cc696bd"
+  },
+  "image_relative_symbols": {
+    "_vectors_start": "0x0",
+    "cpu_reset": "0x8fc",
+    "smp_secondary_entry": "0x30d40",
+    "smp_set_wfe_mode": "0x318c0",
+    "_cpu_reset_c": "0x328e0",
+    "timeout_calculate": "0x37f20",
+    "_smp_shared_start": "0x90000",
+    "smp_reset_stacks": "0x90010",
+    "spin_table": "0x90210",
+    "target_cpu": "0x90a10",
+    "wfe_mode": "0x90a14",
+    "_reset_stack": "0x90a20",
+    "_smp_shared_end": "0xa0000",
+    "secondary_stacks": "0x158000"
+  },
+  "cpu1_layout": {
+    "cpu_id": 1,
+    "expected_mpidr": "0x40001",
+    "spin_record_offset": "0x90250",
+    "reset_stack_record_offset": "0x90020",
+    "dedicated_stack_bottom_offset": "0x168000",
+    "dedicated_stack_top_offset": "0x178000",
+    "stack_bytes": 65536
+  },
+  "branch_checks": [
+    "vectors+4 -> cpu_reset",
+    "cpu_reset non-EL3 -> _cpu_reset_c"
+  ],
+  "native_cpu_start": "NOT RUN",
+  "deployment_ready": false,
+  "limit": "Static layout only; no reset execution, park, Linux SMP or efficiency evidence."
+}

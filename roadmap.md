@@ -5,7 +5,33 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — after native attempt 27, 2026-10-20
+## Current direction — after census 31A, 2026-10-21
+
+Native Omarchy still has one online CPU and software rendering. Attempt30
+and the subsequent VM tracing support prioritizing renderer concurrency;
+the full native physical-interaction delay and efficiency remain unresolved.
+M1's 31A report confirms that CPU0/CPU1 reset-vector mirrors match the installed
+entry. No secondary was started. The
+[current decision](tools/m1n1-client/attempt31b-planning-update.md) supersedes
+the older attempt assignments below.
+
+1. Implement and offline-test a bounded CPU1-only start/park controller using
+   installed boot021. Validate identity, dedicated stack, arrival and a
+   completed parked-loop request. No replacement bootloader is planned.
+   **31B is not ready for restart; M1 waits in macOS.**
+2. After native entry evidence, prepare exact two-core Linux DT/spin-table
+   and launcher changes; validate timers, scheduler wakeups and coherency.
+3. Integrate one renderer worker, keep visual settings constant, and measure
+   native input/presentation latency alongside CPU/memory throughput. Then
+   expand cores under measured gates. Prior VM improvements are not native
+   performance predictions; busy idle is not an efficiency solution.
+4. Continue GPU, idle/thermal/DVFS, Wi-Fi and storage work toward an independent
+   workstation. CPU count alone cannot deliver macOS graphics or energy parity.
+
+31A is consumed, copy-only 31 held, and all macOS/security/default/volume state
+is preserved. Routine policy checks remain waived.
+
+## Historical direction — after native attempt 27, 2026-10-20
 
 **Omarchy boots natively with USB/SSH and automatic keyboard startup.**
 Two-stage delivery works; the user can type without extra letters but menus

@@ -99,6 +99,26 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### 2026-10-21 · M5 reviewed 31A; select CPU1 entry/park experiment
+
+Reviewed M1 report `527defe`: CPU0/CPU1 locked mirrors match installed vectors;
+zero starts, safe Macintosh HD return. Prefer a CPU1-only RAM-state controller
+using installed boot021 over a new image/chainload. Exact image/symbol/source
+checks verify entry branches, shared-state placement and dedicated CPU1 stack.
+Five new offline audit methods plus 11 census/eight renderer regressions PASS.
+Existing SMP call waits are unbounded; WFE-mode setter sends IPIs once a core
+is alive. The proposed controller must handle ordering, bounded request/return,
+late arrival and partial-write failures explicitly. It is not implemented yet.
+
+**31B is planning only; no restart/live command ready.** M1 reads
+`tools/m1n1-client/attempt31b-planning-update.md`; do not replay consumed 31A.
+Next: implement/test the bounded start controller, then independently review
+its release before one human-started CPU1 entry/park trial. Linux two-core
+handoff/DT/launcher and renderer comparison follow entry evidence. All native
+SMP/performance/energy claims remain unproven. Original macOS and settings
+unchanged; routine policy checks waived. Prior 31A source pins stay historical;
+the current stage-b pointer intentionally now directs to the planning notice.
+
 ### Latest M1 native result — census31A consumed, 2026-10-21
 
 **Census31A consumed**, execution `f105ed0`: one command, exit 0 in 1.155 s,
