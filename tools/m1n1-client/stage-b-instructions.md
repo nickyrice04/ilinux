@@ -1,28 +1,18 @@
-# Current native handoff — attempt31 final-copy experiment
+# Current native handoff — revised attempt31A SMP census
 
-## HOLD — user redirected the next experiment, 2026-10-21
+Read [attempt31-smp-instructions.md](attempt31-smp-instructions.md).
+M1 verifies offline and publishes readiness before the human restarts to the
+existing iLinux Boot Lab `Running proxy...` entry. This is one bounded
+reset-vector census, then return to Macintosh HD. No CPU starts or Linux
+launch, image transfer, installed m1n1 replacement, chainload, security,
+volume or default-disk change. Routine policy rechecks remain waived.
 
-Do not restart, launch attempt31, send its root or run its collector. The user
-rejects the copy-only proposal as insufficient for the reported3–5s menu/input
-delay. Code/images and offline results remain useful but are not the next boot.
-Read `native/boot/attempt31/hold-and-replan.md`: trace input-to-visible-action
-latency and establish CPU/memory/software-rendering baselines first. No new
-native experiment is ready. Existing macOS/boot settings and waived routine
-policy checks remain unchanged. This notice supersedes earlier readiness text.
+The guarded startup candidate and adaptive renderer policy are implemented
+and VM-tested. Native raw reset entry is still unknown; the census is required
+to choose a concrete deployment. Build/test evidence does not establish
+native SMP, physical responsiveness or macOS-level efficiency.
 
-**Attempt30 is consumed; do not replay it.** The next scoped candidate is
-[attempt31](attempt31-instructions.md), with a new matched stage-one/root pair.
-Read its [offline validation](../../native/boot/attempt31/validation.md) and
-[detailed plan](../../kernel/experiments/desktop31/PLAN.md).
-
-M1 privately receives both new images, runs offline intake, publishes readiness
-with native/live NOT RUN and launch/send counts0, then waits for human start.
-The original drawing branch is the default. One bounded crossover and45s human
-phase test the candidate; independent cleanup resets it. Fixed600s root-switch
-return window. Keep the existing Boot Lab entry, boot042, installed boot021 and
-client57a9339. No CPU/module/SMP/storage/Wi-Fi or boot/security/volume changes.
-Macintosh HD remains intact/default/Full; routine policy checks are waived.
-
-Attempt30's [result](../../native/boot/stage-b-2026-10-20-attempt30-result.md)
-and [checklist](attempt30-instructions.md) remain historical evidence. VM
-improvement is not native speed, energy savings or macOS parity.
+**The old copy-only31 pair, profile and collector remain HOLD.** Do not follow
+historical [attempt31-instructions.md](attempt31-instructions.md).
+Attempt30 is consumed. See [SMP findings and plan](../../kernel/experiments/smp31/README.md)
+and [validation](../../kernel/experiments/smp31/validation.json).

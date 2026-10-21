@@ -1,0 +1,14 @@
+{
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "symbol_table_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11",
+  "offsets": {
+    "boot_cpu_mpidr": "0x90000",
+    "boot_cpu_idx": "0x90008",
+    "cpu_info": "0x1171e8",
+    "cpu_start_base": "0x1173e8",
+    "smp_initialized": "0x1173f0",
+    "_vectors_start": "0x0",
+    "_start": "0x800"
+  },
+  "scope": "original boot021 ELF symbol offsets; RAM values independently checked live; no target observations"
+}

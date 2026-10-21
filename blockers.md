@@ -1,16 +1,37 @@
 # Blockers
 
-## HOLD — user redirected the next experiment, 2026-10-21
+## Revised attempt31 — SMP preparation; census31A ready for M1 intake
 
-Do not restart, launch attempt31, send its root or run its collector. The user
-rejects the copy-only proposal as insufficient for the reported3–5s menu/input
-delay. Code/images and offline results remain useful but are not the next boot.
-Read `native/boot/attempt31/hold-and-replan.md`: trace input-to-visible-action
-latency and establish CPU/memory/software-rendering baselines first. No new
-native experiment is ready. Existing macOS/boot settings and waived routine
-policy checks remain unchanged. This notice supersedes earlier readiness text.
+2026-10-21. User authorized native SMP and renderer-threading development.
+Original guarded single-secondary startup candidate fully linked in the VM;
+14 actual-function cases PASS both normally and under ASan/UBSan.11 census
+and8 renderer tests PASS; real pinned ADT parser checks PASS. Linux two-CPU
+shared-payload/futex smoke PASS for2,000 rounds. All are offline/VM evidence.
+Fresh REA verified53 PMGR instruction words; cross-boundary pseudocode rejected.
 
-### Offline latency diagnosis — 2026-10-21
+New renderer policy uses online CPUs intersected with process affinity, cap4.
+At identical3456x2160 pixels, two-CPU VM control terminal first-buffer delays
+685–754ms became37–41ms with one configured worker; full callbacks221→216ms.
+Six CPUs/four workers gave59ms full callbacks. Neither physical presentation,
+native CPU functionality nor energy/parity is established. Code/evidence:
+`kernel/experiments/smp31/README.md`, `validation.json`, and
+`native/boot/attempt31/smp-vm-results.json`.
+
+**Next authorized live step is census31A only.** M1 reads
+`tools/m1n1-client/attempt31-smp-instructions.md`, verifies offline, publishes
+readiness, then waits for human restart to the existing Running proxy entry.
+Two guarded RVBAR reads, no CPU start, Linux launch, chainload, hardware write,
+new image transfer or security/volume/default change; then return to Macintosh
+HD. Reset-target/entry remains unknown. Even matching mirrors require review
+before deploying the offline candidate. Native31A/SMP/renderer **NOT RUN**.
+
+The old copy-only31 pair/profile/collector remain **HOLD**. This notice
+supersedes earlier next-boot/readiness wording below. Original macOS remains
+intact; routine policy rechecks remain waived.31B needs a reviewed RAM startup
+path, exact two-core DT/launcher and native timer/IPI/coherency checks before
+renderer integration or expansion. Other agents' jobs047/048 are untouched.
+
+### Historical offline latency diagnosis — 2026-10-21
 
 Attempt31 remains **HOLD**; no native images or boot instructions are released.
 Original compositor tracing and CPU/RAM/pixel references are implemented and

@@ -1,0 +1,45 @@
+{
+  "provider": "ghidra",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "results": [
+    {
+      "evidence_id": "ev_6ddceb962aec91ddc9b76979748c8df49e3265bb0a158eafd4c5cdac3f4f3433",
+      "member": "com.apple.driver.AppleT6050PMGR",
+      "function": "__ZN14AppleT6050PMGR13initRegGroupsEv",
+      "body_anchors": [
+        {
+          "start": "0xfffffe000987f094",
+          "end_inclusive": "0xfffffe000987f167",
+          "carrier_offset": 42446996,
+          "derived_offset": 14644,
+          "bytes": 212,
+          "sha256": "d2246aa6b61fa1c125f989d3d276a50f57ed275c8614bdcf9c0355d3ec99804b"
+        }
+      ],
+      "assembly_instructions": 53,
+      "original_bytes_verified": true,
+      "pcode_operations": 1,
+      "pcode_outside_body": 1,
+      "outside_addresses": [
+        "0xfffffe000947d5d0"
+      ],
+      "pseudocode_gate": "rejected_cross_boundary",
+      "decompiler_warning_classes": [
+        "bad_instruction_or_truncated_control_flow",
+        "provider_removed_blocks"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "smp31-reggroups",
+      "llvm_instruction_words_verified": 53,
+      "llvm_unknown_instructions": []
+    }
+  ],
+  "limits": [
+    "Static consistency only, not semantic or runtime equivalence",
+    "Rejected pseudocode cannot guide implementation; manual gates are not passes"
+  ]
+}

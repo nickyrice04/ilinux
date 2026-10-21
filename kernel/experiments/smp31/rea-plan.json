@@ -1,0 +1,12 @@
+{
+  "provider": "ghidra",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "targets": [
+    {
+      "id": "smp31-reggroups",
+      "artifact": "AppleT6050PMGR.macho",
+      "sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+      "address": "0xfffffe000987f094"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-21",
+  "scope": "offline only; native SMP NOT RUN; census NOT RUN",
+  "m1n1_source_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "toolchain": [
+    "gcc (GCC) 16.1.1 20260430",
+    "rustc 1.99.0 (b940084d7 2026-09-28) (Arch Linux rust 1:1.99.0-1)",
+    "Linux 7.1.6-vzrun2 aarch64"
+  ],
+  "m1n1_flags": "make -j6 ARCH= BUILDSTD=1; M1N1_VERSION_TAG=ilinux-smp31-OFFLINE; standard O2 ARMv8.2-a freestanding flags",
+  "full_build": "PASS; linked retained smp31_start_one symbol; guest exit 0",
+  "startup_tests": {
+    "normal": 14,
+    "asan_ubsan": 14,
+    "result": "PASS",
+    "function_source": "actual extracted candidate functions; synthetic MMIO, no hardware"
+  },
+  "renderer_unit_tests": 8,
+  "census_unit_tests": 11,
+  "coherence_vm": {
+    "result": "PASS",
+    "cpus": [
+      0,
+      1
+    ],
+    "rounds": 2000,
+    "elapsed_ns": 40612750
+  },
+  "single_cpu_coherence": {
+    "exit": 77,
+    "result": "NEEDS_TWO_ALLOWED_CPUS"
+  },
+  "rea": "53 LLVM/carrier instruction words matched; whole-function pseudocode rejected_cross_boundary",
+  "renderer_vm": "three cases PASS; guest exit 0; see native/boot/attempt31/smp-vm-results.json",
+  "native": {
+    "census": "NOT RUN",
+    "secondary_start": "NOT RUN",
+    "Linux_two_core": "NOT RUN",
+    "renderer_policy": "NOT RUN"
+  },
+  "initial_harness_failures": [
+    "Missing read-only share mounts; corrected.",
+    "Optional artwork symlink copy; preserved symlinks.",
+    "Synthetic mask integer type did not match m1n1 u64; corrected.",
+    "Cleanup cwd held the tmpfs busy; changed cwd before unmount.",
+    "Renderer job generator quoting syntax; corrected and statically checked.",
+    "Synthetic ADT lacked the PMGR devices table required by real parser; fixture corrected."
+  ],
+  "artifacts": {
+    "m1n1-OFFLINE.bin": {
+      "bytes": 3932160,
+      "sha256": "e5840afbc621c6e189730e44248d950bfb415adffae98e8eae630d33ffe78c43"
+    },
+    "coherence": {
+      "bytes": 71704,
+      "sha256": "836e223e5581cb75c68b078372530c239b1a27b250010afc36c30202dd588f6e"
+    },
+    "smp.c": {
+      "bytes": 17085,
+      "sha256": "73ab7c986ddf251ba631d8d7010276c361a7f7dae895eb88ed95cf0a3b17bc59"
+    }
+  },
+  "not_for_native_deployment": [
+    "m1n1-OFFLINE.bin",
+    "coherence"
+  ],
+  "limits": [
+    "Full build and VM tests do not establish raw reset-entry behavior.",
+    "No RAM chainload or installed m1n1 replacement prepared.",
+    "Census observations must be reviewed before a write-capable handoff."
+  ],
+  "real_parser_vm": "PASS: actual pinned ADT parser, synthetic18-CPU metadata, boot-args revisions2/3 accepted, revision4 refused; guest exit0"
+}

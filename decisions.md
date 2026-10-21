@@ -2102,3 +2102,34 @@ Native CPU/memory measurements and physical input/presentation timing still
 need a separately reviewed boot. Keep attempt31 held; do not relabel VM
 results as native fixes or lower visual quality as a parity claim. See
 `native/boot/attempt31/diagnosis/README.md`.
+
+### 2026-10-21 · Establish raw reset entry before native SMP deployment
+
+2026-10-21. User authorized native SMP and renderer-threading development.
+Original guarded single-secondary startup candidate fully linked in the VM;
+14 actual-function cases PASS both normally and under ASan/UBSan.11 census
+and8 renderer tests PASS; real pinned ADT parser checks PASS. Linux two-CPU
+shared-payload/futex smoke PASS for2,000 rounds. All are offline/VM evidence.
+Fresh REA verified53 PMGR instruction words; cross-boundary pseudocode rejected.
+
+New renderer policy uses online CPUs intersected with process affinity, cap4.
+At identical3456x2160 pixels, two-CPU VM control terminal first-buffer delays
+685–754ms became37–41ms with one configured worker; full callbacks221→216ms.
+Six CPUs/four workers gave59ms full callbacks. Neither physical presentation,
+native CPU functionality nor energy/parity is established. Code/evidence:
+`kernel/experiments/smp31/README.md`, `validation.json`, and
+`native/boot/attempt31/smp-vm-results.json`.
+
+**Next authorized live step is census31A only.** M1 reads
+`tools/m1n1-client/attempt31-smp-instructions.md`, verifies offline, publishes
+readiness, then waits for human restart to the existing Running proxy entry.
+Two guarded RVBAR reads, no CPU start, Linux launch, chainload, hardware write,
+new image transfer or security/volume/default change; then return to Macintosh
+HD. Reset-target/entry remains unknown. Even matching mirrors require review
+before deploying the offline candidate. Native31A/SMP/renderer **NOT RUN**.
+
+The old copy-only31 pair/profile/collector remain **HOLD**. This notice
+supersedes earlier next-boot/readiness wording below. Original macOS remains
+intact; routine policy rechecks remain waived.31B needs a reviewed RAM startup
+path, exact two-core DT/launcher and native timer/IPI/coherency checks before
+renderer integration or expansion. Other agents' jobs047/048 are untouched.

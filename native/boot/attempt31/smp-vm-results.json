@@ -1,0 +1,2127 @@
+{
+  "date": "2026-10-21",
+  "context": "linux-vm",
+  "guest": "Linux 7.1.6-vzrun2 aarch64; 12 vCPU / 24 GiB",
+  "root_sha256": "59a7383e4b6cd47712e5dc05998ab34a58d511edc0b7ee016b267a15d4fb2b78",
+  "compositor_sha256": "b22fedff2f75a7a955bb881aa5c314d6e7028570f98204d981eb0012bf920c6e",
+  "pixels": [
+    3456,
+    2160
+  ],
+  "case_order": [
+    6,
+    7,
+    8
+  ],
+  "replicates": "one session per policy; three terminal/menu actions and frame samples retained",
+  "cases": [
+    {
+      "case": 6,
+      "allowed_compositor_cpus": [
+        0,
+        1
+      ],
+      "configured_workers": 0,
+      "client_cpus": [
+        0
+      ],
+      "client_workers": 0,
+      "analysis": {
+        "schema": 1,
+        "context": "linux-vm",
+        "trace_rows": 8074,
+        "active": {
+          "begin": {
+            "n": 212,
+            "median_ms": 0.0134285,
+            "max_ms": 55.923595,
+            "wall_sum_ms": 70.566161,
+            "thread_cpu_sum_ms": 70.248335
+          },
+          "element": {
+            "n": 1471,
+            "median_ms": 0.007615,
+            "max_ms": 54.266727,
+            "wall_sum_ms": 252.079394,
+            "thread_cpu_sum_ms": 251.026237
+          },
+          "end_render": {
+            "n": 212,
+            "median_ms": 183.0911605,
+            "max_ms": 280.836325,
+            "wall_sum_ms": 34927.219118,
+            "thread_cpu_sum_ms": 34835.082613
+          },
+          "final_copy": {
+            "n": 213,
+            "median_ms": 130.49599,
+            "max_ms": 171.81547,
+            "wall_sum_ms": 25982.847626,
+            "thread_cpu_sum_ms": 25912.960841
+          },
+          "monitor": {
+            "n": 207,
+            "median_ms": 208.847068,
+            "max_ms": 280.920493,
+            "wall_sum_ms": 34944.099062,
+            "thread_cpu_sum_ms": 34851.779362
+          },
+          "output_commit": {
+            "n": 208,
+            "median_ms": 0.011644,
+            "max_ms": 0.036119,
+            "wall_sum_ms": 2.467195,
+            "thread_cpu_sum_ms": 2.46316
+          },
+          "primitive": {
+            "n": 208,
+            "median_ms": 142.919885,
+            "max_ms": 171.794485,
+            "wall_sum_ms": 25980.481044,
+            "thread_cpu_sum_ms": 25910.732811
+          },
+          "scene": {
+            "n": 212,
+            "median_ms": 0.1182845,
+            "max_ms": 75.099707,
+            "wall_sum_ms": 254.03486099999998,
+            "thread_cpu_sum_ms": 252.956538
+          },
+          "surface_buffer": {
+            "n": 429,
+            "median_ms": 0.159684,
+            "max_ms": 2.453617,
+            "wall_sum_ms": 142.79105,
+            "thread_cpu_sum_ms": 141.452148
+          },
+          "surface_commit": {
+            "n": 27,
+            "median_ms": 0.003499,
+            "max_ms": 45.470503,
+            "wall_sum_ms": 49.086952000000004,
+            "thread_cpu_sum_ms": 48.889916
+          },
+          "texture": {
+            "n": 1132,
+            "median_ms": 0.0065145,
+            "max_ms": 31.715164,
+            "wall_sum_ms": 148.550509,
+            "thread_cpu_sum_ms": 147.909456
+          }
+        },
+        "terminal": [
+          {
+            "rep": 0,
+            "first_buffer_commit_received_ms": 684.61798,
+            "commits": 3,
+            "render_scope_occupied_ms_before_first_buffer": 681.873808
+          },
+          {
+            "rep": 1,
+            "first_buffer_commit_received_ms": 753.586185,
+            "commits": 3,
+            "render_scope_occupied_ms_before_first_buffer": 750.258431
+          },
+          {
+            "rep": 2,
+            "first_buffer_commit_received_ms": 750.555671,
+            "commits": 3,
+            "render_scope_occupied_ms_before_first_buffer": 747.221974
+          }
+        ],
+        "frames": [
+          {
+            "label": "native_pixels",
+            "stages": {
+              "begin": {
+                "n": 24,
+                "median_ms": 0.013164,
+                "max_ms": 0.028037,
+                "wall_sum_ms": 0.342182,
+                "thread_cpu_sum_ms": 0.337126
+              },
+              "element": {
+                "n": 165,
+                "median_ms": 0.007541,
+                "max_ms": 20.671996,
+                "wall_sum_ms": 43.051135,
+                "thread_cpu_sum_ms": 42.86579
+              },
+              "end_render": {
+                "n": 24,
+                "median_ms": 219.6651475,
+                "max_ms": 237.965195,
+                "wall_sum_ms": 5142.893669,
+                "thread_cpu_sum_ms": 5128.294181
+              },
+              "final_copy": {
+                "n": 24,
+                "median_ms": 167.1579345,
+                "max_ms": 169.680772,
+                "wall_sum_ms": 3867.865491,
+                "thread_cpu_sum_ms": 3856.770385
+              },
+              "monitor": {
+                "n": 24,
+                "median_ms": 219.7196995,
+                "max_ms": 238.036138,
+                "wall_sum_ms": 5144.203041,
+                "thread_cpu_sum_ms": 5129.582051
+              },
+              "output_commit": {
+                "n": 25,
+                "median_ms": 0.013206,
+                "max_ms": 0.036119,
+                "wall_sum_ms": 0.347933,
+                "thread_cpu_sum_ms": 0.348708
+              },
+              "primitive": {
+                "n": 24,
+                "median_ms": 167.14687350000003,
+                "max_ms": 169.666399,
+                "wall_sum_ms": 3867.573049,
+                "thread_cpu_sum_ms": 3856.495427
+              },
+              "scene": {
+                "n": 24,
+                "median_ms": 0.1308085,
+                "max_ms": 20.830336,
+                "wall_sum_ms": 43.270544,
+                "thread_cpu_sum_ms": 43.084663
+              },
+              "surface_buffer": {
+                "n": 68,
+                "median_ms": 0.27353099999999997,
+                "max_ms": 2.351858,
+                "wall_sum_ms": 21.114404,
+                "thread_cpu_sum_ms": 20.896287
+              },
+              "surface_commit": {
+                "n": 1,
+                "median_ms": 0.041074,
+                "max_ms": 0.041074,
+                "wall_sum_ms": 0.041074,
+                "thread_cpu_sum_ms": 0.041083
+              },
+              "texture": {
+                "n": 141,
+                "median_ms": 0.014622,
+                "max_ms": 20.660874,
+                "wall_sum_ms": 42.639001,
+                "thread_cpu_sum_ms": 42.459584
+              }
+            },
+            "cell_median_ms": 220.24111249999999,
+            "full_median_ms": 220.761087
+          },
+          {
+            "label": "quarter_pixels",
+            "stages": {
+              "begin": {
+                "n": 24,
+                "median_ms": 0.0054995,
+                "max_ms": 0.048285,
+                "wall_sum_ms": 0.191308,
+                "thread_cpu_sum_ms": 0.191621
+              },
+              "element": {
+                "n": 149,
+                "median_ms": 0.008457,
+                "max_ms": 0.121524,
+                "wall_sum_ms": 1.574745,
+                "thread_cpu_sum_ms": 1.564494
+              },
+              "end_render": {
+                "n": 24,
+                "median_ms": 55.7332295,
+                "max_ms": 75.177438,
+                "wall_sum_ms": 1167.84532,
+                "thread_cpu_sum_ms": 1164.393568
+              },
+              "final_copy": {
+                "n": 24,
+                "median_ms": 42.9624675,
+                "max_ms": 60.318475,
+                "wall_sum_ms": 934.746493,
+                "thread_cpu_sum_ms": 931.972944
+              },
+              "monitor": {
+                "n": 23,
+                "median_ms": 55.768683,
+                "max_ms": 75.312085,
+                "wall_sum_ms": 1168.608552,
+                "thread_cpu_sum_ms": 1165.153025
+              },
+              "output_commit": {
+                "n": 23,
+                "median_ms": 0.008832,
+                "max_ms": 0.014582,
+                "wall_sum_ms": 0.207429,
+                "thread_cpu_sum_ms": 0.207499
+              },
+              "primitive": {
+                "n": 23,
+                "median_ms": 42.965738,
+                "max_ms": 60.297228,
+                "wall_sum_ms": 934.555225,
+                "thread_cpu_sum_ms": 931.801908
+              },
+              "scene": {
+                "n": 24,
+                "median_ms": 0.065408,
+                "max_ms": 0.261131,
+                "wall_sum_ms": 1.763183,
+                "thread_cpu_sum_ms": 1.752419
+              },
+              "surface_buffer": {
+                "n": 20,
+                "median_ms": 0.0768235,
+                "max_ms": 1.752005,
+                "wall_sum_ms": 3.271803,
+                "thread_cpu_sum_ms": 3.128661
+              },
+              "surface_commit": {
+                "n": 1,
+                "median_ms": 0.085404,
+                "max_ms": 0.085404,
+                "wall_sum_ms": 0.085404,
+                "thread_cpu_sum_ms": 0.084583
+              },
+              "texture": {
+                "n": 123,
+                "median_ms": 0.007457,
+                "max_ms": 0.107526,
+                "wall_sum_ms": 1.172515,
+                "thread_cpu_sum_ms": 1.166336
+              }
+            },
+            "cell_median_ms": 27.477957500000002,
+            "full_median_ms": 55.9481595
+          }
+        ],
+        "limitations": [
+          "CPU submission and callbacks are not physical presentation.",
+          "Nested categories overlap: do not sum across tags.",
+          "A first surface commit can be an empty configure handshake.",
+          "Direct command bypasses physical keyboard. No native hardware validation."
+        ]
+      },
+      "all_frame_samples": [
+        {
+          "label": "native_pixels",
+          "rows": [
+            {
+              "event": "configured",
+              "elapsed_ms": 340.789855
+            },
+            {
+              "event": "frame",
+              "index": 0,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 162.949294,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 1,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 443.852768,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 2,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 459.437706,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 3,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 220.091838,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 4,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 220.632671,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 5,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 219.849554,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 6,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 220.827407,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 7,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 218.801756,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 8,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 220.984668,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 9,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 219.588299,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 10,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 221.194216,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 11,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 219.693821,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 12,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 221.505868,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 13,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 219.738393,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 14,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 221.397521,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 15,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 219.441436,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 16,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 221.591821,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 17,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 220.124653,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 18,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 221.575583,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 19,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 219.974598,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "done",
+              "frames": 20,
+              "elapsed_ms": 5170.357145
+            }
+          ]
+        },
+        {
+          "label": "quarter_pixels",
+          "rows": [
+            {
+              "event": "configured",
+              "elapsed_ms": 0.590626
+            },
+            {
+              "event": "frame",
+              "index": 0,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 1.965267,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 1,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 128.728859,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 2,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 119.405081,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 3,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 111.968417,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 4,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 111.535824,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 5,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 55.897625,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 6,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 56.188503,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 7,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 27.514807,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 8,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 27.30121,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 9,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 27.19714,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 10,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 27.441108,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 11,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 27.199807,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 12,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.938077,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 13,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.984613,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 14,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 56.268492,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 15,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.900708,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 16,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.958242,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 17,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 56.275533,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 18,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.774932,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 19,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.774349,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "done",
+              "frames": 20,
+              "elapsed_ms": 1176.845168
+            }
+          ]
+        }
+      ],
+      "menu_commands": [
+        {
+          "rep": 0,
+          "command_return_ms": 67.026395,
+          "exit": 0
+        },
+        {
+          "rep": 1,
+          "command_return_ms": 67.312025,
+          "exit": 0
+        },
+        {
+          "rep": 2,
+          "command_return_ms": 26.429875,
+          "exit": 0
+        }
+      ]
+    },
+    {
+      "case": 7,
+      "allowed_compositor_cpus": [
+        0,
+        1
+      ],
+      "configured_workers": 1,
+      "client_cpus": [
+        0
+      ],
+      "client_workers": 0,
+      "analysis": {
+        "schema": 1,
+        "context": "linux-vm",
+        "trace_rows": 5588,
+        "active": {
+          "begin": {
+            "n": 128,
+            "median_ms": 0.0152075,
+            "max_ms": 1.007382,
+            "wall_sum_ms": 5.434497,
+            "thread_cpu_sum_ms": 5.372749
+          },
+          "element": {
+            "n": 836,
+            "median_ms": 0.0088955,
+            "max_ms": 114.372605,
+            "wall_sum_ms": 468.924083,
+            "thread_cpu_sum_ms": 68.100561
+          },
+          "end_render": {
+            "n": 128,
+            "median_ms": 164.718167,
+            "max_ms": 233.737818,
+            "wall_sum_ms": 15930.165345,
+            "thread_cpu_sum_ms": 78.841908
+          },
+          "final_copy": {
+            "n": 128,
+            "median_ms": 163.31051250000002,
+            "max_ms": 233.54208,
+            "wall_sum_ms": 15445.532537000001,
+            "thread_cpu_sum_ms": 8.244744
+          },
+          "monitor": {
+            "n": 124,
+            "median_ms": 164.82141000000001,
+            "max_ms": 233.787314,
+            "wall_sum_ms": 15898.049306,
+            "thread_cpu_sum_ms": 46.308456
+          },
+          "output_commit": {
+            "n": 124,
+            "median_ms": 0.011833,
+            "max_ms": 0.02529,
+            "wall_sum_ms": 1.430011,
+            "thread_cpu_sum_ms": 1.395915
+          },
+          "primitive": {
+            "n": 124,
+            "median_ms": 164.52149200000002,
+            "max_ms": 233.529665,
+            "wall_sum_ms": 15443.984076,
+            "thread_cpu_sum_ms": 6.768657
+          },
+          "scene": {
+            "n": 128,
+            "median_ms": 0.12884800000000002,
+            "max_ms": 114.458727,
+            "wall_sum_ms": 470.229935,
+            "thread_cpu_sum_ms": 69.391705
+          },
+          "surface_buffer": {
+            "n": 169,
+            "median_ms": 0.590549,
+            "max_ms": 59.112265,
+            "wall_sum_ms": 2033.657542,
+            "thread_cpu_sum_ms": 71.400377
+          },
+          "surface_commit": {
+            "n": 23,
+            "median_ms": 0.022916,
+            "max_ms": 44.554255,
+            "wall_sum_ms": 48.407291,
+            "thread_cpu_sum_ms": 48.169334
+          },
+          "texture": {
+            "n": 655,
+            "median_ms": 0.008833,
+            "max_ms": 114.362397,
+            "wall_sum_ms": 416.631345,
+            "thread_cpu_sum_ms": 16.08183
+          }
+        },
+        "terminal": [
+          {
+            "rep": 0,
+            "first_buffer_commit_received_ms": 40.623541,
+            "commits": 4,
+            "render_scope_occupied_ms_before_first_buffer": 0.0
+          },
+          {
+            "rep": 1,
+            "first_buffer_commit_received_ms": 37.346349,
+            "commits": 4,
+            "render_scope_occupied_ms_before_first_buffer": 0.0
+          },
+          {
+            "rep": 2,
+            "first_buffer_commit_received_ms": 37.147704,
+            "commits": 4,
+            "render_scope_occupied_ms_before_first_buffer": 0.0
+          }
+        ],
+        "frames": [
+          {
+            "label": "native_pixels",
+            "stages": {
+              "begin": {
+                "n": 21,
+                "median_ms": 0.011749,
+                "max_ms": 0.067831,
+                "wall_sum_ms": 0.31669600000000003,
+                "thread_cpu_sum_ms": 0.298541
+              },
+              "element": {
+                "n": 126,
+                "median_ms": 0.0173745,
+                "max_ms": 1.445029,
+                "wall_sum_ms": 4.563582,
+                "thread_cpu_sum_ms": 4.510628
+              },
+              "end_render": {
+                "n": 21,
+                "median_ms": 164.708824,
+                "max_ms": 215.612756,
+                "wall_sum_ms": 3173.476767,
+                "thread_cpu_sum_ms": 6.272379
+              },
+              "final_copy": {
+                "n": 21,
+                "median_ms": 164.561038,
+                "max_ms": 214.933365,
+                "wall_sum_ms": 3168.531574,
+                "thread_cpu_sum_ms": 1.381706
+              },
+              "monitor": {
+                "n": 21,
+                "median_ms": 164.749364,
+                "max_ms": 215.656796,
+                "wall_sum_ms": 3174.477104,
+                "thread_cpu_sum_ms": 7.244875
+              },
+              "output_commit": {
+                "n": 21,
+                "median_ms": 0.010166,
+                "max_ms": 0.020457,
+                "wall_sum_ms": 0.243576,
+                "thread_cpu_sum_ms": 0.234832
+              },
+              "primitive": {
+                "n": 21,
+                "median_ms": 164.550163,
+                "max_ms": 214.917116,
+                "wall_sum_ms": 3168.286004,
+                "thread_cpu_sum_ms": 1.151914
+              },
+              "scene": {
+                "n": 21,
+                "median_ms": 0.13462,
+                "max_ms": 1.777266,
+                "wall_sum_ms": 4.746655,
+                "thread_cpu_sum_ms": 4.692751
+              },
+              "surface_buffer": {
+                "n": 20,
+                "median_ms": 50.969563,
+                "max_ms": 51.676913,
+                "wall_sum_ms": 570.610462,
+                "thread_cpu_sum_ms": 9.814
+              },
+              "surface_commit": {
+                "n": 1,
+                "median_ms": 0.106663,
+                "max_ms": 0.106663,
+                "wall_sum_ms": 0.106663,
+                "thread_cpu_sum_ms": 0.105542
+              },
+              "texture": {
+                "n": 105,
+                "median_ms": 0.0205,
+                "max_ms": 1.436362,
+                "wall_sum_ms": 4.094721,
+                "thread_cpu_sum_ms": 4.050792
+              }
+            },
+            "cell_median_ms": 108.68094049999999,
+            "full_median_ms": 216.3066585
+          },
+          {
+            "label": "quarter_pixels",
+            "stages": {
+              "begin": {
+                "n": 20,
+                "median_ms": 0.006562,
+                "max_ms": 0.038498,
+                "wall_sum_ms": 0.168907,
+                "thread_cpu_sum_ms": 0.169207
+              },
+              "element": {
+                "n": 133,
+                "median_ms": 0.008458,
+                "max_ms": 0.106538,
+                "wall_sum_ms": 1.3932,
+                "thread_cpu_sum_ms": 1.384409
+              },
+              "end_render": {
+                "n": 20,
+                "median_ms": 42.809219999999996,
+                "max_ms": 60.191537,
+                "wall_sum_ms": 864.519031,
+                "thread_cpu_sum_ms": 2.356953
+              },
+              "final_copy": {
+                "n": 20,
+                "median_ms": 42.739035,
+                "max_ms": 59.933254,
+                "wall_sum_ms": 862.807173,
+                "thread_cpu_sum_ms": 0.652747
+              },
+              "monitor": {
+                "n": 20,
+                "median_ms": 42.83649,
+                "max_ms": 60.313658,
+                "wall_sum_ms": 865.150801,
+                "thread_cpu_sum_ms": 2.969121
+              },
+              "output_commit": {
+                "n": 20,
+                "median_ms": 0.0067705000000000005,
+                "max_ms": 0.01525,
+                "wall_sum_ms": 0.143702,
+                "thread_cpu_sum_ms": 0.136499
+              },
+              "primitive": {
+                "n": 20,
+                "median_ms": 42.734243500000005,
+                "max_ms": 59.918713,
+                "wall_sum_ms": 862.669177,
+                "thread_cpu_sum_ms": 0.52108
+              },
+              "scene": {
+                "n": 20,
+                "median_ms": 0.065935,
+                "max_ms": 0.244992,
+                "wall_sum_ms": 1.5579479999999999,
+                "thread_cpu_sum_ms": 1.54854
+              },
+              "surface_buffer": {
+                "n": 20,
+                "median_ms": 12.7601585,
+                "max_ms": 13.094865,
+                "wall_sum_ms": 206.577358,
+                "thread_cpu_sum_ms": 2.966958
+              },
+              "surface_commit": {
+                "n": 1,
+                "median_ms": 0.08833,
+                "max_ms": 0.08833,
+                "wall_sum_ms": 0.08833,
+                "thread_cpu_sum_ms": 0.086917
+              },
+              "texture": {
+                "n": 113,
+                "median_ms": 0.007583,
+                "max_ms": 0.094163,
+                "wall_sum_ms": 1.056885,
+                "thread_cpu_sum_ms": 1.050831
+              }
+            },
+            "cell_median_ms": 55.587773999999996,
+            "full_median_ms": 55.651313
+          }
+        ],
+        "limitations": [
+          "CPU submission and callbacks are not physical presentation.",
+          "Nested categories overlap: do not sum across tags.",
+          "A first surface commit can be an empty configure handshake.",
+          "Direct command bypasses physical keyboard. No native hardware validation."
+        ]
+      },
+      "all_frame_samples": [
+        {
+          "label": "native_pixels",
+          "rows": [
+            {
+              "event": "configured",
+              "elapsed_ms": 0.63006
+            },
+            {
+              "event": "frame",
+              "index": 0,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 4.769402,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 1,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 378.146406,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 2,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 431.318832,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 3,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 215.901221,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 4,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 215.754727,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 5,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 159.86943,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 6,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 109.1319,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 7,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 108.760747,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 8,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 108.522091,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 9,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 108.485972,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 10,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 108.601134,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 11,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 108.537387,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 12,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 165.324196,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 13,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 216.279427,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 14,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 216.271241,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 15,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 216.411096,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 16,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 216.33389,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 17,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 216.827206,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 18,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 216.269977,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 19,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 216.649548,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "done",
+              "frames": 20,
+              "elapsed_ms": 3757.623007
+            }
+          ]
+        },
+        {
+          "label": "quarter_pixels",
+          "rows": [
+            {
+              "event": "configured",
+              "elapsed_ms": 0.597814
+            },
+            {
+              "event": "frame",
+              "index": 0,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 1.784649,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 1,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 115.257412,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 2,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 59.731636,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 3,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 59.523809,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 4,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 55.640564,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 5,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 55.534984,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 6,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 55.930637,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 7,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 55.909054,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 8,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 55.461694,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 9,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 55.643188,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 10,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 39.989501,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 11,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 27.095973,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 12,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 43.088107,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 13,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.690603,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 14,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.612023,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 15,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.480403,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 16,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.963285,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 17,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 56.052423,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 18,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.709684,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 19,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 55.507982,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "done",
+              "frames": 20,
+              "elapsed_ms": 1076.451086
+            }
+          ]
+        }
+      ],
+      "menu_commands": [
+        {
+          "rep": 0,
+          "command_return_ms": 32.405089,
+          "exit": 0
+        },
+        {
+          "rep": 1,
+          "command_return_ms": 38.008128,
+          "exit": 0
+        },
+        {
+          "rep": 2,
+          "command_return_ms": 39.955744,
+          "exit": 0
+        }
+      ]
+    },
+    {
+      "case": 8,
+      "allowed_compositor_cpus": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "configured_workers": 4,
+      "client_cpus": [
+        0
+      ],
+      "client_workers": 0,
+      "analysis": {
+        "schema": 1,
+        "context": "linux-vm",
+        "trace_rows": 13990,
+        "active": {
+          "begin": {
+            "n": 193,
+            "median_ms": 0.012416,
+            "max_ms": 0.825071,
+            "wall_sum_ms": 6.264232,
+            "thread_cpu_sum_ms": 6.244471
+          },
+          "element": {
+            "n": 1201,
+            "median_ms": 0.009083,
+            "max_ms": 55.858459,
+            "wall_sum_ms": 369.233813,
+            "thread_cpu_sum_ms": 263.9226
+          },
+          "end_render": {
+            "n": 193,
+            "median_ms": 44.654274,
+            "max_ms": 123.516573,
+            "wall_sum_ms": 6471.299759,
+            "thread_cpu_sum_ms": 282.062289
+          },
+          "final_copy": {
+            "n": 193,
+            "median_ms": 43.709799,
+            "max_ms": 68.404358,
+            "wall_sum_ms": 6096.878131,
+            "thread_cpu_sum_ms": 12.99346
+          },
+          "monitor": {
+            "n": 189,
+            "median_ms": 44.740046,
+            "max_ms": 123.607613,
+            "wall_sum_ms": 6420.304307,
+            "thread_cpu_sum_ms": 231.233175
+          },
+          "output_commit": {
+            "n": 188,
+            "median_ms": 0.010062,
+            "max_ms": 0.022874,
+            "wall_sum_ms": 1.978254,
+            "thread_cpu_sum_ms": 1.965212
+          },
+          "primitive": {
+            "n": 188,
+            "median_ms": 44.103207499999996,
+            "max_ms": 68.376233,
+            "wall_sum_ms": 6094.796626,
+            "thread_cpu_sum_ms": 11.01975
+          },
+          "scene": {
+            "n": 193,
+            "median_ms": 0.109665,
+            "max_ms": 81.195612,
+            "wall_sum_ms": 371.088463,
+            "thread_cpu_sum_ms": 265.758577
+          },
+          "surface_buffer": {
+            "n": 116,
+            "median_ms": 2.0716725,
+            "max_ms": 14.520798,
+            "wall_sum_ms": 535.483726,
+            "thread_cpu_sum_ms": 61.895512
+          },
+          "surface_commit": {
+            "n": 23,
+            "median_ms": 0.01225,
+            "max_ms": 46.298754,
+            "wall_sum_ms": 50.211356,
+            "thread_cpu_sum_ms": 49.955118
+          },
+          "texture": {
+            "n": 896,
+            "median_ms": 0.008979000000000001,
+            "max_ms": 34.241054,
+            "wall_sum_ms": 262.805765,
+            "thread_cpu_sum_ms": 158.016881
+          }
+        },
+        "terminal": [
+          {
+            "rep": 0,
+            "first_buffer_commit_received_ms": 41.375687,
+            "commits": 4,
+            "render_scope_occupied_ms_before_first_buffer": 0.0
+          },
+          {
+            "rep": 1,
+            "first_buffer_commit_received_ms": 41.018517,
+            "commits": 4,
+            "render_scope_occupied_ms_before_first_buffer": 0.0
+          },
+          {
+            "rep": 2,
+            "first_buffer_commit_received_ms": 39.895847,
+            "commits": 4,
+            "render_scope_occupied_ms_before_first_buffer": 0.0
+          }
+        ],
+        "frames": [
+          {
+            "label": "native_pixels",
+            "stages": {
+              "begin": {
+                "n": 23,
+                "median_ms": 0.01175,
+                "max_ms": 0.066582,
+                "wall_sum_ms": 0.323492,
+                "thread_cpu_sum_ms": 0.32367
+              },
+              "element": {
+                "n": 146,
+                "median_ms": 0.0126875,
+                "max_ms": 29.42094,
+                "wall_sum_ms": 51.48102900000001,
+                "thread_cpu_sum_ms": 51.201302
+              },
+              "end_render": {
+                "n": 23,
+                "median_ms": 44.826135,
+                "max_ms": 75.06189,
+                "wall_sum_ms": 1066.124512,
+                "thread_cpu_sum_ms": 53.369755
+              },
+              "final_copy": {
+                "n": 23,
+                "median_ms": 44.697053,
+                "max_ms": 62.43866,
+                "wall_sum_ms": 1014.051865,
+                "thread_cpu_sum_ms": 1.583959
+              },
+              "monitor": {
+                "n": 24,
+                "median_ms": 44.853423500000005,
+                "max_ms": 75.221846,
+                "wall_sum_ms": 1067.191292,
+                "thread_cpu_sum_ms": 54.435504
+              },
+              "output_commit": {
+                "n": 23,
+                "median_ms": 0.010666,
+                "max_ms": 0.017958,
+                "wall_sum_ms": 0.263495,
+                "thread_cpu_sum_ms": 0.263623
+              },
+              "primitive": {
+                "n": 23,
+                "median_ms": 44.688054,
+                "max_ms": 62.421869,
+                "wall_sum_ms": 1013.795956,
+                "thread_cpu_sum_ms": 1.338914
+              },
+              "scene": {
+                "n": 23,
+                "median_ms": 0.114582,
+                "max_ms": 29.724853,
+                "wall_sum_ms": 51.694154,
+                "thread_cpu_sum_ms": 51.407543
+              },
+              "surface_buffer": {
+                "n": 20,
+                "median_ms": 13.821484,
+                "max_ms": 14.435038,
+                "wall_sum_ms": 189.64413100000002,
+                "thread_cpu_sum_ms": 9.712586
+              },
+              "surface_commit": {
+                "n": 1,
+                "median_ms": 0.122332,
+                "max_ms": 0.122332,
+                "wall_sum_ms": 0.122332,
+                "thread_cpu_sum_ms": 0.112625
+              },
+              "texture": {
+                "n": 123,
+                "median_ms": 0.017249,
+                "max_ms": 29.410732,
+                "wall_sum_ms": 50.948996,
+                "thread_cpu_sum_ms": 50.677422
+              }
+            },
+            "cell_median_ms": 36.691066,
+            "full_median_ms": 59.237027499999996
+          },
+          {
+            "label": "quarter_pixels",
+            "stages": {
+              "begin": {
+                "n": 20,
+                "median_ms": 0.0090835,
+                "max_ms": 0.285829,
+                "wall_sum_ms": 0.517621,
+                "thread_cpu_sum_ms": 0.516128
+              },
+              "element": {
+                "n": 129,
+                "median_ms": 0.009084,
+                "max_ms": 0.065749,
+                "wall_sum_ms": 1.523182,
+                "thread_cpu_sum_ms": 1.516538
+              },
+              "end_render": {
+                "n": 20,
+                "median_ms": 12.6264435,
+                "max_ms": 12.895315,
+                "wall_sum_ms": 248.022855,
+                "thread_cpu_sum_ms": 2.90417
+              },
+              "final_copy": {
+                "n": 20,
+                "median_ms": 12.5178195,
+                "max_ms": 12.804316,
+                "wall_sum_ms": 245.986756,
+                "thread_cpu_sum_ms": 0.875253
+              },
+              "monitor": {
+                "n": 20,
+                "median_ms": 12.675005,
+                "max_ms": 12.920065,
+                "wall_sum_ms": 249.076214,
+                "thread_cpu_sum_ms": 3.947086
+              },
+              "output_commit": {
+                "n": 20,
+                "median_ms": 0.0058335,
+                "max_ms": 0.014124,
+                "wall_sum_ms": 0.144704,
+                "thread_cpu_sum_ms": 0.142504
+              },
+              "primitive": {
+                "n": 20,
+                "median_ms": 12.511674,
+                "max_ms": 12.797358,
+                "wall_sum_ms": 245.861092,
+                "thread_cpu_sum_ms": 0.754754
+              },
+              "scene": {
+                "n": 20,
+                "median_ms": 0.0785405,
+                "max_ms": 0.142956,
+                "wall_sum_ms": 1.713725,
+                "thread_cpu_sum_ms": 1.707125
+              },
+              "surface_buffer": {
+                "n": 20,
+                "median_ms": 3.4333255,
+                "max_ms": 3.616531,
+                "wall_sum_ms": 63.294841,
+                "thread_cpu_sum_ms": 2.216214
+              },
+              "surface_commit": {
+                "n": 1,
+                "median_ms": 0.033957,
+                "max_ms": 0.033957,
+                "wall_sum_ms": 0.033957,
+                "thread_cpu_sum_ms": 0.033041
+              },
+              "texture": {
+                "n": 109,
+                "median_ms": 0.007375,
+                "max_ms": 0.058291,
+                "wall_sum_ms": 1.035186,
+                "thread_cpu_sum_ms": 1.031499
+              }
+            },
+            "cell_median_ms": 16.685968,
+            "full_median_ms": 16.730927
+          }
+        ],
+        "limitations": [
+          "CPU submission and callbacks are not physical presentation.",
+          "Nested categories overlap: do not sum across tags.",
+          "A first surface commit can be an empty configure handshake.",
+          "Direct command bypasses physical keyboard. No native hardware validation."
+        ]
+      },
+      "all_frame_samples": [
+        {
+          "label": "native_pixels",
+          "rows": [
+            {
+              "event": "configured",
+              "elapsed_ms": 0.719031
+            },
+            {
+              "event": "frame",
+              "index": 0,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 4.30502,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 1,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 124.813239,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 2,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 125.896722,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 3,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 136.91781,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 4,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 117.391015,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 5,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 58.624301,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 6,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 58.692509,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 7,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 43.535445,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 8,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 29.828646,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 9,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 29.834354,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 10,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 29.743231,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 11,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 29.846687,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 12,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 45.858036,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 13,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 59.162633,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 14,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 59.191799,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 15,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 59.514336,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 16,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 59.285048,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 17,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 59.256631,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 18,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 59.251048,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "frame",
+              "index": 19,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 59.223007,
+              "width": 3456,
+              "height": 2160
+            },
+            {
+              "event": "done",
+              "frames": 20,
+              "elapsed_ms": 1270.368303
+            }
+          ]
+        },
+        {
+          "label": "quarter_pixels",
+          "rows": [
+            {
+              "event": "configured",
+              "elapsed_ms": 0.360328
+            },
+            {
+              "event": "frame",
+              "index": 0,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 0.82028,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 1,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 27.559728,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 2,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 17.543789,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 3,
+              "warmup": true,
+              "damage": "cell",
+              "callback_ms": 16.530429,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 4,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 16.787883,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 5,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 16.585219,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 6,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 16.870965,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 7,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 16.528803,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 8,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 16.723801,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 9,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 16.688218,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 10,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 16.652551,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 11,
+              "warmup": false,
+              "damage": "cell",
+              "callback_ms": 16.683718,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 12,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 16.592469,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 13,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 16.724885,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 14,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 15.569777,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 15,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 16.979382,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 16,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 16.571388,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 17,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 16.736969,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 18,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 16.745678,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "frame",
+              "index": 19,
+              "warmup": false,
+              "damage": "full",
+              "callback_ms": 16.928425,
+              "width": 1728,
+              "height": 1080
+            },
+            {
+              "event": "done",
+              "frames": 20,
+              "elapsed_ms": 332.206975
+            }
+          ]
+        }
+      ],
+      "menu_commands": [
+        {
+          "rep": 0,
+          "command_return_ms": 33.51084,
+          "exit": 0
+        },
+        {
+          "rep": 1,
+          "command_return_ms": 40.698363,
+          "exit": 0
+        },
+        {
+          "rep": 2,
+          "command_return_ms": 42.956273,
+          "exit": 0
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Headless VM, not native GPU/SMP or panel presentation.",
+    "Configured worker count is recorded; actual Mesa worker enumeration is pending.",
+    "Cases were sequential, not randomized; no causal power or native performance claim.",
+    "Quarter-pixel results are a diagnostic control, not a proposed reduction in resolution.",
+    "First buffer and command return are not physical visible latency."
+  ]
+}
