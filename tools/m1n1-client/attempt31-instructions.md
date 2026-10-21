@@ -1,5 +1,15 @@
 # Attempt31 — verified final-copy experiment
 
+## HOLD — user redirected the next experiment, 2026-10-21
+
+Do not restart, launch attempt31, send its root or run its collector. The user
+rejects the copy-only proposal as insufficient for the reported3–5s menu/input
+delay. Code/images and offline results remain useful but are not the next boot.
+Read `native/boot/attempt31/hold-and-replan.md`: trace input-to-visible-action
+latency and establish CPU/memory/software-rendering baselines first. No new
+native experiment is ready. Existing macOS/boot settings and waived routine
+policy checks remain unchanged. This notice supersedes earlier readiness text.
+
 Native/live **NOT RUN**. Attempt30 is consumed. Read
 `kernel/experiments/desktop31/PLAN.md` and `native/boot/attempt31/validation.md`.
 This is one new boot and root send after M1 offline readiness and human start.

@@ -2071,3 +2071,21 @@ failed harness runs or cherry-pick startup-contaminated timings. M1 verifies
 both new images and publishes readiness before human start. No routine policy
 check or additional boot/security/volume action. SMP, thermal/frequency, GPU,
 Wi-Fi and storage remain on the detailed plan after this bounded experiment.
+
+
+### 2026-10-21 · Hold copy31; account for the full menu/input delay
+
+Do not restart, launch attempt31, send its root or run its collector. The user
+rejects the copy-only proposal as insufficient for the reported3–5s menu/input
+delay. Code/images and offline results remain useful but are not the next boot.
+Read `native/boot/attempt31/hold-and-replan.md`: trace input-to-visible-action
+latency and establish CPU/memory/software-rendering baselines first. No new
+native experiment is ready. Existing macOS/boot settings and waived routine
+policy checks remain unchanged. This notice supersedes earlier readiness text.
+
+The attempt26 keyboard timestamp evidence points downstream without excluding
+firmware latency. Memory attributes and a CPU clock estimate do not prove full
+bandwidth or CPU functionality. Trace the original path and compare identical
+CPU/memory/software-rendering work before selecting another native change.
+Preserve the optional copy optimization without presenting its VM25% result as
+a fix for seconds of user-visible latency. No revised native trial is scheduled.

@@ -99,6 +99,16 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+## HOLD — user redirected the next experiment, 2026-10-21
+
+Do not restart, launch attempt31, send its root or run its collector. The user
+rejects the copy-only proposal as insufficient for the reported3–5s menu/input
+delay. Code/images and offline results remain useful but are not the next boot.
+Read `native/boot/attempt31/hold-and-replan.md`: trace input-to-visible-action
+latency and establish CPU/memory/software-rendering baselines first. No new
+native experiment is ready. Existing macOS/boot settings and waived routine
+policy checks remain unchanged. This notice supersedes earlier readiness text.
+
 ### Current M5 handoff — attempt31 final-copy experiment, 2026-10-21
 
 Reviewed attempt30 (`45952cc`): native compositor CPU near 97%, full callbacks
