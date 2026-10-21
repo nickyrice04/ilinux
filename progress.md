@@ -5,6 +5,20 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: CPU1 console isolation 31D offline readiness PASS
+
+M1 pulled **`c331796`**; all **60** source pins, boot042's **13** package
+files, existing boot021/helper and clean client `57a9339` PASS. **73 Python
+methods PASS**, all 11 required subprocesses exit 0, no skips/fixes; additional
+independent console image/source audit equals the Git binding. No USB, target
+allocation/start or real 31D receipt; prior 31B/31C evidence digests unchanged.
+Human reports both computers ready. Publish before fresh human 31D start and
+90 s timer confirmation. **Native31D/hardware writes/CPU1/Linux SMP NOT RUN;
+live attempts 0.** Existing image/client/macOS/settings unchanged; routine
+policy rechecks waived and protections remain last reported. No Linux
+continuation or retry. Evidence: `native/boot/attempt31d-m1-offline-2026-10-21.md`.
+
+
 ### 2026-10-21 · M5: 31C reviewed; 31D console-isolation experiment ready offline
 
 31C passed the actual RAM gate and acknowledged both CPU1 starts, then timed

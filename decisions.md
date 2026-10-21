@@ -2354,3 +2354,21 @@ power/reset operations. Keep the three-second arrival bound. A success advances
 to two-core Linux validation; no reset record advances to reviewed earlier-entry
 instrumentation, not another unchanged retry. Missing native entry evidence
 remains the blocker to renderer-threading gains on this machine.
+
+
+### 2026-10-21 · Accept M1 31D intake for one console-isolation trial
+
+M1 pulled **`c331796`**; all **60** source pins, boot042's **13** package
+files, existing boot021/helper and clean client `57a9339` PASS. **73 Python
+methods PASS**, all 11 required subprocesses exit 0, no skips/fixes; additional
+independent console image/source audit equals the Git binding. No USB, target
+allocation/start or real 31D receipt; prior 31B/31C evidence digests unchanged.
+Human reports both computers ready. Publish before fresh human 31D start and
+90 s timer confirmation. **Native31D/hardware writes/CPU1/Linux SMP NOT RUN;
+live attempts 0.** Existing image/client/macOS/settings unchanged; routine
+policy rechecks waived and protections remain last reported. No Linux
+continuation or retry. Evidence: `native/boot/attempt31d-m1-offline-2026-10-21.md`.
+
+Keep the three-second arrival bound and preserve all prior consumed evidence.
+UART muting is temporary RAM state and an unproven hypothesis, not a native
+fix. Fresh human start follows readiness; no automatic Linux continuation.
