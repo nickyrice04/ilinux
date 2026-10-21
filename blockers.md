@@ -1,5 +1,19 @@
 # Blockers
 
+## M1 controller31B offline gate PASS; CPU1 entry still unobserved
+
+M1 pulled **`7d505fd`**; all **36** new source pins, boot042's **13** files,
+exact boot021/192-byte helper/offline controller and clean client `57a9339`
+PASS. **46 Python methods PASS** (19 controller, 3 supervisor, 11 census, 5 audit,
+8 renderer), zero skips/fixes. No live-use receipt existed before/after tests;
+no USB, target allocation or start. Native31B/hardware writes/CPU1/Linux SMP
+**NOT RUN**, live attempts 0. Human reports M1 restart/M5 Running proxy and
+confirms cable/power/unlocked/lid/90s timer. Publish readiness before one
+supervised CPU1 entry/two-request test. Existing boot021, macOS/default/security/
+volumes unchanged; routine policy checks waived. No Linux continuation or retry.
+Evidence: `native/boot/attempt31b-m1-offline-2026-10-21.md`.
+
+
 ### 2026-10-21 · CPU1 controller 31B implemented and offline validated
 
 User authorized CPU1 controller implementation/testing and the M1 handoff.

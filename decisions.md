@@ -2221,3 +2221,21 @@ then waits for one human-started existing Boot Lab proxy session. Controller
 No retry or automatic Linux continuation. Routine policy checks waived.
 31A consumed and old copy-only 31 held; Linux two-core/timer/IPI/coherence and renderer
 integration follow entry evidence, with performance/energy still unproven.
+
+
+### 2026-10-21 · Accept M1 controller31B intake for the one bounded CPU1 trial
+
+M1 pulled **`7d505fd`**; all **36** new source pins, boot042's **13** files,
+exact boot021/192-byte helper/offline controller and clean client `57a9339`
+PASS. **46 Python methods PASS** (19 controller, 3 supervisor, 11 census, 5 audit,
+8 renderer), zero skips/fixes. No live-use receipt existed before/after tests;
+no USB, target allocation or start. Native31B/hardware writes/CPU1/Linux SMP
+**NOT RUN**, live attempts 0. Human reports M1 restart/M5 Running proxy and
+confirms cable/power/unlocked/lid/90s timer. Publish readiness before one
+supervised CPU1 entry/two-request test. Existing boot021, macOS/default/security/
+volumes unchanged; routine policy checks waived. No Linux continuation or retry.
+Evidence: `native/boot/attempt31b-m1-offline-2026-10-21.md`.
+
+Retain exact write bounds and durable intent counts. Interrupted dispatch is
+unknown completion, never permission to retry. A successful parked-loop request
+is not Linux SMP or an automatic renderer/extra-core continuation.
