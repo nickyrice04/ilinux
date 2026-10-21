@@ -5,6 +5,27 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: 31F vector recorder published; CPU1 timeout; return confirmed
+
+**31F consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution
+`56f68f1` after handoff `6092b11`. RAM/UART and **EL2/VHE/all 16 translation
+checks PASS**; recorder body/vector-hook/whole-text readback verified. **63
+mutation intents; both CPU1 starts attempted/acknowledged**. Recorder **94
+complete samples / 470 reads, phase 0, identity not_committed, error null**;
+reset/spin **94 samples, no_reset_record_seen**. CPU1/EL/cache state remains
+unverified/unknown; 0 callbacks, no park. Controller exit 1 in 4.567 s; supervisor
+5.003 s, no deadline. Human corrected accidental Return problem selection:
+returned fine. Corrected confirmation +80.498 s (includes correction), within
+90 s; no actual return fault reported. No retry/reconnect/rollback/further target
+command. **Linux/native SMP/renderer tests NOT RUN**. CPU0 publication is not
+CPU1 visibility or zero-instruction proof. Installed boot021/client/macOS/
+settings unchanged; only session RAM code patched. No routine M1 restart or
+policy recheck. M5 next: offline effective-reset/visibility/first-store review.
+138 pins/194 image-only methods PASS; M1 full-symbol checks NOT RUN. Preserve
+receipts. Evidence: `native/boot/attempt31f-2026-10-21-result.md` and final JSON.
+This supersedes frozen pre-execution controller NOT RUN wording.
+
+
 ## 2026-10-21 · M1: vector-first 31F offline readiness PASS
 
 M1 pulled **`6092b11`**; **138 source pins**, existing boot021 and **194

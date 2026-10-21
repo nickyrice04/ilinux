@@ -1,0 +1,11 @@
+{
+  "action": "power off M5 and return to Macintosh HD; no retry",
+  "controller_exit": 1,
+  "controller_started": true,
+  "elapsed_seconds": 5.003,
+  "experiment": "smp31f",
+  "source_manifest_sha256": "d5de4d4ba2372ec7cf0c0d4c509f8feeea07a096fc466cf18026ac2d8c3b0161",
+  "supervisor_deadline": false,
+  "supervisor_exit": 1,
+  "supervisor_reason": "controller_exited"
+}
