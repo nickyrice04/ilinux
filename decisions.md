@@ -2302,3 +2302,27 @@ remain last reported. No Linux continuation or retry. Evidence:
 The revised bound is verified offline, not a reason to replay 31B. Use only
 the separate 31C supervisor after its fresh human start. Preserve the exact
 write bounds, one-use receipts and immediate Macintosh HD return on outcome.
+
+
+### 2026-10-21 · Consume 31C at CPU1 arrival timeout; review before any continuation
+
+**31C consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution
+`c48464d` after handoff `61bbe52`. All 11 RAM-check booleans true, BootArgs
+revision 3. **9 mutation requests, 2 CPU1 start writes attempted/acknowledged**;
+arrival unverified, 0 timer requests completed, counter progress unverified.
+Controller exit 1 in 4.466 s; supervisor 4.865 s, no deadline. Human confirmed
+usual Macintosh HD return +51.953 s after start, within 90 s. No retry,
+reconnect, rollback or further target command. CPU1 experiment ran; **Linux
+boot/native Linux SMP/renderer tests NOT RUN**. A timeout does not prove CPU1
+executed no instructions. Existing boot021/client pin, macOS and settings
+unchanged; routine rechecks waived and protections remain last reported.
+M5 next: offline review of CPU1 entry/arrival and observation path; preserve
+all once/consumed receipts. 46 source pins and 60 offline methods passed.
+Evidence: `native/boot/attempt31c-2026-10-21-result.md` and its two sanitized JSON
+records. This supersedes frozen checklist/readiness text for the controller.
+
+The corrected native RAM gate passed, but acknowledged CPU-start writes do
+not establish CPU1 entry. Do not infer a zero-instruction start, hardware
+fault or final parked state from this timeout. No automatic retry, extended
+arrival window or Linux/two-core renderer continuation. Preserve the exact
+partial evidence for M5 offline review and a separately reviewed next step.

@@ -1,6 +1,24 @@
 # Blockers
 
-## Current — 31C offline gate PASS; CPU1 entry unobserved
+## Current — 31C CPU1 arrival timeout after two acknowledged start writes
+
+**31C consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution
+`c48464d` after handoff `61bbe52`. All 11 RAM-check booleans true, BootArgs
+revision 3. **9 mutation requests, 2 CPU1 start writes attempted/acknowledged**;
+arrival unverified, 0 timer requests completed, counter progress unverified.
+Controller exit 1 in 4.466 s; supervisor 4.865 s, no deadline. Human confirmed
+usual Macintosh HD return +51.953 s after start, within 90 s. No retry,
+reconnect, rollback or further target command. CPU1 experiment ran; **Linux
+boot/native Linux SMP/renderer tests NOT RUN**. A timeout does not prove CPU1
+executed no instructions. Existing boot021/client pin, macOS and settings
+unchanged; routine rechecks waived and protections remain last reported.
+M5 next: offline review of CPU1 entry/arrival and observation path; preserve
+all once/consumed receipts. 46 source pins and 60 offline methods passed.
+Evidence: `native/boot/attempt31c-2026-10-21-result.md` and its two sanitized JSON
+records. This supersedes frozen checklist/readiness text for the controller.
+
+
+## Historical — 31C offline gate PASS; CPU1 entry unobserved
 
 M1 pulled **`61bbe52`** and independently verified all **46** 31C source
 pins, boot042's **13** files, existing boot021 image/helper and clean client
