@@ -2537,3 +2537,22 @@ then Macintosh HD return. Healthy M1 requires no routine reboot; no repeated
 policy checks or host/settings/storage changes. Next result chooses a precise
 entry repair or a reviewed two-core Linux correctness/rendering/memory batch.
 31F native and macOS performance/efficiency parity remain unverified.
+
+
+### 2026-10-21 · Accept M1 image-only 31F intake before fresh human start
+
+M1 pulled **`6092b11`**; **138 source pins**, existing boot021 and **194
+image-only methods PASS**, no skips/fixes. Both documented offline commands
+exit 0; additional retained-package intake verifies all 13 files. Clean client
+`57a9339`; manifest `d5de4d4b…3b0161`. Symbol mode `reviewed_layout_only`;
+full-symbol checks explicitly **NOT RUN** on M1. Hardware operations 0,
+restart_ready false (expected), no real 31F receipts; prior 31B/31C/31D/31E
+evidence digests unchanged. Human reports both machines ready. Publish before
+fresh human M5 lab start and 90 s timer. Healthy M1 needs no routine restart
+or policy recheck. **Native31F/CPU1/Linux SMP NOT RUN/unverified; live attempts
+0.** Installed boot021/client/macOS/settings unchanged. No retry/reconnect
+or Linux continuation. Evidence: `native/boot/attempt31f-m1-offline-2026-10-21.md`.
+
+Keep full-symbol verification and M5 VM evidence separate. A vector marker
+is not reset provenance; unexpected identity/progress after the first store
+prevents a second store. No automatic retry or Linux continuation.

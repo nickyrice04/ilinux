@@ -5,6 +5,21 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: vector-first 31F offline readiness PASS
+
+M1 pulled **`6092b11`**; **138 source pins**, existing boot021 and **194
+image-only methods PASS**, no skips/fixes. Both documented offline commands
+exit 0; additional retained-package intake verifies all 13 files. Clean client
+`57a9339`; manifest `d5de4d4b…3b0161`. Symbol mode `reviewed_layout_only`;
+full-symbol checks explicitly **NOT RUN** on M1. Hardware operations 0,
+restart_ready false (expected), no real 31F receipts; prior 31B/31C/31D/31E
+evidence digests unchanged. Human reports both machines ready. Publish before
+fresh human M5 lab start and 90 s timer. Healthy M1 needs no routine restart
+or policy recheck. **Native31F/CPU1/Linux SMP NOT RUN/unverified; live attempts
+0.** Installed boot021/client/macOS/settings unchanged. No retry/reconnect
+or Linux continuation. Evidence: `native/boot/attempt31f-m1-offline-2026-10-21.md`.
+
+
 ## 2026-10-21 · M5: 31F complete offline; core-type-aware path to all18
 
 31E is consumed: CPU0 publication/permissions passed but CPU1 entry remained
