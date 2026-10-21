@@ -99,6 +99,21 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest M1 offline readiness — corrected CPU1 controller 31C, 2026-10-21
+
+M1 pulled **`61bbe52`** and independently verified all **46** 31C source
+pins, boot042's **13** files, existing boot021 image/helper and clean client
+`57a9339`. **60 Python methods PASS** (11 new RAM/controller, 3 new supervisor,
+46 prior), all nine requested subprocesses exit 0; no skips/fixes. No USB,
+target allocation/start or real 31C receipt. Prior 31B evidence digests are
+unchanged. Human reports M1 ready/M5 Running proxy; fresh human 31C start and
+90 s timer confirmation follow publication. **Native31C, CPU1 entry and
+Linux/native SMP/renderer tests NOT RUN; live attempts 0.** No installed-image,
+macOS/security/default/volume change; routine rechecks waived and protections
+remain last reported. No Linux continuation or retry. Evidence:
+`native/boot/attempt31c-m1-offline-2026-10-21.md`.
+
+
 ### 2026-10-21 · M5 reviewed 31B; corrected RAM gate ready offline as 31C
 
 31B report `4fb684c`: STOP before allocation/start, zero mutation requests,
