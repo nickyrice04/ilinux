@@ -2372,3 +2372,28 @@ continuation or retry. Evidence: `native/boot/attempt31d-m1-offline-2026-10-21.m
 Keep the three-second arrival bound and preserve all prior consumed evidence.
 UART muting is temporary RAM state and an unproven hypothesis, not a native
 fix. Fresh human start follows readiness; no automatic Linux continuation.
+
+
+### 2026-10-21 · Consume 31D; no reset record requires earlier-entry review
+
+**31D consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution
+`04ffeee` after handoff `c331796`. All RAM checks PASS, revision 3; direct USB
+and expected UART bases PASS, initially enabled count 2, both RAM zeroes
+published. **13 mutation requests, 2 CPU1 starts attempted/acknowledged**;
+arrival unverified, 0 timer requests. **171 sequential samples** retained
+`no_reset_record_seen`; this is not proof of zero executed instructions or
+an atomic/final state. Controller exit 1 in 4.485 s; supervisor 4.866 s, no
+deadline. Human returned to usual Macintosh HD at +44.628 s, within 90 s.
+No retry, reconnect, rollback or further target command. **Linux/native SMP/
+renderer tests NOT RUN**; installed boot021/client/macOS/settings unchanged.
+Routine rechecks waived; protections remain last reported. M5 next: offline
+review and separately reviewed earlier-entry instrumentation per the 31D
+no-reset-record decision. Preserve all consumed receipts. 60 source pins,
+73 methods and independent console binding audit PASS. Evidence:
+`native/boot/attempt31d-2026-10-21-result.md` and two sanitized final JSON files.
+Current result supersedes frozen pre-execution controller NOT RUN wording.
+
+Console isolation did not establish arrival in this run. Preserve the partial
+evidence and three-second bound; no automatic retry, speculative power write,
+UART flush or time-limit extension. M5 reviews earlier-entry instrumentation
+and its deployment before another native command. Linux SMP remains separate.

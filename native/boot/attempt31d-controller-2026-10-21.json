@@ -1,0 +1,38 @@
+{
+  "experiment": "smp31d",
+  "result": "STOP",
+  "phase": "cpu1_arrival",
+  "mutation_requests": 13,
+  "start_writes_attempted": 2,
+  "start_writes_acknowledged": 2,
+  "cpu1_arrival_verified": false,
+  "requests_completed": 0,
+  "counter_progress_verified": false,
+  "linux_boot": "NOT RUN",
+  "native_linux_smp": "NOT RUN",
+  "ram_check": {
+    "revision_supported": true,
+    "bootargs_revision": 3,
+    "revision_consistent": true,
+    "integer_fields": true,
+    "nonempty_u64": true,
+    "address_width": true,
+    "within_machine_dram": true,
+    "adt_within_usable": true,
+    "adt_read_complete": true,
+    "chosen_base_matches": true,
+    "chosen_size_matches": true,
+    "image_within_usable": true
+  },
+  "diagnostic_uart_check": {
+    "direct_usb_proxy": true,
+    "bases_expected_or_zero": true,
+    "enabled_count": 2,
+    "ram_zeroes_published": true
+  },
+  "entry_observation": "no_reset_record_seen",
+  "arrival_samples": 171,
+  "reason": "cpu1_arrival_timeout",
+  "controller_elapsed_seconds": 4.485,
+  "source_manifest_sha256": "e41c9a29748007b08e06e077e45d63deb494eb0b3ec75e0142dc4aeb9f4e3ba5"
+}

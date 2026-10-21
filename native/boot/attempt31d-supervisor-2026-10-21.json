@@ -1,0 +1,7 @@
+{
+  "experiment": "smp31d",
+  "controller_exit": 1,
+  "supervisor_deadline": false,
+  "elapsed_seconds": 4.866,
+  "action": "power off M5 and return to Macintosh HD; no retry"
+}
