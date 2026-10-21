@@ -6,6 +6,27 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### 2026-10-21 · M5: 31C reviewed; 31D console-isolation experiment ready offline
+
+31C passed the actual RAM gate and acknowledged both CPU1 starts, then timed
+out before verified arrival. Return to usual macOS confirmed. CPU1 may have
+stalled before its flag; zero executed instructions is not established.
+
+Public-source and exact-image review found unbounded diagnostic UART polling
+before arrival. Fresh REA/Ghidra queries plus 214 byte/LLVM-verified instruction
+words did not establish a missing power write; cross-boundary pseudocode was
+rejected. 31D tests the console hypothesis with two RAM base zeroes plus cache
+publication before start and partial reset/spin observations. USB retained;
+installed boot021, start sequence, prior controller sources and receipts frozen.
+
+73 Python methods, real pinned-client/parser paths and 9 actual-source UART
+cases in normal/ASan/UBSan builds PASS in job 061. First harness compile warning
+fixed without relaxing Werror. **M1 intake pending; native31D NOT RUN.** Follow
+`tools/m1n1-client/attempt31d-instructions.md`: offline readiness first, fresh
+human start, one CPU1 test, immediate Macintosh HD return. No Linux continuation,
+new image, power/security/volume change or routine policy recheck. Performance
+and efficiency unproven. Review: `native/boot/attempt31d/review.md`.
+
 ### Current M1 result — 31C consumed; CPU1 arrival unverified, 2026-10-21
 
 **31C consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution

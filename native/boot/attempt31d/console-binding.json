@@ -1,0 +1,25 @@
+{
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "source_sha256": {
+    "uart.c": "1dfdb722238ed1f28eb544291c8fc70a407c2387d9a0c323188282de08dc0a81",
+    "dockchannel_uart.c": "452639469ad946d3d33c2d7b6e9db081205c6cadf639d8776eac69299da45949",
+    "iodev.c": "b5966d13f018761bd2bf051a4e4e4c25ac2f9775b66c06e917ac1440568e15f2",
+    "iodev.h": "1210a80029f3b99a89f4fb880a10e2389bed0139e3e1db9d7c389cdcb9fa90df"
+  },
+  "functions": [
+    {
+      "function_offset": "0x347a0",
+      "ram_variable_offset": "0x35a4a0",
+      "zero_return_offset": "0x347c8",
+      "zero_returns_before_mmio": true
+    },
+    {
+      "function_offset": "0x1a360",
+      "ram_variable_offset": "0x110030",
+      "zero_return_offset": "0x1a39c",
+      "zero_returns_before_mmio": true
+    }
+  ],
+  "result": "OFFLINE_CONSOLE_BINDING_PASS",
+  "native_cpu1": "NOT RUN"
+}

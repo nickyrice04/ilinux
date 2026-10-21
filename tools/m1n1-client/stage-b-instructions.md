@@ -1,23 +1,24 @@
-# Current native handoff — 31C corrected CPU1 memory gate
+# Current native handoff — 31D CPU1 diagnostic-console experiment
 
-Read [attempt31c-instructions.md](attempt31c-instructions.md).
-31B stopped before allocation or CPU startup: its address ceiling was below
-this M5's physical DRAM. The new gate checks the actual BootArgs usable range
-against this machine's observed DRAM and the target ADT. CPU1 startup code is
-unchanged. Review and evidence: `native/boot/attempt31c/review.md`.
+Read [attempt31d-instructions.md](attempt31d-instructions.md).
+31C is consumed: RAM gate passed, both CPU1 startup writes acknowledged,
+arrival timed out; usual Macintosh HD return confirmed. No Linux boot.
 
-M5 offline preparation PASS: 60 Python methods and the real pinned parsers/
-high-address serializer PASS. **Native 31C NOT RUN; M1 intake pending.**
-M1 verifies the new source manifest and retained boot042 package, publishes
-readiness, then waits for a fresh human start. Existing Boot Lab/boot021,
-one CPU1 entry/two-request test, immediate Macintosh HD return.
+31D tests a source-backed hypothesis: unbounded diagnostic UART output before
+the arrival flag. It zeros two diagnostic UART RAM variables, cache-publishes
+them before start, retains direct USB, and records partial CPU1 reset/spin
+identity. Existing installed boot021, unchanged start/request sequence, no
+code/RVBAR/power/security/volume change or new MMIO probe. No files to AirDrop.
 
-Both 31A and 31B are consumed; preserve their receipts. 31C uses a distinct
-fixed directory and literal confirmation. No new image/root transfer, Linux
-launch, chainload, installation or security/default/volume change. Routine
-policy checks remain waived. Old copy31/rebuilt m1n1 remain held.
+M5 offline preparation PASS: 73 Python methods, actual client/parsers, compiled
+UART harness normal/ASan/UBSan, exact compiled-image binding audit. Fresh REA
+and independent byte/LLVM cross-checks inform the decision; no native fix is
+yet established. **M1 intake pending; native31D NOT RUN.**
 
-Use `native/boot/attempt31c/source-sha256.txt`. Earlier manifests remain
-historical and pin earlier versions of this pointer; do not regenerate them.
-Bootloader entry success would precede two-core Linux/timer/IPI/coherence and
-renderer work; it is not proof of Linux SMP, performance or efficiency.
+Use `native/boot/attempt31d/source-sha256.txt`. M1 publishes offline readiness,
+then waits for a fresh human start and 90-second timer. One bounded CPU1 test,
+then immediately Macintosh HD, even on success. Preserve every prior receipt;
+no retry, reconnect or Linux continuation. Routine policy rechecks stay waived.
+
+Review: `native/boot/attempt31d/review.md`. CPU1 entry success precedes two-core
+Linux timer/IPI/coherency and renderer tests. Performance/efficiency are unproven.

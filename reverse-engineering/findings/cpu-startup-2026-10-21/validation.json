@@ -1,0 +1,71 @@
+{
+  "provider": "ghidra",
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "results": [
+    {
+      "evidence_id": "ev_a0c322db609e8776d0d1e91219e928d9c04691e9adfb7565d802ed443a22fe75",
+      "member": "com.apple.driver.ApplePMGR",
+      "function": "__ZN9ApplePMGR14enableCPUCoresEyb",
+      "body_anchors": [
+        {
+          "start": "0xfffffe000949606c",
+          "end_inclusive": "0xfffffe0009496303",
+          "carrier_offset": 38346860,
+          "derived_offset": 202092,
+          "bytes": 664,
+          "sha256": "0d8a88ca037f5c65af63adc67a7e2f3328dd1212cf1fcb76bb5528bef461c391"
+        }
+      ],
+      "assembly_instructions": 166,
+      "original_bytes_verified": true,
+      "pcode_operations": 431,
+      "pcode_outside_body": 0,
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "smp31d-enable-cpus",
+      "llvm_instruction_words_verified": 166,
+      "llvm_unknown_instructions": []
+    },
+    {
+      "evidence_id": "ev_ddd45ba8355f6a920398861f509b50a4a73c8b26a34ee6d6eeb310eed7f53cd4",
+      "member": "com.apple.driver.ApplePMGR",
+      "function": "__ZN9ApplePMGR20getClusterPowerStateEhj",
+      "body_anchors": [
+        {
+          "start": "0xfffffe000949e3bc",
+          "end_inclusive": "0xfffffe000949e47b",
+          "carrier_offset": 38380476,
+          "derived_offset": 235708,
+          "bytes": 192,
+          "sha256": "8007519cac0db45b4d43ba793064ed21e18b424d5c320801a3d23146103203c6"
+        }
+      ],
+      "assembly_instructions": 48,
+      "original_bytes_verified": true,
+      "pcode_operations": 218,
+      "pcode_outside_body": 153,
+      "pseudocode_gate": "rejected_cross_boundary",
+      "decompiler_warning_classes": [
+        "bad_instruction_or_truncated_control_flow",
+        "provider_removed_blocks"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "id": "smp31d-cluster-state",
+      "llvm_instruction_words_verified": 48,
+      "llvm_unknown_instructions": []
+    }
+  ],
+  "limits": [
+    "Static consistency only, not semantic or runtime equivalence",
+    "Rejected pseudocode cannot guide implementation; manual gates are not passes"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "experiment": "smp31d",
+  "date": "2026-10-21",
+  "based_on_report": "beaadb1",
+  "result": "OFFLINE_PASS",
+  "native_31d": "NOT RUN",
+  "native_linux_smp": "NOT RUN",
+  "job": "virtualization/jobs/061-smp31d",
+  "guest_start_utc": "2026-10-21T20:58:05Z",
+  "guest_end_utc": "2026-10-21T20:58:13Z",
+  "guest_exit": 0,
+  "toolchain": {
+    "gcc": "16.1.1 20260430",
+    "python": "3.14.8",
+    "kernel": "7.1.6-vzrun2 aarch64"
+  },
+  "python_methods": {
+    "new_controller": 10,
+    "new_supervisor": 3,
+    "prior": 60,
+    "total": 73
+  },
+  "new_controller_host_methods": 10,
+  "actual_pinned_client": {
+    "result": "PASS",
+    "scenarios": [
+      "complete",
+      "reset_identity_timeout"
+    ],
+    "bootargs_and_adt": "actual pinned parsers at M5 high addresses",
+    "new_opcode": "P_DC_CVAC 0x308"
+  },
+  "actual_public_source_console_harness": {
+    "cases": 9,
+    "normal": "PASS",
+    "address_undefined_sanitizers": "PASS",
+    "transmitter_poll_bound_in_mock": 32
+  },
+  "compiled_image_binding": "PASS; original instruction decoder plus GNU objdump",
+  "native_mutation_requests_expected": {
+    "arrival_timeout_after_two_starts": 13,
+    "complete": 15
+  },
+  "hardware_start_writes": 2,
+  "new_mmio_operations": 0,
+  "first_iteration": {
+    "guest_exit": 1,
+    "reason": "test harness compile rejected non-volatile loop variable across longjmp",
+    "correction": "volatile loop variable; retained Werror; successful rerun"
+  },
+  "limits": [
+    "VM models do not expose native reset, UART FIFO, PMGR or cache visibility",
+    "UART blockage in 31C remains a hypothesis",
+    "No native CPU1 success, Linux SMP or performance/energy gain claimed"
+  ],
+  "source_pin_count": 60
+}
