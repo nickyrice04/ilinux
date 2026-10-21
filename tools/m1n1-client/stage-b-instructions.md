@@ -1,19 +1,18 @@
-# Current native handoff — attempt30 desktop latency
+# Current native handoff — attempt30 consumed; wait for new scope
 
-Follow [attempt30's checklist](attempt30-instructions.md).
-**M5 offline preparation PASS; M1 intake pending; native/live NOT RUN.**
+**Do not replay attempt30 or older checklists.** One authorized desktop-latency
+boot/root send/userspace bundle collection completed on `6e49687`.
+Final `LATENCY_OBSERVED`; no frequency, renderer or module change.
+Macintosh HD return confirmed at +223.531/600 seconds.
 
-Attempt29 is consumed. Its memory observations did not explain persistent
-application/typing delay. Attempt30 adds an original userspace frame workload,
-software CPU sampler and IPC observation, with one 45s human interaction window.
-This measures the cause; no native speedup or CPU-policy change is claimed.
+Read [the native result](../../native/boot/stage-b-2026-10-20-attempt30-result.md)
+and [all sanitized samples](../../native/boot/attempt30/native-observation.json).
+M5 next: offline draw/event-loop/generated-code attribution review, preserving
+human timing and preparation limits. No new live run, retry or policy change.
+Keep attempt28 images, boot042, installed boot021/client `57a9339` and existing
+entry. Macintosh HD/default/Full and lab Permissive remain last reported;
+routine checks waived, no settings/volume/firmware changes.
 
-Privately receive only `desktop30.tar` (163,840 bytes); retain the exact attempt28
-stage one/root and boot042. Use `desktop-latency` and its new confirmation token.
-No CPU/memory module, renderer, frequency, core-start, storage, Wi-Fi, security,
-volume or installed-m1n1 change. No replay of earlier collectors/checklists.
-
-M1 verifies pins/package/pair/bundle/tests and publishes sanitized offline
-readiness with native/live NOT RUN. Then the human starts one filmed boot via
-the existing Boot Lab entry. Fixed600s root-switch window and Macintosh HD
-return; routine policy checks remain waived. Do not restart until M1 is ready.
+[The source-pinned attempt30 checklist](attempt30-instructions.md) is retained
+unchanged for provenance; its NOT RUN heading is historical. A new reviewed
+handoff and explicit human start precede any later native operation.

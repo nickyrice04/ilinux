@@ -1,5 +1,31 @@
 # Blockers
 
+## Current evidence — attempt30 quantifies expensive desktop work; delay remains
+
+**Attempt30 consumed: one native desktop-latency boot/root send/userspace
+bundle delivery PASS**, final `LATENCY_OBSERVED`; no frequency/renderer changes
+or CPU/memory module load. Execution `6e49687`. Two 20-callback controls:
+small medians 256.940/256.346 ms, full 513.491/516.029 ms; compositor process near 97%
+CPU, IPC medians 407.639/407.789 ms. Software main-thread samples mostly anonymous
+executable, not yet attributed to LLVM/Mesa; lost 0, unmapped retained. All 40
+callbacks including warm-ups and 414 IPC samples preserved. Human reports
+prompt cue, accurate typing, delay remains; individual action times unlogged.
+Clock estimate 2.651/2.650 GHz; no thermal/energy data. No kernel fault/M1 panic
+observed. Macintosh HD return confirmed +223.531/600 s; owned processes ended.
+No retry, settings, policy/default/volume, hardware, SMP, storage or Wi-Fi change;
+routine checks waived. Restart is human-reported; measured M1 reader uptime
+20,933 s does not independently establish freshness. Evidence and timing limits:
+`native/boot/stage-b-2026-10-20-attempt30-result.md`; full sanitized samples:
+`native/boot/attempt30/native-observation.json`.
+
+High control CPU and queued IPC support draw/event-loop investigation. Anonymous
+executable samples need attribution; callbacks are not photon timing. Human app
+completion within the45s window is unverified. Keep one-core/software-rendering,
+SMP entry, bounded DVFS/thermal, independent N1 Wi-Fi and ANS storage open. No
+new live operation or renderer compromise selected. Source-pinned historical
+checklist remains unchanged; consumed result supersedes its NOT RUN heading.
+
+
 ## M1 attempt30 offline gate — PASS, native timing unknown
 
 M1 pulled **`cfebfb7`**, verified the 163,840-byte desktop30 bundle

@@ -2019,3 +2019,29 @@ Evidence: `native/boot/attempt30-m1-offline-2026-10-20.md`.
 Preserve sampler-unavailable errors and partial phases. Callback is not photon
 latency, process CPU covers all compositor threads, and the software sampler
 covers only its main thread. No automatic retry or renderer/clock policy change.
+
+
+### 2026-10-20 · Consume attempt30; profile the expensive draw path before selecting a policy change
+
+**Attempt30 consumed: one native desktop-latency boot/root send/userspace
+bundle delivery PASS**, final `LATENCY_OBSERVED`; no frequency/renderer changes
+or CPU/memory module load. Execution `6e49687`. Two 20-callback controls:
+small medians 256.940/256.346 ms, full 513.491/516.029 ms; compositor process near 97%
+CPU, IPC medians 407.639/407.789 ms. Software main-thread samples mostly anonymous
+executable, not yet attributed to LLVM/Mesa; lost 0, unmapped retained. All 40
+callbacks including warm-ups and 414 IPC samples preserved. Human reports
+prompt cue, accurate typing, delay remains; individual action times unlogged.
+Clock estimate 2.651/2.650 GHz; no thermal/energy data. No kernel fault/M1 panic
+observed. Macintosh HD return confirmed +223.531/600 s; owned processes ended.
+No retry, settings, policy/default/volume, hardware, SMP, storage or Wi-Fi change;
+routine checks waived. Restart is human-reported; measured M1 reader uptime
+20,933 s does not independently establish freshness. Evidence and timing limits:
+`native/boot/stage-b-2026-10-20-attempt30-result.md`; full sanitized samples:
+`native/boot/attempt30/native-observation.json`.
+
+Both tiny and full controls are slow natively, unlike calling the VM tiny case
+a native fast path. Keep all warm-ups/outliers and long-tail human IPC. Main-
+thread anonymous mappings are not proven rasterizer code; precise action and
+presentation timing remain open. No blind renderer/clock change, extra core,
+retry or additional setup. Preserve Macintosh HD, installed entry and waiver
+of routine policy checks. M5 reviews offline before a separately scoped run.
