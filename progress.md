@@ -5,6 +5,27 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: 31E RAM recorder published; CPU1 timeout; safe return
+
+**31E consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution
+`76514f0` after handoff `a79a275`. RAM/UART checks PASS; **EL2/VHE and all 16
+translation probes PASS**. Recorder body/hook/whole-text readback verified.
+**72 mutation intents; both CPU1 starts attempted/acknowledged**. Arrival
+unverified; **93 recorder samples / 465 reads, highest phase 0, no identity,
+error null**; reset/spin **94 samples, no_reset_record_seen**. CPU1 EL/cache bits
+remain unknown, not disabled. No timer requests, counter progress or final
+park verified. Controller exit 1 in 4.587 s; supervisor 5.024 s, no deadline.
+Human returned to Macintosh HD +45.867 s, within 90 s. No retry/reconnect/rollback
+or further target command. **Linux/native SMP/renderer tests NOT RUN**. CPU0
+publication does not establish CPU1 visibility or zero executed instructions.
+Installed boot021/client/macOS/settings unchanged; only session RAM code was
+patched. Routine rechecks waived; no routine M1 restart. M5 next: offline
+entry/visibility review using this richer evidence. 112 pins and 141 image-only
+methods PASS; M1 full-symbol checks explicitly NOT RUN. Preserve receipts.
+Evidence: `native/boot/attempt31e-2026-10-21-result.md` and sanitized final JSON.
+This supersedes frozen pre-execution controller NOT RUN wording.
+
+
 ## 2026-10-21 · M1: early recorder 31E offline readiness PASS
 
 M1 pulled **`a79a275`**; **112 source pins**, exact existing boot021 and
