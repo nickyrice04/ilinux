@@ -5,21 +5,23 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — after census 31A, 2026-10-21
+## Current direction — after 31B preflight refusal, 2026-10-21
 
 Native Omarchy still has one online CPU and software rendering. Attempt30
 and the subsequent VM tracing support prioritizing renderer concurrency;
 the full native physical-interaction delay and efficiency remain unresolved.
 M1's 31A report confirms that CPU0/CPU1 reset-vector mirrors match the installed
-entry. No secondary was started. The
-[current decision](tools/m1n1-client/attempt31b-planning-update.md) supersedes
+entry. 31B refused before allocation/start: our RAM ceiling excluded this
+machine's high-address DRAM. The
+[current review and fix](native/boot/attempt31c/review.md) supersedes
 the older attempt assignments below.
 
 1. CPU1-only start/park controller is implemented and offline-tested against
-   installed boot021. M1 completes [31B intake](tools/m1n1-client/attempt31b-instructions.md),
+   installed boot021 with corrected, independently cross-checked RAM bounds.
+   M1 completes [31C intake](tools/m1n1-client/attempt31c-instructions.md),
    publishes readiness, then the human starts one existing Boot Lab session.
    Verify identity, stack, arrival and two request completions; return to
-   Macintosh HD. No replacement bootloader. **Native31B remains NOT RUN.**
+   Macintosh HD. No replacement bootloader. **Native31C remains NOT RUN.**
 2. After native entry evidence, prepare exact two-core Linux DT/spin-table
    and launcher changes; validate timers, scheduler wakeups and coherency.
 3. Integrate one renderer worker, keep visual settings constant, and measure
@@ -29,7 +31,7 @@ the older attempt assignments below.
 4. Continue GPU, idle/thermal/DVFS, Wi-Fi and storage work toward an independent
    workstation. CPU count alone cannot deliver macOS graphics or energy parity.
 
-31A is consumed, copy-only 31 held, and all macOS/security/default/volume state
+31A and 31B are consumed, copy-only 31 held, and all macOS/security/default/volume state
 is preserved. Routine policy checks remain waived.
 
 ## Historical direction — after native attempt 27, 2026-10-20

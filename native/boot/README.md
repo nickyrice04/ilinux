@@ -1,10 +1,12 @@
-# J716c native handoff — current attempt31B
+# J716c native handoff — current attempt31C
 
-**Current:** use [31B CPU1 instructions](../../tools/m1n1-client/attempt31b-instructions.md)
-and [offline validation](attempt31b/validation.md). M5 preparation PASS; M1
-intake pending; native31B NOT RUN. Existing installed boot021, one CPU1 start
+**Current:** use [31C CPU1 instructions](../../tools/m1n1-client/attempt31c-instructions.md)
+and [31B review/31C validation](attempt31c/review.md). M5 preparation PASS; M1
+intake pending; native31C NOT RUN. 31B stopped before allocation/start because
+of the RAM-range gate; 31C checks the actual high-address memory map.
+Existing installed boot021, one CPU1 start
 and two bounded parked-loop requests, then Macintosh HD. No Linux launch or
-new boot image. Census31A and earlier attempts are consumed. The historical
+new boot image. Census31A, 31B and earlier attempts are consumed. The historical
 attempt28 directions below are context, not the next live command.
 
 ## Historical handoff — attempt 28 CPU observation

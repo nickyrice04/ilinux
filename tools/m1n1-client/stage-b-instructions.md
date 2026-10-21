@@ -1,19 +1,23 @@
-# Current native handoff — 31B CPU1 entry and request test
+# Current native handoff — 31C corrected CPU1 memory gate
 
-Read [attempt31b-instructions.md](attempt31b-instructions.md).
-M5 offline preparation passes; M1 must verify the new source pins, retained
-boot042 package and tests, publish readiness, then wait for the human start.
-**Native 31B is NOT RUN.** Census 31A is consumed; do not replay it separately.
+Read [attempt31c-instructions.md](attempt31c-instructions.md).
+31B stopped before allocation or CPU startup: its address ceiling was below
+this M5's physical DRAM. The new gate checks the actual BootArgs usable range
+against this machine's observed DRAM and the target ADT. CPU1 startup code is
+unchanged. Review and evidence: `native/boot/attempt31c/review.md`.
 
-Use the existing Boot Lab/installed boot021. A small RAM-only controller starts
-CPU1 once, verifies entry and two completed requests, then the human returns
-to Macintosh HD. No Linux launch, new root/image transfer, chainload,
-installation or security/default/volume change. Routine policy checks waived.
+M5 offline preparation PASS: 60 Python methods and the real pinned parsers/
+high-address serializer PASS. **Native 31C NOT RUN; M1 intake pending.**
+M1 verifies the new source manifest and retained boot042 package, publishes
+readiness, then waits for a fresh human start. Existing Boot Lab/boot021,
+one CPU1 entry/two-request test, immediate Macintosh HD return.
 
-The new controller uploads a 192-byte original helper to an allocated 16 KiB RAM
-block and issues two CPU1 start writes. It is not a read-only census. The old
-copy-only 31 pair/profile and rebuilt m1n1 candidate remain held. Successful
-bootloader entry does not establish native Linux SMP, speed or efficiency.
+Both 31A and 31B are consumed; preserve their receipts. 31C uses a distinct
+fixed directory and literal confirmation. No new image/root transfer, Linux
+launch, chainload, installation or security/default/volume change. Routine
+policy checks remain waived. Old copy31/rebuilt m1n1 remain held.
 
-Use `native/boot/attempt31b/source-sha256.txt`. The 31A manifest remains historical
-and intentionally pins an older version of this pointer; do not regenerate it.
+Use `native/boot/attempt31c/source-sha256.txt`. Earlier manifests remain
+historical and pin earlier versions of this pointer; do not regenerate them.
+Bootloader entry success would precede two-core Linux/timer/IPI/coherence and
+renderer work; it is not proof of Linux SMP, performance or efficiency.

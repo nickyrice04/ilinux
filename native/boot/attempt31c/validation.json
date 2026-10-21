@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-21",
+  "scope": "31C offline validation; native NOT RUN",
+  "reviewed_m1_report": "4fb684c",
+  "reviewed_m1_execution": "a6ced1708c87800d94a99c8046e85a6e7b33c217",
+  "confirmed_defect": "31B physical-address ceiling excludes this machine DRAM aperture",
+  "native31b_rejected_numeric_fields": "not retained; exact values unknown",
+  "observed_dram": {
+    "base_hex": "0x10000000000",
+    "size_hex": "0x2000000000",
+    "source": "read-only IODeviceTree chosen, only dram-base/dram-size emitted",
+    "capacity_gib": 128
+  },
+  "bootargs_revisions_tested": [
+    2,
+    3
+  ],
+  "bootargs_phys_base_byte_offset": 16,
+  "bootargs_mem_size_byte_offset": 24,
+  "client_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "shared_controller_sha256": "9fea909adeb0bdef74a5c544af6c0b95f1ecda4740a95d4ff683c91238a6bced",
+  "new_controller_sha256": "8b69e15e248b596ad1f51b7b013c2a0e72d8096d65afe8815166998e45fca567",
+  "shared_helper_sha256": "dc046b303191b9a4fcb26a9e689fa4ec7b936dd1ae67dc5fd9b81c4edf4bf8aa",
+  "source_provenance": {
+    "src/xnuboot.h": "96a59a1fbfcddbd183de537259eca2d8f60851b356ccd2b88a15569d529ed3d4",
+    "src/memory.c": "a3a07cf06c0b16c0964c0e894a11914fd62900a1494b4e3cfaa184e2642b6609",
+    "src/memory.h": "2031598add8752e061b087935aefe0fa8cc69062bb9c97833308e300d9abb199",
+    "src/kboot.c": "7c5c2c96e4629bcb8baeee5bb8a93df0b6bf24bfc71e5193873cf92320f14cba",
+    "src/arm_cpu_regs.h": "c7991a1948e03159dbe6d576ee9560552915fa17d33efac65f649f5c720ef514",
+    "proxyclient/m1n1/tgtypes.py": "4faaf21d5d5d093d246cc988cf0693ff0b3945d832b5ff61386317572300055e",
+    "proxyclient/m1n1/adt.py": "cda8cc68e23a7b3c044259d0a33bd50c2126fe4fac80a3f25852ab8de348bff0",
+    "proxyclient/m1n1/proxy.py": "7c30c574b7925de202b352ac752735159316d70d1d498dac561df783985d7f1b"
+  },
+  "vm": {
+    "job": 60,
+    "run_record": "vzjob: start=2026-10-21T20:32:29Z end=2026-10-21T20:32:34Z exit=0",
+    "kernel": "Linux 7.1.6-vzrun2 aarch64",
+    "python": "3.14.8",
+    "vcpus": 12,
+    "memory_gib": 24,
+    "source_mounts": "read-only"
+  },
+  "tests": {
+    "vm_python_methods": 60,
+    "host_new_methods": 14,
+    "result": "PASS",
+    "actual_bootargs_adt_parsers": "PASS",
+    "high_address_pinned_client_serializer": "PASS",
+    "frozen_cpu1_sequence": "unchanged",
+    "new_c_compilation": "not applicable; prior helper build/ARM64/sanitizer evidence retained from job 059"
+  },
+  "initial_offline_failures": [
+    "Synthetic ADT lacked parser-required PMGR node.",
+    "Synthetic PMGR needed two device records; fixed fixture, not production guard."
+  ],
+  "limits": [
+    "Synthetic BootArgs encode the observed aperture, not saved native bootargs.",
+    "CPU/PMGR/cache response model is not native execution.",
+    "Existing topology parser evidence retained; high-address serializer uses synthetic topology records.",
+    "31C native CPU1, Linux SMP, performance and energy NOT RUN."
+  ]
+}

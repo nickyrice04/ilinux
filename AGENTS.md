@@ -99,6 +99,27 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### 2026-10-21 · M5 reviewed 31B; corrected RAM gate ready offline as 31C
+
+31B report `4fb684c`: STOP before allocation/start, zero mutation requests,
+safe Macintosh HD return. Confirmed controller defect: its <1 TiB address
+ceiling excludes this machine's DRAM, observed at 1 TiB with a 128 GiB span.
+Exact rejected numeric fields were not recorded in 31B; no CPU/RAM fault is
+established. Read-only chosen data, earlier native evidence and pinned public
+bootloader source support the correction; fresh REA was unnecessary here.
+
+31C retains the frozen 31B CPU1 sequence, verifies BootArgs' usable interval
+against this exact machine aperture and matching target ADT, and records
+boolean refusal predicates. Separate receipt/confirmation; preserve 31B.
+60 Python methods, real BootArgs/ADT and high-address pinned-client tests PASS
+in job 060; 14 new host methods PASS. No native action or macOS/settings change.
+**M1 intake pending; native31C NOT RUN.** Follow
+`tools/m1n1-client/attempt31c-instructions.md`; publish offline readiness, wait
+for a fresh human start, one CPU1 trial then Macintosh HD. No Linux continuation.
+Review: `native/boot/attempt31c/review.md`. Successful entry precedes two-core
+Linux/timer/IPI/coherence validation and renderer threading. Policy rechecks
+remain waived; performance/energy parity is still unproven.
+
 ### Latest M1 native result — 31B consumed at preflight, 2026-10-21
 
 **31B consumed: STOP / preflight / `ram_bounds`**, execution `a6ced17` after
