@@ -6,7 +6,36 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 intake — 31N offline ready; fresh start next, 2026-10-22
+### Current M1 result — 31N consumed; M5 interpretation next, 2026-10-22
+
+**Observed:** one native31N session consumed on readiness/execution `a4b7840`,
+release `adc9542`: **STOP / cpu1_arrival / cpu1_arrival_timeout**, exits1/1.
+Single local pair: durable intent, dispatch, reply/token and diagnostics all
+true; **START_PAIR_COMPLETION_CONFIRMED, acknowledged2, possible stores[2]**.
+No individually observed store attempts, atomicity or hardware timing claim.
+Pair permissions/publication/owned-line initialization PASS; all CPU0 controls
+and cache qualification DMinLine64/CWG64 PASS. Paired vector/cold each **126
+samples/756 reads/126 maintenance acknowledgments, phase0/not_committed,
+errors null**; all254 maintenance requests acknowledged. Device vector64/320,
+cold128/512 also phase0/not_committed; separate arrival_samples63 retained.
+Three actual PS/state pairs,6 reads each: before_start, after_second_start,
+final; **after_first_start explicitly omitted**, not zeros. CPU1 actual0,15,15
+and opaque byte0,2,2; CPU0 steady15/2. **412 mutation intents; callbacks0/0**.
+Controller6.013s/supervisor6.685s, no outer deadline/journal/finalization error.
+Human returned to usual Macintosh HD+41.286s, within90s; no retry or extra command.
+
+CPU1 execution/effective entry remain unverified. Pair completion, power changes
+and CPU0 controls do not prove CPU1 fetch; negative cached/maintained records
+cannot exclude execution or establish cache cause. **Linux boot/native SMP NOT
+RUN**. All330/frozen M306/L281/K254/J226/I202/H186/host6 pins, prior receipts,
+boot021/boot042/client57a9339 unchanged. No new MMIO/reset address, firmware replay,
+extra core or settings change. Original Full/lab Permissive/Macintosh HD default
+remain last reported, not rechecked. M5 interprets before a separate proposal;
+no automatic follow-up. Evidence: `native/boot/attempt31n-2026-10-22-result.md`
+and sanitized final JSON.
+
+
+### Historical M1 intake — 31N offline ready; fresh start next, 2026-10-22
 
 M1 independently verified release **`adc9542`**: **330 pins / 932 image-only
 methods PASS**, no skips/repairs; both documented commands and retained13-file
@@ -29,7 +58,7 @@ fresh human start/90s timer. No routine M1 restart/policy/settings change.
 Evidence: `native/boot/attempt31n-m1-offline-2026-10-22.md`.
 
 
-### Current — M5 releases 31N; M1 independent intake next, 2026-10-22
+### Historical — 31N release before independent intake, 2026-10-22
 
 31M's controls passed but no CPU1 entry record committed identity. The power
 transition and two acknowledged starts are not execution evidence. GitHub source
