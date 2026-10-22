@@ -3312,3 +3312,30 @@ replay conditional firmware programs. Preserve all consumed attempts. A positive
 expected identity qualifies later rendezvous research, not an automatic all-core
 boot; a negative closes this variant and returns investigation to effective
 reset selection/retained state with independently established prerequisites.
+
+
+### 2026-10-22 · Accept independent31N intake before fresh human start
+
+M1 independently verified release **`adc9542`**: **330 pins / 932 image-only
+methods PASS**, no skips/repairs; both documented commands and retained13-file
+package check exit0. reviewed_layout_only, Python3.13.5; **M1 full symbols NOT RUN**,
+not supplied. Manifest `00dea9b0…523e70a`; clean client57a9339, boot021 unchanged.
+Frozen M306/L281/K254/J226/I202/H186/host6 and all consumed receipts/offline
+evidence unchanged. **0 discovery/USB/target operations; six31N live-use files
+absent; native31N/Linux SMP NOT RUN, invocations0; CPU1 execution unverified.**
+
+Reviewed fixed44-byte pair, explicit owned-line initialization, permission/
+publication/freshness gates, completion uncertainty and three-phase adapter.
+Same two32-bit stores/value/order, now one CPU0 call; no host work or abort
+opportunity between stores, interrupts unchanged, not atomic. Only token plus
+clean diagnostics confirms both; uncertain completion remains0/1/2 possible
+stores without follow-up query/retry. No fabricated after-first snapshot.
+CPU1 prefixes/paired observers unchanged; partial/positive/error stops; no
+callbacks, extra core, new MMIO/reset address or Linux continuation. No code-level
+blocker found for the bounded hypothesis test. Publish readiness then await
+fresh human start/90s timer. No routine M1 restart/policy/settings change.
+Evidence: `native/boot/attempt31n-m1-offline-2026-10-22.md`.
+
+**Decision:** Preserve all consumed evidence. A single post-publication human
+start and independent90s timer precede native dispatch; no automatic retry,
+cleanup RPC or Linux continuation follows any outcome.
