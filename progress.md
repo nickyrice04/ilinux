@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: 31J independent intake and retained runner PASS
+
+M1 pulled **`ad9892e`**; **226 source pins /579 image-only methods PASS**,
+no skips/repairs. Both documented offline commands and retained13-file package
+check exit0; clean client `57a9339`, existing boot021 unchanged. Manifest
+`360c1939…f6fe765`; mode `reviewed_layout_only`, M1 full-symbol checks **NOT RUN**.
+Frozen31I202/host6 pins and prior31B–31I plus separate31J-host evidence unchanged.
+**No real discovery/USB; all six31J live-use files absent; invocations0;
+native31J/Linux SMP NOT RUN; CPU1 unverified.** New boundary suites included:
+identity16,host19,connection24,wrapper64,intake6,supervisor21 PASS. Publish before
+fresh human start/independent90s timer. Single supervisor includes bounded4-query/
+15s pre-open discovery, strict identity/path/source gates, separate connection
+and native journals, one serial attempt, unchanged31I CPU operations. No routine
+M1 restart/policy check, image transfer, new hardware write, extra core or Linux
+continuation. First fault stops; immediate Macintosh HD return, no reconnect.
+Evidence: `native/boot/attempt31j-m1-offline-2026-10-21.md`.
+
+
 ## 2026-10-21 · M5: 31J connection boundary fixed and validated offline
 
 **Discovered:** M1 host check `ed3a63a` (execution `aa3f668`) returned empty

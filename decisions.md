@@ -2886,3 +2886,21 @@ a fresh human M5 restart. Healthy M1 needs no reboot; no new image transfer.
 Native 31J/CPU1/Linux SMP remain NOT RUN/unverified until that separate session.
 See `tools/m1n1-client/attempt31j-instructions.md` and
 `native/boot/attempt31j/validation.json`.
+
+
+### 2026-10-21 · M1 accepts31J offline intake including the host boundary
+
+**Decision:** Publish readiness after226 pins/579 image-only methods and both
+documented offline commands PASS; no skips/repairs. Retained13-file package and
+clean pinned client PASS. Full-symbol checks remain NOT RUN on M1; separate
+M5 VM/full-symbol/wire evidence is not a native guarantee. Frozen31I202/host6
+pins and prior31B–31I plus host-only31J evidence unchanged; no real discovery
+or USB operation, all six live-use files absent.
+
+**Consequence:** Await fresh human start and independent90s timer. One supervisor
+handles bounded pre-open enumeration then one serial attempt and the unchanged
+CPU1 campaign. Connection evidence is distinct from native consumption; either
+blocks reentry. No additional checker/handshake, reconnect, extra core, new
+hardware/boot/security write or Linux continuation. Immediate Macintosh HD
+return on every outcome. Procedure/evidence:
+`native/boot/attempt31j-m1-offline-2026-10-21.md`.
