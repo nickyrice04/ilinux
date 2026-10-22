@@ -5,6 +5,25 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: 31H independent offline intake PASS
+
+M1 pulled **`c89faf7`**; **186 source pins** and **344 image-only methods
+PASS**, no skips/fixes. Both documented offline commands exit 0; retained-package
+intake verifies all 13 files and the existing boot021 image. Clean client
+`57a9339`; manifest `00fefcb2…defc155`. Symbol mode `reviewed_layout_only`;
+full-symbol checks **NOT RUN** on M1. Hardware operations 0, restart_ready false
+(expected), no real 31H receipts; prior 31B–31G evidence digests unchanged.
+**Native 31H/Linux SMP NOT RUN; CPU1 entry unverified; attempts 0.**
+Publish before fresh human start with independent 90 s timer. Healthy M1 needs
+no routine restart or policy recheck. Same CPU1 starts/recorder; existing two
+reset-mirror reads gain strict format gates, with at most eight added fixed
+32-bit core-state reads. Register access and t6050 semantics remain unverified;
+opaque low bytes cannot prove execution/reset/running state. No extra core,
+retry/reconnect, new power/security write or Linux continuation. Installed
+boot021/client/macOS/settings intact. Evidence:
+`native/boot/attempt31h-m1-offline-2026-10-21.md`.
+
+
 ## 2026-10-21 · M5:31H firmware REA and bounded core-state campaign
 
 **31H is ready for M1 offline intake; native31H/CPU1/Linux SMP NOT RUN.**

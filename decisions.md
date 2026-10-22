@@ -2706,3 +2706,20 @@ existing lab. One90-second session and immediate macOS return; no new transfer,
 installation, policy check or routine helper restart. Outcome table drives the
 next offline implementation. All Apple material stays private; only original
 behavioral findings/code and sanitized evidence are published.
+
+
+### 2026-10-21 · M1 accepts 31H intake within the documented image-only limits
+
+**Decision:** Publish independent offline readiness before a fresh human start.
+Both documented commands and retained-package intake exit 0; 186 pins and 344
+methods PASS without skips or source repairs. Complete symbol checks remain
+NOT RUN on M1; reviewed layout is not hardware validation. Existing 31B–31G
+evidence is unchanged, and no real 31H receipt exists.
+
+**Consequence:** One supervised 90-second-bounded session only after the human
+confirms the fresh proxy session and timer. Same CPU1 starts and recorder,
+strict classification of the existing two reset reads, and at most eight opaque
+core-state reads. Access/semantics are unverified; values do not establish
+execution/reset release. Immediately return to Macintosh HD on any outcome.
+No retry, reconnect, extra core, new settings/write or Linux continuation.
+Details: `native/boot/attempt31h-m1-offline-2026-10-21.md`.
