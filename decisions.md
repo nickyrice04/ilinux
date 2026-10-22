@@ -2993,3 +2993,26 @@ negative markers do not exclude either path. No fault cleanup/reconnect/retry,
 installed boot/settings change or Linux continuation. Return immediately to
 Macintosh HD on every outcome. Evidence:
 `native/boot/attempt31k-m1-offline-2026-10-22.md`.
+
+
+### 2026-10-22 · Consume31K; retain positive control and negative entry prefixes
+
+**Observed:** on `db9a79d` after `7043b17`, connection/reset/probes/publication
+PASS. Returning CPU0 control24 reads/2 acknowledged stores,marker/canaries/
+known-zero restoration verified in14.136ms. Cold183 samples/732 reads and vector
+91 samples/455 reads stayed phase0,identity not committed,errors null. Both
+CPU1 starts attempted/acknowledged,95 mutation intents; three PS/state pairs
+complete,CPU1 actual0→15/opaque0→2 after second start,CPU0 steady15/2.
+
+**Decision:** Respect `cpu1_arrival_observation_deadline`, distinct from natural
+expiry; no final PS/state pair or trailing target read is authorized. Positive
+CPU0 control narrows its own recording-path failure, not CPU1 visibility. No
+marker cannot exclude either entry path,fault before first store or publication
+failure. Effective entry/CPU1 execution remain UNKNOWN/unverified. M5 reviews
+these prefixes before another separately reviewed campaign; no guessed redirect,
+new power/reset operation,extra core,longer timeout or retry.
+
+**Return:** exits1/1,5.439/6.035s,no supervisor deadline; human Macintosh HD
+confirmed +64.898s. No post-outcome target command/settings change. No callbacks/
+park/Linux SMP. Installed boot021/client and all earlier pins/evidence retained.
+Report: `native/boot/attempt31k-2026-10-22-result.md` and sanitized final JSON.

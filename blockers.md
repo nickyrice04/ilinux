@@ -1,6 +1,29 @@
 # Blockers
 
-## Current — 31K independently ready; natural-entry evidence pending
+## Current — CPU0 recording control proven; CPU1 entry/fetch/store still unknown
+
+**31K native consumed: STOP / `cpu1_arrival` /
+`cpu1_arrival_observation_deadline`**, execution `db9a79d`,handoff `7043b17`.
+First query verified primary; one serial attempt/connection/source/reset gates
+PASS,transport closed. **CPU0 control PASS:24 reads,2 acknowledged stores,
+marker/canaries/restoration verified,14.136ms**; this does not test CPU1 visibility.
+Cold/vector publication and all new probes PASS; **cold183 samples/732 reads,
+vector91 samples/455 reads,all phase0,no committed identity,errors null**.
+**95 mutation intents; both CPU1 starts attempted/acknowledged**. Three PS/state
+pairs complete,6 reads each: CPU1 actual0,0,15/opaque byte0,0,2;CPU0 steady15/2.
+No final pair after the in-flight observation deadline; terminal error null
+means no terminal sampling error was recorded, not a completed final pair.
+No callbacks/park; **Linux/native SMP NOT RUN; effective entry UNKNOWN**.
+Controller5.439s/supervisor6.035s,exits1/1,no supervisor deadline/finalization
+error. Human usual Macintosh HD +64.898s,within90s. No retry/reconnect/further
+target command/settings change. Frozen254/J226/I202/host6 and earlier evidence
+unchanged;716 image-only methods PASS,M1 full symbols NOT RUN. M5 next interprets
+the positive CPU0 control and negative marker prefixes without excluding either
+CPU1 path. Report/final JSON: `native/boot/attempt31k-2026-10-22-result.md`.
+Frozen pre-execution NOT RUN text is historical; this result supersedes it.
+
+
+## Historical — 31K independent readiness before the consumed session
 
 M1 pulled **`7043b17`**; **254 pins /716 image-only methods PASS**, no skips/
 repairs. Both documented offline commands and retained13-file package check
