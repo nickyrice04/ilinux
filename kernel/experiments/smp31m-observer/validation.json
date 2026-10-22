@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "scope": "static_pinned_open_source_cache_dispatch",
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "m1n1_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "independent_decoder": "Apple LLVM version 21.0.0",
+  "ranges": [
+    {
+      "name": "civac_body",
+      "start": "0x277a0",
+      "end_exclusive": "0x27820",
+      "instruction_words": 32,
+      "sha256": "51e183b25d9a7181da7919db82f5454761ee451dee102ee4dde9021def925d4e"
+    },
+    {
+      "name": "proxy_entry",
+      "start": "0x2cd80",
+      "end_exclusive": "0x2cdb0",
+      "instruction_words": 12,
+      "sha256": "d29f9c90e098d8fb2ff06a7ec3147741d077346abb1acbb658f5a7ad3afad8f6"
+    },
+    {
+      "name": "proxy_dispatch",
+      "start": "0x2cf18",
+      "end_exclusive": "0x2cf54",
+      "instruction_words": 15,
+      "sha256": "b46fad8e67e7aaa7128708f534aa83fae3ceba066b31089236a2664c9f5d730b"
+    },
+    {
+      "name": "civac_case",
+      "start": "0x2d454",
+      "end_exclusive": "0x2d470",
+      "instruction_words": 7,
+      "sha256": "16a0d07125af8cea4445dd9af03c5c674aa89087bc5c3e243d7c908d84586e74"
+    },
+    {
+      "name": "common_epilogue",
+      "start": "0x2ce48",
+      "end_exclusive": "0x2ce64",
+      "instruction_words": 7,
+      "sha256": "1919d954535424bbabaf6d96ec4e3d0063da7a4d8b4fca259eb00faf18119f4c"
+    }
+  ],
+  "checked_instruction_words": 73,
+  "byte_mismatches": 0,
+  "decoded_opcode": 778,
+  "decoded_dispatch_target": "0x2d454",
+  "native_execution": "NOT RUN",
+  "ctr_leaf_independent_assembly": "PENDING separate VM",
+  "observer_unit_test_methods": 21,
+  "pinned_audit_test_methods": 3,
+  "tests_platform": "macOS",
+  "tests_include_native_hardware": false
+}

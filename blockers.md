@@ -1,6 +1,49 @@
 # Blockers
 
-## Current — 31L consumed; CPU1 entry and visibility unresolved
+## Current — CPU1 execution unknown; 31M ready for independent M1 intake
+
+31L is consumed. Both CPU0 controls and the two CPU1 start acknowledgements
+passed, but neither Normal nor Device records committed CPU1 identity. Power
+state changes are not execution evidence. The audit found no wrong start mask,
+entry branch or sampled-field offset.
+
+31M addresses a concrete observation limitation: CPU0 can keep reading a cached
+zero after a secondary store. It retains the exact CPU1 prefixes and two starts,
+then pairs cached reads with bounded clean-and-invalidate and another read of
+the same owned record. Cache maintenance is issued by CPU0 and may propagate
+through shareable caches. CPU0 regime, geometry, live dispatch bindings, complete
+owned granules and a separate maintenance control must pass before starts.
+Any partial/positive/error stops; only a committed expected identity proves CPU1
+prefix execution. A maintained positive does not establish cache causality, and
+all-zero still cannot exclude execution. No callbacks are authorized.
+
+Three fresh REA/Ghidra queries and 378 independently checked instruction words
+separated peripheral reset handling and cluster error capture from application
+CPU1 startup. They qualify no new MMIO operation. Original behavioral findings
+are public; proprietary bytes and decompiler output remain ignored.
+
+**Offline PASS:** VM072 completed 893 full-symbol methods, 870 image-only methods,
+46 actual pinned-client synthetic scenarios and one independent GNU assembly
+comparison of the original CTR leaf. New host suites also pass. Source closure:
+306 files, `b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97`.
+Frozen H/I/J/host/K/L closures and all consumed receipts are unchanged. See
+`native/boot/attempt31m/validation.json` for corrections, setup history and limits.
+
+**M1 next:** follow `tools/m1n1-client/attempt31m-instructions.md`, run independent
+offline intake and publish readiness before a fresh human-started lab session.
+Reuse installed boot021 and retained boot042; no new image transfer or M1 reboot.
+One supervised session, immediate Macintosh HD return on any outcome, no retry.
+Native31M, CPU1 execution and Linux SMP remain unverified. macOS, volumes,
+installed boot images and security/default settings are unchanged this turn;
+no repeated policy check is requested.
+
+The target topology remains 12 Performance and 6 Super cores. This attempt tests
+CPU1 in CPU0's active Performance cluster. Stable secondary execution, another
+cluster, all-core timer/IPI/coherency tests, and measured scheduling/frequency/
+energy performance remain subsequent gates; online core count alone is not parity.
+
+
+## Historical evidence — 31L consumed; CPU1 entry and visibility unresolved
 
 **Observed:** one authorized31L session consumed on execution/readiness
 `c7608c7`, release `11cc2af`: **STOP / cpu1_arrival / cpu1_arrival_timeout**.

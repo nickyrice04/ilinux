@@ -1,0 +1,526 @@
+{
+  "schema": "ilinux-31m-firmware-static-v1",
+  "date": "2026-10-22",
+  "status": "PASS_BOUNDED_STATIC_REVIEW",
+  "native_execution": "NOT_RUN",
+  "decoded_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_live_address": false,
+  "llvm_version": "Apple LLVM version 21.0.0",
+  "queries": [
+    {
+      "label": "cpu-diagnostic",
+      "start": "0x100c1ae86d0",
+      "end_exclusive": "0x100c1ae87a4",
+      "code_bytes": 212,
+      "instruction_words": 53,
+      "source_sha256": "8233eeb16584996604d2420455c20d6a396c8175b320b28c0ada72227d33204a",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0,
+      "dossier_sha256": "27042187951ad9c11be4ba154effba80fe38d9c374d4c2b7eee97b528f9ca296",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "exit": 0,
+      "seconds": 57.978744736,
+      "pcode_operations": 64,
+      "out_of_body_operations": 0,
+      "pcode_truncated": false,
+      "provider_removed_blocks": false,
+      "whole_function_pseudocode_accepted": false,
+      "interpretation": "Bounded original-byte/LLVM behavior; no runtime reachability claim"
+    },
+    {
+      "label": "early-context",
+      "start": "0x100c1aa9ddc",
+      "end_exclusive": "0x100c1aa9e18",
+      "code_bytes": 60,
+      "instruction_words": 15,
+      "source_sha256": "a703856fece21256ad08d86ddb7084faa168cb1c0493a40133490d922d29b5e3",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0,
+      "dossier_sha256": "f8c6bf8dc29882c0fdd78d67fe8fd8209dcf8e7f725b3241b7b6833948cdb233",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "exit": 0,
+      "seconds": 57.263450444,
+      "pcode_operations": 15,
+      "out_of_body_operations": 0,
+      "pcode_truncated": false,
+      "provider_removed_blocks": false,
+      "whole_function_pseudocode_accepted": false,
+      "interpretation": "Bounded original-byte/LLVM behavior; no runtime reachability claim"
+    },
+    {
+      "label": "early-selector",
+      "start": "0x100c1aaba28",
+      "end_exclusive": "0x100c1aabaa8",
+      "code_bytes": 128,
+      "instruction_words": 32,
+      "source_sha256": "578980c2dfa51dc0077d8c904426f0d057dd5a67390f64f85aada46a45797c78",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0,
+      "dossier_sha256": "bc58a7f1d0e9d065b48b3f09293e2ff14f9b6363a7948a91172a225099b9e080",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "exit": 0,
+      "seconds": 56.95368206799999,
+      "pcode_operations": 34,
+      "out_of_body_operations": 0,
+      "pcode_truncated": false,
+      "provider_removed_blocks": false,
+      "whole_function_pseudocode_accepted": false,
+      "interpretation": "Bounded original-byte/LLVM behavior; no runtime reachability claim"
+    }
+  ],
+  "bounded_blocks": [
+    {
+      "label": "snapshot-wrapper",
+      "start": "0x100c1ae87a4",
+      "end_exclusive": "0x100c1ae8808",
+      "code_bytes": 100,
+      "instruction_words": 25,
+      "source_sha256": "981cc72afa0c60d43247cf9b1a6e44deea50c1c5b00185b3bf557e25bd6533c3",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "snapshot-save-arguments",
+      "start": "0x100c1ae9ca8",
+      "end_exclusive": "0x100c1ae9cbc",
+      "code_bytes": 20,
+      "instruction_words": 5,
+      "source_sha256": "847abc393d1729cf121aa33d5a4fc135a63062e2e31517c483503344506f8abd",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "snapshot-return-arguments",
+      "start": "0x100c1ae9bc8",
+      "end_exclusive": "0x100c1ae9bdc",
+      "code_bytes": 20,
+      "instruction_words": 5,
+      "source_sha256": "af22ea89c375ea31f5f7fea3e9802a21431523adcbc2b2764efc55d770849f4b",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "snapshot-cluster-getter",
+      "start": "0x100c1ada800",
+      "end_exclusive": "0x100c1ada868",
+      "code_bytes": 104,
+      "instruction_words": 26,
+      "source_sha256": "fcdf7f29be46d8eb099f8c9ce26e837cd36e56859b5a627e9a44e46ce4fc9262",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "direct-mpidr-getter",
+      "start": "0x100c1cafea0",
+      "end_exclusive": "0x100c1cafea8",
+      "code_bytes": 8,
+      "instruction_words": 2,
+      "source_sha256": "24f9b8bc832055d0f2b5e17e62e294a008bba384c5830fe90899f1f3074606ff",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "serror-capture-prefix",
+      "start": "0x100c1cafff4",
+      "end_exclusive": "0x100c1cb002c",
+      "code_bytes": 56,
+      "instruction_words": 14,
+      "source_sha256": "64b951da184cf566b2fcc57f596bb26ac25fe83788f1d1b92f8e42fa98a88a1d",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "snapshot-serialization",
+      "start": "0x100c1ca5d5c",
+      "end_exclusive": "0x100c1ca5de4",
+      "code_bytes": 136,
+      "instruction_words": 34,
+      "source_sha256": "3a3317062ad9b8efc8571b7fb117d610b4e2baed3846221575e99d855991297a",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "early-locked-store",
+      "start": "0x100c1aaa664",
+      "end_exclusive": "0x100c1aaa8a4",
+      "code_bytes": 576,
+      "instruction_words": 144,
+      "source_sha256": "2261937fa41b6474c8b52d97edb73ed5b374e3af552d810d3c438e61e4343e62",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "descriptor-dispatch",
+      "start": "0x100c1aabaa8",
+      "end_exclusive": "0x100c1aabadc",
+      "code_bytes": 52,
+      "instruction_words": 13,
+      "source_sha256": "2ab5c60cded584cc3a6130434b43b68caa8cab2c840af83271cd7173bedba18d",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "context-id-mask",
+      "start": "0x100c1aab93c",
+      "end_exclusive": "0x100c1aab948",
+      "code_bytes": 12,
+      "instruction_words": 3,
+      "source_sha256": "454127a10d27f3b96242da0d413012eb7917db804098a9ddf440dd304bb76c88",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "reset-window-thunk",
+      "start": "0x100c1aab970",
+      "end_exclusive": "0x100c1aab97c",
+      "code_bytes": 12,
+      "instruction_words": 3,
+      "source_sha256": "bfd561643edfc296dd2a1e01bf479a26a52735794681606495a82580f53b597d",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "reset-window-address-combine",
+      "start": "0x100c1aab92c",
+      "end_exclusive": "0x100c1aab93c",
+      "code_bytes": 16,
+      "instruction_words": 4,
+      "source_sha256": "53e808bfdb4292ec9e076d593e11f3a560a9d3fddd3b6d08d86b870208bdca6d",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    }
+  ],
+  "checked_unique_instruction_words": 378,
+  "checked_unique_code_bytes": 1512,
+  "context_table": {
+    "address": "0x100c1e253b0",
+    "entries": 75,
+    "stride": 496,
+    "bytes": 37200,
+    "sha256": "ff095382036fd15b9c5ea8405f63e98a2d7e3ac5883b6774852fe209f66ca611",
+    "valid_entries": 46,
+    "nonzero_type_entries": [
+      {
+        "index": 1,
+        "type": "0x40",
+        "descriptor_base": "0x505e00000",
+        "reset_window_base": "0x505800000"
+      },
+      {
+        "index": 2,
+        "type": "0x20",
+        "descriptor_base": "0x502600000",
+        "reset_window_base": "0x502000000"
+      },
+      {
+        "index": 3,
+        "type": "0x40",
+        "descriptor_base": "0x28c600000",
+        "reset_window_base": "0x28c000000"
+      },
+      {
+        "index": 4,
+        "type": "0x40",
+        "descriptor_base": "0x509600000",
+        "reset_window_base": "0x509000000"
+      },
+      {
+        "index": 5,
+        "type": "0x20",
+        "descriptor_base": "0x419600000",
+        "reset_window_base": "0x419000000"
+      },
+      {
+        "index": 6,
+        "type": "0x40",
+        "descriptor_base": "0x290600000",
+        "reset_window_base": "0x290000000"
+      },
+      {
+        "index": 7,
+        "type": "0x40",
+        "descriptor_base": "0x2283e00000",
+        "reset_window_base": "0x2283800000"
+      },
+      {
+        "index": 8,
+        "type": "0x20",
+        "descriptor_base": "0x2302600000",
+        "reset_window_base": "0x2302000000"
+      },
+      {
+        "index": 9,
+        "type": "0x20",
+        "descriptor_base": "0x581600000",
+        "reset_window_base": "0x581000000"
+      },
+      {
+        "index": 10,
+        "type": "0x40",
+        "descriptor_base": "0x284e00000",
+        "reset_window_base": "0x284800000"
+      },
+      {
+        "index": 12,
+        "type": "0x40",
+        "descriptor_base": "0x48ae00000",
+        "reset_window_base": "0x48a800000"
+      },
+      {
+        "index": 16,
+        "type": "0x40",
+        "descriptor_base": "0x294600000",
+        "reset_window_base": "0x294000000"
+      },
+      {
+        "index": 17,
+        "type": "0x100",
+        "descriptor_base": "0x2a1000000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 18,
+        "type": "0x100",
+        "descriptor_base": "0x2a9000000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 19,
+        "type": "0x100",
+        "descriptor_base": "0x2a1200000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 20,
+        "type": "0x100",
+        "descriptor_base": "0x2a9200000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 23,
+        "type": "0x40",
+        "descriptor_base": "0x23a3e00000",
+        "reset_window_base": "0x23a3800000"
+      },
+      {
+        "index": 24,
+        "type": "0x40",
+        "descriptor_base": "0x2b2e00000",
+        "reset_window_base": "0x2b2800000"
+      },
+      {
+        "index": 25,
+        "type": "0x40",
+        "descriptor_base": "0x392e00000",
+        "reset_window_base": "0x392800000"
+      },
+      {
+        "index": 26,
+        "type": "0x40",
+        "descriptor_base": "0x302e00000",
+        "reset_window_base": "0x302800000"
+      },
+      {
+        "index": 27,
+        "type": "0x40",
+        "descriptor_base": "0x306e00000",
+        "reset_window_base": "0x306800000"
+      },
+      {
+        "index": 28,
+        "type": "0x100",
+        "descriptor_base": "0x381000000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 29,
+        "type": "0x100",
+        "descriptor_base": "0x381200000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 30,
+        "type": "0x100",
+        "descriptor_base": "0x389000000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 31,
+        "type": "0x100",
+        "descriptor_base": "0x389200000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 33,
+        "type": "0x40",
+        "descriptor_base": "0x48e600000",
+        "reset_window_base": "0x48e000000"
+      },
+      {
+        "index": 34,
+        "type": "0x100",
+        "descriptor_base": "0x2a3000000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 35,
+        "type": "0x100",
+        "descriptor_base": "0x2ab000000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 36,
+        "type": "0x100",
+        "descriptor_base": "0x383000000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 37,
+        "type": "0x100",
+        "descriptor_base": "0x38b000000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 39,
+        "type": "0x100",
+        "descriptor_base": "0x415c00000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 40,
+        "type": "0x100",
+        "descriptor_base": "0x415e00000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 41,
+        "type": "0x100",
+        "descriptor_base": "0x415a00000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 42,
+        "type": "0x100",
+        "descriptor_base": "0x415800000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 45,
+        "type": "0x40",
+        "descriptor_base": "0x291600000",
+        "reset_window_base": "0x291000000"
+      },
+      {
+        "index": 46,
+        "type": "0x40",
+        "descriptor_base": "0x2302e00000",
+        "reset_window_base": "0x2302800000"
+      },
+      {
+        "index": 47,
+        "type": "0x101",
+        "descriptor_base": "0x582780000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 50,
+        "type": "0x101",
+        "descriptor_base": "0x395d00000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 64,
+        "type": "0x101",
+        "descriptor_base": "0x2285440000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 65,
+        "type": "0x100",
+        "descriptor_base": "0x4415c00000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 66,
+        "type": "0x100",
+        "descriptor_base": "0x4415e00000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 67,
+        "type": "0x100",
+        "descriptor_base": "0x4415a00000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 68,
+        "type": "0x100",
+        "descriptor_base": "0x4415800000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 71,
+        "type": "0x100",
+        "descriptor_base": "0x288b00000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 72,
+        "type": "0x101",
+        "descriptor_base": "0x23a1440000",
+        "reset_window_base": "0x0"
+      },
+      {
+        "index": 74,
+        "type": "0x101",
+        "descriptor_base": "0x4395d00000",
+        "reset_window_base": "0x0"
+      }
+    ],
+    "application_cpu0_or_cpu1_reset_base_matches": 0
+  },
+  "independent_peripheral_match": {
+    "index": 3,
+    "path": "/arm-io/apr0",
+    "physical_base": "0x28c000000",
+    "sanitized_adt_nodes_sha256": "3febd6cd8fbd82c8d207f2d85f556d874d279b5b8038a7ac8844df5c31a9a8d8"
+  },
+  "diagnostic": {
+    "access_width_bits": 64,
+    "selection": "cached MPIDR affinity1",
+    "local_core_index_used": false,
+    "cluster0_cpuimpl_reads": [
+      "0x210052048",
+      "0x210052028",
+      "0x210050020"
+    ],
+    "exception_class_gate": "0x2f (SError)",
+    "record_bytes": 64,
+    "esr_predicate": {
+      "mask": "0x3fc000000",
+      "equals": "0xbc000000"
+    },
+    "cpu1_specific_provenance": false
+  },
+  "limitations": [
+    "Static paths do not establish current CPU1 PC, reset state or execution.",
+    "SError-oriented capture provides no read-side-effect or per-core status contract.",
+    "Peripheral descriptor entries are not application-CPU startup registers.",
+    "Generated pseudocode is not source; no firmware sequence is reproduced.",
+    "No new native MMIO read/write, debug access, target execution or security change authorized by these findings."
+  ]
+}

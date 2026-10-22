@@ -1,0 +1,104 @@
+{
+  "benchmark": "NOT RUN: software diagnostics do not measure native performance",
+  "corrections": [
+    "Bind live GOT feature pointer and signed proxy dispatch-table entry before cache qualification.",
+    "Require independent cache writeback granule and execution regime checks; retain full 128-byte ownership.",
+    "Recheck control budget after journal operations and preserve partial faults without further target queries.",
+    "Correct cold-record synthetic publication and verify maintained-channel result in actual-client tests.",
+    "Fix copied supervisor test fixture path; final 23-method suite passes.",
+    "Correct inherited requests_planned metadata to zero; no callbacks are authorized."
+  ],
+  "cpu1_execution": "UNVERIFIED",
+  "date": "2026-10-22",
+  "frozen": {
+    "I202": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+    "J226": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765",
+    "K254": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c",
+    "L281": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f",
+    "host6": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+  },
+  "inputs": {
+    "client_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "image_bytes": 3932160,
+    "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "symbols_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11"
+  },
+  "limitations": [
+    "No Apple firmware or cache-coherency emulation; synthetic targets validate software contracts only.",
+    "A committed expected identity proves prefix execution; partial or unexpected data does not.",
+    "A maintained positive does not establish cache causality; CPU1 may arrive between samples.",
+    "All-zero observations cannot exclude execution or private dirty CPU1 cache data.",
+    "CPU0-issued maintenance may affect shareable caches beyond CPU0; it is not a CPU0-local guarantee.",
+    "Arrival/control budgets are checked around operations; an in-flight request can reach its serial timeout.",
+    "All 18 cores, both core types, scheduler, idle, thermal behavior and performance parity remain unverified."
+  ],
+  "linux_smp": "NOT RUN",
+  "m1_independent_intake": "PENDING",
+  "macos": {
+    "cache_audit_methods": 3,
+    "controller_methods": 18,
+    "intake_methods": 9,
+    "observer_methods": 21,
+    "result": "PASS: new suites; final full and image-only intakes run in VM",
+    "supervisor_methods": 23
+  },
+  "macos_boot_settings_images_volumes": "UNCHANGED",
+  "native31m": "NOT RUN",
+  "open_source_cache_dispatch": {
+    "byte_mismatches": 0,
+    "ctr_assembly_note": "The earlier static record says PENDING separate VM; the later VM assembly result recorded here is PASS.",
+    "independently_checked_instruction_words": 73,
+    "record": "kernel/experiments/smp31m-observer/validation.json"
+  },
+  "output_sha256": {
+    "assembly.json": "c1f6fe5c5ea906717de4704bf95ac6687053ecd49e2cde075f18ec2885abbb9b",
+    "cache-path.json": "0e756c146e18be2131a0c1ac87813b759f51387432992f0831d00b36238960b4",
+    "intake-full.json": "1cdcb153c7ee3d730d19f29eff2f60649fdd159c0f665ea9842df853c3997c4f",
+    "intake-image.json": "eecd38348eddaa9b633ed981e504976297a8f206202a1ea9dc677a30b5040a42",
+    "run.log": "1750f9056a036c3f07b6910738e93c11cf63543943d8abc70f1632b9aa8d46fb",
+    "toolchain.txt": "d3c01c7046efa57627bd7db33354465a687a722f9eaeb1a8151b55f4ec79b537",
+    "wire.log": "688588fdcac8a376f022e6b93c19b85d09cb470ff13a35eed47ed0e141057a63"
+  },
+  "rea": {
+    "backend": "Ghidra 12.1.4 through REA 6.4 in isolated VM",
+    "byte_mismatches": 0,
+    "independently_checked_unique_instruction_words": 378,
+    "new_mmio_probes_qualified": 0,
+    "queries": 3,
+    "record": "reverse-engineering/findings/cpu-startup31m/validation.json"
+  },
+  "result": "OFFLINE_RELEASE_VALIDATION_PASS",
+  "review": {
+    "behavioral_findings": "PASS: original behavioral records only; proprietary outputs remain ignored",
+    "independent_controller_and_integration": "PASS after corrections",
+    "m1": "Independent intake/review required before fresh human start"
+  },
+  "schema": 1,
+  "setup_history": [
+    "First VM launch skipped the job because its new run script lacked the executable bit. No tests ran in that launch; the owned VM process was terminated and locks released.",
+    "Made the run script executable, added a launcher preflight and retained console input. The subsequent complete job passed and shut down; all owned locks released."
+  ],
+  "source_manifest_sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97",
+  "source_pins": 306,
+  "vm": {
+    "end_utc": "2026-10-22T19:18:50Z",
+    "exit": 0,
+    "full_symbol_methods": 893,
+    "image_only_methods": 870,
+    "memory_gib": 4,
+    "network": false,
+    "original_ctr_leaf_assembly_comparisons": 1,
+    "original_ctr_leaf_bytes": 8,
+    "physical_usb": false,
+    "result": "PASS",
+    "skips": 0,
+    "start_utc": "2026-10-22T19:17:29Z",
+    "toolchain": [
+      "Python 3.14.8",
+      "Linux 7.1.6-vzrun2 aarch64",
+      "GNU assembler (GNU Binutils) 2.46.0"
+    ],
+    "vcpus": 2,
+    "wire_scenarios": 46
+  }
+}
