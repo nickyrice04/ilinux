@@ -1,0 +1,552 @@
+{
+  "schema": "ilinux-31n-firmware-static-v1",
+  "date": "2026-10-22",
+  "status": "PASS_BOUNDED_STATIC_REVIEW",
+  "native_execution": "NOT_RUN",
+  "decoded_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "ibootdata_im4p_sha256": "8b86a8ec0a074fde75995a53ec3cd616311fcff3b5a771ab530ce2c6bce38b4d",
+  "ibootdata_decoded_sha256": "b43f7a31f6d980c6205f029dd80b2dc5ec0a2a52d7d3d801019736d9dcb5d11b",
+  "ibootdata_decoded_bytes": 459150,
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_live_address": false,
+  "llvm_version": "Apple LLVM version 21.0.0",
+  "queries": [
+    {
+      "label": "command-parser",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "successful_query": true,
+      "blocks": [
+        {
+          "label": "command-parser-0",
+          "start": "0x100c1c81d18",
+          "end_exclusive": "0x100c1c81dd8",
+          "code_bytes": 192,
+          "instruction_words": 48,
+          "source_sha256": "05fdca2ec027705ae8371f78623c5481e28898847e955afff07c1f74d54af17f",
+          "source_and_elf_match": true,
+          "llvm_word_mismatches": 0
+        }
+      ],
+      "dossier_sha256": "f7b171c7c9720898099fb1d8574fa059785465df2f5d74d57c7d31d219051e21",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "seconds": 58.417603528,
+      "pcode_operations": 85,
+      "out_of_body_operations": 0,
+      "pcode_truncated": false,
+      "provider_removed_blocks": false,
+      "provider_terminal_call_flags": 1,
+      "assembly_instructions": 48,
+      "analyst_seeded_function": false,
+      "seed_file_loaded": false,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "command-dispatch",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "successful_query": true,
+      "blocks": [
+        {
+          "label": "command-dispatch-0",
+          "start": "0x100c1c81dd8",
+          "end_exclusive": "0x100c1c81e9c",
+          "code_bytes": 196,
+          "instruction_words": 49,
+          "source_sha256": "bbe5622f54df24173f94be070c3327121e5edb82f3eebe4b945e0333b2bc51c0",
+          "source_and_elf_match": true,
+          "llvm_word_mismatches": 0
+        },
+        {
+          "label": "command-dispatch-1",
+          "start": "0x100c1c8a91c",
+          "end_exclusive": "0x100c1c8a920",
+          "code_bytes": 4,
+          "instruction_words": 1,
+          "source_sha256": "110f46b5b35c069160560c6ad6786f647dd44e8760a52a46fc22dbbcd7630b91",
+          "source_and_elf_match": true,
+          "llvm_word_mismatches": 0
+        }
+      ],
+      "dossier_sha256": "ef662a6ed58578a6634c8fa68564ca99a89e6776a26ab969e01c3b681a44431f",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "seconds": 56.38112036000001,
+      "pcode_operations": 71,
+      "out_of_body_operations": 0,
+      "pcode_truncated": false,
+      "provider_removed_blocks": false,
+      "provider_terminal_call_flags": 3,
+      "assembly_instructions": 50,
+      "analyst_seeded_function": false,
+      "seed_file_loaded": false,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "read64-handler",
+      "status": "ANALYSIS_REFUSED_NO_PROCEDURE",
+      "successful_query": false,
+      "dossier_sha256": "58aea1964b16ff0440c9b58e7a4ed6ad53aa890223fa65107e66972a81921273",
+      "cli_exit": 1,
+      "seconds": 56.360638944
+    },
+    {
+      "label": "read64-seeded",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "successful_query": true,
+      "blocks": [
+        {
+          "label": "read64-seeded-0",
+          "start": "0x100c1c85af4",
+          "end_exclusive": "0x100c1c85bac",
+          "code_bytes": 184,
+          "instruction_words": 46,
+          "source_sha256": "57713c7791374baf5a00889bb15adc484d24ac80be73da28fabb6abe3ee7672d",
+          "source_and_elf_match": true,
+          "llvm_word_mismatches": 0
+        }
+      ],
+      "dossier_sha256": "ce0f5aabc6a4f96ee21011c1271ab1167038b05457be42de9be83f06d5fbe6ce",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "seconds": 57.860348902,
+      "pcode_operations": 75,
+      "out_of_body_operations": 0,
+      "pcode_truncated": false,
+      "provider_removed_blocks": false,
+      "provider_terminal_call_flags": 1,
+      "assembly_instructions": 46,
+      "analyst_seeded_function": true,
+      "seed_file_loaded": true,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "read64-merge",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "successful_query": true,
+      "blocks": [
+        {
+          "label": "read64-merge-0",
+          "start": "0x100c1c830c8",
+          "end_exclusive": "0x100c1c830dc",
+          "code_bytes": 20,
+          "instruction_words": 5,
+          "source_sha256": "5d069ed301d94800406611904f3e53a2b5e30857ee21abc32a6ff0f75d0f4dd2",
+          "source_and_elf_match": true,
+          "llvm_word_mismatches": 0
+        }
+      ],
+      "dossier_sha256": "c9c06beea8e7139368eec3261db83d612ff643db335e6360c210082e8a977643",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "seconds": 56.649920902,
+      "pcode_operations": 8,
+      "out_of_body_operations": 0,
+      "pcode_truncated": false,
+      "provider_removed_blocks": false,
+      "provider_terminal_call_flags": 0,
+      "assembly_instructions": 5,
+      "analyst_seeded_function": false,
+      "seed_file_loaded": true,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "command-queue",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "successful_query": true,
+      "blocks": [
+        {
+          "label": "command-queue-0",
+          "start": "0x100c1c82f1c",
+          "end_exclusive": "0x100c1c830c8",
+          "code_bytes": 428,
+          "instruction_words": 107,
+          "source_sha256": "0b815a4168b5e1334229781124f6c063271fb068ae48f1b074e8df340a1ebc2b",
+          "source_and_elf_match": true,
+          "llvm_word_mismatches": 0
+        }
+      ],
+      "dossier_sha256": "fef44aee77db016d519ddb6e7511dbfe6bd74c25001f3841a60708db739b8f45",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "seconds": 56.88600148500001,
+      "pcode_operations": 177,
+      "out_of_body_operations": 0,
+      "pcode_truncated": false,
+      "provider_removed_blocks": false,
+      "provider_terminal_call_flags": 5,
+      "assembly_instructions": 107,
+      "analyst_seeded_function": false,
+      "seed_file_loaded": true,
+      "whole_function_pseudocode_accepted": false
+    }
+  ],
+  "query_summary": {
+    "attempted": 6,
+    "successful": 5,
+    "initial_refusals": 1,
+    "pcode_operations": 416,
+    "assembly_instructions": 256,
+    "seeded_entry": "0x100c1c85af4",
+    "seed_sha256": "4c10d58399564d6af45f19ab24afa873ee633051cfac87eb920e2a5f2d7f1f5a",
+    "seed_provenance": "opcode21 descriptor plus independently decoded function prologue and return",
+    "input_firmware_modified": false
+  },
+  "bounded_blocks": [
+    {
+      "label": "opcode15-body",
+      "start": "0x100c1c85af4",
+      "end_exclusive": "0x100c1c85bac",
+      "code_bytes": 184,
+      "instruction_words": 46,
+      "source_sha256": "57713c7791374baf5a00889bb15adc484d24ac80be73da28fabb6abe3ee7672d",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "width-dependent-read",
+      "start": "0x100c1c830c8",
+      "end_exclusive": "0x100c1c830dc",
+      "code_bytes": 20,
+      "instruction_words": 5,
+      "source_sha256": "5d069ed301d94800406611904f3e53a2b5e30857ee21abc32a6ff0f75d0f4dd2",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "buffered-write-queue",
+      "start": "0x100c1c82f1c",
+      "end_exclusive": "0x100c1c830c8",
+      "code_bytes": 428,
+      "instruction_words": 107,
+      "source_sha256": "0b815a4168b5e1334229781124f6c063271fb068ae48f1b074e8df340a1ebc2b",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "opcode-zero",
+      "start": "0x100c1c84538",
+      "end_exclusive": "0x100c1c84564",
+      "code_bytes": 44,
+      "instruction_words": 11,
+      "source_sha256": "a961661afcc9b59f5228f03f02947aadde52b0d05dacc0e6e44abac85dd4bc9b",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "opcode-zero-tail",
+      "start": "0x100c1c8a7ac",
+      "end_exclusive": "0x100c1c8a7c4",
+      "code_bytes": 24,
+      "instruction_words": 6,
+      "source_sha256": "3c5173c910ca407ff5d4305bf8ab1074fd30c2534aeefb956fe5508e69b0aa21",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "descriptor-table-factory",
+      "start": "0x100c1c843b4",
+      "end_exclusive": "0x100c1c843d8",
+      "code_bytes": 36,
+      "instruction_words": 9,
+      "source_sha256": "99a17e5da7213fade8bee9d6b493f0a98414270809f92cb899dec193efdfbd28",
+      "source_and_elf_match": true,
+      "llvm_word_mismatches": 0
+    }
+  ],
+  "checked_unique_instruction_words": 282,
+  "checked_unique_code_bytes": 1128,
+  "descriptor_table": {
+    "raw_offset": "0x40d3e0",
+    "address": "0x100c1eb13e0",
+    "bytes": 7936,
+    "entries": 248,
+    "stride": 32,
+    "sha256": "5763b538cc0d2dc4b98f9ced6ab5c9fcc0b2ea760fefc9e2b5d97666a6ef3466",
+    "nonzero_handlers": 207,
+    "opcode0_handler": "0x100c1c84538",
+    "opcode21_handler": "0x100c1c85af4"
+  },
+  "rcfg": {
+    "directory_offset": "0x1b0",
+    "sections": [
+      {
+        "kind": 0,
+        "offset": "0x82c8",
+        "bytes": 296900,
+        "records": 16542,
+        "maximum_operands": 30,
+        "exact_consumption": true,
+        "sha256": "76ed47d1c66b5947970b012dc2b259d583f1e55901d743afc4c336a343b97cff"
+      },
+      {
+        "kind": 1,
+        "offset": "0x4000",
+        "bytes": 17096,
+        "records": 843,
+        "maximum_operands": 6,
+        "exact_consumption": true,
+        "sha256": "559b6533c0f76ffa7e17c4c19f5c56a5f0e08c2275a695c980be6111cb105e1a"
+      },
+      {
+        "kind": 2,
+        "offset": "0x50a8c",
+        "bytes": 100392,
+        "records": 5411,
+        "maximum_operands": 30,
+        "exact_consumption": true,
+        "sha256": "2076283ffe1e9ceb9382eb38e76d9a6824821520cde50f4caaa4aac093d631af"
+      },
+      {
+        "kind": 3,
+        "offset": "0x692b4",
+        "bytes": 856,
+        "records": 59,
+        "maximum_operands": 3,
+        "exact_consumption": true,
+        "sha256": "b9cf9245705b266544a60b8ddac70da7208579d92543a826adfbc82f3f2f70df"
+      }
+    ],
+    "named_sequences": 417,
+    "name_record_bytes": 66,
+    "name_table_sha256": "d3a13d460f7cddfb7a75dbf4f14d55a1248e64ede430abfc42222c0a3bee1a9a",
+    "total_commands": 22855,
+    "parser_operand_limit": 32,
+    "exact_all_section_consumption": true,
+    "evaluated_or_executed": false
+  },
+  "restore_sequences": [
+    {
+      "sequence": "MGP_CE0_ACC0_POWER_UP",
+      "opcode": "0x15",
+      "count": 6,
+      "first_record_offset": "0x5ee34",
+      "last_record_offset": "0x5eee8",
+      "implementation_bases": [
+        "0x210050000",
+        "0x210150000",
+        "0x210250000",
+        "0x210350000",
+        "0x210450000",
+        "0x210550000"
+      ],
+      "behavior": "read existing 64-bit value, queue value for later restoration",
+      "literal_reset_vector_supplied": false
+    },
+    {
+      "sequence": "MGP_CE0_ACC1_POWER_UP",
+      "opcode": "0x15",
+      "count": 6,
+      "first_record_offset": "0x61204",
+      "last_record_offset": "0x612b8",
+      "implementation_bases": [
+        "0x211050000",
+        "0x211150000",
+        "0x211250000",
+        "0x211350000",
+        "0x211450000",
+        "0x211550000"
+      ],
+      "behavior": "read existing 64-bit value, queue value for later restoration",
+      "literal_reset_vector_supplied": false
+    },
+    {
+      "sequence": "MGP_CE0_ACC2_POWER_UP",
+      "opcode": "0x15",
+      "count": 6,
+      "first_record_offset": "0x635ac",
+      "last_record_offset": "0x63660",
+      "implementation_bases": [
+        "0x212050000",
+        "0x212150000",
+        "0x212250000",
+        "0x212350000",
+        "0x212450000",
+        "0x212550000"
+      ],
+      "behavior": "read existing 64-bit value, queue value for later restoration",
+      "literal_reset_vector_supplied": false
+    }
+  ],
+  "conditional_start_sequence": {
+    "name": "MPMGR_D2A_IBOOT2B",
+    "selected_records": [
+      {
+        "offset": "0x50e58",
+        "address": "0x280688010",
+        "value": 1,
+        "access_width_bits": 32,
+        "operation": "queue conditional write"
+      },
+      {
+        "offset": "0x50e94",
+        "address": "0x280688008",
+        "value": 1,
+        "access_width_bits": 32,
+        "operation": "queue conditional write"
+      }
+    ],
+    "conditions_present": true,
+    "selected_branch_at_runtime": "UNKNOWN"
+  },
+  "platform_driver": {
+    "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "bounded_blocks": [
+      {
+        "member": "ApplePMGR",
+        "label": "selector2-start-dispatches",
+        "start": "0xfffffe0009495b74",
+        "end_exclusive": "0xfffffe0009495c60",
+        "source_sha256": "bacbafb288b1d6c5c5d5cddc3fd7e3fc3c1ab716fa12e5fc776e60aa5e23c50f",
+        "code_bytes": 236,
+        "instruction_words": 59,
+        "carrier_match": true,
+        "llvm_word_mismatches": 0
+      },
+      {
+        "member": "ApplePMGR",
+        "label": "legacy-start-dispatches",
+        "start": "0xfffffe0009495d24",
+        "end_exclusive": "0xfffffe0009495dc4",
+        "source_sha256": "06a001ac11c205fc1afb958a31abc7e78532bb932135550b23dbdd27bb93d166",
+        "code_bytes": 160,
+        "instruction_words": 40,
+        "carrier_match": true,
+        "llvm_word_mismatches": 0
+      },
+      {
+        "member": "AppleT6050PMGR",
+        "label": "t6050-write32",
+        "start": "0xfffffe0009884dc4",
+        "end_exclusive": "0xfffffe0009884ee8",
+        "source_sha256": "32140fc723672481cb2d177324ef7e976e6c8cbe76971d94286c16fe16214cda",
+        "code_bytes": 292,
+        "instruction_words": 73,
+        "carrier_match": true,
+        "llvm_word_mismatches": 0
+      },
+      {
+        "member": "ApplePMGR",
+        "label": "base-write32",
+        "start": "0xfffffe0009498870",
+        "end_exclusive": "0xfffffe0009498a2c",
+        "source_sha256": "1dfb35fe647c75cc7255d7e110c81e54470d3d4e5054c0d82e478d66d1148fa4",
+        "code_bytes": 444,
+        "instruction_words": 111,
+        "carrier_match": true,
+        "llvm_word_mismatches": 0
+      },
+      {
+        "member": "AppleT6050PMGR",
+        "label": "t6050-is-power-state-register",
+        "start": "0xfffffe0009884f50",
+        "end_exclusive": "0xfffffe0009884fd4",
+        "source_sha256": "949c3f1380c16c010e981be325a4ce88fe02380a04b4679d8a638ebbb26a36b6",
+        "code_bytes": 132,
+        "instruction_words": 33,
+        "carrier_match": true,
+        "llvm_word_mismatches": 0
+      }
+    ],
+    "static_chain_references": [
+      {
+        "target": "0xfffffe0009884dc4",
+        "cache_level": 0,
+        "authenticated": true,
+        "diversity": 64779,
+        "address_diversity": true,
+        "key": 0,
+        "next_bytes": 8,
+        "address": "0xfffffe00081668d0",
+        "carrier_offset": 18229456,
+        "pointer_format": 8,
+        "page_size": 16384,
+        "page_chain_entries": 1878,
+        "chain_membership_verified": true
+      },
+      {
+        "target": "0xfffffe0009884f50",
+        "cache_level": 0,
+        "authenticated": true,
+        "diversity": 35858,
+        "address_diversity": true,
+        "key": 0,
+        "next_bytes": 8,
+        "address": "0xfffffe00081668e0",
+        "carrier_offset": 18229472,
+        "pointer_format": 8,
+        "page_size": 16384,
+        "page_chain_entries": 1878,
+        "chain_membership_verified": true
+      },
+      {
+        "target": "0xfffffe000807d9d0",
+        "cache_level": 0,
+        "authenticated": false,
+        "diversity": 0,
+        "address_diversity": false,
+        "key": 0,
+        "next_bytes": 8,
+        "address": "0xfffffe0008165840",
+        "carrier_offset": 18225216,
+        "pointer_format": 8,
+        "page_size": 16384,
+        "page_chain_entries": 1878,
+        "chain_membership_verified": true
+      },
+      {
+        "target": "0xfffffe0009498870",
+        "cache_level": 0,
+        "authenticated": true,
+        "diversity": 64779,
+        "address_diversity": true,
+        "key": 0,
+        "next_bytes": 8,
+        "address": "0xfffffe000807ea38",
+        "carrier_offset": 17279544,
+        "pointer_format": 8,
+        "page_size": 16384,
+        "page_chain_entries": 1465,
+        "chain_membership_verified": true
+      }
+    ],
+    "checked_instruction_words": 316,
+    "selector2_dispatches": [
+      "0xfffffe0009495ba8",
+      "0xfffffe0009495c4c"
+    ],
+    "legacy_dispatches": [
+      "0xfffffe0009495d54",
+      "0xfffffe0009495db8"
+    ],
+    "underlying_store": "0xfffffe0009498948",
+    "access_width_bits": 32,
+    "misc_cores_map": 8,
+    "misc_cores_is_power_state_register": false,
+    "inter_store_timing_requirement": "NOT_ESTABLISHED"
+  },
+  "limitations": [
+    "Commands are decoded as data, never evaluated or executed.",
+    "Static program presence does not show which program ran or whether Linux needs it.",
+    "The opcode21 trailing operands are not established as a literal reset vector.",
+    "RVBAR is read and queued in the observed handler; effective reset-entry selection remains unknown.",
+    "Ghidra terminal-call and seeded-boundary metadata are analyst/provider observations, not runtime proof.",
+    "No firmware sequence, decompiled pseudocode or extracted Apple code is published.",
+    "No additional native MMIO, firmware replay, reset-vector write or security change follows from this review."
+  ]
+}

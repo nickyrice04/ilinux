@@ -6,7 +6,47 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 result — 31M consumed; M5 interpretation next, 2026-10-22
+### Current — M5 releases 31N; M1 independent intake next, 2026-10-22
+
+31M's controls passed but no CPU1 entry record committed identity. The power
+transition and two acknowledged starts are not execution evidence. GitHub source
+comparisons found a reported T8142 all-core result with a different reset layout;
+its relay is not applicable to this raw image, and our CPU1 code already uses PoC
+publication. Matching-firmware REA completed five queries (one earlier refusal
+retained), with 598 independently checked firmware/driver words and zero mismatches.
+No new reset register or firmware replay is justified by those findings.
+
+31N removes a concrete instrumentation difference: the unchanged 31M synthetic
+path has 127 interface calls and 33 journal callbacks between its startup stores.
+These are call counts, not measured native delay. An original 44-byte CPU0 routine
+issues the same 32-bit value 2 to the same two addresses in order, without host work
+between them. It leaves interrupts unchanged and is not atomic. There is no
+between-store abort or sample. Three actual power/state phases replace four;
+uncertain completion preserves zero/one/two possible stores and stops without retry.
+CPU1 prefixes, paired observers, exact boot021 and client 57a9339 remain unchanged.
+
+**Offline PASS:** VM073 completed 955 full-symbol methods,
+932 image-only methods, 51 real pinned-client synthetic scenarios and an independent
+GNU assembly match. The real-client test caught and fixed rejection of valid
+integer subclasses before release. Source closure: 330 files,
+`00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a`. Frozen M306/L281/K254/J226/I202/H186/host6,
+all previous receipts and input images remain unchanged. Detailed results and
+limits: `native/boot/attempt31n/validation.json`.
+
+**M1 next:** read `tools/m1n1-client/attempt31n-instructions.md`, perform independent
+intake and publish readiness before the human starts the existing lab. No new
+image transfer or routine M1 restart. One supervised session, immediate Macintosh
+HD return on any result, no retry, callback or Linux continuation. Native 31N,
+CPU1 execution and Linux SMP remain unverified. macOS, installed boot images,
+volumes, security and default-boot settings are unchanged; no repeat policy check.
+
+The target remains 12 Performance and 6 Super cores. CPU1 shares CPU0's active
+Performance cluster. After actual entry: bounded rendezvous, coherency/timer/IPI
+checks, other Performance cluster and Super cluster, then all-core scheduling,
+frequency and measured energy/performance. Online count alone is not parity.
+
+
+### Historical M1 result — 31M consumed; M5 interpretation next, 2026-10-22
 
 **Observed:** one authorized31M native session consumed on readiness/execution
 `f874095`, release `24aa8eb`: **STOP / cpu1_arrival / cpu1_arrival_timeout**.

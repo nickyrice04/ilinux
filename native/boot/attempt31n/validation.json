@@ -1,0 +1,158 @@
+{
+  "benchmark": "NOT RUN: no native timing or performance measurement",
+  "corrections": [
+    "Explicitly initialize only the owned 64-byte leaf span; memalign does not promise zero-filled RAM.",
+    "Validate the return token inside dispatch before any diagnostic target query.",
+    "Rebuild the static supervisor closure from the complete N intake; correct copied attempt metadata and real-client verification patch depth.",
+    "Real-client integration exposed strict type(int) rejecting valid BootArgs integer subclasses. Accept integer subclasses but reject bool/float/string without coercion; add two regression methods.",
+    "Require the manifest and both intakes in VM073 instead of allowing optional intake omission."
+  ],
+  "cpu1_execution": "UNVERIFIED",
+  "date": "2026-10-22",
+  "frozen": {
+    "31h": {
+      "all_files": "UNCHANGED",
+      "pins": 186,
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "31i": {
+      "all_files": "UNCHANGED",
+      "pins": 202,
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "31j": {
+      "all_files": "UNCHANGED",
+      "pins": 226,
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "31j-host": {
+      "all_files": "UNCHANGED",
+      "pins": 6,
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    },
+    "31k": {
+      "all_files": "UNCHANGED",
+      "pins": 254,
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "31l": {
+      "all_files": "UNCHANGED",
+      "pins": 281,
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "31m": {
+      "all_files": "UNCHANGED",
+      "pins": 306,
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    }
+  },
+  "historical_record_note": "The nine-method and pending-integration paragraph in research/native31n-result-review.md records the earlier independent audit milestone. Final release results are the 10 plan plus one gap methods and completed VM intakes recorded here; no native result is implied.",
+  "inputs": {
+    "client_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "consumed_result_commit": "0a2590b",
+    "image_bytes": 3932160,
+    "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "symbols_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11"
+  },
+  "limitations": [
+    "Synthetic targets validate software contracts; they do not emulate Apple firmware, caches, reset timing or power sequencing.",
+    "The unchanged two-store local pair is a timing hypothesis, not a demonstrated fix or macOS-equivalent ordering guarantee.",
+    "Interrupt state is unchanged. There is no guaranteed inter-store deadline and no between-store abort opportunity.",
+    "Pair completion and power-state changes do not prove CPU1 execution; only committed expected identity establishes prefix execution.",
+    "Negative records cannot exclude execution or an unobserved entry path.",
+    "Every outcome stops without callbacks or Linux continuation; any uncertain pair is never retried.",
+    "All 12 Performance and 6 Super cores, coherent memory, timers/IPIs, Linux idle, scheduling, frequency and energy parity remain unverified."
+  ],
+  "linux_smp": "NOT RUN",
+  "m1_independent_intake": "PENDING",
+  "macos": {
+    "controller_methods": 19,
+    "intake_methods": 9,
+    "leaf_plan_methods": 10,
+    "prior_gap_methods": 1,
+    "result": "PASS: new original suites; final full and image-only intakes in VM",
+    "supervisor_methods": 23
+  },
+  "macos_boot_settings_images_volumes": "UNCHANGED",
+  "native31n": "NOT RUN",
+  "original31m_synthetic_gap": {
+    "interface_calls": 127,
+    "journal_callbacks": 33,
+    "native_duration": "NOT MEASURED"
+  },
+  "output_sha256": {
+    "assembly.json": "43a917ee54d13fe225d79b39d3f2b6721aef356ea90e9a90755ec21639bbc954",
+    "intake-full.json": "0632fc0550e5cc350174cdc9c7013dcf6991d13d45631401c8b6fc8a0d5c9188",
+    "intake-image.json": "8482a6891178c64a6913366e39b5cfd3b9d6acf09005482c8b376d3300bb2524",
+    "run.log": "a4423f905e0bb6da9685243512dfd39ee593b6cf8d81469d4d134f227a800276",
+    "toolchain.txt": "d3c01c7046efa57627bd7db33354465a687a722f9eaeb1a8151b55f4ec79b537",
+    "wire.log": "88199951ae58bbce15acf887426ed5e66b0dfac108ca25b106dbb8397c440d36"
+  },
+  "pair": {
+    "addresses": [
+      "0x280688004",
+      "0x280688008"
+    ],
+    "atomic": false,
+    "callbacks_authorized": false,
+    "cpu1_prefixes_changed": false,
+    "hardware_timing_measured": false,
+    "host_requests_between_stores": 0,
+    "sha256": "8c591d55d1d92a6b466a33a9cc5af69f869504df066728862119c5f39037bf19",
+    "stores": 2,
+    "uncertain_completion_possible_stores": [
+      0,
+      1,
+      2
+    ],
+    "value": 2,
+    "width_bits": 32
+  },
+  "rea": {
+    "backend": "REA 6.4 / Ghidra 12.1.4 in isolated VM",
+    "byte_mismatches": 0,
+    "independently_checked_driver_words": 316,
+    "independently_checked_firmware_words": 282,
+    "initial_no_procedure_refusals": 1,
+    "new_hardware_transactions_qualified": 0,
+    "record": "reverse-engineering/findings/cpu-startup31n/validation.json",
+    "seed_modifies_input_bytes": false,
+    "successful_queries": 5,
+    "temporary_analyst_seed": true
+  },
+  "result": "OFFLINE_RELEASE_VALIDATION_PASS",
+  "review": {
+    "independent_controller": "PASS after explicit owned-span initialization",
+    "integration": "PASS after integer-subclass correction",
+    "public_artifacts": "Original code and behavioral findings only"
+  },
+  "schema": 1,
+  "setup_history": [
+    "First VM run passed assembly and all 60 then-current new methods but failed the real-client synthetic negative path before full intakes.",
+    "A diagnostic rerun identified start_pair_address_type at start_pair_prepare. Both failed run logs are retained privately; neither is a passing validation.",
+    "Corrected integer contract and added two methods. Final VM run passed all new suites, 51 pinned-client scenarios, both full closures, and shut down with job exit0."
+  ],
+  "source_manifest_sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a",
+  "source_pins": 330,
+  "vm": {
+    "end_utc": "2026-10-22T20:00:24Z",
+    "exit": 0,
+    "full_symbol_methods": 955,
+    "image_only_methods": 932,
+    "memory_gib": 4,
+    "network": false,
+    "original_start_pair_assembly_comparisons": 1,
+    "original_start_pair_leaf_bytes": 44,
+    "physical_usb": false,
+    "result": "PASS",
+    "skips": 0,
+    "start_utc": "2026-10-22T19:58:35Z",
+    "toolchain": [
+      "Python 3.14.8",
+      "Linux 7.1.6-vzrun2 aarch64",
+      "GNU assembler (GNU Binutils) 2.46.0"
+    ],
+    "vcpus": 2,
+    "wire_scenarios": 51
+  }
+}
