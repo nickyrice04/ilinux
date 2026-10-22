@@ -2974,3 +2974,22 @@ does not prove another path. CPU1/Linux SMP/performance parity remain unverified
 Next engineering depends on the measured prefix, not another guessed write.
 See `tools/m1n1-client/attempt31k-instructions.md` and
 `native/boot/attempt31k/validation.json`.
+
+
+### 2026-10-22 · M1 accepts31K image-only intake before fresh human start
+
+**Decision:** Publish independent readiness:254 pins/716 methods, both documented
+commands and retained13-file package PASS, no skips/repairs. Full-symbol checks
+NOT RUN on M1; M5's739-method VM,105 wire scenarios and independent assembly
+remain separate evidence. Frozen J226/I202/host6 pins and prior receipts unchanged.
+No real discovery, serial or target operation; all six31K live-use files absent.
+
+**Scope:** One supervised campaign after fresh human start/90s timer. Returning
+CPU0 Device-scratch control must pass and restore normally before cold hook
+publication/startup. Natural cold-tripwire prefix/error stops without cold-path
+continuation, reset redirect or additional core. Positive CPU0 control does not
+prove CPU1 visibility; phase3 does not prove loop residence/architectural park;
+negative markers do not exclude either path. No fault cleanup/reconnect/retry,
+installed boot/settings change or Linux continuation. Return immediately to
+Macintosh HD on every outcome. Evidence:
+`native/boot/attempt31k-m1-offline-2026-10-22.md`.

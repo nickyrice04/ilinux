@@ -99,6 +99,25 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest M1 offline readiness — 31K, 2026-10-22
+
+M1 pulled **`7043b17`**; **254 pins /716 image-only methods PASS**, no skips/
+repairs. Both documented offline commands and retained13-file package check
+exit0; clean client `57a9339`, boot021 unchanged. Manifest `cfb3a24b…9c1668c`,
+mode reviewed_layout_only; **full-symbol checks NOT RUN on M1**. Frozen J226/
+I202/host6 inputs and prior31B–31J/host-only evidence unchanged. **No real
+registry/USB/hardware operation; all six live-use files absent; invocations0;
+native31K/CPU0 control/cold tripwire/Linux SMP NOT RUN; CPU1 unverified.**
+New methods: control26,tripwire49,controller35,intake6,supervisor21 PASS, plus
+inherited579. Publish before fresh human start/independent90s timer. New RAM-only
+returning CPU0 control must pass before cold hook arms or CPU1 starts; natural
+cold arrival is observed without reset redirection. Any cold prefix/error stops;
+phase3 is not terminal-PC/park proof. Same two starts and bounded discovery,
+no routine M1 reboot/policy check, installed-image/settings change, extra core,
+retry/reconnect or Linux continuation. Immediate Macintosh HD return on outcome.
+Evidence: `native/boot/attempt31k-m1-offline-2026-10-22.md`.
+
+
 ### 2026-10-21 · M5: 31K ready for independent M1 intake
 
 **31K offline release ready; M1 independent intake PENDING. Native31K and Linux
