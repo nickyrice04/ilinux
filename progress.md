@@ -5,6 +5,34 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M5:31H firmware REA and bounded core-state campaign
+
+**31H is ready for M1 offline intake; native31H/CPU1/Linux SMP NOT RUN.**
+Matching-board mBoot REA resolves the reset field as bits41:11, but the reviewed
+caller aligns its input to4KiB; no cold-entry redirect or new startup write is
+justified. Seven firmware dossiers/1,537 independent instruction words checked.
+The current raw-mode effective reset destination remains unknown.
+
+The new controller preserves the existing two RVBAR reads precisely and refuses
+unexplained formats before mutation. It combines existing PS/entry evidence with
+at most8 exploratory32-bit CPU_IMPL+0x100 reads (guarded baseline, then unchanged
+fixed helper). Low bytes are opaque; they cannot prove execution/reset release.
+Same CPU1 starts/vector recorder, no extra core, stop/power/security write or
+Linux continuation. First fault/deadline stops with partial evidence.
+
+**VM066 PASS:367 full-symbol methods,344 image-only methods,24 actual pinned-client
+cases;186 source pins. macOS image-only intake344 PASS.** Independent review
+repairs preserve journal failures and deadlines. No native speedup claimed.
+Validation/review: `native/boot/attempt31h/`; findings:
+`research/native31h-reset-entry.md`; outcome table: `native/boot/attempt31h-plan.md`.
+
+M1 next: follow `tools/m1n1-client/attempt31h-instructions.md`, publish independent
+readiness, then wait for the human's fresh M5 lab start. Existing entry/package;
+no new transfer/install or routine M1 reboot/policy check. One90-second-bounded
+session, immediate Macintosh HD return. Preserve all consumed31A–31G evidence
+and frozen navigation. macOS, volumes, security and installed boot021 unchanged.
+
+
 ## 2026-10-21 · M5: 31G reviewed; reset-format evidence gap reproduced
 
 31G confirms CPU1 PS actual 0 → 15 after the second start; it does not

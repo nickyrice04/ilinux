@@ -2675,3 +2675,34 @@ REA to investigate the correct raw boot path and qualify an independent
 observation. No recorder relocation or RVBAR write follows from this finding.
 No controller, new physical test or performance gain is claimed here. M1 holds;
 see `native/boot/attempt31h-plan.md` and its new offline-only instructions.
+
+
+### 2026-10-21 · Release31H after firmware-format and bounded-access review
+
+**Decision:** Replace the offline hold with the reviewed31H campaign, subject
+to independent M1 intake and a fresh human lab start. No startup fix is claimed.
+
+**Evidence:** matching generic board firmware preserves bits41:11 in its writer,
+but the reviewed caller aligns to4KiB. The inherited report discarded bit11.
+PMGR/public m1n1 do not support a missing stop-clear. Public hypervisor code
+physically forwards32-bit reads at CPU_IMPL+0x100; no t6050-specific semantic
+reader was established. Existing live ADT binds both windows in the active
+cluster. This supports a tightly bounded exploratory observation, not a proved
+reset/PC interface.
+
+**Implementation:** strict reset-format preflight plus eight opaque low-byte
+observations alongside existing PS/entry evidence; guarded baseline and fixed
+guard-free helper after starts, first-fault/deadline stop, partial persistence.
+Same CPU1 start writes and vector recorder. A cold-hook redirect, new power/stop
+write, extra core and automatic Linux continuation remain unsupported.
+
+**Validation:** VM066 exit0,367 full-symbol/344 image-only test methods,
+24 real pinned-client synthetic cases,186 source pins; macOS344 image-only PASS.
+Journal-failure flags and outer/pair deadline reasons survive interruption;
+overdue reads cannot trigger another diagnostic call. Native31H NOT RUN.
+
+**Consequence:** M1 publishes readiness before the human restarts M5 into the
+existing lab. One90-second session and immediate macOS return; no new transfer,
+installation, policy check or routine helper restart. Outcome table drives the
+next offline implementation. All Apple material stays private; only original
+behavioral findings/code and sanitized evidence are published.
