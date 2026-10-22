@@ -1,5 +1,32 @@
 # Progress Log
 
+## 2026-10-22 · M1: 31O independent offline review PASS; no restart
+
+**Independent M1 review on `220d8c7`: OFFLINE_REVIEW_PASS_NATIVE_HOLD.**
+**348 pins / 63 methods PASS**, no skips/repairs; documented command exit0,
+Python3.13.5, elapsed2.127s. Exact-image entry/Normal-prefix audits PASS in
+reviewed_layout_only mode. **Full symbols and actual private firmware parsing
+NOT RUN on M1**, inputs not supplied; synthetic decoder tests passed. M5's
+matching-payload/VM/REA results remain separate evidence, not reproduced here.
+
+Consumed31M and31N both classify NATURAL_TIMEOUT_WITHOUT_VISIBLE_ENTRY, matching
+the released canonical hashes; CPU1 UNVERIFIED, first fetch/firmware cause
+UNKNOWN. Classifier checks supplied report consistency, not raw authenticity or
+hardware execution; positive metadata requires committed-record review. RCfg
+parser checks structure only, without nesting/condition/command interpretation.
+No code-level blocker found for this offline scope. No boot readiness grant.
+
+Frozen N330/M306/L281/K254/J226/I202/H186/host6, retained13-file package, clean
+client57a9339 and all old receipts/offline evidence verified unchanged. No31O
+native use file. **New discovery/device opens/target requests/native invocations0;
+neither device restarted. Native31O HOLD / NOT RUN; Linux SMP NOT RUN.**
+No install, transfer, live/version/policy check, VM/REA run or settings change.
+Original Full/lab Permissive/Macintosh HD default remain last reported, not
+freshly verified. M5 owns prerequisite investigation/offline GPU work; no physical
+follow-up or consumed-runner reuse. Evidence:
+`native/boot/attempt31o-m1-offline-2026-10-22.md` and reviewed metadata JSON.
+
+
 ## 2026-10-22 · M5: 31O offline evidence tools and firmware review PASS
 
 31N completed both startup stores in one CPU0 call, but every CPU1 entry channel

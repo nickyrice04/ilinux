@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "tested_git_commit": "220d8c7027639e8aaf82a0cc8e8b9d4cd8d44cfe",
+  "result": "OFFLINE_REVIEW_PASS_NATIVE_HOLD",
+  "command_exit": 0,
+  "elapsed_seconds": 2.127,
+  "source_pins": 348,
+  "source_manifest_sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39",
+  "python_version": "Python 3.13.5",
+  "unit_test_methods": 63,
+  "skips": 0,
+  "repairs": 0,
+  "checks": [
+    {
+      "check": "kernel/experiments/smp31o-evidence/test_evidence.py",
+      "methods": 33,
+      "result": "PASS"
+    },
+    {
+      "check": "kernel/experiments/smp31o-evidence/test_rcfg.py",
+      "methods": 19,
+      "result": "PASS"
+    },
+    {
+      "check": "tools/m1n1-client/test_attempt31o_offline.py",
+      "methods": 11,
+      "result": "PASS"
+    }
+  ],
+  "consumed_evidence": {
+    "m": {
+      "classification": "NATURAL_TIMEOUT_WITHOUT_VISIBLE_ENTRY",
+      "counts": {
+        "arrival_samples": 64,
+        "callbacks_completed": 0,
+        "cold_observation_reads": 516,
+        "cold_observation_samples": 129,
+        "cpu_state_observation_reads": 8,
+        "maintenance_acknowledged": 258,
+        "mutation_intents": 413,
+        "paired_cold_maintenance": 128,
+        "paired_cold_reads": 768,
+        "paired_cold_samples": 128,
+        "paired_vector_maintenance": 128,
+        "paired_vector_reads": 768,
+        "paired_vector_samples": 128,
+        "power_observation_reads": 8,
+        "recorder_observation_reads": 320,
+        "recorder_observation_samples": 64,
+        "reported_positive_indicators": 0,
+        "start_stores_acknowledged": 2
+      },
+      "cpu1_execution": "UNVERIFIED",
+      "experiment": "31M",
+      "firmware_cause": "UNKNOWN",
+      "first_instruction_fetch": "UNKNOWN",
+      "hardware_operations": 0,
+      "native_ready": false,
+      "negative_excludes_execution": false,
+      "reason": "COMPLETE_NEGATIVE_OBSERVATION_NOT_FETCH_PROOF",
+      "report_authenticity": "NOT_ESTABLISHED",
+      "report_canonical_sha256": "5a74a9593b69abf17958cb772bdfaef505084b1c590f7c35a51e8fc20fbd1002",
+      "schema": 1
+    },
+    "n": {
+      "classification": "NATURAL_TIMEOUT_WITHOUT_VISIBLE_ENTRY",
+      "counts": {
+        "arrival_samples": 63,
+        "callbacks_completed": 0,
+        "cold_observation_reads": 512,
+        "cold_observation_samples": 128,
+        "cpu_state_observation_reads": 6,
+        "maintenance_acknowledged": 254,
+        "mutation_intents": 412,
+        "paired_cold_maintenance": 126,
+        "paired_cold_reads": 756,
+        "paired_cold_samples": 126,
+        "paired_vector_maintenance": 126,
+        "paired_vector_reads": 756,
+        "paired_vector_samples": 126,
+        "power_observation_reads": 6,
+        "recorder_observation_reads": 320,
+        "recorder_observation_samples": 64,
+        "reported_positive_indicators": 0,
+        "start_stores_acknowledged": 2
+      },
+      "cpu1_execution": "UNVERIFIED",
+      "experiment": "31N",
+      "firmware_cause": "UNKNOWN",
+      "first_instruction_fetch": "UNKNOWN",
+      "hardware_operations": 0,
+      "native_ready": false,
+      "negative_excludes_execution": false,
+      "reason": "COMPLETE_NEGATIVE_OBSERVATION_NOT_FETCH_PROOF",
+      "report_authenticity": "NOT_ESTABLISHED",
+      "report_canonical_sha256": "3521be6cb2d92bdf772d404c6f3e5adb20764b204de7ca0d2556867fd6bc7e4d",
+      "schema": 1
+    }
+  },
+  "entry_contract": {
+    "result": "OFFLINE_ENTRY_CONTRACT_PASS",
+    "address_cases_checked": 56,
+    "translation_cases_checked": 112,
+    "symbol_mode": "reviewed_layout_only",
+    "hardware_emulator": false
+  },
+  "normal_prefix_audit": {
+    "result": "STATIC_NORMAL_PREFIX_AUDIT_PASS",
+    "symbol_mode": "reviewed_layout_only",
+    "relocations_checked": 1371,
+    "symbol_check_performed": false,
+    "computed_reference_proof": false
+  },
+  "full_symbol_validation": "NOT RUN: exact symbols not supplied",
+  "firmware_structure": {
+    "reason": "optional_private_input_not_supplied",
+    "result": "NOT RUN"
+  },
+  "retained_package_files_verified": 13,
+  "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "client_imported_or_run": false,
+  "frozen": {
+    "attempt31o": {
+      "pins": 348,
+      "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+    },
+    "attempt31n": {
+      "pins": 330,
+      "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+    },
+    "attempt31m": {
+      "pins": 306,
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    },
+    "attempt31l": {
+      "pins": 281,
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "attempt31k": {
+      "pins": 254,
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "attempt31j": {
+      "pins": 226,
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "attempt31i": {
+      "pins": 202,
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "attempt31h": {
+      "pins": 186,
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "attempt31j-host": {
+      "pins": 6,
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    }
+  },
+  "prior_receipts": "unchanged",
+  "new_discovery_queries": 0,
+  "new_device_opens": 0,
+  "new_target_requests": 0,
+  "new_native_invocations": 0,
+  "native31o": "HOLD / NOT RUN",
+  "linux_smp": "NOT RUN",
+  "cpu1_execution": "UNVERIFIED",
+  "restart_ready": false,
+  "hardware_operations": 0,
+  "devices_restarted": false
+}
