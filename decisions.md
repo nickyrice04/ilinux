@@ -2723,3 +2723,23 @@ core-state reads. Access/semantics are unverified; values do not establish
 execution/reset release. Immediately return to Macintosh HD on any outcome.
 No retry, reconnect, extra core, new settings/write or Linux continuation.
 Details: `native/boot/attempt31h-m1-offline-2026-10-21.md`.
+
+
+### 2026-10-21 · Consume 31H at the reset-format gate; investigate offline
+
+**Observed:** on execution `1910070` after handoff `c89faf7`, both existing
+reset-mirror reads returned and passed immediate guard checks, mirrors equal.
+Both firmware fields match image base, bit11 is clear, bits10:1 and47:42 are
+zero; the upper field63:42 is nonzero (upper63:48 present). Strict gate refused
+with `reset_format_requires_review` before mutation. No raw word is published.
+
+**Decision:** Retain that refusal. Do not relax the gate, redirect the hook,
+repeat reads or try a power/reset write. Exact entry/effective reset route and
+the high-field meaning remain UNKNOWN. M5 traces exact firmware ownership and
+access format offline before choosing any separately reviewed future campaign.
+
+**Outcome:** 0 mutation intents/CPU1 starts, no PS/core-state reads, recorder,
+callbacks or Linux SMP. Controller/supervisor exits1/1,2.045/2.457 s, no deadline;
+human Macintosh HD return recorded +37.692 s. No further target command.
+All prior evidence, installed boot021, client and settings retained. Details:
+`native/boot/attempt31h-2026-10-21-result.md` and sanitized final JSON.

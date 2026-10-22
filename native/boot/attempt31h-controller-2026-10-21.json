@@ -1,0 +1,144 @@
+{
+  "experiment": "smp31h",
+  "result": "STOP",
+  "phase": "preflight",
+  "mutation_requests": 0,
+  "start_writes_attempted": 0,
+  "start_writes_acknowledged": 0,
+  "cpu1_arrival_verified": false,
+  "requests_completed": 0,
+  "counter_progress_verified": false,
+  "linux_boot": "NOT RUN",
+  "native_linux_smp": "NOT RUN",
+  "ram_check": {
+    "revision_supported": true,
+    "bootargs_revision": 3,
+    "revision_consistent": true,
+    "integer_fields": true,
+    "nonempty_u64": true,
+    "address_width": true,
+    "within_machine_dram": true,
+    "adt_within_usable": true,
+    "adt_read_complete": true,
+    "chosen_base_matches": true,
+    "chosen_size_matches": true,
+    "image_within_usable": true
+  },
+  "diagnostic_uart_check": {
+    "direct_usb_proxy": true,
+    "bases_expected_or_zero": true,
+    "enabled_count": 2
+  },
+  "entry_observation": "not_sampled",
+  "arrival_samples": 0,
+  "cpu_topology": {
+    "validated_by_exact_adt_and_runtime_census": true,
+    "physical_and_logical_cores": 18,
+    "clusters": [
+      {
+        "id": 0,
+        "adt_type": "M",
+        "macos_name": "Performance",
+        "cores": 6
+      },
+      {
+        "id": 1,
+        "adt_type": "M",
+        "macos_name": "Performance",
+        "cores": 6
+      },
+      {
+        "id": 2,
+        "adt_type": "P",
+        "macos_name": "Super",
+        "cores": 6
+      }
+    ],
+    "boot_cpu": 0,
+    "target_cpu": 1,
+    "target_cluster": 0,
+    "target_macos_type": "Performance",
+    "same_cluster_as_boot_cpu": true,
+    "linux_scheduler_capacity_calibrated": false,
+    "all_core_linux_operation": "NOT RUN"
+  },
+  "permissions": {},
+  "recorder_publication": {},
+  "recorder_observation": {},
+  "recorder_reads": 0,
+  "requests_planned": 8,
+  "request_roundtrips_ms": [],
+  "park_verified": false,
+  "power_binding": {
+    "live_adt_bound": true,
+    "cpu_ids": [
+      0,
+      1
+    ],
+    "width_bits": 32,
+    "cpu1_start_mapping_unchanged": true,
+    "all18_topology_mapping_validated": true,
+    "later_cluster_legacy_mask_mismatch_cpu_ids": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ]
+  },
+  "power_permissions": {},
+  "power_observation": {},
+  "terminal_observation_error": null,
+  "rvbar_observation": {
+    "state": "complete",
+    "read_attempts": 2,
+    "read_returns": 2,
+    "guard_check_attempts": 2,
+    "validated_reads": 2,
+    "pending_cpu_id": null,
+    "rows": [
+      {
+        "cpu_id": 0,
+        "legacy_page_field_matches_vectors": true,
+        "legacy_lock_bit0": true,
+        "unknown_low_bits_class": "zero",
+        "bit11_set": false,
+        "unknown_upper_bits_present": true,
+        "firmware_format_field_relation": "image_base",
+        "firmware_format_low_bits_10_1_class": "zero",
+        "firmware_format_high_bits_63_42_class": "nonzero",
+        "firmware_format_bits_47_42_class": "zero"
+      },
+      {
+        "cpu_id": 1,
+        "legacy_page_field_matches_vectors": true,
+        "legacy_lock_bit0": true,
+        "unknown_low_bits_class": "zero",
+        "bit11_set": false,
+        "unknown_upper_bits_present": true,
+        "firmware_format_field_relation": "image_base",
+        "firmware_format_low_bits_10_1_class": "zero",
+        "firmware_format_high_bits_63_42_class": "nonzero",
+        "firmware_format_bits_47_42_class": "zero"
+      }
+    ],
+    "mirrors_equal": true,
+    "exact_entry_offset": "UNKNOWN",
+    "effective_reset_route": "UNKNOWN",
+    "error": null
+  },
+  "restart_ready": false,
+  "cpu_state_permissions": {},
+  "cpu_state_observation": {},
+  "reset_format_gate_passed": false,
+  "reason": "reset_format_requires_review",
+  "controller_elapsed_seconds": 2.045,
+  "source_manifest_sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+}

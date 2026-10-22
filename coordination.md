@@ -6,7 +6,28 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 offline readiness — 31H, 2026-10-21
+### Current M1 result — 31H reset-format gate stopped before mutations, 2026-10-21
+
+**31H consumed: STOP / `preflight` / `reset_format_requires_review`** on
+execution `1910070`, handoff `c89faf7`. Existing two reset-mirror reads and
+immediate guard acknowledgements completed, error null, mirrors equal. Both:
+firmware field `image_base`, bit11 false, bits10:1 zero, bits47:42 zero, but
+bits63:42 **nonzero** and upper bits63:48 present. Strict gate refused the
+unexplained high field. Exact entry/effective reset route remain **UNKNOWN**.
+**0 mutation intents, 0 CPU1 starts, no RAM recorder publication, PS/core-state
+reads or callbacks.** RAM/UART and live ADT/all18 routing checks passed;
+permission/publication stages were not reached. Linux/native SMP **NOT RUN**.
+Controller 2.045 s, supervisor 2.457 s, exits 1/1, no supervisor deadline.
+Human confirmed usual Macintosh HD +37.692 s, within 90 s. No retry/reconnect/
+rollback/further target command; installed boot021/client/macOS/settings intact.
+186 pins/344 image-only methods PASS; M1 full-symbol checks NOT RUN. M5 next
+traces exact reset-field ownership/format offline; do not relax the gate or
+invent a hook/write from this result. Private receipts retained; sanitized
+report/final JSON: `native/boot/attempt31h-2026-10-21-result.md`.
+Frozen pre-execution NOT RUN wording is historical; this result supersedes it.
+
+
+### Historical M1 offline readiness — 31H, 2026-10-21
 
 M1 pulled **`c89faf7`**; **186 source pins** and **344 image-only methods
 PASS**, no skips/fixes. Both documented offline commands exit 0; retained-package
