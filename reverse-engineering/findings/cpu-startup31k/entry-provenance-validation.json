@@ -1,0 +1,244 @@
+{
+  "schema": 1,
+  "purpose": "31K source-entry provenance, static evidence only",
+  "source_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "derived_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_runtime_observation": false,
+  "raw_apple_material_published": false,
+  "fresh_rea_queries": 6,
+  "fresh_rea_function_queries": 5,
+  "fresh_rea_xrefs_queries": 1,
+  "functions": [
+    {
+      "evidence_id": "ev_af70a9dc43d336d30f86039281249f0397e2016365e4eb581d305a4140445968",
+      "member": "iBoot.j716c.RELEASE",
+      "function": "FUN_100c1b3ef44",
+      "body_anchors": [
+        {
+          "start": "0x100c1b3ef44",
+          "end_inclusive": "0x100c1b3f057",
+          "carrier_offset": 634692,
+          "derived_offset": 638788,
+          "bytes": 276,
+          "sha256": "97ec843a91dc52eb830e8f7b82bba05872f362766ee53bb9b0911120b1b883ba"
+        }
+      ],
+      "assembly_instructions": 69,
+      "original_bytes_verified": true,
+      "pcode_operations": 37,
+      "pcode_outside_body": 3,
+      "outside_addresses": [
+        "0x100c1b3f068",
+        "0x100c1b3f080"
+      ],
+      "pseudocode_gate": "rejected_cross_boundary",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "query": "dispatch-caller",
+      "flow_truncated": false,
+      "flow_omitted_operations_lower_bound": 0,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "rea_exit": 0,
+      "llvm_word_count": 69,
+      "llvm_word_mismatches": 0,
+      "semantic_use": "Whole-function high-pcode/pseudocode rejected. Bounded original-byte/LLVM observations only."
+    },
+    {
+      "evidence_id": "ev_db6515876c3ff6fa646608768d9b100188d2d058b884e8a990a0e175020c6781",
+      "member": "iBoot.j716c.RELEASE",
+      "function": "FUN_100c1c2feac",
+      "body_anchors": [
+        {
+          "start": "0x100c1c2feac",
+          "end_inclusive": "0x100c1c3022f",
+          "carrier_offset": 1621676,
+          "derived_offset": 1625772,
+          "bytes": 900,
+          "sha256": "69f83d8a55a975c4cd81f2495f703609e09bb6dcff00273aa29cd2fe4d17c1db"
+        }
+      ],
+      "assembly_instructions": 225,
+      "original_bytes_verified": true,
+      "pcode_operations": 463,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "query": "dispatch-finalizer",
+      "flow_truncated": false,
+      "flow_omitted_operations_lower_bound": 0,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "rea_exit": 0,
+      "llvm_word_count": 225,
+      "llvm_word_mismatches": 0,
+      "semantic_use": "Bounded manual review; no native reachability or state claim."
+    },
+    {
+      "evidence_id": "ev_239ec74920b8e5ef6bb80f77825193c468348d035e2bc0edf4005cdbf5be6cf9",
+      "member": "iBoot.j716c.RELEASE",
+      "function": "FUN_100c1ad7af8",
+      "body_anchors": [
+        {
+          "start": "0x100c1ad7af8",
+          "end_inclusive": "0x100c1ad7b0f",
+          "carrier_offset": 211704,
+          "derived_offset": 215800,
+          "bytes": 24,
+          "sha256": "cdc0582243943746ea8a0d9722499af279cd323e5e6bc43dbf54d7545ee79efe"
+        }
+      ],
+      "assembly_instructions": 6,
+      "original_bytes_verified": true,
+      "pcode_operations": 11,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "query": "entry-table-copy",
+      "flow_truncated": false,
+      "flow_omitted_operations_lower_bound": 0,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "rea_exit": 0,
+      "llvm_word_count": 6,
+      "llvm_word_mismatches": 0,
+      "semantic_use": "Bounded manual review; no native reachability or state claim."
+    },
+    {
+      "evidence_id": "ev_ad4d0414ed07bfa3a0f728c2f61e80eccc4233aa347694eab86d2b54550c170e",
+      "member": "iBoot.j716c.RELEASE",
+      "function": "FUN_100c1ad12e0",
+      "body_anchors": [
+        {
+          "start": "0x100c1ad12e0",
+          "end_inclusive": "0x100c1ad2523",
+          "carrier_offset": 185056,
+          "derived_offset": 189152,
+          "bytes": 4676,
+          "sha256": "bcc458540a401f28c094116a9c0faaa75b43540d85c4de13d62585643a91c848"
+        }
+      ],
+      "assembly_instructions": 1169,
+      "original_bytes_verified": true,
+      "pcode_operations": 2181,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "query": "entry-producer-a",
+      "flow_truncated": false,
+      "flow_omitted_operations_lower_bound": 0,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "rea_exit": 0,
+      "llvm_word_count": 1169,
+      "llvm_word_mismatches": 0,
+      "semantic_use": "Whole-function route inference rejected; only bounded static references retained."
+    },
+    {
+      "evidence_id": "ev_17fde514e0fd1a18b72ccae75f56405cd40388d31f762e6645a87ae51eeb737e",
+      "member": "iBoot.j716c.RELEASE",
+      "function": "FUN_100c1ad2594",
+      "body_anchors": [
+        {
+          "start": "0x100c1ad2594",
+          "end_inclusive": "0x100c1ad46c7",
+          "carrier_offset": 189844,
+          "derived_offset": 193940,
+          "bytes": 8500,
+          "sha256": "ce56449427516c64a96c11cd6153c8abbf05787725d00f0c36a1a354fe658da6"
+        }
+      ],
+      "assembly_instructions": 2125,
+      "original_bytes_verified": true,
+      "pcode_operations": 3000,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "query": "entry-producer-b",
+      "flow_truncated": true,
+      "flow_omitted_operations_lower_bound": 1,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "rea_exit": 0,
+      "llvm_word_count": 2125,
+      "llvm_word_mismatches": 0,
+      "semantic_use": "Whole-function route inference rejected; only bounded static references retained."
+    }
+  ],
+  "descriptor_getter": {
+    "start": "0x100c1ad4ef0",
+    "bytes": 12,
+    "sha256": "47262190c25b3d24d908c1d5cc88cce3d4c004066428fd3ce28afc759726ba29",
+    "llvm_word_count": 3,
+    "llvm_word_mismatches": 0
+  },
+  "native_execution": "NOT RUN",
+  "limitations": [
+    "Static generic firmware does not identify the current personalized live path.",
+    "Producer A has removed-block warnings; producer B truncates high-pcode. Whole-function route inference is not accepted from either.",
+    "No incoming CPU1 EL, translation state or effective PC has been established.",
+    "Dispatch-caller contains 3 high-pcode operations at 2 addresses outside its reported body; whole-function pseudocode/high-pcode inference is rejected. Its published claims rely only on bounded original-byte and LLVM instruction review."
+  ],
+  "tool_versions": {
+    "rea": "6.4.0",
+    "ghidra": "12.1.4",
+    "llvm": "Apple LLVM 21.0.0"
+  },
+  "aggregate": {
+    "fresh_rea_body_instructions": 3594,
+    "fresh_rea_body_bytes": 14376,
+    "llvm_words_including_getter": 3597,
+    "llvm_word_mismatches": 0,
+    "pcode_outside_body_operations": 3,
+    "pcode_outside_body_distinct_addresses": [
+      "0x100c1b3f068",
+      "0x100c1b3f080"
+    ]
+  }
+}

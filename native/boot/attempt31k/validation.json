@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "date": "2026-10-21",
+  "experiment": "smp31k",
+  "result": "OFFLINE_VALIDATION_PASS_AWAIT_M1_INTAKE",
+  "source_pins": 254,
+  "source_manifest_sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c",
+  "exact_image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "pinned_client": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "vm": {
+    "job": "069-smp31k",
+    "guest_exit": 0,
+    "launcher_exit": 0,
+    "full_symbol_methods": 739,
+    "image_only_methods": 716,
+    "pinned_client_scenarios": 105,
+    "toolchain": [
+      "Python 3.14.8",
+      "Linux 7.1.6-vzrun2 aarch64"
+    ],
+    "assembler": "GNU assembler (GNU Binutils) 2.46.0",
+    "final_run": "vzjob: start=2026-10-22T03:57:16Z end=2026-10-22T03:58:03Z exit=0",
+    "success_marker": "SMP31K-ALL-OFFLINE-PASS"
+  },
+  "macos": {
+    "image_only_methods": 716,
+    "exit": 0,
+    "python": "3.9.6",
+    "host_modified": false
+  },
+  "assembly": {
+    "cpu0_control": {
+      "compiled_object": "PASS",
+      "compiled_object_sha256": "527d6eef578d58ed8f54d91663e6c09b85d12cf6f8a99b9dd388df28109134d1",
+      "cpu1_execution": "NOT_TESTED",
+      "cpu1_record_visibility": "NOT_TESTED",
+      "helper_leaf_bytes": 16,
+      "helper_leaf_offset": "0x200",
+      "helper_leaf_sha256": "4f6701c7d4c6e10bc9e2e000c2b839c7b7c0b29293aa3e305b006e0098277f77",
+      "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+      "native_control": "NOT RUN",
+      "physical_hardware_operations": 0,
+      "pinned_image_scratch_zero": true,
+      "result": "OFFLINE_CPU0_CONTROL_AUDIT_PASS",
+      "shared_scratch_bytes": 64,
+      "shared_scratch_relative_offset": "0x90b00"
+    },
+    "tripwire_encoder_match": true,
+    "tripwire_bytes": 76,
+    "tripwire_sha256": "c49763521a8ea3c7b063c16a915139b41d39cef00a48800903059f0f3f7b5f98",
+    "elf_sha256": "dd89a0dbb7fde6617fc5394447d8db39e3dd202b6ca867cebccb803049882e8f"
+  },
+  "new_method_counts": {
+    "kernel/experiments/smp31k-control/test_control.py": 26,
+    "kernel/experiments/smp31k-entry/test_tripwire.py": 49,
+    "native/boot/test_smp31k.py": 35,
+    "tools/m1n1-client/test_attempt31k_offline.py": 6,
+    "tools/m1n1-client/test_attempt31k_supervisor.py": 21
+  },
+  "fixed_before_release": [
+    "High physical DRAM address bound now covers the established M5 aperture.",
+    "Each new guarded bulk read has its immediate exception check.",
+    "Cold observer cap covers bounded arrival and eight callback loops.",
+    "Initial VM actual-client run rejected Construct integer subclasses in BootArgs; normalize only integer subclasses, reject bool and numeric lookalikes, retain strict observed-word validation. Final complete VM rerun passes."
+  ],
+  "vm_initial_failure": {
+    "stage": "actual_pinned_client",
+    "reason": "control_address_type",
+    "native_operations": 0,
+    "final_rerun": "PASS"
+  },
+  "independent_design_review": "PASS",
+  "privacy_scan": "PASS targeted text/secret/path scan; public original sources and behavioral metadata only",
+  "frozen_manifests": {
+    "attempt31j": {
+      "files": 226,
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "attempt31i": {
+      "files": 202,
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "attempt31j-host": {
+      "files": 6,
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    }
+  },
+  "m1_independent_intake": "PENDING",
+  "native_31k": "NOT RUN",
+  "cpu1_entry": "UNKNOWN",
+  "linux_smp": "NOT RUN",
+  "performance_parity": "UNPROVEN",
+  "hardware_operations": 0,
+  "restart_ready": false,
+  "next_step": "M1 verifies this release and publishes readiness; human then starts one supervised existing-lab session and immediately returns to Macintosh HD on any outcome"
+}

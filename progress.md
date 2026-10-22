@@ -1,5 +1,38 @@
 # Progress Log
 
+## 2026-10-21 · M5: fresh REA and 31K implementation
+
+**31K offline release ready; M1 independent intake PENDING. Native31K and Linux
+SMP NOT RUN; CPU1's effective entry remains UNKNOWN.** Six fresh REA queries
+trace the firmware entry global and its consumers. LLVM validates 3,597 words;
+three out-of-body pcode operations cause one whole-function interpretation to
+be rejected, and two producer analyses remain incomplete. Behavioral findings:
+`research/native31k-entry.md`; no Apple code or raw artifacts are published.
+
+The original RAM-only experiment combines a returning CPU0 Device-scratch
+control with separate vector and natural cold-entry observations. It never
+redirects reset. Any cold marker/error stops before the shared cold path can
+reinitialize state; the terminal spin is not a verified architectural park.
+The existing two CPU1 starts, exact 12 Performance/6 Super census, strict
+connection/identity gates and 60/65/90-second bounds remain. No extra core,
+MMIO start/power operation, installed image, macOS, volume or setting change.
+
+**VM069 PASS: 739 full-symbol methods,716 image-only methods,105 actual pinned-
+client scenarios and both independent assembly comparisons. macOS716 PASS;
+254 source pins; independent review PASS.** The first VM run caught a real
+BootArgs integer-wrapper mismatch; fixed with narrow normalization and new
+regressions, then the complete job reran successfully. Frozen J226/I202/host6
+pins and consumed receipts remain unchanged. Evidence:
+`native/boot/attempt31k/validation.json`.
+
+M1: follow `tools/m1n1-client/attempt31k-instructions.md`, publish independent
+readiness, then wait for the human's fresh existing-lab start. No new image
+transfer or routine M1 restart. One supervised campaign; immediate Macintosh HD
+return on every result, no reconnect or Linux continuation. Routine repeated
+policy checks remain waived. A negative marker does not exclude either entry
+path or establish CPU1 fetch/store visibility; no performance parity is claimed.
+
+
 Newest first. Each milestone lists: discovered, implemented, tested,
 measured, still unsupported, and next.
 

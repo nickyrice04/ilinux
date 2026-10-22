@@ -2946,3 +2946,31 @@ is justified yet. After verified CPU1 entry, test two-core Linux coherence,
 timers/IPIs, frequency/memory and renderer/input latency together, then expand
 through both Performance clusters and the Super cluster. Details:
 `research/native31j-result-review.md`. No hardware/settings changes in this review.
+
+### 2026-10-21 · Release 31K as an entry discriminator, not a guessed reset fix
+
+**Decision:** preserve consumed31J, use fresh REA findings to narrow the entry
+source question, and instrument the known natural cold entry without selecting
+it as the reset destination. A separate returning CPU0 Device-memory control
+runs first. Cold evidence records progress/identity/EL and ends in an externally
+bounded terminal spin, never the primary stack/relocation/BSS path. No reset,
+security, clock, core-mask or additional-core change is justified by static REA.
+
+**Evidence:** six fresh isolated REA queries;3,597 LLVM-checked words with no
+byte mismatches. One out-of-bound pcode dossier and two incomplete producer
+analyses are explicitly limited. Exact-image/symbol/reference audit and original
+instruction fault model, independent code review, VM069739 full-symbol/716
+image-only methods,105 actual-client scenarios, both assembly checks and macOS
+716 methods PASS. The first VM run found a BootArgs integer-subclass mismatch;
+normalization now preserves the stored numeric value, excludes bool/lookalikes
+and keeps observed words strict. Complete VM rerun PASS;254 source pins.
+
+**Consequences:** M1 independently verifies the published instructions, then
+one human-started90s lab session runs both observation channels and bounded
+conditional callbacks. Any result immediately returns to Macintosh HD. No
+installed image transfer, routine M1 reboot, repeated policy check or automatic
+retry. A positive CPU0 control does not prove CPU1 visibility; a negative pair
+does not prove another path. CPU1/Linux SMP/performance parity remain unverified.
+Next engineering depends on the measured prefix, not another guessed write.
+See `tools/m1n1-client/attempt31k-instructions.md` and
+`native/boot/attempt31k/validation.json`.
