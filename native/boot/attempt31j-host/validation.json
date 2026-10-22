@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-21",
+  "baseline_commit": "dec2f89",
+  "scope": "Standalone host diagnostic; no native31J controller",
+  "result": "HOST_DIAGNOSTIC_TESTS_PASS_NATIVE_HOLD",
+  "new_test_methods": 19,
+  "legacy_usb_identity_methods": 16,
+  "independent_review": "PASS",
+  "python": "3.9.6",
+  "platform": "macOS; standard library only",
+  "new_tests_have_real_registry_calls": false,
+  "m5_actual_cached_query": {
+    "category": "no_primary_candidate",
+    "device_opens": 0,
+    "inventory_classified": true,
+    "modem_interfaces": 0,
+    "native_ready": false,
+    "phase": "identity",
+    "primary_candidates": 0,
+    "primary_verified": false,
+    "query_attempts": 1,
+    "query_returned": true,
+    "require_primary": false,
+    "result": "HOST_DIAGNOSTIC_COMPLETE",
+    "schema": "usb_discovery31j",
+    "stderr_present": false,
+    "stdout_kind": "xml_plist",
+    "target_requests": 0
+  },
+  "m5_default_command_exit": 0,
+  "read_only_reproduction": {
+    "date": "2026-10-21",
+    "scope": "M5 cached registry reads only; no raw output retained",
+    "production_query": {
+      "exit": 0,
+      "stdout_bytes": 60851,
+      "stderr_bytes": 0,
+      "parse": "PASS",
+      "root_type": "list",
+      "root_count": 2
+    },
+    "deliberately_absent_fixture_class": {
+      "exit": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "old_plist_parser_exception": "InvalidFileException"
+    },
+    "m1_failed_stdout": "NOT RETAINED",
+    "m1_cause": "UNKNOWN; empty no-match output is a reproduced possible cause",
+    "serial_opens": 0,
+    "target_requests": 0
+  },
+  "frozen31i_sources": 202,
+  "frozen31i_manifest_sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+  "m1_check": "PENDING",
+  "native31j": "HOLD / NOT RUN",
+  "cpu1_entry": "UNVERIFIED",
+  "linux_smp": "NOT RUN",
+  "vm_or_kernel_build": "not applicable to stdlib-only macOS host diagnostic",
+  "decompilation": "not required for this host boundary; public ioreg source plus read-only reproduction",
+  "live_controller_or_supervisor_released": false
+}

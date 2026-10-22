@@ -2814,3 +2814,27 @@ failure is claimed. Consumed sources and all202/186 pins remain frozen.
 before another fresh human-started session. No production patch, test bypass,
 automatic retry, extra core, settings change or Linux continuation here.
 Details: `native/boot/attempt31i-2026-10-21-result.md`.
+
+
+### 2026-10-21 · Diagnose the helper boundary before spending another native boot
+
+**Decision:** Keep31I and its202 pins consumed/frozen. Release a standalone,
+read-only31J host diagnostic first; no native31J controller or reboot readiness.
+Its one fixed cached-registry query performs no serial open or target request.
+M1 runs it with M5 still in Macintosh HD, then publishes sanitized categories.
+
+**Evidence:**31I stopped at connect/InvalidFileException before a completed
+Controller/preflight result. Current M5 no-match query returns exit0/empty stdout,
+which reproduces the exception; Apple's public ioreg source corroborates empty
+output for no matched subtree. Actual failed M1 bytes were not retained, so
+cause stays qualified. The old intake omitted discovery tests and its wrappers
+mocked that boundary. More CPU/firmware changes would not address this gap.
+
+**Next:** include discovery error-path tests and precise fixed connection-phase
+reports in a separately pinned31J wrapper, preserving31I's target operations.
+Verify helper parser health now; later verify the primary interface in the same
+fresh lab session before consuming the native experiment. Parser health cannot
+prove future enumeration. Do not skip malformed input, guess a callout, weaken
+identity checks, or reconnect/retry after target execution. Target-free diagnostic
+completion is never CPU1/native readiness. Native31J/CPU1/Linux SMP NOT RUN.
+See `tools/m1n1-client/attempt31j-host-instructions.md`.

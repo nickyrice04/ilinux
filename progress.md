@@ -5,6 +5,38 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M5:31I reviewed; reproduce host parser gap and prepare no-restart diagnosis
+
+**31I is consumed; native31J HOLD / NOT RUN. Do not restart either Mac yet.**
+The latest M1 result (`dec2f89`) is STOP / connect / InvalidFileException,
+0.099s controller /0.526s supervisor, normal Macintosh HD confirmed+35.607s.
+No completed Controller/preflight result or new CPU1 measurement exists.
+Missing startup/mutation counters remain absent, not measured zeros.
+
+Offline review found an unhandled empty `ioreg` stdout case and a coverage gap:
+31I intake omitted the USB discovery suite; wrapper tests mocked discovery and
+VM protocol tests began below it. M5 read-only reproduction confirms that a
+successful no-match cached-registry query can return zero bytes and trigger
+this parser exception. Apple public source corroborates that behavior;
+attempts17/18 show the same historical symptom. Actual31I input was not saved,
+so its precise cause remains unconfirmed. Firmware/CPU conclusions unchanged.
+
+The separately versioned31J host diagnostic and regression tests distinguish
+command/parse/tree/identity/path outcomes without opening USB or retaining
+identifiers. New findings and validation live under `research/native31j-host-discovery.md`
+and `native/boot/attempt31j-host/`. All202 frozen31I inputs remain unchanged.
+No new native controller, CPU-start change, image or live attempt is released.
+
+M1 now: follow `tools/m1n1-client/attempt31j-host-instructions.md`, run tests and
+one host-only check while M5 stays in macOS, then publish sanitized results.
+Target absence in this state is expected; diagnostic completion is not native
+readiness. M5 then reviews the precise host result and integrates a separately
+pinned connection wrapper with31I's unchanged combined CPU campaign. The later
+fresh lab session should verify primary-interface discovery before consuming
+its native run. No retry/reconnect after target execution, no arbitrary port,
+boot/security change, receipt reset or macOS modification.
+
+
 ## 2026-10-21 · M1: 31I connect-stage InvalidFileException; normal return
 
 **31I session consumed: STOP / `connect` / `InvalidFileException`**, execution
