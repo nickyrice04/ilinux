@@ -5,6 +5,24 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: one31J host diagnostic; empty cached-query stdout
+
+**31J host-only diagnostic completed once, exit0**, on handoff/execution
+`aa3f668`, with M5 remaining in macOS. **6 source pins /19 synthetic methods
+PASS**; one cached query returned exact empty stdout, stderr absent:
+`empty_stdout_unresolved`, phase=parse, inventory_classified=false,
+primary_verified=false, native_ready=false. **0 device opens/target requests**.
+Empty output is not a parsed empty list or measured zero interface count; no
+primary-candidate count exists. This confirms the empty-query condition on M1
+now, not the precise cause of the earlier31I failure. No restart,31I rerun,
+serial handshake or settings change. All202 frozen31I pins and prior31B–31I
+receipt digests unchanged. **Native31J HOLD/NOT RUN; CPU1 unverified; Linux SMP
+NOT RUN.** M5 next prepares its separately reviewed discovery/connection wrapper;
+no native readiness from this result. Full sanitized result:
+`native/boot/attempt31j-host-m1-2026-10-21.json`; report:
+`native/boot/attempt31j-host-m1-2026-10-21.md`.
+
+
 ## 2026-10-21 · M5:31I reviewed; reproduce host parser gap and prepare no-restart diagnosis
 
 **31I is consumed; native31J HOLD / NOT RUN. Do not restart either Mac yet.**

@@ -2838,3 +2838,21 @@ prove future enumeration. Do not skip malformed input, guess a callout, weaken
 identity checks, or reconnect/retry after target execution. Target-free diagnostic
 completion is never CPU1/native readiness. Native31J/CPU1/Linux SMP NOT RUN.
 See `tools/m1n1-client/attempt31j-host-instructions.md`.
+
+
+### 2026-10-21 · Record one M1 host-only check; keep native31J on hold
+
+**Observed:** execution `aa3f668`,6 pins/19 synthetic methods PASS; one default
+host diagnostic exit0, empty_stdout_unresolved, parse phase, query returned,
+inventory not classified and primary not verified. Native_ready=false,
+device_opens=0,target_requests=0. No candidate/interface count was produced.
+This is diagnostic completion, not a successful plist parse or proxy readiness.
+
+**Decision:** Preserve the exact distinction between empty stdout and a valid
+empty registry. The empty-query condition now occurs on M1, but31I's original
+input remains unknown. M5 reviews its separately pinned discovery/connection
+wrapper before any future fresh lab session. No restart,31I rerun, retries,
+serial opens, guessed path, settings change or native launch. All202 frozen31I
+pins and prior31B–31I evidence unchanged. Native31J HOLD/NOT RUN; CPU1 remains
+unverified and Linux SMP NOT RUN. Report and complete sanitized JSON:
+`native/boot/attempt31j-host-m1-2026-10-21.md`.

@@ -1,0 +1,16 @@
+{
+  "category": "empty_stdout_unresolved",
+  "device_opens": 0,
+  "inventory_classified": false,
+  "native_ready": false,
+  "phase": "parse",
+  "primary_verified": false,
+  "query_attempts": 1,
+  "query_returned": true,
+  "require_primary": false,
+  "result": "HOST_DIAGNOSTIC_COMPLETE",
+  "schema": "usb_discovery31j",
+  "stderr_present": false,
+  "stdout_kind": "empty",
+  "target_requests": 0
+}
