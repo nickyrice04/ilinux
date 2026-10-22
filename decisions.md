@@ -2776,3 +2776,20 @@ Collect power, opaque core-state and entry evidence together. No automatic retry
 extra core or Linux continuation. Native31I,CPU1/Linux SMP and performance gain
 remain unverified. Outcome table and handoff: `research/native31i-readback.md`
 and `tools/m1n1-client/attempt31i-instructions.md`.
+
+
+### 2026-10-21 · M1 accepts separately pinned31I after independent offline intake
+
+**Decision:** Publish independent31I readiness, then await a fresh human start.
+202 source pins,429 image-only methods, both documented commands and retained
+13-file package PASS, no source fixes/skips. Full-symbol checks NOT RUN on M1;
+M5's firmware/VM validation remains separate evidence. All186 frozen31H pins
+and prior31B–31H receipt digests unchanged; real31I receipts absent.
+
+**Scope:** Only the unsupported upper63:48-zero readback assumption is removed;
+full mirror/address/lock/low-field/immediate guard checks stay. Upper-field
+meaning remains UNKNOWN. Same starts/recorder/bounded observations and conditional
+callbacks/park; no added target operation, extra core or Linux continuation.
+One90-second supervised session and immediate Macintosh HD return on every
+outcome. No routine M1 restart/policy check or retry. Details:
+`native/boot/attempt31i-m1-offline-2026-10-21.md`.

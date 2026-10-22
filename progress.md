@@ -5,6 +5,25 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M1: 31I independent image-only intake PASS
+
+M1 pulled **`89a0947`**; **202 source pins / 429 image-only methods PASS**,
+no skips/fixes. Both documented offline commands and retained13-file package
+verification exit0. Clean client `57a9339`, existing boot021 image unchanged;
+source manifest `5c8279f9…7b4a2c6`. Symbol mode `reviewed_layout_only`;
+full-symbol checks **NOT RUN on M1**. All186 frozen31H pins and prior31B–31H
+receipt digests unchanged. Hardware operations0; no real31I receipts;
+restart_ready false (expected). **Native31I/Linux SMP NOT RUN; CPU1 unverified;
+live attempts0.** Publish before fresh human start/independent90s timer.
+The firmware-backed gate corrects31H's unsupported upper63:48-zero assumption;
+full mirror/address/lock/low-field/guard checks remain. No new target operation:
+same bounded starts/recorder, up to8 PS and8 opaque core-state reads, conditional
+callbacks/park. Upper semantics and effective reset route remain UNKNOWN;
+core-state access remains exploratory. No routine M1 reboot/policy check,
+extra core, new settings/write, retry/reconnect or Linux continuation.
+Evidence: `native/boot/attempt31i-m1-offline-2026-10-21.md`.
+
+
 ## 2026-10-21 · M5:31I firmware-backed readback correction; offline PASS
 
 **31I is ready for independent M1 offline intake; native31I/CPU1/Linux SMP
