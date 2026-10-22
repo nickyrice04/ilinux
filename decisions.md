@@ -2904,3 +2904,25 @@ blocks reentry. No additional checker/handshake, reconnect, extra core, new
 hardware/boot/security write or Linux continuation. Immediate Macintosh HD
 return on every outcome. Procedure/evidence:
 `native/boot/attempt31j-m1-offline-2026-10-21.md`.
+
+
+### 2026-10-21 · Consume31J; interpret combined power/state response offline
+
+**Observed:** execution `3277ca1` after `ad9892e`, primary verified on the first
+query, connection/source recheck/reset gate PASS, one serial attempt returned
+and transport closed. Child native_attempt_consumed=true; parent reservation's
+static consumed=false describes only its invocation. Both starts attempted/
+acknowledged,66 mutation intents. CPU1 PS actual0→15 and opaque byte0→2 after
+the second start; CPU0 stays15/2. All four PS/state pairs complete,8 reads each,
+errors null. Recorder93 samples/465 reads stays phase0 without identity; no
+reset record observed. STOP/cpu1_arrival_timeout, no callback or park.
+
+**Decision:** This combined transition is not execution, reset release or PC
+proof. Preserve opaque meaning and unknown effective route. M5 reviews effective
+dispatch/first-store visibility before a separately reviewed new campaign; no
+extra query, power/reset write, hook guess, automatic retry or Linux continuation.
+
+**Return:** exits1/1,5.270/5.679s,no supervisor deadline; human usual Macintosh
+HD +45.136s. No post-outcome target command/settings change. Linux/native SMP
+NOT RUN; installed boot021/client intact; all frozen inputs/earlier evidence
+unchanged. Report: `native/boot/attempt31j-2026-10-21-result.md`.

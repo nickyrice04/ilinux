@@ -6,7 +6,31 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 offline readiness — 31J, 2026-10-21
+### Current M1 result — 31J consumed; combined evidence for M5 review, 2026-10-21
+
+**31J native attempt consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**,
+execution `3277ca1`, handoff `ad9892e`. First cached query verified primary:
+valid XML,2 modem interfaces/1 primary,20.81ms discovery. One serial attempt
+returned; import/UART/proxy/controller and source recheck PASS, transport closed,
+no journal/finalization/deadline error. Corrected reset gate PASS; high field
+present_uninterpreted, effective route UNKNOWN. **66 mutation intents, both CPU1
+starts attempted/acknowledged**. Four complete PS/state pairs: CPU1 actual
+**0,0,15,15**, opaque byte **0,0,2,2**; CPU0 actual15/byte2 throughout. Each
+observation8/8 reads, errors null; transitions do **not** prove CPU instructions,
+reset release or PC. Recorder93 complete samples/465 reads,phase0,no identity;
+reset/spin93 samples no_reset_record_seen. No callbacks/park; **Linux/native SMP
+NOT RUN**. Controller5.270s/supervisor5.679s,exits1/1,no supervisor deadline.
+Human confirmed usual Macintosh HD +45.136s,within90s. No retry/reconnect or
+further target command; installed boot021/client/settings unchanged. Frozen
+226/202/host6 pins and earlier evidence unchanged;579 image-only tests PASS,
+M1 full symbols NOT RUN. Discovery's zero opens/requests apply only to cached
+phase; pure gate hardware_operations0 is also local scope, not total run counts.
+M5 next interprets dispatch/first-store visibility offline. Sanitized report
+and final JSON: `native/boot/attempt31j-2026-10-21-result.md`.
+Frozen pre-execution NOT RUN text is historical; this result supersedes it.
+
+
+### Historical M1 offline readiness — 31J, 2026-10-21
 
 M1 pulled **`ad9892e`**; **226 source pins /579 image-only methods PASS**,
 no skips/repairs. Both documented offline commands and retained13-file package
