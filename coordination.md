@@ -6,6 +6,22 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M1 offline readiness — 31G, 2026-10-21
+
+M1 pulled **`449eb6e`**; **166 source pins**, existing boot021 and **232
+image-only methods PASS**, no skips/fixes. Both documented offline commands
+exit 0; additional retained-package intake verifies all 13 files. Clean client
+`57a9339`; manifest `a06d3c20…1a4532`. Symbol mode `reviewed_layout_only`;
+full-symbol checks explicitly **NOT RUN** on M1. Hardware operations 0,
+restart_ready false (expected), no real 31G receipts; prior 31B–31F evidence
+digests unchanged. Human reports both machines ready. Publish before fresh
+human M5 lab start/90 s timer. Healthy M1 needs no routine restart or policy
+recheck. **Native31G/PS observations/CPU1/Linux SMP NOT RUN/unverified; attempts
+0.** Existing entry/client/macOS/settings unchanged. No PS writes, extra core,
+retry/reconnect or Linux continuation. Evidence:
+`native/boot/attempt31g-m1-offline-2026-10-21.md`.
+
+
 ### 2026-10-21 · M5: 31G ready offline — power/entry evidence and all18 topology routing
 
 31F consumed at `f2d9035`; no CPU1 marker despite CPU0 publication. **31G is

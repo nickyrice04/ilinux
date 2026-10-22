@@ -1,5 +1,21 @@
 # Blockers
 
+## Current — 31G independent intake PASS; physical power/entry evidence pending
+
+M1 pulled **`449eb6e`**; **166 source pins**, existing boot021 and **232
+image-only methods PASS**, no skips/fixes. Both documented offline commands
+exit 0; additional retained-package intake verifies all 13 files. Clean client
+`57a9339`; manifest `a06d3c20…1a4532`. Symbol mode `reviewed_layout_only`;
+full-symbol checks explicitly **NOT RUN** on M1. Hardware operations 0,
+restart_ready false (expected), no real 31G receipts; prior 31B–31F evidence
+digests unchanged. Human reports both machines ready. Publish before fresh
+human M5 lab start/90 s timer. Healthy M1 needs no routine restart or policy
+recheck. **Native31G/PS observations/CPU1/Linux SMP NOT RUN/unverified; attempts
+0.** Existing entry/client/macOS/settings unchanged. No PS writes, extra core,
+retry/reconnect or Linux continuation. Evidence:
+`native/boot/attempt31g-m1-offline-2026-10-21.md`.
+
+
 ## Current — CPU1 execution unresolved; 31G observes power separately
 
 31F remains the latest native evidence. Neither acknowledged start stores nor

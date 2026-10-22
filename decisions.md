@@ -2609,3 +2609,23 @@ emulator. No PS writes, extra cores, security changes or macOS modifications.
 fresh human M5 start, performs one bounded controller run, and returns to
 Macintosh HD. No unchanged retry. Use combined power/entry evidence to choose
 the next original implementation; preserve all consumed evidence.
+
+
+### 2026-10-21 · Accept M1 image-only 31G intake before fresh human start
+
+M1 pulled **`449eb6e`**; **166 source pins**, existing boot021 and **232
+image-only methods PASS**, no skips/fixes. Both documented offline commands
+exit 0; additional retained-package intake verifies all 13 files. Clean client
+`57a9339`; manifest `a06d3c20…1a4532`. Symbol mode `reviewed_layout_only`;
+full-symbol checks explicitly **NOT RUN** on M1. Hardware operations 0,
+restart_ready false (expected), no real 31G receipts; prior 31B–31F evidence
+digests unchanged. Human reports both machines ready. Publish before fresh
+human M5 lab start/90 s timer. Healthy M1 needs no routine restart or policy
+recheck. **Native31G/PS observations/CPU1/Linux SMP NOT RUN/unverified; attempts
+0.** Existing entry/client/macOS/settings unchanged. No PS writes, extra core,
+retry/reconnect or Linux continuation. Evidence:
+`native/boot/attempt31g-m1-offline-2026-10-21.md`.
+
+Preserve partial PS samples and fixed read bounds; active encodings are not
+CPU execution or reset proof. M5 owns interpretation after one session. No
+automatic retry, power-control adjustment, extra-core or Linux continuation.
