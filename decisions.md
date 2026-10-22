@@ -3205,3 +3205,30 @@ CPU1's prefix. A negative result remains ambiguous and must not trigger an
 automatic variant/retry. The next review should revisit reset-entry ownership,
 private-cache visibility and the upstream power-emulation findings rather than
 add another equivalent marker. No firmware sequence or proprietary code is copied.
+
+
+### 2026-10-22 · Accept independent31M intake before fresh human start
+
+M1 independently verified release **`24aa8eb`**: **306 pins / 870 image-only
+methods PASS**, no skips/repairs; both documented commands and retained13-file
+package verification exit0. Mode reviewed_layout_only, Python3.13.5; **M1 full
+symbols NOT RUN** (not supplied). Clean client57a9339 and boot021 unchanged.
+Manifest `b89a0520…ac3da97`; frozen L281/K254/J226/I202/H186/host6 and all prior
+receipts/offline evidence unchanged. **0 discovery/USB/target operations;
+six31M live-use files absent; native31M/Linux SMP NOT RUN, invocations0.**
+
+Reviewed cache geometry/ownership, live feature/dispatch binding, separate CPU0
+maintenance control and paired stop semantics. Maintenance is CPU0-issued but
+may affect shareable caches beyond CPU0. Only an all-zero cached triad permits
+fixed owned-record CIVAC and a maintained triad; partial/positive/error stops.
+Committed expected identity proves prefix execution, not cache causality or
+reset provenance. All-negative remains inconclusive. Same CPU1 prefixes/two
+starts; no callbacks, extra core, new MMIO/reset write or Linux continuation.
+No code-level blocker found for the bounded diagnostic; native qualification
+remains unknown. Publish readiness then await fresh human start/90s timer.
+No routine M1 restart/policy check or settings change. Evidence:
+`native/boot/attempt31m-m1-offline-2026-10-22.md`.
+
+**Decision:** Preserve every consumed receipt and keep native31M unrun until
+the post-publication human start. The existing90s return bound and immediate
+Macintosh HD return on any result apply; no automatic retry follows.
