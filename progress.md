@@ -1,5 +1,43 @@
 # Progress Log
 
+## 2026-10-22 · M1: 31L native-release intake PASS; historical local review preserved
+
+M1 pulled **`11cc2af`** after preserving the local first31L review in a
+recoverable snapshot/stash and carrying its notes forward. **281 pins/796
+image-only methods PASS**,no skips/repairs; both documented commands and
+retained13-file package check exit0. Clean client `57a9339`,boot021 unchanged;
+manifest `c7cc4343…5a9d26f`,reviewed_layout_only,**M1 full symbols NOT RUN**.
+Frozen K254/J226/I202/host6 and consumed31B–31K/host evidence unchanged; earlier
+24-test31L offline review retained separately. **No real discovery/USB; six
+live-use files absent;invocations0;native31L/Linux SMP NOT RUN,CPU1 unverified.**
+New methods:candidate24,observer16,controller8,intake9,supervisor23 PASS,plus
+inherited716. Normal mapping/control and publication gates reviewed; no code-level
+blocker found for this bounded hypothesis test. Any Normal prefix stops; only
+committed expected identity is CPU1 evidence. **No callbacks authorized**,including
+Device-only arrival; positives intentionally STOP/exit1. Negative channels cannot
+rule out execution or identify a Device/cache cause. Fresh human start/90s timer
+follows publication. Existing image/starts only,no routine M1 restart/policy check,
+new MMIO/reset write,extra core,reconnect or Linux continuation. Evidence:
+`native/boot/attempt31l-m1-intake-2026-10-22.md`.
+
+
+## 2026-10-22 · M1: 31L offline contract PASS; consumed receipts preserved
+
+Independent M1 verification on **`e1cdf7a`**: **24 image/report tests PASS,
+0 skips**,both documented commands exit0 on **Python3.13.5**. Checker
+OFFLINE_ENTRY_CONTRACT_PASS,reviewed_layout_only; **M1 full symbols NOT RUN**.
+56 address/112 translation cases,42 supplied MMU-off/nonidentity mismatches;
+8 injected hypotheses remain compatible. These are software premises,not
+hardware measurements. Result equals the released contract except explicit
+symbol fields. Exact retained boot021/report digests and3 checker/document
+pins PASS; frozen K254/J226/I202/host6 and consumed31B–31K/host evidence unchanged.
+**0 registry queries,device opens,target requests,native invocations or restarts.**
+Native31L HOLD/NOT RUN,CPU1 unverified,effective entry UNKNOWN,Linux SMP NOT RUN.
+No new physical runner released. Local verification only; no commit/push in
+this handoff. Evidence: `native/boot/attempt31l-m1-offline-2026-10-22.md`;
+private logs/digest snapshots retained under ignored build.
+
+
 ## 2026-10-22 · M5: REA first-fetch investigation and original31L visibility experiment
 
 31L offline release is ready for M1 independent intake; **native31L NOT RUN**.

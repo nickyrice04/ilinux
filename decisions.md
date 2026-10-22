@@ -3085,3 +3085,41 @@ advertised as ruling out entry. Firmware cleanup and shared-cluster restoration
 are not replayed because their CPU1 necessity/ownership was not established.
 Separate research findings are in `research/native31l-first-fetch.md` and
 `research/native31l-platform-prepare.md`; proprietary artifacts remain ignored.
+
+### 2026-10-22 · Complete31L locally as an offline verification only
+
+**Observed:** `e1cdf7a`,Python3.13.5,24 image/report test methods PASS with0
+skips; both documented commands exit0,OFFLINE_ENTRY_CONTRACT_PASS in reviewed
+layout mode. Full symbols NOT RUN on M1. 56 address/112 supplied translation
+cases,42 nonidentity/MMU-off mismatches and8 compatible injected hypotheses;
+canonical output agrees with released contract except explicit symbol fields.
+
+**Decision:** Retain native31L HOLD/NOT RUN and UNKNOWN effective CPU1 entry;
+no restart,proxy connection,hardware query or reuse of a consumed runner.
+Frozen inputs and all consumed evidence remain identical. Results/status notes
+saved locally; no commit/push requested in this handoff. This software check
+does not qualify another physical operation or identify the startup cause.
+Evidence: `native/boot/attempt31l-m1-offline-2026-10-22.md`.
+
+
+### 2026-10-22 · Accept separate31L Normal-memory release after M1 intake
+
+**Preservation:** save a recoverable local snapshot/Git stash of the earlier
+uncommitted24-test offline review,fast-forward to `11cc2af`,and carry its status
+sections/report forward. The old report is byte-identical; consumed native
+receipts and earlier source closures were not changed. The prior no-push/native-
+hold wording describes the earlier `e1cdf7a` analysis-only handoff,not this release.
+
+**Decision:** Publish281-pin/796-method image-only intake PASS,both documented
+commands and retained13-file package exit0,no skips/repairs. Full symbols NOT
+RUN on M1; M5's VM819 methods/60 wire cases/10 assembly comparisons remain
+separate evidence. No real discovery or target operation and no31L use receipt.
+
+**Scope:** fresh human-started90s session only after publication. Same CPU1
+starts; new owned Normal records/prefixes require CPU0 mapping/control and
+pre-start freshness/publication. Every Normal positive/partial/error stops;
+only committed expected identity proves this prefix executed. No post-positive
+Device comparison,callbacks,extra core,MMIO/reset/settings change,post-start
+cache maintenance or Linux continuation. Both-negative remains ambiguous.
+Immediate Macintosh HD return on any outcome,no reconnect/retry. Evidence:
+`native/boot/attempt31l-m1-intake-2026-10-22.md`.
