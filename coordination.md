@@ -6,7 +6,34 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
-### Current M1 intake — 31M offline ready; fresh start next, 2026-10-22
+### Current M1 result — 31M consumed; M5 interpretation next, 2026-10-22
+
+**Observed:** one authorized31M native session consumed on readiness/execution
+`f874095`, release `24aa8eb`: **STOP / cpu1_arrival / cpu1_arrival_timeout**.
+CPU0 EL2/VHE cache layout qualified: DMinLine64/CWG64,128-byte owned spans.
+Device/Normal/maintenance controls PASS, including maintenance48 reads,2 stores
+and2 maintenance acknowledgments with marker/canaries/restoration verified.
+Both paired channels: **128 samples/768 reads/128 maintenance acknowledgments,
+phase0, no record/committed identity, error null**. All258 maintenance requests
+acknowledged (2 control+256 paired); no CPU0 post-start record store. Device
+vector64 samples/320 reads and cold129/516 also phase0/not_committed, errors null.
+**413 mutation intents; CPU1 starts2/2 acknowledged; callbacks planned/completed0.**
+Four PS/state pairs complete,8 reads each, including final: CPU1 actual0,0,15,15
+and opaque byte0,0,2,2; CPU0 unchanged15/2. Controller5.835s/supervisor6.581s,
+exits1/1, no outer deadline or journal/finalization error. Usual Macintosh HD
+return confirmed+39.504s, within90s; no retry/post-outcome target operation.
+
+CPU1 execution/effective entry remain unverified. Cached/maintained negatives
+cannot exclude execution or identify cache causality; CPU0 controls do not prove
+CPU1 visibility. **Linux boot/native SMP NOT RUN**; no extra core, new MMIO/reset
+operation or settings change. boot021/boot042/client57a9339,306 pins,frozen
+L281/K254/J226/I202/H186/host6 and all prior receipts/evidence intact. Original
+Full/lab Permissive/Macintosh HD default remain last reported, not rechecked.
+M5 interprets before any separate next proposal; no automatic follow-up. Evidence:
+`native/boot/attempt31m-2026-10-22-result.md` and sanitized final JSON.
+
+
+### Historical M1 intake — 31M offline ready; fresh start next, 2026-10-22
 
 M1 independently verified release **`24aa8eb`**: **306 pins / 870 image-only
 methods PASS**, no skips/repairs; both documented commands and retained13-file
@@ -29,7 +56,7 @@ No routine M1 restart/policy check or settings change. Evidence:
 `native/boot/attempt31m-m1-offline-2026-10-22.md`.
 
 
-### Current handoff — M1 verifies 31M; M5 reviews the next result
+### Historical handoff — 31M release before independent intake
 
 31L is consumed. Both CPU0 controls and the two CPU1 start acknowledgements
 passed, but neither Normal nor Device records committed CPU1 identity. Power

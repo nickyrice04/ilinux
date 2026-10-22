@@ -1,5 +1,32 @@
 # Progress Log
 
+## 2026-10-22 · M1: 31M cache qualification/controls PASS; no CPU1 identity; returned
+
+**Observed:** one authorized31M native session consumed on readiness/execution
+`f874095`, release `24aa8eb`: **STOP / cpu1_arrival / cpu1_arrival_timeout**.
+CPU0 EL2/VHE cache layout qualified: DMinLine64/CWG64,128-byte owned spans.
+Device/Normal/maintenance controls PASS, including maintenance48 reads,2 stores
+and2 maintenance acknowledgments with marker/canaries/restoration verified.
+Both paired channels: **128 samples/768 reads/128 maintenance acknowledgments,
+phase0, no record/committed identity, error null**. All258 maintenance requests
+acknowledged (2 control+256 paired); no CPU0 post-start record store. Device
+vector64 samples/320 reads and cold129/516 also phase0/not_committed, errors null.
+**413 mutation intents; CPU1 starts2/2 acknowledged; callbacks planned/completed0.**
+Four PS/state pairs complete,8 reads each, including final: CPU1 actual0,0,15,15
+and opaque byte0,0,2,2; CPU0 unchanged15/2. Controller5.835s/supervisor6.581s,
+exits1/1, no outer deadline or journal/finalization error. Usual Macintosh HD
+return confirmed+39.504s, within90s; no retry/post-outcome target operation.
+
+CPU1 execution/effective entry remain unverified. Cached/maintained negatives
+cannot exclude execution or identify cache causality; CPU0 controls do not prove
+CPU1 visibility. **Linux boot/native SMP NOT RUN**; no extra core, new MMIO/reset
+operation or settings change. boot021/boot042/client57a9339,306 pins,frozen
+L281/K254/J226/I202/H186/host6 and all prior receipts/evidence intact. Original
+Full/lab Permissive/Macintosh HD default remain last reported, not rechecked.
+M5 interprets before any separate next proposal; no automatic follow-up. Evidence:
+`native/boot/attempt31m-2026-10-22-result.md` and sanitized final JSON.
+
+
 ## 2026-10-22 · M1: 31M independent offline intake PASS
 
 M1 independently verified release **`24aa8eb`**: **306 pins / 870 image-only
