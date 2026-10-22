@@ -1,0 +1,296 @@
+{
+  "date": "2026-10-21",
+  "timezone": "America/New_York",
+  "baseline_commit": "ed3a63a",
+  "result": "OFFLINE_PASS_NATIVE_NOT_RUN",
+  "job": "virtualization/jobs/068-smp31j/run.sh",
+  "guest_exit": 0,
+  "source_pins": 226,
+  "source_manifest_sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765",
+  "full_symbol_test_methods": 602,
+  "image_only_test_methods": 579,
+  "macos_image_only_test_methods": 579,
+  "full_symbol_checks": "PASS",
+  "new_boundary_suites": {
+    "tools/m1n1-client/test_usb_identity.py": 16,
+    "tools/m1n1-client/test_usb_discovery31j.py": 19,
+    "tools/m1n1-client/test_usb_connection31j.py": 24,
+    "native/boot/test_smp31j.py": 64,
+    "tools/m1n1-client/test_attempt31j_offline.py": 6,
+    "tools/m1n1-client/test_attempt31j_supervisor.py": 21
+  },
+  "actual_pinned_client_cases": [
+    {
+      "cpu_state_guarded_reads": 2,
+      "cpu_state_helper_reads": 6,
+      "cpu_state_read_bytes": 4,
+      "guarded_startup_stores": 0,
+      "partial_record_timeout": false,
+      "primary_el": 1,
+      "real_bootargs_adt": true,
+      "requests_completed": 8,
+      "rvbar_observation": "TWO_EXISTING_READS_CLASSIFIED",
+      "rvbar_reads": 2,
+      "start_helper_calls": 2
+    },
+    {
+      "cpu_state_guarded_reads": 2,
+      "cpu_state_helper_reads": 6,
+      "cpu_state_read_bytes": 4,
+      "guarded_startup_stores": 0,
+      "partial_record_timeout": true,
+      "primary_el": 1,
+      "real_bootargs_adt": true,
+      "requests_completed": 0,
+      "rvbar_observation": "TWO_EXISTING_READS_CLASSIFIED",
+      "rvbar_reads": 2,
+      "start_helper_calls": 2
+    },
+    {
+      "cpu_state_guarded_reads": 2,
+      "cpu_state_helper_reads": 6,
+      "cpu_state_read_bytes": 4,
+      "guarded_startup_stores": 0,
+      "partial_record_timeout": false,
+      "primary_el": 2,
+      "real_bootargs_adt": true,
+      "requests_completed": 8,
+      "rvbar_observation": "TWO_EXISTING_READS_CLASSIFIED",
+      "rvbar_reads": 2,
+      "start_helper_calls": 2
+    },
+    {
+      "cpu_state_guarded_reads": 2,
+      "cpu_state_helper_reads": 6,
+      "cpu_state_read_bytes": 4,
+      "guarded_startup_stores": 0,
+      "partial_record_timeout": true,
+      "primary_el": 2,
+      "real_bootargs_adt": true,
+      "requests_completed": 0,
+      "rvbar_observation": "TWO_EXISTING_READS_CLASSIFIED",
+      "rvbar_reads": 2,
+      "start_helper_calls": 2
+    },
+    {
+      "cpu_state_reads": 0,
+      "mutations": 0,
+      "primary_el": 1,
+      "reset_format_refusal": true
+    },
+    {
+      "cpu_state_reads": 0,
+      "mutations": 0,
+      "primary_el": 2,
+      "reset_format_refusal": true
+    },
+    {
+      "cpu_state_reads": 0,
+      "cpu_state_translation_refused": true,
+      "primary_el": 1,
+      "start_helper_calls": 0
+    },
+    {
+      "cpu_state_reads": 0,
+      "cpu_state_translation_refused": true,
+      "primary_el": 2,
+      "start_helper_calls": 0
+    },
+    {
+      "cpu_state_reads": 1,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 1
+    },
+    {
+      "cpu_state_reads": 2,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 2
+    },
+    {
+      "cpu_state_reads": 3,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 3
+    },
+    {
+      "cpu_state_reads": 4,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 4
+    },
+    {
+      "cpu_state_reads": 5,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 5
+    },
+    {
+      "cpu_state_reads": 6,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 6
+    },
+    {
+      "cpu_state_reads": 7,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 7
+    },
+    {
+      "cpu_state_reads": 8,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 8
+    },
+    {
+      "cpu_state_reads": 1,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 1
+    },
+    {
+      "cpu_state_reads": 2,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 2
+    },
+    {
+      "cpu_state_reads": 3,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 3
+    },
+    {
+      "cpu_state_reads": 4,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 4
+    },
+    {
+      "cpu_state_reads": 5,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 5
+    },
+    {
+      "cpu_state_reads": 6,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 6
+    },
+    {
+      "cpu_state_reads": 7,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": true,
+      "primary_el": 2,
+      "state_fault_at": 7
+    },
+    {
+      "cpu_state_reads": 8,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": true,
+      "primary_el": 2,
+      "state_fault_at": 8
+    }
+  ],
+  "independent_review": "PASS; connection, wrapper, supervisor and publication",
+  "target_trace_parity_with_31i": [
+    "success",
+    "natural_timeout"
+  ],
+  "new_target_operations": 0,
+  "frozen_inputs": {
+    "attempt31i": {
+      "files": 202,
+      "manifest_sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+      "result": "UNCHANGED"
+    },
+    "attempt31j-host": {
+      "files": 6,
+      "manifest_sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e",
+      "result": "UNCHANGED"
+    }
+  },
+  "m1n1_client_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "symbols_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11",
+  "guest_toolchain": [
+    "Python 3.14.8",
+    "Linux 7.1.6-vzrun2 aarch64"
+  ],
+  "macos_python_version": "3.9.6",
+  "macos_version": "26.6.2",
+  "macos_build": "25G83",
+  "macos_packaged_runner": "NOT RUN: checkout-local client venv absent. Direct controller offline check PASS inside intake; M1 must verify its retained runner independently.",
+  "initial_vm_failure": {
+    "scope": "test assertion only",
+    "reason": "Python3.14 adds __static_attributes__ and __firstlineno__ to class metadata",
+    "fix": "Exclude only known compiler metadata, retain explicit callable override and inherited target-method checks",
+    "production_changed": false,
+    "full_rerun": "PASS"
+  },
+  "m1_host_result": {
+    "category": "empty_stdout_unresolved",
+    "device_opens": 0,
+    "inventory_classified": false,
+    "native_ready": false,
+    "phase": "parse",
+    "primary_verified": false,
+    "query_attempts": 1,
+    "query_returned": true,
+    "require_primary": false,
+    "result": "HOST_DIAGNOSTIC_COMPLETE",
+    "schema": "usb_discovery31j",
+    "stderr_present": false,
+    "stdout_kind": "empty",
+    "target_requests": 0
+  },
+  "m1_host_report_commit": "ed3a63a",
+  "m1_host_execution_commit": "aa3f668",
+  "prior31i_cause": "UNKNOWN; M1 host check confirms empty-output condition now, not original failed input",
+  "discovery_bounds": {
+    "max_queries": 4,
+    "query_seconds": 3,
+    "wait_seconds": 1,
+    "total_seconds": 15,
+    "waitable": [
+      "empty_stdout_unresolved",
+      "no_primary_candidate"
+    ],
+    "post_open_retry": false
+  },
+  "rea": "No new decompilation: host-only boundary defect. Frozen firmware findings and 31I CPU gate unchanged.",
+  "helper_recorder_bytes": "UNCHANGED",
+  "new_kernel_build": "Not applicable: host connection workflow only",
+  "evidence_sha256": {
+    "intake.json": "c1583e4f4a7b7ff8153ff7a9b7a4b93cda8f842ad0ed3e81cbaf2223b8ea40c5",
+    "intake-image-only.json": "1a47ed75647946baf6ea6973ce58b46d55746a3b02cc9afb793d8eac661d1114",
+    "intake-macos-image-only.json": "1a47ed75647946baf6ea6973ce58b46d55746a3b02cc9afb793d8eac661d1114",
+    "validation.log": "25d2049212c0db5bfd92c28c5df575b410d45b8ceb9d3852945b958d6cce6dc2",
+    "run.log": "42fa0a4ff400c13147608709e89e4cfcdcf646c2eb237704abdd769d14e8e644",
+    "toolchain.txt": "e01cafae2897a74295411b40b7e4ec2a7699d4c7fd4df624cf5f2c5842b49a17"
+  },
+  "physical_hardware_operations": 0,
+  "native31j": "NOT RUN",
+  "cpu1_execution": "UNVERIFIED",
+  "linux_smp": "NOT RUN",
+  "performance_gain": "NOT MEASURED",
+  "m1_independent_intake": "PENDING",
+  "next_step": "M1 publishes independent offline readiness; human starts fresh M5 lab session; one supervised31J command then immediate Macintosh HD return"
+}

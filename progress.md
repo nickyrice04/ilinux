@@ -5,6 +5,50 @@ measured, still unsupported, and next.
 
 ---
 
+## 2026-10-21 · M5: 31J connection boundary fixed and validated offline
+
+**Discovered:** M1 host check `ed3a63a` (execution `aa3f668`) returned empty
+cached-registry stdout, exit 0, no inventory/primary classification. This
+confirms the condition now, not 31I's missing original input. Its zero device
+opens/requests apply only to that host-only diagnostic. More CPU/firmware changes
+would not resolve the parser/reservation gap.
+
+**Implemented:** separately pinned 31J connection module and wrapper. At most
+4 cached queries, 3 seconds each, 1-second waits, 15 seconds total; only exact
+empty output or valid zero-primary inventories may wait before any open.
+Malformed/query/ambiguous-identity/path failures stop. Separate durable discovery
+and native journals, source recheck, precise connection phases and truthful
+attempted/returned flags. Native consumption follows readiness, before one serial
+attempt. No reconnect/retry afterward. Supervisor invocation is recorded separately
+from native consumption. Outer deadline/interrupt provenance survives secondary
+journal/cleanup errors. Same 31I target operations and CPU gate, new J token and
+receipts; existing topology includes all 12 Performance (M) and 6 Super (P) cores.
+This diagnostic still targets CPU1 only.
+
+**Tested:** VM068 guest exit 0: 602 full-symbol methods, 579 image-only methods,
+24 actual pinned-client wire scenarios. macOS Python 3.9.6 image-only 579 PASS.
+New coverage includes real discovery parsing through the wrapper with mocked
+registry/serial boundaries; strict faults, journals, deadlines and exact I/J
+success/timeout transaction parity. Initial VM run caught a Python 3.14 class-
+metadata assumption in a test; explicit metadata handling fixed it without a
+production change, then the entire job passed. Independent review PASS. New
+226-file manifest; frozen I202/host6 unchanged. M5 checkout lacks the optional
+client venv, so the packaged runner is for M1's independent check; the direct
+controller offline check passed in both intakes. Details, hashes and versions:
+`native/boot/attempt31j/validation.json`.
+
+**Measured/limitations:** no target hardware access this turn; no native CPU,
+SMP or performance result. Offline tests cannot prove physical enumeration,
+reset routing or CPU1 execution. Existing REA-backed firmware conclusions remain
+unchanged. Installed boot021, retained boot042, macOS and boot settings untouched.
+
+**Next:** supersede the host-only hold with the separately reviewed 31J release.
+M1 follows `tools/m1n1-client/attempt31j-instructions.md` and publishes readiness
+before the M5 restart. No M1 reboot or new artifact transfer needed. One fresh
+human-started lab session, bounded combined discovery/CPU1 campaign, immediate
+Macintosh HD return. No old receipt reset, extra core or Linux continuation.
+Outcome table: `research/native31j-connection.md`.
+
 ## 2026-10-21 · M1: one31J host diagnostic; empty cached-query stdout
 
 **31J host-only diagnostic completed once, exit0**, on handoff/execution

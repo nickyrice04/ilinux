@@ -2856,3 +2856,33 @@ serial opens, guessed path, settings change or native launch. All202 frozen31I
 pins and prior31B–31I evidence unchanged. Native31J HOLD/NOT RUN; CPU1 remains
 unverified and Linux SMP NOT RUN. Report and complete sanitized JSON:
 `native/boot/attempt31j-host-m1-2026-10-21.md`.
+
+
+### 2026-10-21 · Release 31J connection repair with unchanged CPU1 operations
+
+**Decision:** fix the verified host workflow gap before spending another boot
+on CPU speculation. M1's exact empty cached-query output is unclassified, not a
+parsed zero-interface inventory. Keep frozen 31I and the host-only handoff intact.
+New 31J waits only on empty/absent enumeration before any device opens, preserving
+strict identity/path checks and rechecking source pins before native reservation.
+It records discovery separately, makes one serial attempt, and never retries or
+reconnects after that attempt. Detailed phase/attempt flags and partial journals
+replace ambiguous generic connect errors; absent CPU counters remain absent.
+
+**Scope:** exact 31I CPU sequence, same installed image and firmware-backed gate,
+no new MMIO operation, core, reset vector or boot/security change. 60-second
+connection/native bound inside an independent 65-second child-process deadline;
+90-second human window unchanged. Each outcome immediately returns to Macintosh HD.
+
+**Evidence:** independent review, VM068 guest exit 0, 602 full-symbol methods,
+579 image-only methods on Linux and macOS, 24 real pinned-client scenarios,
+226 source pins and unchanged I202/host6. A test-only Python 3.14 metadata mismatch
+was corrected and the full job rerun successfully. Physical enumeration and CPU1
+execution cannot be established offline. No new decompilation is needed to fix
+this host boundary; existing REA findings are retained without alteration.
+
+**Next:** M1 independently verifies the release and its retained launcher before
+a fresh human M5 restart. Healthy M1 needs no reboot; no new image transfer.
+Native 31J/CPU1/Linux SMP remain NOT RUN/unverified until that separate session.
+See `tools/m1n1-client/attempt31j-instructions.md` and
+`native/boot/attempt31j/validation.json`.

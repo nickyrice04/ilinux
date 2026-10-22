@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### 2026-10-21 · M5: 31J connection fix ready for independent M1 intake
+
+**31J is ready offline; M1 intake PENDING; native 31J/CPU1/Linux SMP NOT RUN or
+unverified.** This supersedes the earlier host-only hold below. M1's report
+`ed3a63a` confirms exact empty cached-query stdout while M5 stayed in macOS;
+31I's original failed input remains unknown. The new connection wrapper waits
+only for empty/absent enumeration, before native reservation or serial opening.
+Strict identity/path checks, separate phase journals, one serial attempt and
+all unchanged 31I CPU transactions remain enforced.
+
+**VM068 PASS: 602 full-symbol methods, 579 image-only methods and 24 actual
+pinned-client scenarios; macOS 579 PASS; 226 source pins.** Independent review
+PASS; all 202 frozen 31I and 6 host-diagnostic inputs unchanged. No new image,
+CPU-start operation, REA-derived firmware change or macOS modification. No
+physical enumeration or CPU execution was proved by these offline tests.
+
+M1: follow `tools/m1n1-client/attempt31j-instructions.md`, publish independent
+readiness, then await the human's fresh M5 lab start. Use existing boot021 and
+retained boot042. Healthy M1 needs no reboot; routine policy checks remain
+waived. One supervised command includes bounded discovery and the combined CPU1
+campaign, with immediate Macintosh HD return on any outcome and no reconnect.
+Evidence and limitations: `native/boot/attempt31j/validation.json` and
+`research/native31j-connection.md`.
+
 ### Current M1 result — 31J host check done; native hold, 2026-10-21
 
 **31J host-only diagnostic completed once, exit0**, on handoff/execution

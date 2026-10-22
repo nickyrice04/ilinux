@@ -1,5 +1,26 @@
 # Blockers
 
+## Current — 31J offline ready; physical enumeration and CPU1 remain unverified
+
+The host parser/reservation gap is fixed in separately pinned 31J. M1's empty
+host-query result is reviewed; it does not prove the original 31I cause or a
+cable fault. VM068 602 full-symbol/579 image-only methods and 24 real-client
+scenarios PASS; macOS 579 PASS. Frozen I202/host6 unchanged. Native 31J NOT RUN.
+This entry supersedes older host-only holds below; historical evidence stays.
+
+**Remaining gate:** M1 independent intake and both documented offline commands.
+Then one fresh human-started session can establish actual primary enumeration
+and run the unchanged CPU1 campaign. No new boot image, client update, M1 reboot
+or security/volume change. If no primary appears within the bounded wait, return
+to macOS and retain classified evidence; no reconnect or attempt reset.
+
+**Hardware blocker unchanged:** CPU1 first instruction/recorder and Linux SMP
+are unverified; power/state transitions alone do not prove execution. All 18
+heterogeneous cores, performance/efficiency parity and comfortable native use
+remain future validation. No further firmware hypothesis is justified by a
+host-only connection failure. Handoff: `tools/m1n1-client/attempt31j-instructions.md`;
+outcome table: `research/native31j-connection.md`.
+
 ## Current — 31J host empty-output condition observed; native wrapper pending
 
 **31J host-only diagnostic completed once, exit0**, on handoff/execution
