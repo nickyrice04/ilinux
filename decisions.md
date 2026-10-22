@@ -2926,3 +2926,23 @@ extra query, power/reset write, hook guess, automatic retry or Linux continuatio
 HD +45.136s. No post-outcome target command/settings change. Linux/native SMP
 NOT RUN; installed boot021/client intact; all frozen inputs/earlier evidence
 unchanged. Report: `native/boot/attempt31j-2026-10-21-result.md`.
+
+### 2026-10-21 · Investigate secondary dispatch before releasing 31K
+
+**Decision:** accept 31J's successful connection and combined power/state
+observations, preserve its consumed inputs, and keep the next physical attempt
+unreleased until an offline-supported discriminator exists. The observations
+confirm a response to the start sequence but not instruction execution. Review
+finds no concrete observer bug; CPU0's record mapping is verified Device memory,
+so generic reader cache invalidation is not an evidence-backed fix.
+
+Trace matching firmware's raw-boot source-entry provenance/branch selection with
+REA and independent byte validation, then audit the exact first-fetch/store
+contract. If useful, design a separate pre-start CPU0 observer positive control
+without calling the existing non-returning reset recorder. Do not equate that
+control with CPU1 visibility. Batch justified discriminators in one later session.
+No new start bit, stop-clear, cold-entry redirect, longer timeout or extra core
+is justified yet. After verified CPU1 entry, test two-core Linux coherence,
+timers/IPIs, frequency/memory and renderer/input latency together, then expand
+through both Performance clusters and the Super cluster. Details:
+`research/native31j-result-review.md`. No hardware/settings changes in this review.

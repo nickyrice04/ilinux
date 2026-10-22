@@ -6,6 +6,26 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 work — 31J reviewed; offline entry investigation next
+
+**31J reviewed at `f4156af`; consumed and frozen. No restart-ready 31K yet.**
+Connection and reset-readback gates passed; CPU1 PS actual changed 0→15 and
+opaque state 0→2 after the second acknowledged start. All 93 recorder samples
+stayed at phase 0; CPU1 execution and Linux SMP remain unverified.
+Normal Macintosh HD return was confirmed at +45.136 seconds.
+
+Independent review found no concrete observer bug. Live CPU0 record translation
+checks require Device-nGnRnE, weakening a generic stale-data-cache hypothesis;
+they do not establish CPU1's incoming mapping or first-store visibility.
+Next: focused REA of raw-boot secondary dispatch and entry provenance, then an
+exact-image first-fetch/first-store audit and a discriminating single-session
+31K design. A separate observer positive control may help, but cannot prove
+CPU1 execution. No longer timeout, guessed cold-entry redirect, new power write
+or additional core follows from this result. Keep M5 in macOS and preserve all
+receipts pending a reviewed new handoff. Detailed evidence/prerequisites:
+`research/native31j-result-review.md`. All J226/I202/host6 pins unchanged; this
+assessment made no hardware or boot/settings changes.
+
 ### Current M1 result — 31J consumed; combined evidence for M5 review, 2026-10-21
 
 **31J native attempt consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**,
