@@ -6,6 +6,23 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current M5 work — 31L offline review, no physical campaign released
+
+M5 reviewed M1 `b820110` and retained consumed31K. CPU0 reporting control PASS
+does not establish CPU1's unknown entry or memory context. Exact-prefix audit
+found no high-address/first-store/publication-barrier fix. Original checker:
+`kernel/experiments/smp31l-analysis/`; macOS24 full-symbol +24 image-only tests,
+VM07024 full-symbol tests/both checker modes, independent320 prefix mutants PASS.
+Fresh REA: two queries/320 independently checked words, no qualified new target
+operation. Findings: `research/native31l-entry.md`; assessment and engineering
+criteria: `research/native31k-result-review.md`.
+
+**M1 owns optional independent offline verification only**, per
+`tools/m1n1-client/attempt31l-instructions.md`. **31L native HOLD / NOT RUN.**
+No restart, proxy session, old runner reuse, image transfer, policy check or
+settings change. M5 owns further evidence-backed entry/visibility design before
+releasing a physical controller. Preserve all historical inputs and receipts.
+
 ### Current M1 result — 31K consumed; marker visibility review next, 2026-10-22
 
 **31K native consumed: STOP / `cpu1_arrival` /

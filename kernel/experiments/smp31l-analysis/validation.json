@@ -1,0 +1,44 @@
+{
+  "contract_results_sha256": "4080cdad0253e6754089824f6185d17f16a400cbf3178a9c2d3a6e732f27daab",
+  "date": "2026-10-22",
+  "hardware_emulator": false,
+  "host_os": "macOS",
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "independent_review": {
+    "full_symbol_methods_rerun": 24,
+    "hardware_execution": "NOT RUN",
+    "result": "PASS",
+    "single_bit_prefix_mutants_rejected": 320
+  },
+  "macos_version": "26.6.2",
+  "native_31l": "NOT RUN",
+  "native_next_attempt_ready": false,
+  "python_version": "3.9.6",
+  "report_canonical_json_sha256": "96e27a6273b667238e02b6ee551d6712d31556ed6b8a9067752b436d50ca9204",
+  "report_sha256": "53462743e99a935e8374d4ea6add4201bacbe4de555abb94537e94cc3b7e7861",
+  "report_source": "native/boot/attempt31k-controller-2026-10-22.json",
+  "result": "OFFLINE_HOST_VALIDATION_PASS",
+  "runs": [
+    {
+      "exit_code": 0,
+      "mode": "full_symbols",
+      "result": "PASS",
+      "skips": 0,
+      "test_methods": 24
+    },
+    {
+      "exit_code": 0,
+      "mode": "image_only",
+      "result": "PASS",
+      "skips": 0,
+      "test_methods": 24
+    }
+  ],
+  "source_sha256": {
+    "README.md": "1f1f7e89b6bab0b4e4b67b7e7d78ecd18bd4bfcf6d5ccc46676a849ee4b8fcd4",
+    "entry_contract.py": "416a1d4c8356ad21499a7ec025c57127365356e31a60baa5d8f901765920a8b6",
+    "test_entry_contract.py": "e280ba4629fd01152113edd29dd53c741711ab88b13c6770803019014298b123"
+  },
+  "symbol_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11",
+  "vm_execution": "See ../../../virtualization/jobs/070-smp31l-analysis/validation.json for subsequent separate run"
+}

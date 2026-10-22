@@ -99,6 +99,29 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### 2026-10-22 · M5 review: 31L is offline analysis; no restart released
+
+Reviewed M1's `b820110` result. The31K CPU0 reporting control passed; neither
+CPU1 marker committed identity. Both recorders share unknown CPU1 entry/mapping/
+visibility assumptions. No wrong first-store encoding, high-address truncation
+or missing CPU0 publication barrier was found. Do not equate the power/opaque
+state transitions with CPU1 execution, or repeat consumed31K.
+
+New original `kernel/experiments/smp31l-analysis/` checks exact entry prefixes,
+56 synthetic address cases and112 explicit translation cases. **macOS24 full-
+symbol +24 image-only tests PASS; VM07024 full-symbol tests and both checker
+modes PASS; independent320 prefix mutants rejected.** These are software checks,
+not firmware emulation or native SMP evidence. Two fresh REA queries and320
+independently checked instruction words clarify entry provenance but establish
+no new reset-release operation or passive PC observer. Raw Apple material stays ignored. See
+`research/native31k-result-review.md` and `research/native31l-entry.md`.
+
+**Physical31L HOLD / NOT RUN.** M1 follows the offline-only
+`tools/m1n1-client/attempt31l-instructions.md`; no restart/proxy/native command.
+Keep consumed receipts and all frozen inputs intact. Next release needs an
+evidence-backed entry/fetch/store discriminator, not another equivalent marker.
+macOS, installed images, volumes and security settings remain unchanged.
+
 ### Latest M1 native result — 31K CPU0 control passes, no entry marker, 2026-10-22
 
 **31K native consumed: STOP / `cpu1_arrival` /

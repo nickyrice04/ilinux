@@ -1,5 +1,22 @@
 # Blockers
 
+## Current — need an independent CPU1 entry/fetch/store distinction before31L
+
+31K's CPU0 reporting control passed; its negative CPU1 markers share unknown
+CPU1 memory/context assumptions. High-address arithmetic, first-store encoding
+and CPU0 publication audit found no defect to fix. A new original offline checker
+and Linux VM070 tests now guard those assumptions and malformed evidence;
+details: `research/native31k-result-review.md`.
+
+Fresh REA: `research/native31l-entry.md`. A concrete incoming execution contract
+or independently supported nonintrusive observer is still required before a
+useful new physical test. A longer timeout, equivalent marker, guessed cache
+instruction or blind CoreSight read does not establish that contract.
+**No physical31L runner released; native31L NOT RUN.** M1 instructions are
+offline only. No user approval, reboot or repeated security check is needed
+to continue the current offline investigation. All18-core Linux, CPU efficiency
+and macOS parity remain unverified.
+
 ## Current — CPU0 recording control proven; CPU1 entry/fetch/store still unknown
 
 **31K native consumed: STOP / `cpu1_arrival` /

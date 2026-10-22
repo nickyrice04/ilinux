@@ -1,0 +1,225 @@
+{
+  "31k_constraint": {
+    "cause_identified": false,
+    "compatible_injected_hypotheses": [
+      "another_entry_or_no_reset_release",
+      "first_fetch_denied",
+      "old_instructions_visible",
+      "first_store_unmapped",
+      "first_store_readonly",
+      "first_store_invisible",
+      "normal_dirty_dsb_only",
+      "normal_dirty_clean_without_contract"
+    ],
+    "cpu0_control_pass_does_not_prove_cpu1_mapping": true,
+    "effective_entry": "UNKNOWN",
+    "incompatible_only_if_every_synthetic_premise_holds": [
+      "normal_dirty_clean_with_full_assumptions",
+      "device_same_physical_visible"
+    ],
+    "native_next_attempt_ready": false,
+    "no_raw_word_zero_claim": true,
+    "report_canonical_json_sha256": "96e27a6273b667238e02b6ee551d6712d31556ed6b8a9067752b436d50ca9204"
+  },
+  "address_cases_checked": 56,
+  "alias_limit": "With MMU off, a nonidentity alias is a different physical address; no alias translation is assumed.",
+  "cpu1_effective_entry": "UNKNOWN",
+  "hardware_emulator": false,
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "mmu_off_alias_cases_not_same_record": 42,
+  "native_execution": "NOT RUN",
+  "native_next_attempt_ready": false,
+  "original_vector_slots": [
+    {
+      "31k_vector_hook_on_first_word": true,
+      "direct_target": "0x8fc",
+      "slot": "0x0"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x8a0",
+      "slot": "0x80"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x8a0",
+      "slot": "0x100"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x8a0",
+      "slot": "0x180"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x10000",
+      "slot": "0x200"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x10018",
+      "slot": "0x280"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x10030",
+      "slot": "0x300"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x10048",
+      "slot": "0x380"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x10000",
+      "slot": "0x400"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x10018",
+      "slot": "0x480"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x10030",
+      "slot": "0x500"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x10048",
+      "slot": "0x580"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x8a0",
+      "slot": "0x600"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x8a0",
+      "slot": "0x680"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x8a0",
+      "slot": "0x700"
+    },
+    {
+      "31k_vector_hook_on_first_word": false,
+      "direct_target": "0x8a0",
+      "slot": "0x780"
+    }
+  ],
+  "prefixes": {
+    "cold": {
+      "code_offset": 2816,
+      "context_system_reads_before_first_store": 0,
+      "first_store_offset": 2828,
+      "hook_offset": 2048,
+      "low": 2688,
+      "pages": 144,
+      "prefix_sha256": "d22a2f6ede3222740c072596a8473b14d2b0936bb2f0db27e180a7920c0620b1",
+      "record_offset": 592512,
+      "stack_operations_before_first_store": 0
+    },
+    "vector": {
+      "code_offset": 2560,
+      "context_system_reads_before_first_store": 0,
+      "first_store_offset": 2572,
+      "hook_offset": 0,
+      "low": 2624,
+      "pages": 144,
+      "prefix_sha256": "7010bf5ed5db8ac240fba2add087f16966bbdaf26611075140b03644377140ce",
+      "record_offset": 592448,
+      "stack_operations_before_first_store": 0
+    }
+  },
+  "result": "OFFLINE_ENTRY_CONTRACT_PASS",
+  "scenarios": {
+    "another_entry_or_no_reset_release": {
+      "clean_comparison": false,
+      "first_store_executed": false,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 0,
+      "reason": "different_entry_or_reset_not_released"
+    },
+    "device_same_physical_visible": {
+      "clean_comparison": false,
+      "first_store_executed": true,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 1,
+      "reason": "first_marker_visible_under_all_premises"
+    },
+    "first_fetch_denied": {
+      "clean_comparison": false,
+      "first_store_executed": false,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 0,
+      "reason": "instruction_fetch_not_available"
+    },
+    "first_store_invisible": {
+      "clean_comparison": false,
+      "first_store_executed": true,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 0,
+      "reason": "injected_store_visibility_failure"
+    },
+    "first_store_readonly": {
+      "clean_comparison": false,
+      "first_store_executed": false,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 0,
+      "reason": "record_store_not_permitted"
+    },
+    "first_store_unmapped": {
+      "clean_comparison": false,
+      "first_store_executed": false,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 0,
+      "reason": "record_translation_not_available"
+    },
+    "normal_dirty_clean_with_full_assumptions": {
+      "clean_comparison": true,
+      "first_store_executed": true,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 1,
+      "reason": "first_marker_visible_under_all_premises"
+    },
+    "normal_dirty_clean_without_contract": {
+      "clean_comparison": true,
+      "first_store_executed": true,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 0,
+      "reason": "clean_contract_not_established"
+    },
+    "normal_dirty_dsb_only": {
+      "clean_comparison": false,
+      "first_store_executed": true,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 0,
+      "reason": "injected_dirty_store_not_published_by_dsb"
+    },
+    "old_instructions_visible": {
+      "clean_comparison": false,
+      "first_store_executed": false,
+      "hardware_behavior_proven": false,
+      "native_execution": "NOT RUN",
+      "phase": 0,
+      "reason": "instrumented_instructions_not_observed"
+    }
+  },
+  "schema": 1,
+  "symbol_mode": "full_symbols",
+  "symbol_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11",
+  "translation_cases_checked": 112
+}

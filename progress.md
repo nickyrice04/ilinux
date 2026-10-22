@@ -1,5 +1,30 @@
 # Progress Log
 
+## 2026-10-22 · M5: 31K assessed; executable offline entry checks for31L
+
+Reviewed M1 `b820110`: CPU0 control PASS, cold183/vector91 phase-zero samples,
+both CPU1 starts acknowledged, power/opaque transitions without execution proof.
+The observation deadline is a stop boundary, not the cause of missing entry.
+No concrete first-store encoding or CPU0 publication defect was found.
+
+Implemented original exact-prefix/address/translation/evidence checks in
+`kernel/experiments/smp31l-analysis/`. **macOS24 full-symbol +24 image-only tests
+PASS; VM07024 full-symbol tests and both checker commands PASS; independent320
+single-bit prefix mutants rejected.** Review found and fixed malformed-evidence
+handling and absent acquisition-counter validation before final tests. The tool
+checks56 address and112 supplied translation cases without pretending to emulate
+Apple firmware or establish CPU1's context. Frozen254/J226/I202 pins unchanged.
+
+Two fresh REA queries and320 independently checked instruction words clarify
+the firmware entry producers; no additional reset-release operation or passive
+PC observer is established. Details: `research/native31l-entry.md`.
+The [result review](research/native31k-result-review.md) explains why neither a
+blind cache clean nor an unverified debug-register read is a justified fix.
+**Physical31L remains HOLD / NOT RUN** until a new entry/fetch/store distinction
+is supported. [M1 handoff](tools/m1n1-client/attempt31l-instructions.md) is
+offline only. No macOS, native target, installed image, boot setting or volume
+changed. CPU1/Linux SMP and performance parity remain unverified.
+
 ## 2026-10-22 · M1: 31K control PASS; observation deadline without cold/vector marker
 
 **31K native consumed: STOP / `cpu1_arrival` /

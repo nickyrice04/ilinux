@@ -1,0 +1,191 @@
+{
+  "schema": "ilinux-31l-static-entry-provenance-v1",
+  "date": "2026-10-22",
+  "status": "PASS_OFFLINE_ONLY",
+  "native_31l": "NOT_RUN",
+  "decoded_firmware_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_live_address": false,
+  "llvm_version": "Apple LLVM version 21.0.0",
+  "query_records": [
+    {
+      "label": "early-cpu-window",
+      "start": "0x100c1aab970",
+      "end_exclusive": "0x100c1aab97c",
+      "bytes": 12,
+      "instructions": 3,
+      "body_sha256": "bfd561643edfc296dd2a1e01bf479a26a52735794681606495a82580f53b597d",
+      "llvm_word_mismatches": 0,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "seconds": 58.184210153,
+      "exit": 0,
+      "dossier_sha256": "e2b35cfe2b779deb2497beda9ad83338e2b35724800ecc37f3ca1d8fd2897c74",
+      "pcode_operation_count": 2,
+      "pcode_outside_reported_body": 0,
+      "pcode_truncated": false,
+      "boundary_limitation": "terminal tail call or failure edge; helper context still required"
+    },
+    {
+      "label": "early-reg-lookup",
+      "start": "0x100c1aa9ef4",
+      "end_exclusive": "0x100c1aa9f38",
+      "bytes": 68,
+      "instructions": 17,
+      "body_sha256": "3a791afde3c03864591cffbcec86ccc3853e503dd2eb358d75ce5989b61bcaee",
+      "llvm_word_mismatches": 0,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "seconds": 57.20099636100001,
+      "exit": 0,
+      "dossier_sha256": "a05cbeb0669c12d384f6a3a8b5ab45d0b51b4974d6c03d7deb85afeb6b291063",
+      "pcode_operation_count": 18,
+      "pcode_outside_reported_body": 0,
+      "pcode_truncated": false,
+      "boundary_limitation": "terminal tail call or failure edge; helper context still required"
+    }
+  ],
+  "bounded_block_records": [
+    {
+      "label": "producer_selector",
+      "start": "0x100c1ad15a4",
+      "end_exclusive": "0x100c1ad15f4",
+      "bytes": 80,
+      "instructions": 20,
+      "body_sha256": "47893e9d757682661d2c7c565039b381ed8a2b895310f66d72f53d8d1689b96c",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "producer_a_output_pointers",
+      "start": "0x100c1ad1b68",
+      "end_exclusive": "0x100c1ad1c00",
+      "bytes": 152,
+      "instructions": 38,
+      "body_sha256": "f7f57b203e84290bf32800bc38379bce9526854bf049e0d59a3fb3f489144cdb",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "producer_a_entry_field",
+      "start": "0x100c1ad5ef0",
+      "end_exclusive": "0x100c1ad5ff0",
+      "bytes": 256,
+      "instructions": 64,
+      "body_sha256": "2e5e201a438762422484f41424121dc4342377a25c7e6cd1700acb841acb3c3f",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "producer_a_entry_translate",
+      "start": "0x100c1ad2348",
+      "end_exclusive": "0x100c1ad2354",
+      "bytes": 12,
+      "instructions": 3,
+      "body_sha256": "96ec135890f164f0bfb1ccd8818f0576c223a108c3753c68b787231e3a89dbdd",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "producer_a_global_write",
+      "start": "0x100c1ad245c",
+      "end_exclusive": "0x100c1ad247c",
+      "bytes": 32,
+      "instructions": 8,
+      "body_sha256": "abe4e7739d34782586da6868496cd85248a722e06c0e3ff1ff18d73a5330b713",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "address_translation",
+      "start": "0x100c1ad4858",
+      "end_exclusive": "0x100c1ad489c",
+      "bytes": 68,
+      "instructions": 17,
+      "body_sha256": "1ca1273e4ec73bf9d5c727fbff447ea7b5de2df26962cd04c73d1769920191b2",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "address_translation_wrapper",
+      "start": "0x100c1ad7e00",
+      "end_exclusive": "0x100c1ad7e10",
+      "bytes": 16,
+      "instructions": 4,
+      "body_sha256": "d958160f6adc59dbce1f108d618d71f939fb7173f19064442471db9077e92efc",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "producer_b_entry_fields",
+      "start": "0x100c1ad44a4",
+      "end_exclusive": "0x100c1ad4544",
+      "bytes": 160,
+      "instructions": 40,
+      "body_sha256": "a3d89ec0cb44032048fa3b0bdd5cf31987ec66e518ce0ce2e8ef11094c988ef0",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "producer_b_subobject",
+      "start": "0x100c1ad79f0",
+      "end_exclusive": "0x100c1ad7a20",
+      "bytes": 48,
+      "instructions": 12,
+      "body_sha256": "8955fa562177ead319eb2fb40abb277db2e062bc857c1fb7dbc32c47e24c7b23",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "entry_consumer",
+      "start": "0x100c1ae5c60",
+      "end_exclusive": "0x100c1ae5c8c",
+      "bytes": 44,
+      "instructions": 11,
+      "body_sha256": "5ea8768df436668dd61b4fc2eff536e06b81503558c4723a24bf62207337859e",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "producer_wrapper",
+      "start": "0x100c1aa4e5c",
+      "end_exclusive": "0x100c1aa4f10",
+      "bytes": 180,
+      "instructions": 45,
+      "body_sha256": "ef92a65609f73e408df03abbc648a5af0fee3f7c2013b8898e2c66bf07152073",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "descriptor_caller_0",
+      "start": "0x100c1aa61d8",
+      "end_exclusive": "0x100c1aa6214",
+      "bytes": 60,
+      "instructions": 15,
+      "body_sha256": "dcf25b2319ec1c26d65685e04f80fa74e481251b9d6e9a1999ca210d6cd06b8c",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "descriptor_caller_1",
+      "start": "0x100c1aa67dc",
+      "end_exclusive": "0x100c1aa680c",
+      "bytes": 48,
+      "instructions": 12,
+      "body_sha256": "7da3ed43d45b12bff38f7732c8cb01da2ce496a32180d65634e2ea26ecf1faeb",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "descriptor_caller_2",
+      "start": "0x100c1aa9734",
+      "end_exclusive": "0x100c1aa9760",
+      "bytes": 44,
+      "instructions": 11,
+      "body_sha256": "3b42d86e97c8389c6abbda75e7f47968d36b10a88eb1a233871c48fa57479706",
+      "llvm_word_mismatches": 0
+    }
+  ],
+  "checked_instructions": 320,
+  "checked_bytes": 1280,
+  "limitations": [
+    "Local bytes/words and function bounds only; not runtime route evidence.",
+    "Producer A provider removes blocks; producer B pcode truncates. Whole-function path inference remains rejected.",
+    "Descriptor runtime contents, effective CPU1 PC and incoming CPU1 context unresolved.",
+    "No new native register access qualified."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "cpu1_effective_entry": "UNKNOWN",
+  "date": "2026-10-22",
+  "environment": {
+    "memory_gib": 4,
+    "network": false,
+    "os": "Linux 7.1.6-vzrun2 aarch64",
+    "python": "3.14.8",
+    "vcpus": 2
+  },
+  "hardware_emulator": false,
+  "initial_sandbox_launch": "VM configuration unavailable; no guest tests ran; rerun with existing VM entitlement succeeded",
+  "native31l": "NOT RUN",
+  "native_next_attempt_ready": false,
+  "output_sha256": {
+    "entry-full-symbols.json": "09a91b948f941cd5ea7d2cb12e647ff90bfb40f00713559ecfb307376c075895",
+    "entry-image-only.json": "60dedf969f57832830dbad3b3e5df733dbd444635aeb1965b2088348aa416cb4",
+    "run.log": "70b6ce56c913564ccd407c7204d93a3b3b555d451d6050b84bcdd6d55871d35f",
+    "toolchain.txt": "e01cafae2897a74295411b40b7e4ec2a7699d4c7fd4df624cf5f2c5842b49a17"
+  },
+  "result": "OFFLINE_VM_VALIDATION_PASS",
+  "schema": 1,
+  "source_sha256": {
+    "kernel/experiments/smp31l-analysis/entry_contract.py": "416a1d4c8356ad21499a7ec025c57127365356e31a60baa5d8f901765920a8b6",
+    "kernel/experiments/smp31l-analysis/test_entry_contract.py": "e280ba4629fd01152113edd29dd53c741711ab88b13c6770803019014298b123",
+    "native/boot/attempt31k-controller-2026-10-22.json": "53462743e99a935e8374d4ea6add4201bacbe4de555abb94537e94cc3b7e7861",
+    "virtualization/jobs/070-smp31l-analysis/run.sh": "8bc457246d1d0813389486decce1f696783ca60ac1222a1a55a7c3cee8a59561"
+  },
+  "tests": {
+    "exit_code": 0,
+    "full_symbol_checker": "PASS",
+    "full_symbol_methods": 24,
+    "host_full_result_equal": true,
+    "host_image_result_equal_except_symbol_mode": true,
+    "image_only_checker": "PASS",
+    "image_only_methods": "NOT RERUN",
+    "skips": 0
+  }
+}

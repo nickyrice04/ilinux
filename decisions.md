@@ -3016,3 +3016,34 @@ new power/reset operation,extra core,longer timeout or retry.
 confirmed +64.898s. No post-outcome target command/settings change. No callbacks/
 park/Linux SMP. Installed boot021/client and all earlier pins/evidence retained.
 Report: `native/boot/attempt31k-2026-10-22-result.md` and sanitized final JSON.
+
+### 2026-10-22 · Make31L an offline entry investigation before another physical run
+
+**Decision:** retain consumed31K and hold a new physical campaign. CPU0's
+positive reporting control is useful evidence, but the negative cold/vector
+markers share unproved CPU1 execution-context and store-visibility premises.
+The power/opaque-state response and observation deadline do not identify a
+startup fix. Do not release another equivalent marker experiment solely to
+collect the same ambiguity.
+
+**Implemented and tested:** original exact-entry contract checker, high-address
+and translation scenarios, malformed-report checks and a reproducible VM070
+job. macOS24 full-symbol +24 image-only methods PASS; VM24 full-symbol methods
+and both checker commands PASS. Independent review rejected320 single-bit
+instruction-prefix mutants. No address truncation or first-store encoding bug
+was found. Frozen254/J226/I202 inputs and native receipts remain unchanged.
+
+**REA:** two fresh queries and320 instruction words/1,280 bytes checked against
+original firmware, analysis wrapper and LLVM, with zero mismatches. Bounded
+entry-producer/accessor findings and limits are in
+`research/native31l-entry.md`; no Apple bytes or pseudocode are published.
+Firmware image-address provenance does not override the existing live mirror
+observation or independently establish the effective CPU1 PC.
+
+**Consequences:** M1 can independently run the new offline checker and retain
+its result. It must not restart, connect to the proxy or reuse an old runner.
+A future physical release needs a justified new entry/fetch/store distinction
+and separately reviewed operations. Blind cache cleaning, debug unlocking or
+unqualified CoreSight reads are not fixes. No macOS/image/volume/security change
+occurred. CPU1 execution, Linux SMP and performance parity remain unverified.
+Handoff: `tools/m1n1-client/attempt31l-instructions.md`.
