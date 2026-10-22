@@ -1,5 +1,39 @@
 # Blockers
 
+## Current —31I corrects diagnostic refusal; CPU1 execution remains unresolved
+
+**31I is ready for independent M1 offline intake; native31I/CPU1/Linux SMP
+NOT RUN/unverified.** 31H stopped before mutations or CPU1 starts because our
+preflight incorrectly required upper reset-readback bits to be zero. Retained
+matching-board REA plus fresh original-byte/LLVM validation confirms that the
+firmware comparison excludes those bits. Their meaning remains **UNKNOWN**;
+this corrects our check, not a demonstrated hardware startup defect.
+
+The separately pinned31I controller retains exact address/lock/low-field/full
+mirror equality and guarded-read requirements. It adds no target operations to
+31H. Same existing CPU1 starts, RAM recorder, up to8 PS and8 opaque core-state
+reads, conditional requests/park, time bounds and first-fault stop. The combined
+measurements31H never reached now fit one session. Core-state access remains
+exploratory; fields alone cannot establish reset release or instruction execution.
+
+**VM067 PASS:452 full-symbol methods,429 image-only methods,24 actual pinned-client
+scenarios;202 source pins. macOS image-only429 PASS.** Actual31H public-report
+regression, all65,536 synthetic upper-field patterns, success/timeout exact
+transaction parity and independent review PASS. All186 frozen31H pins unchanged.
+Fresh firmware validation:233 words/932 bytes, zero mismatches. No native
+speedup or all-core support claimed. Findings: `research/native31i-readback.md`;
+review/validation: `native/boot/attempt31i/`.
+
+M1 next: follow `tools/m1n1-client/attempt31i-instructions.md`, publish independent
+readiness, then wait for the human's fresh M5 lab start. Existing boot021/boot042
+package; no image transfer, install, routine M1 reboot or policy check. One
+90-second-bounded session, immediate Macintosh HD return. No retry, extra core,
+new power/security write or Linux continuation. Preserve consumed31A–31H and
+frozen navigation. This entry supersedes older instructions to hold the unexplained
+readback gate: the comparison is now independently established; upper semantics
+and effective CPU1 entry remain unknown. macOS/settings/installed boot021 intact.
+
+
 ## Current — 31H unexplained high reset field requires offline review
 
 **31H consumed: STOP / `preflight` / `reset_format_requires_review`** on

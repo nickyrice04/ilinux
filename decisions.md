@@ -2743,3 +2743,36 @@ callbacks or Linux SMP. Controller/supervisor exits1/1,2.045/2.457 s, no deadlin
 human Macintosh HD return recorded +37.692 s. No further target command.
 All prior evidence, installed boot021, client and settings retained. Details:
 `native/boot/attempt31h-2026-10-21-result.md` and sanitized final JSON.
+
+
+### 2026-10-21 · Release31I using the verified firmware readback predicate
+
+**Decision:** Correct the unsupported zero-upper-readback requirement in a new
+31I controller after independent REA/source review. Preserve consumed31H exactly.
+Its native result had no mutations or CPU1 starts; it is not an additional CPU1
+timeout. The matching firmware masks readback with0x3fffffff801 (bits41:11 and
+bit0). A normalized zero-upper write does not require zero-upper readback.
+
+**Evidence:** two retained REA bodies plus fresh bounded follow-up,233 words/932
+bytes checked against original firmware/analysis ELF/Apple LLVM without mismatch.
+Public pinned m1n1 independently ignores upper63:48 in legacy address matching.
+Do not assign the upper field a meaning, infer an effective reset destination,
+redirect the recorder, or add a power/reset/protection write.
+
+**Implementation:** pure fixed-schema gate, all address/lock/low-field/full-mirror
+and immediate guard-ack checks retained; only upper63:48-zero is removed. Explicit
+frozen31G preflight through31H observer; all later31H behavior inherited. No caught
+refusal followed by continuation, global patch, repeated census or added target
+operation. Separate31I token/receipt/source closure and independent supervisor.
+
+**Validation:** VM067 exit0;452 full-symbol/429 image-only methods and24 real
+pinned-client scenarios PASS, macOS429 PASS. Actual31H report regression,
+65,536 synthetic upper patterns, exact successful/timeout transaction parity,
+fault stops and source-closure tests PASS.202 new pins;186 old pins unchanged.
+
+**Consequence:** M1 publishes readiness before one fresh human-started90-second
+lab session; same image/package, immediate Macintosh HD return on every outcome.
+Collect power, opaque core-state and entry evidence together. No automatic retry,
+extra core or Linux continuation. Native31I,CPU1/Linux SMP and performance gain
+remain unverified. Outcome table and handoff: `research/native31i-readback.md`
+and `tools/m1n1-client/attempt31i-instructions.md`.

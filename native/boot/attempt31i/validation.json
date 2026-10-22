@@ -1,0 +1,246 @@
+{
+  "date": "2026-10-21",
+  "baseline_commit": "16292e3",
+  "result": "OFFLINE_PASS_NATIVE_NOT_RUN",
+  "job": "virtualization/jobs/067-smp31i/run.sh",
+  "guest_exit": 0,
+  "source_pins": 202,
+  "source_manifest_sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+  "full_symbol_test_methods": 452,
+  "image_only_test_methods": 429,
+  "macos_image_only_test_methods": 429,
+  "full_symbol_checks": "PASS",
+  "actual_pinned_client_cases": [
+    {
+      "cpu_state_guarded_reads": 2,
+      "cpu_state_helper_reads": 6,
+      "cpu_state_read_bytes": 4,
+      "guarded_startup_stores": 0,
+      "partial_record_timeout": false,
+      "primary_el": 1,
+      "real_bootargs_adt": true,
+      "requests_completed": 8,
+      "rvbar_observation": "TWO_EXISTING_READS_CLASSIFIED",
+      "rvbar_reads": 2,
+      "start_helper_calls": 2
+    },
+    {
+      "cpu_state_guarded_reads": 2,
+      "cpu_state_helper_reads": 6,
+      "cpu_state_read_bytes": 4,
+      "guarded_startup_stores": 0,
+      "partial_record_timeout": true,
+      "primary_el": 1,
+      "real_bootargs_adt": true,
+      "requests_completed": 0,
+      "rvbar_observation": "TWO_EXISTING_READS_CLASSIFIED",
+      "rvbar_reads": 2,
+      "start_helper_calls": 2
+    },
+    {
+      "cpu_state_guarded_reads": 2,
+      "cpu_state_helper_reads": 6,
+      "cpu_state_read_bytes": 4,
+      "guarded_startup_stores": 0,
+      "partial_record_timeout": false,
+      "primary_el": 2,
+      "real_bootargs_adt": true,
+      "requests_completed": 8,
+      "rvbar_observation": "TWO_EXISTING_READS_CLASSIFIED",
+      "rvbar_reads": 2,
+      "start_helper_calls": 2
+    },
+    {
+      "cpu_state_guarded_reads": 2,
+      "cpu_state_helper_reads": 6,
+      "cpu_state_read_bytes": 4,
+      "guarded_startup_stores": 0,
+      "partial_record_timeout": true,
+      "primary_el": 2,
+      "real_bootargs_adt": true,
+      "requests_completed": 0,
+      "rvbar_observation": "TWO_EXISTING_READS_CLASSIFIED",
+      "rvbar_reads": 2,
+      "start_helper_calls": 2
+    },
+    {
+      "cpu_state_reads": 0,
+      "mutations": 0,
+      "primary_el": 1,
+      "reset_format_refusal": true
+    },
+    {
+      "cpu_state_reads": 0,
+      "mutations": 0,
+      "primary_el": 2,
+      "reset_format_refusal": true
+    },
+    {
+      "cpu_state_reads": 0,
+      "cpu_state_translation_refused": true,
+      "primary_el": 1,
+      "start_helper_calls": 0
+    },
+    {
+      "cpu_state_reads": 0,
+      "cpu_state_translation_refused": true,
+      "primary_el": 2,
+      "start_helper_calls": 0
+    },
+    {
+      "cpu_state_reads": 1,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 1
+    },
+    {
+      "cpu_state_reads": 2,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 2
+    },
+    {
+      "cpu_state_reads": 3,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 3
+    },
+    {
+      "cpu_state_reads": 4,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 4
+    },
+    {
+      "cpu_state_reads": 5,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 5
+    },
+    {
+      "cpu_state_reads": 6,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 6
+    },
+    {
+      "cpu_state_reads": 7,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 7
+    },
+    {
+      "cpu_state_reads": 8,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 8
+    },
+    {
+      "cpu_state_reads": 1,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 1
+    },
+    {
+      "cpu_state_reads": 2,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 2
+    },
+    {
+      "cpu_state_reads": 3,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 3
+    },
+    {
+      "cpu_state_reads": 4,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 4
+    },
+    {
+      "cpu_state_reads": 5,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 5
+    },
+    {
+      "cpu_state_reads": 6,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": false,
+      "primary_el": 2,
+      "state_fault_at": 6
+    },
+    {
+      "cpu_state_reads": 7,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": true,
+      "primary_el": 2,
+      "state_fault_at": 7
+    },
+    {
+      "cpu_state_reads": 8,
+      "first_fault_stopped": true,
+      "natural_timeout_preserved": true,
+      "primary_el": 2,
+      "state_fault_at": 8
+    }
+  ],
+  "gate_test_methods": 13,
+  "controller_test_methods": 48,
+  "synthetic_upper_field_patterns": 65536,
+  "upper_field_values_are_synthetic": true,
+  "target_trace_parity_with_31h_valid_baseline": [
+    "success",
+    "natural_timeout"
+  ],
+  "real31h_report_regression": "old gate refuses; new address-readback gate passes; high-field meaning remains UNKNOWN",
+  "frozen31h_source_pins": 186,
+  "frozen31h_manifest_sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155",
+  "m1n1_client_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "symbols_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11",
+  "guest_toolchain": [
+    "Python 3.14.8",
+    "Linux 7.1.6-vzrun2 aarch64"
+  ],
+  "macos_python_version": "3.9.6",
+  "helper_recorder_bytes": "unchanged; inherited assembly/width evidence retained",
+  "new_kernel_build": "not applicable: helper-side report validation only",
+  "rea_validation": {
+    "new_rea_vm_query": false,
+    "retained_dossier_instruction_words": 208,
+    "fresh_llvm_and_original_byte_words": 233,
+    "additional_followup_words": 25,
+    "mismatches": 0
+  },
+  "evidence_sha256": {
+    "intake.json": "66b56d5493523dd7e78735f1b53154602bb293166ecda5031d027a224471457f",
+    "intake-image-only.json": "22a9451520c6cc094eceb231744786c169180388c0ef6ef5ae767ee6a2f54bdd",
+    "intake-macos-image-only.json": "22a9451520c6cc094eceb231744786c169180388c0ef6ef5ae767ee6a2f54bdd",
+    "validation.log": "fbf71e33d53a8a8264631d2b3de9fd30c6a05337b03907ec4d04744a9f92c2c4",
+    "run.log": "cf79f5dbd50a1de3ab87e2301fe8baea0ac0dd8158ae0aa373a9f819b4ce75e0",
+    "toolchain.txt": "e01cafae2897a74295411b40b7e4ec2a7699d4c7fd4df624cf5f2c5842b49a17"
+  },
+  "physical_hardware_operations": 0,
+  "native31i": "NOT RUN",
+  "cpu1_execution": "UNVERIFIED",
+  "linux_smp": "NOT RUN",
+  "performance_gain": "NOT MEASURED",
+  "m1_independent_intake": "PENDING",
+  "next_step": "M1 offline intake and publish readiness; fresh human M5 lab start; one bounded session; immediate Macintosh HD return"
+}
