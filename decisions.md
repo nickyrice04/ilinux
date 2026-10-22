@@ -2655,3 +2655,23 @@ Preserve the decoded desired=0/actual=15 combination exactly; do not normalize
 it or infer reset release. Final PS pair followed natural arrival expiry,
 not an in-flight observation deadline. No additional target command or
 automatic retry; M5 chooses the next separately reviewed implementation.
+
+
+### 2026-10-21 · After 31G: resolve reset-format evidence before another run
+
+**Decision:** Hold native 31H while M5 investigates the effective entry
+contract. CPU1's power-state response is established; instruction execution
+is not. A repeated start or speculative power write would not resolve this.
+
+**New evidence:** the frozen RVBAR classifier collapses synthetic `base|1`
+and `base|0x801` into the same vector-page report. The exact boot021 has
+vectors at 0 and cold entry at 0x800; whether bit11 has address meaning on
+t6050 remains UNKNOWN. Eight original offline tests pass. This corrects
+inference precision, not a proven hardware configuration error.
+
+**Consequence:** preserve consumed sources/pins and add unknown-field
+classification to a future controller's existing preflight reads. First use
+REA to investigate the correct raw boot path and qualify an independent
+observation. No recorder relocation or RVBAR write follows from this finding.
+No controller, new physical test or performance gain is claimed here. M1 holds;
+see `native/boot/attempt31h-plan.md` and its new offline-only instructions.

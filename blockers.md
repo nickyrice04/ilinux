@@ -1,5 +1,21 @@
 # Blockers
 
+## Current — effective CPU1 entry unknown; 31H not native-ready
+
+31G confirms CPU1 PS actual 0 → 15 after the second start; it does not
+establish CPU1 execution. The old RVBAR report discarded bits 11:1/63:48,
+so its vector match establishes only equality of the legacy bits47:12 page
+field. Eight new offline regression tests reproduce that information loss;
+bit11 address semantics
+remain UNKNOWN. No new REA query, VM run or hardware operation this review.
+
+**31H is offline investigation only; no native controller ready or restart
+requested.** M5 next resolves reset-format/entry ownership and qualifies an
+independent observation before constructing one informative campaign. M1
+preserves 31G evidence and follows `tools/m1n1-client/attempt31h-instructions.md`
+(offline hold). Plan: `native/boot/attempt31h-plan.md`. Frozen 31G controllers,
+manifests and pinned navigation remain intact. No macOS/boot/security changes.
+
 ## Current — 31G PS actual transition observed; execution/reset still unresolved
 
 **31G consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution
