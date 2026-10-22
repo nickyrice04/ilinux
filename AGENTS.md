@@ -99,7 +99,28 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-### Latest M1 offline readiness — power/entry campaign 31G, 2026-10-21
+### Latest M1 native result — 31G PS transition; no CPU1 marker, 2026-10-21
+
+**31G consumed: STOP / `cpu1_arrival` / `cpu1_arrival_timeout`**, execution
+`768c547` after handoff `449eb6e`. Live ADT/all 18 routing and both PS translation
+checks PASS; **8/8 fixed 32-bit PS reads, four complete pairs, no errors**.
+CPU0 actual stayed 15; CPU1 actual **0 before/after first start, 15 after second
+and final**. Both desired fields 0 and decoded status booleans false throughout.
+This is power-status evidence, **not CPU execution/reset proof**. RAM/UART,
+EL2/VHE/all 16 code probes and body/hook/whole-text publication PASS. **66
+mutation intents; both CPU1 starts attempted/acknowledged**. Recorder **95
+complete samples / 475 reads, phase 0, no identity, error null**; reset/spin 95 samples
+no_reset_record_seen. No callbacks/park; **Linux/native SMP NOT RUN**. Controller
+5.188 s, supervisor 5.583 s, exits 1 / 1, no deadline/terminal error. Human confirmed
+Macintosh HD +56.513 s, within 90 s. No retry/reconnect/rollback/further command.
+Installed boot021/client/macOS/settings unchanged; only session RAM code/helper
+changes. No routine restart or policy recheck. 166 pins/232 image-only methods
+PASS; M1 full-symbol checks NOT RUN. M5 owns combined power/entry interpretation;
+preserve all receipts. Evidence: `native/boot/attempt31g-2026-10-21-result.md`
+and sanitized final JSON. Supersedes frozen pre-execution NOT RUN wording.
+
+
+### Historical M1 offline readiness — power/entry campaign 31G, 2026-10-21
 
 M1 pulled **`449eb6e`**; **166 source pins**, existing boot021 and **232
 image-only methods PASS**, no skips/fixes. Both documented offline commands

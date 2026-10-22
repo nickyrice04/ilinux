@@ -1,0 +1,235 @@
+{
+  "experiment": "smp31g",
+  "result": "STOP",
+  "phase": "cpu1_arrival",
+  "mutation_requests": 66,
+  "start_writes_attempted": 2,
+  "start_writes_acknowledged": 2,
+  "cpu1_arrival_verified": false,
+  "requests_completed": 0,
+  "counter_progress_verified": false,
+  "linux_boot": "NOT RUN",
+  "native_linux_smp": "NOT RUN",
+  "ram_check": {
+    "revision_supported": true,
+    "bootargs_revision": 3,
+    "revision_consistent": true,
+    "integer_fields": true,
+    "nonempty_u64": true,
+    "address_width": true,
+    "within_machine_dram": true,
+    "adt_within_usable": true,
+    "adt_read_complete": true,
+    "chosen_base_matches": true,
+    "chosen_size_matches": true,
+    "image_within_usable": true
+  },
+  "diagnostic_uart_check": {
+    "direct_usb_proxy": true,
+    "bases_expected_or_zero": true,
+    "enabled_count": 2,
+    "ram_zeroes_published": true
+  },
+  "entry_observation": "no_reset_record_seen",
+  "arrival_samples": 95,
+  "cpu_topology": {
+    "validated_by_exact_adt_and_runtime_census": true,
+    "physical_and_logical_cores": 18,
+    "clusters": [
+      {
+        "id": 0,
+        "adt_type": "M",
+        "macos_name": "Performance",
+        "cores": 6
+      },
+      {
+        "id": 1,
+        "adt_type": "M",
+        "macos_name": "Performance",
+        "cores": 6
+      },
+      {
+        "id": 2,
+        "adt_type": "P",
+        "macos_name": "Super",
+        "cores": 6
+      }
+    ],
+    "boot_cpu": 0,
+    "target_cpu": 1,
+    "target_cluster": 0,
+    "target_macos_type": "Performance",
+    "same_cluster_as_boot_cpu": true,
+    "linux_scheduler_capacity_calibrated": false,
+    "all_core_linux_operation": "NOT RUN"
+  },
+  "permissions": {
+    "primary_exception_level": 2,
+    "regime_verified": true,
+    "hook_identity_read": true,
+    "hook_alias_read": true,
+    "hook_alias_write": true,
+    "hook_identity_write": true,
+    "stub_first_identity_read": true,
+    "stub_first_alias_read": true,
+    "stub_first_alias_write": true,
+    "stub_first_identity_write": true,
+    "stub_last_identity_read": true,
+    "stub_last_alias_read": true,
+    "stub_last_alias_write": true,
+    "stub_last_identity_write": true,
+    "record_first_read": true,
+    "record_first_write": true,
+    "record_last_read": true,
+    "record_last_write": true,
+    "passed": true
+  },
+  "recorder_publication": {
+    "body_verified": true,
+    "hook_verified": true,
+    "whole_text_verified": true
+  },
+  "recorder_observation": {
+    "state": "no_recorder_publication_seen",
+    "samples_attempted": 95,
+    "samples_completed": 95,
+    "reads_attempted": 475,
+    "reads_completed": 475,
+    "highest_phase_seen": 0,
+    "identity_seen": false,
+    "identity_recorded": false,
+    "identity_sample_complete": false,
+    "complete": false,
+    "error": null,
+    "closed": false,
+    "exception_level": null,
+    "identity_status": "not_committed",
+    "observed_cpu_id": null,
+    "observed_cluster": null,
+    "observed_core": null,
+    "observed_core_type": null,
+    "observed_macos_class": null,
+    "identity_mapping_evidence": null,
+    "mmu_enabled": null,
+    "data_cache_enabled": null,
+    "instruction_cache_enabled": null
+  },
+  "recorder_reads": 475,
+  "requests_planned": 8,
+  "request_roundtrips_ms": [],
+  "park_verified": false,
+  "power_binding": {
+    "live_adt_bound": true,
+    "cpu_ids": [
+      0,
+      1
+    ],
+    "width_bits": 32,
+    "cpu1_start_mapping_unchanged": true,
+    "all18_topology_mapping_validated": true,
+    "later_cluster_legacy_mask_mismatch_cpu_ids": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ]
+  },
+  "power_permissions": {
+    "0": true,
+    "1": true
+  },
+  "power_observation": {
+    "samples": [
+      {
+        "phase": "before_start",
+        "complete": true,
+        "cpu0": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        },
+        "cpu1": {
+          "desired": 0,
+          "actual": 0,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        }
+      },
+      {
+        "phase": "after_first_start",
+        "complete": true,
+        "cpu0": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        },
+        "cpu1": {
+          "desired": 0,
+          "actual": 0,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        }
+      },
+      {
+        "phase": "after_second_start",
+        "complete": true,
+        "cpu0": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        },
+        "cpu1": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        }
+      },
+      {
+        "phase": "final",
+        "complete": true,
+        "cpu0": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        },
+        "cpu1": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        }
+      }
+    ],
+    "reads_attempted": 8,
+    "reads_completed": 8,
+    "error": null,
+    "entry_execution": "NOT_ESTABLISHED",
+    "reset_release": "NOT_ESTABLISHED",
+    "effective_reset_destination": "NOT_ESTABLISHED"
+  },
+  "terminal_observation_error": null,
+  "reason": "cpu1_arrival_timeout",
+  "controller_elapsed_seconds": 5.188,
+  "source_manifest_sha256": "a06d3c201818a046b7964147a171d1d6c50e5b4d78a47dbdcd40584b321a4532"
+}
