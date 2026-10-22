@@ -1,0 +1,709 @@
+{
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "rows": [
+    {
+      "member": "ApplePMGR",
+      "label": "restore-acc",
+      "start": "0xfffffe0009492b0c",
+      "end_exclusive": "0xfffffe0009492e10",
+      "bytes": 772,
+      "words": 193,
+      "derived_offset": 188428,
+      "carrier_offset": 38333196,
+      "body_sha256": "bddc47b1acdd655579adb0e021c561c548eb528f07b067a1eb48d1fb345d0bbf",
+      "carrier_match": true,
+      "llvm_words_verified": 193
+    },
+    {
+      "member": "ApplePMGR",
+      "label": "complex-enable",
+      "start": "0xfffffe0009496304",
+      "end_exclusive": "0xfffffe00094964a4",
+      "bytes": 416,
+      "words": 104,
+      "derived_offset": 202756,
+      "carrier_offset": 38347524,
+      "body_sha256": "f06c4459862726614df18913e1cc1ab51fd7ed19791cc8a5279317f695bc766f",
+      "carrier_match": true,
+      "llvm_words_verified": 104
+    },
+    {
+      "member": "ApplePMGR",
+      "label": "cluster-enable",
+      "start": "0xfffffe0009496524",
+      "end_exclusive": "0xfffffe00094966e0",
+      "bytes": 444,
+      "words": 111,
+      "derived_offset": 203300,
+      "carrier_offset": 38348068,
+      "body_sha256": "3eda614780775f4e135687317f186d0b2ef8ad7d6196f6b20d908ea6c123926c",
+      "carrier_match": true,
+      "llvm_words_verified": 111
+    },
+    {
+      "member": "ApplePMGR",
+      "label": "idle-init",
+      "start": "0xfffffe00094af5e0",
+      "end_exclusive": "0xfffffe00094af69c",
+      "bytes": 188,
+      "words": 47,
+      "derived_offset": 305888,
+      "carrier_offset": 38450656,
+      "body_sha256": "7a8c0d4cb5ccb9453e732f413c51baaef63060374101e985caf8599d63235383",
+      "carrier_match": true,
+      "llvm_words_verified": 47
+    },
+    {
+      "member": "AppleARMPlatform",
+      "label": "armcpu-init",
+      "start": "0xfffffe0008a50f9c",
+      "end_exclusive": "0xfffffe0008a51100",
+      "bytes": 356,
+      "words": 89,
+      "derived_offset": 86988,
+      "carrier_offset": 27578268,
+      "body_sha256": "1e82d52b376f3ec96b16c96d3bb7a4aa2a68e07daf5111871626869c930443cb",
+      "carrier_match": true,
+      "llvm_words_verified": 89
+    },
+    {
+      "member": "AppleT6050PMGR",
+      "label": "t6050-restore",
+      "start": "0xfffffe0009880428",
+      "end_exclusive": "0xfffffe0009880548",
+      "bytes": 288,
+      "words": 72,
+      "derived_offset": 19656,
+      "carrier_offset": 42452008,
+      "body_sha256": "66e2248f99e21103960729e71ecc978a5eab73fb89306b8b851ab3dc7cc10663",
+      "carrier_match": true,
+      "llvm_words_verified": 72
+    },
+    {
+      "member": "AppleT6050PMGR",
+      "label": "t6050-acc-map",
+      "start": "0xfffffe0009884704",
+      "end_exclusive": "0xfffffe0009884934",
+      "bytes": 560,
+      "words": 140,
+      "derived_offset": 36772,
+      "carrier_offset": 42469124,
+      "body_sha256": "93dc1972b4c4cfb354d83a6241cf97cde8afc0ae3e937620e237f400444c4e3d",
+      "carrier_match": true,
+      "llvm_words_verified": 140
+    },
+    {
+      "member": "AppleT6050PMGR",
+      "label": "t6050-acc-write",
+      "start": "0xfffffe0009884b74",
+      "end_exclusive": "0xfffffe0009884c80",
+      "bytes": 268,
+      "words": 67,
+      "derived_offset": 37908,
+      "carrier_offset": 42470260,
+      "body_sha256": "96f3508a474b0d2605350cc945ec92cd8d394ec95fb4b042d6c758ba796608c0",
+      "carrier_match": true,
+      "llvm_words_verified": 67
+    },
+    {
+      "member": "AppleT6050PMGR",
+      "label": "t6050-restore-hw",
+      "start": "0xfffffe000987fd8c",
+      "end_exclusive": "0xfffffe000988012c",
+      "bytes": 928,
+      "words": 232,
+      "derived_offset": 17964,
+      "carrier_offset": 42450316,
+      "body_sha256": "4928efbd018e4cc28a2abd3eddc0e7025798e56ae5c61a84513537cad9020c0a",
+      "carrier_match": true,
+      "llvm_words_verified": 232
+    },
+    {
+      "member": "AppleT6050PMGR",
+      "label": "t6050-complex-power",
+      "start": "0xfffffe0009880a64",
+      "end_exclusive": "0xfffffe0009880b30",
+      "bytes": 204,
+      "words": 51,
+      "derived_offset": 21252,
+      "carrier_offset": 42453604,
+      "body_sha256": "25590589d0275733e693fc464b485baa377c01119ef1c86fc68d107508cf3f0c",
+      "carrier_match": true,
+      "llvm_words_verified": 51
+    },
+    {
+      "member": "ApplePMGR",
+      "label": "cluster-completion-wait",
+      "start": "0xfffffe000949df18",
+      "end_exclusive": "0xfffffe000949e024",
+      "bytes": 268,
+      "words": 67,
+      "derived_offset": 234520,
+      "carrier_offset": 38379288,
+      "body_sha256": "d28263a7fdc22e3b96d4c573ca26f5310970cf5268bb8ee475615ca045b344bc",
+      "carrier_match": true,
+      "llvm_words_verified": 67
+    },
+    {
+      "member": "AppleT6050PMGR",
+      "label": "t6050-init-regmaps",
+      "start": "0xfffffe000987ea54",
+      "end_exclusive": "0xfffffe000987f094",
+      "bytes": 1600,
+      "words": 400,
+      "derived_offset": 13044,
+      "carrier_offset": 42445396,
+      "body_sha256": "ee7f03825874f618ba02db5a184f6a0deccafbecd53faff9f92b0bded7156540",
+      "carrier_match": true,
+      "llvm_words_verified": 400
+    },
+    {
+      "member": "ApplePMGR",
+      "label": "core-enable",
+      "start": "0xfffffe000949606c",
+      "end_exclusive": "0xfffffe0009496304",
+      "bytes": 664,
+      "words": 166,
+      "derived_offset": 202092,
+      "carrier_offset": 38346860,
+      "body_sha256": "0d8a88ca037f5c65af63adc67a7e2f3328dd1212cf1fcb76bb5528bef461c391",
+      "carrier_match": true,
+      "llvm_words_verified": 166
+    },
+    {
+      "member": "AppleARMPlatform",
+      "label": "armcpu-start",
+      "start": "0xfffffe0008a51100",
+      "end_exclusive": "0xfffffe0008a5115c",
+      "bytes": 92,
+      "words": 23,
+      "derived_offset": 87344,
+      "carrier_offset": 27578624,
+      "body_sha256": "4237d1ef75f8a91287576be27a5b4c75db503b7089e721f9cca0467fec9eec06",
+      "carrier_match": true,
+      "llvm_words_verified": 23
+    }
+  ],
+  "schema_version": 1,
+  "record_date": "2026-10-22",
+  "scope": "offline static platform prepare review; no target operations",
+  "fresh_rea_queries": [
+    {
+      "label": "complex-enable",
+      "dossier_sha256": "48a75133ee7aaab5a0a3406b9592b7e8e26597defe508c682c76f78b209ef967",
+      "evidence_id": "ev_fe25ccb0756ae42cbd89f4565957feeb7932fd45a97b98e335066db0b592d4cc",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "run": {
+        "input_sha256": "a74c641b1445c3347d72840a95a08cdff344a14fed8700c2ff9fb75a0a4d0b0f",
+        "exit": 0,
+        "seconds": 41.173933727000005,
+        "command": "function",
+        "address": "0xfffffe0009496304"
+      },
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0xfffffe0009496304",
+            "end": "0xfffffe00094964a3"
+          }
+        ],
+        "total_bytes": 416,
+        "span_bytes": 416,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "assembly_instruction_count": 104,
+      "pcode_operations": 92,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "interpretation": "bounded LLVM and resolved references; generated tail-call signatures and removed blocks are not source or runtime proof"
+    },
+    {
+      "label": "cluster-enable",
+      "dossier_sha256": "e1b9ac65433d0466235e66de02eb52d7d7fed1393db5fb03cd03ebf05d236930",
+      "evidence_id": "ev_2c10f0ed7a0a2820b376ecf50ca13f2da63bb693609fca4e26e4f1afa2561eb4",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "run": {
+        "input_sha256": "a74c641b1445c3347d72840a95a08cdff344a14fed8700c2ff9fb75a0a4d0b0f",
+        "exit": 0,
+        "seconds": 40.862230894,
+        "command": "function",
+        "address": "0xfffffe0009496524"
+      },
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0xfffffe0009496524",
+            "end": "0xfffffe00094966df"
+          }
+        ],
+        "total_bytes": 444,
+        "span_bytes": 444,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "assembly_instruction_count": 111,
+      "pcode_operations": 120,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "interpretation": "bounded LLVM and resolved references; generated tail-call signatures and removed blocks are not source or runtime proof"
+    },
+    {
+      "label": "t6050-restore",
+      "dossier_sha256": "a2e3915095e2d29b62fbc617c5dd7283cfb08791ce73947f5451f42a2a16a77f",
+      "evidence_id": "ev_528f5c0e60703f2a851822084f6ddf23606b5ef1ac7bc91d2b7abb69d9295b79",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "run": {
+        "input_sha256": "45e8d9c2663bdde29b7f71f8317d782983064a0a919a94c240bd194cf2bf143e",
+        "exit": 0,
+        "seconds": 17.380538842000007,
+        "command": "function",
+        "address": "0xfffffe00098804a8"
+      },
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0xfffffe00098804a8",
+            "end": "0xfffffe0009880547"
+          }
+        ],
+        "total_bytes": 160,
+        "span_bytes": 160,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "assembly_instruction_count": 40,
+      "pcode_operations": 26,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "interpretation": "bounded LLVM and resolved references; generated tail-call signatures and removed blocks are not source or runtime proof"
+    }
+  ],
+  "static_chain_references": [
+    {
+      "target": "0xfffffe00094af5e0",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 10526,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166250",
+      "carrier_offset": 18227792,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0x9d8",
+      "symbols": [
+        "__ZN9ApplePMGR12_cpuIdleInitEP17ml_processor_info"
+      ]
+    },
+    {
+      "target": "0xfffffe000949606c",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 58570,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166300",
+      "carrier_offset": 18227968,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xa88",
+      "symbols": [
+        "__ZN9ApplePMGR14enableCPUCoresEyb"
+      ]
+    },
+    {
+      "target": "0xfffffe0009880428",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 60199,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166560",
+      "carrier_offset": 18228576,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xce8",
+      "symbols": [
+        "__ZN14AppleT6050PMGR10quiesceACCEj"
+      ]
+    },
+    {
+      "target": "0xfffffe00098804a8",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 60359,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166568",
+      "carrier_offset": 18228584,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xcf0",
+      "symbols": [
+        "__ZN14AppleT6050PMGR10restoreACCEjb"
+      ]
+    },
+    {
+      "target": "0xfffffe0009495968",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 28853,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166590",
+      "carrier_offset": 18228624,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xd18",
+      "symbols": [
+        "__ZN9ApplePMGR15configMiscCoresEyb"
+      ]
+    },
+    {
+      "target": "0xfffffe0009880a64",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 56328,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166598",
+      "carrier_offset": 18228632,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xd20",
+      "symbols": [
+        "__ZN14AppleT6050PMGR26configCPUComplexPowerStateEjb"
+      ]
+    },
+    {
+      "target": "0xfffffe0009496304",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 43955,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe00081665a0",
+      "carrier_offset": 18228640,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xd28",
+      "symbols": [
+        "__ZN9ApplePMGR16enableCPUComplexEjb"
+      ]
+    },
+    {
+      "target": "0xfffffe0009881a78",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 46245,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166770",
+      "carrier_offset": 18229104,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xef8",
+      "symbols": [
+        "__ZN14AppleT6050PMGR27enableCPUEnergyAccumulatorsEjb"
+      ]
+    },
+    {
+      "target": "0xfffffe0009883554",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 8660,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe00081666b0",
+      "carrier_offset": 18228912,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xe38",
+      "symbols": [
+        "__ZN14AppleT6050PMGR12setPerfStateEhhbj"
+      ]
+    },
+    {
+      "target": "0xfffffe000988509c",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 65034,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166330",
+      "carrier_offset": 18228016,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xab8",
+      "symbols": [
+        "__ZN9ApplePMGR6_pmpV2Ev"
+      ]
+    },
+    {
+      "target": "0xfffffe000988220c",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 55039,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166808",
+      "carrier_offset": 18229256,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0xf90",
+      "symbols": [
+        "__ZN14AppleT6050PMGR26enableCPMPowerDomainGatingEb"
+      ]
+    },
+    {
+      "target": "0xfffffe0009884b74",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 27000,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe00081669a8",
+      "carrier_offset": 18229672,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "slot": "0x1130",
+      "symbols": [
+        "__ZN14AppleT6050PMGR11writeACCRegEjjyj"
+      ]
+    },
+    {
+      "target": "0xfffffe000807d9d0",
+      "cache_level": 0,
+      "authenticated": false,
+      "diversity": 0,
+      "address_diversity": false,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008165840",
+      "carrier_offset": 18225216,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "symbols": [
+        "__ZTV9ApplePMGR"
+      ]
+    },
+    {
+      "target": "0xfffffe0009492b0c",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 60359,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe000807e6d0",
+      "carrier_offset": 17278672,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1465,
+      "chain_membership_verified": true,
+      "symbols": [
+        "__ZN9ApplePMGR10restoreACCEjb"
+      ]
+    },
+    {
+      "target": "0xfffffe000949235c",
+      "cache_level": 0,
+      "authenticated": true,
+      "diversity": 60199,
+      "address_diversity": true,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe000807e6c8",
+      "carrier_offset": 17278664,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1465,
+      "chain_membership_verified": true,
+      "symbols": [
+        "__ZN9ApplePMGR10quiesceACCEj"
+      ]
+    },
+    {
+      "target": "0xfffffe0007633770",
+      "cache_level": 0,
+      "authenticated": false,
+      "diversity": 0,
+      "address_diversity": false,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166bb0",
+      "carrier_offset": 18230192,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "symbols": [
+        "__ZN14AppleT6050PMGR13_macc0MappingE"
+      ]
+    },
+    {
+      "target": "0xfffffe00076337c8",
+      "cache_level": 0,
+      "authenticated": false,
+      "diversity": 0,
+      "address_diversity": false,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166bb8",
+      "carrier_offset": 18230200,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "symbols": [
+        "__ZN14AppleT6050PMGR13_macc1MappingE"
+      ]
+    },
+    {
+      "target": "0xfffffe0007633820",
+      "cache_level": 0,
+      "authenticated": false,
+      "diversity": 0,
+      "address_diversity": false,
+      "key": 0,
+      "next_bytes": 8,
+      "address": "0xfffffe0008166bc0",
+      "carrier_offset": 18230208,
+      "pointer_format": 8,
+      "page_size": 16384,
+      "page_chain_entries": 1878,
+      "chain_membership_verified": true,
+      "symbols": [
+        "__ZN14AppleT6050PMGR12_paccMappingE"
+      ]
+    }
+  ],
+  "restore_mappings": [
+    {
+      "physical_complex": 0,
+      "mapping_table_address": "0xfffffe0007633770",
+      "table_sha256": "403af4ca665652282d6977ddcc9266fa45f6a733d5212befc5d4e136eaabfbcd",
+      "selected_entry": 10,
+      "register_map": 45,
+      "selector_base": "0xe40000",
+      "pmgr_adt_reg_index": 17,
+      "translated_physical_base": "0x210e40000",
+      "restore_offset": "0x40f8",
+      "restore_address": "0x210e440f8",
+      "write_width_bytes": 8,
+      "write_value": 1,
+      "read_side_effects": "not established",
+      "native_write_qualified": false
+    },
+    {
+      "physical_complex": 1,
+      "mapping_table_address": "0xfffffe00076337c8",
+      "table_sha256": "0360a788dc78b0d1e39241ce9c4c55288ccd8ac23baa118933733d67947ad90e",
+      "selected_entry": 10,
+      "register_map": 56,
+      "selector_base": "0xe40000",
+      "pmgr_adt_reg_index": 27,
+      "translated_physical_base": "0x211e40000",
+      "restore_offset": "0x40f8",
+      "restore_address": "0x211e440f8",
+      "write_width_bytes": 8,
+      "write_value": 1,
+      "read_side_effects": "not established",
+      "native_write_qualified": false
+    },
+    {
+      "physical_complex": 2,
+      "mapping_table_address": "0xfffffe0007633820",
+      "table_sha256": "7f5ac33dfde6be2faf263b1a5cb06e78c2905433df70ec58e2d2eb7110246363",
+      "selected_entry": 10,
+      "register_map": 22,
+      "selector_base": "0xe40000",
+      "pmgr_adt_reg_index": 37,
+      "translated_physical_base": "0x212e40000",
+      "restore_offset": "0x40f8",
+      "restore_address": "0x212e440f8",
+      "write_width_bytes": 8,
+      "write_value": 1,
+      "read_side_effects": "not established",
+      "native_write_qualified": false
+    }
+  ],
+  "totals": {
+    "bounded_blocks": 14,
+    "llvm_instruction_words": 1762,
+    "bytes_checked": 7048,
+    "fresh_rea_queries": 3,
+    "fresh_rea_body_bytes": 1020,
+    "fresh_rea_body_instructions": 255,
+    "fresh_pcode_operations": 238,
+    "static_chain_references": 18
+  },
+  "limitations": [
+    "All mapping addresses are static evidence tied to the pinned carrier and sanitized ADT, not live virtual addresses.",
+    "The cluster preparation path is not proven necessary for starting a sibling of the already running boot CPU.",
+    "The CPM restoration location has write provenance, not qualified read or current-state evidence.",
+    "No native controller, target transaction, macOS setting, security state, volume or installed image changed.",
+    "Three fresh dossiers pass containment but retain terminal/indirect-flow and removed-block limitations; no generated pseudocode is published."
+  ],
+  "runtime_validation": "NOT RUN",
+  "new_target_read_qualified": false,
+  "new_target_write_qualified": false,
+  "native_allowance_from_this_finding": "NONE"
+}

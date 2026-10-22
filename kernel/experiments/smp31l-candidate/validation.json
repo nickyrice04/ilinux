@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "status": "OFFLINE_CANDIDATE",
+  "native": "NOT_RUN",
+  "host_full_symbol_methods": 24,
+  "independent_assembly": {
+    "result": "PASS",
+    "addresses": 5,
+    "prefix_comparisons": 10
+  },
+  "limitations": [
+    "Software checks do not prove CPU1 incoming state or native visibility."
+  ],
+  "full_controller_validation": "native/boot/attempt31l/validation.json"
+}

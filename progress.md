@@ -1,5 +1,34 @@
 # Progress Log
 
+## 2026-10-22 · M5: REA first-fetch investigation and original31L visibility experiment
+
+31L offline release is ready for M1 independent intake; **native31L NOT RUN**.
+Nine successful fresh REA queries (one additional no-procedure refusal) and
+3,968 independently checked instruction words clarified CPU0 firmware handoff,
+VHE limits and cluster restoration; no new CPU1 reset/power write was justified.
+Bare boot021 does not normally start secondaries before proxy.
+
+Implemented original Normal-first prefixes before both existing Device records.
+They reuse the owned16KiB helper allocation, validate CPU0 Normal mappings and
+control, then retain the same two CPU1 starts. Any partial/committed Normal
+publication stops; only committed expected identity proves CPU1 prefix execution.
+No callbacks follow even a Device-only arrival. All-zero observations remain
+ambiguous. No reset redirect, new MMIO, post-start cache maintenance, installed
+image, macOS, volume or security change. The12 Performance/6 Super census remains.
+
+**VM071 PASS:819 full-symbol methods,796 image-only methods,60 actual pinned-client
+scenarios and10 independent assembler comparisons.** New macOS suites also pass.
+Final regression fixed a source-closure mismatch and diagnostic-text handling.
+281 source pins; frozen K254/J226/I202 and consumed receipts unchanged.
+See `native/boot/attempt31l/validation.json` and the two new31L research documents.
+
+M1: read `tools/m1n1-client/attempt31l-instructions.md`, perform independent intake
+and publish readiness before the human's fresh existing-lab start. No routine
+M1 restart or repeated security check. One supervised session, immediate return
+to Macintosh HD on any outcome, no retry. CPU1/Linux SMP and performance parity
+remain unverified; this is an entry diagnostic, not a desktop-speed fix.
+
+
 ## 2026-10-22 · M5: 31K assessed; executable offline entry checks for31L
 
 Reviewed M1 `b820110`: CPU0 control PASS, cold183/vector91 phase-zero samples,

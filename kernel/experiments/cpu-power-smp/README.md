@@ -1,5 +1,13 @@
 # CPU power on t6050: SMP start, idle, DVFS and the PMGR↔PMP path, from this Mac's macOS 26.6.2 drivers
 
+> Historical October15 research. This repository is now public. The broad
+> claims below about PMGR-only startup, reset entry and unconditional WFI
+> power-down were superseded by later bounded evidence; do not use its old
+> native-test recipe. See the [October19 correction](../../../reverse-engineering/findings/cpu-startup-2026-10-19/README.md),
+> [31L firmware review](../../../research/native31l-first-fetch.md), and
+> [platform preparation review](../../../research/native31l-platform-prepare.md).
+> Only the current M1 handoff authorizes the next experiment.
+
 2026-10-15, M5 REA session. **Offline analysis only: nothing here has run on the M5.** Every
 proprietary input (kernel-collection members, pseudocode, disassembly, live-registry dumps) stays
 in the ignored `build/macos-drivers/`; this directory holds original code, tests and prose.

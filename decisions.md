@@ -3047,3 +3047,41 @@ and separately reviewed operations. Blind cache cleaning, debug unlocking or
 unqualified CoreSight reads are not fixes. No macOS/image/volume/security change
 occurred. CPU1 execution, Linux SMP and performance parity remain unverified.
 Handoff: `tools/m1n1-client/attempt31l-instructions.md`.
+
+### 2026-10-22 · Release a bounded Normal-memory hypothesis test for31L
+
+31L offline release is ready for M1 independent intake; **native31L NOT RUN**.
+Nine successful fresh REA queries (one additional no-procedure refusal) and
+3,968 independently checked instruction words clarified CPU0 firmware handoff,
+VHE limits and cluster restoration; no new CPU1 reset/power write was justified.
+Bare boot021 does not normally start secondaries before proxy.
+
+Implemented original Normal-first prefixes before both existing Device records.
+They reuse the owned16KiB helper allocation, validate CPU0 Normal mappings and
+control, then retain the same two CPU1 starts. Any partial/committed Normal
+publication stops; only committed expected identity proves CPU1 prefix execution.
+No callbacks follow even a Device-only arrival. All-zero observations remain
+ambiguous. No reset redirect, new MMIO, post-start cache maintenance, installed
+image, macOS, volume or security change. The12 Performance/6 Super census remains.
+
+**VM071 PASS:819 full-symbol methods,796 image-only methods,60 actual pinned-client
+scenarios and10 independent assembler comparisons.** New macOS suites also pass.
+Final regression fixed a source-closure mismatch and diagnostic-text handling.
+281 source pins; frozen K254/J226/I202 and consumed receipts unchanged.
+See `native/boot/attempt31l/validation.json` and the two new31L research documents.
+
+M1: read `tools/m1n1-client/attempt31l-instructions.md`, perform independent intake
+and publish readiness before the human's fresh existing-lab start. No routine
+M1 restart or repeated security check. One supervised session, immediate return
+to Macintosh HD on any outcome, no retry. CPU1/Linux SMP and performance parity
+remain unverified; this is an entry diagnostic, not a desktop-speed fix.
+
+**Decision rationale:** Unknown CPU1 context does not forbid a bounded test with
+a useful positive outcome. The new record changes CPU0 observation attributes
+and storage ownership, not merely the address of another Device marker. It can
+reveal execution that the existing channels could not establish. A first Normal
+fault can hide subsequent Device evidence, so another negative must not be
+advertised as ruling out entry. Firmware cleanup and shared-cluster restoration
+are not replayed because their CPU1 necessity/ownership was not established.
+Separate research findings are in `research/native31l-first-fetch.md` and
+`research/native31l-platform-prepare.md`; proprietary artifacts remain ignored.

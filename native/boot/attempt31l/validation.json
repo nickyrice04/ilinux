@@ -1,0 +1,65 @@
+{
+  "benchmark": "NOT RUN: software diagnostics do not measure native performance",
+  "corrections": [
+    "Fixed an intake/supervisor source-closure mismatch before final validation.",
+    "Retain uncommitted nonzero identity as partial evidence without attributing CPU1.",
+    "Sanitize foreign ValueError diagnostics; retain interruption prefixes."
+  ],
+  "cpu1_execution": "UNVERIFIED",
+  "date": "2026-10-22",
+  "frozen": {
+    "I202": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+    "J226": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765",
+    "K254": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+  },
+  "limitations": [
+    "No Apple firmware emulation or native instruction-fetch validation.",
+    "Normal positive proves only prefix execution/visibility when identity committed.",
+    "No post-positive Device comparison; negative remains ambiguous.",
+    "All18-core Linux, scheduler/idle/thermal behavior and performance parity remain unverified."
+  ],
+  "linux_smp": "NOT RUN",
+  "m1_independent_intake": "PENDING",
+  "macos": {
+    "candidate_full_symbol_methods": 24,
+    "controller_methods": 8,
+    "intake_methods": 9,
+    "observer_methods": 16,
+    "result": "PASS: new suites; full host intake failed earlier on closure mismatch and was not rerun; corrected final full intake passed in VM",
+    "supervisor_methods": 23
+  },
+  "native31l": "NOT RUN",
+  "output_sha256": {
+    "assembly.json": "f3bbadfa5207553ebfb901e68e6125388195e27cdf9e84e2302621b7dd811be6",
+    "intake-full.json": "10a0cb434526bc77ca3e03055af02813620607695fde2613bcba5a71e7e05ce0",
+    "intake-image.json": "1decc6de08fa62afff0f60e7b89fe035163cc8946d124c03d62345af392e7d21",
+    "run.log": "5723737e5f48a3d62aa9bcb6b635c1a16a22b6dbb12c4be36798f433671fd9fe",
+    "toolchain.txt": "d3c01c7046efa57627bd7db33354465a687a722f9eaeb1a8151b55f4ec79b537",
+    "wire.log": "c45c003aab65393e79ca0bda3d295f7f1ee60ce13680d8280c2f3a3534573ec0"
+  },
+  "result": "OFFLINE_RELEASE_VALIDATION_PASS",
+  "review": {
+    "behavioral_findings": "separate clean-room session review PASS",
+    "candidate_and_preliminary_controller": "separate session review; final integration completed and reviewed by root",
+    "m1": "independent intake/review required before fresh human start"
+  },
+  "schema": 1,
+  "source_manifest_sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f",
+  "source_pins": 281,
+  "vm": {
+    "assembly_prefix_comparisons": 10,
+    "full_symbol_methods": 819,
+    "image_only_methods": 796,
+    "memory_gib": 4,
+    "network": false,
+    "physical_usb": false,
+    "skips": 0,
+    "toolchain": [
+      "Python 3.14.8",
+      "Linux 7.1.6-vzrun2 aarch64",
+      "GNU assembler (GNU Binutils) 2.46.0"
+    ],
+    "vcpus": 2,
+    "wire_scenarios": 60
+  }
+}

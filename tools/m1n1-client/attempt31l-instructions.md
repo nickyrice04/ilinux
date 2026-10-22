@@ -1,74 +1,127 @@
-# 31L: offline entry review; no restart or native runner released
+# M1 handoff —31L Normal-memory CPU1 entry experiment
 
-2026-10-22. Supersedes earlier pre-execution instructions for the next action.
-**31K is consumed. Physical31L is HOLD / NOT RUN. Keep M5 in macOS.**
+**31K is consumed. Native31L/CPU1/Linux SMP remain NOT RUN or unverified.**
+The M5 offline release must pass the companion validation record, and M1 must
+publish independent intake before the human restarts M5. Use the existing
+boot021 lab entry and retained boot042 package. No image transfer, reinstall,
+volume/security/default change, repeated policy check or routine M1 reboot.
 
-## Why this handoff is offline
+## What this tests
 
-The31K CPU0 reporting control passed, but both CPU1 recorders remained at phase
-zero. Their common incoming-memory assumptions mean that another similar marker
-run could produce the same result without locating the failure. We have not
-identified a justified CPU-start correction. The new checker tests exact entry
-address calculations and interpretation limits without opening a target.
+Both31K Device-memory records were negative despite the CPU0 control passing.
+31L adds an original Normal-memory prefix before each existing recorder. A
+committed CPU1 identity would establish execution and visibility through this
+new channel. It would not prove the subsequent Device recorder ran, reset
+provenance, or that a cache issue caused the earlier failures. Both records
+zero remains inconclusive. This is a diagnostic attempt, not a CPU-speed fix.
 
-Read [the result review](../../research/native31k-result-review.md),
-[fresh REA findings](../../research/native31l-entry.md) and
-[checker documentation](../../kernel/experiments/smp31l-analysis/README.md).
-Keep all consumed receipts and frozen31K/J/I inputs intact.
+Read `research/native31l-first-fetch.md`,
+`research/native31l-platform-prepare.md`, and
+`native/boot/attempt31l/controller-review.md`. Raw Apple artifacts stay private;
+no firmware cleanup sequence is copied or replayed.
 
-## M1 work available now
+## M1 offline intake
 
-From your existing checkout, inspect local changes before fast-forwarding:
-
-```sh
-git status --short
-git pull --ff-only
-```
-
-If there are local changes or divergence, preserve them and report the conflict;
-do not reset the tree. Read this file again after updating.
-
-Use the already verified boot021 `m1n1.bin` in the retained package. Substitute
-its existing local path below; no image transfer or replacement is needed.
-Run with the existing Python interpreter from the repository root:
+Preserve local work. Run `git status --short`, then `git pull --ff-only`; stop
+on divergence and report it rather than resetting. From the repository root:
 
 ```sh
-python3 -I kernel/experiments/smp31l-analysis/test_entry_contract.py \
-  --image /EXISTING/BOOT021/m1n1.bin \
-  --report native/boot/attempt31k-controller-2026-10-22.json
+python3 -I tools/m1n1-client/attempt31l-offline.py \
+  --image build/native-boot042-download/ilinux-j716c-boot042/m1n1.bin
 
-python3 -I kernel/experiments/smp31l-analysis/entry_contract.py \
-  --image /EXISTING/BOOT021/m1n1.bin \
-  --report native/boot/attempt31k-controller-2026-10-22.json
+tools/m1n1-client/run.sh native/boot/smp31l.py \
+  --image build/native-boot042-download/ilinux-j716c-boot042/m1n1.bin
 ```
 
-Expected: test success with no skipped image/report checks, and
-`OFFLINE_ENTRY_CONTRACT_PASS`, `symbol_mode: reviewed_layout_only`,
-`native_next_attempt_ready: false`, `cpu1_effective_entry: UNKNOWN`,
-`hardware_emulator: false`. The numerical address/translation case counts are
-software scenarios, not measured hardware states. Full-symbol validation is a
-separate M5 result unless the exact pinned symbols are already available on M1.
+Both must exit0 without skips or repairs. First reports
+`OFFLINE_CHECKS_PASS_AWAIT_HUMAN_START`, hardware_operations0 and
+restart_ready=false: this phase performs no real discovery or USB action.
+Second prints OFFLINE PASS; do not add `--live`. Full-symbol checks remain
+NOT RUN on M1 unless the exact pinned symbol file is supplied. M5's full-symbol
+VM result is separate. Keep the client clean at57a9339 and all earlier source
+pins/receipts intact. Keep the existing13-file package verification; if a
+package file changed, repeat its existing intake. Do not update/install the
+client to bypass a refusal.
 
-Both commands read local artifacts and run original stdlib analysis. They do
-not enumerate USB, import the proxy client, open a serial port, issue hardware
-requests, mutate an image, or consume a native attempt. The checker is not an
-installer or a live launcher.
+No31L use files may exist in `build/native-intake/attempt31l/`. Never clear,
+rename or force consumed receipts, including connection-only ones. Publish
+sanitized readiness with commit, manifest digest/count, methods/skips, symbol
+mode, both exits, frozen-pin status and prior receipts preserved. M1 should
+also review the Normal-record/stop semantics; report concerns before any boot.
+Then wait for the human's fresh start.
 
-Report the checked Git commit, image digest, test count/skips, tool version and
-checker result. Keep local absolute paths and raw diagnostic data out of public
-notes. Retain `native31L / CPU1 execution / Linux SMP: NOT RUN or unverified`.
-If asked to publish the result, use a new dated offline review file and update
-current status without editing historical consumed reports.
+## One supervised lab session after M1 readiness
 
-## Release gate for a future physical31L
+Leave M1 awake/unlocked, lid open, direct known-good cable/ports. No routine M1
+restart. The human shuts down M5, holds power, selects the **existing iLinux
+Boot Lab** for this boot and waits for `Running proxy...`. Do not enter Recovery
+or change the default startup disk. Start an independent **90-second timer
+immediately before** this one command on M1:
 
-M5 must first provide a separately reviewed controller and exact instruction
-pins that test a new distinction supported by firmware or public-source
-evidence. That handoff must state target operations, identity/translation
-conditions, expected outcomes, time bounds and the return procedure.
+```sh
+python3 -I tools/m1n1-client/attempt31l-supervisor.py \
+  --image build/native-boot042-download/ilinux-j716c-boot042/m1n1.bin \
+  --confirm START-CPU1-J716C-31L
+```
 
-**There is no live command in this handoff.** Do not run31K again, clear receipts,
-start a proxy session, restart either Mac, or infer native readiness from an
-offline PASS. No repeated boot-policy check is requested. No installed image,
-security setting, volume, raw device or original macOS change is part of this
-work.
+No preliminary manual USB handshake or old checker. Discovery uses the existing
+bounded cached-registry checks and exact primary identity before one serial-open
+attempt. No reconnect, fallback or target retry follows. The supervisor reserves
+its invocation; connection progress is recorded separately; the child reserves
+native consumption before the serial attempt. Parent spawn alone is not proof
+of native consumption. Any use file blocks reuse of this invocation.
+
+The existing60-second child,65-second supervisor,2-second serial and3-second
+arrival bounds remain; the human90-second timer covers failure software cannot
+contain. Two CPU0 controls each have2-second local bounds. Do not extend any
+window. No callbacks are authorized in31L, even on complete Device-only arrival.
+
+The hardware census still validates18 cores:12 Performance (ADT M) and6 Super
+(ADT P). Only CPU1, in CPU0's active Performance cluster, is targeted. The same
+two CPU1 start stores and strict reset mirror checks remain. No new MMIO,
+reset destination, system-register write or mapping change is introduced.
+
+The existing16KiB helper allocation owns separate64-byte Normal records on
+128-byte boundaries and a separate CPU0 control. Initialization/cache publication
+happens only before starts. CPU0 Normal translation/permissions, control,
+known-zero freshness, instruction readback and whole text must pass first.
+Two60-byte prefixes write a phase before MRS, then commit low24 MPIDR before
+branching to the retained Device recorders. All effects are in loaded RAM.
+
+Any Normal publication, including partial/uncommitted identity, stops. A
+committed expected CPU1 identity is useful positive evidence; it is not a
+verified park, Linux arrival or Device comparison. Every observation error
+stops with partial counts. The inherited cold tripwire remains a terminal spin,
+externally bounded by the human return, never a verified architectural park.
+
+On **any result, lost proxy or timer**, immediately power off M5 and choose
+**Macintosh HD**. Do not wait out the timer after a result. No extra reads,
+cleanup, retry, reconnect, Linux command or cable troubleshooting in-session.
+Confirm the normal macOS desktop. Original macOS/installed image/settings stay
+intact; no repeated policy check is requested.
+
+## Results to publish after return
+
+Use private final controller/supervisor JSON and durable journals as needed.
+Publish sanitized final JSON plus a new `native/boot/attempt31l-...-result.md`.
+Never publish raw stderr, registry data, serial paths, identifiers or Apple
+artifacts. Include:
+
+- Actual consumption, connection phases/counts, attempted/returned transport
+  flags, deadline/journal/finalization errors and both exits/timings.
+- Source manifest and all preflight/reset/topology/publication gates.
+- `cpu0_normal_control`, `normal_permissions`, `normal_publication`,
+  `normal_observation`, `normal_reads`, `cpu1_prefix_identity_observed`, plus
+  inherited Device control/cold/vector/power/state observations and counters.
+- For each Normal channel: acquired reads/samples, highest phase,
+  any_record_seen, identity_status and error. Raw identity values are private.
+  Partial phase/identity is not CPU1 proof. Missing samples remain missing.
+- Starts attempted/acknowledged and mutation intents; requests_completed must
+  be0. Every expected positive is deliberately a STOP (exit1), not a failed
+  test merely because the controller did not return a success code.
+- Human Macintosh HD return confirmation/time. Keep Linux SMP and performance
+  parity unverified. A first positive does not compare Device visibility.
+
+A natural timeout or observation deadline consumes the session too. Preserve
+partial reports when final JSON is absent, state unknowns explicitly, update
+progress/coordination and push. M5 interprets the evidence before any next boot.
