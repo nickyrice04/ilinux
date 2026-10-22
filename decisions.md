@@ -2793,3 +2793,24 @@ callbacks/park; no added target operation, extra core or Linux continuation.
 One90-second supervised session and immediate Macintosh HD return on every
 outcome. No routine M1 restart/policy check or retry. Details:
 `native/boot/attempt31i-m1-offline-2026-10-21.md`.
+
+
+### 2026-10-21 · Consume31I after connection failure; investigate parser offline
+
+**Observed:** one authorized31I session, execution `ca8d7ac`, returned STOP /
+connect / InvalidFileException, exits1/1,0.099/0.526s, no supervisor deadline.
+Preflight was not reached and no CPU1 measurement exists. Missing mutation/
+start counters are not a measured zero. Human confirmed Macintosh HD +35.607s.
+No retry/reconnect or post-outcome target command; private two-record journal
+and minimal final JSON retained. Linux/native SMP NOT RUN.
+
+**Offline finding:** source points to the USB discovery plist parser; synthetic
+empty and non-plist stdout reproduce the class, valid empty plist parses.
+All subprocesses mocked; zero real registry queries/USB opens/target requests.
+Actual stdout/traceback was not retained, so no definitive cause or hardware
+failure is claimed. Consumed sources and all202/186 pins remain frozen.
+
+**Decision:** M5 reviews a separately pinned discovery/error-reporting remedy
+before another fresh human-started session. No production patch, test bypass,
+automatic retry, extra core, settings change or Linux continuation here.
+Details: `native/boot/attempt31i-2026-10-21-result.md`.

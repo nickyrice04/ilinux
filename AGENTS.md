@@ -99,7 +99,28 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-### Latest M1 offline readiness — 31I, 2026-10-21
+### Latest M1 result — 31I connection-stage refusal; normal return, 2026-10-21
+
+**31I session consumed: STOP / `connect` / `InvalidFileException`**, execution
+`ca8d7ac` after handoff `89a0947`. Controller/supervisor exits1/1, elapsed
+**0.099/0.526 s**, no supervisor deadline. Minimal connection-stage result:
+controller preflight was not reached; no reset decision, PS/core-state/entry
+measurements or CPU1 start evidence. Mutation/start counters are **absent**, not
+measured zeros. **Linux/native SMP NOT RUN; CPU1 unverified.** Two complete
+private journal records retained, no retry/reconnect/further target command.
+Human confirmed usual Macintosh HD +35.607 s, within90s. Installed boot021,
+client, package and all settings unchanged. 202/186 new/frozen pins and prior
+31B–31H receipts unchanged;429 image-only methods PASS; M1 full symbols NOT RUN.
+**Likely host discovery plist parse**, based on source and synthetic empty/
+non-plist inputs producing the same exception; actual stdout/traceback not
+retained, cause unconfirmed. Three offline parser cases, zero real registry
+queries/USB opens/target requests; no source fix. M5 next reviews the discovery
+failure and prepares a separately pinned remedy before another human-started
+session. Evidence: `native/boot/attempt31i-2026-10-21-result.md` and sanitized
+minimal controller/supervisor JSON. Frozen pre-execution NOT RUN text is historical.
+
+
+### Historical M1 offline readiness — 31I, 2026-10-21
 
 M1 pulled **`89a0947`**; **202 source pins / 429 image-only methods PASS**,
 no skips/fixes. Both documented offline commands and retained13-file package

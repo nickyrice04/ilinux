@@ -1,0 +1,9 @@
+{
+  "experiment": "smp31i",
+  "result": "STOP",
+  "phase": "connect",
+  "linux_boot": "NOT RUN",
+  "reason": "InvalidFileException",
+  "controller_elapsed_seconds": 0.099,
+  "source_manifest_sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+}
