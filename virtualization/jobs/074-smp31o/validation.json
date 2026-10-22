@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-22",
+  "hardware_operations": 0,
+  "native31o": "HOLD / NOT RUN",
+  "output_sha256": {
+    "review-full.json": "b79dbeee7070f3d3e9befbba5bf725ec728ab985b436d94227c82183c1e585bc",
+    "review-image.json": "7b2068a58ab0b9cccaec491799f70958ad9df09dfa39a130937286a7ddc2d21c",
+    "run.log": "71524718fa97d122bd0ecded4d1af3f90c346cc7693e9f788486a26dd24fc5cc",
+    "toolchain.txt": "e01cafae2897a74295411b40b7e4ec2a7699d4c7fd4df624cf5f2c5842b49a17"
+  },
+  "private_input_published": false,
+  "record": "native/boot/attempt31o/validation.json",
+  "result": "OFFLINE_REVIEW_PASS_NATIVE_HOLD",
+  "schema": 1,
+  "source_manifest_sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39",
+  "source_pins": 348,
+  "vm": {
+    "end_utc": "2026-10-22T20:35:30Z",
+    "exit": 0,
+    "full_symbol_methods": 63,
+    "host_full_output_identical": true,
+    "image_only_methods": 63,
+    "memory_gib": 4,
+    "network": false,
+    "physical_usb": false,
+    "result": "PASS",
+    "skips": 0,
+    "start_utc": "2026-10-22T20:35:28Z",
+    "toolchain": [
+      "Python 3.14.8",
+      "Linux 7.1.6-vzrun2 aarch64"
+    ],
+    "vcpus": 2
+  }
+}

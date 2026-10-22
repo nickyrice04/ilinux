@@ -1,0 +1,161 @@
+{
+  "benchmark": "NOT RUN: no new native latency, throughput or energy measurement",
+  "consumed_evidence": {
+    "m": {
+      "classification": "NATURAL_TIMEOUT_WITHOUT_VISIBLE_ENTRY",
+      "cpu1_execution": "UNVERIFIED",
+      "firmware_cause": "UNKNOWN",
+      "first_instruction_fetch": "UNKNOWN",
+      "report_canonical_sha256": "5a74a9593b69abf17958cb772bdfaef505084b1c590f7c35a51e8fc20fbd1002"
+    },
+    "n": {
+      "classification": "NATURAL_TIMEOUT_WITHOUT_VISIBLE_ENTRY",
+      "cpu1_execution": "UNVERIFIED",
+      "firmware_cause": "UNKNOWN",
+      "first_instruction_fetch": "UNKNOWN",
+      "report_canonical_sha256": "3521be6cb2d92bdf772d404c6f3e5adb20764b204de7ca0d2556867fd6bc7e4d"
+    }
+  },
+  "consumed_result_commit": "922aeb3",
+  "corrections": [
+    "Reject report-level positive labels that contradict the actual observation channels; retain possible positive metadata as requiring record review, never automatic CPU1 proof.",
+    "Use fixed argument-error labels so invalid inputs cannot echo local paths or secrets.",
+    "Validate the private parser child result against the exact reviewed payload hash after it reopens the file; add a replacement regression test.",
+    "Do not pass the newer 31N report to the older 31K-only entry-audit schema; use that audit solely for the retained image contract."
+  ],
+  "cpu1_execution": "UNVERIFIED",
+  "date": "2026-10-22",
+  "firmware_emulator": false,
+  "firmware_structure": {
+    "command_count": 22855,
+    "command_semantics_interpreted": false,
+    "evaluated_conditions": false,
+    "maximum_operand_count": 30,
+    "named_sequence_count": 417,
+    "native_operations": 0,
+    "nesting_validated": false,
+    "result": "RCfg_STRUCTURAL_PASS"
+  },
+  "frozen": {
+    "31h": {
+      "all_files": "UNCHANGED",
+      "pins": 186,
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "31i": {
+      "all_files": "UNCHANGED",
+      "pins": 202,
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "31j": {
+      "all_files": "UNCHANGED",
+      "pins": 226,
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "31j-host": {
+      "all_files": "UNCHANGED",
+      "pins": 6,
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    },
+    "31k": {
+      "all_files": "UNCHANGED",
+      "pins": 254,
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "31l": {
+      "all_files": "UNCHANGED",
+      "pins": 281,
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "31m": {
+      "all_files": "UNCHANGED",
+      "pins": 306,
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    },
+    "31n": {
+      "all_files": "UNCHANGED",
+      "pins": 330,
+      "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+    }
+  },
+  "hardware_operations": 0,
+  "inputs": {
+    "client_imported_or_run": false,
+    "image_bytes": 3932160,
+    "image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "prior_client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "private_payload_bytes": 459150,
+    "private_payload_sha256": "b43f7a31f6d980c6205f029dd80b2dc5ec0a2a52d7d3d801019736d9dcb5d11b",
+    "symbols_sha256": "751a9643a2196eda44efba4789aa789465b2b75e9546be460946d2fa4c70ac11"
+  },
+  "limitations": [
+    "The tools validate report consistency and firmware framing; they neither emulate hardware nor interpret firmware conditions.",
+    "31N completed the local start pair without visible CPU1 identity. Negative markers cannot exclude execution or identify a failed first fetch.",
+    "External M5 Pro/Max reports strengthen the firmware-prerequisite hypothesis but do not prove this machine has an unfixable or identical defect.",
+    "Static REA identifies conditions and bounded call ordering, not their runtime descriptor values or active program selection.",
+    "No firmware replay, new reset operation, native controller or live authorization is released.",
+    "All 18 cores, Performance/Super cooperation, native SMP and macOS-equivalent performance or energy remain unverified.",
+    "The manifest freezes executable intake dependencies; this result record and mutable project status documents are intentionally not self-pinned."
+  ],
+  "linux_smp": "NOT RUN",
+  "m1_independent_offline_review": "PENDING",
+  "macos": {
+    "build": "25G83",
+    "evidence_methods": 33,
+    "full_symbols": true,
+    "intake_methods": 11,
+    "matching_private_payload": true,
+    "os": "macOS 26.6.2",
+    "python": "3.9.6",
+    "rcfg_methods": 19,
+    "result": "PASS",
+    "total_methods": 63
+  },
+  "macos_boot_settings_images_volumes": "UNCHANGED",
+  "native31o": "HOLD / NOT RUN",
+  "output_sha256": {
+    "review-full.json": "b79dbeee7070f3d3e9befbba5bf725ec728ab985b436d94227c82183c1e585bc",
+    "review-image.json": "7b2068a58ab0b9cccaec491799f70958ad9df09dfa39a130937286a7ddc2d21c",
+    "run.log": "71524718fa97d122bd0ecded4d1af3f90c346cc7693e9f788486a26dd24fc5cc",
+    "toolchain.txt": "e01cafae2897a74295411b40b7e4ec2a7699d4c7fd4df624cf5f2c5842b49a17"
+  },
+  "rea": {
+    "backend": "REA 6.4 / Ghidra 12.1.4 in isolated VM",
+    "byte_mismatches": 0,
+    "initial_no_procedure_refusals": 1,
+    "input_bytes_modified": false,
+    "new_hardware_transactions_qualified": 0,
+    "record": "reverse-engineering/findings/cpu-startup31o/validation.json",
+    "successful_queries": 5,
+    "temporary_analyst_seed": true,
+    "unique_independently_checked_instruction_words": 706
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_REVIEW_PASS_NATIVE_HOLD",
+  "review": {
+    "evidence_and_decoder": "Independent cross-review PASS after contradictory-positive metadata rejection",
+    "intake_and_handoff": "Independent bounded review PASS",
+    "public_artifacts": "Original code, behavioral findings and validation metadata only"
+  },
+  "schema": 1,
+  "source_manifest_sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39",
+  "source_pins": 348,
+  "vm": {
+    "end_utc": "2026-10-22T20:35:30Z",
+    "exit": 0,
+    "full_symbol_methods": 63,
+    "host_full_output_identical": true,
+    "image_only_methods": 63,
+    "memory_gib": 4,
+    "network": false,
+    "physical_usb": false,
+    "result": "PASS",
+    "skips": 0,
+    "start_utc": "2026-10-22T20:35:28Z",
+    "toolchain": [
+      "Python 3.14.8",
+      "Linux 7.1.6-vzrun2 aarch64"
+    ],
+    "vcpus": 2
+  }
+}

@@ -3373,3 +3373,56 @@ and sanitized final JSON.
 final JSON and original notes. A negative local-pair variant does not authorize
 firmware replay, another equivalent recorder or an automatic physical attempt.
 M5 owns the evidence-backed next proposal.
+
+
+### 2026-10-22 · Release 31O offline tools; require new evidence before another boot
+
+**Decision:** keep native 31O HOLD. The user authorized investigation, original
+implementation and publication after the latest result, while keeping macOS
+intact. The completed 31N local pair did not produce CPU1 identity. Equivalent
+marker changes or another repetition would not distinguish the remaining causes.
+
+31N completed both startup stores in one CPU0 call, but every CPU1 entry channel
+remained negative. CPU1 execution is **UNVERIFIED**; the tested host-gap change
+did not resolve startup. There is no demonstrated new hardware fix in this release.
+
+Fresh primary-source research found Gravity Linux's explicit M5 Pro/Max
+secondary-start limitation and independent T6050 failures. This strengthens the
+firmware-prerequisite investigation, not a claim that our cause is proven or
+unfixable. Matching-firmware REA completed five bounded queries (one initial
+refusal retained); 706 independently checked instruction words had zero
+mismatches. Per-core restore captures are conditional, so blind firmware replay
+is not justified. See `research/native31o-upstream.md` and
+`research/native31o-firmware.md`.
+
+Implemented original report-consistency and RCfg structural decoders plus an
+offline-only M1 runner. **63 methods pass on macOS and in VM074**; full host/VM
+outputs are identical. The private matching payload parses as 22,855 commands /
+417 names; this is structure validation, not firmware emulation. All **348 pins**
+and frozen N330/M306/L281/K254/J226/I202/H186/host6 pass. Exact boot021 and previous
+receipts remain unchanged. Validation: `native/boot/attempt31o/validation.json`.
+
+**M1 next:** follow `tools/m1n1-client/attempt31o-instructions.md`, publish an
+independent offline review and wait. **No restart: native 31O HOLD / NOT RUN.**
+No policy check, target operation, installation or macOS change occurred here.
+Next work: distinguish raw-image firmware preparation offline; develop the
+separate G17C GPU build/audit track to address rendering latency. Exact priorities
+and limits: `research/native31o-next-work.md`. All-core execution and performance/
+energy parity remain unverified.
+
+The source manifest is
+`e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39`.
+The offline runner has no live option, m1n1 import, USB discovery or target
+operation. It distinguishes structural validity, report consistency, possible
+positive metadata requiring record review, and actual execution evidence.
+Its pass is deliberately not a readiness grant. M1 may publish its independent
+offline result; no consumed runner may be reused.
+
+The next CPU deliverable must relate raw-image/kernel-collection initialization,
+reset setup and active firmware branch conditions to a specific distinguishing
+observation. A post-power mirror comparison or bounded local trace can only be
+part of a justified future experiment; neither alone proves CPU1's PC. No OS
+update, alternate installation, firmware replay or blind debug probe is supported
+by the evidence. GPU work uses exact G17C requirements and starts with offline
+build/serialization checks; public M4/base-M5 results are not native qualification
+for this machine. These are engineering directions, not promised fixes.

@@ -1,0 +1,585 @@
+{
+  "schema": "ilinux-31o-firmware-static-v1",
+  "date": "2026-10-22",
+  "status": "PASS_BOUNDED_STATIC_REVIEW",
+  "native_execution": "NOT_RUN",
+  "native31o_status": "HOLD",
+  "analysis_seed": {
+    "address": "0x100c1c87f14",
+    "sha256": "3876de735832cd4468afd2d9309cd75975823a468a4389e2fdeacf98701eb2c8",
+    "provenance": "descriptor192 target, original prologue/return and nextprologue boundary",
+    "input_modified": false,
+    "initial_refusal_preserved": true
+  },
+  "decoded_iboot_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "ibootdata_sha256": "b43f7a31f6d980c6205f029dd80b2dc5ec0a2a52d7d3d801019736d9dcb5d11b",
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_live": false,
+  "llvm_version": "Apple LLVM version 21.0.0",
+  "bounded_blocks": [
+    {
+      "label": "core-restore-condition",
+      "start": "0x100c1c88320",
+      "end_exclusive": "0x100c1c883a0",
+      "instruction_words": 32,
+      "code_bytes": 128,
+      "sha256": "be0905cbe96ad9d3ee118dea0c8407f7b30b00fc3ed92e0371fb0d7b0e3092f0",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "core-ordinal-predicate",
+      "start": "0x100c1b33234",
+      "end_exclusive": "0x100c1b3327c",
+      "instruction_words": 18,
+      "code_bytes": 72,
+      "sha256": "57ceb73db06a8077c1c933a89f1e47e9fed9a38424704f6ebdca7b5ebb2974be",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "core-count-discovery",
+      "start": "0x100c1af5ed0",
+      "end_exclusive": "0x100c1af601c",
+      "instruction_words": 83,
+      "code_bytes": 332,
+      "sha256": "a219c8710b830496fea53504d34ab70bc413db74af1c7802b2c6d7a972a3a4ef",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "condition-context-descriptor",
+      "start": "0x100c1c82c94",
+      "end_exclusive": "0x100c1c82cb0",
+      "instruction_words": 7,
+      "code_bytes": 28,
+      "sha256": "88e70bc5395743e5f3ddee325a7bc547798850173c549e1b4ff49ada254a55db",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "condition-context-wrapper",
+      "start": "0x100c1c8a478",
+      "end_exclusive": "0x100c1c8a494",
+      "instruction_words": 7,
+      "code_bytes": 28,
+      "sha256": "78ef1fabbc77913b4cc257f6732b1331697989946199095e6c3e47e55994cab7",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "condition-range-deref",
+      "start": "0x100c1c8a3b0",
+      "end_exclusive": "0x100c1c8a3c0",
+      "instruction_words": 4,
+      "code_bytes": 16,
+      "sha256": "e9f25d1ec7107a8086aa6042b5306017d8bc12bf8628c93caf95724bd86486c8",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "condition-stack-bounds",
+      "start": "0x100c1c8a3e0",
+      "end_exclusive": "0x100c1c8a3f0",
+      "instruction_words": 4,
+      "code_bytes": 16,
+      "sha256": "e0f68fc1ee455e858f45ba7a16ff5943149a1c651aa8aba4502631e1172d5586",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "condition-opener-classification",
+      "start": "0x100c1c82b44",
+      "end_exclusive": "0x100c1c82b90",
+      "instruction_words": 19,
+      "code_bytes": 76,
+      "sha256": "97cdd06bb3dd8f8679ea925c0f42ef622cea8895f17219c6f7fbe5e06c69f26e",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "reset-and-later-context-preparation",
+      "start": "0x100c1ae5c34",
+      "end_exclusive": "0x100c1ae5cec",
+      "instruction_words": 46,
+      "code_bytes": 184,
+      "sha256": "f449a124113b40fb067842f38ce13517a02120c1db13aff81f034558d3c64a58",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "context-mode-and-manager-call",
+      "start": "0x100c1c82000",
+      "end_exclusive": "0x100c1c82044",
+      "instruction_words": 17,
+      "code_bytes": 68,
+      "sha256": "cda8ca0d8528bd629326bf539784262330e80065415344b19689ce84a28f23c1",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "command-context-view",
+      "start": "0x100c1c829bc",
+      "end_exclusive": "0x100c1c829d8",
+      "instruction_words": 7,
+      "code_bytes": 28,
+      "sha256": "9de3bd954e96e0b48b57f9f982a58e6617e315c250cd7534832766a9e1614166",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    }
+  ],
+  "queries": [
+    {
+      "label": "lifecycle-manager",
+      "requested_address": "0x100c1b31c0c",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "dossier_sha256": "344644a958f035504f72516de7e0f1f5407a17a947825da939fa92938d2afde5",
+      "cli_exit": 0,
+      "seconds": 58.756427777999995,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analyst_seeded_function": false,
+      "seed_file_loaded": false,
+      "blocks": [
+        {
+          "label": "lifecycle-manager-0",
+          "start": "0x100c1b31c0c",
+          "end_exclusive": "0x100c1b3214c",
+          "instruction_words": 336,
+          "code_bytes": 1344,
+          "sha256": "872ccdf18f0bb5ae0eef22ca218121dd0035db0980d927b935a9e8ff7c7947da",
+          "llvm_word_mismatches": 0,
+          "analysis_elf_matches_original": true
+        }
+      ],
+      "assembly_instructions": 336,
+      "pcode_operations": 2908,
+      "pcode_truncated": false,
+      "out_of_body_operations": 0,
+      "out_of_body_addresses": [],
+      "provider_removed_blocks": false,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "conditional-handler",
+      "requested_address": "0x100c1c87f14",
+      "status": "ANALYSIS_REFUSED",
+      "dossier_sha256": "56713156b0cc6e1f90811a563a87ac41d2e99f302ff9923ded05b93696d56798",
+      "cli_exit": 1,
+      "seconds": 56.882711693000005,
+      "code": "invalid_request"
+    },
+    {
+      "label": "conditional-driver",
+      "requested_address": "0x100c1c81bd8",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "dossier_sha256": "5a8d781f905eda043b0a54bfa5a42de744a059f20d07767125045a3c9cac69bc",
+      "cli_exit": 0,
+      "seconds": 56.96997252699998,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analyst_seeded_function": false,
+      "seed_file_loaded": false,
+      "blocks": [
+        {
+          "label": "conditional-driver-0",
+          "start": "0x100c1c81bd8",
+          "end_exclusive": "0x100c1c81d18",
+          "instruction_words": 80,
+          "code_bytes": 320,
+          "sha256": "2f8a31e8a724a377c238d5772ff4b5311d661207eaf6e70a2ff1e90d0e8b8928",
+          "llvm_word_mismatches": 0,
+          "analysis_elf_matches_original": true
+        }
+      ],
+      "assembly_instructions": 80,
+      "pcode_operations": 148,
+      "pcode_truncated": false,
+      "out_of_body_operations": 0,
+      "out_of_body_addresses": [],
+      "provider_removed_blocks": false,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "conditional-handler-seeded",
+      "requested_address": "0x100c1c87f14",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "dossier_sha256": "8c9ddbe92e30ca065c692102569a02e57e8b789e40fd3202e55a7494863308fd",
+      "cli_exit": 0,
+      "seconds": 57.809618486,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analyst_seeded_function": true,
+      "seed_file_loaded": true,
+      "blocks": [
+        {
+          "label": "conditional-handler-seeded-0",
+          "start": "0x100c1c87f14",
+          "end_exclusive": "0x100c1c87fcc",
+          "instruction_words": 46,
+          "code_bytes": 184,
+          "sha256": "a69dcc0999b138ff7290ab245f98d26ae3e33c45e0a87fbb29155c41cea4f272",
+          "llvm_word_mismatches": 0,
+          "analysis_elf_matches_original": true
+        }
+      ],
+      "assembly_instructions": 46,
+      "pcode_operations": 76,
+      "pcode_truncated": false,
+      "out_of_body_operations": 0,
+      "out_of_body_addresses": [],
+      "provider_removed_blocks": false,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "core-condition",
+      "requested_address": "0x100c1c88320",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "dossier_sha256": "9186f300946e8473353ebac3500b9ced72ed0073db1c6ca002bb0bc5b8c97bc9",
+      "cli_exit": 0,
+      "seconds": 57.759671361,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analyst_seeded_function": false,
+      "seed_file_loaded": true,
+      "blocks": [
+        {
+          "label": "core-condition-0",
+          "start": "0x100c1c88320",
+          "end_exclusive": "0x100c1c883a0",
+          "instruction_words": 32,
+          "code_bytes": 128,
+          "sha256": "be0905cbe96ad9d3ee118dea0c8407f7b30b00fc3ed92e0371fb0d7b0e3092f0",
+          "llvm_word_mismatches": 0,
+          "analysis_elf_matches_original": true
+        }
+      ],
+      "assembly_instructions": 32,
+      "pcode_operations": 45,
+      "pcode_truncated": false,
+      "out_of_body_operations": 0,
+      "out_of_body_addresses": [],
+      "provider_removed_blocks": false,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "core-ordinal",
+      "requested_address": "0x100c1b33234",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "dossier_sha256": "4729de4a2a1b915ad343b3aea2177254ebaa4672c8f32fea47e4889dc0f47453",
+      "cli_exit": 0,
+      "seconds": 57.15030786,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "analyst_seeded_function": false,
+      "seed_file_loaded": true,
+      "blocks": [
+        {
+          "label": "core-ordinal-0",
+          "start": "0x100c1b33234",
+          "end_exclusive": "0x100c1b3327c",
+          "instruction_words": 18,
+          "code_bytes": 72,
+          "sha256": "57ceb73db06a8077c1c933a89f1e47e9fed9a38424704f6ebdca7b5ebb2974be",
+          "llvm_word_mismatches": 0,
+          "analysis_elf_matches_original": true
+        }
+      ],
+      "assembly_instructions": 18,
+      "pcode_operations": 12,
+      "pcode_truncated": false,
+      "out_of_body_operations": 0,
+      "out_of_body_addresses": [],
+      "provider_removed_blocks": false,
+      "whole_function_pseudocode_accepted": false
+    }
+  ],
+  "query_summary": {
+    "attempted": 6,
+    "successful": 5,
+    "instruction_words": 512,
+    "pcode_operations": 3189
+  },
+  "unique_independent_instruction_words": 706,
+  "unique_independent_code_bytes": 2824,
+  "llvm_word_mismatches": 0,
+  "rcfg_section_consumption": [
+    {
+      "kind": 0,
+      "records": 16542,
+      "exact": true
+    },
+    {
+      "kind": 1,
+      "records": 843,
+      "exact": true
+    },
+    {
+      "kind": 2,
+      "records": 5411,
+      "exact": true
+    },
+    {
+      "kind": 3,
+      "records": 59,
+      "exact": true
+    }
+  ],
+  "restore_guards": [
+    {
+      "sequence": "MGP_CE0_ACC0_POWER_UP",
+      "sequence_id": 80,
+      "cluster": 0,
+      "rows": [
+        {
+          "cpu_ordinal": 0,
+          "core": 0,
+          "address": "0x210050000",
+          "guard_record_offset": "0x5ee28",
+          "restore_record_offset": "0x5ee34",
+          "end_record_offset": "0x5ee48",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 1,
+          "core": 1,
+          "address": "0x210150000",
+          "guard_record_offset": "0x5ee4c",
+          "restore_record_offset": "0x5ee58",
+          "end_record_offset": "0x5ee6c",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 2,
+          "core": 2,
+          "address": "0x210250000",
+          "guard_record_offset": "0x5ee70",
+          "restore_record_offset": "0x5ee7c",
+          "end_record_offset": "0x5ee90",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 3,
+          "core": 3,
+          "address": "0x210350000",
+          "guard_record_offset": "0x5ee94",
+          "restore_record_offset": "0x5eea0",
+          "end_record_offset": "0x5eeb4",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 4,
+          "core": 4,
+          "address": "0x210450000",
+          "guard_record_offset": "0x5eeb8",
+          "restore_record_offset": "0x5eec4",
+          "end_record_offset": "0x5eed8",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 5,
+          "core": 5,
+          "address": "0x210550000",
+          "guard_record_offset": "0x5eedc",
+          "restore_record_offset": "0x5eee8",
+          "end_record_offset": "0x5eefc",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        }
+      ]
+    },
+    {
+      "sequence": "MGP_CE0_ACC1_POWER_UP",
+      "sequence_id": 82,
+      "cluster": 1,
+      "rows": [
+        {
+          "cpu_ordinal": 256,
+          "core": 0,
+          "address": "0x211050000",
+          "guard_record_offset": "0x611f8",
+          "restore_record_offset": "0x61204",
+          "end_record_offset": "0x61218",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 257,
+          "core": 1,
+          "address": "0x211150000",
+          "guard_record_offset": "0x6121c",
+          "restore_record_offset": "0x61228",
+          "end_record_offset": "0x6123c",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 258,
+          "core": 2,
+          "address": "0x211250000",
+          "guard_record_offset": "0x61240",
+          "restore_record_offset": "0x6124c",
+          "end_record_offset": "0x61260",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 259,
+          "core": 3,
+          "address": "0x211350000",
+          "guard_record_offset": "0x61264",
+          "restore_record_offset": "0x61270",
+          "end_record_offset": "0x61284",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 260,
+          "core": 4,
+          "address": "0x211450000",
+          "guard_record_offset": "0x61288",
+          "restore_record_offset": "0x61294",
+          "end_record_offset": "0x612a8",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 261,
+          "core": 5,
+          "address": "0x211550000",
+          "guard_record_offset": "0x612ac",
+          "restore_record_offset": "0x612b8",
+          "end_record_offset": "0x612cc",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        }
+      ]
+    },
+    {
+      "sequence": "MGP_CE0_ACC2_POWER_UP",
+      "sequence_id": 84,
+      "cluster": 2,
+      "rows": [
+        {
+          "cpu_ordinal": 512,
+          "core": 0,
+          "address": "0x212050000",
+          "guard_record_offset": "0x635a0",
+          "restore_record_offset": "0x635ac",
+          "end_record_offset": "0x635c0",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 513,
+          "core": 1,
+          "address": "0x212150000",
+          "guard_record_offset": "0x635c4",
+          "restore_record_offset": "0x635d0",
+          "end_record_offset": "0x635e4",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 514,
+          "core": 2,
+          "address": "0x212250000",
+          "guard_record_offset": "0x635e8",
+          "restore_record_offset": "0x635f4",
+          "end_record_offset": "0x63608",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 515,
+          "core": 3,
+          "address": "0x212350000",
+          "guard_record_offset": "0x6360c",
+          "restore_record_offset": "0x63618",
+          "end_record_offset": "0x6362c",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 516,
+          "core": 4,
+          "address": "0x212450000",
+          "guard_record_offset": "0x63630",
+          "restore_record_offset": "0x6363c",
+          "end_record_offset": "0x63650",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        },
+        {
+          "cpu_ordinal": 517,
+          "core": 5,
+          "address": "0x212550000",
+          "guard_record_offset": "0x63654",
+          "restore_record_offset": "0x63660",
+          "end_record_offset": "0x63674",
+          "guard_opcode": "0xbe",
+          "guard_polarity": 0,
+          "guard_individual_core": true
+        }
+      ]
+    }
+  ],
+  "conditional_start": {
+    "guard_record_offset": "0x50e20",
+    "mask": "0x400000000000",
+    "software_descriptor_field": "0x50",
+    "predicate": "nonzero_mask_intersection",
+    "true_store_record": "0x50e58",
+    "false_store_record": "0x50e94",
+    "else_record": "0x50e68",
+    "end_record": "0x50ea4",
+    "native_branch": "UNKNOWN"
+  },
+  "limitations": [
+    "Original instruction bytes and decompiler output remain private.",
+    "Static predicates do not establish live descriptor values or program selection.",
+    "Restore programs are per-cluster; CPU1 shares CPU0 active cluster, so per-core start does not establish a cluster restore event.",
+    "Existing pre-start mirrors are not a measured effective CPU1 PC.",
+    "A proposed post-pair mirror read tests temporal register stability only; no new reset writes are justified.",
+    "No firmware program was interpreted, replayed, or installed.",
+    "Whole-function pseudocode is not accepted as implementation source or runtime proof."
+  ]
+}
