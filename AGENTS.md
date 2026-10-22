@@ -99,7 +99,34 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
-### Latest M1 release intake — 31L Normal-memory diagnostic, 2026-10-22
+### Latest M1 native result — 31L consumed; no visible entry, 2026-10-22
+
+**Observed:** one authorized31L session consumed on execution/readiness
+`c7608c7`, release `11cc2af`: **STOP / cpu1_arrival / cpu1_arrival_timeout**.
+Both CPU0 controls PASS (24 reads/2 acknowledged stores each, marker/canaries/
+restoration verified); mapping, freshness, reset and publication gates PASS.
+Normal vector/cold each **169 samples/507 reads, phase0, no record, identity
+not_committed, error null**; total1014 Normal reads. Device vector84 samples/
+420 reads and cold169 samples/676 reads also phase0/no committed identity.
+**144 mutation intents; CPU1 starts2/2 acknowledged; requests_completed0.**
+Four complete PS/state pairs,8 reads each, include final: CPU1 actual0,0,15,15
+and opaque byte0,0,2,2; CPU0 remains15/2. Controller5.796s/supervisor6.432s,
+exits1/1, no outer deadline or journal/finalization error. Human returned to
+usual Macintosh HD at+38.799s, within90s; no retry or post-outcome target command.
+
+**CPU1 prefix execution/entry and effective reset route remain unverified.**
+Neither Normal nor Device marker committed identity. Positive CPU0 controls
+are not CPU1 visibility proof; negative channels cannot exclude execution or
+identify a cache/Device cause. No callbacks, verified park, Linux boot/SMP,
+extra-core start or new reset/MMIO/settings operation. Original Full/lab
+Permissive/Macintosh HD default remain last reported, not freshly checked.
+Existing boot021/boot042/client57a9339,281 pins,frozen K254/J226/I202/host6,
+all prior receipts and earlier31L offline evidence remain intact. M5 owns next
+interpretation; no automatic retry. Evidence:
+`native/boot/attempt31l-2026-10-22-result.md` and its sanitized final JSON.
+
+
+### Historical M1 release intake — 31L Normal-memory diagnostic, 2026-10-22
 
 M1 pulled **`11cc2af`** after preserving the local first31L review in a
 recoverable snapshot/stash and carrying its notes forward. **281 pins/796
@@ -189,7 +216,7 @@ Keep consumed receipts and all frozen inputs intact. Next release needs an
 evidence-backed entry/fetch/store discriminator, not another equivalent marker.
 macOS, installed images, volumes and security settings remain unchanged.
 
-### Latest M1 native result — 31K CPU0 control passes, no entry marker, 2026-10-22
+### Historical M1 native result — 31K CPU0 control passes, no entry marker, 2026-10-22
 
 **31K native consumed: STOP / `cpu1_arrival` /
 `cpu1_arrival_observation_deadline`**, execution `db9a79d`,handoff `7043b17`.

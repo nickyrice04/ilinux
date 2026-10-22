@@ -1,0 +1,564 @@
+{
+  "experiment": "smp31l",
+  "result": "STOP",
+  "phase": "cpu1_arrival",
+  "mutation_requests": 144,
+  "start_writes_attempted": 2,
+  "start_writes_acknowledged": 2,
+  "cpu1_arrival_verified": false,
+  "requests_completed": 0,
+  "counter_progress_verified": false,
+  "linux_boot": "NOT RUN",
+  "native_linux_smp": "NOT RUN",
+  "ram_check": {
+    "revision_supported": true,
+    "bootargs_revision": 3,
+    "revision_consistent": true,
+    "integer_fields": true,
+    "nonempty_u64": true,
+    "address_width": true,
+    "within_machine_dram": true,
+    "adt_within_usable": true,
+    "adt_read_complete": true,
+    "chosen_base_matches": true,
+    "chosen_size_matches": true,
+    "image_within_usable": true
+  },
+  "diagnostic_uart_check": {
+    "direct_usb_proxy": true,
+    "bases_expected_or_zero": true,
+    "enabled_count": 2,
+    "ram_zeroes_published": true
+  },
+  "entry_observation": "no_reset_record_seen",
+  "arrival_samples": 84,
+  "cpu_topology": {
+    "validated_by_exact_adt_and_runtime_census": true,
+    "physical_and_logical_cores": 18,
+    "clusters": [
+      {
+        "id": 0,
+        "adt_type": "M",
+        "macos_name": "Performance",
+        "cores": 6
+      },
+      {
+        "id": 1,
+        "adt_type": "M",
+        "macos_name": "Performance",
+        "cores": 6
+      },
+      {
+        "id": 2,
+        "adt_type": "P",
+        "macos_name": "Super",
+        "cores": 6
+      }
+    ],
+    "boot_cpu": 0,
+    "target_cpu": 1,
+    "target_cluster": 0,
+    "target_macos_type": "Performance",
+    "same_cluster_as_boot_cpu": true,
+    "linux_scheduler_capacity_calibrated": false,
+    "all_core_linux_operation": "NOT RUN"
+  },
+  "permissions": {
+    "primary_exception_level": 2,
+    "regime_verified": true,
+    "hook_identity_read": true,
+    "hook_alias_read": true,
+    "hook_alias_write": true,
+    "hook_identity_write": true,
+    "stub_first_identity_read": true,
+    "stub_first_alias_read": true,
+    "stub_first_alias_write": true,
+    "stub_first_identity_write": true,
+    "stub_last_identity_read": true,
+    "stub_last_alias_read": true,
+    "stub_last_alias_write": true,
+    "stub_last_identity_write": true,
+    "record_first_read": true,
+    "record_first_write": true,
+    "record_last_read": true,
+    "record_last_write": true,
+    "passed": true
+  },
+  "recorder_publication": {
+    "body_verified": true,
+    "hook_verified": true,
+    "whole_text_verified": true
+  },
+  "recorder_observation": {
+    "state": "no_recorder_publication_seen",
+    "samples_attempted": 84,
+    "samples_completed": 84,
+    "reads_attempted": 420,
+    "reads_completed": 420,
+    "highest_phase_seen": 0,
+    "identity_seen": false,
+    "identity_recorded": false,
+    "identity_sample_complete": false,
+    "complete": false,
+    "error": null,
+    "closed": false,
+    "exception_level": null,
+    "identity_status": "not_committed",
+    "observed_cpu_id": null,
+    "observed_cluster": null,
+    "observed_core": null,
+    "observed_core_type": null,
+    "observed_macos_class": null,
+    "identity_mapping_evidence": null,
+    "mmu_enabled": null,
+    "data_cache_enabled": null,
+    "instruction_cache_enabled": null
+  },
+  "recorder_reads": 420,
+  "requests_planned": 8,
+  "request_roundtrips_ms": [],
+  "park_verified": false,
+  "power_binding": {
+    "live_adt_bound": true,
+    "cpu_ids": [
+      0,
+      1
+    ],
+    "width_bits": 32,
+    "cpu1_start_mapping_unchanged": true,
+    "all18_topology_mapping_validated": true,
+    "later_cluster_legacy_mask_mismatch_cpu_ids": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ]
+  },
+  "power_permissions": {
+    "0": true,
+    "1": true
+  },
+  "power_observation": {
+    "samples": [
+      {
+        "phase": "before_start",
+        "complete": true,
+        "cpu0": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        },
+        "cpu1": {
+          "desired": 0,
+          "actual": 0,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        }
+      },
+      {
+        "phase": "after_first_start",
+        "complete": true,
+        "cpu0": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        },
+        "cpu1": {
+          "desired": 0,
+          "actual": 0,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        }
+      },
+      {
+        "phase": "after_second_start",
+        "complete": true,
+        "cpu0": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        },
+        "cpu1": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        }
+      },
+      {
+        "phase": "final",
+        "complete": true,
+        "cpu0": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        },
+        "cpu1": {
+          "desired": 0,
+          "actual": 15,
+          "parent_missing": false,
+          "device_disabled": false,
+          "auto_enabled": false
+        }
+      }
+    ],
+    "reads_attempted": 8,
+    "reads_completed": 8,
+    "error": null,
+    "entry_execution": "NOT_ESTABLISHED",
+    "reset_release": "NOT_ESTABLISHED",
+    "effective_reset_destination": "NOT_ESTABLISHED"
+  },
+  "terminal_observation_error": null,
+  "rvbar_observation": {
+    "state": "complete",
+    "read_attempts": 2,
+    "read_returns": 2,
+    "guard_check_attempts": 2,
+    "validated_reads": 2,
+    "pending_cpu_id": null,
+    "rows": [
+      {
+        "cpu_id": 0,
+        "legacy_page_field_matches_vectors": true,
+        "legacy_lock_bit0": true,
+        "unknown_low_bits_class": "zero",
+        "bit11_set": false,
+        "unknown_upper_bits_present": true,
+        "firmware_format_field_relation": "image_base",
+        "firmware_format_low_bits_10_1_class": "zero",
+        "firmware_format_high_bits_63_42_class": "nonzero",
+        "firmware_format_bits_47_42_class": "zero"
+      },
+      {
+        "cpu_id": 1,
+        "legacy_page_field_matches_vectors": true,
+        "legacy_lock_bit0": true,
+        "unknown_low_bits_class": "zero",
+        "bit11_set": false,
+        "unknown_upper_bits_present": true,
+        "firmware_format_field_relation": "image_base",
+        "firmware_format_low_bits_10_1_class": "zero",
+        "firmware_format_high_bits_63_42_class": "nonzero",
+        "firmware_format_bits_47_42_class": "zero"
+      }
+    ],
+    "mirrors_equal": true,
+    "exact_entry_offset": "UNKNOWN",
+    "effective_reset_route": "UNKNOWN",
+    "error": null
+  },
+  "restart_ready": false,
+  "cpu_state_permissions": {
+    "0": true,
+    "1": true
+  },
+  "cpu_state_observation": {
+    "samples": [
+      {
+        "phase": "before_start",
+        "complete": true,
+        "cpu0": {
+          "low_byte": 2,
+          "changed_from_baseline": null
+        },
+        "cpu1": {
+          "low_byte": 0,
+          "changed_from_baseline": null
+        },
+        "cores_equal": false
+      },
+      {
+        "phase": "after_first_start",
+        "complete": true,
+        "cpu0": {
+          "low_byte": 2,
+          "changed_from_baseline": false
+        },
+        "cpu1": {
+          "low_byte": 0,
+          "changed_from_baseline": false
+        },
+        "cores_equal": false
+      },
+      {
+        "phase": "after_second_start",
+        "complete": true,
+        "cpu0": {
+          "low_byte": 2,
+          "changed_from_baseline": false
+        },
+        "cpu1": {
+          "low_byte": 2,
+          "changed_from_baseline": true
+        },
+        "cores_equal": true
+      },
+      {
+        "phase": "final",
+        "complete": true,
+        "cpu0": {
+          "low_byte": 2,
+          "changed_from_baseline": false
+        },
+        "cpu1": {
+          "low_byte": 2,
+          "changed_from_baseline": true
+        },
+        "cores_equal": true
+      }
+    ],
+    "reads_attempted": 8,
+    "reads_completed": 8,
+    "error": null,
+    "journal_failed": false,
+    "entry_execution": "NOT_ESTABLISHED",
+    "reset_release": "NOT_ESTABLISHED",
+    "running_state": "NOT_ESTABLISHED",
+    "program_counter": "NOT_OBSERVED",
+    "t6050_register_semantics": "UNKNOWN"
+  },
+  "reset_format_gate_passed": true,
+  "reset_readback_decision": {
+    "result": "RESET_ADDRESS_READBACK_PASS",
+    "firmware_readback_mask": 4398046509057,
+    "address_field_matches_image_base": true,
+    "full_word_mirrors_equal": true,
+    "legacy_lock_bit0": true,
+    "low_bits_10_1_and_47_42_zero": true,
+    "upper_bits_63_48": "present_uninterpreted",
+    "upper_bits_required_zero": false,
+    "upper_field_semantics": "UNKNOWN",
+    "exact_entry_offset": "UNKNOWN",
+    "effective_reset_route": "UNKNOWN",
+    "cpu1_execution": "UNVERIFIED",
+    "hardware_operations": 0
+  },
+  "cpu0_control": {
+    "schema": "cpu0_observer_control31k",
+    "result": "CPU0_OBSERVER_CONTROL_PASS",
+    "phase": "complete",
+    "scope": "cpu0_shared_device_ram_observer",
+    "read_intents": 24,
+    "reads_attempted": 24,
+    "reads_completed": 24,
+    "write_intents": 2,
+    "writes_attempted": 2,
+    "writes_acknowledged": 2,
+    "marker_observed": true,
+    "canaries_preserved": true,
+    "original_restored": true,
+    "journal_failed": false,
+    "elapsed_seconds": 0.013107,
+    "cpu1_execution": "NOT_TESTED",
+    "cpu1_record_visibility": "NOT_TESTED"
+  },
+  "control_permissions": {
+    "control_leaf_alias_read": true,
+    "control_scratch_first_read": true,
+    "control_scratch_first_write": true,
+    "control_scratch_last_read": true,
+    "control_scratch_last_write": true
+  },
+  "cold_permissions": {
+    "cold_hook_identity_read": true,
+    "cold_hook_alias_read": true,
+    "cold_hook_alias_write": true,
+    "cold_hook_identity_write": true,
+    "cold_stub_first_identity_read": true,
+    "cold_stub_first_alias_read": true,
+    "cold_stub_first_alias_write": true,
+    "cold_stub_first_identity_write": true,
+    "cold_stub_last_identity_read": true,
+    "cold_stub_last_alias_read": true,
+    "cold_stub_last_alias_write": true,
+    "cold_stub_last_identity_write": true,
+    "cold_record_first_read": true,
+    "cold_record_first_write": true,
+    "cold_record_last_read": true,
+    "cold_record_last_write": true
+  },
+  "cold_publication": {
+    "body_verified": true,
+    "hook_verified": true,
+    "whole_text_verified": true
+  },
+  "cold_observation": {
+    "samples_attempted": 169,
+    "samples_completed": 169,
+    "reads_attempted": 676,
+    "reads_completed": 676,
+    "highest_phase_seen": 0,
+    "any_record_seen": false,
+    "stop_required": false,
+    "complete": false,
+    "record_complete": false,
+    "park_verified": false,
+    "reset_route": "UNKNOWN",
+    "exception_level": null,
+    "error": null,
+    "state": "no_cold_publication_seen",
+    "identity_status": "not_committed",
+    "observed_cpu_id": null,
+    "observed_cluster": null,
+    "observed_core": null,
+    "observed_core_type": null,
+    "observed_macos_class": null,
+    "identity_mapping_evidence": null
+  },
+  "cold_reads": 676,
+  "cold_entry_armed": true,
+  "effective_reset_route": "UNKNOWN",
+  "normal_permissions": {
+    "normal_vector_first_read": true,
+    "normal_vector_first_write": true,
+    "normal_vector_last_read": true,
+    "normal_vector_last_write": true,
+    "normal_cold_first_read": true,
+    "normal_cold_first_write": true,
+    "normal_cold_last_read": true,
+    "normal_cold_last_write": true,
+    "normal_control_first_read": true,
+    "normal_control_first_write": true,
+    "normal_control_last_read": true,
+    "normal_control_last_write": true,
+    "normal_code_vector_first_False": true,
+    "normal_code_vector_first_True": true,
+    "normal_code_vector_last_False": true,
+    "normal_code_vector_last_True": true,
+    "normal_code_cold_first_False": true,
+    "normal_code_cold_first_True": true,
+    "normal_code_cold_last_False": true,
+    "normal_code_cold_last_True": true
+  },
+  "normal_publication": {
+    "vector_body": true,
+    "vector_hook": true,
+    "cold_body": true,
+    "cold_hook": true,
+    "whole_text_verified": true
+  },
+  "normal_observation": {
+    "vector": {
+      "samples_attempted": 169,
+      "samples_completed": 169,
+      "reads_attempted": 507,
+      "reads_completed": 507,
+      "highest_phase_seen": 0,
+      "any_record_seen": false,
+      "identity_status": "not_committed",
+      "error": null,
+      "cpu1_execution": "UNVERIFIED",
+      "device_visibility": "UNTESTED"
+    },
+    "cold": {
+      "samples_attempted": 169,
+      "samples_completed": 169,
+      "reads_attempted": 507,
+      "reads_completed": 507,
+      "highest_phase_seen": 0,
+      "any_record_seen": false,
+      "identity_status": "not_committed",
+      "error": null,
+      "cpu1_execution": "UNVERIFIED",
+      "device_visibility": "UNTESTED"
+    }
+  },
+  "cpu0_normal_control": {
+    "result": "CPU0_NORMAL_CONTROL_PASS",
+    "scope": "cpu0_normal_ram_observer",
+    "read_intents": 24,
+    "write_intents": 2,
+    "reads_attempted": 24,
+    "reads_completed": 24,
+    "writes_attempted": 2,
+    "writes_acknowledged": 2,
+    "marker_observed": true,
+    "canaries_preserved": true,
+    "original_restored": true,
+    "cpu1_visibility": "NOT_TESTED",
+    "error": null
+  },
+  "normal_entry_armed": true,
+  "normal_reads": 1014,
+  "cpu1_prefix_identity_observed": false,
+  "device_visibility_cause": "UNKNOWN",
+  "reason": "cpu1_arrival_timeout",
+  "connection": {
+    "schema": "connection31l",
+    "phase": "controller_run",
+    "discovery_started": true,
+    "discovery_completed": true,
+    "discovery_observation": {
+      "schema": "usb_connection31j",
+      "result": "PRIMARY_INTERFACE_VERIFIED",
+      "reason": "primary_verified",
+      "phase": "complete",
+      "query_attempts": 1,
+      "query_returns": 1,
+      "elapsed_seconds": 0.021114,
+      "ready": true,
+      "native_ready": false,
+      "device_opens": 0,
+      "target_requests": 0,
+      "progress_callback_failed": false,
+      "observations": [
+        {
+          "query_index": 1,
+          "state": "complete",
+          "phase": "complete",
+          "category": "primary_verified",
+          "query_returned": true,
+          "inventory_classified": true,
+          "primary_verified": true,
+          "started_at_seconds": 0.00015,
+          "stderr_present": false,
+          "stdout_kind": "xml_plist",
+          "modem_interfaces": 2,
+          "primary_candidates": 1,
+          "elapsed_seconds": 0.020625
+        }
+      ]
+    },
+    "discovery_scope": "cached_registry_only",
+    "source_recheck_passed": true,
+    "client_import_attempted": true,
+    "client_import_returned": true,
+    "native_reservation_attempted": true,
+    "native_attempt_consumed": true,
+    "serial_open_attempted": true,
+    "serial_open_returned": true,
+    "uart_init_attempted": true,
+    "uart_init_returned": true,
+    "proxy_init_attempted": true,
+    "proxy_init_returned": true,
+    "controller_construction_attempted": true,
+    "controller_constructed": true,
+    "transport_close_attempted": true,
+    "transport_closed": true,
+    "connection_journal_failed": false,
+    "native_journal_failed": false
+  },
+  "native_attempt_consumed": true,
+  "source_manifest_sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f",
+  "controller_elapsed_seconds": 5.796
+}

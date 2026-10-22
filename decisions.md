@@ -3123,3 +3123,35 @@ Device comparison,callbacks,extra core,MMIO/reset/settings change,post-start
 cache maintenance or Linux continuation. Both-negative remains ambiguous.
 Immediate Macintosh HD return on any outcome,no reconnect/retry. Evidence:
 `native/boot/attempt31l-m1-intake-2026-10-22.md`.
+
+
+### 2026-10-22 · Consume31L once; retain negative-channel uncertainty
+
+**Observed:** one authorized31L session consumed on execution/readiness
+`c7608c7`, release `11cc2af`: **STOP / cpu1_arrival / cpu1_arrival_timeout**.
+Both CPU0 controls PASS (24 reads/2 acknowledged stores each, marker/canaries/
+restoration verified); mapping, freshness, reset and publication gates PASS.
+Normal vector/cold each **169 samples/507 reads, phase0, no record, identity
+not_committed, error null**; total1014 Normal reads. Device vector84 samples/
+420 reads and cold169 samples/676 reads also phase0/no committed identity.
+**144 mutation intents; CPU1 starts2/2 acknowledged; requests_completed0.**
+Four complete PS/state pairs,8 reads each, include final: CPU1 actual0,0,15,15
+and opaque byte0,0,2,2; CPU0 remains15/2. Controller5.796s/supervisor6.432s,
+exits1/1, no outer deadline or journal/finalization error. Human returned to
+usual Macintosh HD at+38.799s, within90s; no retry or post-outcome target command.
+
+**CPU1 prefix execution/entry and effective reset route remain unverified.**
+Neither Normal nor Device marker committed identity. Positive CPU0 controls
+are not CPU1 visibility proof; negative channels cannot exclude execution or
+identify a cache/Device cause. No callbacks, verified park, Linux boot/SMP,
+extra-core start or new reset/MMIO/settings operation. Original Full/lab
+Permissive/Macintosh HD default remain last reported, not freshly checked.
+Existing boot021/boot042/client57a9339,281 pins,frozen K254/J226/I202/host6,
+all prior receipts and earlier31L offline evidence remain intact. M5 owns next
+interpretation; no automatic retry. Evidence:
+`native/boot/attempt31l-2026-10-22-result.md` and its sanitized final JSON.
+
+**Decision:** Publish only reviewed sanitized final JSON and original notes.
+Do not infer a CPU1 reset/fetch failure or replay a firmware sequence from these
+negative observations. Preserve the consumed invocation and all prior receipts;
+M5 reviews the evidence before any separate next proposal.
