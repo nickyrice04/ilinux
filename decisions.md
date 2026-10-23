@@ -3844,3 +3844,38 @@ G17C mapping/publication/completion qualification. Evidence:
 positive attributed guest result merits qualification of its missing host path;
 it supplies no automatic raw-boot remedy. Ring software tests qualify no native
 ordering, event semantics or readiness. No physical follow-up or restart.
+
+
+### 2026-10-23 · Publish31V mapping messages and alternate-bootstrap audit; no physical retry
+
+M1's 31U review `c510d74` is incorporated. One CPU and six GPU REA queries
+completed in four isolated batches. The candidate CPU preparation helper handles
+a shared command-line span; it is not monitor activation. Aura's public release
+excludes its alternate host boot-object work, and its applicable WFE difference
+acts after secondary arrival. No new T6050 first-fetch fix or Apple-only
+impossibility is established; the actual alternate host bootstrap remains needed.
+
+Original C now encodes the checked 24-byte GPU mapping notification and performs
+one bounded publication to its 256-slot queue. Full queues do not wait; uncertain
+write/publication effects stop without retry. Real mapping, DMA ordering,
+near-full progress and completion remain native adapter prerequisites. Two new
+cross-boundary decompilations are refused; bounded instruction evidence and
+synthetic checks support the narrow format/publication contract separately.
+
+**492 pins /234 Python methods /103 portable C groups PASS** on host, curated
+host and VM082; the new eight C groups pass Linux ASan/UBSan. Review bytes match;
+all15 older closures are unchanged. Independent review fixed exact prior-result
+count/manifest binding in the new intake. No native performance or energy gain
+is measured. macOS, volumes, policies, installed images and consumed receipts
+remain unchanged. **Native31V HOLD / NOT RUN; no restart.** M1 follows
+`tools/m1n1-client/attempt31v-instructions.md` for independent offline review.
+Evidence: `native/boot/attempt31v/validation.json` and the three31V research notes.
+
+**Decision:** do not replay monitor operations, substitute accepted image
+classification or copy chip-specific reset paths into T6050 from static evidence.
+The next CPU discriminator needs the actual qualified host bootstrap and physical
+entry provenance behind the reported all-core guest. The next GPU work must bind
+the actual mapping/firmware address conversion, near-full notification and
+completion contract to a qualified role/version. Keep queue publication separate
+from delivery/readiness. Another unchanged CPU marker boot would not resolve
+these prerequisites and is not requested.

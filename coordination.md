@@ -6,6 +6,36 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31V offline handoff ready; M1 review next, 2026-10-23
+
+Root completed integration and publication preparation. CPU/GPU/public-source
+research and independent original-code/public-scope reviews are complete. All
+four REA batches and VM082 ended; quiet/VM locks in both repositories are released.
+Unrelated Omarchy work remains untouched. No additional native experiment is prepared.
+
+M1's 31U review `c510d74` is incorporated. One CPU and six GPU REA queries
+completed in four isolated batches. The candidate CPU preparation helper handles
+a shared command-line span; it is not monitor activation. Aura's public release
+excludes its alternate host boot-object work, and its applicable WFE difference
+acts after secondary arrival. No new T6050 first-fetch fix or Apple-only
+impossibility is established; the actual alternate host bootstrap remains needed.
+
+Original C now encodes the checked 24-byte GPU mapping notification and performs
+one bounded publication to its 256-slot queue. Full queues do not wait; uncertain
+write/publication effects stop without retry. Real mapping, DMA ordering,
+near-full progress and completion remain native adapter prerequisites. Two new
+cross-boundary decompilations are refused; bounded instruction evidence and
+synthetic checks support the narrow format/publication contract separately.
+
+**492 pins /234 Python methods /103 portable C groups PASS** on host, curated
+host and VM082; the new eight C groups pass Linux ASan/UBSan. Review bytes match;
+all15 older closures are unchanged. Independent review fixed exact prior-result
+count/manifest binding in the new intake. No native performance or energy gain
+is measured. macOS, volumes, policies, installed images and consumed receipts
+remain unchanged. **Native31V HOLD / NOT RUN; no restart.** M1 follows
+`tools/m1n1-client/attempt31v-instructions.md` for independent offline review.
+Evidence: `native/boot/attempt31v/validation.json` and the three31V research notes.
+
 ### Current — M1 31U review complete; M5 investigation next, 2026-10-23
 
 **Independent M1 review on `24cba27`: OFFLINE_PASS_NATIVE_HOLD.**

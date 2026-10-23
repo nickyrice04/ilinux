@@ -1,0 +1,234 @@
+{
+  "schema": "ilinux-cpu31v-handoff-contract-v1",
+  "date": "2026-10-23",
+  "status": "PASS_OFFLINE_NATIVE_HOLD",
+  "native": "NOT_RUN",
+  "decoded_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "decoded_bytes": 4266536,
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_runtime_address": false,
+  "decoded_file_offset_in_elf": 4096,
+  "byte_preserving_mapping": true,
+  "completed_queries": 1,
+  "query_failures": 0,
+  "queries": [
+    {
+      "label": "pre-entry-context-finalizer",
+      "requested_address": "0x100c1ad46c8",
+      "returned_entry": "0x100c1ad46c8",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "output_sha256": "f4b83acba9049dff7bd22c6c0ebd425fcf34631473c91b18be264949b09c27e7",
+      "cli_exit": 0,
+      "seconds": 67.74637411500001,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "body_anchors": [
+        {
+          "start": "0x100c1ad46c8",
+          "end_inclusive": "0x100c1ad4813",
+          "carrier_offset": 198344,
+          "derived_offset": 202440,
+          "bytes": 332,
+          "sha256": "84d473306f489638e6226577c170afda34ce5ad259d1a3aab8f5d055bbf792f0"
+        }
+      ],
+      "assembly_instructions": 83,
+      "pcode_operations": 69,
+      "pcode_truncated": false,
+      "pcode_outside_body": 0,
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "whole_function_pseudocode_accepted": false
+    }
+  ],
+  "query_script_sha256": "f7bda0cc4b16a4e9153ac5d9f4125e9d48a9af8f641250a6fc55130a24300376",
+  "active_query_list_sha256": "af431a490ef828df409a24f82898add9a43cbfc1bdf7151683adcc9cd68f52a0",
+  "superseded_before_launch": {
+    "list_sha256": "f4197fb9cd0eb98fcbea1d81d9e9e351d41c1ea4484b15e6de6d1df9fba9c666",
+    "removed_target": "0x100c1b3ef44",
+    "reason": "Previously queried in31K; preserve cross-boundary refusal and check bounded forwarding independently",
+    "executed": false,
+    "is_query_refusal": false
+  },
+  "environment": {
+    "interfaces": [
+      "lo"
+    ],
+    "physical_usb": false,
+    "vm_setup_exit": 0,
+    "vm_job_exit": 0
+  },
+  "independent_bounded_blocks": [
+    {
+      "label": "shared-command-line-helper",
+      "start": "0x100c1ad46c8",
+      "end_exclusive": "0x100c1ad4814",
+      "instruction_words": 83,
+      "code_bytes": 332,
+      "sha256": "84d473306f489638e6226577c170afda34ce5ad259d1a3aab8f5d055bbf792f0",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "helper-input-adapter",
+      "start": "0x100c1ad80a0",
+      "end_exclusive": "0x100c1ad80b4",
+      "instruction_words": 5,
+      "code_bytes": 20,
+      "sha256": "dfc009edb9a001d10c0eef0c5916332ce76a143801f7e6b019c7cd3aa216df01",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "helper-result-adapter",
+      "start": "0x100c1ad7e10",
+      "end_exclusive": "0x100c1ad7e24",
+      "instruction_words": 5,
+      "code_bytes": 20,
+      "sha256": "ba52d95190ad453a095b061932695c58bc82e261a52725c6e68d637fa312dffe",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "producer-A-command-line-span",
+      "start": "0x100c1ad244c",
+      "end_exclusive": "0x100c1ad246c",
+      "instruction_words": 8,
+      "code_bytes": 32,
+      "sha256": "23fc4f7114c5cb90c3661970d47f1408d5296e75024ff479a44a6c1807dc5e8a",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "producer-B-command-line-span",
+      "start": "0x100c1ad447c",
+      "end_exclusive": "0x100c1ad449c",
+      "instruction_words": 8,
+      "code_bytes": 32,
+      "sha256": "484ecd69181ff90a141aa8d9ee35a5aa2b03f77a6e1e8a433733702d9f1bbd99",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "common-final-forwarding",
+      "start": "0x100c1b3ef44",
+      "end_exclusive": "0x100c1b3f058",
+      "instruction_words": 69,
+      "code_bytes": 276,
+      "sha256": "97ec843a91dc52eb830e8f7b82bba05872f362766ee53bb9b0911120b1b883ba",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "service7-wrapper",
+      "start": "0x100c1b3f058",
+      "end_exclusive": "0x100c1b3f084",
+      "instruction_words": 11,
+      "code_bytes": 44,
+      "sha256": "bc0ebea75984a3d45708e26f3c2f053736bb47ebdd8abdb545ddc469dfa866fd",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    }
+  ],
+  "independent_unique_instruction_words": 189,
+  "independent_code_bytes": 756,
+  "new_words_beyond_prior_published_ranges": 93,
+  "overlap_prior_published_ranges": 96,
+  "prior_union_method": "Both exclusive-end bounded blocks and inclusive-end validated body anchors; rejects non-image ranges",
+  "llvm_word_mismatches": 0,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "shared_command_line_contract": {
+    "helper": "0x100c1ad46c8",
+    "caller_spans": [
+      {
+        "call_site": "0x100c1ad2468",
+        "start_offset": 108,
+        "end_offset_exclusive": 1132,
+        "bytes": 1024,
+        "same_object_base": true
+      },
+      {
+        "call_site": "0x100c1ad4498",
+        "start_offset": 108,
+        "end_offset_exclusive": 1132,
+        "bytes": 1024,
+        "same_object_base": true
+      }
+    ],
+    "byte_read_sites": 4,
+    "nul_and_space_handling": true,
+    "direct_system_or_service_operations": 0,
+    "direct_indirect_call_sites": 0,
+    "interpretation": "Shared bounded command-line handling; span matches public BootArgs revision3. No live revision inferred."
+  },
+  "final_forwarding": {
+    "caller": "0x100c1b3ef44",
+    "site": "0x100c1b3f054",
+    "wrapper": "0x100c1b3f058",
+    "input_parameter_order": [
+      1,
+      2,
+      0
+    ],
+    "roles": [
+      "selected entry",
+      "context",
+      "mode"
+    ],
+    "service": 7,
+    "service_sites": [
+      "0x100c1b3f068"
+    ],
+    "scope": "common boot-CPU handoff; not secondary reset dispatch",
+    "prior_whole_function_refusal": "31K cross-boundary P-code remains refused"
+  },
+  "public_structure_comparison": {
+    "repository": "AsahiLinux/m1n1",
+    "commit": "7cde7d1a784d851ebfee5579fa363c38b14150c0",
+    "source_path": "proxyclient/m1n1/tgtypes.py",
+    "source_sha256": "4faaf21d5d5d093d246cc988cf0693ff0b3945d832b5ff61386317572300055e",
+    "source_bytes": 2706,
+    "method": "stdlib AST size evaluation; source never imported or executed",
+    "command_line_layouts": [
+      {
+        "revision": 1,
+        "offset": 108,
+        "bytes": 256
+      },
+      {
+        "revision": 2,
+        "offset": 108,
+        "bytes": 608
+      },
+      {
+        "revision": 3,
+        "offset": 108,
+        "bytes": 1024
+      }
+    ],
+    "matching_span_revision": 3,
+    "guest_entry_builder_scope": "guest loader only; not accepted native boot-object contract"
+  },
+  "decision": {
+    "monitor_activation_in_fresh_helper": false,
+    "secondary_release_in_fresh_helper": false,
+    "alternate_native_handoff": "NOT_QUALIFIED",
+    "native_host_bootstrap_contract": "MISSING_FROM_LOCATED_PUBLIC_RELEASE",
+    "firmware_impossibility": "NOT_ESTABLISHED"
+  },
+  "limitations": [
+    "Fresh helper proximity to entry publication does not imply monitor activation.",
+    "Caller object identification is corroborated by bounded span and public layout; no runtime BootArgs revision is measured.",
+    "Earlier layout removed blocks, producer truncation and final caller cross-boundary P-code remain unrepaired.",
+    "Public guest serialization does not establish native image acceptance, monitor residency or physical secondary entry.",
+    "No original native adapter or hardware action follows."
+  ],
+  "physical_hardware_operations": 0,
+  "personalized_objects_read": 0,
+  "firmware_replay": false,
+  "protection_bypass": false
+}
