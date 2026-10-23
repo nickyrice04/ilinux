@@ -3653,3 +3653,37 @@ reviewed metadata JSON.
 **Decision:** Publish the offline results and retain all consumed evidence. The
 attachment reducer is supplied-evidence bookkeeping; it cannot qualify firmware
 ownership or CPU startup. A software pass authorizes no physical follow-up.
+
+
+### 2026-10-23 · Publish31S service resolution and GPU bootstrap; native HOLD
+
+**Decision:** accept M1's 31R review `ff1ed8e` and publish the original resolver,
+GPU bootstrap component, bounded REA findings and applicable-source review after
+offline validation. Prepare no physical boot on the present evidence.
+
+**Evidence:** two CPU and six GPU REA queries completed. Independent comparison
+matches 321 CPU words (157 new beyond the checked 31L/Q/R union) and 644 GPU
+words. Services 12/17 resolve inside the retained generic boot image and perform
+range configuration. This closes ownership, not first-fetch causality. GPU owner
+initialization binds callbacks; bootstrap formatting and transport are separate
+from firmware readiness. Decompiler warnings and earlier refusals are preserved.
+
+**Implementation:** original hash-bound table resolution checks five retained
+targets, with 22 synthetic tests. Original C rejects message truncation, preserves
+full receive words and opaque status, and invokes an injected callback once with
+no retry. It has no native device transport. 441 pins/207 Python methods/74 C
+groups pass host/curated-host/Linux; new 14 C groups pass Linux sanitizers. All
+12 older closures remain unchanged; private Apple output remains ignored.
+
+**Alternatives:** do not substitute other-chip SPTM code, a family-name match or
+unproven cache-coherency patch for a qualified T6050 fix. Public firmware reports
+are credible but do not establish that only Apple can fix every path. A new
+firmware release or demonstrated workaround is evidence to evaluate, not an
+assumption that one exists. No Apple update or security change is requested.
+
+**Next:** M1 independently reviews `tools/m1n1-client/attempt31s-instructions.md`
+and publishes. M5 seeks effective CPU entry/range-state evidence and qualifies
+GPU shared-data publication, address/role ownership and completion. CPU1 remains
+UNVERIFIED; native SMP/GPU and performance/energy gains remain NOT MEASURED.
+macOS, boot policy, volumes and installed images remain unchanged. Validation:
+`native/boot/attempt31s/validation.json`.

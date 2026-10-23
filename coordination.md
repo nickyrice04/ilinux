@@ -6,6 +6,29 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31S offline handoff ready; M1 review next, 2026-10-23
+
+M1's 31R review `ff1ed8e` is incorporated. CPU/GPU investigators completed their
+bounded findings; public-source review found no demonstrated exact-machine SMP
+workaround or G17C runtime path. Root wrote original components from behavioral
+findings and completed host/curated-host/VM079 integration. All four REA batches
+and VM079 finished; both repositories' quiet/VM locks are released. Unrelated
+kernel configuration/compositing work remains untouched.
+
+**M1 owns** `tools/m1n1-client/attempt31s-instructions.md`: verify 441 source
+pins, 207 Python methods and 74 portable C groups, independently review contracts,
+and publish results. Linux sanitizers/private-input integration remain separate
+M5 evidence. No restart, proxy, device request or routine policy recheck.
+
+**M5 owns** effective CPU entry/range-state investigation and GPU shared-data,
+role/address ownership and completion qualification. Range-service ownership
+is resolved inside the retained boot image; CPU1 causality is not. GPU callback
+binding and format fit are not a hardware handshake. Firmware misconfiguration
+is credible, but an Apple-only remedy is not established. All 31R and earlier
+closures/receipts stay frozen. A new boot needs a meaningful discriminator.
+Native31S HOLD / NOT RUN; macOS, volumes, security and installed images intact.
+Validation: `native/boot/attempt31s/validation.json`.
+
 ### Current — M1 31R review complete; M5 investigation next, 2026-10-23
 
 **Independent M1 review on `e36db12`: OFFLINE_PASS_NATIVE_HOLD.**

@@ -1,5 +1,37 @@
 # Blockers
 
+## Current — 31S owner resolved; effective CPU state and GPU binding unknown
+
+**CPU:** the range-service owner is no longer unknown: dispatcher and local
+handlers are in the retained generic boot image. They perform range-protection
+configuration, not a secondary-release operation. Historical descriptor values,
+selected bank, effective protection at CPU1 startup and first instruction fetch
+remain unknown. Their absence prevents a causal overlap test. Do not replay
+services or change locks based on static ownership alone. Seek independently
+qualified effective entry/range-state evidence, or a demonstrated exact-machine
+firmware/workaround result before proposing another boot.
+
+**Firmware question:** Gravity and Asahi discussion support an attributed
+firmware/handoff diagnosis. No reviewed source proves that every software remedy
+is impossible, and no verified T6050 workaround was found. General reset-stack/
+cache-publication fixes and other-chip SPTM work are comparison material, not
+drop-in fixes. Working macOS does not establish identical custom-boot state.
+See `research/native31s-upstream.md` for pinned sources and applicability limits.
+
+**GPU:** the original bootstrap encoder and injected-callback adapter are
+tested. Owner initialization only binds callbacks; it is not hardware acceptance.
+Full outgoing type and partial incoming discriminator differ. Neither a field
+fit nor a transport return qualifies address ownership, buffer lifetime, shared
+data publication, endpoint-to-ADT roles, completion or G17C firmware ABI/UAT.
+Those are the next bounded initialization questions; a recognized generation
+label is insufficient to enable a driver.
+
+441 pins/207 Python methods/74 C groups pass host and VM; new 14 C groups also
+pass sanitizers. These are software checks, not native performance evidence.
+**M1 offline review next; native31S HOLD / NOT RUN, no restart.** Prior closures,
+receipts, installed images and macOS remain intact. Validation:
+`native/boot/attempt31s/validation.json`.
+
 ## Current — 31R independently reviewed; native prerequisites unresolved
 
 **Independent M1 review on `e36db12`: OFFLINE_PASS_NATIVE_HOLD.**

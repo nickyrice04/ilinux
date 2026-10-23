@@ -99,6 +99,33 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31S range-service owner and GPU bootstrap, 2026-10-23
+
+M1's 31R review `ff1ed8e` is incorporated. Two CPU and six GPU REA queries
+completed. Independent checks match 321 CPU words (157 new beyond the checked
+31L/Q/R union) and 644 GPU words, with zero mismatches. The CPU range-service
+dispatcher and handlers resolve inside the same retained generic boot image;
+they configure range protection, not secondary release. Historical inputs,
+effective secondary state and CPU1's first fetch remain unknown.
+
+Original Python table resolution checks five retained static targets and has
+22 synthetic tests. Original C GPU bootstrap code validates the full message
+header and 44-bit field, preserves receive words and opaque transport status,
+and submits only through an injected test callback. Callback binding is not a
+hardware handshake. Address ownership, G17C UAT and firmware ABI are unqualified.
+
+**441 pins /207 Python methods /74 C groups PASS** on macOS and isolated Linux
+VM079; the new 14 C groups also pass ASan/UBSan. Host, curated-host and VM review
+JSON match exactly. All 12 earlier frozen closures remain unchanged. Firmware
+misconfiguration is a credible attributed public diagnosis; no demonstrated
+T6050 workaround or proof that only Apple can fix every path was found.
+
+**M1 next:** `tools/m1n1-client/attempt31s-instructions.md`, independent offline
+review and publication. **Do not restart: native31S HOLD / NOT RUN.** CPU1
+UNVERIFIED; no native SMP/GPU or performance/energy result. macOS, boot policy,
+volumes and installed images remain intact. Validation:
+`native/boot/attempt31s/validation.json`.
+
 ### Latest M1 review — 31R offline PASS; native HOLD, 2026-10-23
 
 **Independent M1 review on `e36db12`: OFFLINE_PASS_NATIVE_HOLD.**

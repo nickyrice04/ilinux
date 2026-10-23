@@ -1,0 +1,129 @@
+{
+  "all_table_targets_validated": false,
+  "date": "2026-10-23",
+  "firmware_input": {
+    "analysis_elf_used_by_resolver": false,
+    "byte_origin": {
+      "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "compressed_payload_bytes": 1461345,
+      "compressed_payload_file_offset_in_wrapper": 42,
+      "decoded_elf_bytes_identical": true,
+      "decoded_file_offset_in_analysis_elf": 4096,
+      "decoded_input_bytes": 4266536,
+      "decoded_input_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+      "extraction_and_decompression": "INHERITED_RETAINED31H31N_NOT_REPEATED31S",
+      "personalized_artifacts_read": false,
+      "retained_generic_im4p_sha256": "b9501bee4fef7d2b82530d34a0a3182e21f9f0edf60cb5ad1dae0358dd4bcef1",
+      "retained_lzfse_payload_sha256": "826d767772cf6b1121e64d42b3a1022aca9a6eaa6d8e576f74b1cae2e558fc4f",
+      "retained_wrapper_bytes": 1461427
+    },
+    "bytes": 4266536,
+    "role": "ENTIRE_RETAINED_DECODED_GENERIC_IBOOT",
+    "sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120"
+  },
+  "full_table_extent_bounded": true,
+  "hardware_operations": 0,
+  "implementation": {
+    "origin": "ORIGINAL_ILINUX_PYTHON_NOT_FIRMWARE_INPUT",
+    "path": "kernel/experiments/firmware31s/dispatch.py",
+    "sha256": "88d3d3f100f8ab965d08ffe7f0a4b720a0383d4ac5981acc37e901030ddf47b1"
+  },
+  "independent_twos_complement_comparison": "PASS_5_OF_5",
+  "layout": {
+    "entry_count": 131,
+    "mappings": [
+      {
+        "address": 1102760787968,
+        "file_offset": 0,
+        "size": 4266536
+      }
+    ],
+    "schema": 1,
+    "selectors": [
+      5,
+      6,
+      7,
+      12,
+      17
+    ],
+    "table_offset": 2185368,
+    "target_anchor": 1102762962192,
+    "target_ranges": [
+      [
+        1102762966328,
+        1102762966332
+      ],
+      [
+        1102762966456,
+        1102762966460
+      ],
+      [
+        1102762966584,
+        1102762966588
+      ],
+      [
+        1102762969840,
+        1102762969844
+      ],
+      [
+        1102762969856,
+        1102762969860
+      ]
+    ]
+  },
+  "layout_sha256": "81e6bc45488ec9dbb423f67c95d2de380440681104ef3963aabb5a1b91868633",
+  "limits": [
+    "Layout and anchor are independently supplied premises, not discovered or authenticated by the generic resolver.",
+    "Full table extent is checked; only selectors5,6,7,12,17 are resolved and checked against exact four-byte target windows.",
+    "The source implementation hash identifies original Python; the firmware input hash identifies the entire retained decoded generic image.",
+    "Original IM4P/compressed payload hashes and exact byte containment were rechecked; retained decompression was not repeated.",
+    "Static target resolution neither executes firmware nor authenticates historical runtime state."
+  ],
+  "new31s_selectors": [
+    12,
+    17
+  ],
+  "old31l_selectors_preserved": [
+    5,
+    6,
+    7
+  ],
+  "output_sha256": "67bc0db4df14d322738d405eccc4083df140c7fd34ff87c365c2332db31c97e9",
+  "permission_state": "UNKNOWN",
+  "result": "STATIC_RESOLUTION_ONLY",
+  "runtime_execution": "NOT_OBSERVED",
+  "schema": "ilinux-cpu31s-resolver-integration-v1",
+  "selected_target_count": 5,
+  "selected_targets": [
+    {
+      "entry_offset": 2185388,
+      "selector": 5,
+      "target": 1102762969840,
+      "target_file_offset": 2181872
+    },
+    {
+      "entry_offset": 2185392,
+      "selector": 6,
+      "target": 1102762969856,
+      "target_file_offset": 2181888
+    },
+    {
+      "entry_offset": 2185396,
+      "selector": 7,
+      "target": 1102762966328,
+      "target_file_offset": 2178360
+    },
+    {
+      "entry_offset": 2185416,
+      "selector": 12,
+      "target": 1102762966456,
+      "target_file_offset": 2178488
+    },
+    {
+      "entry_offset": 2185436,
+      "selector": 17,
+      "target": 1102762966584,
+      "target_file_offset": 2178616
+    }
+  ]
+}

@@ -1,5 +1,45 @@
 # Progress Log
 
+## 2026-10-23 · M5: 31S CPU service owner resolved; GPU bootstrap code tested
+
+Accepted M1's 31R review `ff1ed8e`. REA completed two CPU and six GPU queries;
+independent decoding matches 321 CPU words and 644 GPU words without mismatch.
+157 CPU words are new beyond the checked 31L/Q/R union; 164 overlap. All reported
+decompiler warnings and older whole-function refusals remain explicit.
+
+CPU services 12/17 resolve through the retained generic boot image's own
+dispatcher to local range-register handlers. The separate table anchor matters;
+the new original resolver checks it with explicit digest-bound mappings and
+five selected targets. Static ownership is resolved, but historical arguments,
+effective secondary protection and CPU1's first fetch are not. No release fix
+or causal firmware restriction follows from range-handler identification.
+
+GPU analysis distinguishes software owner/callback binding from a device
+handshake and establishes the full bootstrap header, 44-bit address field and
+endpoint selector. Original C validates the format, preserves the full receive
+word, and invokes an injected transport callback exactly once. It does not
+qualify addresses, infer readiness, retry errors or provide a native transport.
+Pinned m1n1/Gravity source corroborates the format; shared lineage is explicit.
+
+**441 pins /207 Python methods /74 C groups PASS** on host, curated host and
+Linux VM079, with byte-identical review JSON (`85d12acd…b0e1e39`). New 14 C
+groups pass Linux ASan/UBSan. The VM had only loopback, curated sources and the
+retained image were read-only, and all four REA batches plus job079 exited 0.
+Twelve earlier closures, consumed evidence and native images remain unchanged.
+
+Public-source review found relevant cache-coherency work and other-chip SPTM
+research, but no demonstrated T6050 SMP workaround or G17C runtime path. The
+reported firmware misconfiguration merits investigation; an Apple-only remedy
+has not been established. The next useful CPU work requires effective entry/
+range-state evidence; GPU work requires shared-data publication, address/role
+ownership and completion qualification. Adjacent static queries alone cannot
+recover historical CPU state.
+
+**M1:** follow `tools/m1n1-client/attempt31s-instructions.md` and publish an
+independent offline review. **Native31S HOLD / NOT RUN; do not restart.** No
+macOS, policy or volume change, no hardware operations or parity claim.
+Evidence: `native/boot/attempt31s/validation.json` and the three 31S research notes.
+
 ## 2026-10-23 · M1: 31R independent offline review PASS; no restart
 
 **Independent M1 review on `e36db12`: OFFLINE_PASS_NATIVE_HOLD.**
