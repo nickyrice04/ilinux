@@ -3879,3 +3879,34 @@ the actual mapping/firmware address conversion, near-full notification and
 completion contract to a qualified role/version. Keep queue publication separate
 from delivery/readiness. Another unchanged CPU marker boot would not resolve
 these prerequisites and is not requested.
+
+
+### 2026-10-23 · Publish independent31V review; preserve native HOLD
+
+**Independent M1 review on `dca49e3`: OFFLINE_PASS_NATIVE_HOLD.**
+**492 pins /234 Python methods /103 portable C groups PASS**, no skips/repairs;
+command exit0 in8.795s with Python3.13.5/Apple clang17.0.0. Prior225 Python/95 C
+plus new9 Python/8 C pass. Output matches released host/curated/VM bytes
+(`b6598abd…8a8f4f64`). Compiler temporaries removed; Linux sanitizers NOT RUN on M1.
+
+No actionable issue in the bounded24-byte encoder/queue contract. Full/invalid
+setup calls nothing; uncertain write/publication retains evidence and forbids
+retry. Real DMA ordering, sole-producer lifetime, near-full progress and completion
+remain caller/native-adapter duties. Prior31U exact counts/manifest now bound by
+new intake mutation checks; older sources unchanged. CPU helper is command-line
+handling, not monitor activation. Alternate accepted host bootstrap remains
+outside located public release; WFE difference is post-arrival. Two new whole-
+function GPU refusals and earlier truncation/cross-boundary gates retained.
+REA/private parsing/evaluators/full symbols/upstream builds/refetch/VM NOT RUN on M1.
+
+All15 frozen closures, retained13-file package, clean client57a9339 and384 prior
+intake evidence files verified unchanged. No31V native-use file; discovery/device
+opens/target requests/native invocations0. **Neither Mac restarted. Native31V
+HOLD / NOT RUN; GPU acceleration/Linux SMP NOT RUN; CPU1 UNVERIFIED.** No transfer,
+install, live/policy check or settings change. M5 continues accepted host/physical
+entry and G17C mapping/progress/completion qualification. Evidence:
+`native/boot/attempt31v-m1-offline-2026-10-23.md` and reviewed metadata JSON.
+
+**Decision:** Publish the bounded software result and preserve all consumed
+evidence. Queue publication is not delivery or readiness; runtime mediation
+is not accepted native bootstrap provenance. No physical follow-up or restart.
