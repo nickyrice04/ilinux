@@ -3687,3 +3687,33 @@ GPU shared-data publication, address/role ownership and completion. CPU1 remains
 UNVERIFIED; native SMP/GPU and performance/energy gains remain NOT MEASURED.
 macOS, boot policy, volumes and installed images remain unchanged. Validation:
 `native/boot/attempt31s/validation.json`.
+
+
+### 2026-10-23 · Publish independent31S review; preserve native HOLD
+
+**Independent M1 review on `58ca707`: OFFLINE_PASS_NATIVE_HOLD.**
+**441 pins /207 Python methods /74 portable C groups PASS**, no skips/repairs;
+command exit0 in6.574s with Python3.13.5/Apple clang17.0.0. Prior176 Python/60 C
+plus new31 Python/14 C pass. Output matches released host/curated/VM bytes
+(`85d12acd…b0e1e39`). Compiler temporaries removed; Linux sanitizers NOT RUN on M1.
+
+No blocker found for the documented offline resolver/codec contracts. Explicit
+table/target anchors, signed bounds, full outgoing header, raw receive words and
+opaque callback status are preserved. Callback OK is not delivery/readiness;
+error is not proof of no delivery and authorizes no retry. Three pinned public
+m1n1 files read/hash-checked as data, never imported. Private resolver integration,
+REA/full symbols/upstream builds/external refetch/VM NOT RUN on M1. CPU range
+owner is statically resolved; effective state/CPU1 fetch remain unknown. GPU
+role/address domains UNQUALIFIED; ABI/UAT UNKNOWN, prior refusals preserved.
+
+All12 frozen closures, retained13-file package, clean client57a9339 and357 prior
+intake evidence files verified unchanged. No31S native-use file; discovery/device
+opens/target requests/native invocations0. **Neither Mac restarted. Native31S
+HOLD / NOT RUN; GPU acceleration/Linux SMP NOT RUN; CPU1 UNVERIFIED.** No transfer,
+install, live/policy check or settings change. M5 continues effective CPU state
+and G17C shared-data/ownership/completion work; no boot readiness grant. Evidence:
+`native/boot/attempt31s-m1-offline-2026-10-23.md` and reviewed metadata JSON.
+
+**Decision:** Preserve all consumed evidence and publish the offline pass without
+a physical follow-up. Static range-service ownership and injected transport
+success do not establish CPU1 execution or GPU acceptance. Neither Mac restarts.
