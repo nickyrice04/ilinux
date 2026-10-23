@@ -1,5 +1,33 @@
 # Blockers
 
+## Current — 31P independently reviewed; native CPU/GPU still HOLD
+
+**Independent M1 review on `311473c`: OFFLINE_PASS_NATIVE_HOLD.**
+**379 pins /122 Python methods /12 portable C groups PASS**, no skips/repairs,
+command exit0 in4.064s. M1 Python3.13.5/Apple clang17.0.0; C11/O2 strict-warning
+build and exact success token pass, temporary codec output removed. Review JSON
+is byte-identical to the released host/curated/VM output (`ec98fa7d…308250`).
+Retained ADT contract STRUCTURAL_PASS:9 contract nodes,2 roles,4 descriptors;
+41-bit first-address fields preserved,3 cross-role IOVA overlaps retained.
+Address domain UNQUALIFIED; UAT/firmware ABI UNKNOWN; native GPU enablement HOLD.
+
+Prior31O63 methods plus new59 pass. Portable C is distinct from M5's Linux
+ASan/UBSan evidence. **Upstream Mesa396 gtests/kernel build, Linux sanitizers,
+REA/private firmware parsing/full symbols NOT RUN on M1.** The prior31O missing
+entry-check dependency is pinned by31P; older frozen notes/receipts stay intact.
+Earlier M5 VM31O network:false is qualified by the explicit NAT correction;
+M1 did not run a VM. No code-level blocker found for this offline scope.
+
+All frozen O348/N330/M306/L281/K254/J226/I202/H186/host6, retained13-file package,
+clean client57a9339 and prior receipts/offline evidence unchanged. No31P native
+use file. **New discovery/device opens/target requests/native invocations0;
+neither Mac restarted. Native31P HOLD / NOT RUN; Linux SMP/GPU acceleration NOT
+RUN; CPU1 UNVERIFIED.** No install, transfer, live/policy check or settings change.
+M5 owns CPU prerequisite and G17C address-domain/ABI/UAT/queue work; no boot
+readiness or automatic follow-up. Evidence:
+`native/boot/attempt31p-m1-offline-2026-10-22.md` and reviewed metadata JSON.
+
+
 ## Current — 31P offline progress; CPU startup and G17C runtime unresolved
 
 **CPU:**31N's completed startup pair still produced no CPU1 identity.31P confirms
