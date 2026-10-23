@@ -1,0 +1,195 @@
+{
+  "cpu1_execution": "UNVERIFIED",
+  "cpu_rea": {
+    "effective_cpu1_entry_state": "UNKNOWN",
+    "independent_unique_instruction_words": 82,
+    "initial_refusals_preserved": true,
+    "initial_table_address_refusals": 2,
+    "mismatches": 0,
+    "missing_cpu1_prerequisite": "NOT_ESTABLISHED",
+    "record": "reverse-engineering/findings/cpu-startup31t/validation.json",
+    "sha256": "ad00215439e51a7068b5048ed35557aa3aac40fe1c08f70703d212657567c971",
+    "successful_queries": 2
+  },
+  "date_local": "2026-10-23",
+  "energy": "UNMEASURED",
+  "frozen": {
+    "attempt31h": {
+      "pins": 186,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "attempt31i": {
+      "pins": 202,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "attempt31j": {
+      "pins": 226,
+      "result": "PASS_UNCHANGED",
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "attempt31j-host": {
+      "pins": 6,
+      "result": "PASS_UNCHANGED",
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    },
+    "attempt31k": {
+      "pins": 254,
+      "result": "PASS_UNCHANGED",
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "attempt31l": {
+      "pins": 281,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "attempt31m": {
+      "pins": 306,
+      "result": "PASS_UNCHANGED",
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    },
+    "attempt31n": {
+      "pins": 330,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+    },
+    "attempt31o": {
+      "pins": 348,
+      "result": "PASS_UNCHANGED",
+      "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+    },
+    "attempt31p": {
+      "pins": 379,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c"
+    },
+    "attempt31q": {
+      "pins": 402,
+      "result": "PASS_UNCHANGED",
+      "sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6"
+    },
+    "attempt31r": {
+      "pins": 420,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4"
+    },
+    "attempt31s": {
+      "pins": 441,
+      "result": "PASS_UNCHANGED",
+      "sha256": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158"
+    }
+  },
+  "gpu_original": {
+    "c_groups": 14,
+    "cleanup_policy": "INDEPENDENT_LEASES_ONCE_REVERSE_ORDER_PRESERVE_UNRESOLVED",
+    "component": "kernel/experiments/gpu31t/leases.c",
+    "firmware_abi": "UNKNOWN",
+    "firmware_use_during_preparation": "CALLER_MUST_PREVENT",
+    "native_mapping_adapter": "NOT_IMPLEMENTED",
+    "native_readiness": "NOT_ESTABLISHED",
+    "ownership": "EXPLICIT_CALLBACK_CONTRACT_NOT_DERIVED_FROM_OPAQUE_STATUS",
+    "publication": "NOT_IMPLEMENTED"
+  },
+  "gpu_rea": {
+    "independent_instruction_words": 2935,
+    "mismatches": 0,
+    "prior_gate_refusals_preserved": true,
+    "record": "reverse-engineering/findings/gpu31t/validation.json",
+    "running_kernel_identity_match": "NOT_INDEPENDENTLY_ESTABLISHED",
+    "sha256": "2f190b82067bf04f5440c1964516fbc9d0b01a433dae25087b75453906efe921",
+    "successful_queries": 6,
+    "truncated_pcode_queries": 1,
+    "whole_function_allocation_semantics": "NOT_ACCEPTED"
+  },
+  "host": {
+    "architecture": "arm64",
+    "build": "25G83",
+    "c_groups": 88,
+    "compiler": "Apple clang 21.0.0",
+    "os": "macOS 26.6.2",
+    "python": "3.9.6",
+    "python_methods": 216,
+    "result": "PASS"
+  },
+  "integration": {
+    "new_c_asan": "PASS",
+    "new_c_groups": 14,
+    "new_c_ubsan": "PASS",
+    "prior_c_groups": 74,
+    "python_methods": 216,
+    "record": "virtualization/jobs/080-offline31t/validation.json",
+    "result": "PASS",
+    "sha256": "a9fdc071c803aafca8ca5b1b109697ac23b3095b92f3f93ab4f1fae8a2baf5b4"
+  },
+  "limitations": [
+    "Static setters and boot-CPU or hypervisor shadow observations do not establish effective CPU1 state.",
+    "The identified control preparation already exists in firmware; historical reachability and causality remain unknown.",
+    "Public alternate-handoff code does not demonstrate T6050 physical secondary startup.",
+    "GPU preparation status and cleanup obligation are distinct; completion is not a firmware acknowledgment.",
+    "The lease helper requires independent obligations, safe-release preconditions, truthful bounded callbacks and caller serialization.",
+    "No native mapping adapter, cache/UAT publication, firmware readiness or G17C runtime qualification follows.",
+    "Private Apple bytes, disassembly, pseudocode and personal identifiers are excluded from public artifacts."
+  ],
+  "linux_smp": "NOT_RUN",
+  "m1": {
+    "instructions": "tools/m1n1-client/attempt31t-instructions.md",
+    "prior31s_review": "PASS_OFFLINE_NATIVE_HOLD",
+    "prior31s_review_commit": "822d53f",
+    "this31t_review": "NOT_RUN_PENDING_M1"
+  },
+  "native31t": "HOLD / NOT RUN",
+  "native_gpu_acceleration": "NOT_RUN",
+  "native_operations": 0,
+  "performance": "UNMEASURED",
+  "preservation": {
+    "boot_policy_changes": 0,
+    "installed_native_image_changed": false,
+    "macos_changes": 0,
+    "previous_consumed_receipts_changed": false,
+    "unrelated_untracked_work": "PRESERVED",
+    "volumes_changed": 0
+  },
+  "rea_batches": {
+    "cpu-a": {
+      "job_exit": 1,
+      "setup_exit": 0
+    },
+    "cpu-b": {
+      "job_exit": 0,
+      "setup_exit": 0
+    },
+    "gpu-a": {
+      "job_exit": 0,
+      "setup_exit": 0
+    },
+    "gpu-b": {
+      "job_exit": 0,
+      "setup_exit": 0
+    },
+    "gpu-c": {
+      "job_exit": 0,
+      "setup_exit": 0
+    }
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "retained_boot021_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "review_outputs": {
+    "byte_identical": true,
+    "curated_host_sha256": "ecf940846a26ea5969aca1f3c9c8dd098d6eff1d3b6500f8e7e8139db48557fe",
+    "host_sha256": "ecf940846a26ea5969aca1f3c9c8dd098d6eff1d3b6500f8e7e8139db48557fe",
+    "vm_sha256": "ecf940846a26ea5969aca1f3c9c8dd098d6eff1d3b6500f8e7e8139db48557fe"
+  },
+  "reviewed_parent_commit": "822d53f4fce97f0382311af71202dc32e0e0026e",
+  "schema": "ilinux-attempt31t-offline-v1",
+  "source_manifest_sha256": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7",
+  "source_pins": 458,
+  "upstream": {
+    "new_verified_t6050_smp_fix": false,
+    "only_apple_can_fix": "NOT_ESTABLISHED",
+    "record": "research/native31t-upstream.md",
+    "sha256": "89761364f27f0e7bb950dd59f17b9acf91899075e7f21654467bfdb901b0d681",
+    "third_party_code_executed": false
+  }
+}

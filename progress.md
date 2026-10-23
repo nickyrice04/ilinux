@@ -1,5 +1,35 @@
 # Progress Log
 
+## 2026-10-23 · M5: 31T entry-state investigation and GPU lifetime code
+
+M1's 31S review `822d53f` is incorporated. CPU REA completed two corrected
+function-entry queries; two initial table-address refusals remain recorded.
+Independent decoding matches 82 CPU words (81 new), with zero mismatches.
+The firmware already contains a separate range-control preparation path, but
+historical reachability and effective CPU1 entry/protection state remain unknown.
+Boot-CPU observations and hypervisor shadow arrays do not establish that state.
+
+Six GPU REA queries trace bounded mapping preparation/completion and shared-data
+allocation/initialization edges; truncated allocation P-code remains unaccepted. Memory completion is not a firmware acknowledgment;
+an error may already have rolled back its preparation. Original C explicitly
+separates acceptance, cleanup obligation and opaque status, completes each
+reported obligation once, and retains unresolved leases. All obligations must
+be independent, with no consumer use during preparation and qualified safe
+release later. No native mapping adapter, publication or device transport exists.
+
+**458 pins /216 Python methods /88 C groups PASS** on macOS and isolated Linux
+VM080; the new 14 C groups also pass ASan/UBSan. Host, curated-host and VM review
+JSON are byte-identical. Thirteen earlier frozen closures remain unchanged.
+Public-source investigation found no verified T6050 startup workaround; the
+XNU-compatible shim remains incomplete, and hypervisor guest setup requires
+already working host secondaries. An Apple-only remedy is not established.
+
+**M1 next:** `tools/m1n1-client/attempt31t-instructions.md`, independent offline
+review and publication. **Do not restart: native31T HOLD / NOT RUN.** CPU1
+UNVERIFIED; native SMP/GPU and performance/energy improvements NOT MEASURED.
+macOS, boot policy, volumes and installed images remain intact. Validation:
+`native/boot/attempt31t/validation.json`.
+
 ## 2026-10-23 · M1: 31S independent offline review PASS; no restart
 
 **Independent M1 review on `58ca707`: OFFLINE_PASS_NATIVE_HOLD.**

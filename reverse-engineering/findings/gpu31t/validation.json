@@ -1,0 +1,544 @@
+{
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "consumed_review_commit": "822d53f",
+  "date": "2026-10-23",
+  "descriptor_cpu_address_domain": "UNQUALIFIED",
+  "findings": {
+    "facts": {
+      "completion_is_not_firmware_ack": true,
+      "failed_optional_array_entry_can_reach_completion": true,
+      "full_success_sets_software_flag_under_lock": true,
+      "map_complete_forwards_to_backing_memory": true,
+      "map_prepare_forwards_to_backing_memory": true,
+      "prepare_status_separate_from_cleanup_obligation": true,
+      "selected_slow_commit_failure_unwires_and_balances_preparation_increment": true,
+      "static_gpu_address_getter_in_three_map_tables": true
+    },
+    "limitations": [
+      "Synthetic callback stubs exercise retained instruction paths, not Apple firmware or hardware.",
+      "The slow-path cases fix initial flags and stub wire, scheduler and mapping results; they do not cover every initial state or alias lifetime.",
+      "Optional-array cleanup is not a native bug claim; preexisting references, aliasing and reachable callback results remain unqualified.",
+      "Atomic instruction arithmetic is modeled sequentially; no concurrency or memory ordering validation is claimed.",
+      "Original callback ownership and reverse cleanup are explicit adapter contracts, not a translation of private status codes."
+    ],
+    "mapping_path_cases": 127,
+    "private_interpreter_sha256": "d65bf649292f4044243d5d3f0e24a42e94933594936e9f7ed7d3496efa709703",
+    "schema": "ilinux-gpu31t-private-behavior-checks-v1",
+    "slow_preparation_cases": 3
+  },
+  "firmware_abi": "UNKNOWN",
+  "gpu_enablement": "HOLD",
+  "hardware_operations": 0,
+  "independent_instruction_ranges": [
+    {
+      "carrier_offset": 26646936,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 576584,
+      "end_exclusive": "0xfffffe000896db0c",
+      "id": "gpu31t-prepare-data",
+      "instruction_words": 93,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "b19f40f5510aa99c7aacc8b13552e4aeaabf0c795e7acf4970b2f55c13c8b6b8",
+      "start": "0xfffffe000896d998"
+    },
+    {
+      "carrier_offset": 26646772,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 576420,
+      "end_exclusive": "0xfffffe000896d998",
+      "id": "gpu31t-complete-data",
+      "instruction_words": 41,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "08b35e81fa83812f708da4c1bb03fdff41bc0ccc03ba12ee6aad6155f12ff3a9",
+      "start": "0xfffffe000896d8f4"
+    },
+    {
+      "carrier_offset": 26490104,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 419752,
+      "end_exclusive": "0xfffffe00089477e4",
+      "id": "gpu31t-allocate-shared",
+      "instruction_words": 187,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "6093f4cfee31a2810102ce653da059b8b2a8777a71cba4472e26ddf7bf5c257c",
+      "start": "0xfffffe00089474f8"
+    },
+    {
+      "carrier_offset": 26489804,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 419452,
+      "end_exclusive": "0xfffffe00089474f8",
+      "id": "gpu31t-create-mapping",
+      "instruction_words": 75,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "0f02b944925e21fb6538db0b10799ff71ace7d532b124fd5e3da57983dd5f748",
+      "start": "0xfffffe00089473cc"
+    },
+    {
+      "carrier_offset": 55106248,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 319800,
+      "end_exclusive": "0xfffffe000a491ad4",
+      "id": "gpu31t-map-prepare",
+      "instruction_words": 3,
+      "llvm_word_mismatches": 0,
+      "module": "IOGPUFamily",
+      "module_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "range_sha256": "fd7ca3ae8f64a209cdb75816a13077cbc0f0c2826f4f31b373d385664f7e7649",
+      "start": "0xfffffe000a491ac8"
+    },
+    {
+      "carrier_offset": 55106260,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 319812,
+      "end_exclusive": "0xfffffe000a491ae0",
+      "id": "gpu31t-map-complete",
+      "instruction_words": 3,
+      "llvm_word_mismatches": 0,
+      "module": "IOGPUFamily",
+      "module_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "range_sha256": "1cc9bda3e73745f30cc183d0959542d0d5d6ffed0e1892b8050e90268cc3d8be",
+      "start": "0xfffffe000a491ad4"
+    },
+    {
+      "carrier_offset": 55106080,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 319632,
+      "end_exclusive": "0xfffffe000a491a2c",
+      "id": "gpu31t-map-gpuva",
+      "instruction_words": 3,
+      "llvm_word_mismatches": 0,
+      "module": "IOGPUFamily",
+      "module_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "range_sha256": "dc8e9afd348a80d12cda8cb1dc37d30bf8b0bf7740d5400715a80970442261a7",
+      "start": "0xfffffe000a491a20"
+    },
+    {
+      "carrier_offset": 55106272,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 319824,
+      "end_exclusive": "0xfffffe000a491c9c",
+      "id": "gpu31t-map-commit",
+      "instruction_words": 111,
+      "llvm_word_mismatches": 0,
+      "module": "IOGPUFamily",
+      "module_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "range_sha256": "beedbc222b2da6fcf9348b0cadb250bfbe91fd958af5c5a0ae6bbdd0e750128a",
+      "start": "0xfffffe000a491ae0"
+    },
+    {
+      "carrier_offset": 55106716,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 320268,
+      "end_exclusive": "0xfffffe000a491e48",
+      "id": "gpu31t-map-release",
+      "instruction_words": 107,
+      "llvm_word_mismatches": 0,
+      "module": "IOGPUFamily",
+      "module_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "range_sha256": "bbf3a0fbb7c9632c53821046316a0c3914cb65ff687f9fe00c458e7ac8f8a594",
+      "start": "0xfffffe000a491c9c"
+    },
+    {
+      "carrier_offset": 54846952,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 60504,
+      "end_exclusive": "0xfffffe000a4527f4",
+      "id": "gpu31t-prepare-memory-slow",
+      "instruction_words": 131,
+      "llvm_word_mismatches": 0,
+      "module": "IOGPUFamily",
+      "module_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "range_sha256": "181fb87b1dbd21e863854bc935694a4ecf381c9985fc1a05e65d3a03a764d1bf",
+      "start": "0xfffffe000a4525e8"
+    },
+    {
+      "carrier_offset": 54847696,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 61248,
+      "end_exclusive": "0xfffffe000a45290c",
+      "id": "gpu31t-memory-prepare",
+      "instruction_words": 15,
+      "llvm_word_mismatches": 0,
+      "module": "IOGPUFamily",
+      "module_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "range_sha256": "f34feb1fdc5d92e648bc662e83d62c6e03ac0762c8679b8397ed8da1f73e4e9e",
+      "start": "0xfffffe000a4528d0"
+    },
+    {
+      "carrier_offset": 54847984,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 61536,
+      "end_exclusive": "0xfffffe000a452a34",
+      "id": "gpu31t-memory-complete",
+      "instruction_words": 17,
+      "llvm_word_mismatches": 0,
+      "module": "IOGPUFamily",
+      "module_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "range_sha256": "9258a552ed03352ca18dbb175c6b1ea33fce3b911e14a731e30eb3931c6af261",
+      "start": "0xfffffe000a4529f0"
+    },
+    {
+      "carrier_offset": 26665020,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 594668,
+      "end_exclusive": "0xfffffe0008972e74",
+      "id": "gpu31t-alloc-data",
+      "instruction_words": 910,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "6eb596a3715d7002fb7913335e6ab66049c61f0361dc4c32b6ade055a692c833",
+      "start": "0xfffffe000897203c"
+    },
+    {
+      "carrier_offset": 26659304,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 588952,
+      "end_exclusive": "0xfffffe0008971d44",
+      "id": "gpu31t-init-data",
+      "instruction_words": 1239,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "9f82603f83976a96abdbff49171e95d7f6c66614a577e913f376e69215b0e58d",
+      "start": "0xfffffe00089709e8"
+    }
+  ],
+  "independent_instruction_words": 2935,
+  "independent_instruction_words_in_queried_ranges": 2601,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "iogpu_derivative_provenance": {
+    "derivation_tool": "reverse-engineering/rea-lab/derive_member.py",
+    "derivation_tool_sha256": "5e7efd582287acbbad1ef88d211986704b05e2df7366aebac08a095439f1105d",
+    "derived_bytes": 653752,
+    "derived_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+    "execution": "original host parser reads bytes; derivative never executed",
+    "member": "com.apple.iokit.IOGPUFamily",
+    "private_manifest_sha256": "d5e45154e2ef31707811665c055564309b6d0731960f972caf163281c9cb49ad",
+    "scope": "member allowlist extended in private in-memory invocation only; frozen original sources unchanged"
+  },
+  "limitations": [
+    "Dossier gates and warnings remain explicit; bounded instruction evidence does not override whole-function refusals.",
+    "allocFirmwareData high P-code reports truncation with one known omitted input; whole-high-P-code conclusions are refused despite the manual_review_required dossier gate.",
+    "Earlier31Q/31R rejected_cross_boundary records and all31S/frozen sources remain unchanged.",
+    "Synthetic path checks stub all external effects and initial conditions; sequential arithmetic is not concurrency or ordering validation.",
+    "The failed-array cleanup edge does not establish a runtime bug; reachable results, preexisting preparation and mapping aliases are unqualified.",
+    "Lower preparation can unwind internally on error; neither ownership nor cleanup safety follows from an opaque status alone.",
+    "The named GPU-VA getter is statically resolved in three map tables; runtime selection, CPU-PA identity and firmware validity remain unqualified.",
+    "No full shared-data wire layout, cache-publication protocol, ADT role mapping, firmware ABI, UAT profile or completion message is supplied.",
+    "No native allocator, DMA mapping adapter, firmware submission, MMIO, device open or boot operation is provided.",
+    "Apple bytes, disassembly and P-code remain solely in ignored private artifacts."
+  ],
+  "native_validation": "NOT_RUN",
+  "network_checks": [
+    {
+      "batch": "out-batch1",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    },
+    {
+      "batch": "out-batch2",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    },
+    {
+      "batch": "out-batch3",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    }
+  ],
+  "original_component_contract": {
+    "acceptance_separate_from_cleanup_obligation": true,
+    "all_leases_independently_completable_even_when_others_unreleased": true,
+    "automatic_retry": false,
+    "firmware_readiness_inferred": false,
+    "native_adapter": false,
+    "opaque_status_preserved": true,
+    "owned_partial_failure_supported": true,
+    "path": "kernel/experiments/gpu31t",
+    "preparation_consumer_exposure_permitted": false,
+    "reverse_cleanup": "original design choice for independent leases, not an Apple sequence",
+    "unresolved_cleanup_retained": true
+  },
+  "private_behavior_check_sha256": "8c23db7bba4e3f3747d1af6ac086499871ce392796de901ec9b3d8cc2c1dd433",
+  "public_api_comparison": {
+    "checked_date": "2026-10-23",
+    "scope": "primary Linux API comparison supplied by parallel public-source review; no Apple status translation or G17C compatibility inference",
+    "sections": [
+      "cpu-and-dma-addresses",
+      "handling-errors",
+      "using-streaming-dma-mappings"
+    ],
+    "source": "https://docs.kernel.org/core-api/dma-api-howto.html"
+  },
+  "queries": [
+    {
+      "address": "0xfffffe000896d8f4",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 71.973,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 61,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31t-complete-data",
+      "limit_seconds": 100,
+      "pcode_operations": 61,
+      "private_output_sha256": "bb9cb688e4ce4c097ed238ba25b24df95efb8fda11341b2200fb356f3f781c8c",
+      "private_run_record_sha256": "67889cb7303df4dd90b0cc577b74b3f2ff10a47a873355053fee095e47e11631",
+      "rea_body_bytes": 164,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 41,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    },
+    {
+      "address": "0xfffffe000896d998",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 72.254,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 143,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31t-prepare-data",
+      "limit_seconds": 100,
+      "pcode_operations": 143,
+      "private_output_sha256": "10ca5afcb7fbdb715cd3bd28e7454e61fd62b3f8f8d1e7751d64dae0d84bb5e5",
+      "private_run_record_sha256": "4d201ba49ce9942a755a4643b193457564b77a259f3000685695be953ffb5d9d",
+      "rea_body_bytes": 372,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 93,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    },
+    {
+      "address": "0xfffffe00089474f8",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch2",
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "elapsed_seconds": 72.491,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 264,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31t-allocate-shared",
+      "limit_seconds": 100,
+      "pcode_operations": 264,
+      "private_output_sha256": "d98664ffba26c182cd883ae026d92fcbf7667c92ed7a2059923e4459cad515ee",
+      "private_run_record_sha256": "3ba484f5d329436e612e27605735c311cc298d40b5edb5dc92612b03505f1d37",
+      "rea_body_bytes": 748,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 187,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    },
+    {
+      "address": "0xfffffe000a4525e8",
+      "artifact_sha256": "4bdf71a84df51736e6f5fd4b064ff232db4093f0d54a3c021a9d84c5bc217593",
+      "batch": "out-batch2",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 47.164,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 203,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31t-prepare-memory-slow",
+      "limit_seconds": 100,
+      "pcode_operations": 203,
+      "private_output_sha256": "09f227d7fb868572c8cfeffc9a0eb17d5dbf414bcd57fab84780e04c9fe4619c",
+      "private_run_record_sha256": "9559fd04a2a0888060883da4d5b9a148aa6ffeb8a173e0e5a9a55aa2170048a2",
+      "rea_body_bytes": 524,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 131,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    },
+    {
+      "address": "0xfffffe000897203c",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch3",
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "elapsed_seconds": 72.541,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 1,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 2388,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": true,
+      "id": "gpu31t-alloc-data",
+      "limit_seconds": 100,
+      "pcode_operations": 2388,
+      "private_output_sha256": "37b2f1804a19814240691caa2b6b061c5354e37abb3f73a311015014b031f54b",
+      "private_run_record_sha256": "f23989b2f99e6fbaa4db0639e561f131bc6344a59f295b495b55a3fa7f888d26",
+      "rea_body_bytes": 3640,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 910,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "REFUSED_TRUNCATED"
+    },
+    {
+      "address": "0xfffffe00089709e8",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch3",
+      "decompiler_warning_classes": [
+        "unresolved_indirect_jump",
+        "provider_removed_blocks"
+      ],
+      "elapsed_seconds": 72.247,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 2282,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31t-init-data",
+      "limit_seconds": 100,
+      "pcode_operations": 2282,
+      "private_output_sha256": "7ddace158ce173c20bd10719d6b1d6091110457c2ee6b3020fd5adff6049842e",
+      "private_run_record_sha256": "6f22ffe9341c2b3bc1de9a45478a11d261714a1c7f31870b2f26d704545cbb95",
+      "rea_body_bytes": 4956,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 1239,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    }
+  ],
+  "rea_completed_queries": 6,
+  "rea_not_completed_queries": 0,
+  "result": "STATIC_MAPPING_OWNERSHIP_CONTRACT_NATIVE_HOLD",
+  "running_kernel_identity_verified": false,
+  "runtime_gpu_firmware_address_binding": "UNQUALIFIED",
+  "schema": "ilinux-gpu31t-firmware-evidence-v1",
+  "static_collection_references": [
+    {
+      "address": "0xfffffe00084144d8",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN14IOGPUMemoryMap20getGPUVirtualAddressEv"
+      ],
+      "pointer_format": 8,
+      "slot": 344,
+      "target": "0xfffffe000a491a20",
+      "vtable": "IOGPUMemoryMap"
+    },
+    {
+      "address": "0xfffffe0007e19348",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN14IOGPUMemoryMap20getGPUVirtualAddressEv"
+      ],
+      "pointer_format": 8,
+      "slot": 344,
+      "target": "0xfffffe000a491a20",
+      "vtable": "AGXLegacyMemoryMap"
+    },
+    {
+      "address": "0xfffffe0007e1d138",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN14IOGPUMemoryMap20getGPUVirtualAddressEv"
+      ],
+      "pointer_format": 8,
+      "slot": 344,
+      "target": "0xfffffe000a491a20",
+      "vtable": "AGXSecureMemoryMap"
+    },
+    {
+      "address": "0xfffffe0008414a38",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN11IOGPUMemory22createGPUMappingInTaskEP9IOGPUTasky"
+      ],
+      "pointer_format": 8,
+      "slot": 336,
+      "target": "0xfffffe000a452310",
+      "vtable": "IOGPUSysMemory"
+    },
+    {
+      "address": "0xfffffe0008414a70",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN14IOGPUSysMemory4wireEv"
+      ],
+      "pointer_format": 8,
+      "slot": 392,
+      "target": "0xfffffe000a493d94",
+      "vtable": "IOGPUSysMemory"
+    },
+    {
+      "address": "0xfffffe0008414a78",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN14IOGPUSysMemory6unwireEv"
+      ],
+      "pointer_format": 8,
+      "slot": 400,
+      "target": "0xfffffe000a4942b4",
+      "vtable": "IOGPUSysMemory"
+    }
+  ],
+  "uat_runtime_layout": "UNKNOWN"
+}

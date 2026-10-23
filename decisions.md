@@ -3717,3 +3717,36 @@ and G17C shared-data/ownership/completion work; no boot readiness grant. Evidenc
 **Decision:** Preserve all consumed evidence and publish the offline pass without
 a physical follow-up. Static range-service ownership and injected transport
 success do not establish CPU1 execution or GPU acceptance. Neither Mac restarts.
+
+
+### 2026-10-23 · Publish31T state qualification and GPU lifetime code; native HOLD
+
+**Decision:** incorporate M1's 31S review `822d53f`; publish bounded findings,
+original mapping-lease code and offline results. Prepare no physical boot.
+
+**Evidence:** two corrected CPU REA queries and six GPU queries completed;
+initial CPU table-address refusals and truncated GPU allocation P-code remain
+recorded. Range-control preparation
+already exists in the retained firmware, but no effective CPU1 state or missing
+startup condition has been established. Public boot-CPU register observations,
+guest shadow initialization and incomplete XNU shims do not prove a workaround.
+They also do not establish that only Apple can fix the failure.
+
+**Implementation:** memory preparation status is separate from cleanup ownership;
+lower failures can already have rolled back. Original C explicitly tracks each
+callback-reported obligation and attempts cleanup once, retaining unresolved
+resources. Independent reviewers required all leases to be independent despite
+unresolved siblings and no consumer exposure during preparation; both conditions
+are documented and mixed unresolved/borrowed behavior is tested. This is an
+original lifetime utility, not copied unwind ordering or a native GPU adapter.
+
+458 pins/216 Python methods/88 C groups pass host/curated-host/Linux; new 14 C
+groups pass sanitizers. Host/VM outputs match; thirteen older closures remain
+unchanged. No hardware or performance/energy improvement is claimed.
+
+**Consequence:** M1 independently reviews and publishes. M5 continues exact
+raw-versus-XNU handoff/state comparison and GPU shared-data publication/ABI work.
+Do not replay protection setters, adopt another chip's startup path or prepare
+an equivalent negative-marker reboot. macOS, volumes, boot/security settings,
+native images and consumed evidence remain intact. Validation:
+`native/boot/attempt31t/validation.json`.

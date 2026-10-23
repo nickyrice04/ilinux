@@ -1,0 +1,345 @@
+{
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_runtime_address": false,
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "batch_outcomes": [
+    {
+      "batch": "A",
+      "job_exit": 1,
+      "query_count": 2,
+      "reason": "requested preceding table addresses; both no-procedure refusals retained",
+      "setup_exit": 0,
+      "successful_queries": 0
+    },
+    {
+      "batch": "B",
+      "job_exit": 0,
+      "query_count": 2,
+      "reason": "exact direct-call destinations; returned entries match requested entries",
+      "setup_exit": 0,
+      "successful_queries": 2
+    }
+  ],
+  "byte_preserving_mapping": true,
+  "completed_queries": 2,
+  "consumed_m1_review_commit": "822d53f",
+  "control_behavior": [
+    {
+      "control_write_sites": 8,
+      "effective_state_reads": 0,
+      "label": "ctxr-control-handler",
+      "nonstack_store_count": 0,
+      "register_family": "CTXR",
+      "scope": "successful dispatch blocks; separate error tail excluded",
+      "secondary_runtime_state_established": false,
+      "supervisor_hypervisor_secure_calls": 0,
+      "synchronized": true
+    },
+    {
+      "control_write_sites": 8,
+      "effective_state_reads": 0,
+      "label": "ctrr-control-handler",
+      "nonstack_store_count": 0,
+      "register_family": "CTRR",
+      "scope": "successful dispatch blocks; separate error tail excluded",
+      "secondary_runtime_state_established": false,
+      "supervisor_hypervisor_secure_calls": 0,
+      "synchronized": true
+    }
+  ],
+  "cpu1_execution": "UNVERIFIED",
+  "data_comparison": "TABLE_DATA_EXCLUDED_FROM_INSTRUCTION_COUNTS",
+  "date": "2026-10-23",
+  "decoded_bytes": 4266536,
+  "decoded_file_offset_in_elf": 4096,
+  "decoded_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "dispatch_cases": [
+    {
+      "call_site": "0x100c1cb7de0",
+      "entry_file_offset": 2185424,
+      "entry_sha256": "68a3a7045df9b97bd179b2627dea8d995340b5d2e0c4541fc10950c39f6736c0",
+      "handler": "0x100c1adad08",
+      "selector": 14,
+      "target": "0x100c1cb7dd4"
+    },
+    {
+      "call_site": "0x100c1cb7e64",
+      "entry_file_offset": 2185440,
+      "entry_sha256": "3f614f05c8f004dc4f663d6d2ad421a094ed81cd3dcbd6b036bde765e819fc1f",
+      "handler": "0x100c1adabbc",
+      "selector": 18,
+      "target": "0x100c1cb7e54"
+    }
+  ],
+  "effective_secondary_entry_state": "UNKNOWN",
+  "effective_secondary_protection_state": "UNKNOWN",
+  "extraction_decompression_repeated_31t": false,
+  "firmware_replay": false,
+  "immutable_firmware_barrier": "NOT_ESTABLISHED",
+  "independent_bounded_blocks": [
+    {
+      "code_bytes": 120,
+      "decoded_elf_match": true,
+      "end_exclusive": "0x100c1adac34",
+      "instruction_words": 30,
+      "label": "ctxr-control-handler",
+      "llvm_word_mismatches": 0,
+      "sha256": "ab6853683b6f49a1c4e5b9d6c111bf28f3dcc22bc0333a1667ff0f144bd20fae",
+      "start": "0x100c1adabbc"
+    },
+    {
+      "code_bytes": 148,
+      "decoded_elf_match": true,
+      "end_exclusive": "0x100c1adad9c",
+      "instruction_words": 37,
+      "label": "ctrr-control-handler",
+      "llvm_word_mismatches": 0,
+      "sha256": "4a916438494ac49d32117f143110387ec1c9810aae10f5264374a2a431de62f1",
+      "start": "0x100c1adad08"
+    },
+    {
+      "code_bytes": 12,
+      "decoded_elf_match": true,
+      "end_exclusive": "0x100c1adad08",
+      "instruction_words": 3,
+      "label": "ctrr-control-wrapper",
+      "llvm_word_mismatches": 0,
+      "sha256": "c3f43b157bd8024fb98791173095324f2880ddeefbea7842e21e3320fd7f00e4",
+      "start": "0x100c1adacfc"
+    },
+    {
+      "code_bytes": 4,
+      "decoded_elf_match": true,
+      "end_exclusive": "0x100c1aec744",
+      "instruction_words": 1,
+      "label": "range-consumer-control-call",
+      "llvm_word_mismatches": 0,
+      "sha256": "69e241266ef4585ebdf760e4128a53c8498541b979dd77bc690244185f592602",
+      "start": "0x100c1aec740"
+    },
+    {
+      "code_bytes": 20,
+      "decoded_elf_match": true,
+      "end_exclusive": "0x100c1cb7de8",
+      "instruction_words": 5,
+      "label": "svc14-case",
+      "llvm_word_mismatches": 0,
+      "sha256": "44187fa16b4c9323223854d07a9507426f783648140f89af58726a6d3e8cb4c2",
+      "start": "0x100c1cb7dd4"
+    },
+    {
+      "code_bytes": 24,
+      "decoded_elf_match": true,
+      "end_exclusive": "0x100c1cb7e6c",
+      "instruction_words": 6,
+      "label": "svc18-case",
+      "llvm_word_mismatches": 0,
+      "sha256": "94c77c19253ed855644611f031ee7002e8a384f97ed5b7b99a983788085e6d44",
+      "start": "0x100c1cb7e54"
+    }
+  ],
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "independent_unique_instruction_words": 82,
+  "inherited_provenance_record": "reverse-engineering/findings/cpu-startup31s/validation.json",
+  "input_provenance": {
+    "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+    "compressed_payload_bytes": 1461345,
+    "compressed_payload_file_offset_in_wrapper": 42,
+    "decoded_elf_bytes_identical": true,
+    "decoded_file_offset_in_analysis_elf": 4096,
+    "decoded_input_bytes": 4266536,
+    "decoded_input_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+    "extraction_and_decompression": "INHERITED_RETAINED31H31N_NOT_REPEATED31S",
+    "personalized_artifacts_read": false,
+    "retained_generic_im4p_sha256": "b9501bee4fef7d2b82530d34a0a3182e21f9f0edf60cb5ad1dae0358dd4bcef1",
+    "retained_lzfse_payload_sha256": "826d767772cf6b1121e64d42b3a1022aca9a6eaa6d8e576f74b1cae2e558fc4f",
+    "retained_wrapper_bytes": 1461427
+  },
+  "limitations": [
+    "Static controls and ranges do not establish historical branch execution or resulting CPU1 state.",
+    "Control behavior applies to bounded successful dispatch blocks, excluding separate error-reporting tails.",
+    "EL and ACC accessor names do not independently establish physical CPU ownership or effective privilege.",
+    "All whole-function pseudocode remains unaccepted; no runtime or semantic equivalence is inferred from coverage.",
+    "The source-aligned candidate inventory is not global control-flow coverage or proof of absent computed access.",
+    "Boot-CPU system-register observations do not establish secondary state; per-core reset mirrors are distinct.",
+    "Hypervisor shadow-array initialization after host startup is not a host secondary-release operation.",
+    "No firmware replay, protection bypass, native collection, installed image or macOS change occurred."
+  ],
+  "llvm_word_mismatches": 0,
+  "missing_initialization": "NOT_ESTABLISHED",
+  "native31t": "HOLD / NOT RUN",
+  "network_checks": [
+    {
+      "batch": "A",
+      "expected_no_network_device": true,
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false
+    },
+    {
+      "batch": "B",
+      "expected_no_network_device": true,
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false
+    }
+  ],
+  "new_cpu_implementation": "NOT_WARRANTED_BY_CURRENT_EVIDENCE",
+  "new_native_read_qualified": false,
+  "new_native_write_qualified": false,
+  "new_words_beyond_prior_published_ranges": 81,
+  "overlap_prior_published_ranges": 1,
+  "physical_hardware_operations": 0,
+  "private_synthetic_check": {
+    "cases": 84,
+    "firmware_emulation": false,
+    "limits": "Bounded original integer evaluator; not a CPU emulator, live register model or native recipe",
+    "purpose": "check paired accessor bank selection and caller-data versus fixed-policy distinction",
+    "result_sha256": "b3766c7b621963e8029afe5572b86e86be02ce77c5d0d0126a782c9a4096eff8",
+    "runtime_state_established": false,
+    "selected_tables": [
+      {
+        "analysis_address": "0x100c1adac34",
+        "bytes": 16,
+        "counted_as_instructions": false,
+        "decoded_file_offset": 224308,
+        "entries": 4,
+        "label": "ctxr-control-policy",
+        "sha256": "435b481d70cc420cb7861db2fbbd1d4138698636f2dbe1313331d6d3cc527963"
+      },
+      {
+        "analysis_address": "0x100c1adad9c",
+        "bytes": 16,
+        "counted_as_instructions": false,
+        "decoded_file_offset": 224668,
+        "entries": 4,
+        "label": "ctrr-control-policy",
+        "sha256": "717b3f20d520eec3c4885eb71e42f9f355c82f3be0ac09ee03f38c9fbdf42cf2"
+      }
+    ],
+    "source_instruction_execution": false,
+    "successful_selector_cases": 48
+  },
+  "protection_bypass": false,
+  "public_comparison_inputs": [
+    {
+      "description": "public source read as data only",
+      "file_name": "betizzel-ctrr-dump.py",
+      "sha256": "c460b4cbf7d36f63af42b4faec64726f572f3484fa5365cc4f40d42d933ede65"
+    },
+    {
+      "description": "public source read as data only",
+      "file_name": "asahi-current-hv-sprr.c",
+      "sha256": "c33c2a7165007407790584b41995a4ee7e02b129c0afcb4cab8575449defff9b"
+    }
+  ],
+  "public_identifier_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+  "public_identifier_sources": [
+    {
+      "path": "src/cpu_regs.h",
+      "sha256": "28bdf735344ec058555415e00d4a99f23e93b1e771727a585a77bd75cf9eec51"
+    },
+    {
+      "path": "proxyclient/m1n1/apple_regs.json",
+      "sha256": "5124961d11aa9bedeb2590f1a82ec2e38ce5e3108b1632dfa7730225b60bd2d3"
+    }
+  ],
+  "queries": [
+    {
+      "assembly_instructions": 30,
+      "body_anchors": [
+        {
+          "bytes": 120,
+          "carrier_offset": 224188,
+          "derived_offset": 228284,
+          "end_inclusive": "0x100c1adac33",
+          "sha256": "ab6853683b6f49a1c4e5b9d6c111bf28f3dcc22bc0333a1667ff0f144bd20fae",
+          "start": "0x100c1adabbc"
+        }
+      ],
+      "cli_exit": 0,
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "ctxr-control-handler",
+      "output_sha256": "75a5d36019978eb655452021ba0bf082382ef44a9ea223d648ba07d30c13501c",
+      "pcode_operations": 19,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1adabbc",
+      "returned_entry": "0x100c1adabbc",
+      "seconds": 67.708964365,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "assembly_instructions": 37,
+      "body_anchors": [
+        {
+          "bytes": 148,
+          "carrier_offset": 224520,
+          "derived_offset": 228616,
+          "end_inclusive": "0x100c1adad9b",
+          "sha256": "4a916438494ac49d32117f143110387ec1c9810aae10f5264374a2a431de62f1",
+          "start": "0x100c1adad08"
+        }
+      ],
+      "cli_exit": 0,
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "ctrr-control-handler",
+      "output_sha256": "ea489b67bd24ba3dabeb1a898c75737c1763abc2e3b8a4260517190531d7e313",
+      "pcode_operations": 22,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1adad08",
+      "returned_entry": "0x100c1adad08",
+      "seconds": 67.46822661499999,
+      "whole_function_pseudocode_accepted": false
+    }
+  ],
+  "range_consumer_control_call": {
+    "fixed_bank_selector": 1,
+    "historical_reachability": "UNOBSERVED",
+    "service": 14,
+    "site": "0x100c1aec740",
+    "wrapper": "0x100c1adacfc"
+  },
+  "refused_queries": [
+    {
+      "body_available": false,
+      "exit": 1,
+      "interpretation": "Initial address qualification error; not a successful query",
+      "label": "ctxr-control-policy",
+      "output_sha256": "b98d09b277f9e9942440b77685a4f9c0c18498d36942e08efd6d87337cd98edf",
+      "reason": "NO_PROCEDURE_AT_PRECEDING_TABLE_ADDRESS",
+      "requested_address": "0x100c1adabac",
+      "seconds": 67.567406574
+    },
+    {
+      "body_available": false,
+      "exit": 1,
+      "interpretation": "Initial address qualification error; not a successful query",
+      "label": "ctrr-control-policy",
+      "output_sha256": "eadfaf4abdc5757a1e178d7bc6b093796531528fc25a850018fddcc5ad661cd8",
+      "reason": "NO_PROCEDURE_AT_PRECEDING_TABLE_ADDRESS",
+      "requested_address": "0x100c1adacec",
+      "seconds": 66.79370090700002
+    }
+  ],
+  "restart_ready": false,
+  "result": "PASS_BOUNDED_STATIC_REVIEW_NATIVE_HOLD",
+  "schema": "ilinux-cpu31t-control-state-evidence-v1"
+}

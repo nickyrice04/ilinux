@@ -1,5 +1,32 @@
 # Blockers
 
+## Current — 31T: CPU1 state unobserved; no qualified workaround
+
+**CPU:** the matching range preparer already calls a fixed-bank control service.
+This is static preparation, not a missing-operation diagnosis or a measurement
+of secondary state. Effective entry PC, incoming translation/visibility and
+protection remain unknown. Boot-CPU MRS results, reset mirrors and guest shadow
+state cannot substitute for CPU1 observations. New sources do not establish a
+working T6050 alternate handoff. The proposed XNU shim needs a qualified resident
+monitor and continuing memory-management support; it is not a one-call fix.
+No new native observer or startup write was qualified in this pass.
+
+**GPU:** allocation and mapping-lifetime contracts are clearer; original lease
+code is tested. Opaque errors do not determine ownership, and mapping completion
+does not acknowledge firmware. A native adapter still needs actual address/role
+qualification, independent safe-release semantics, shared-data publication,
+matching firmware ABI/UAT and bounded observable completion. PREPARED is not
+native readiness. Independent-resource cleanup cannot handle backing dependencies.
+
+Next CPU work must distinguish raw versus XNU-conditioned preparation with exact
+image/phase/core evidence, rather than repeat setters or boot-CPU observations.
+Next GPU work must qualify actual G17C initialization/publication and completion
+contracts before a hardware adapter. 458 pins/216 Python methods/88 C groups and
+new 14 sanitizer groups pass; this is not a native performance result.
+**M1 offline review next; native31T HOLD / NOT RUN. No restart.** No firmware
+replay, macOS/settings/volume change or prior receipt reuse. Evidence:
+`native/boot/attempt31t/validation.json` and the three 31T research notes.
+
 ## Current — 31S independently reviewed; native state remains unverified
 
 **Independent M1 review on `58ca707`: OFFLINE_PASS_NATIVE_HOLD.**

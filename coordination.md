@@ -6,6 +6,28 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31T offline handoff ready; M1 review next, 2026-10-23
+
+M1's 31S review `822d53f` is merged. CPU/GPU and public-source investigations are
+complete. Root completed original GPU lifetime code and host/curated-host/VM080
+integration. All five REA batches ended; the initial CPU refusals are preserved
+separately from corrected successes. VM080 finished; both repositories' VM/quiet
+locks are released. Unrelated kernel/configuration/compositing work is untouched.
+
+**M1 owns** `tools/m1n1-client/attempt31t-instructions.md`: independent offline
+review of 458 pins, 216 Python methods and 88 C groups, then publication. Private
+REA and Linux sanitizers remain separate M5 evidence. No restart, device request,
+proxy, image transfer or routine policy check is requested.
+
+**M5 owns** effective CPU entry-state/handoff investigation and G17C initialization,
+address/role and publication qualification. CPU control setters are not effective
+state measurements; hypervisor shadow setup is not physical release. GPU cleanup
+ownership must come from actual adapter semantics, not status or method names.
+No verified CPU workaround or native GPU adapter follows. Earlier closures and
+receipts stay frozen. Native31T HOLD / NOT RUN; no new boot without a meaningful
+discriminator. macOS, security, volumes and installed images remain intact.
+Validation: `native/boot/attempt31t/validation.json`.
+
 ### Current — M1 31S review complete; M5 investigation next, 2026-10-23
 
 **Independent M1 review on `58ca707`: OFFLINE_PASS_NATIVE_HOLD.**
