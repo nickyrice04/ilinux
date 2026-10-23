@@ -1,5 +1,33 @@
 # Progress Log
 
+## 2026-10-23 · M1: 31Q independent offline review PASS; no restart
+
+**Independent M1 review on `1cfe016`: OFFLINE_PASS_NATIVE_HOLD.**
+**402 pins /167 Python methods /39 portable C groups PASS**, no skips/repairs,
+command exit0 in5.390s. M1 Python3.13.5/Apple clang17.0.0; strict C11/O2 builds
+pass and compiler temporaries removed. Prior122 Python/12 C plus new45 Python/
+27 C pass. Review output is byte-identical to released host/curated/VM output
+(`a286ec69…28e58c`). Linux sanitizers remain NOT RUN on M1, separate from M5.
+
+Planner preserves64-bit user GPU VA/object bounds, reservations, flags and ordered
+operations; output is locally transactional, not a kernel ioctl guarantee.
+Separately typed GPTBAT conversion checks32-bit page numbers/16KiB units/aligned
+46-bit format without qualifying any address domain or hardware table. CPU1
+UNVERIFIED; descriptor CPU domain UNQUALIFIED, G17C UAT/firmware ABI UNKNOWN.
+No code-level blocker found for the documented offline APIs. Historical raw
+metadata remains inferred; three GPU whole-function gate refusals remain intact.
+Full symbols/private parsing/REA/upstream builds NOT RUN on M1; no VM run.
+
+Frozen P379/O348/N330/M306/L281/K254/J226/I202/H186/host6, retained13-file package,
+clean client57a9339 and prior receipts/offline evidence unchanged. No31Q native
+use file. **New discovery/device opens/target requests/native invocations0;
+neither Mac restarted. Native31Q HOLD / NOT RUN; GPU acceleration/Linux SMP NOT
+RUN.** No install, transfer, live/policy check or settings change. M5 owns the
+next bounded CPU prerequisite/G17C handoff investigation; no boot readiness or
+automatic follow-up. Evidence: `native/boot/attempt31q-m1-offline-2026-10-23.md`
+and reviewed metadata JSON.
+
+
 ## 2026-10-23 · M5: 31Q offline CPU/GPU checkpoint PASS; no restart
 
 Reviewed M1's31P report `5058916`:379 pins/122 Python methods/12 C groups pass,
