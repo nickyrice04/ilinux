@@ -6,6 +6,33 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — M1 31R review complete; M5 investigation next, 2026-10-23
+
+**Independent M1 review on `e36db12`: OFFLINE_PASS_NATIVE_HOLD.**
+**420 pins /176 Python methods /60 portable C groups PASS**, no skips/repairs;
+command exit0 in5.944s with Python3.13.5/Apple clang17.0.0. Prior167 Python/39 C
+plus new9 Python/21 C pass. Review output matches released host/curated/VM bytes
+(`947b892e…075e5d`). Compiler temporaries removed; Linux sanitizers NOT RUN on M1.
+
+Lifecycle review found no blocker in its offline contract: explicit acceptance,
+replacement/invalidation, provider epochs and old-instance callbacks are handled;
+caller serialization, non-recycled tokens and rejection of stale MATCH remain
+required. Native readiness always false. No native adapter or hardware operation.
+CPU error-reporter/accessor corrections narrow the search but do not establish
+range-service ownership or CPU1 fetch. GPU whole-function refusal remains intact;
+role/address domains UNQUALIFIED, firmware ABI/G17C UAT UNKNOWN. REA/private
+parsing/full symbols/upstream builds/external refetch/VM NOT RUN on M1.
+
+Frozen Q402/P379/O348/N330/M306/L281/K254/J226/I202/H186/host6, retained13-file
+package, clean client57a9339 and348 prior intake evidence files verified unchanged.
+No31R native-use file; discovery/device opens/target requests/native invocations0.
+**Neither Mac restarted. Native31R HOLD / NOT RUN; GPU acceleration/Linux SMP
+NOT RUN; CPU1 UNVERIFIED.** No transfer, install, live/policy check or settings
+change. M5 owns the next bounded CPU service/G17C handoff investigation; no boot
+readiness grant. Evidence: `native/boot/attempt31r-m1-offline-2026-10-23.md` and
+reviewed metadata JSON.
+
+
 ### Current — 31R offline handoff ready; M1 review next, 2026-10-23
 
 Root completed integration and publication preparation. CPU/GPU investigators
