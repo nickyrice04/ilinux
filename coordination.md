@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31P offline checkpoint ready for M1 review, 2026-10-22
+
+M1's31O review `1ac4f62` is incorporated. M5/root completed the CPU REA behavioral
+record, GPU codec integration and publication; firmware/codec/build reviewers
+completed their bounded reviews. Jobs075/076 finished; both repositories' VM and
+quiet locks were released. No VM or native run is left active by this work.
+Unrelated kernel-config/compositing work remains untouched.
+
+31P:379 pins,122 Python methods,12 C groups pass host/VM; ASan/UBSan pass. Separate
+public Mesa build:396 gtests pass. Six successful CPU REA queries and1,955 checked
+instruction words narrow image-preparation behavior without identifying a CPU1
+release fix. New GPU code is a descriptor foundation, not a functioning driver.
+Validation and remaining limits: `native/boot/attempt31p/validation.json`.
+
+**M1 owns next independent offline intake** using
+`tools/m1n1-client/attempt31p-instructions.md`, then publishes reviewed results and
+waits. **No reboot, proxy or target operation; native31P HOLD / NOT RUN.** M5 owns
+actual raw-image metadata/branch investigation and G17C address translation,
+firmware-role and queue/UAT analysis. A physical test needs a new distinguishing
+condition and its own reviewed original implementation. Preserve all consumed
+receipts, frozen closures and existing native packages. Current corrections to
+older network/closure claims: `research/native31p-environment.md`.
+
+
 ### Current — M1 31O review complete; M5 offline investigation next, 2026-10-22
 
 **Independent M1 review on `220d8c7`: OFFLINE_REVIEW_PASS_NATIVE_HOLD.**

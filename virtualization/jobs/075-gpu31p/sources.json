@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "name": "mesa",
+      "repository": "https://github.com/GravityLinux/mesa",
+      "commit": "87ac51d411f0e58a9433567ec2666f457be89e1d",
+      "filename": "mesa-87ac51d.tar.gz",
+      "size": 134319568,
+      "sha256": "1195f212bcf5816b8b893113b0b5dc578ce744d420856b6ad4f42008889e231e",
+      "url": "https://codeload.github.com/GravityLinux/mesa/tar.gz/87ac51d411f0e58a9433567ec2666f457be89e1d"
+    },
+    {
+      "name": "linux",
+      "repository": "https://github.com/GravityLinux/linux",
+      "commit": "4fc326f6c25ccceb7515e2635c22e01fde5d3bac",
+      "filename": "linux-4fc326f.tar.gz",
+      "size": 263270476,
+      "sha256": "045c64540fa4210394c899cad6320c5bf9090a66919938d986aeaad0033946e8",
+      "url": "https://codeload.github.com/GravityLinux/linux/tar.gz/4fc326f6c25ccceb7515e2635c22e01fde5d3bac"
+    }
+  ]
+}

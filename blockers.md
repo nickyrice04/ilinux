@@ -1,5 +1,35 @@
 # Blockers
 
+## Current — 31P offline progress; CPU startup and G17C runtime unresolved
+
+**CPU:**31N's completed startup pair still produced no CPU1 identity.31P confirms
+conditional software-object preparation and metadata selectors in matching
+firmware, with1,955 independently checked instruction words; it does not identify
+a missing reset-release write. The current raw-image metadata values and branch
+provenance are not established. Establish those from existing authorized local
+artifacts before choosing a new physical discriminator. First verified CPU1
+execution precedes coherent-memory/timer/IPI qualification, other Performance/
+Super clusters, Linux SMP and cross-core efficiency measurements.
+
+**GPU:** original dual-controller descriptor code and396 public Mesa foundation
+gtests pass. The actual four descriptors require41-bit first addresses; code
+preserves them without assuming CPU-physical translation. G17C's two firmware
+processor roles, matching ABI, address-domain/UAT mapping and command completion
+semantics remain unqualified. Public M4/base-M5 support is a foundation, not a
+compatible-string alias. The Rust kernel object build remains explicitly skipped
+until its LLVM/Rust pairing and guest workspace are qualified. Native G17C render
+or compute has not run; responsiveness and energy improvements are unmeasured.
+
+**Integration repaired:** minimal staging exposed a missing older runner
+dependency;31P's379-file closure includes it.122 Python methods and12 C groups
+pass on macOS and VM, including Linux ASan/UBSan. Earlier network-isolation
+metadata is qualified by `research/native31p-environment.md`; final jobs use
+explicit no-network configuration and verify loopback only.
+
+**Native31P HOLD / NOT RUN. No restart.** M1 can independently review the new
+offline checkpoint. Nothing here changes macOS, boot settings or installed images.
+
+
 ## Current — 31O independently reviewed; native HOLD, CPU1 unverified
 
 **Independent M1 review on `220d8c7`: OFFLINE_REVIEW_PASS_NATIVE_HOLD.**

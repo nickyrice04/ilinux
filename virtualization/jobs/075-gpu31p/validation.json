@@ -1,0 +1,161 @@
+{
+  "artifacts_sha256": {
+    "agx_apple9_tiny_tool": "ee5f90e1e59cc0a174418c9603eb55efd284ac71bbcf9e3bdbba2b49de4f0e72",
+    "agx_tests": "0ec8ef08be3e487bcd546743e3c5db106ccbc2db7c263dade66cb032ef28ea17",
+    "asahi_layout_tests": "c23f0d70fd2453c6e9d6a90042df36b6e6818997c30e6232f1b92be5ee9069b7",
+    "libasahi_compiler.a": "77a1b632060942340108f933921e2948a034c05e973217cc5db4784f1a3a09ac",
+    "libasahi_tests": "bebe675420bb15b1df670fe110c7e4f3a867585c0d123c7e20a3afb1d16e4ac5"
+  },
+  "compiler_warnings": {
+    "categories": {
+      "-Wdangling-else": 1,
+      "-Wenum-compare": 2,
+      "-Wnarrowing": 1
+    },
+    "count": 4,
+    "errors": 0,
+    "scope": "UPSTREAM_APPLE9_TEST_SOURCE"
+  },
+  "evidence_files_sha256": {
+    "configure-command.txt": "b83fcd6befd184132cd5d0e1f5eec816b697dd2cbacf2ba6e820a14224f3761a",
+    "guest-free-space.txt": "79ec7df0a820814826c411aafdf1de319b5333df88173439b1df08626377b34d",
+    "input-hashes.json": "05f350138a69b0d2b6d51da8d5bd316cb60f0cabcf55402ff9ccb6dcb81e20a2",
+    "isolation-tests.log": "ac1ca7cb9fc7f8c06e03b89a9cc52a0caeb79baf7d0c2d26b96820c2cea2e307",
+    "kernel-build.log": "a09228ea7e8b0d4911f9c092af8c43ff3d59e6ed0270160010c9f17034b34c0e",
+    "kernel-exit.txt": "94d5a38598be77593d4781b8fbd74cb4e2cd05bb006b1b531988ab2db90de9c9",
+    "memory-preflight.json": "85dc0aaed8752b1fbf91bc956d93f524d65a18a31233840b0e1d587c90dfd8fc",
+    "mesa-artifact-hashes.txt": "7d42624ff4f6afa1150092790be8b4f103dfd42ca125a249ad8ae553d8a5c520",
+    "mesa-build.log": "9a2e91346b796cde0cc9affffe5344a264015af9a277c4ed0831486c68f34035",
+    "mesa-buildoptions.json": "8847ac1a1e48cdcbbcfbf880b7b35194b82827406ac5bc674c84b3e182a7bdf7",
+    "mesa-configure.log": "63b5c30683bb0b9a42803c50a38e17ebbce285a35cc5f1954a575fb32fd0c44a",
+    "mesa-testlog.json": "0bc21e477669e63ccf4992436c978dbdd2fcfa3ccfc549dd6e483d7b1fd51750",
+    "mesa-tests.log": "f09583c61b44a4b0a908ebab0d4d2a761be723467568d6c753a78e0a810d1d8a",
+    "network-preflight.json": "0c7f122829ecdbf9618a9b5f2aee9affe0605c3228c0e7b887c0281cff8907d0",
+    "package-space-tests.log": "17e6278793a9eff2bb003c1d4acfe5aea635a20e554c3460febf0990e5626437",
+    "packages-after.txt": "e4dfe1d5e98e2d8dff74eb5f3ba918c36d17480a80fb36b97c7b9672f61973bd",
+    "packages-before.txt": "e4dfe1d5e98e2d8dff74eb5f3ba918c36d17480a80fb36b97c7b9672f61973bd",
+    "run-detail.log": "e79e793a0173aa4373da28c06fe974d4b443afbcf77d2997200f67fce2245ed3",
+    "run.log": "546bec52cbb9067cc476f8fa41d0589c412f84a64f2aa2650be162c665d073ea",
+    "summary.json": "96444f3beca707bf0699b5c91b91075d29b9f5afd6e6433b2fdf29051a92c60e",
+    "toolchain-paths.txt": "2a2ec22ade243e066b4e54a89596211e90a23b858bba261445d311f40d36639d",
+    "toolchain-verification.json": "f0fc42434443a5f262cbd4a0ec51ce35cea9240fc312d57634f616d4a1c9b21d",
+    "toolchain.txt": "c6f2ff6b0ef2ae6a74297a630fcac13580228a2477745b8898054f0066e2230f"
+  },
+  "executed_job_sources_sha256": {
+    "isolate-toolchain.py": "9e45d3f69f85561fc9d727336a06d055e2b316d3c47219e287c38b3058961bff",
+    "kernel.sh": "b5dc140f8f79f54de713e946c928e10be01eb2a783c9ed9f632560ad3124c9a4",
+    "llvm-config-relocated.py": "85ad2a665b1f83f6620f4012591248eea57338b124884eade2e2d06cc653fab4",
+    "package-space.py": "f1085f3dbe0b6a8bc81131dc99ff21c6ab22d8cc336c7d6f699e33c76d73e523",
+    "packages.json": "f4ef5efa481d434a27cd2148f619dee366179c6b97be6f071f0c74d7b9ca43cc",
+    "run.sh": "7b58983f7c1ee14b33f8d4891169e0febfdbf3687e642f60fc1ad352b1190582",
+    "sources.json": "1b27aedfd0df4a10b0d18832c484167c414ed93d87c437b2882107b172b93386",
+    "test_isolation.py": "58113095da7ed22268911d7c07b97f3183862564269d02e547e5b032606cded9",
+    "test_package_space.py": "d16affc4abd4219b3af781f30ec414e7a071bb504494238f0ae540e13a5c77cf",
+    "verify-inputs.py": "e55941f1d3342e782ff7a4576dd4b009b5cc532f05aee0af81fd398f02336f6b"
+  },
+  "execution_environment": "ARM64_LINUX_VM",
+  "g17c_support": "UNSUPPORTED_UNVERIFIED",
+  "gtest_failed_total": 0,
+  "gtest_passed_total": 396,
+  "guest_package_changes": 0,
+  "guest_package_lists_identical": true,
+  "job": {
+    "end_utc": "2026-10-22T21:56:36Z",
+    "exit": 0,
+    "ninja_actions": 514,
+    "start_utc": "2026-10-22T21:55:37Z",
+    "wall_seconds": 59
+  },
+  "kernel_object": {
+    "reason": "ISOLATED_MESA_TOOLCHAIN_AND_PROTECTED_EXACT_VERSION_RUST_RUNTIME",
+    "result": "SKIPPED"
+  },
+  "kernel_source_commit": "4fc326f6c25ccceb7515e2635c22e01fde5d3bac",
+  "mesa_commit": "87ac51d411f0e58a9433567ec2666f457be89e1d",
+  "native_gpu": "NOT_RUN",
+  "native_operations": 0,
+  "native_performance": "UNMEASURED",
+  "original_preflight_tests": {
+    "disk_budget_methods": 7,
+    "isolation_methods": 6,
+    "result": "PASS"
+  },
+  "post_execution_source_change": "SPDX MIT comment only; source snapshots retained locally",
+  "previous_stops": [
+    {
+      "available_bytes": 585388032,
+      "mutation": false,
+      "stage": "disk_preflight"
+    },
+    {
+      "installation": false,
+      "reason": "rust requires compiler-rt and llvm-libs 23.1.1",
+      "stage": "pacman_dependency_resolution"
+    }
+  ],
+  "published_job_sources_sha256": {
+    "isolate-toolchain.py": "e811c2ca216df41e36c2ef3605119e5e28123795f1cff80bea3a1178c7eb671b",
+    "kernel.sh": "05e7010a00d7b3f8494d2cc488516ccfaaed4fdc93f36b9a85503a83f755bb5e",
+    "llvm-config-relocated.py": "955287f36907aa5d363799218f9946ef9ffc9485fcad9f001ccc84893739be7a",
+    "package-space.py": "d676b6a496360ad910da9459e0054f0d9b05f7b94e2f2fb61c72d2670811c00b",
+    "packages.json": "f4ef5efa481d434a27cd2148f619dee366179c6b97be6f071f0c74d7b9ca43cc",
+    "run.sh": "de2da8e017925d4b343c72bc56c6240de578cfb5b3231ae22a964a9d01446b99",
+    "sources.json": "1b27aedfd0df4a10b0d18832c484167c414ed93d87c437b2882107b172b93386",
+    "test_isolation.py": "1bd6b3074ac9b246b09da371ddf80c2e0682f4e2d38107e110d588fc2b5ff0c9",
+    "test_package_space.py": "e8af7139911cb16df952addd2ff466fec569b5057eafc866b79e6b5a70c334e9",
+    "verify-inputs.py": "bae3a4820add0b9c0c2d5337e07f39bd712b2eecffb6010ffbd7052913e363ba"
+  },
+  "result": "PASS",
+  "schema": "ilinux-gpu31p-build-v1",
+  "signature_verification": {
+    "all_trust_fully": true,
+    "all_validsig": true,
+    "maintainer_scripts_executed": 0,
+    "package_installations": 0,
+    "packages": 10
+  },
+  "tests": [
+    {
+      "duration_seconds": 0.0037767887115478516,
+      "executable": "libasahi_tests",
+      "passed": 5,
+      "result": "OK"
+    },
+    {
+      "duration_seconds": 0.01190805435180664,
+      "executable": "asahi_layout_tests",
+      "passed": 25,
+      "result": "OK"
+    },
+    {
+      "duration_seconds": 0.28575968742370605,
+      "executable": "agx_tests",
+      "passed": 366,
+      "result": "OK"
+    }
+  ],
+  "toolchain": {
+    "clang": "23.1.3",
+    "gcc": "16.1.1",
+    "gtest": "1.18.0",
+    "guest_kernel": "7.1.6-vzrun2 aarch64",
+    "gxx": "16.1.1",
+    "isolated_bindgen": "0.73.2",
+    "llvm": "23.1.3",
+    "llvm_spirv_pkgconfig": "23.1.0.0",
+    "meson": "1.12.1",
+    "ninja": "1.13.2",
+    "protected_system_rust": "1.99.0",
+    "spirv_tools_pkgconfig": "2026.4.1"
+  },
+  "uapi_header_sha256": "eb9f39e87dfe448dc044f54ab2d11b7493bf1359faca8fb76ece5f3583469015",
+  "vm": {
+    "interfaces": [
+      "lo"
+    ],
+    "memory_gib": 12,
+    "mesa_tmpfs_limit_gib": 6,
+    "network_enabled": false,
+    "vcpus": 4
+  }
+}

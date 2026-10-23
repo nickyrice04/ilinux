@@ -1,0 +1,138 @@
+{
+  "cpu1_execution": "UNVERIFIED",
+  "cpu_rea": {
+    "independent_unique_instruction_words": 1955,
+    "interrupted_queries": 1,
+    "mismatches": 0,
+    "missing_cpu1_prerequisite": "NOT_ESTABLISHED",
+    "native_branch_values": "UNKNOWN",
+    "record": "reverse-engineering/findings/cpu-startup31p/validation.json",
+    "sha256": "4c9efc84f5cc002c6af1e82c4dce3535d8e591d73d649256e32867a72f532017",
+    "successful_queries": 6,
+    "unstarted_queries": 1
+  },
+  "date_local": "2026-10-22",
+  "environment_corrections": "research/native31p-environment.md",
+  "frozen": {
+    "attempt31h": {
+      "pins": 186,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "attempt31i": {
+      "pins": 202,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "attempt31j": {
+      "pins": 226,
+      "result": "PASS_UNCHANGED",
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "attempt31j-host": {
+      "pins": 6,
+      "result": "PASS_UNCHANGED",
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    },
+    "attempt31k": {
+      "pins": 254,
+      "result": "PASS_UNCHANGED",
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "attempt31l": {
+      "pins": 281,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "attempt31m": {
+      "pins": 306,
+      "result": "PASS_UNCHANGED",
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    },
+    "attempt31n": {
+      "pins": 330,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+    },
+    "attempt31o": {
+      "pins": 348,
+      "result": "PASS_UNCHANGED",
+      "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+    }
+  },
+  "gpu_original": {
+    "c_test_groups": 12,
+    "descriptor_cpu_address_domain": "UNQUALIFIED",
+    "firmware_abi": "UNKNOWN",
+    "full_address_width_preserved": true,
+    "python_methods": 38,
+    "record": "kernel/experiments/gpu31p/adt-validation.json",
+    "sha256": "c34a0ec26a04859fb81c371b7cca785e4c7307ff4bf4592d661ab1511be6e4ac",
+    "uat_layout": "UNKNOWN"
+  },
+  "gpu_public_foundation": {
+    "gtests_failed": 0,
+    "gtests_passed": 396,
+    "kernel_object": "SKIPPED_TOOLCHAIN_NOT_QUALIFIED",
+    "native_g17c": "NOT_RUN",
+    "performance": "UNMEASURED",
+    "record": "virtualization/jobs/075-gpu31p/validation.json",
+    "sha256": "1f2c7bd5ab1d078b5d632d07930a9508428983e6839bd72e61fe6e2f582836f4"
+  },
+  "host": {
+    "architecture": "arm64",
+    "build": "25G83",
+    "c_test_groups": 12,
+    "compiler": "Apple clang 21.0.0",
+    "os": "macOS 26.6.2",
+    "python": "3.9.6",
+    "python_methods": 122,
+    "result": "PASS"
+  },
+  "integration": {
+    "asan": "PASS",
+    "c_test_groups": 12,
+    "python_methods": 122,
+    "record": "virtualization/jobs/076-offline31p/validation.json",
+    "result": "PASS",
+    "sha256": "21a40ce57d2450717f4025fa575b4ca038d1c195e738c492eee7185773d9dcba",
+    "ubsan": "PASS"
+  },
+  "limitations": [
+    "Offline structure and compilation do not emulate CPU reset, firmware behavior or native GPU operation.",
+    "VM observations do not establish native performance or efficiency.",
+    "The earlier31O network:false claim is superseded by the explicit environment correction.",
+    "Private Apple artifacts and decompiler output remain ignored local inputs; publication contains original code and behavioral metadata only."
+  ],
+  "linux_smp": "NOT_RUN",
+  "m1": {
+    "instructions": "tools/m1n1-client/attempt31p-instructions.md",
+    "prior31o_review": "PASS_OFFLINE_NATIVE_HOLD",
+    "prior31o_review_commit": "1ac4f62199dbdb08b1fb2e3294c312174e181a41",
+    "this31p_independent_review": "NOT_RUN_PENDING_M1"
+  },
+  "native31p": "HOLD / NOT RUN",
+  "native_gpu_acceleration": "NOT_RUN",
+  "native_operations": 0,
+  "preservation": {
+    "boot_policy_changes": 0,
+    "installed_native_image_changed": false,
+    "macos_changes": 0,
+    "previous_consumed_receipts_changed": false,
+    "unrelated_untracked_work": "PRESERVED",
+    "volumes_changed": 0
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "retained_boot021_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "review_outputs": {
+    "byte_identical": true,
+    "curated_host_sha256": "ec98fa7d5968e7d905716f9f70893832b84b196fd985429b9856e20750308250",
+    "host_sha256": "ec98fa7d5968e7d905716f9f70893832b84b196fd985429b9856e20750308250",
+    "vm_sha256": "ec98fa7d5968e7d905716f9f70893832b84b196fd985429b9856e20750308250"
+  },
+  "reviewed_parent_commit": "1ac4f62199dbdb08b1fb2e3294c312174e181a41",
+  "schema": "ilinux-attempt31p-offline-v1",
+  "source_manifest_sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c",
+  "source_pins": 379
+}

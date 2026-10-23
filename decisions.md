@@ -3458,3 +3458,41 @@ follow-up or consumed-runner reuse. Evidence:
 or structural pass neither proves CPU1 execution nor authorizes a hardware
 operation. Preserve every consumed receipt and await a separately qualified
 proposal; do not download optional proprietary inputs to fill a status field.
+
+### 2026-10-22 · Release31P offline CPU/GPU work; preserve native HOLD
+
+**Decision:** publish the original GPU descriptor codec, isolated public compiler
+build, CPU behavioral findings and offline M1 intake. The user authorized finishing
+tests and pushing updates while requiring a meaningful question before another
+boot. This checkpoint does not create a native controller or a restart request.
+
+**Evidence:** six completed REA queries and1,955 independently checked instruction
+words distinguish image metadata/object preparation from hardware core release.
+The actual raw-boot branch and missingCPU1 prerequisite remain unknown. C/Python
+code preserves all64 address bits in the two GPU firmware-controller descriptor
+sets, validates machine/resources and keeps unknown address domains opaque.
+379 source pins,122 unique Python methods and12 C groups pass on host/VM; Linux
+ASan/UBSan pass. Host/full, host/curated and VM review JSON match byte-for-byte.
+Public Mesa foundation tests:396 pass; kernel object is explicitly skipped.
+
+**Corrections retained openly:**31P adds an unchanged entry-check script omitted
+from31O's closure; the minimal VM failed until that dependency was pinned. Older
+frozen sources/receipts are untouched. The previous31O network:false field was
+inaccurate because its wrapper inherited NAT; no packet capture proves absence
+of traffic.31P records that qualification and verifies explicit no-network/only-lo
+for final REA/build/integration jobs. Private Apple material remains separate from
+public source builds and excluded from publication. See environment note.
+
+**Consequence:** M1 reviews `tools/m1n1-client/attempt31p-instructions.md`, publishes
+offline results and waits. Native31P HOLD / NOT RUN; no routine restart or policy
+check. NextCPU work establishes actual raw-image metadata provenance and its
+connection to preparation conditions. NextGPU work qualifies G17C address
+translation, firmware role/ABI, UAT and queue contracts before writing their
+original Linux implementation. All-core operation, native GPU rendering and
+macOS-class performance/energy remain unverified. No firmware replay, generation
+alias or equivalent marker-only retry follows from these tests.
+
+Validation: `native/boot/attempt31p/validation.json`; source manifest
+`5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c`.
+M1's prior31O review `1ac4f62` is merged before this publication. Existing native
+packages and all frozen closures are unchanged. macOS remains intact.

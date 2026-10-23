@@ -1,0 +1,110 @@
+{
+  "c_codec": {
+    "address_sanitizer": "PASS",
+    "halt_on_undefined_behavior": true,
+    "leak_detection": true,
+    "portable_flags": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-O2"
+    ],
+    "result": "PASS",
+    "sanitizer_flags": [
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer"
+    ],
+    "test_groups": 12,
+    "undefined_behavior_sanitizer": "PASS"
+  },
+  "date_local": "2026-10-22",
+  "fix": "31P pins unchanged smp31l-analysis/entry_contract.py; frozen prior files untouched",
+  "hardware_operations": 0,
+  "host_and_curated_host_and_vm_review_bytes_identical": true,
+  "job": {
+    "end_utc": "2026-10-23T03:31:47Z",
+    "exit": 0,
+    "start_utc": "2026-10-23T03:31:43Z"
+  },
+  "job_source_sha256": "f3684d0b6173937c1f450a8f334aa8127a12ebdfa975bfa4c97316300a89133a",
+  "native_cpu": "NOT_RUN",
+  "native_gpu": "NOT_RUN",
+  "output_hashes": {
+    "network-preflight.json": "0c7f122829ecdbf9618a9b5f2aee9affe0605c3228c0e7b887c0281cff8907d0",
+    "prior-review.json": "7b2068a58ab0b9cccaec491799f70958ad9df09dfa39a130937286a7ddc2d21c",
+    "review.json": "ec98fa7d5968e7d905716f9f70893832b84b196fd985429b9856e20750308250",
+    "run-detail.log": "7e099a7e773cd85a259c62404ef7aa5fc6c028e23d163241359445bafc4f0263",
+    "run.log": "b448b87855dbb573051d0a23888acc1794131f9898af0b5675422f2aa5e56f36",
+    "sanitizers.txt": "f3621de0002fe2ae90c677dcda97e306d0929c3e4c5b538ff5c32eda79558fcf",
+    "test-gpu31p-segments": "92b902e0a883b10416a8fd6e959e1815f264dd632d32545422539e43166dc947",
+    "test_attempt31o_offline.py.log": "2204939774223b151f5966a74ca19b7dcc7809f29f7f078120e1db7751ac4585",
+    "test_attempt31p_offline.py.log": "f2ce366f054fbb6fe825ca2025a5ba4dd3fff84e9b9bf8ad371479d1f82853d3",
+    "test_contract.py.log": "42c13f65fff37f6ccac21bafd1184c83873ba9e9e5c5891980ae8c4cb4ac99d7",
+    "test_evidence.py.log": "64a5993b186b27cbab79c0032c4335cda7c18c779c9a7fc7169b1e60b68273b6",
+    "test_isolation.py.log": "ac1ca7cb9fc7f8c06e03b89a9cc52a0caeb79baf7d0c2d26b96820c2cea2e307",
+    "test_package_space.py.log": "17e6278793a9eff2bb003c1d4acfe5aea635a20e554c3460febf0990e5626437",
+    "test_rcfg.py.log": "e168cfcf1e7316be70ce54b64a41f979bb482032228c8e39c10868dccfd80408",
+    "toolchain.txt": "f99b15f2273b54d7083f9efc8e28d5a3f6533c332d12f2463e19d188a795d399"
+  },
+  "prior_failures": [
+    {
+      "exit": 1,
+      "logs_sha256": {
+        "network-preflight.json": "0c7f122829ecdbf9618a9b5f2aee9affe0605c3228c0e7b887c0281cff8907d0",
+        "review.json": "0e5188d2a6d65f953cb3ab3207e59e91b7a06606e2470f6efa6175acbff3d701",
+        "run-detail.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run.log": "105559fea3fe27e33fd7aa34d2614c741082e897bb59b29e12097848a2dfdb52"
+      },
+      "reason": "FROZEN_PRIOR_INTAKE_DEPENDENCY_OMITTED_FROM_CURATED_CLOSURE",
+      "source_manifest_sha256": "a8ba8c052ae63c67f0227ee03e020107b8f785d1d1694c816ff5045fbee30f84",
+      "source_pins": 378
+    },
+    {
+      "exit": 1,
+      "logs_sha256": {
+        "network-preflight.json": "0c7f122829ecdbf9618a9b5f2aee9affe0605c3228c0e7b887c0281cff8907d0",
+        "prior-review.json": "0e5188d2a6d65f953cb3ab3207e59e91b7a06606e2470f6efa6175acbff3d701",
+        "review.json": "0e5188d2a6d65f953cb3ab3207e59e91b7a06606e2470f6efa6175acbff3d701",
+        "run-detail.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run.log": "ce1aff7bf0e7203404756149bbc4e0912fb524e9680b4f8087ab5fcd5b064b0a",
+        "test_attempt31o_offline.py.log": "685fd7dd8d19251e7e5fa1ed01246883ffe76417cf51432000ffc5f86a2c28cc",
+        "test_attempt31p_offline.py.log": "b0791340df4ec819b65008b60efff0649994e452b53cbc006545cc188e0208bf",
+        "test_contract.py.log": "ccb58eac897696f1f5aac7a83f6e49278d8f4fea8320398942e22d0be12a040a",
+        "test_evidence.py.log": "1a65509d11e115dbd6bee65a84396b422d01de2dd558f802384477f587814c9e",
+        "test_isolation.py.log": "ac1ca7cb9fc7f8c06e03b89a9cc52a0caeb79baf7d0c2d26b96820c2cea2e307",
+        "test_package_space.py.log": "17e6278793a9eff2bb003c1d4acfe5aea635a20e554c3460febf0990e5626437",
+        "test_rcfg.py.log": "e168cfcf1e7316be70ce54b64a41f979bb482032228c8e39c10868dccfd80408"
+      },
+      "reason": "FROZEN_PRIOR_INTAKE_DEPENDENCY_OMITTED_FROM_CURATED_CLOSURE",
+      "source_manifest_sha256": "abe32cc92e4f5346785190d2ad152d6c3d93abdb1a65d6c57e8e98aff0eac432",
+      "source_pins": 378
+    }
+  ],
+  "python_unique_methods": 122,
+  "repeated_suite_runs_not_added_to_count": true,
+  "restart_ready": false,
+  "result": "PASS",
+  "schema": "ilinux-offline31p-validation-v1",
+  "source_manifest_sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c",
+  "source_pins": 379,
+  "toolchain": {
+    "gcc": "16.1.1 20260430",
+    "kernel": "7.1.6-vzrun2 aarch64",
+    "python": "3.14.8"
+  },
+  "vm": {
+    "curated_source_read_only": true,
+    "explicit_no_net": true,
+    "interfaces": [
+      "lo"
+    ],
+    "memory_gib": 4,
+    "physical_usb": false,
+    "test_build_tmpfs_mib": 256,
+    "vcpus": 2
+  }
+}

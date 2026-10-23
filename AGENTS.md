@@ -99,6 +99,29 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Current — 31P offline CPU/GPU checkpoint; native HOLD, 2026-10-22
+
+M1's independent31O review `1ac4f62` is merged:348 pins/63 methods PASS,
+no target operations. 31P continues from those consumed results; CPU1 execution
+and the missing startup prerequisite remain unverified. REA traced conditional
+image/object preparation, independently checking1,955 instruction words with
+zero mismatches. Software readiness is not a newly identified CPU-release step.
+
+Original dual-ASC GPU descriptor tooling preserves full64-bit addresses and
+validates J716c/T6050 resources. **379 pins /122 Python methods /12 C groups PASS**
+on macOS and VM076; Linux ASan/UBSan PASS, host/curated-host/VM review outputs
+identical. Public Mesa foundation build:396 gtests PASS; kernel object skipped
+pending a matching toolchain. G17C initialization/rendering NOT RUN.
+
+**M1 next:** `tools/m1n1-client/attempt31p-instructions.md`; publish an independent
+offline review and wait. **Do not restart: native31P HOLD / NOT RUN.** macOS,
+installed lab image, old receipts and all frozen source closures are unchanged.
+Validation: `native/boot/attempt31p/validation.json`. Environment/source-closure
+corrections: `research/native31p-environment.md`. Next CPU work establishes actual
+raw-image metadata/branch provenance; GPU work establishes address-domain, dual
+firmware-role and UAT/queue semantics before an original native implementation.
+
+
 ### Latest M1 review — 31O offline PASS; native HOLD, 2026-10-22
 
 **Independent M1 review on `220d8c7`: OFFLINE_REVIEW_PASS_NATIVE_HOLD.**

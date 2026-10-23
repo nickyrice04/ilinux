@@ -1,0 +1,384 @@
+{
+  "schema": "ilinux-31p-firmware-static-v1",
+  "date": "2026-10-22",
+  "status": "PASS_BOUNDED_STATIC_REVIEW",
+  "native_execution": "NOT_RUN",
+  "native31p_status": "HOLD",
+  "missing_cpu1_prerequisite": "NOT_ESTABLISHED",
+  "decoded_iboot_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_live": false,
+  "llvm_version": "Apple LLVM version 21.0.0",
+  "environment": {
+    "execution": "diskless_VM",
+    "explicit_no_net": true,
+    "network_interface_checks": [
+      {
+        "batch": "environment.json",
+        "interfaces": [
+          "lo"
+        ],
+        "physical_usb": false
+      },
+      {
+        "batch": "environment2.json",
+        "interfaces": [
+          "lo"
+        ],
+        "physical_usb": false
+      }
+    ],
+    "thirdparty_executed_on_host": false
+  },
+  "batch1_receipt": {
+    "sha256": "33d609eb8dc35b49c5bc62d8101141faa7dbc247520e2e6d3a55f2dddf5052f0",
+    "outer_job_exit": 143,
+    "result": "INCOMPLETE_OUTER_JOB_TIMEOUT",
+    "completed_requests": 3,
+    "interrupted_requests": 1,
+    "not_started_requests": 1
+  },
+  "bounded_blocks": [
+    {
+      "label": "layout-property-callback",
+      "start": "0x100c1ad0b04",
+      "end_exclusive": "0x100c1ad0e70",
+      "instruction_words": 219,
+      "code_bytes": 876,
+      "sha256": "3f9750cca203bc3e5255e187784e67c9d058ab36586f9403c7db494eaa304a82",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "buffer-loader-callback-registration",
+      "start": "0x100c1ad0868",
+      "end_exclusive": "0x100c1ad0b04",
+      "instruction_words": 167,
+      "code_bytes": 668,
+      "sha256": "fae1cccf36376d618d30eb77fa6e69d41e31b8d493bfced1f3d761058443df20",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "file-loader-callback-registration",
+      "start": "0x100c1ad0e70",
+      "end_exclusive": "0x100c1ad1058",
+      "instruction_words": 122,
+      "code_bytes": 488,
+      "sha256": "5b10ded256f531bd2dc9eed7012c58b7a781592b2b4d49db718d9f4075d87cb6",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "tag-upper-half-and-flags",
+      "start": "0x100c1ad7d20",
+      "end_exclusive": "0x100c1ad7d2c",
+      "instruction_words": 3,
+      "code_bytes": 12,
+      "sha256": "f6789d8d43c6c1cbd03925928d1c5cbfd8efad4aa2281587d1978e1245ca84fa",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "producer-b-selector-and-prerequisite",
+      "start": "0x100c1ad158c",
+      "end_exclusive": "0x100c1ad15f4",
+      "instruction_words": 26,
+      "code_bytes": 104,
+      "sha256": "f7965f659eb42baf02e88e3c9427243b0c51e7748376f0db16b20532ac407052",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "layout-active-and-ready-accessors",
+      "start": "0x100c1ca6334",
+      "end_exclusive": "0x100c1ca6390",
+      "instruction_words": 23,
+      "code_bytes": 92,
+      "sha256": "4e5458daa12f6dccdcab9b304afa42e65edfc2a2547908b8e470e88448a90d00",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "image-descriptor-size-validation",
+      "start": "0x100c1ad2524",
+      "end_exclusive": "0x100c1ad2594",
+      "instruction_words": 28,
+      "code_bytes": 112,
+      "sha256": "e29da71dd02f366de637e85bf315850fb500e4e3d82e3583489d058264b261f2",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "separate-object-buffer-load",
+      "start": "0x100c1ca6a8c",
+      "end_exclusive": "0x100c1ca6d88",
+      "instruction_words": 191,
+      "code_bytes": 764,
+      "sha256": "5492e06ba8e6d5d0ee12c5b01e7bd314709ac7c12da0b65fd8e81b9692d271df",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    },
+    {
+      "label": "selected-memory-layout-context",
+      "start": "0x100c1aec7fc",
+      "end_exclusive": "0x100c1aec988",
+      "instruction_words": 99,
+      "code_bytes": 396,
+      "sha256": "3828eda44d09dbcd0cb6c463ff2413e847bbec93429e62950c4a4ad12fa8f4b0",
+      "llvm_word_mismatches": 0,
+      "analysis_elf_matches_original": true
+    }
+  ],
+  "queries": [
+    {
+      "label": "layout-property",
+      "command": "decompile",
+      "requested_address": "0x100c1ad0b04",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "output_sha256": "78a3e4037d8b710523ddf0fabf4cc2da27d36ff1e68659d464542c078cffb6aa",
+      "cli_exit": 0,
+      "seconds": 67.586351658,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "whole_function_pseudocode_accepted": false,
+      "response_kind": "pseudocode_only",
+      "provider_body_bounds_available": false,
+      "provider_pcode_bounds_available": false,
+      "provider_removed_blocks": false,
+      "independent_bounds_basis": "original entry/return and next-entry instruction review; no provider body proof"
+    },
+    {
+      "label": "load-buffer",
+      "command": "decompile",
+      "requested_address": "0x100c1ad0868",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "output_sha256": "2ea233fce1cf640d6b810e7b924b7ddb4ccad1f496737a5c16f8c102c38d79cd",
+      "cli_exit": 0,
+      "seconds": 66.20346499000001,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "whole_function_pseudocode_accepted": false,
+      "response_kind": "pseudocode_only",
+      "provider_body_bounds_available": false,
+      "provider_pcode_bounds_available": false,
+      "provider_removed_blocks": false,
+      "independent_bounds_basis": "original entry/return and next-entry instruction review; no provider body proof"
+    },
+    {
+      "label": "load-file",
+      "command": "decompile",
+      "requested_address": "0x100c1ad0e70",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "output_sha256": "91b0cb8306494894795f4872a5dfd754513899e47f2d960b52ab01311048cb3e",
+      "cli_exit": 0,
+      "seconds": 67.056308032,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "whole_function_pseudocode_accepted": false,
+      "response_kind": "pseudocode_only",
+      "provider_body_bounds_available": false,
+      "provider_pcode_bounds_available": false,
+      "provider_removed_blocks": false,
+      "independent_bounds_basis": "original entry/return and next-entry instruction review; no provider body proof"
+    },
+    {
+      "label": "prepare-caller-primary",
+      "command": "decompile",
+      "requested_address": "0x100c1aa5de0",
+      "status": "NO_COMPLETION_RECORD",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "prepare-caller-alternate",
+      "command": "decompile",
+      "requested_address": "0x100c1aa6528",
+      "status": "NOT_STARTED",
+      "output_sha256": null
+    },
+    {
+      "label": "prepare-caller-primary-dossier",
+      "command": "function",
+      "requested_address": "0x100c1aa5de0",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "output_sha256": "62049e234cc24adfd0d73c1540687bcb8aa5c6c34c1cff30352808d1202adf02",
+      "cli_exit": 0,
+      "seconds": 67.78758319900001,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "whole_function_pseudocode_accepted": false,
+      "blocks": [
+        {
+          "label": "prepare-caller-primary-dossier-0",
+          "start": "0x100c1aa5de0",
+          "end_exclusive": "0x100c1aa6528",
+          "instruction_words": 466,
+          "code_bytes": 1864,
+          "sha256": "c8037ecdb4ff1fcd0f477defe06f5fc2f1e1cf47f926a9c5de4a91694047314c",
+          "llvm_word_mismatches": 0,
+          "analysis_elf_matches_original": true
+        }
+      ],
+      "response_kind": "function_dossier",
+      "assembly_instructions": 466,
+      "pcode_operations": 2767,
+      "pcode_truncated": false,
+      "out_of_body_operations": 0,
+      "out_of_body_addresses": [],
+      "provider_removed_blocks": false
+    },
+    {
+      "label": "prepare-caller-alternate-dossier",
+      "command": "function",
+      "requested_address": "0x100c1aa6528",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "output_sha256": "150c55cf46c269fb1898af6efdd779bfac0e885667b1e60dfcc50410e0f9527e",
+      "cli_exit": 0,
+      "seconds": 66.937739823,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "whole_function_pseudocode_accepted": false,
+      "blocks": [
+        {
+          "label": "prepare-caller-alternate-dossier-0",
+          "start": "0x100c1aa6528",
+          "end_exclusive": "0x100c1aa6824",
+          "instruction_words": 191,
+          "code_bytes": 764,
+          "sha256": "3d96232818b77d29d749048c54b89d3714394b695c4d5b89149a5017773f714f",
+          "llvm_word_mismatches": 0,
+          "analysis_elf_matches_original": true
+        }
+      ],
+      "response_kind": "function_dossier",
+      "assembly_instructions": 191,
+      "pcode_operations": 383,
+      "pcode_truncated": false,
+      "out_of_body_operations": 0,
+      "out_of_body_addresses": [],
+      "provider_removed_blocks": false
+    },
+    {
+      "label": "objects-loader-dossier",
+      "command": "function",
+      "requested_address": "0x100c1ca6390",
+      "status": "PASS_BOUNDED_STATIC_REVIEW",
+      "output_sha256": "bb1f8024188867d8b5d78f36b26c08eabe5e96df0cc4d226c9ad1fbe223e6faf",
+      "cli_exit": 0,
+      "seconds": 67.31371499099998,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "whole_function_pseudocode_accepted": false,
+      "blocks": [
+        {
+          "label": "objects-loader-dossier-0",
+          "start": "0x100c1ca6390",
+          "end_exclusive": "0x100c1ca6a20",
+          "instruction_words": 420,
+          "code_bytes": 1680,
+          "sha256": "448e8bbf9b986dc6d7d8070495b10c473d310d8b6644613431367a1372c53297",
+          "llvm_word_mismatches": 0,
+          "analysis_elf_matches_original": true
+        }
+      ],
+      "response_kind": "function_dossier",
+      "assembly_instructions": 420,
+      "pcode_operations": 1764,
+      "pcode_truncated": false,
+      "out_of_body_operations": 0,
+      "out_of_body_addresses": [],
+      "provider_removed_blocks": false
+    }
+  ],
+  "query_summary": {
+    "planned": 8,
+    "successful": 6,
+    "no_completion_record": 1,
+    "not_started": 1,
+    "dossier_instruction_words": 1077,
+    "dossier_pcode_operations": 4914
+  },
+  "unique_independent_instruction_words": 1955,
+  "unique_independent_code_bytes": 7820,
+  "llvm_word_mismatches": 0,
+  "descriptor_properties": [
+    {
+      "tag": "kcbz",
+      "tag_value": "0x6b63627a",
+      "descriptor_offset": "0x38",
+      "value_width_bytes": 8,
+      "compare_location": "0x100c1ad0b94",
+      "store_location": "0x100c1ad0c84",
+      "condition": "equal_full_32bit_tag",
+      "meaning": "entry_producer_and_extra_object_loader_selector"
+    },
+    {
+      "tag": "kcep",
+      "tag_value": "0x6b636570",
+      "descriptor_offset": "0xa0",
+      "value_width_bytes": 8,
+      "compare_location": "0x100c1ad0ba0",
+      "store_location": "0x100c1ad0d58",
+      "condition": "equal_full_32bit_tag",
+      "meaning": "entry_offset_input"
+    }
+  ],
+  "object_tables": [
+    {
+      "label": "object-buffer-ids",
+      "address": "0x100c1e10f98",
+      "bytes": 12,
+      "sha256": "fce27af5d5d872c7992dcfcccd396a3bb65d3538f3465b5fcaeb0275be1fbe6f"
+    },
+    {
+      "label": "object-alternate-types",
+      "address": "0x100c1e10fa4",
+      "bytes": 12,
+      "sha256": "fdc8792edf8f1c4ab8ee0e17b27333c3f12a6856b5b588b448d9b8a6103c9ad6"
+    },
+    {
+      "label": "object-types",
+      "address": "0x100c1e10fb0",
+      "bytes": 12,
+      "sha256": "e8ee0aa0918f9292e5b2b1fff2ac60924f9638d579118802d7ed859db6b4dd5b"
+    }
+  ],
+  "object_readiness": {
+    "required_mask_global": "0x100c1f2c8e0",
+    "loaded_mask_global": "0x100c1f2c8dc",
+    "predicate": "equal_32bit_masks",
+    "active_layout_byte": "0x100c1f288d9",
+    "native_values": "UNKNOWN",
+    "not_a_cpu_power_or_fetch_indicator": true
+  },
+  "limitations": [
+    "Proprietary bytes, disassembly and pseudocode stay in ignored build directories.",
+    "Tag helper returns condition flags outside ordinary C-call modeling; pseudocode tag dispatch is not accepted.",
+    "First batch exceeded its outer VM job deadline; partial/unstarted requests are retained separately from later dossiers.",
+    "Body and pcode counts apply only to function dossiers, not decompile-only responses.",
+    "Image property spelling is observed; detailed field names and current raw-boot values remain unverified.",
+    "Object-loading readiness is not CPU1 first-fetch or power readiness.",
+    "Loaded-object mask has more than one writer; the checked file loader is not the sole possible producer.",
+    "No software descriptor or analysis address is qualified as a live native read.",
+    "No firmware replay, policy change, security bypass, native memory/register write or installed image modification is proposed."
+  ]
+}

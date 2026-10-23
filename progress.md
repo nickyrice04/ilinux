@@ -1,5 +1,43 @@
 # Progress Log
 
+## 2026-10-22 · M5: 31P original GPU code and offline integration PASS
+
+Merged M1's31O independent review `1ac4f62`, preserving its report and all earlier
+native receipts. No physical test followed. The new CPU REA pass completed six
+queries; one preceding request was interrupted and one unstarted. Independent
+instruction checks cover1,955 unique words/7,820 bytes with zero mismatches.
+The verified image metadata gates additional-object preparation. Native values,
+actual raw-boot branch and the missing CPU1 startup prerequisite remain unknown;
+there is no established new hardware release operation. Details:
+`research/native31p-firmware.md`.
+
+Implemented original Python/C GPU descriptor validation/serialization, full64-bit
+address preservation, role-separated overlap checks and J716c/T6050 identity and
+resource checks. The actual sanitized metadata needs41 address bits; an old
+research table had displayed only32. Address translation, UAT and firmware ABI
+remain unknown; code generates no reservations, page tables, messages or MMIO.
+See `research/native31p-gpu-contract.md` and `kernel/experiments/gpu31p/`.
+
+Public Gravity Mesa compiled in a separate network-disabled ARM64 VM:514 build
+actions and396 passing compiler/layout/library gtests. The offline Apple9 shader
+tool is built; no GPU submission ran. Ten signed build packages were verified and
+extracted into guest RAM, with installed package lists unchanged. Kernel object
+build was explicitly skipped due unqualified Rust/LLVM pairing. Full pins,
+versions, warnings and prior failed preflights: job075 validation/build note.
+
+Final integration: **379 source pins,122 unique Python methods,12 C test groups**
+PASS on host and VM076, ASan/UBSan PASS. Host/full, host/curated and VM review JSON
+are byte-identical. A curated-tree failure exposed an unpinned dependency in the
+older31O runner;31P now pins the unchanged checker. Prior frozen records remain
+unchanged. The older31O network-isolation claim is also corrected explicitly in
+`research/native31p-environment.md`. Final runs verify loopback only.
+
+**M1 handoff:** `tools/m1n1-client/attempt31p-instructions.md`; independent offline
+review only. **No restart; native31P HOLD / NOT RUN.** macOS, boot settings and
+installed image unchanged; all-core/G17C/performance/energy parity unverified.
+Complete result: `native/boot/attempt31p/validation.json`.
+
+
 ## 2026-10-22 · M1: 31O independent offline review PASS; no restart
 
 **Independent M1 review on `220d8c7`: OFFLINE_REVIEW_PASS_NATIVE_HOLD.**
