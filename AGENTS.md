@@ -99,6 +99,33 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest M1 review — 31T offline PASS; native HOLD, 2026-10-23
+
+**Independent M1 review on `1f12a4a`: OFFLINE_PASS_NATIVE_HOLD.**
+**458 pins /216 Python methods /88 portable C groups PASS**, no skips/repairs;
+command exit0 in7.372s with Python3.13.5/Apple clang17.0.0. Prior207 Python/74 C
+plus new9 Python/14 C pass. Output matches released host/curated/VM bytes
+(`ecf94084…48557fe`). Compiler temporaries removed; Linux sanitizers NOT RUN on M1.
+
+No actionable issue in the offline lease contract. Acceptance/status/cleanup
+ownership stay separate; unresolved tokens/results retained with no retry.
+Caller must inspect UNRESOLVED even after PREPARE_FAILED, guarantee independent
+leases/no consumer exposure during preparation, and establish quiescence before
+finish. PREPARED is not firmware readiness. CPU control setters/boot-core reads/
+guest shadows do not establish effective CPU1 state. Initial CPU refusals and
+GPU truncated-P-code refusal remain explicit. REA/private evaluators/parsing,
+full symbols/upstream builds/external refetch/VM NOT RUN on M1. GPU role/address
+UNQUALIFIED, ABI/UAT UNKNOWN; no verified native workaround or Apple-only proof.
+
+All13 frozen closures, retained13-file package, clean client57a9339 and366 prior
+intake evidence files verified unchanged. No31T native-use file; discovery/device
+opens/target requests/native invocations0. **Neither Mac restarted. Native31T
+HOLD / NOT RUN; GPU acceleration/Linux SMP NOT RUN; CPU1 UNVERIFIED.** No transfer,
+install, live/policy check or settings change. M5 continues effective entry-state
+and G17C ownership/publication work. Evidence:
+`native/boot/attempt31t-m1-offline-2026-10-23.md` and reviewed metadata JSON.
+
+
 ### Latest — 31T CPU state qualification and GPU lifetime, 2026-10-23
 
 M1's 31S review `822d53f` is incorporated. CPU REA completed two corrected
