@@ -1,5 +1,27 @@
 # Blockers
 
+## Current — 31R software checks pass; CPU/GPU native prerequisites unresolved
+
+**CPU:** successful range preparation crosses service classes whose dispatcher,
+privilege context and ownership effects remain unknown. The apparent ordinary
+consumer was a failure reporter; a six-descriptor follow-up includes an ISP
+resource and cannot establish CPU topology. Next identify the service owner and
+whether its contract covers selected CPU1 entry memory. No new release correction
+or effective first fetch has been established.
+
+**GPU:** endpoint notification subscription, match and accepted initialization
+are distinct. The original lifecycle component is tested; mapping local slots to
+firmware selectors/ADT roles, address ownership, shared-data publication and
+firmware ABI remain unqualified. Next trace bounded endpoint owner initialization
+and shared-data consumers. Public Aurora/Gravity code is useful, but checked G17C
+admission and kernel contracts are incomplete; do not widen a family predicate.
+
+420 pins/176 Python methods/60 C groups pass host/VM, including new21 C sanitizer
+groups. No hardware performance result follows. M1 has an offline review;
+**native31R HOLD / NOT RUN, no restart**. Existing receipts/closures are intact.
+Evidence: `native/boot/attempt31r/validation.json` and the three31R research notes.
+
+
 ## Current — 31Q independently reviewed; native CPU/GPU remain HOLD
 
 **Independent M1 review on `1cfe016`: OFFLINE_PASS_NATIVE_HOLD.**

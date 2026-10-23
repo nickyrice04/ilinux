@@ -6,6 +6,27 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31R offline handoff ready; M1 review next, 2026-10-23
+
+Root completed integration and publication preparation. CPU/GPU investigators
+completed bounded behavioral records; two independent reviews found no remaining
+implementation blocker in the original lifecycle component's documented scope.
+The ecosystem investigator completed the primary-source comparison. All four REA
+VM batches and job078 are finished; both repositories' VM/quiet locks released.
+Unrelated kernel configuration/compositing work remains untouched.
+
+M1 owns `tools/m1n1-client/attempt31r-instructions.md`:420 pins,176 Python methods,
+60 portable C groups, independent offline review and publication. No restart,
+proxy, target operation or routine policy recheck. Native31R HOLD / NOT RUN.
+
+M5 owns the unresolved successful CPU range-service contract and G17C role,
+address-domain, endpoint initialization and shared-data publication work. A new
+boot requires a meaningful discriminator; neither a firmware-family label nor
+passing software tests qualifies hardware. Community discussion was read at the
+user's request, but member-only messages and identities are excluded from public
+artifacts. No community message was sent. See `native/boot/attempt31r/validation.json`
+and `research/native31r-ecosystem.md`. All31Q and older closures stay frozen.
+
 ### Current — M1 31Q offline review complete; M5 investigation next, 2026-10-23
 
 **Independent M1 review on `1cfe016`: OFFLINE_PASS_NATIVE_HOLD.**

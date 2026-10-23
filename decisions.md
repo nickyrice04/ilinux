@@ -3591,3 +3591,34 @@ and reviewed metadata JSON.
 **Decision:** Keep the explicit no-restart/no-native scope. Portable planning
 and format validation do not establish CPU1 fetch, GPU ownership or G17C runtime.
 Preserve every consumed receipt and wait for a separately qualified proposal.
+
+
+### 2026-10-23 · Publish31R attachment code and corrected CPU trace; native HOLD
+
+**Decision:** accept M1's31Q review `bc4d46c`; publish bounded CPU/GPU findings,
+original lifecycle code and the primary-source project comparison after offline
+validation. Do not issue another boot test without a new distinguishing condition.
+
+**Evidence:** seven completed REA queries;853 CPU and1,233 GPU words independently
+match.156 CPU words are new beyond31Q; the overlap is not counted as fresh work.
+Range-service ownership remains unresolved, and the following descriptor count
+is not CPU topology. GPU whole-function rejection remains explicit. Firmware
+preload, no-copy response, subscriptions and initialized attachment are distinct.
+
+**Implementation:** original provider epochs, ingestion sequences and endpoint
+instance tokens prevent stale record application within documented caller duties;
+replacement/rejection/termination invalidate acceptance. Callback arrival before
+registration completion is supported. Supplied evidence is not authenticated and
+native readiness is never promoted.420 pins/176 Python methods/60 C groups pass
+host/curated-host/Linux; new21 C groups pass sanitizers. Older closures are intact.
+
+**Reuse:** newer public UAT/Mesa code supplies concrete comparisons, but source
+admission and UAPI semantics exclude simple G17C substitution. Related projects
+already offer Arch/Hyprland, Omarchy and macOS-parity research; this project's
+specific machine and reproducible results define its contribution. Member-only
+community content stays out of public artifacts.
+
+**Consequence:** M1 independently reviews offline and publishes. macOS, volumes,
+boot policy and native images remain unchanged; no reboot/physical operation or
+performance claim. Next resolve CPU service ownership and G17C role/address/
+shared-data contracts. `native/boot/attempt31r/validation.json` records outcomes.

@@ -99,6 +99,35 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31R CPU/GPU offline checkpoint, 2026-10-23
+
+M1's31Q review `bc4d46c` is incorporated. Four CPU and three GPU REA queries
+completed. Independent checks match853 CPU words (156 new beyond31Q) and1,233
+GPU words with zero mismatches. CPU range wrappers cross an unresolved service
+boundary; the nearby error reporter and six-descriptor setup do not identify a
+CPU-release fix or CPU topology. GPU preload, payload, subscription, match and
+acceptance are separate facts. One whole-function decompiler rejection remains
+explicit; bounded evidence does not override it.
+
+Original C attachment-evidence lifecycle code handles provider reset, explicit
+acceptance/rejection, replacement and stale-instance callbacks. It has no native
+adapter or hardware operations. **420 pins /176 Python methods /60 C groups PASS**
+on macOS and isolated Linux VM078; new21 C groups also pass ASan/UBSan. Host,
+curated-host and VM review JSON are byte-identical. All older frozen closures,
+receipts and installed images are unchanged.
+
+Public-source comparison documents newer Gravity UAT work and Aurora's M5 Mesa
+proposal, with actual G17C exclusions and UAPI differences. No newly verified
+T6050 SMP fix or G17C runtime path was found. iLinux's value is this exact machine's
+Omarchy integration and measured development, with shared Asahi/Mesa foundations;
+related Arch/Hyprland and Omarchy performance projects are acknowledged.
+
+**M1 next:** `tools/m1n1-client/attempt31r-instructions.md`, independent offline
+review and report. **Do not restart: native31R HOLD / NOT RUN.** CPU1 UNVERIFIED;
+native GPU/SMP and performance/energy improvements NOT MEASURED. No macOS, boot
+or volume change. Validation: `native/boot/attempt31r/validation.json`.
+
+
 ### Latest M1 review — 31Q offline CPU/GPU PASS; native HOLD, 2026-10-23
 
 **Independent M1 review on `1cfe016`: OFFLINE_PASS_NATIVE_HOLD.**

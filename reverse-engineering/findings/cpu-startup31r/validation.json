@@ -1,0 +1,447 @@
+{
+  "analysis_address_is_runtime_address": false,
+  "analysis_base": "0x100c1aa4000",
+  "boot_policy_changes": 0,
+  "bounded_arithmetic_check": {
+    "arithmetic_cases": 12,
+    "checked_descriptor_indices": 6,
+    "conditional_branch_execution": "NOT_EMULATED",
+    "following_writes_depend_on_lookup_result": true,
+    "lookup_matches_static_descriptor_base": true,
+    "native_address_qualification": false,
+    "synthetic_first_argument_examples": 2,
+    "table_stride_bytes": 40
+  },
+  "completed_queries": 4,
+  "consumed_review_commit": "bc4d46c",
+  "cpu1_execution": "UNVERIFIED",
+  "date": "2026-10-23",
+  "elf_matches_carrier": true,
+  "findings": {
+    "cross_artifact_match": {
+      "adt_path": "hardware/adt/adt-sanitized.json",
+      "adt_sha256": "6f143434d2f05310067559f8fa3836ae564dd9934ebc5912660f2a9f5a8a73af",
+      "descriptor_base": "0x380020000",
+      "descriptor_index": 2,
+      "kind": "STATIC_CONTAINMENT_NOT_RUNTIME_OWNERSHIP",
+      "matched_reg": {
+        "bytes": 67043328,
+        "start": "0x380000000"
+      },
+      "node": "/Root/device-tree/arm-io/isp0"
+    },
+    "data_blocks": [
+      {
+        "bytes": 240,
+        "label": "six-descriptor-address-table",
+        "sha256": "2fb478ba8c1de12c67c6eb1408bcbbcfbb0a2126f309cfaba94610a7f782b0dc",
+        "start": "0x100c1e35fc0"
+      }
+    ],
+    "failure_reporting_entry": "0x100c1b3f5a8",
+    "failure_reporting_wrapper": "0x100c1b3f5cc",
+    "following_finalizer": {
+      "call": "0x100c1ae5ba8",
+      "cpu_cluster_identity": "NOT_ESTABLISHED",
+      "descriptor_bytes": 40,
+      "descriptor_count_bound": 6,
+      "descriptor_lookup": "0x100c1aec3d4",
+      "descriptor_table": "0x100c1e35fc0",
+      "eligibility_predicate": "0x100c1af6d28",
+      "eligibility_semantics": "NOT_ESTABLISHED",
+      "entry": "0x100c1aec428",
+      "lookup_argument_bounds": [
+        {
+          "abi_argument": 1,
+          "exclusive_bound": 6,
+          "site": "0x100c1aec3e0"
+        }
+      ],
+      "native_execution": "NOT_OBSERVED"
+    },
+    "service_dispatch_owner": "NOT_ESTABLISHED",
+    "service_wrappers": [
+      {
+        "direct_nonstack_store_count": 0,
+        "entry": "0x100c1ada92c",
+        "service_number": 12,
+        "service_site": "0x100c1ada950",
+        "success_returns_before_failure_reporting": true
+      },
+      {
+        "direct_nonstack_store_count": 0,
+        "entry": "0x100c1ada96c",
+        "service_number": 12,
+        "service_site": "0x100c1ada990",
+        "success_returns_before_failure_reporting": true
+      },
+      {
+        "direct_nonstack_store_count": 0,
+        "entry": "0x100c1ada9ac",
+        "service_number": 12,
+        "service_site": "0x100c1ada9d0",
+        "success_returns_before_failure_reporting": true
+      },
+      {
+        "direct_nonstack_store_count": 0,
+        "entry": "0x100c1ada9ec",
+        "service_number": 17,
+        "service_site": "0x100c1adaa10",
+        "success_returns_before_failure_reporting": true
+      },
+      {
+        "direct_nonstack_store_count": 0,
+        "entry": "0x100c1adaa2c",
+        "service_number": 17,
+        "service_site": "0x100c1adaa50",
+        "success_returns_before_failure_reporting": true
+      },
+      {
+        "direct_nonstack_store_count": 0,
+        "entry": "0x100c1adaa6c",
+        "service_number": 17,
+        "service_site": "0x100c1adaa90",
+        "success_returns_before_failure_reporting": true
+      },
+      {
+        "direct_nonstack_store_count": 0,
+        "entry": "0x100c1adaaac",
+        "service_number": 17,
+        "service_site": "0x100c1adaad0",
+        "success_returns_before_failure_reporting": true
+      }
+    ],
+    "state_accessor": {
+      "entry": "0x100c1b40230",
+      "read_only": true,
+      "software_global": "0x100c1f2cb60"
+    }
+  },
+  "firmware_replay": false,
+  "hardware_operations": 0,
+  "historical_raw_branch": "INFERRED_NOT_OBSERVED",
+  "independent_bounded_blocks": [
+    {
+      "carrier_match": true,
+      "code_bytes": 448,
+      "end_exclusive": "0x100c1adaaec",
+      "instruction_words": 112,
+      "label": "range-service-wrappers",
+      "llvm_word_mismatches": 0,
+      "sha256": "b5440db0d39688160627f65eb0834c6d2b6bf5c08a8396607fc4a4285409836d",
+      "start": "0x100c1ada92c"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 32,
+      "end_exclusive": "0x100c1adafa8",
+      "instruction_words": 8,
+      "label": "service-preflight",
+      "llvm_word_mismatches": 0,
+      "sha256": "60a0e75eadcfce0bf31bc130ebb848c6e074a4e3a8e66d9967df8e32c72bfea8",
+      "start": "0x100c1adaf88"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 48,
+      "end_exclusive": "0x100c1ae11e4",
+      "instruction_words": 12,
+      "label": "topology-count-accessor",
+      "llvm_word_mismatches": 0,
+      "sha256": "54474eaa87c1ec5b8cad062fafae056062590056db072b2199cc3ebeae0e5e8a",
+      "start": "0x100c1ae11b4"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 8,
+      "end_exclusive": "0x100c1ae28d0",
+      "instruction_words": 2,
+      "label": "index-stride-accessor",
+      "llvm_word_mismatches": 0,
+      "sha256": "008816324250c06e66ca174f257c933b0d3a7d05ae19334ddb101a72517eaadd",
+      "start": "0x100c1ae28c8"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 28,
+      "end_exclusive": "0x100c1ae5bac",
+      "instruction_words": 7,
+      "label": "handoff-range-order",
+      "llvm_word_mismatches": 0,
+      "sha256": "450d861241a56c7b4c5d8226dd86166e84aa3820126f538fb2721701fb793a4e",
+      "start": "0x100c1ae5b90"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 48,
+      "end_exclusive": "0x100c1ae5c90",
+      "instruction_words": 12,
+      "label": "entry-vector-consumer",
+      "llvm_word_mismatches": 0,
+      "sha256": "64508481b5b23c9f4ebdb66ebf7867cff4671810e5d2510e3770877600587c52",
+      "start": "0x100c1ae5c60"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 84,
+      "end_exclusive": "0x100c1aec428",
+      "instruction_words": 21,
+      "label": "per-cluster-finalizer",
+      "llvm_word_mismatches": 0,
+      "sha256": "dc98259a70a93ced41f52aef104ef75a2f0c8b9b3248c59c619dadbc319f9b92",
+      "start": "0x100c1aec3d4"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 240,
+      "end_exclusive": "0x100c1aec518",
+      "instruction_words": 60,
+      "label": "post-range-finalizer",
+      "llvm_word_mismatches": 0,
+      "sha256": "922229d11baaeffba630aedf7c9428d7a4488ad529d010d61df29271d35bd939",
+      "start": "0x100c1aec428"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 24,
+      "end_exclusive": "0x100c1aec544",
+      "instruction_words": 6,
+      "label": "descriptor-table-helper",
+      "llvm_word_mismatches": 0,
+      "sha256": "7b656bca52074399ddcd4ac362b8466c429c108278c4b61db26d84804cb6e6e7",
+      "start": "0x100c1aec52c"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 2332,
+      "end_exclusive": "0x100c1aece90",
+      "instruction_words": 583,
+      "label": "range-layout-procedure",
+      "llvm_word_mismatches": 0,
+      "sha256": "b6385fcab7a4c3b7e01b314aaeaa593d86734dfa590efa6ba77c10696dc785f3",
+      "start": "0x100c1aec574"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 36,
+      "end_exclusive": "0x100c1b3f5cc",
+      "instruction_words": 9,
+      "label": "failure-reporting-entry",
+      "llvm_word_mismatches": 0,
+      "sha256": "a748b83ac8411d556d8e50bcfcea74a2a8abd1469d7292e372c7e41b171649aa",
+      "start": "0x100c1b3f5a8"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 36,
+      "end_exclusive": "0x100c1b3f5f0",
+      "instruction_words": 9,
+      "label": "range-register-consumer",
+      "llvm_word_mismatches": 0,
+      "sha256": "78d57d6816aafff0a3d66b6720187885570be0d14b9a1bbc571814e7e02aee52",
+      "start": "0x100c1b3f5cc"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 16,
+      "end_exclusive": "0x100c1b40240",
+      "instruction_words": 4,
+      "label": "range-state-mutator",
+      "llvm_word_mismatches": 0,
+      "sha256": "993f7028ffbaaffe01d0f867dab8f46545cd30b0663401e6492556607ed4719f",
+      "start": "0x100c1b40230"
+    },
+    {
+      "carrier_match": true,
+      "code_bytes": 32,
+      "end_exclusive": "0x100c1b40dc8",
+      "instruction_words": 8,
+      "label": "finalizer-boolean-gates",
+      "llvm_word_mismatches": 0,
+      "sha256": "318798b36c38a101a12c363f97ee5a913a71e111bd1b6491a57ca51c76bd0fec",
+      "start": "0x100c1b40da8"
+    }
+  ],
+  "independent_code_bytes": 3412,
+  "independent_new_words_beyond31q": 156,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "independent_unique_instruction_words": 853,
+  "inputs": {
+    "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+    "decoded_iboot_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+    "sanitized_adt_sha256": "6f143434d2f05310067559f8fa3836ae564dd9934ebc5912660f2a9f5a8a73af"
+  },
+  "limitations": [
+    "Four REA queries completed; whole-function pseudocode remains unaccepted and is never an implementation source.",
+    "Initial query labels are retained but corrected roles control interpretation; failure reporting is not successful range dispatch.",
+    "The checked supervisor-call wrapper bodies have no direct non-stack stores; this does not constrain the unexamined handler effects.",
+    "The owner, execution privilege and protection semantics behind service numbers12 and17 remain unknown.",
+    "The six-descriptor table is not CPU cluster topology; one static base lies inside the retained ISP window, but native ownership and other roles remain unqualified.",
+    "Selected eligibility predicates and actual native values are unresolved; conditional finalizer writes are not a Linux replay recipe.",
+    "Arithmetic checks use synthetic scalar arguments and retained bytes; they do not emulate conditional firmware execution.",
+    "Coverage includes697 words already checked in31Q; only156 are new relative to that checkpoint.",
+    "Historical raw metadata and first CPU1 fetch remain unobserved; no native fix or physical retry is proposed.",
+    "Apple bytes, disassembly, pseudocode and private absolute paths are excluded from this record."
+  ],
+  "llvm_word_mismatches": 0,
+  "macos_changes": 0,
+  "missing_startup_prerequisite": "NOT_ESTABLISHED",
+  "native31r": "HOLD / NOT RUN",
+  "network_checks": [
+    {
+      "batch": "a",
+      "expected_no_network_device": true,
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false
+    },
+    {
+      "batch": "b",
+      "expected_no_network_device": true,
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false
+    }
+  ],
+  "overlap_words_with31q": 697,
+  "pcode_outside_body": 0,
+  "pcode_truncated_queries": 0,
+  "provider_removed_block_queries": 0,
+  "queries": [
+    {
+      "assembly_instructions": 9,
+      "body_anchors": [
+        {
+          "bytes": 36,
+          "carrier_offset": 636364,
+          "derived_offset": 640460,
+          "end_inclusive": "0x100c1b3f5ef",
+          "sha256": "78d57d6816aafff0a3d66b6720187885570be0d14b9a1bbc571814e7e02aee52",
+          "start": "0x100c1b3f5cc"
+        }
+      ],
+      "cli_exit": 0,
+      "corrected_role": "FAILURE_REPORTING_WRAPPER_NOT_RANGE_OWNER",
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "range-register-consumer",
+      "output_sha256": "507e12baad66e2db1c63826db4b7193e675faa9ff351b77c70f099153ae2a8f2",
+      "pcode_operations": 3,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1b3f5cc",
+      "returned_entry": "0x100c1b3f5cc",
+      "seconds": 68.595952408,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "assembly_instructions": 4,
+      "body_anchors": [
+        {
+          "bytes": 16,
+          "carrier_offset": 639536,
+          "derived_offset": 643632,
+          "end_inclusive": "0x100c1b4023f",
+          "sha256": "993f7028ffbaaffe01d0f867dab8f46545cd30b0663401e6492556607ed4719f",
+          "start": "0x100c1b40230"
+        }
+      ],
+      "cli_exit": 0,
+      "corrected_role": "READ_ONLY_SOFTWARE_STATE_ACCESSOR",
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "range-state-mutator",
+      "output_sha256": "fb4fddfb7c94877a52da3295df26b5b17b4252e76d63a407a6f38700c07de509",
+      "pcode_operations": 2,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1b40230",
+      "returned_entry": "0x100c1b40230",
+      "seconds": 68.557471741,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "assembly_instructions": 60,
+      "body_anchors": [
+        {
+          "bytes": 240,
+          "carrier_offset": 295976,
+          "derived_offset": 300072,
+          "end_inclusive": "0x100c1aec517",
+          "sha256": "922229d11baaeffba630aedf7c9428d7a4488ad529d010d61df29271d35bd939",
+          "start": "0x100c1aec428"
+        }
+      ],
+      "cli_exit": 0,
+      "corrected_role": "FOLLOWING_SIX_DESCRIPTOR_FINALIZER",
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "post-range-finalizer",
+      "output_sha256": "0559f1ba0eb60cc86793c98f048289cc91dcd328d5f35d365f7a5e395c7af079",
+      "pcode_operations": 58,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1aec428",
+      "returned_entry": "0x100c1aec428",
+      "seconds": 67.422769199,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "assembly_instructions": 21,
+      "body_anchors": [
+        {
+          "bytes": 84,
+          "carrier_offset": 295892,
+          "derived_offset": 299988,
+          "end_inclusive": "0x100c1aec427",
+          "sha256": "dc98259a70a93ced41f52aef104ef75a2f0c8b9b3248c59c619dadbc319f9b92",
+          "start": "0x100c1aec3d4"
+        }
+      ],
+      "cli_exit": 0,
+      "corrected_role": "BOUNDED_DESCRIPTOR_ADDRESS_LOOKUP_NOT_CPU_TOPOLOGY",
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "per-cluster-finalizer",
+      "output_sha256": "321e49b68a1d8fb3ce477b01ef0a877f1243882f980e3b457b4194bacfff23b4",
+      "pcode_operations": 25,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1aec3d4",
+      "returned_entry": "0x100c1aec3d4",
+      "seconds": 67.72780707399998,
+      "whole_function_pseudocode_accepted": false
+    }
+  ],
+  "rea_assembly_instructions": 94,
+  "rea_pcode_operations": 88,
+  "restart_ready": false,
+  "result": "BOUNDED_STATIC_FINDINGS_NATIVE_HOLD",
+  "schema": "ilinux-cpu-startup31r-static-evidence-v1"
+}

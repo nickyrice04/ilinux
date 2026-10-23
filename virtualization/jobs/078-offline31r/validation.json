@@ -1,0 +1,75 @@
+{
+  "c_groups": {
+    "new_lifecycle": 21,
+    "prior_portable": 39
+  },
+  "date_local": "2026-10-23",
+  "hardware_operations": 0,
+  "host_curated_vm_review_bytes_identical": true,
+  "job": {
+    "end_utc": "2026-10-23T15:54:19Z",
+    "exit": 0,
+    "start_utc": "2026-10-23T15:54:15Z"
+  },
+  "job_source_sha256": "7d8b8b1559226bb9198b7f5623312cd309aee1647f1ba33e9348b5e6d8f9b74a",
+  "native_cpu": "NOT_RUN",
+  "native_gpu": "NOT_RUN",
+  "new_lifecycle": {
+    "address_sanitizer": "PASS",
+    "exhaustive_depth5_paths": 32768,
+    "exhaustive_transitions": 37448,
+    "halt_on_undefined_behavior": true,
+    "leak_detection": true,
+    "portable_flags": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-O2"
+    ],
+    "sanitizer_flags": [
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer"
+    ],
+    "undefined_behavior_sanitizer": "PASS"
+  },
+  "output_hashes": {
+    "network-preflight.json": "0c7f122829ecdbf9618a9b5f2aee9affe0605c3228c0e7b887c0281cff8907d0",
+    "review.json": "947b892ef50cdf14cb0d2e052f6a8fb5d8f1c2fe8066ba6479505db16e075e5d",
+    "run-detail.log": "8e3d47954b3627f288d16360fb795ac8aa253af7e01715301a5d69e5bddce87c",
+    "run.log": "4119536466b5c0bf5651a44a97c621cf9a049b398ce73cc77be8223254b39a6c",
+    "sanitizers-lifecycle.txt": "d053334d75db266e5c352f25d372832c739add71a09a1fd1d05a29f21ecd48d6",
+    "test-lifecycle": "bc42f2efc0a5791940eaaea031d2fbc691dafa13ae6a1bc7dcad9757c15f63ae",
+    "test_attempt31r_offline.py.log": "ace016ebec696f4fdef876dcb37271e57fa4921ea618b507b9695d84e57b07c1",
+    "toolchain.txt": "f99b15f2273b54d7083f9efc8e28d5a3f6533c332d12f2463e19d188a795d399"
+  },
+  "prior_c_sanitizers_repeated": false,
+  "python_new_methods": 9,
+  "python_unique_methods": 176,
+  "repeated_suite_runs_not_added_to_count": true,
+  "restart_ready": false,
+  "result": "PASS",
+  "schema": "ilinux-offline31r-validation-v1",
+  "source_manifest_sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4",
+  "source_pins": 420,
+  "toolchain": {
+    "cc": "cc (GCC) 16.1.1 20260430",
+    "kernel": "Linux 7.1.6-vzrun2 aarch64",
+    "python": "Python 3.14.8"
+  },
+  "vm": {
+    "curated_source_read_only": true,
+    "explicit_no_net": true,
+    "interfaces": [
+      "lo"
+    ],
+    "memory_gib": 4,
+    "physical_usb": false,
+    "retained_image_read_only": true,
+    "test_build_tmpfs_mib": 256,
+    "vcpus": 2
+  }
+}

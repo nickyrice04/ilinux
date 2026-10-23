@@ -1,0 +1,269 @@
+{
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "consumed_review_commit": "bc4d46c",
+  "data_anchors": [
+    {
+      "address": "0xfffffe0007134d6a",
+      "bytes": 5,
+      "carrier_mismatches": 0,
+      "name": "role",
+      "sha256": "1a5ec5fca49e16f23ce96b1d17c8890bdd47c8dbae4bd608833955a1d64dfb14"
+    },
+    {
+      "address": "0xfffffe0007134e1a",
+      "bytes": 10,
+      "carrier_mismatches": 0,
+      "name": "Endpoint1",
+      "sha256": "5afedaacc750d947331c91aed22c9690f174c5850e651bd8071fcd8593fd63d0"
+    },
+    {
+      "address": "0xfffffe0007134e24",
+      "bytes": 10,
+      "carrier_mismatches": 0,
+      "name": "Endpoint2",
+      "sha256": "3314387ad90775abb1f914a99fcf76e672817be8d90f4cb6b3b0839ab5d06ac2"
+    }
+  ],
+  "date": "2026-10-23",
+  "descriptor_cpu_address_domain": "UNQUALIFIED",
+  "findings": {
+    "endpoint_callback_selectors": [
+      32,
+      33
+    ],
+    "endpoint_name_suffixes": [
+      "Endpoint1",
+      "Endpoint2"
+    ],
+    "endpoint_notifications": [
+      "match",
+      "termination"
+    ],
+    "endpoint_selector_to_adt_role_mapping": "UNKNOWN",
+    "endpoint_selector_to_provider_numeric_role_mapping": "UNKNOWN",
+    "mmu_configuration_establishes_owner_property_binding": false,
+    "nonpreloaded_path_can_reach_load_firmware": true,
+    "notification_registration_is_endpoint_readiness": false,
+    "preloaded_path_reaches_load_firmware": false,
+    "preloaded_predicate": "RTBuddyService::iBootLoaded",
+    "provider_role_property_observed": "role",
+    "selector_32_initialization_failure_clears_attachment": true,
+    "selector_32_match_requires_separate_owner_initialization": true,
+    "shared_data_cache_publication_qualified": false,
+    "shared_initializer_indirect_method_resolved": false,
+    "shared_initializer_separate_records_with_common_and_distinct_inputs": true,
+    "software_incarnations_and_instance_tokens": "ORIGINAL_DEFENSIVE_DESIGN_NOT_APPLE_ABI",
+    "termination_clears_only_selector_slot": true
+  },
+  "firmware_abi": "UNKNOWN",
+  "gpu_enablement": "HOLD",
+  "hardware_operations": 0,
+  "independent_instruction_ranges": [
+    {
+      "carrier_offset": 26171680,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 10528,
+      "end_exclusive": "0xfffffe00088f9f60",
+      "id": "gpu31r-provider-boot",
+      "instruction_words": 400,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "36b0321b48d7bdcb716ade40be80f71f8a2f16df976ce6d17c21dfece40ab9ff",
+      "start": "0xfffffe00088f9920"
+    },
+    {
+      "carrier_offset": 26759000,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 688648,
+      "end_exclusive": "0xfffffe0008989488",
+      "id": "gpu31r-setup-mmu",
+      "instruction_words": 332,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "a613357f1cb38d1c55ace2b564c8c3e9dd39ffba322da0150e83c82125ae026e",
+      "start": "0xfffffe0008988f58"
+    },
+    {
+      "carrier_offset": 26590212,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 519860,
+      "end_exclusive": "0xfffffe0008960084",
+      "id": "gpu31r-init-shared",
+      "instruction_words": 288,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "0da0f91cca91d5c6a538a7d77aab384336394ce86ce6a0b34b9e0d426d407c8a",
+      "start": "0xfffffe000895fc04"
+    },
+    {
+      "carrier_offset": 26173280,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 12128,
+      "end_exclusive": "0xfffffe00088f9ff8",
+      "id": "gpu31r-endpoint-matched",
+      "instruction_words": 38,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "b80f73f98b084c74e0e26e11214ef3e13ff819e4011f949b9d9b1d4871e6a159",
+      "start": "0xfffffe00088f9f60"
+    },
+    {
+      "carrier_offset": 26173432,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 12280,
+      "end_exclusive": "0xfffffe00088fa1b8",
+      "id": "gpu31r-endpoint-matched-gated",
+      "instruction_words": 112,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "69eecee9d40f8490aa2511605301756ec7d1973b63009aaac83cd0f18dd5f5b0",
+      "start": "0xfffffe00088f9ff8"
+    },
+    {
+      "carrier_offset": 26174204,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 13052,
+      "end_exclusive": "0xfffffe00088fa394",
+      "id": "gpu31r-endpoint-terminated",
+      "instruction_words": 38,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "611ad1b04d815ec04787c3a350afe457dd25eaef7a756936ebb3018c8362a0e7",
+      "start": "0xfffffe00088fa2fc"
+    },
+    {
+      "carrier_offset": 26174356,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 13204,
+      "end_exclusive": "0xfffffe00088fa3f8",
+      "id": "gpu31r-endpoint-terminated-gated",
+      "instruction_words": 25,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "a1131f16f9e2b226fdd8e290c3fe44078060b1032c2b1e5020a3a29a9622df77",
+      "start": "0xfffffe00088fa394"
+    }
+  ],
+  "independent_instruction_words": 1233,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "limitations": [
+    "Provider whole-function decompilation is rejected for cross-boundary P-code. Only independently bounded instruction behavior is used.",
+    "Successful REA completion and manual_review_required gates do not independently prove semantics or runtime behavior.",
+    "Carrier external symbols qualify direct calls; unresolved virtual calls and collection fixups remain unknown.",
+    "Static preloaded branching does not observe current firmware loading, readiness, ownership, ABI, or current kernel identity.",
+    "Endpoint selector, provider numeric role and ADT role are separate namespaces.",
+    "Two shared record sources do not establish their role names, wire layout, cache publication or firmware consumption.",
+    "Original offline lifecycle state never enables native hardware; no MMIO, queue, firmware or security sequence is emitted.",
+    "Apple bytes, assembly and P-code remain only in ignored local build artifacts."
+  ],
+  "native_validation": "NOT_RUN",
+  "network_checks": [
+    {
+      "batch": "out-batch1",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    },
+    {
+      "batch": "out-batch2",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    }
+  ],
+  "private_behavior_check_hashes": {
+    "behavior-validation.json": "875805fda0889abaeb76ceeb7823060e631b874877c11531f7706621c71b467d",
+    "endpoint-selector-validation.json": "b06d5bc1670a48ac2e1025bcc113bcab6ecda54dc9fd92ca0de094c57f08ced6",
+    "provider-control-validation.json": "1a260d98db3dc03460014ff589825535fcd06ce4293a6656a515b820644fe476"
+  },
+  "queries": [
+    {
+      "address": "0xfffffe00088f9920",
+      "artifact_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "batch": "out-batch1",
+      "decompiler_warning_classes": [
+        "unresolved_indirect_jump",
+        "provider_removed_blocks"
+      ],
+      "elapsed_seconds": 22.972,
+      "exit_code": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_ops_inside_independent_bounds": 1246,
+      "high_pcode_ops_outside_independent_bounds": 58,
+      "high_pcode_truncated": false,
+      "id": "gpu31r-provider-boot",
+      "limit_seconds": 100,
+      "pcode_operations": 1304,
+      "private_output_sha256": "885a9f57ea8ca8f4d0a9c3f213e02044d206f3d613cf5d70d1262056852c3d23",
+      "private_run_record_sha256": "27ef0d171584e1be0345a1d5b7ffed7548868e54477afc45b3d3bcecb9dc6a02",
+      "rea_body_bytes": 1600,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 400,
+      "standard_pseudocode_gate": "rejected_cross_boundary",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED"
+    },
+    {
+      "address": "0xfffffe0008988f58",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 73.311,
+      "exit_code": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_ops_inside_independent_bounds": 293,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31r-setup-mmu",
+      "limit_seconds": 100,
+      "pcode_operations": 293,
+      "private_output_sha256": "58df1b976762a0d00e4ccb73020d8038142f49dc41c45a04fcb4f0488da4ebff",
+      "private_run_record_sha256": "6212e067650d19d673ae4df33b2f23f21cf08b4f155fc46ff535fb4c1e88d875",
+      "rea_body_bytes": 1328,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 332,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED"
+    },
+    {
+      "address": "0xfffffe000895fc04",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch2",
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "elapsed_seconds": 71.596,
+      "exit_code": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_ops_inside_independent_bounds": 224,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31r-init-shared",
+      "limit_seconds": 100,
+      "pcode_operations": 224,
+      "private_output_sha256": "5ba77835a5c280097d1cec6e24dbc9e8faad4e0d7cb9c325014ed77213dc3092",
+      "private_run_record_sha256": "51dd531e2792d4025b86d4c6df5923c270493ece43c1ddd05f95a0eefce1aeab",
+      "rea_body_bytes": 1152,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 288,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED"
+    }
+  ],
+  "rea_cancelled_queries": 0,
+  "rea_completed_queries": 3,
+  "result": "STATIC_LIFECYCLE_EVIDENCE_NATIVE_HOLD",
+  "running_kernel_identity_verified": false,
+  "schema": "ilinux-gpu31r-firmware-evidence-v1",
+  "uat_runtime_layout": "UNKNOWN"
+}

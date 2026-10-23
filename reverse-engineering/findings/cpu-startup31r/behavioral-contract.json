@@ -1,0 +1,55 @@
+{
+  "evidence": "reverse-engineering/findings/cpu-startup31r/validation.json",
+  "hardware_test_ready": false,
+  "historical_path_confidence": "INFERRED_NOT_OBSERVED",
+  "native_controller_change": false,
+  "next_question": "Identify the successful range-service dispatcher in the retained generic boot chain and determine whether its bounded ownership contract covers the independently selected CPU1 entry memory.",
+  "prohibited_inferences": [
+    "A call after range setup is necessarily a CPU-release prerequisite.",
+    "Six firmware descriptors establish six CPU clusters.",
+    "An error reporter or state accessor owns successful supervisor-call range dispatch.",
+    "Service numbers are a Linux ABI or imply that firmware operations must be replayed.",
+    "A matching range base or completed startup store proves CPU1 instruction fetch."
+  ],
+  "schema": "ilinux-cpu-startup31r-behavioral-contract-v1",
+  "scope": "OFFLINE_RESEARCH_ONLY",
+  "stages": [
+    {
+      "allocation_bytes": 49152,
+      "effective_cpu1_pc": "NOT_ESTABLISHED",
+      "evidence_checkpoint": "31Q",
+      "id": "fallback-memory-ranges",
+      "view_bytes": 16384,
+      "view_count": 3
+    },
+    {
+      "confidence": "CONFIRMED_BOUNDED_STATIC",
+      "error_reporter_is_owner": false,
+      "handler_effects": "UNKNOWN",
+      "id": "range-service-boundary",
+      "local_wrapper_nonstack_stores": 0,
+      "service_classes": [
+        12,
+        17
+      ],
+      "successful_dispatch_owner": "UNKNOWN"
+    },
+    {
+      "confidence": "CONFIRMED_BOUNDED_STATIC",
+      "descriptor_bytes": 40,
+      "descriptor_count_bound": 6,
+      "descriptor_count_is_cpu_cluster_count": false,
+      "id": "following-descriptor-finalizer",
+      "native_eligibility": "UNKNOWN",
+      "native_operations_authorized": false,
+      "one_static_descriptor_inside_isp_resource": true
+    },
+    {
+      "analysis_site": "0x100c1ae5c60",
+      "cpu1_fetch": "UNVERIFIED",
+      "evidence_checkpoint": "31Q",
+      "id": "independent-entry-vector-operation",
+      "same_object_as_fallback_views": false
+    }
+  ]
+}
