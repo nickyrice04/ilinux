@@ -1,0 +1,316 @@
+{
+  "schema": "ilinux-cpu31u-bounded-handoff-comparison-v1",
+  "date": "2026-10-23",
+  "status": "PASS_OFFLINE_NATIVE_HOLD",
+  "native": "NOT_RUN",
+  "decoded_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "decoded_bytes": 4266536,
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "analysis_base": "0x100c1aa4000",
+  "analysis_base_is_runtime_address": false,
+  "decoded_file_offset_in_elf": 4096,
+  "byte_preserving_mapping": true,
+  "completed_queries": 2,
+  "query_failures": 0,
+  "queries": [
+    {
+      "label": "selected-object-range",
+      "requested_address": "0x100c1ca6da4",
+      "returned_entry": "0x100c1ca6da4",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "output_sha256": "a55bb2ad99024d9006719d993567fc506f53081e56dd1b2080b514f54cceca43",
+      "cli_exit": 0,
+      "seconds": 67.16674361599999,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "body_anchors": [
+        {
+          "start": "0x100c1ca6da4",
+          "end_inclusive": "0x100c1ca6e63",
+          "carrier_offset": 2108836,
+          "derived_offset": 2112932,
+          "bytes": 192,
+          "sha256": "8eff509f6fc1db0fae64a0f8765a628e4bc0516c153f21c695cca982e44a2cef"
+        }
+      ],
+      "assembly_instructions": 48,
+      "pcode_operations": 64,
+      "pcode_truncated": false,
+      "pcode_outside_body": 0,
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "label": "selected-object-layout",
+      "requested_address": "0x100c1ca7268",
+      "returned_entry": "0x100c1ca7268",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "output_sha256": "7f354dde175864ea481f8f5b0ee19db0be128e23a17c7fb8f394ffbe3e390dbd",
+      "cli_exit": 0,
+      "seconds": 67.18916469800001,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "body_anchors": [
+        {
+          "start": "0x100c1ca7268",
+          "end_inclusive": "0x100c1ca742f",
+          "carrier_offset": 2110056,
+          "derived_offset": 2114152,
+          "bytes": 456,
+          "sha256": "f926cf4ea5da76d509a952bf0414008c7863c4bc82c8659c98540e29509fca4e"
+        }
+      ],
+      "assembly_instructions": 114,
+      "pcode_operations": 2,
+      "pcode_truncated": false,
+      "pcode_outside_body": 0,
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "whole_function_pseudocode_accepted": false
+    }
+  ],
+  "query_script_sha256": "ed5b305cea40c3ebc1b83a57f6fb37c1953b7d7bedd997520084e340ff3de279",
+  "query_list_sha256": "6b27616f0752263b381c6b7df41f22053605c353c8d423ee57a9a537d7f44de7",
+  "environment": {
+    "interfaces": [
+      "lo"
+    ],
+    "physical_usb": false,
+    "vm_setup_exit": 0,
+    "vm_job_exit": 0
+  },
+  "independent_bounded_blocks": [
+    {
+      "label": "selected-object-range",
+      "start": "0x100c1ca6da4",
+      "end_exclusive": "0x100c1ca6e64",
+      "instruction_words": 48,
+      "code_bytes": 192,
+      "sha256": "8eff509f6fc1db0fae64a0f8765a628e4bc0516c153f21c695cca982e44a2cef",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "selected-object-layout",
+      "start": "0x100c1ca7268",
+      "end_exclusive": "0x100c1ca7430",
+      "instruction_words": 114,
+      "code_bytes": 456,
+      "sha256": "f926cf4ea5da76d509a952bf0414008c7863c4bc82c8659c98540e29509fca4e",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "range-record-base-accessor",
+      "start": "0x100c1ca7688",
+      "end_exclusive": "0x100c1ca7694",
+      "instruction_words": 3,
+      "code_bytes": 12,
+      "sha256": "af09014cb974144cb4df277a4da9a5683c5d930e6dbda7cc82f4fb58d013a8d6",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "producer-B-entry-context",
+      "start": "0x100c1ad44a4",
+      "end_exclusive": "0x100c1ad4544",
+      "instruction_words": 40,
+      "code_bytes": 160,
+      "sha256": "a3d89ec0cb44032048fa3b0bdd5cf31987ec66e518ce0ce2e8ef11094c988ef0",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "producer-B-subobject",
+      "start": "0x100c1ad79f0",
+      "end_exclusive": "0x100c1ad7a08",
+      "instruction_words": 6,
+      "code_bytes": 24,
+      "sha256": "9ca2ab9350c5ec684c456e61cd9df3327eca950e53acf67e4a9277bdf180ac4d",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "producer-selector-prerequisite",
+      "start": "0x100c1ad158c",
+      "end_exclusive": "0x100c1ad15f4",
+      "instruction_words": 26,
+      "code_bytes": 104,
+      "sha256": "f7965f659eb42baf02e88e3c9427243b0c51e7748376f0db16b20532ac407052",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "entry-vector-consumer",
+      "start": "0x100c1ae5c60",
+      "end_exclusive": "0x100c1ae5c8c",
+      "instruction_words": 11,
+      "code_bytes": 44,
+      "sha256": "5ea8768df436668dd61b4fc2eff536e06b81503558c4723a24bf62207337859e",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "range-consumer-helper-call-0",
+      "start": "0x100c1aec864",
+      "end_exclusive": "0x100c1aec868",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "0ad0d0043e729208e8a8366b7d1571ae517abf255ed466426f3d2bab41811bb3",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "range-consumer-helper-call-1",
+      "start": "0x100c1aec878",
+      "end_exclusive": "0x100c1aec87c",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "d71118b6b85373b2f479be885db42f345a0c6a2e4c5ed86f32e7218d844cce69",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "range-consumer-helper-call-2",
+      "start": "0x100c1aec88c",
+      "end_exclusive": "0x100c1aec890",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "76365b24c4819cfde6e977c8d3844cc116ffb288431c484a293e84aed17d0599",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "range-consumer-helper-call-3",
+      "start": "0x100c1aec8a0",
+      "end_exclusive": "0x100c1aec8a4",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "ce726ba5d21de4f97d15aca4feb8f9fb0f7312600a1d04d1dd6c6b169f30801c",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "range-consumer-helper-call-4",
+      "start": "0x100c1aec8b4",
+      "end_exclusive": "0x100c1aec8b8",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "a747a607dfeaea9906928f5f93154f1e11cb9f398a22a9329001526c08ef6168",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    },
+    {
+      "label": "range-consumer-helper-call-5",
+      "start": "0x100c1aec8c8",
+      "end_exclusive": "0x100c1aec8cc",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "8510e3197c23cf76aac68a0120bbcca1ec75988f15dc30c9d285a0c900f5d737",
+      "llvm_word_mismatches": 0,
+      "decoded_elf_match": true
+    }
+  ],
+  "independent_unique_instruction_words": 254,
+  "independent_code_bytes": 1016,
+  "new_words_beyond_prior_published_ranges": 165,
+  "overlap_prior_published_ranges": 89,
+  "llvm_word_mismatches": 0,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "named_records": [
+    {
+      "name": "TXM",
+      "address": "0x100c1eb3958",
+      "decoded_file_offset": 4258136,
+      "elf_file_offset": 4262232,
+      "bytes": 4,
+      "sha256": "af607e57ba434f443f50686994ccffd108272eb8db0166b1fddb031ca578797c"
+    },
+    {
+      "name": "SPTM",
+      "address": "0x100c1eb3a98",
+      "decoded_file_offset": 4258456,
+      "elf_file_offset": 4262552,
+      "bytes": 5,
+      "sha256": "5444e1e721b0891d6584f0a3b89a481b9fe06de8b696d1efdd668e456170ae30"
+    }
+  ],
+  "named_record_spacing": 320,
+  "range_consumer_calls": [
+    {
+      "site": "0x100c1aec864",
+      "helper": "0x100c1ca6da4"
+    },
+    {
+      "site": "0x100c1aec878",
+      "helper": "0x100c1ca6e64"
+    },
+    {
+      "site": "0x100c1aec88c",
+      "helper": "0x100c1ca6f9c"
+    },
+    {
+      "site": "0x100c1aec8a0",
+      "helper": "0x100c1ca7070"
+    },
+    {
+      "site": "0x100c1aec8b4",
+      "helper": "0x100c1ca71a8"
+    },
+    {
+      "site": "0x100c1aec8c8",
+      "helper": "0x100c1ca7268"
+    }
+  ],
+  "new_behavior": {
+    "range_helper_names_spatially_exact_sptm_record": true,
+    "range_record_fields": [
+      "0x10",
+      "0x18",
+      "0x20",
+      "0x68"
+    ],
+    "absent_record_path_skips_output_stores": true,
+    "range_helper_direct_system_register_or_service_operations": 0,
+    "layout_whole_function_inference": "REFUSED_PROVIDER_REMOVED_BLOCKS",
+    "producer_B_record_identity": "31L bounded context plus static SPTM tag; runtime context unobserved"
+  },
+  "retained_payload": {
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "bytes": 3932160,
+    "accepted_property_metadata_in_evidence": false,
+    "historical_executable_hash_captured": false,
+    "historical_raw_selection": "INFERRED_NOT_OBSERVED"
+  },
+  "decision": {
+    "first_static_divergence": "accepted descriptor gates additional-object loading before common image preparation",
+    "externally_relevant_differences": [
+      "entry source: raw descriptor/relocation versus selected object context",
+      "range source: object metadata versus separate allocated fallback views"
+    ],
+    "effective_CPU1_state": "UNKNOWN",
+    "missing_reset_release": "NOT_IDENTIFIED",
+    "workaround": "NOT_QUALIFIED",
+    "firmware_impossibility": "NOT_ESTABLISHED"
+  },
+  "limitations": [
+    "Addresses identify retained image only, never approved live reads.",
+    "Producer A removed blocks and producer B truncated P-code remain unrepaired from earlier passes.",
+    "Current raw metadata serializer is not the historical accepted descriptor.",
+    "SPTM-named data and available firmware do not establish a resident monitor or its entry contract.",
+    "Static range configuration is not effective CPU1 fetch/protection evidence."
+  ],
+  "physical_hardware_operations": 0,
+  "personalized_objects_read": 0,
+  "firmware_replay": false,
+  "protection_bypass": false
+}

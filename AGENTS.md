@@ -99,6 +99,30 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31U raw/XNU evidence and GPU receive path, 2026-10-23
+
+M1's 31T review `99146f7` is incorporated. Two CPU and four GPU REA queries
+completed in the existing isolated VM. Raw fallback ranges and loaded SPTM-object
+ranges are now distinguished, but historical selection/effective CPU1 state
+remain unknown. A public T6050 all-core guest report is a new lead; its host
+bootstrap and physical-entry provenance are not available in the located sources.
+No qualified raw-start workaround or Apple-only impossibility is established.
+
+Original C consumes the checked 72-byte GPU ring variant through explicit
+copy/publication callbacks, retains raw records, bounds types and snapshot drain,
+and stops on uncertain publication without retry. Real DMA ordering, mapping,
+roles and completion remain adapter prerequisites. Whole-function claims from
+the removed-block CPU layout query and truncated GPU dispatcher remain refused.
+
+**475 pins /225 Python methods /95 portable C groups PASS** on host, curated
+host and VM081; the new seven C groups pass Linux ASan/UBSan. Review bytes match;
+all14 earlier closures remain unchanged. No native performance/energy improvement
+was measured. macOS, volumes, policies, installed images and consumed receipts
+are unchanged. **Native31U HOLD / NOT RUN; no restart.** M1 follows
+`tools/m1n1-client/attempt31u-instructions.md` for independent offline review.
+Evidence: `native/boot/attempt31u/validation.json` and the three31U research notes.
+
+
 ### Latest M1 review — 31T offline PASS; native HOLD, 2026-10-23
 
 **Independent M1 review on `1f12a4a`: OFFLINE_PASS_NATIVE_HOLD.**

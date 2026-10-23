@@ -1,0 +1,446 @@
+{
+  "behavior_checks": {
+    "capacity_index_grid": 1785,
+    "concurrency_or_native_execution": false,
+    "copy_type_barrier_publication_order": "PASS",
+    "external_calls": "stop without executing",
+    "fetch_scenarios": 1923,
+    "hardware_barrier_scope": "inner-shareable",
+    "hardware_shift_alias_cases": 6,
+    "large_signed_index_pointer_cases": "NOT_VALIDATED",
+    "memory": "synthetic only",
+    "record_copy_bytes": 72,
+    "record_stride_bytes": 72,
+    "refusal_cases": 3,
+    "schema": "private-sequential-ring-checks-v1",
+    "snapshot_barrier_observed": false,
+    "snapshot_scenarios": 5,
+    "stale_shared_producer_cases": 1,
+    "status": "PASS",
+    "type_admission_cases": 128
+  },
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "consumed_review_commit": "99146f7",
+  "date": "2026-10-23",
+  "findings": [
+    {
+      "confidence": "Confirmed static bounded behavior",
+      "contract": "Copies 32-bit consumer and producer indices into cached state; validates both against capacity and requires data backing. No inline barrier observed in this bounded routine. Acquisition/coherency remains adapter responsibility.",
+      "id": "snapshot"
+    },
+    {
+      "confidence": "Confirmed static bounded behavior",
+      "contract": "Fetch consumes cached indices, copies exactly 72 bytes at 72-byte record stride, and does not reread shared producer. Equal cached indices and invalid consumer/backing take failure paths before record copying.",
+      "id": "copy"
+    },
+    {
+      "confidence": "Confirmed static bounded behavior",
+      "contract": "First copied 32-bit word selects a bit in a 64-bit admission mask before index advance/publication. Disallowed selection fails after copy and before consumer publication. Hardware variable-shift count aliases modulo64; original software deliberately rejects types>=64.",
+      "id": "type"
+    },
+    {
+      "confidence": "Confirmed static bounded behavior",
+      "contract": "After copy and type admission, advances cached consumer modulo capacity; observed inner-shareable barrier precedes shared consumer-index store. This is consumer reclamation ordering, not shared-data bootstrap publication, firmware acknowledgment, cache-maintenance sufficiency or native DMA qualification.",
+      "id": "publication"
+    },
+    {
+      "confidence": "Unknown beyond bounded edges",
+      "contract": "Event drain calls the checked fetch and separate device-control waiting routine. Its truncated P-code and provider-removed blocks forbid complete event/role/readiness interpretation. The wait routine has time/deadline-related direct calls and unresolved indirect calls; its name supplies no event acknowledgment contract.",
+      "id": "completion"
+    },
+    {
+      "confidence": "Unknown runtime binding",
+      "contract": "Role-dependent ring selection and statically resolved event-handler table entries do not establish runtime subclass, role-to-ADT correspondence or readiness. Static chained references are not runtime pointer authentication.",
+      "id": "roles"
+    }
+  ],
+  "firmware_abi": "UNKNOWN",
+  "gpu_enablement": "HOLD",
+  "hardware_operations": 0,
+  "independent_instruction_ranges": [
+    {
+      "carrier_offset": 26554800,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 484448,
+      "end_exclusive": "0xfffffe0008957268",
+      "id": "gpu31u-ring-snapshot",
+      "instruction_words": 46,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "b57350e0bcfabcf81501ce453577ac1cf0270c53fa9c83a6a2892173d52899bc",
+      "start": "0xfffffe00089571b0"
+    },
+    {
+      "carrier_offset": 26554984,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 484632,
+      "end_exclusive": "0xfffffe00089572bc",
+      "id": "gpu31u-ring-outstanding",
+      "instruction_words": 21,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "a57067796640d1dd2cc3ac4650f168a80126a884d6d27c86921096f8e6a00d51",
+      "start": "0xfffffe0008957268"
+    },
+    {
+      "carrier_offset": 26555068,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 484716,
+      "end_exclusive": "0xfffffe0008957478",
+      "id": "gpu31u-ring-fetch",
+      "instruction_words": 111,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "12d63e40347f176303b560869f573fec6a399bab56a2793931979b7c66a24096",
+      "start": "0xfffffe00089572bc"
+    },
+    {
+      "carrier_offset": 26512972,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 442620,
+      "end_exclusive": "0xfffffe000894ce64",
+      "id": "gpu31u-cold-boot-complete",
+      "instruction_words": 6,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "b5d936c0f0fd74e31d7889d9a9f25886503db55b36cebafd359398039ec71c66",
+      "start": "0xfffffe000894ce4c"
+    },
+    {
+      "carrier_offset": 26512996,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 442644,
+      "end_exclusive": "0xfffffe000894ce7c",
+      "id": "gpu31u-cold-boot-done",
+      "instruction_words": 6,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "75b22e8341ba4a6912c27d9228a05cf2072e105a967f524b006ba1d6dbc66315",
+      "start": "0xfffffe000894ce64"
+    },
+    {
+      "carrier_offset": 26682900,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 612548,
+      "end_exclusive": "0xfffffe0008976648",
+      "id": "gpu31u-gfx-booted",
+      "instruction_words": 13,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "63c99a82a3dae06065857d1c79ac15344922741a8205bfd63c3ee8bd3f1b2925",
+      "start": "0xfffffe0008976614"
+    },
+    {
+      "carrier_offset": 26591364,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 521012,
+      "end_exclusive": "0xfffffe000896008c",
+      "id": "gpu31u-controller-event",
+      "instruction_words": 2,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "d33fdb74881bcff46b1cf4fc3e20479b1882e0e683789e80e6d650554066a1aa",
+      "start": "0xfffffe0008960084"
+    },
+    {
+      "carrier_offset": 26467832,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 397480,
+      "end_exclusive": "0xfffffe0008943420",
+      "id": "gpu31u-drain-events",
+      "instruction_words": 1418,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "b703b643902f84bea6513bb45ae193048f35b9054057d90b91e3177767522b31",
+      "start": "0xfffffe0008941df8"
+    },
+    {
+      "carrier_offset": 26473684,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 403332,
+      "end_exclusive": "0xfffffe00089436d0",
+      "id": "gpu31u-wait-control",
+      "instruction_words": 127,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "503a27568faad85279bd738f273be88c99cc58c876d2e68be513947254e1fc30",
+      "start": "0xfffffe00089434d4"
+    }
+  ],
+  "independent_instruction_words": 1750,
+  "independent_instruction_words_in_queried_ranges": 1702,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "limitations": [
+    "All four standard gates remain manual_review_required; no dossier is automatically semantic evidence.",
+    "drain-events high P-code truncates at3000 operations: at least1 omitted operation and204 known omitted edges; provider_removed_blocks warning retained. Whole-high-P-code and whole-function completion/readiness claims refused.",
+    "The drain REA listing is1402 words versus1418 independently checked symbol-bounded words. All listed words/P-code addresses remain inside bounds; no complete listing claim.",
+    "Earlier31Q/31R cross-boundary refusals and31T truncated-allocation refusal remain unchanged.",
+    "Synthetic checks are bounded sequential instruction interpretation, not native execution of Apple code, concurrency validation or cache-coherence proof; pointer authentication and high signed-index paths unqualified.",
+    "Observed consumer-index barrier does not qualify mapping publication, cache maintenance, page-table commit/TLBI order, bootstrap completion or firmware readiness.",
+    "Caller-supplied masks/capacities and full raw records do not establish event labels, GFX/GFX1 roles or a complete firmware wire ABI.",
+    "The public comparators have different implementations/builds; matching record size is corroboration only.",
+    "No native allocator, DMA mapping, device adapter, firmware submission, MMIO, device open, boot operation or performance measurement is provided.",
+    "Apple bytes, disassembly and P-code remain solely in ignored private artifacts."
+  ],
+  "module_manifest_sha256": "b643ce31384e20aaa89aca7cb634f73f3224f9b6d43e8134c31726a5c5848bbe",
+  "native_validation": "NOT_RUN",
+  "network_checks": [
+    {
+      "batch": "out-batch1",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    },
+    {
+      "batch": "out-batch2",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    }
+  ],
+  "original_component_contract": {
+    "allowed_types": "caller-provided uint64 mask; type>=64 refused before publication",
+    "automatic_retry": false,
+    "byte_offsets": "checked extent and uint64 multiplication; original arithmetic policy, not native capacity qualification",
+    "callbacks": [
+      "copy stable full record",
+      "perform platform-qualified read-before-consumer-store ordering and publish index"
+    ],
+    "caller_obligations": [
+      "sole consumer and serialized untampered state",
+      "stable mapped extent and lifetime",
+      "index acquisition and record coherence",
+      "producer must not overwrite unread records",
+      "real device/DMA publication ordering"
+    ],
+    "capacity_and_indices": "uint32; nonzero capacity, both indices strictly below capacity",
+    "code_review": "No behavioral blocker found within documented offline adapter contract; parent owns tests and integration execution.",
+    "copy_failure": "terminal refusal, no publication",
+    "copy_preserves_full_raw_record": true,
+    "event_labels_inferred": false,
+    "firmware_readiness_inferred": false,
+    "native_adapter": false,
+    "original_policy_differences": [
+      "safe EMPTY/refusal instead of private panic",
+      "strict type>=64 rejection instead of hardware shift alias",
+      "explicit callback statuses and ambiguous-publication retention"
+    ],
+    "path": "kernel/experiments/gpu31u",
+    "producer_snapshot": "immutable for one bounded batch",
+    "publication_failure": "terminal unknown-effects result retains record/proposed index/status; no retry",
+    "record_bytes": 72,
+    "record_type_encoding": "first four copied bytes, little-endian uint32",
+    "type_failure": "terminal refusal after raw copy, no publication"
+  },
+  "parent_vm_outcome": {
+    "both_batches": "SETUP_EXIT=0 JOB_EXIT=0",
+    "initial_launch_refusal": "GPU-A sandbox VZ failure before guest execution retained separately by parent",
+    "source": "parent run completion reports; no subagent VM execution"
+  },
+  "private_behavior_check_sha256": "6e6fae80634f100fb9914881ca07698c19be54859a4f42ce6d346fd71c67628b",
+  "private_original_assertions_sha256": "15743dddcadec0675d4519d43edbfa5f7e77004666acf0b5d5ee324a5e816dd4",
+  "private_original_evaluator_sha256": "9144590c9c844a5fb74db423130a39f048f59d0ab311afc8f058893967f0885f",
+  "public_comparison": {
+    "asahi": "Pinned receive poll captures producer once and publishes consumer after draining; its EventMsg records are56 bytes, so ordering comparison does not supply the72-byte ABI.",
+    "vinix": "Pinned inactive G17C path uses72-byte records and256 slots, validates type<32 with fixed mask, and rereads producer for each dequeue. Its25F71/AGX351.2/RTKit3255.120.11 observation differs from retained25G83 carrier. No native compatibility or event semantics imported."
+  },
+  "public_sources": [
+    {
+      "bytes": 140829,
+      "commit": "ffb1fc5b87660104de4c268804cf1fb2d8afe4bc",
+      "execution": "read and hash only; never imported or executed",
+      "path": "kernel/gpu/agx/fw/g17.v",
+      "repository": "vlang/vinix",
+      "sha256": "a2dad16ef622ebde9559f7b29d137de435237e6c62bc99befd9a7b5d5c6b0ab5",
+      "url": "https://github.com/vlang/vinix/blob/ffb1fc5b87660104de4c268804cf1fb2d8afe4bc/kernel/gpu/agx/fw/g17.v"
+    },
+    {
+      "bytes": 151737,
+      "commit": "ffb1fc5b87660104de4c268804cf1fb2d8afe4bc",
+      "execution": "read and hash only; never imported or executed",
+      "path": "tools/agx-re/G17_T6050.md",
+      "repository": "vlang/vinix",
+      "sha256": "3a4666b8724c61ed44437c1c93ab450b120a0f00e41dc1ee577974af03e93468",
+      "url": "https://github.com/vlang/vinix/blob/ffb1fc5b87660104de4c268804cf1fb2d8afe4bc/tools/agx-re/G17_T6050.md"
+    },
+    {
+      "bytes": 4900,
+      "commit": "7cde7d1a784d851ebfee5579fa363c38b14150c0",
+      "execution": "read and hash only; never imported or executed",
+      "path": "proxyclient/m1n1/agx/channels.py",
+      "repository": "AsahiLinux/m1n1",
+      "sha256": "dfb71f0e37044dd1b41ec71b13547e45b560b9e1c3e31f17e4d22a4dffd71124",
+      "url": "https://github.com/AsahiLinux/m1n1/blob/7cde7d1a784d851ebfee5579fa363c38b14150c0/proxyclient/m1n1/agx/channels.py"
+    },
+    {
+      "bytes": 17918,
+      "commit": "7cde7d1a784d851ebfee5579fa363c38b14150c0",
+      "execution": "read and hash only; never imported or executed",
+      "path": "proxyclient/m1n1/fw/agx/channels.py",
+      "repository": "AsahiLinux/m1n1",
+      "sha256": "d1486e64d0b8e60d3272f29cce06a20c564bbf75f89d79b15fb24522132fe60e",
+      "url": "https://github.com/AsahiLinux/m1n1/blob/7cde7d1a784d851ebfee5579fa363c38b14150c0/proxyclient/m1n1/fw/agx/channels.py"
+    }
+  ],
+  "queries": [
+    {
+      "address": "0xfffffe00089572bc",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 72.807,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 153,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31u-ring-fetch",
+      "limit_seconds": 100,
+      "pcode_operations": 153,
+      "private_output_sha256": "9edcd2b47af7a802a4b42b810c5fb97a3be4eabf5d7a3beb0febe4424cb403e6",
+      "private_run_record_sha256": "b59567193e97b8e0610b8b078cb6718198432f327aaf80f265adcb3f0225b4fc",
+      "rea_body_bytes": 444,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 111,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    },
+    {
+      "address": "0xfffffe00089571b0",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 72.724,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 33,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31u-ring-snapshot",
+      "limit_seconds": 100,
+      "pcode_operations": 33,
+      "private_output_sha256": "5cc756cc1311f957449811f2c72d1b08c1f925f352d73a47302625c19dbe4a5b",
+      "private_run_record_sha256": "affe9ad9dbf8edecbf8f3a7148eb2fd6f5cc602b907376beb10eed0548cc2396",
+      "rea_body_bytes": 184,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 46,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    },
+    {
+      "address": "0xfffffe0008941df8",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch2",
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "elapsed_seconds": 72.474,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 204,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 1,
+      "high_pcode_ops_inside_independent_bounds": 3000,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": true,
+      "id": "gpu31u-drain-events",
+      "limit_seconds": 100,
+      "pcode_operations": 3000,
+      "private_output_sha256": "64494a22d447fce06e4e8fbf0a89070b7dfe286126815b343414eae2d2b19565",
+      "private_run_record_sha256": "22064059d9a4f63d69d73d01d30228b695e9f107bc9d6924daa350b17b9b328d",
+      "rea_body_bytes": 5608,
+      "rea_listing_covers_symbol_bounded_range": false,
+      "rea_listing_instruction_words": 1402,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "REFUSED_TRUNCATED"
+    },
+    {
+      "address": "0xfffffe00089434d4",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch2",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 71.729,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 147,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31u-wait-control",
+      "limit_seconds": 100,
+      "pcode_operations": 147,
+      "private_output_sha256": "e44162a02f7760fa9d17343d30ac2156cab241a7c65e89ab065a596c8fc8c261",
+      "private_run_record_sha256": "2a6c5ebea75fd80ec34cceb326bed6996a3db493f7064e88cf54b7f7483ab0db",
+      "rea_body_bytes": 508,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 127,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    }
+  ],
+  "rea_completed_queries": 4,
+  "rea_not_completed_queries": 0,
+  "rea_total_high_pcode_operations": 3333,
+  "rea_truncated_high_pcode_queries": 1,
+  "result": "STATIC_RING_CONSUMPTION_CONTRACT_NATIVE_HOLD",
+  "running_kernel_identity_verified": false,
+  "runtime_gpu_firmware_address_binding": "UNQUALIFIED",
+  "runtime_role_to_adt_binding": "UNQUALIFIED",
+  "schema": "ilinux-gpu31u-firmware-evidence-v1",
+  "static_collection_references": [
+    {
+      "address": "0xfffffe0007e0caf0",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN14AGXArmFirmware29handleFirmwareControllerEventEPK26AGFIFirmwareEventRingEntry"
+      ],
+      "pointer_format": 8,
+      "slot": 2168,
+      "target": "0xfffffe0008960084",
+      "vtable": "AGXArmFirmwareASC"
+    },
+    {
+      "address": "0xfffffe0007e0c448",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN14AGXArmFirmware24isGPURecoveryPacketStaleEPK27AGFIFirmwareEventHWRecovery"
+      ],
+      "pointer_format": 8,
+      "slot": 464,
+      "target": "0xfffffe000896d090",
+      "vtable": "AGXArmFirmwareASC"
+    }
+  ],
+  "uat_runtime_layout": "UNKNOWN"
+}

@@ -1,0 +1,187 @@
+{
+  "cpu1_execution": "UNVERIFIED",
+  "cpu_rea": {
+    "effective_cpu1_entry_state": "UNKNOWN",
+    "historical_branch": "NOT_OBSERVED",
+    "record": "reverse-engineering/findings/cpu-startup31u/validation.json",
+    "sha256": "fcb2e47bdb665dacbc0c3845efa8b79f52d66165a7fa1a6adb6e7ba30c302ec9",
+    "successful_queries": 2
+  },
+  "date_local": "2026-10-23",
+  "energy": "UNMEASURED",
+  "frozen": {
+    "attempt31h": {
+      "pins": 186,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "attempt31i": {
+      "pins": 202,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "attempt31j": {
+      "pins": 226,
+      "result": "PASS_UNCHANGED",
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "attempt31j-host": {
+      "pins": 6,
+      "result": "PASS_UNCHANGED",
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    },
+    "attempt31k": {
+      "pins": 254,
+      "result": "PASS_UNCHANGED",
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "attempt31l": {
+      "pins": 281,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "attempt31m": {
+      "pins": 306,
+      "result": "PASS_UNCHANGED",
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    },
+    "attempt31n": {
+      "pins": 330,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+    },
+    "attempt31o": {
+      "pins": 348,
+      "result": "PASS_UNCHANGED",
+      "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+    },
+    "attempt31p": {
+      "pins": 379,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c"
+    },
+    "attempt31q": {
+      "pins": 402,
+      "result": "PASS_UNCHANGED",
+      "sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6"
+    },
+    "attempt31r": {
+      "pins": 420,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4"
+    },
+    "attempt31s": {
+      "pins": 441,
+      "result": "PASS_UNCHANGED",
+      "sha256": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158"
+    },
+    "attempt31t": {
+      "pins": 458,
+      "result": "PASS_UNCHANGED",
+      "sha256": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7"
+    }
+  },
+  "gpu_original": {
+    "component": "kernel/experiments/gpu31u/ring.c",
+    "native_adapter": "NOT_IMPLEMENTED",
+    "native_readiness": "NOT_ESTABLISHED",
+    "publication": "INJECTED_CALLBACK_CONTRACT_ONLY",
+    "record_bytes": 72,
+    "type_semantics": "UNQUALIFIED"
+  },
+  "gpu_rea": {
+    "prior_refusals_preserved": true,
+    "record": "reverse-engineering/findings/gpu31u/validation.json",
+    "running_kernel_identity_match": "NOT_INDEPENDENTLY_ESTABLISHED",
+    "sha256": "6b2fa4cf6bdbdf2c172e167b058cf363155ed861db53f98b17edab5774d25aea",
+    "successful_queries": 4,
+    "whole_event_dispatcher_semantics": "NOT_ACCEPTED"
+  },
+  "host": {
+    "architecture": "arm64",
+    "build": "25G83",
+    "c_groups": 95,
+    "compiler": "Apple clang21.0.0",
+    "os": "macOS 26.6.2",
+    "python": "3.9.6",
+    "python_methods": 225,
+    "result": "PASS"
+  },
+  "initial_host_vm_start": {
+    "evidence_preserved": true,
+    "isolated_retry": "PASS_WITH_ESCALATED_EXISTING_VM_WRAPPER",
+    "reason": "Virtualization.framework unavailable inside sandbox",
+    "result": "REFUSED_BEFORE_GUEST"
+  },
+  "integration": {
+    "new_c_asan": "PASS",
+    "new_c_groups": 7,
+    "new_c_ubsan": "PASS",
+    "prior_c_groups": 88,
+    "python_methods": 225,
+    "record": "virtualization/jobs/081-offline31u/validation.json",
+    "result": "PASS",
+    "sha256": "5e855de9e466ed1b2e7a7edb2ab55a44f29d9ca09c7a75a0c937e7c5d238173e"
+  },
+  "limitations": [
+    "Static raw/XNU differences do not establish historical branch selection or effective CPU1 state.",
+    "Attributed all-core guest results lack the public host bootstrap needed to reproduce on this raw boot.",
+    "The ring reader is a specific72-byte variant, not a complete firmware ABI or readiness decoder.",
+    "Snapshot stability, sole-consumer ownership and actual device/DMA ordering are native adapter duties.",
+    "Truncated event dispatcher and removed-block layout queries do not support whole-function conclusions.",
+    "Private Apple bytes, disassembly, pseudocode and identifiers remain excluded from public artifacts."
+  ],
+  "linux_smp": "NOT_RUN",
+  "m1": {
+    "instructions": "tools/m1n1-client/attempt31u-instructions.md",
+    "prior31t_review": "PASS_OFFLINE_NATIVE_HOLD",
+    "prior31t_review_commit": "99146f7",
+    "this31u_review": "NOT_RUN_PENDING_M1"
+  },
+  "native31u": "HOLD / NOT RUN",
+  "native_gpu_acceleration": "NOT_RUN",
+  "native_operations": 0,
+  "performance": "UNMEASURED",
+  "preservation": {
+    "boot_policy_changes": 0,
+    "installed_native_image_changed": false,
+    "macos_changes": 0,
+    "previous_consumed_receipts_changed": false,
+    "unrelated_untracked_work": "PRESERVED",
+    "volumes_changed": 0
+  },
+  "rea_batches": {
+    "cpu-a": {
+      "job_exit": 0,
+      "setup_exit": 0
+    },
+    "gpu-a": {
+      "job_exit": 0,
+      "setup_exit": 0
+    },
+    "gpu-b": {
+      "job_exit": 0,
+      "setup_exit": 0
+    }
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "retained_boot021_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "review_outputs": {
+    "byte_identical": true,
+    "curated_host_sha256": "3f5aba9fcc965b797bfde72887ad6894301f9831351414552ee2974d4cd2c155",
+    "host_sha256": "3f5aba9fcc965b797bfde72887ad6894301f9831351414552ee2974d4cd2c155",
+    "vm_sha256": "3f5aba9fcc965b797bfde72887ad6894301f9831351414552ee2974d4cd2c155"
+  },
+  "reviewed_parent_commit": "99146f791e456dc5d9cb5a2c1e5c6346d86c8e50",
+  "schema": "ilinux-attempt31u-offline-v1",
+  "source_manifest_sha256": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25",
+  "source_pins": 475,
+  "upstream": {
+    "only_apple_can_fix": "NOT_ESTABLISHED",
+    "record": "research/native31u-upstream.md",
+    "sha256": "2a13ff1ff7bf19112df2370dd16c9989264e612c1fdb4f2ff1f52a9f4fcf5b25",
+    "third_party_code_executed": false,
+    "verified_current_machine_raw_smp_workaround": false
+  }
+}

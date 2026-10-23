@@ -3781,3 +3781,34 @@ and G17C ownership/publication work. Evidence:
 **Decision:** Publish the offline review while preserving all consumed evidence.
 Explicit callback ownership is useful software structure, not a qualified native
 GPU mapping adapter or CPU-start correction. No physical follow-up or restart.
+
+
+### 2026-10-23 · Publish31U ring implementation and handoff evidence; no physical retry
+
+M1's 31T review `99146f7` is incorporated. Two CPU and four GPU REA queries
+completed in the existing isolated VM. Raw fallback ranges and loaded SPTM-object
+ranges are now distinguished, but historical selection/effective CPU1 state
+remain unknown. A public T6050 all-core guest report is a new lead; its host
+bootstrap and physical-entry provenance are not available in the located sources.
+No qualified raw-start workaround or Apple-only impossibility is established.
+
+Original C consumes the checked 72-byte GPU ring variant through explicit
+copy/publication callbacks, retains raw records, bounds types and snapshot drain,
+and stops on uncertain publication without retry. Real DMA ordering, mapping,
+roles and completion remain adapter prerequisites. Whole-function claims from
+the removed-block CPU layout query and truncated GPU dispatcher remain refused.
+
+**475 pins /225 Python methods /95 portable C groups PASS** on host, curated
+host and VM081; the new seven C groups pass Linux ASan/UBSan. Review bytes match;
+all14 earlier closures remain unchanged. No native performance/energy improvement
+was measured. macOS, volumes, policies, installed images and consumed receipts
+are unchanged. **Native31U HOLD / NOT RUN; no restart.** M1 follows
+`tools/m1n1-client/attempt31u-instructions.md` for independent offline review.
+Evidence: `native/boot/attempt31u/validation.json` and the three31U research notes.
+
+**Decision:** retain the raw path and earlier receipts. Do not substitute image
+classification or invoke protection/monitor operations from static evidence.
+First qualify the alternate report's exact host/accepted payload/firmware and
+physical secondary path; separately resolve actual ring mapping, acquisition
+and bounded completion. The tested receive component advances original code
+without claiming a native GPU or repeating an indistinguishable CPU boot.
