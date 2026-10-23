@@ -3910,3 +3910,47 @@ entry and G17C mapping/progress/completion qualification. Evidence:
 **Decision:** Publish the bounded software result and preserve all consumed
 evidence. Queue publication is not delivery or readiness; runtime mediation
 is not accepted native bootstrap provenance. No physical follow-up or restart.
+
+
+### 2026-10-23 · Publish31W; defer CPU retries until discriminating evidence exists
+
+M1's31V review `9befeb3` is incorporated. One CPU and two GPU REA queries
+completed in two isolated batches. The retained monitor's declared primary entry
+requires prepared context and memory state; it is not a stand-alone secondary
+start operation. Independent instruction checks support those narrow findings;
+removed-block whole-function pseudocode remains refused.
+
+**CPU decision: defer unchanged native retries.** No verified software workaround
+is available. A raw-path firmware/handoff defect is supported by matching failure
+reports, but an Apple-only dependency across all compatible paths is unproven.
+Reopen CPU implementation with an applicable accepted-host/context revision and
+physical-secondary provenance, or an independently qualified effective-entry or
+early-fault discriminator. Guest CPU counts and unchanged start stores do not
+qualify. Exact-board public patches add diagnostics/late-entry handling but no
+new successful start operation; the alternate host bootstrap is still missing.
+
+Original C now composes the frozen31V mapping producer with explicit near-full
+note acceptance before record copy/publication. Unknown effects stop without
+retry; full queues refuse without waiting. Native endpoint eligibility, firmware
+message semantics, mapping, DMA visibility and completion remain unqualified.
+Another version calls the same word halt; matching bits do not justify a benign
+notification label or hardware use. This is offline driver infrastructure, not
+native GPU acceleration or a measured performance improvement.
+
+**509 pins /243 Python methods /111 portable C groups PASS** on host, curated
+host and VM083. The new eight C groups pass Linux ASan/UBSan; review output bytes
+match. All16 older closures are unchanged. Independent code/intake/scope review
+found no remaining blocker; comparator links were corrected before freezing.
+macOS, volumes, policies, installed images and consumed receipts are unchanged.
+**Native31W HOLD / NOT RUN; no restart.** M1 follows
+`tools/m1n1-client/attempt31w-instructions.md` for independent offline review.
+Evidence: `native/boot/attempt31w/validation.json` and the three31W research notes.
+
+**Decision:** do not manufacture an alternate-host boot object or replay monitor
+initialization from this static entry description. The accepted bootstrap and
+physical-secondary chain must be qualified first. Treat the current CPU track
+as practically blocked, without claiming every software route impossible or
+requiring an unverified Apple fix. Continue useful original GPU work offline;
+qualify the firmware-side meaning and completion path before adding a native
+adapter. The new strict acceptance policy and stop-on-full policy are deliberate
+Linux design choices, not assertions of private implementation equivalence.

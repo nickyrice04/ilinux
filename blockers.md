@@ -1,5 +1,40 @@
 # Blockers
 
+## Current — 31W CPU practically blocked; Apple-only necessity unproven
+
+M1's31V review `9befeb3` is incorporated. One CPU and two GPU REA queries
+completed in two isolated batches. The retained monitor's declared primary entry
+requires prepared context and memory state; it is not a stand-alone secondary
+start operation. Independent instruction checks support those narrow findings;
+removed-block whole-function pseudocode remains refused.
+
+**CPU decision: defer unchanged native retries.** No verified software workaround
+is available. A raw-path firmware/handoff defect is supported by matching failure
+reports, but an Apple-only dependency across all compatible paths is unproven.
+Reopen CPU implementation with an applicable accepted-host/context revision and
+physical-secondary provenance, or an independently qualified effective-entry or
+early-fault discriminator. Guest CPU counts and unchanged start stores do not
+qualify. Exact-board public patches add diagnostics/late-entry handling but no
+new successful start operation; the alternate host bootstrap is still missing.
+
+Original C now composes the frozen31V mapping producer with explicit near-full
+note acceptance before record copy/publication. Unknown effects stop without
+retry; full queues refuse without waiting. Native endpoint eligibility, firmware
+message semantics, mapping, DMA visibility and completion remain unqualified.
+Another version calls the same word halt; matching bits do not justify a benign
+notification label or hardware use. This is offline driver infrastructure, not
+native GPU acceleration or a measured performance improvement.
+
+**509 pins /243 Python methods /111 portable C groups PASS** on host, curated
+host and VM083. The new eight C groups pass Linux ASan/UBSan; review output bytes
+match. All16 older closures are unchanged. Independent code/intake/scope review
+found no remaining blocker; comparator links were corrected before freezing.
+macOS, volumes, policies, installed images and consumed receipts are unchanged.
+**Native31W HOLD / NOT RUN; no restart.** M1 follows
+`tools/m1n1-client/attempt31w-instructions.md` for independent offline review.
+Evidence: `native/boot/attempt31w/validation.json` and the three31W research notes.
+
+
 ## Current — 31V independently reviewed; accepted host/native adapter unqualified
 
 **Independent M1 review on `dca49e3`: OFFLINE_PASS_NATIVE_HOLD.**

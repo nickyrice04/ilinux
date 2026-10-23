@@ -1,0 +1,355 @@
+{
+  "behavior_checks": {
+    "concurrency_or_cache_proof": false,
+    "direct_send_status_cases": 3,
+    "external_effects": "stubbed",
+    "guard_exclusion_cases": 2,
+    "native_execution": false,
+    "near_full_order_cases": 256,
+    "note_before_new_record_copy": "PASS",
+    "note_status_does_not_gate_private_insertion": "PASS",
+    "note_word": "0x0085000000000000",
+    "ordinary_ring_cases": 256,
+    "outer_boolean": false,
+    "pointer_authentication_proven": false,
+    "provider_role_cases": 2,
+    "status": "PASS",
+    "total_cases": 522,
+    "unknown_error_path_statuses_qualified": false,
+    "wrapper_status_cases": 3
+  },
+  "callsite_reference_checks": [
+    {
+      "callsite": "0xfffffe000896d118",
+      "chain_membership_verified": true,
+      "discriminator_consistent": true,
+      "slot": 2176,
+      "vtable": "AGXFirmwareKextG17RTBuddy"
+    },
+    {
+      "callsite": "0xfffffe000896b800",
+      "chain_membership_verified": true,
+      "discriminator_consistent": true,
+      "slot": 2216,
+      "vtable": "AGXFirmwareKextG17RTBuddy"
+    },
+    {
+      "callsite": "0xfffffe00088f9440",
+      "chain_membership_verified": true,
+      "discriminator_consistent": true,
+      "slot": 488,
+      "vtable": "RTBuddyEndpoint"
+    }
+  ],
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "consumed_review_commit": "9befeb3",
+  "date": "2026-10-23",
+  "findings": [
+    {
+      "confidence": "Confirmed selected static and synthetic paths",
+      "contract": "Initialization stores provider roles0/1 in distinct slots separated by56 bytes; the near-full insertion reads the role0 slot. Provider vtable slots2176/2216 resolve pointer binding and asynchronous-note forwarding. Numeric role0 is not an ADT identity.",
+      "id": "provider_role"
+    },
+    {
+      "confidence": "Confirmed bounded call arguments and static references",
+      "contract": "One free entry, consumer==(producer+2)%256, invokes provider role0 with word0x0085000000000000 and Boolean false before record copy. The wrapper preserves both through gated dispatch. The admitted direct gated path selects the endpoint associated with0x21 and forwards the word buffer to RTBuddyEndpoint sendMessage; its separate Boolean true is not assigned operational meaning.",
+      "id": "note_transport"
+    },
+    {
+      "confidence": "Confirmed selected bounded path; other paths unqualified",
+      "contract": "The direct endpoint-send path requires a non-null stored endpoint and a zero provider guard byte. Endpoint absence or nonzero guard excludes this direct call. The private guard byte is not a public readiness/permission API; diagnostic/error/suppression paths and their status conventions are not qualified.",
+      "id": "direct_path_guard"
+    },
+    {
+      "confidence": "Confirmed bounded status forwarding and causal ordering",
+      "contract": "Selected wrapper and direct-send paths return the injected transport status unchanged. Insertion does not branch on the note return before copying and publishing. The note precedes the new record, so its return cannot acknowledge that unpublished record. Firmware processing, mapping completion and readiness remain unknown.",
+      "id": "status_and_completion"
+    }
+  ],
+  "firmware_abi": "UNKNOWN",
+  "gpu_enablement": "HOLD",
+  "hardware_operations": 0,
+  "independent_instruction_ranges": [
+    {
+      "carrier_offset": 26644652,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 574300,
+      "end_exclusive": "0xfffffe000896d130",
+      "id": "gpu31w-init-provider",
+      "instruction_words": 33,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "98ec6a9b1cef6d7f2c8f8ede9ac9ee692709b985c067c4e6551aacdfbba65fc9",
+      "start": "0xfffffe000896d0ac"
+    },
+    {
+      "carrier_offset": 26170300,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 9148,
+      "end_exclusive": "0xfffffe00088f95d8",
+      "id": "gpu31w-note-gated",
+      "instruction_words": 135,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "20feb58aed1f52713e2676fcc648db197e0ce09de73bec6e89190bd5d1195490",
+      "start": "0xfffffe00088f93bc"
+    },
+    {
+      "carrier_offset": 26170840,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 9688,
+      "end_exclusive": "0xfffffe00088f96e4",
+      "id": "gpu31w-note-wrapper",
+      "instruction_words": 67,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "d61c58c4bfce87d12b61c8c2fa24f6ef0ffeaf726a06fd2c50a84e4d92eaf88f",
+      "start": "0xfffffe00088f95d8"
+    },
+    {
+      "carrier_offset": 26638208,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 567856,
+      "end_exclusive": "0xfffffe000896b8e0",
+      "id": "gpu31w-insert-mapping-entry",
+      "instruction_words": 88,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "02c0ca36e98c94bbdcbd05f7b9189dfa3e07f1762e9eaee16351990177382edb",
+      "start": "0xfffffe000896b780"
+    }
+  ],
+  "independent_instruction_words": 323,
+  "independent_instruction_words_in_queried_ranges": 168,
+  "independent_instruction_words_repeated_from_31v": 88,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "inherited_evidence": [
+    {
+      "path": "research/native31r-gpu-firmware.md",
+      "purpose": "Endpoint match/termination selectors0x20 and0x21",
+      "sha256": "6340d898b9d7a4d2d026c06cb0a561b12ed980cb022f19135321b2a56e240e4e"
+    },
+    {
+      "path": "reverse-engineering/findings/gpu31v/validation.json",
+      "purpose": "Fixed24-byte mapping record and ring; two cross-boundary refusals remain frozen",
+      "sha256": "5f794ce13217731a947148f24e1335fe1eda7dff931d16ca8cf4cf275a81f29a"
+    }
+  ],
+  "limitations": [
+    "Both fresh gates require manual review. Gated send retains unresolved-indirect-jump and provider-removed-block warnings; whole-function equivalence is not asserted.",
+    "Earlier31Q/31R cross-boundary,31T allocation truncation,31U dispatcher truncation, and both31V cross-boundary refusals remain unchanged. Rechecking bounded insertion instructions does not admit its refused whole P-code.",
+    "Synthetic checks interpret selected numeric instruction behavior with fabricated memory and stubbed external calls; no native execution of Apple code, PAC proof, concurrency, device visibility or firmware response.",
+    "Five static collection references and three matching callsite discriminators do not prove a runtime subclass, authenticated pointer, provider incarnation, endpoint lifetime or ADT role.",
+    "No semantic label is assigned to0x85 or the Boolean arguments. Adapter acceptance is neither firmware receipt nor completion; a zero private status does not establish direct delivery.",
+    "There is no native mapping/transport adapter, completion event, boot procedure, hardware operation or performance measurement. Apple bytes, assembly and P-code remain ignored and private."
+  ],
+  "module_manifests": [
+    {
+      "module": "AGXG17X",
+      "sha256": "b643ce31384e20aaa89aca7cb634f73f3224f9b6d43e8134c31726a5c5848bbe"
+    },
+    {
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "sha256": "ae8199c520cf2ee64859dd94528a26f5b673451f9211e93bd9274317f402bf7c"
+    }
+  ],
+  "native_validation": "NOT_RUN",
+  "network_checks": [
+    {
+      "batch": "out-batch1",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    }
+  ],
+  "original_component_contract": {
+    "automatic_retry": false,
+    "caller_obligations": [
+      "qualified provider incarnation and role",
+      "accepted live endpoint and actual direct-send eligibility",
+      "firmware/version qualification",
+      "serialization across note and publication",
+      "all frozen31V address, mapping, index, ownership and DMA-ordering preconditions",
+      "external reconciliation after unknown effects, including before a new-object retry"
+    ],
+    "composition_dependency": "kernel/experiments/gpu31v",
+    "effect_order": [
+      "qualified note acceptance when one entry remains",
+      "31V record write",
+      "31V DMA-safe producer publication"
+    ],
+    "endpoint_selector": 33,
+    "firmware_readiness_inferred": false,
+    "full_policy": "Refuse without callbacks or waiting; original stricter bounded policy",
+    "native_adapter": false,
+    "near_full_predicate": "consumer == (producer + 2) % 256",
+    "note_acceptance_policy": "Explicit adapter acceptance separate from opaque status; unknown or suppressed send stops before write, retains receipt, and forbids retry",
+    "note_word": "0x0085000000000000",
+    "outer_boolean": false,
+    "path": "kernel/experiments/gpu31w",
+    "policy_difference": "Private insertion does not gate on note return; original code deliberately requires explicit acceptance",
+    "provider_role": 0,
+    "review": "No behavioral blocker in original pressure.h/c composition; parent owns final tests and integration."
+  },
+  "parent_vm_outcome": {
+    "batch1": "SETUP_EXIT=0 JOB_EXIT=0",
+    "source": "Parent completion report; root alone executed VM and held locks"
+  },
+  "private_behavior_check_sha256": "1c864fba7f24557d30ae22cae84cdd4fb44480ce3c2622a27d52ff26b3f4e7a5",
+  "private_original_assertions_sha256": "d67394334adbe692c0a67477ee48fc2761f88607101168d7b082592af87c31cd",
+  "private_original_evaluator_sha256": "0da5f76b293bdfaca4f8e68f00d4a705ce2cdf4cbf2fefcb3ade3491f370e31d",
+  "private_query_batch_sha256": "c0d860ddef053b58672fca863b25c8137f02f06662aa2f639f350292f7753969",
+  "public_comparison": {
+    "details": "research/native31v-upstream.md",
+    "source_context": "Vinix25F71/AGX351.2/RTKit3255.120.11 differs from retained local25G83",
+    "vinix": "Pinned source names0x85<<48 halt and0x84<<48 firmware control. Its complete flush is G13-only, and G17 initialization remains behind closed admission. The local note is opaque: neither halt nor benign kick/flush semantics transfer across versions."
+  },
+  "public_sources": [
+    {
+      "bytes": 47646,
+      "commit": "ffb1fc5b87660104de4c268804cf1fb2d8afe4bc",
+      "execution": "read and hash only; never imported or executed",
+      "path": "kernel/gpu/agx/gpu/gpu.v",
+      "repository": "vlang/vinix",
+      "sha256": "0163058f9b13f4333f43b4936696290bdcead6345b400aaf3cd263026c8469c1",
+      "url": "https://github.com/vlang/vinix/blob/ffb1fc5b87660104de4c268804cf1fb2d8afe4bc/kernel/gpu/agx/gpu/gpu.v"
+    }
+  ],
+  "queries": [
+    {
+      "address": "0xfffffe000896d0ac",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 72.863,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 33,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31w-init-provider",
+      "limit_seconds": 100,
+      "pcode_operations": 33,
+      "private_output_sha256": "a2640d5fa5661164dd65896fa737a877f29fe750fb75dfee1aabeb85eed73b98",
+      "private_run_record_sha256": "f815678e003e1559ad665d14b8b97b6545ba769d76954e68a6854272fad9c802",
+      "rea_body_bytes": 132,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 33,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    },
+    {
+      "address": "0xfffffe00088f93bc",
+      "artifact_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "batch": "out-batch1",
+      "decompiler_warning_classes": [
+        "unresolved_indirect_jump",
+        "provider_removed_blocks"
+      ],
+      "elapsed_seconds": 22.991,
+      "exit_code": 0,
+      "high_pcode_known_omitted_edges": 0,
+      "high_pcode_known_omitted_inputs": 0,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_omitted_operations_lower_bound": 0,
+      "high_pcode_ops_inside_independent_bounds": 111,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31w-note-gated",
+      "limit_seconds": 100,
+      "pcode_operations": 111,
+      "private_output_sha256": "fa7c980b28587a005b9d6f6ba05308320401b6f21262c2a64dc586ed8a34cf0f",
+      "private_run_record_sha256": "b642e09d95bad6027db39d7eb1f74b617118bb8f5692d3a15a15a14e35790411",
+      "rea_body_bytes": 540,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 135,
+      "rea_listing_words_outside_independent_bounds": 0,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_BOUNDED_FACTS_INDEPENDENTLY_CHECKED",
+      "whole_high_pcode_claim_admission": "NOT_AUTOMATICALLY_ACCEPTED"
+    }
+  ],
+  "rea_completed_queries": 2,
+  "rea_cross_boundary_refusals": 0,
+  "rea_high_pcode_operations_outside_independent_bounds": 0,
+  "rea_not_completed_queries": 0,
+  "rea_total_high_pcode_operations": 144,
+  "rea_truncated_high_pcode_queries": 0,
+  "result": "BOUNDED_NEAR_FULL_TRANSPORT_COMPOSITION_NATIVE_HOLD",
+  "running_kernel_identity_verified": false,
+  "runtime_role_to_adt_binding": "UNQUALIFIED",
+  "schema": "ilinux-gpu31w-firmware-evidence-v1",
+  "static_collection_references": [
+    {
+      "address": "0xfffffe0007e049e0",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN22AGXFirmwareKextRTBuddy21setAccelAndFWPointersEP14AGXAcceleratorP14AGXArmFirmware"
+      ],
+      "pointer_format": 8,
+      "slot": 2176,
+      "target": "0xfffffe00088fa3f8",
+      "vtable": "AGXFirmwareKextG17RTBuddy"
+    },
+    {
+      "address": "0xfffffe0007e04a08",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN22AGXFirmwareKextRTBuddy23sendAsyncNoteToFirmwareEyb"
+      ],
+      "pointer_format": 8,
+      "slot": 2216,
+      "target": "0xfffffe00088f95d8",
+      "vtable": "AGXFirmwareKextG17RTBuddy"
+    },
+    {
+      "address": "0xfffffe0007e05438",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN22AGXFirmwareKextRTBuddy21setAccelAndFWPointersEP14AGXAcceleratorP14AGXArmFirmware"
+      ],
+      "pointer_format": 8,
+      "slot": 2176,
+      "target": "0xfffffe00088fa3f8",
+      "vtable": "AGXFirmwareKextRTBuddy"
+    },
+    {
+      "address": "0xfffffe0007e05460",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN22AGXFirmwareKextRTBuddy23sendAsyncNoteToFirmwareEyb"
+      ],
+      "pointer_format": 8,
+      "slot": 2216,
+      "target": "0xfffffe00088f95d8",
+      "vtable": "AGXFirmwareKextRTBuddy"
+    },
+    {
+      "address": "0xfffffe0008840df8",
+      "address_point_bias": 16,
+      "chain_membership_verified": true,
+      "exact_symbols": [
+        "__ZN15RTBuddyEndpoint11sendMessageEPvS0_b"
+      ],
+      "pointer_format": 8,
+      "slot": 488,
+      "target": "0xfffffe000ae830a8",
+      "vtable": "RTBuddyEndpoint"
+    }
+  ]
+}

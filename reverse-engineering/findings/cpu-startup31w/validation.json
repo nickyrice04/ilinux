@@ -1,0 +1,271 @@
+{
+  "schema": "ilinux-cpu31w-monitor-entry-v1",
+  "date": "2026-10-23",
+  "status": "PASS_BOUNDED_STATIC_NATIVE_HOLD",
+  "native": "NOT_RUN",
+  "completed_queries": 1,
+  "query_failures": 0,
+  "physical_hardware_operations": 0,
+  "personalized_objects_read": 0,
+  "firmware_replay": false,
+  "protection_bypass": false,
+  "input_provenance": {
+    "decoded_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+    "decoded_bytes": 1376288,
+    "prior_metadata": "reverse-engineering/findings/cpu-startup-2026-10-19/validation.json",
+    "prior_metadata_sha256": "130e718d8527f7efa3f02b58bb65b32132bf12cbaba41966ef4318c2d4fedc33",
+    "prior_record_build": "macOS26.6.2/25G83",
+    "build_binding": "INHERITED_PRIOR_RECORD_NOT_FRESH_SYSTEM_OR_INSTALLED_OBJECT_MATCH",
+    "wrapper_sha256": "27541fb8a015e1e94fed28d9e57f53bd206ffc5f0db37ec68fd13fe34261d2cb",
+    "wrapper_bytes": 199144,
+    "compressed_payload_sha256": "559708f39ac10edd51c70fd1e7b665f8f44c7596e1d0242d8eeadc84c883e7c5",
+    "compressed_payload_bytes": 198822,
+    "compressed_payload_unique_wrapper_offset": 25,
+    "decoded_derivation": "RETAINED_EXTRACTION_AND_DECOMPRESSION_NOT_REPEATED31W",
+    "private_query_copy_byte_identical": true,
+    "analysis_wrapper_used": false,
+    "macho_arch": "arm64e",
+    "macho_filetype": 2,
+    "segments": [
+      {
+        "name": "__TEXT",
+        "vmaddr": "0xfffffff027004000",
+        "vmbytes": 81920,
+        "file_offset": 0,
+        "file_bytes": 81920
+      },
+      {
+        "name": "__DATA_CONST",
+        "vmaddr": "0xfffffff027018000",
+        "vmbytes": 32768,
+        "file_offset": 81920,
+        "file_bytes": 32768
+      },
+      {
+        "name": "__LATE_CONST",
+        "vmaddr": "0xfffffff027020000",
+        "vmbytes": 524288,
+        "file_offset": 114688,
+        "file_bytes": 524288
+      },
+      {
+        "name": "__TEXT_EXEC",
+        "vmaddr": "0xfffffff0270a0000",
+        "vmbytes": 393216,
+        "file_offset": 638976,
+        "file_bytes": 393216
+      },
+      {
+        "name": "__LAST",
+        "vmaddr": "0xfffffff027100000",
+        "vmbytes": 16384,
+        "file_offset": 1032192,
+        "file_bytes": 16384
+      },
+      {
+        "name": "__DATA",
+        "vmaddr": "0xfffffff027104000",
+        "vmbytes": 245760,
+        "file_offset": 1048576,
+        "file_bytes": 245760
+      },
+      {
+        "name": "__BOOTDATA",
+        "vmaddr": "0xfffffff027140000",
+        "vmbytes": 81920,
+        "file_offset": 1294336,
+        "file_bytes": 81920
+      },
+      {
+        "name": "__LINKEDIT",
+        "vmaddr": "0xfffffff027154000",
+        "vmbytes": 16384,
+        "file_offset": 1376256,
+        "file_bytes": 32
+      }
+    ]
+  },
+  "declared_entry": {
+    "load_command": "LC_UNIXTHREAD",
+    "flavor": 6,
+    "count": 68,
+    "pc": "0xfffffff0270ac388",
+    "direct_target": "0xfffffff0270af000",
+    "addresses_are_link_time": true,
+    "historical_residency_or_execution": false
+  },
+  "queries": [
+    {
+      "label": "monitor-primary-entry",
+      "requested_address": "0xfffffff0270af000",
+      "returned_entry": "0xfffffff0270af000",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "output_sha256": "0b0f011d5e3ed000f156492f525fe18a2149cd57292cf6e86979f979d30038e8",
+      "cli_exit": 0,
+      "seconds": 22.367518718999996,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "body_anchors": [
+        {
+          "start": "0xfffffff0270af000",
+          "end_inclusive": "0xfffffff0270af3c7",
+          "carrier_offset": 700416,
+          "derived_offset": 700416,
+          "bytes": 968,
+          "sha256": "390a75e6f67ee5069b55db364e730aad098d90389874e028d191892328881bf1"
+        },
+        {
+          "start": "0xfffffff0270af51c",
+          "end_inclusive": "0xfffffff0270af7bb",
+          "carrier_offset": 701724,
+          "derived_offset": 701724,
+          "bytes": 672,
+          "sha256": "0c8ec48a2d94eee2f14bad737f090fd9cd631bc0a6b02920fc6e40c1de3c0e9b"
+        }
+      ],
+      "non_contiguous_body": true,
+      "assembly_instructions": 410,
+      "pcode_operations": 352,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "pseudocode_gate": "manual_review_required",
+      "whole_function_pseudocode_accepted": false,
+      "whole_function_refusal_reason": "Provider removed blocks; bounded instruction facts are separate evidence"
+    }
+  ],
+  "query_script_sha256": "6de15facedcc8d1d7de39973ba1042e41d914a2dce35f26e67070f639f62940e",
+  "query_list_sha256": "85ff1138d2e3205957f829adeb84e924beef5af8a5e490949e9fd419ae71d37e",
+  "environment": {
+    "interfaces": [
+      "lo"
+    ],
+    "physical_usb": false,
+    "vm_setup_exit": 0,
+    "vm_job_exit": 0
+  },
+  "independent_bounded_blocks": [
+    {
+      "label": "declared-entry-veneer",
+      "start": "0xfffffff0270ac388",
+      "end_exclusive": "0xfffffff0270ac38c",
+      "file_offset": 689032,
+      "bytes": 4,
+      "instruction_words": 1,
+      "sha256": "4bae571ca6396630130a9ded7fa323b380d3e5f5ad435f3ea2f45c7be862e9df",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "primary-entry-body-1",
+      "start": "0xfffffff0270af000",
+      "end_exclusive": "0xfffffff0270af3c8",
+      "file_offset": 700416,
+      "bytes": 968,
+      "instruction_words": 242,
+      "sha256": "390a75e6f67ee5069b55db364e730aad098d90389874e028d191892328881bf1",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "primary-entry-body-2",
+      "start": "0xfffffff0270af51c",
+      "end_exclusive": "0xfffffff0270af7bc",
+      "file_offset": 701724,
+      "bytes": 672,
+      "instruction_words": 168,
+      "sha256": "0c8ec48a2d94eee2f14bad737f090fd9cd631bc0a6b02920fc6e40c1de3c0e9b",
+      "llvm_word_mismatches": 0
+    }
+  ],
+  "independent_unique_instruction_words": 411,
+  "independent_code_bytes": 1644,
+  "llvm_word_mismatches": 0,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "prior_coverage": {
+    "earlier_published_entry_range_start": "0xfffffff0270a0000",
+    "earlier_published_entry_range_end_exclusive": "0xfffffff0270a02c4",
+    "overlap_with_that_range_words": 0,
+    "retained_whole_image_disassembly_preexists": true,
+    "new_bounded_entry_words": 411,
+    "new_firmware_discovery": false,
+    "coverage_limit": "411 is new bounded verification of this declared-entry path, not411 previously unseen Apple words or runtime progress"
+  },
+  "entry_contract": {
+    "incoming_context_parameter": 0,
+    "preserved_for_direct_reads": true,
+    "context_reads": [
+      {
+        "site": "0xfffffff0270af010",
+        "offset": 0,
+        "bits": 64
+      },
+      {
+        "site": "0xfffffff0270af01c",
+        "offset": 1152,
+        "bits": 64
+      },
+      {
+        "site": "0xfffffff0270af090",
+        "offset": 8,
+        "bits": 64
+      },
+      {
+        "site": "0xfffffff0270af094",
+        "offset": 16,
+        "bits": 64
+      },
+      {
+        "site": "0xfffffff0270af098",
+        "offset": 24,
+        "bits": 64
+      }
+    ],
+    "optional_context_extension_offset": 1152,
+    "optional_context_extension_guard": "Header comparison and zero extension branch skip the extension block; no new format definition inferred",
+    "public_base_fields": {
+      "virt_base_offset": 8,
+      "phys_base_offset": 16,
+      "mem_size_offset": 24
+    },
+    "exception_level_branch": {
+      "current_el_read_site": "0xfffffff0270af09c",
+      "comparison_encoding": 8,
+      "meaning": "EL2-specific handling; not a proof EL2 is required or other levels accepted",
+      "skip_target": "0xfffffff0270af0d0"
+    },
+    "direct_calls": [
+      {
+        "site": "0xfffffff0270af69c",
+        "target": "0xfffffff0270af7bc"
+      },
+      {
+        "site": "0xfffffff0270af6a8",
+        "target": "0xfffffff0270af8ac"
+      }
+    ],
+    "scope": "Primary image preparation; not physical secondary dispatch, image acceptance, or a supported raw-boot call"
+  },
+  "decision": {
+    "current_raw_workaround": "NOT_ESTABLISHED",
+    "alternate_software_route": "POSSIBLE_IN_PRINCIPLE_BUT_UNQUALIFIED",
+    "apple_only_impossibility": "NOT_ESTABLISHED",
+    "practical_cpu_track": "BLOCKED_PENDING_NEW_DISCRIMINATING_EVIDENCE",
+    "next_native_retry": "NOT_QUALIFIED",
+    "new_cpu_implementation": false
+  },
+  "reopening_conditions": [
+    "Exact accepted alternate-host revision/object and initial context with physical secondary-entry provenance on applicable firmware.",
+    "A safe independently reviewed discriminator for effective CPU1 entry/protection or an early fault, causally separating missing preparation from an immutable constraint."
+  ],
+  "limitations": [
+    "Image identity is the prior retained25G83 record, not a fresh installed/running firmware match.",
+    "Present SPTM artifact does not prove it was loaded or entered during the historical raw boot.",
+    "Primary entry shape and context reads do not qualify the optional extension ABI, full monitor initialization, permitted calls or physical secondary start.",
+    "Removed-block P-code and all earlier refusals remain refused; no whole-function equivalence.",
+    "No protection state was measured or changed; no copied initialization, security substitution, replay or new native test follows."
+  ]
+}
