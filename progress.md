@@ -1,5 +1,49 @@
 # Progress Log
 
+## 2026-10-23 · M5: 31Q offline CPU/GPU checkpoint PASS; no restart
+
+Reviewed M1's31P report `5058916`:379 pins/122 Python methods/12 C groups pass,
+with no native operations. Preserved its report and every earlier frozen closure.
+Further REA completed five CPU and five GPU queries. Independent instruction
+validation covers2,701 CPU words in25 blocks and489 GPU words in7 disjoint ranges;
+zero mismatches. Three earlier GPU query deadlines and a pre-query share-mount
+refusal are retained. CPU queries completed despite a post-VM wrapper bookkeeping
+fault; no result was silently promoted from an incomplete request.
+
+CPU analysis connects the current generic raw-image metadata producer with the
+firmware's preparation branches. The raw serializer omits `kcbz`; historical
+installer output is not available, so the historical branch remains inferred.
+The48KiB fallback allocation supplies three16KiB memory ranges and is distinct
+from entry-vector selection. This narrows the trace without proving CPU1's first
+instruction or identifying a missing release step. No protection/firmware replay.
+
+GPU analysis establishes a bounded32-bit-page/16KiB-unit GPTBAT format, a
+translation-dispatch wrapper, and a provider/consumer null-payload success path.
+The provider's Release label is not firmware ABI. Whole-function evidence gates
+reject three dossiers; only independently checked bounded behavior is used.
+No live address, runtime class, firmware ownership or UAT configuration is inferred
+from integer width. Original implementation was written from public API and
+behavioral facts by a session that did not inspect Apple code.
+
+Added a portable GPU VA planner and separately typed GPTBAT codec, with full64-bit
+bounds, reserved-range and object checks, ordered operations, and unchanged output
+on validation failure. This is local transactional validation, not kernel ioctl
+atomicity. New tests include139,392 page-grid cases,500 high-VA translations,
+16,383 alignment refusals and10,000 conversion roundtrips. No ioctl, MMIO or queue
+submission is generated.
+
+Final integration: **402 pins,167 unique Python methods,39 portable C groups**
+pass on macOS and isolated ARM64 VM077. The27 new C groups pass ASan/UBSan;
+the12 prior groups pass the normal portable intake. VM verifies loopback only,
+uses curated read-only sources and RAM build storage. Host/full, host/curated and
+VM JSON are byte-identical. Prior public Mesa build remains prior evidence;
+upstream builds and physical benchmarks were not repeated.
+
+**M1:** follow `tools/m1n1-client/attempt31q-instructions.md`, publish independent
+offline results and wait. Native31Q HOLD / NOT RUN; CPU1 UNVERIFIED; native G17C,
+performance and energy NOT MEASURED. No Mac restart or macOS/boot change.
+Validation: `native/boot/attempt31q/validation.json`.
+
 ## 2026-10-22 · M1: 31P independent offline review PASS; no restart
 
 **Independent M1 review on `311473c`: OFFLINE_PASS_NATIVE_HOLD.**

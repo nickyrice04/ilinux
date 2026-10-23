@@ -1,0 +1,569 @@
+{
+  "completed_queries": 5,
+  "consumed_review_commit": "5058916",
+  "cpu1_execution": "UNVERIFIED",
+  "date": "2026-10-23",
+  "findings": {
+    "current_raw_serializer": {
+      "address": "0x100023420",
+      "collection_serializer_comparison": "0x1000235a0",
+      "confidence": "CONFIRMED_STATIC_CURRENT_INPUT",
+      "constructor": "0x100023f34",
+      "emits_kcbz": false,
+      "properties": [
+        "kclo",
+        "kcep",
+        "kcrf",
+        "kcrz",
+        "kcsf",
+        "kcsz",
+        "kclf",
+        "kclz"
+      ],
+      "raw_constructor_call": "0x100144860",
+      "raw_serializer_call": "0x10014486c"
+    },
+    "fallback_ranges": {
+      "allocation_bytes": 49152,
+      "confidence": "CONFIRMED_STATIC_RANGE_PREPARATION",
+      "consumer_call": "0x100c1ae5ba4",
+      "consumer_entry": "0x100c1aec574",
+      "getter": "0x100c1ad4f20",
+      "handoff_entry": "0x100c1ae53b8",
+      "helper_call": "0x100c1aec8a0",
+      "later_entry_vector_operation": "0x100c1ae5c60",
+      "published_global": "0x100c1f2a1d0",
+      "query_interior_location": "0x100c1aec7fc",
+      "range_bytes": 16384,
+      "range_count": 3,
+      "same_as_cpu1_effective_pc": "NOT_ESTABLISHED",
+      "selector": "0x100c1ca7070"
+    },
+    "firmware_selector": {
+      "current_behavior_supports_raw_path": true,
+      "historical_path_proven": false,
+      "kcbz_descriptor_offset": "0x38",
+      "kcep_descriptor_offset": "0xa0",
+      "prior_record": "reverse-engineering/findings/cpu-startup31p/validation.json"
+    }
+  },
+  "hardware_operations": 0,
+  "independent_bounded_blocks": [
+    {
+      "code_bytes": 260,
+      "end_exclusive": "0x1001445ac",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 65,
+      "label": "raw-option-gate",
+      "llvm_word_mismatches": 0,
+      "sha256": "e3b9f5f70242064ca777dd4662e863862f7d6bcb460535027bc4148f6bd90b1a",
+      "slice_bytes_match_original": true,
+      "start": "0x1001444a8"
+    },
+    {
+      "code_bytes": 320,
+      "end_exclusive": "0x100144878",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 80,
+      "label": "raw-parameter-construction",
+      "llvm_word_mismatches": 0,
+      "sha256": "b04002d6939ed74753697f6249aac2249e5853d82e7b40dc82ee31b9f2d1e9c2",
+      "slice_bytes_match_original": true,
+      "start": "0x100144738"
+    },
+    {
+      "code_bytes": 384,
+      "end_exclusive": "0x1000235a0",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 96,
+      "label": "raw-eight-property-serialization",
+      "llvm_word_mismatches": 0,
+      "sha256": "0e4e99e1678e625687787c73f4bfdd871f1d5b752003b3180131d69fad3b4beb",
+      "slice_bytes_match_original": true,
+      "start": "0x100023420"
+    },
+    {
+      "code_bytes": 36,
+      "end_exclusive": "0x100023f58",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 9,
+      "label": "property-struct-constructor",
+      "llvm_word_mismatches": 0,
+      "sha256": "a8f574dbe8ec6be9fb3bc32e69217b3f15e32128985cbe073e804edb406afe4f",
+      "slice_bytes_match_original": true,
+      "start": "0x100023f34"
+    },
+    {
+      "code_bytes": 12,
+      "end_exclusive": "0x100025bc4",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 3,
+      "label": "property-value-helper",
+      "llvm_word_mismatches": 0,
+      "sha256": "8f2bd80f8869f03439a71617dc016dba687c8fd9b820f4a921a1823d07083a66",
+      "slice_bytes_match_original": true,
+      "start": "0x100025bb8"
+    },
+    {
+      "code_bytes": 12,
+      "end_exclusive": "0x100025be0",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 3,
+      "label": "property-dictionary-state-helper",
+      "llvm_word_mismatches": 0,
+      "sha256": "6781d8f286a285174a950e9d616306746f886ccf84733f72661eca5b8d8e32fc",
+      "slice_bytes_match_original": true,
+      "start": "0x100025bd4"
+    },
+    {
+      "code_bytes": 52,
+      "end_exclusive": "0x100025c5c",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 13,
+      "label": "empty-property-dictionary-helper",
+      "llvm_word_mismatches": 0,
+      "sha256": "55a8aefa9c03e70cdafe73b983cdd24e18ca5c0bb0414b549a074e9a392f5ce4",
+      "slice_bytes_match_original": true,
+      "start": "0x100025c28"
+    },
+    {
+      "code_bytes": 608,
+      "end_exclusive": "0x100023800",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 152,
+      "label": "collection-property-serializer-comparison",
+      "llvm_word_mismatches": 0,
+      "sha256": "3414d53986217432c43b55cfc35c8341afad3ed8fd8514cf60acd224eab072c8",
+      "slice_bytes_match_original": true,
+      "start": "0x1000235a0"
+    },
+    {
+      "code_bytes": 296,
+      "end_exclusive": "0x10002515c",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 74,
+      "label": "dictionary-insert-worker",
+      "llvm_word_mismatches": 0,
+      "sha256": "2eaaa3fab041e793f7aa43d84b79144fa7fa8ebaf24d12ed6acfcebc6f82828d",
+      "slice_bytes_match_original": true,
+      "start": "0x100025034"
+    },
+    {
+      "code_bytes": 48,
+      "end_exclusive": "0x100144a20",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "instruction_words": 12,
+      "label": "raw-property-forwarding-call",
+      "llvm_word_mismatches": 0,
+      "sha256": "2fefe1d1f98fa029930b297eefb3ce15add30dcd1ac55b176689321dec9e7662",
+      "slice_bytes_match_original": true,
+      "start": "0x1001449f0"
+    },
+    {
+      "code_bytes": 1864,
+      "end_exclusive": "0x100c1aa6528",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 466,
+      "label": "primary-loader-caller",
+      "llvm_word_mismatches": 0,
+      "sha256": "c8037ecdb4ff1fcd0f477defe06f5fc2f1e1cf47f926a9c5de4a91694047314c",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1aa5de0"
+    },
+    {
+      "code_bytes": 2284,
+      "end_exclusive": "0x100c1aa5d88",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 571,
+      "label": "load-image-wrapper",
+      "llvm_word_mismatches": 0,
+      "sha256": "d5c6641096b2fb3ce22eaa66edc92510d3fff484950a3931cd24d4749fdb150d",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1aa549c"
+    },
+    {
+      "code_bytes": 488,
+      "end_exclusive": "0x100c1ad1058",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 122,
+      "label": "file-loader-dossier",
+      "llvm_word_mismatches": 0,
+      "sha256": "5b10ded256f531bd2dc9eed7012c58b7a781592b2b4d49db718d9f4075d87cb6",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ad0e70"
+    },
+    {
+      "code_bytes": 876,
+      "end_exclusive": "0x100c1ad0e70",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 219,
+      "label": "descriptor-callback",
+      "llvm_word_mismatches": 0,
+      "sha256": "3f9750cca203bc3e5255e187784e67c9d058ab36586f9403c7db494eaa304a82",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ad0b04"
+    },
+    {
+      "code_bytes": 76,
+      "end_exclusive": "0x100c1ad15f0",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 19,
+      "label": "producer-a-selection",
+      "llvm_word_mismatches": 0,
+      "sha256": "cedb04545d52c2b3fd75db91fd66c71e8e096af3545e68184a0b1fb4ff00ca5e",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ad15a4"
+    },
+    {
+      "code_bytes": 48,
+      "end_exclusive": "0x100c1ad2384",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 12,
+      "label": "producer-a-fallback-allocation",
+      "llvm_word_mismatches": 0,
+      "sha256": "7ab339ae73c93415d0eac891452dbe482db7a127e4db37f0b6d886de304c8950",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ad2354"
+    },
+    {
+      "code_bytes": 312,
+      "end_exclusive": "0x100c1ca71a8",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 78,
+      "label": "fallback-range-selector",
+      "llvm_word_mismatches": 0,
+      "sha256": "89e0a5e5b787039e272f9ea6e7dd50ac423fef3e61897a126837457d5940cbf6",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ca7070"
+    },
+    {
+      "code_bytes": 12,
+      "end_exclusive": "0x100c1ad4f2c",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 3,
+      "label": "fallback-buffer-view",
+      "llvm_word_mismatches": 0,
+      "sha256": "a85f6bb8dcc396e1c006af5ea4fbe6f6cc6fff2cec3e65fd2d17657774944c0b",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ad4f20"
+    },
+    {
+      "code_bytes": 16,
+      "end_exclusive": "0x100c1aed050",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 4,
+      "label": "fallback-view-thunk",
+      "llvm_word_mismatches": 0,
+      "sha256": "8ab4e6b7f3212d8044b32f15cb20fff31dcaea1ad0b945e455c55c742ea11e08",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1aed040"
+    },
+    {
+      "code_bytes": 2332,
+      "end_exclusive": "0x100c1aece90",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 583,
+      "label": "range-layout-procedure",
+      "llvm_word_mismatches": 0,
+      "sha256": "b6385fcab7a4c3b7e01b314aaeaa593d86734dfa590efa6ba77c10696dc785f3",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1aec574"
+    },
+    {
+      "code_bytes": 24,
+      "end_exclusive": "0x100c1ae5ba8",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 6,
+      "label": "range-caller",
+      "llvm_word_mismatches": 0,
+      "sha256": "551262c62e20969c2b3c9591a9e2d529bd7bb84bc6d1d7cad0a6d1fec561e4f2",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ae5b90"
+    },
+    {
+      "code_bytes": 48,
+      "end_exclusive": "0x100c1ae5c90",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 12,
+      "label": "entry-vector-consumer",
+      "llvm_word_mismatches": 0,
+      "sha256": "64508481b5b23c9f4ebdb66ebf7867cff4671810e5d2510e3770877600587c52",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ae5c60"
+    },
+    {
+      "code_bytes": 4,
+      "end_exclusive": "0x100c1ae0034",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 1,
+      "label": "range-primary-condition-thunk",
+      "llvm_word_mismatches": 0,
+      "sha256": "461251e8cb6e203e87036a5a29dd63ff425cfb4bdf57dbabaebb0143725f1381",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ae0030"
+    },
+    {
+      "code_bytes": 8,
+      "end_exclusive": "0x100c1ae034c",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 2,
+      "label": "range-primary-condition",
+      "llvm_word_mismatches": 0,
+      "sha256": "5103ba3de080c52a046485f800433848701faa49ab8f60241a80987ca249d7ac",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ae0344"
+    },
+    {
+      "code_bytes": 384,
+      "end_exclusive": "0x100c1adaaec",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "instruction_words": 96,
+      "label": "range-service-wrappers",
+      "llvm_word_mismatches": 0,
+      "sha256": "bc4a6c59789be339d39e51172b559ff700eef1a3aed5a31d620fea5c5fea1bbc",
+      "slice_bytes_match_original": true,
+      "start": "0x100c1ada96c"
+    }
+  ],
+  "independent_code_bytes": 10804,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "independent_unique_instruction_words": 2701,
+  "input_checks": {
+    "current_host_os": "macOS26.6.2 build25G83",
+    "elf_matches_decoded": true,
+    "fat_slice_match": true,
+    "historical_emitted_descriptor": "NOT_CAPTURED",
+    "historical_kmutil_hash": "NOT_CAPTURED",
+    "historical_raw_branch": "INFERRED_NOT_OBSERVED",
+    "personalized_policy_objects_read": false
+  },
+  "inputs": {
+    "iboot_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+    "iboot_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+    "kmutil_arm64e_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+    "kmutil_fat_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43"
+  },
+  "limitations": [
+    "Query completion and matching instruction words do not prove complete decompilation semantics or native execution.",
+    "Image-wrapper and range-consumer P-code exports are truncated; whole-function pseudocode is not accepted.",
+    "File-loader P-code omits callback argument flow; bounded independent instructions control that interpretation.",
+    "Current generic metadata producer is not proof of historical executable identity or emitted metadata.",
+    "Memory-range preparation, an idle-pattern buffer, power state and acknowledged starts do not prove CPU1 fetch.",
+    "Analysis addresses and software offsets are not qualified live hardware addresses.",
+    "Private Apple bytes, disassembly, pseudocode and personalized artifacts are not included in publication.",
+    "No firmware replay, security bypass, boot mutation or new native controller is proposed."
+  ],
+  "llvm_word_mismatches": 0,
+  "macos_changes": 0,
+  "missing_startup_prerequisite": "NOT_ESTABLISHED",
+  "native31q": "HOLD / NOT RUN",
+  "network_checks": [
+    {
+      "batch": "environment",
+      "expected_no_network_device": true,
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false
+    },
+    {
+      "batch": "environment-kmutil",
+      "expected_no_network_device": true,
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false
+    },
+    {
+      "batch": "environment-extra",
+      "expected_no_network_device": true,
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false
+    }
+  ],
+  "pcode_truncated_queries": 2,
+  "queries": [
+    {
+      "assembly_instructions": 571,
+      "body_anchors": [
+        {
+          "bytes": 2284,
+          "carrier_offset": 5276,
+          "derived_offset": 9372,
+          "end_inclusive": "0x100c1aa5d87",
+          "sha256": "d5c6641096b2fb3ce22eaa66edc92510d3fff484950a3931cd24d4749fdb150d",
+          "start": "0x100c1aa549c"
+        }
+      ],
+      "cli_exit": 0,
+      "command": "function",
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "load-image-wrapper",
+      "output_sha256": "9c35f1dd4cb73f0217248c136cd3610103667a39367fd6a322d4fa010b427a55",
+      "pcode_operations": 3000,
+      "pcode_outside_body": 0,
+      "pcode_truncated": true,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1aa549c",
+      "returned_entry": "0x100c1aa549c",
+      "seconds": 67.257414324,
+      "status": "COMPLETED_BOUNDED_STATIC_REVIEW",
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "assembly_instructions": 122,
+      "body_anchors": [
+        {
+          "bytes": 488,
+          "carrier_offset": 183920,
+          "derived_offset": 188016,
+          "end_inclusive": "0x100c1ad1057",
+          "sha256": "5b10ded256f531bd2dc9eed7012c58b7a781592b2b4d49db718d9f4075d87cb6",
+          "start": "0x100c1ad0e70"
+        }
+      ],
+      "cli_exit": 0,
+      "command": "function",
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "file-loader-dossier",
+      "output_sha256": "d4540abb251dccd805e61894a3b4f36339e93f87aea91f85da931b1ce64dfd84",
+      "pcode_operations": 82,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1ad0e70",
+      "returned_entry": "0x100c1ad0e70",
+      "seconds": 66.335211782,
+      "status": "COMPLETED_BOUNDED_STATIC_REVIEW",
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "assembly_instructions": 9,
+      "body_anchors": [
+        {
+          "bytes": 36,
+          "carrier_offset": 2244404,
+          "derived_offset": 147252,
+          "end_inclusive": "0x100023f57",
+          "sha256": "a8f574dbe8ec6be9fb3bc32e69217b3f15e32128985cbe073e804edb406afe4f",
+          "start": "0x100023f34"
+        }
+      ],
+      "cli_exit": 0,
+      "command": "function",
+      "decompiler_warning_classes": [],
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "label": "raw-property-constructor",
+      "output_sha256": "8a02438fe777ac5620eec6702cf8bb6f0b43149dea66ab9bcdb634622f13abbd",
+      "pcode_operations": 28,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100023f34",
+      "returned_entry": "0x100023f34",
+      "seconds": 89.69825550099999,
+      "status": "COMPLETED_BOUNDED_STATIC_REVIEW",
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "assembly_instructions": 96,
+      "body_anchors": [
+        {
+          "bytes": 384,
+          "carrier_offset": 2241568,
+          "derived_offset": 144416,
+          "end_inclusive": "0x10002359f",
+          "sha256": "0e4e99e1678e625687787c73f4bfdd871f1d5b752003b3180131d69fad3b4beb",
+          "start": "0x100023420"
+        }
+      ],
+      "cli_exit": 0,
+      "command": "function",
+      "decompiler_warning_classes": [],
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "label": "raw-property-serializer",
+      "output_sha256": "82f7f20338c8649fbe9f9933365c5fd1e20c9e9d5a7484f8f44d0aa76822ee43",
+      "pcode_operations": 38,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100023420",
+      "returned_entry": "0x100023420",
+      "seconds": 89.748168709,
+      "status": "COMPLETED_BOUNDED_STATIC_REVIEW",
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "assembly_instructions": 583,
+      "body_anchors": [
+        {
+          "bytes": 2332,
+          "carrier_offset": 296308,
+          "derived_offset": 300404,
+          "end_inclusive": "0x100c1aece8f",
+          "sha256": "b6385fcab7a4c3b7e01b314aaeaa593d86734dfa590efa6ba77c10696dc785f3",
+          "start": "0x100c1aec574"
+        }
+      ],
+      "cli_exit": 0,
+      "command": "function",
+      "decompiler_warning_classes": [],
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "label": "raw-handoff-range-selection",
+      "output_sha256": "df56af74c277ecf8b777b4e6007cfc73179848011519d4d405f1539874a80489",
+      "pcode_operations": 3000,
+      "pcode_outside_body": 0,
+      "pcode_truncated": true,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "pseudocode_gate": "manual_review_required",
+      "requested_address": "0x100c1aec7fc",
+      "returned_entry": "0x100c1aec574",
+      "seconds": 67.31597778199999,
+      "status": "COMPLETED_BOUNDED_STATIC_REVIEW",
+      "whole_function_pseudocode_accepted": false
+    }
+  ],
+  "restart_ready": false,
+  "result": "BOUNDED_STATIC_FINDINGS_NATIVE_HOLD",
+  "schema": "ilinux-cpu-startup31q-static-evidence-v1",
+  "upstream_recheck": {
+    "bootloader_commit": "f02d4a52017915febb222539636b5b025a70407a",
+    "changed_since31o": false,
+    "faq_commit": "cfc74e6b3fcdb2f794fbf725464f27b506ad8d21",
+    "new_t6050_startup_fix_established": false
+  },
+  "wrapper_outcome": {
+    "cause": "Wrapper was edited while active; later wrappers were kept unchanged during execution.",
+    "first_cpu_vm": "COMPLETED_QUERY_EXITS_0",
+    "first_outer_wrapper": "POST_VM_BOOKKEEPING_ERROR",
+    "query_and_vm_completion_records_retained": true
+  }
+}

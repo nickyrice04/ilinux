@@ -6,6 +6,28 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+
+### Current — 31Q published offline handoff; M1 review next, 2026-10-23
+
+Root completed integration/publication; CPU and GPU investigators completed their
+bounded behavioral records and original implementation review. Job077 and all
+REA runs finished; both repositories' VM/quiet locks released. No background
+native operation remains. Unrelated kernel-config/compositing work is untouched.
+
+M1 owns independent offline review of `tools/m1n1-client/attempt31q-instructions.md`
+and publication of its result. Expected402 pins/167 Python methods/39 portable C
+groups. M5's new27 C groups additionally passed Linux sanitizers. No routine
+restart, proxy, target request or policy check. Native31Q HOLD / NOT RUN.
+
+M5 continues the missing first-secondary startup investigation and G17C firmware
+handoff/address-domain/UAT work. Current raw-producer behavior and fallback ranges
+do not prove historical metadata or CPU1 fetch. GPTBAT format and null-payload
+success do not qualify a native GPU. Preserve prior consumed receipts, packages,
+all frozen closures and the public/private evidence boundary. A new boot requires
+a meaningful discriminator with an independently reviewed bounded implementation.
+Validation: `native/boot/attempt31q/validation.json`.
+
+
 ### Current — M1 31P offline review complete; M5 investigation next, 2026-10-22
 
 **Independent M1 review on `311473c`: OFFLINE_PASS_NATIVE_HOLD.**

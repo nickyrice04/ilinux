@@ -1,0 +1,398 @@
+{
+  "carrier_sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+  "consumed_review_commit": "5058916",
+  "date": "2026-10-23",
+  "descriptor_cpu_address_domain": "UNQUALIFIED",
+  "earlier_environment_refusal": {
+    "preserved": true,
+    "rea_queries_started": 0,
+    "reason": "query share not mounted in initial job",
+    "stage": "before_query"
+  },
+  "findings": {
+    "get_version_meaning": "STATIC_BUILD_FLAVOR_NOT_NUMERIC_ABI",
+    "gptbat_base_max_bits": 46,
+    "gptbat_page_number_bits": 32,
+    "gptbat_page_offset_bits": 14,
+    "gptbat_zero_validity": "UNQUALIFIED",
+    "legacy_handle_role_selection": "NOT_USED_BY_THIS_FUNCTION",
+    "mapper_dispatch": [
+      "IOUAT",
+      "LEGACY_TRANSLATOR"
+    ],
+    "null_payload_consumer_result": "SUCCESS_WITHOUT_ALLOCATION_OR_COPY",
+    "provider_admitted_roles": [
+      0,
+      1
+    ],
+    "provider_payload_length": 8,
+    "provider_payload_pointer": "NULL_ON_ADMITTED_SUCCESS"
+  },
+  "firmware_abi": "UNKNOWN",
+  "gpu_enablement": "HOLD",
+  "hardware_operations": 0,
+  "independent_instruction_ranges": [
+    {
+      "carrier_offset": 27087164,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 1016812,
+      "end_exclusive": "0xfffffe00089d9220",
+      "id": "gpu31q-fw-handle",
+      "instruction_words": 57,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "79f17740c6b501609fe65f06a6876561d9c6deef44b17c36e5f0ec348ec752d0",
+      "start": "0xfffffe00089d913c"
+    },
+    {
+      "carrier_offset": 26690352,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 620000,
+      "end_exclusive": "0xfffffe0008978404",
+      "id": "gpu31q-mapper-physical",
+      "instruction_words": 53,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "9389c5ba91a2a539dc60668c5288c95b02d36c6b656f48bf918b55c6bf5adcd3",
+      "start": "0xfffffe0008978330"
+    },
+    {
+      "carrier_offset": 26760860,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 690508,
+      "end_exclusive": "0xfffffe00089896e0",
+      "id": "gpu31q-gptbat-base",
+      "instruction_words": 17,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "f0108d1b235a5da6006534cf2064311214b950a0bc2c8abf9f53e9a12834452a",
+      "start": "0xfffffe000898969c"
+    },
+    {
+      "carrier_offset": 26167096,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 5944,
+      "end_exclusive": "0xfffffe00088f8958",
+      "id": "gpu31q-provider-request",
+      "instruction_words": 136,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "d6204976c4d4c3a5a66caa88c26e008b71a5f0045da1d6785d984577f44c3b16",
+      "start": "0xfffffe00088f8738"
+    },
+    {
+      "carrier_offset": 26166364,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 5212,
+      "end_exclusive": "0xfffffe00088f8578",
+      "id": "gpu31q-provider-version",
+      "instruction_words": 71,
+      "llvm_word_mismatches": 0,
+      "module": "AGXFirmwareKextG17XRTBuddy",
+      "module_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "range_sha256": "e91ea13e781c40be871936fa39480b1edd84d236e3bdea756cadd0a03ed45990",
+      "start": "0xfffffe00088f845c"
+    },
+    {
+      "carrier_offset": 26724352,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 654000,
+      "end_exclusive": "0xfffffe00089808e0",
+      "id": "gpu31q-wrapper-request",
+      "instruction_words": 56,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "51b6ffe5fafa980c483f6f83846cde27833fb6141157bc369b67a4326dd01d48",
+      "start": "0xfffffe0008980800"
+    },
+    {
+      "carrier_offset": 26646376,
+      "derivative_vs_carrier_mismatches": 0,
+      "derived_offset": 576024,
+      "end_exclusive": "0xfffffe000896d8f4",
+      "id": "gpu31q-load-binary",
+      "instruction_words": 99,
+      "llvm_word_mismatches": 0,
+      "module": "AGXG17X",
+      "module_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "range_sha256": "eaca634d4b10fd47b9792dd9c81570b64242cb1db018c938d06ee85288941130",
+      "start": "0xfffffe000896d768"
+    }
+  ],
+  "independent_instruction_words": 489,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "independent_words_in_rea_requested_ranges": 376,
+  "limitations": [
+    "REA function body and assembly may underreport symbol-bounded routines; independent LLVM/carrier checks establish full instruction ranges and high p-code addresses are classified against independent bounds; outside operations are excluded from semantic evidence.",
+    "Static member behavior does not establish current runtime selection or native firmware state.",
+    "Derivative collection fixups and external calls are not all resolved.",
+    "Legacy shared handle does not establish a global GFX/GFX1 address space.",
+    "GPTBAT format conversion does not establish CPU physical address, PTE layout, table ownership, or readiness.",
+    "Provider no-copy result does not establish actual preloaded firmware ownership or validity.",
+    "Numeric firmware ABI, dual-role queue formats and native G17C initialization remain unqualified.",
+    "Apple bytes, disassembly and pseudocode are private ignored artifacts; only reviewed metadata is published."
+  ],
+  "native_validation": "NOT_RUN",
+  "network_checks": [
+    {
+      "batch": "out-batch1",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    },
+    {
+      "batch": "out-batch1retry",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    },
+    {
+      "batch": "out-batch2",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    },
+    {
+      "batch": "out-batch3",
+      "interfaces": [
+        "lo"
+      ],
+      "network": false,
+      "record_sha256": "255a8fca90b96a35b7c9c3db7f9e5ef05d3519019e9421cf73170bc9f2e58788"
+    }
+  ],
+  "public_source": {
+    "archive_sha256": "045c64540fa4210394c899cad6320c5bf9090a66919938d986aeaad0033946e8",
+    "commit": "4fc326f6c25ccceb7515e2635c22e01fde5d3bac",
+    "files": {
+      "asahi_drm.h": "eb9f39e87dfe448dc044f54ab2d11b7493bf1359faca8fb76ece5f3583469015",
+      "asahi_m4.rs": "83121b03dbdb164c793b4da092a39f7eeeacbddef22bfe2596f6abb0032307c4",
+      "g16.rs": "605f15066d3abb5e65da9fe9505e21d4e9e3725a342a7a8cd9fd61e3e1923677",
+      "g16_vm.rs": "042ff8b086f00bf9fee64199fd2414ae844508acfb07a1af9fb18e2bd609f4f6",
+      "m4_pgtable.rs": "bed5f5ea1dd022576aabad1f9940fd554b2b1655e445cdf1174397e90c0a3c2a",
+      "mmu.rs": "e87ed1cb70327029eb18b4708adfae639f7152ee850bf9702473bf49c894e6ec"
+    },
+    "macos_execution": false,
+    "repository": "GravityLinux/linux"
+  },
+  "queries": [
+    {
+      "address": "0xfffffe00089d913c",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "elapsed_seconds": 70.608,
+      "exit_code": 1,
+      "id": "gpu31q-fw-handle",
+      "limit_seconds": 70,
+      "private_output_sha256": "0bd68713838b2536f67ff683b284d35008b5fcdcc05cfac608dee9c0b1a5e847",
+      "private_run_record_sha256": "6a8a6c1a7424e7e270c38df42b4fdc6599cc0e07d8fd0f702504f1a06e1f944b",
+      "provider_cleanup": "complete",
+      "status": "REA_CANCELLED_AT_QUERY_DEADLINE"
+    },
+    {
+      "address": "0xfffffe000898969c",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "elapsed_seconds": 70.605,
+      "exit_code": 1,
+      "id": "gpu31q-gptbat-base",
+      "limit_seconds": 70,
+      "private_output_sha256": "0bd68713838b2536f67ff683b284d35008b5fcdcc05cfac608dee9c0b1a5e847",
+      "private_run_record_sha256": "839f794dae159382c2a7ea66a7a483cea161a72da3e46048814a1b75cb9ecf09",
+      "provider_cleanup": "complete",
+      "status": "REA_CANCELLED_AT_QUERY_DEADLINE"
+    },
+    {
+      "address": "0xfffffe0008978330",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1",
+      "elapsed_seconds": 70.589,
+      "exit_code": 1,
+      "id": "gpu31q-mapper-physical",
+      "limit_seconds": 70,
+      "private_output_sha256": "0bd68713838b2536f67ff683b284d35008b5fcdcc05cfac608dee9c0b1a5e847",
+      "private_run_record_sha256": "09b92d0404039a7511fa621bb28f989d74e2a3c72314673bad33dc6c0419513d",
+      "provider_cleanup": "complete",
+      "status": "REA_CANCELLED_AT_QUERY_DEADLINE"
+    },
+    {
+      "address": "0xfffffe000898969c",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1retry",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 71.283,
+      "exit_code": 0,
+      "high_pcode_instruction_addresses_inside_independent_bounds": 6,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_ops_inside_independent_bounds": 9,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31q-gptbat-base",
+      "independent_instruction_words_in_requested_range": 17,
+      "limit_seconds": 100,
+      "pcode_operations": 9,
+      "pcode_outside_provider_body": 9,
+      "private_output_sha256": "f933a5942290945020cd99e664ff8b1e9216e8f7f5d0515737e4cf10306dd210",
+      "private_run_record_sha256": "0f41a2bd30d2d23a4164a09f7a140c69c9b8440ff4a61cc6f8a1a2c97f50effd",
+      "rea_body_bytes": 4,
+      "rea_listing_covers_symbol_bounded_range": false,
+      "rea_listing_instruction_words": 1,
+      "standard_pseudocode_gate": "rejected_cross_boundary",
+      "status": "COMPLETED_LIMITED_FACTS_INDEPENDENTLY_CHECKED"
+    },
+    {
+      "address": "0xfffffe0008978330",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch1retry",
+      "decompiler_warning_classes": [
+        "unresolved_indirect_jump"
+      ],
+      "elapsed_seconds": 70.178,
+      "exit_code": 0,
+      "high_pcode_instruction_addresses_inside_independent_bounds": 21,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_ops_inside_independent_bounds": 61,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31q-mapper-physical",
+      "independent_instruction_words_in_requested_range": 53,
+      "limit_seconds": 100,
+      "pcode_operations": 61,
+      "pcode_outside_provider_body": 0,
+      "private_output_sha256": "2405194394f7d939052f800ab0b4028bb6d364b6bfbf813e9644082bcf995343",
+      "private_run_record_sha256": "fd7491bdff8543457571dd1c29fbee766d65e1c52d743bc4eed15e7c7e054c8e",
+      "rea_body_bytes": 212,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 53,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_LIMITED_FACTS_INDEPENDENTLY_CHECKED"
+    },
+    {
+      "address": "0xfffffe00088f8738",
+      "artifact_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "batch": "out-batch2",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 22.893,
+      "exit_code": 0,
+      "high_pcode_instruction_addresses_inside_independent_bounds": 43,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_ops_inside_independent_bounds": 129,
+      "high_pcode_ops_outside_independent_bounds": 2,
+      "high_pcode_truncated": false,
+      "id": "gpu31q-provider-request",
+      "independent_instruction_words_in_requested_range": 136,
+      "limit_seconds": 100,
+      "pcode_operations": 131,
+      "pcode_outside_provider_body": 2,
+      "private_output_sha256": "ddebf38538b79d1ca96c20add1134e326ed98909c973b3b514398d3094698efe",
+      "private_run_record_sha256": "b7cdf52e1724729031069b836ceffb3ec04a7492c1e2f877ced6c98ba9c14fda",
+      "rea_body_bytes": 544,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 136,
+      "standard_pseudocode_gate": "rejected_cross_boundary",
+      "status": "COMPLETED_LIMITED_FACTS_INDEPENDENTLY_CHECKED"
+    },
+    {
+      "address": "0xfffffe00088f845c",
+      "artifact_sha256": "99d95ff5c337a3f6a46368893359c1e6cd861eeed0fa47f398cc8c7280770841",
+      "batch": "out-batch2",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 23.086,
+      "exit_code": 0,
+      "high_pcode_instruction_addresses_inside_independent_bounds": 42,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_ops_inside_independent_bounds": 77,
+      "high_pcode_ops_outside_independent_bounds": 246,
+      "high_pcode_truncated": false,
+      "id": "gpu31q-provider-version",
+      "independent_instruction_words_in_requested_range": 71,
+      "limit_seconds": 100,
+      "pcode_operations": 323,
+      "pcode_outside_provider_body": 246,
+      "private_output_sha256": "6b49ce21b0b3ff86bf464c7caac3396265876ac428871c96647b9b4a769e96d2",
+      "private_run_record_sha256": "2eae63b3e11f7e559882217f48d1e06ca1e360c03161630b7716831e0fea9814",
+      "rea_body_bytes": 284,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 71,
+      "standard_pseudocode_gate": "rejected_cross_boundary",
+      "status": "COMPLETED_LIMITED_FACTS_INDEPENDENTLY_CHECKED"
+    },
+    {
+      "address": "0xfffffe000896d768",
+      "artifact_sha256": "e772f7d8a6197ff54fa3e06b5cc83f8d2019dfb53cdc345b59678ebc4f14339b",
+      "batch": "out-batch3",
+      "decompiler_warning_classes": [],
+      "elapsed_seconds": 71.774,
+      "exit_code": 0,
+      "high_pcode_instruction_addresses_inside_independent_bounds": 49,
+      "high_pcode_missing_addresses": 0,
+      "high_pcode_ops_inside_independent_bounds": 87,
+      "high_pcode_ops_outside_independent_bounds": 0,
+      "high_pcode_truncated": false,
+      "id": "gpu31q-load-binary",
+      "independent_instruction_words_in_requested_range": 99,
+      "limit_seconds": 100,
+      "pcode_operations": 87,
+      "pcode_outside_provider_body": 0,
+      "private_output_sha256": "ade4436dafe2a7e1d5de48de4c6fc3a11bfdab0b3d50fee51de1e1a0c6136ed9",
+      "private_run_record_sha256": "6f777a5588309eb4eee3c0a332ddd680530579d7de0ca2e142d5231f868b4124",
+      "rea_body_bytes": 396,
+      "rea_listing_covers_symbol_bounded_range": true,
+      "rea_listing_instruction_words": 99,
+      "standard_pseudocode_gate": "manual_review_required",
+      "status": "COMPLETED_LIMITED_FACTS_INDEPENDENTLY_CHECKED"
+    }
+  ],
+  "rea_cancelled_queries": 3,
+  "rea_completed_queries": 5,
+  "rea_pcode_operations": 611,
+  "result": "STATIC_FORMAT_EVIDENCE_NATIVE_HOLD",
+  "running_kernel_identity_verified": false,
+  "schema": "ilinux-gpu31q-firmware-evidence-v1",
+  "uat_runtime_layout": "UNKNOWN",
+  "version_label_data_anchors": [
+    {
+      "carrier_mismatches": 0,
+      "carrier_offset": 1246900,
+      "derived_offset": 1716,
+      "sha256": "daa2ac123c801b73cfc8339d6374ab9a47d0ca2d2e6d2d8d27f571029c131454",
+      "size": 8,
+      "start": "0xfffffe00071346b4"
+    },
+    {
+      "carrier_mismatches": 0,
+      "carrier_offset": 1246908,
+      "derived_offset": 1724,
+      "sha256": "daa2ac123c801b73cfc8339d6374ab9a47d0ca2d2e6d2d8d27f571029c131454",
+      "size": 8,
+      "start": "0xfffffe00071346bc"
+    },
+    {
+      "carrier_mismatches": 0,
+      "carrier_offset": 1246916,
+      "derived_offset": 1732,
+      "sha256": "daa2ac123c801b73cfc8339d6374ab9a47d0ca2d2e6d2d8d27f571029c131454",
+      "size": 8,
+      "start": "0xfffffe00071346c4"
+    },
+    {
+      "carrier_mismatches": 0,
+      "carrier_offset": 1246924,
+      "derived_offset": 1740,
+      "sha256": "daa2ac123c801b73cfc8339d6374ab9a47d0ca2d2e6d2d8d27f571029c131454",
+      "size": 8,
+      "start": "0xfffffe00071346cc"
+    }
+  ]
+}

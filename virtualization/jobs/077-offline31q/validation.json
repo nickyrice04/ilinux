@@ -1,0 +1,77 @@
+{
+  "c_groups": {
+    "new_gptbat": 7,
+    "new_planner": 20,
+    "previous_portable": 12
+  },
+  "date_local": "2026-10-23",
+  "hardware_operations": 0,
+  "host_and_curated_host_and_vm_review_bytes_identical": true,
+  "job": {
+    "end_utc": "2026-10-23T15:07:45Z",
+    "exit": 0,
+    "start_utc": "2026-10-23T15:07:41Z"
+  },
+  "job_source_sha256": "72c49af3d777e697897f485cbe4f8a5467fc77fa23275919d7437dd5c297dfb0",
+  "native_cpu": "NOT_RUN",
+  "native_gpu": "NOT_RUN",
+  "new_c_components": {
+    "address_sanitizer": "PASS",
+    "halt_on_undefined_behavior": true,
+    "leak_detection": true,
+    "portable_flags": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-O2"
+    ],
+    "sanitizer_flags": [
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer"
+    ],
+    "undefined_behavior_sanitizer": "PASS"
+  },
+  "output_hashes": {
+    "network-preflight.json": "0c7f122829ecdbf9618a9b5f2aee9affe0605c3228c0e7b887c0281cff8907d0",
+    "review.json": "a286ec699b1567dc4d8fc9ffaca2e2208d640f00236dd9b80a1006e66728e58c",
+    "run-detail.log": "777058f5534bb28295a5beb5560898e1a4e6aff9615cfc9d4e2c09b9e888d910",
+    "run.log": "dbdbefbe8724898294b75067b1083b4ab39bd8176cde701eb99034bed688da6d",
+    "sanitizers-gptbat.txt": "94917e2677cba10a352727f7a2892d59fd60c434c761d71ee27a63f0c8cc5c2c",
+    "sanitizers-planner.txt": "3d695c2236c488897f7d83c0771dcdfef97126e0f643b163c072f40c8ebb1df1",
+    "test-gptbat": "ade69d9a1254ca3097c2166e7a8fb018f7a707c645c33250d388cdd50c415a53",
+    "test-planner": "e1c435cf4bbec864cc3f02ba4544b92dc6d9ce0be47dee51fdd15e31147db800",
+    "test_attempt31q_offline.py.log": "cf98aa5986dd0e3244e95c445ce4596194bd6cd9455ce590a3822c2ee0eb7d4a",
+    "test_reference.py.log": "7d159e357e796965be40b846d3ad0d93fa3b8ab579339848a7f4e2c4d98b28b0",
+    "toolchain.txt": "f99b15f2273b54d7083f9efc8e28d5a3f6533c332d12f2463e19d188a795d399"
+  },
+  "prior_c_sanitizers_repeated": false,
+  "python_new_methods": 45,
+  "python_unique_methods": 167,
+  "repeated_suite_runs_not_added_to_count": true,
+  "restart_ready": false,
+  "result": "PASS",
+  "schema": "ilinux-offline31q-validation-v1",
+  "source_manifest_sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6",
+  "source_pins": 402,
+  "toolchain": {
+    "cc": "cc (GCC) 16.1.1 20260430",
+    "kernel": "Linux 7.1.6-vzrun2 aarch64",
+    "python": "Python 3.14.8"
+  },
+  "vm": {
+    "curated_source_read_only": true,
+    "explicit_no_net": true,
+    "interfaces": [
+      "lo"
+    ],
+    "memory_gib": 4,
+    "physical_usb": false,
+    "retained_image_read_only": true,
+    "test_build_tmpfs_mib": 256,
+    "vcpus": 2
+  }
+}

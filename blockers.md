@@ -1,5 +1,28 @@
 # Blockers
 
+## Current — 31Q narrows CPU preparation; native CPU/GPU remain HOLD
+
+**CPU:** the current generic raw-image serializer omits the additional-object
+selector. Historical installed metadata was not captured; current semantics are
+not historical proof. The fallback range consumer prepares memory layout,
+separately from entry-vector programming. CPU1's effective first fetch and the
+missing startup prerequisite remain unknown. Next trace the normal raw handoff's
+range ownership and per-cluster startup dependencies against the retained input;
+do not retry31N or replay protected firmware steps on these facts alone.
+
+**GPU:** GPTBAT representation and NULL-payload handoff behavior are bounded static
+facts. The retained kernel carrier was not independently matched to the running
+kernel. Translation output, active class/configuration, firmware owner/ABI and
+G17C UAT/shared queues remain unknown. Next inspect the provider's boot handoff,
+MMU configuration and shared-data consumers listed in the GPU research note.
+The original planner/codec are tested building blocks, not a loaded GPU driver.
+No generation alias or identity mapping is justified.
+
+**Validation:**402 pins/167 Python methods/39 C groups PASS on host/VM; new27 C
+groups also pass Linux sanitizers. Offline tests cannot establish reset behavior,
+native SMP, rendering, energy or responsiveness. Native31Q HOLD / NOT RUN;
+no restart. M1 has an offline review handoff; macOS and prior attempts are intact.
+
 ## Current — 31P independently reviewed; native CPU/GPU still HOLD
 
 **Independent M1 review on `311473c`: OFFLINE_PASS_NATIVE_HOLD.**

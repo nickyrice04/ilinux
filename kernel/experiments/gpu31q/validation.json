@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-23",
+  "gptbat_behavior": {
+    "base_bits": 46,
+    "base_domain": "GPTBAT_BASE_DOMAIN_UNQUALIFIED",
+    "claim_basis": "INDEPENDENTLY_CHECKED_INSTRUCTION_BEHAVIOR",
+    "corroboration": "HIGH_PCODE_WITHIN_INDEPENDENT_SYMBOL_RANGE",
+    "independently_checked_instruction_words": 17,
+    "native_values_observed": false,
+    "offset_bits": 14,
+    "page_number_meaningful_bits": 32,
+    "rea_query_completed": true,
+    "rea_whole_function_gate": "REJECTED_CROSS_BOUNDARY",
+    "running_kernel_identity_match": "NOT_INDEPENDENTLY_ESTABLISHED",
+    "runtime_selection": "UNKNOWN",
+    "source_record": "reverse-engineering/findings/gpu31q/validation.json",
+    "source_scope": "Retained AGXG17X PI_300 X SecureMonitor member; static format only",
+    "zero_validity": "UNKNOWN"
+  },
+  "host": {
+    "architecture": "arm64",
+    "build": "25G83",
+    "compiler": "Apple clang21.0.0 (clang-2100.3.34.2)",
+    "os": "macOS26.6.2",
+    "python": "3.9.6"
+  },
+  "limits": {
+    "apple_binary_or_disassembly_seen_by_implementation_session": false,
+    "cpu1_execution": "UNVERIFIED",
+    "descriptor_cpu_address_domain": "UNQUALIFIED",
+    "energy": "UNMEASURED",
+    "firmware_abi": "UNKNOWN",
+    "g17c_uat_layout": "UNKNOWN",
+    "hardware_operations": 0,
+    "ioctl_atomicity_claimed": false,
+    "macos_changes": false,
+    "native_boot_prepared": false,
+    "native_gpu": "HOLD / NOT RUN",
+    "performance": "UNMEASURED"
+  },
+  "public_source": {
+    "archive_sha256": "045c64540fa4210394c899cad6320c5bf9090a66919938d986aeaad0033946e8",
+    "commit": "4fc326f6c25ccceb7515e2635c22e01fde5d3bac",
+    "executed_on_host": false,
+    "member_sha256": {
+      "drivers/gpu/drm/asahi/file.rs": "e880e91345476d8aa7a1ac7eb8118579c99d7cf3bfeb2888da2c52bcfa87a92e",
+      "drivers/gpu/drm/asahi/pgtable.rs": "a25a13fbcb41119ce77ed1f87e0002b8d92d4324ccd91a8005f3ba2d1b5ae230",
+      "include/uapi/drm/asahi_drm.h": "eb9f39e87dfe448dc044f54ab2d11b7493bf1359faca8fb76ece5f3583469015"
+    },
+    "read_as_data_on_host": true,
+    "repository": "https://github.com/GravityLinux/linux"
+  },
+  "published_source_sha256": {
+    "kernel/experiments/gpu31q/README.md": "a2b8b7372b8407b328047fee25934ad746b808b0ff158a4857e9e302b1e25ec5",
+    "kernel/experiments/gpu31q/gptbat.c": "4202bb77486a46fe320fed89d4ea7a2e6e2843dc471a07bc3f4d9d0b279b2e1f",
+    "kernel/experiments/gpu31q/gptbat.h": "f611f73d30e51ec046c1f824a7f4316cb9705f109600928e6fe385df93d505cc",
+    "kernel/experiments/gpu31q/planner.c": "1afbf6f984c5324ee8e0180e4113fc01b4ff58622c5554d80e6353b2527d787f",
+    "kernel/experiments/gpu31q/planner.h": "d813d92162f0e8ba3b967d9b4d753589c9e7af31cc343e9e1855881b1d456d79",
+    "kernel/experiments/gpu31q/reference.py": "49f28f4a6d0abb966e6475e0258bdadacb20ec0c17dfbb1c077fbb3db0d1da88",
+    "kernel/experiments/gpu31q/test_gptbat.c": "cb3a68556895fe9b1503e83032e151e860dfc0a4a70072c31a9abff8db074453",
+    "kernel/experiments/gpu31q/test_planner.c": "1b35e90d5bf31053a8794949d4743eb852a23ec52feb86bd1daf9f7853421826",
+    "kernel/experiments/gpu31q/test_reference.py": "50565b3a7cbd0fea60b4295b47e6b983bad651e66249cc001a27de9634c87716",
+    "research/native31q-gpu-planner.md": "df60b742989d8d6a3233695ece2a42eb22ff4d6076deee23f1f7ec21600886a1"
+  },
+  "result": "OFFLINE_COMPONENT_PASS_NATIVE_HOLD",
+  "schema": 1,
+  "tests": {
+    "c_flags": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-O2"
+    ],
+    "gptbat": {
+      "exit": 0,
+      "groups": 7,
+      "nonzero_page_offset_cases": 16383,
+      "seeded_roundtrips": 10000,
+      "sources": [
+        "gptbat.c",
+        "test_gptbat.c"
+      ],
+      "stdout": "GPU31Q_GPTBAT_PASS\n"
+    },
+    "linux_vm_and_sanitizers": "Recorded separately by root integration; not claimed by this host record",
+    "planner": {
+      "dense_page_grid_cases": 139392,
+      "exit": 0,
+      "groups": 20,
+      "sources": [
+        "planner.c",
+        "test_planner.c"
+      ],
+      "stdout": "GPU31Q_PLANNER_PASS\n"
+    },
+    "python": {
+      "command": "python3 -I kernel/experiments/gpu31q/test_reference.py",
+      "exit": 0,
+      "failures": 0,
+      "gptbat_methods": 8,
+      "methods": 36,
+      "planner_methods": 28,
+      "skips": 0
+    }
+  }
+}

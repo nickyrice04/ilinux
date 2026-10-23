@@ -3529,3 +3529,33 @@ readiness or automatic follow-up. Evidence:
 compiler builds and software tests do not qualify CPU1 or G17C operation. Retain
 the closure/network corrections explicitly, preserve all consumed evidence, and
 wait for a separately justified physical handoff.
+
+
+### 2026-10-23 · Publish31Q software progress; keep native CPU/GPU HOLD
+
+**Decision:** publish the original GPU mapping planner/format codec and bounded
+CPU/GPU findings after host and isolated Linux checks. Incorporate M1's31P review
+`5058916`; do not prepare a physical test without a meaningful new discriminator.
+
+**Evidence:** five completed REA queries on each track;2,701 CPU and489 GPU
+instruction words independently checked with zero mismatches. Current raw
+metadata semantics narrow the likely firmware path but cannot prove historical
+descriptor values. Fallback range preparation is not CPU1 fetch. GPU NULL-payload
+success, Release label and GPTBAT width do not supply ownership, ABI or a page
+table layout. Three whole-function decompiler refusals remain explicit; bounded
+instruction evidence does not retroactively make the dossiers fully accepted.
+
+**Implementation:** original portable mapping validation preserves64-bit values,
+operation ordering and kernel reservations; typed page/base conversion avoids
+implicit address-domain substitution. No Apple code is published.402 pins,
+167 Python methods and39 portable C groups pass host/VM;27 new C groups pass
+Linux ASan/UBSan. Three review outputs match byte-for-byte. VM checks onlylo and
+uses read-only curated inputs. Historical frozen receipts are unchanged.
+
+**Consequence:** M1 independently reviews offline, publishes and waits. No restart,
+native queue submission, firmware replay, policy change or installed-image edit.
+Next static work traces raw-handoff startup prerequisites and G17C boot/MMU/shared
+data consumers before an original native implementation. CPU1, all-core operation,
+GPU acceleration and performance/energy parity remain unverified.
+
+Validation: `native/boot/attempt31q/validation.json`.

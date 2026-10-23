@@ -1,0 +1,148 @@
+{
+  "cpu1_execution": "UNVERIFIED",
+  "cpu_rea": {
+    "historical_raw_branch": "INFERRED_NOT_OBSERVED",
+    "independent_unique_instruction_words": 2701,
+    "mismatches": 0,
+    "missing_cpu1_prerequisite": "NOT_ESTABLISHED",
+    "record": "reverse-engineering/findings/cpu-startup31q/validation.json",
+    "sha256": "2c26b1556fc01ebabb02478bc7e66de8505ba53185521f37bc4e8e5649c03221",
+    "successful_queries": 5
+  },
+  "date_local": "2026-10-23",
+  "energy": "UNMEASURED",
+  "frozen": {
+    "attempt31h": {
+      "pins": 186,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "attempt31i": {
+      "pins": 202,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "attempt31j": {
+      "pins": 226,
+      "result": "PASS_UNCHANGED",
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "attempt31j-host": {
+      "pins": 6,
+      "result": "PASS_UNCHANGED",
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    },
+    "attempt31k": {
+      "pins": 254,
+      "result": "PASS_UNCHANGED",
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "attempt31l": {
+      "pins": 281,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "attempt31m": {
+      "pins": 306,
+      "result": "PASS_UNCHANGED",
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    },
+    "attempt31n": {
+      "pins": 330,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+    },
+    "attempt31o": {
+      "pins": 348,
+      "result": "PASS_UNCHANGED",
+      "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+    },
+    "attempt31p": {
+      "pins": 379,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c"
+    }
+  },
+  "gpu_original": {
+    "c_groups": 27,
+    "descriptor_cpu_address_domain": "UNQUALIFIED",
+    "firmware_abi": "UNKNOWN",
+    "g17c_uat_layout": "UNKNOWN",
+    "python_methods": 36,
+    "record": "kernel/experiments/gpu31q/validation.json",
+    "sha256": "040be8aa6f1061108fedbd60c48622abe19eb4885e62be7bbd75683490abbb37"
+  },
+  "gpu_rea": {
+    "deadline_cancellations": 3,
+    "independent_unique_instruction_words": 489,
+    "initial_prequery_environment_refusals": 1,
+    "mismatches": 0,
+    "record": "reverse-engineering/findings/gpu31q/validation.json",
+    "running_kernel_identity_match": "NOT_INDEPENDENTLY_ESTABLISHED",
+    "sha256": "5e465555caa680fd7952f8c4387a0442c9e43f5a7d83f18301a043826fcf77e7",
+    "successful_queries": 5,
+    "whole_function_gate_refusals": 3
+  },
+  "host": {
+    "architecture": "arm64",
+    "build": "25G83",
+    "c_groups": 39,
+    "compiler": "Apple clang 21.0.0",
+    "os": "macOS 26.6.2",
+    "python": "3.9.6",
+    "python_methods": 167,
+    "result": "PASS"
+  },
+  "integration": {
+    "new_c_asan": "PASS",
+    "new_c_groups": 27,
+    "new_c_ubsan": "PASS",
+    "prior_portable_c_groups": 12,
+    "python_methods": 167,
+    "record": "virtualization/jobs/077-offline31q/validation.json",
+    "result": "PASS",
+    "sha256": "e89e60572e5d621bd58351566f64c7ec8a0b03650c4d4af0506f8fc0de1c51b2"
+  },
+  "limitations": [
+    "VM and synthetic tests validate software only, not CPU reset, firmware execution or native performance.",
+    "Current generic kmutil analysis cannot prove historical installer output; no personalized policy artifact was read.",
+    "Fallback range preparation is distinct from effective CPU1 entry and is not a demonstrated startup fix.",
+    "GPTBAT format evidence rests on independent instruction checks; whole-function pseudocode rejection remains in force.",
+    "GPU provider NULL success and static build flavor do not establish firmware ownership, readiness or ABI.",
+    "CPU first-query VM succeeded; the outer wrapper had a post-run bookkeeping fault. Query records and logs were retained.",
+    "Public upstream builds are prior31P evidence and were not repeated in31Q.",
+    "Private Apple bytes, disassembly and decompiler output remain local ignored inputs."
+  ],
+  "linux_smp": "NOT_RUN",
+  "m1": {
+    "instructions": "tools/m1n1-client/attempt31q-instructions.md",
+    "prior31p_review": "PASS_OFFLINE_NATIVE_HOLD",
+    "prior31p_review_commit": "5058916",
+    "this31q_independent_review": "NOT_RUN_PENDING_M1"
+  },
+  "native31q": "HOLD / NOT RUN",
+  "native_gpu_acceleration": "NOT_RUN",
+  "native_operations": 0,
+  "performance": "UNMEASURED",
+  "preservation": {
+    "boot_policy_changes": 0,
+    "installed_native_image_changed": false,
+    "macos_changes": 0,
+    "previous_consumed_receipts_changed": false,
+    "unrelated_untracked_work": "PRESERVED",
+    "volumes_changed": 0
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "retained_boot021_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+  "review_outputs": {
+    "byte_identical": true,
+    "curated_host_sha256": "a286ec699b1567dc4d8fc9ffaca2e2208d640f00236dd9b80a1006e66728e58c",
+    "host_sha256": "a286ec699b1567dc4d8fc9ffaca2e2208d640f00236dd9b80a1006e66728e58c",
+    "vm_sha256": "a286ec699b1567dc4d8fc9ffaca2e2208d640f00236dd9b80a1006e66728e58c"
+  },
+  "reviewed_parent_commit": "5058916955b32a5441c6b924389f672d9536d388",
+  "schema": "ilinux-attempt31q-offline-v1",
+  "source_manifest_sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6",
+  "source_pins": 402
+}

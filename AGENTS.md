@@ -99,6 +99,29 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Current — 31Q CPU/GPU offline checkpoint, 2026-10-23
+
+M1's31P review `5058916` is incorporated. Five CPU and five GPU REA queries
+completed; independent checks cover2,701 CPU and489 GPU instruction words with
+zero mismatches. Current raw-image metadata production omits the extra-object
+selector, but historical output is inferred, not observed. Fallback memory-range
+preparation does not establish CPU1's first fetch or a missing startup operation.
+
+Original C/Python GPU mapping planner and typed GPTBAT format conversion are
+implemented. **402 pins /167 Python methods /39 portable C groups PASS** on
+macOS and Linux VM077. The27 new C groups pass Linux ASan/UBSan; the12 prior
+groups are repeated portably. Host, curated-host and VM review JSON match exactly.
+GPU descriptor addresses, firmware ownership/ABI and G17C UAT remain unqualified;
+three whole-function decompiler refusals remain recorded. No native acceleration
+or performance/energy improvement is claimed.
+
+**M1 next:** `tools/m1n1-client/attempt31q-instructions.md`; independently review
+offline and publish results. **Do not restart: native31Q HOLD / NOT RUN.** CPU1
+UNVERIFIED. All earlier frozen closures/receipts and native images remain intact;
+macOS, boot settings and volumes unchanged. Evidence and next bounded questions:
+`native/boot/attempt31q/validation.json`, `research/native31q-firmware.md` and
+`research/native31q-gpu-firmware.md`.
+
 ### Latest M1 review — 31P offline CPU/GPU PASS; native HOLD, 2026-10-22
 
 **Independent M1 review on `311473c`: OFFLINE_PASS_NATIVE_HOLD.**
