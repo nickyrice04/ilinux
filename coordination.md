@@ -6,6 +6,33 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — M1 31U review complete; M5 investigation next, 2026-10-23
+
+**Independent M1 review on `24cba27`: OFFLINE_PASS_NATIVE_HOLD.**
+**475 pins /225 Python methods /95 portable C groups PASS**, no skips/repairs;
+command exit0 in7.912s with Python3.13.5/Apple clang17.0.0. Prior216 Python/88 C
+plus new9 Python/7 C pass. Output matches released host/curated/VM bytes
+(`3f5aba9f…d2c155`). Compiler temporaries removed; Linux sanitizers NOT RUN on M1.
+
+No actionable issue in the documented72-byte ring contract. Copy/type validation
+precedes publication; fixed producer bounds and wide offsets preserved. Ambiguous
+publication retains raw record/proposed index and forbids retry. Caller owns
+sole-consumer serialization, mapping/coherence and real DMA ordering; no readiness
+or event semantics follow. CPU raw/optional-object differences do not establish
+historical selection or CPU1 fetch. The attributed all-core guest report is a
+new lead with host-bootstrap/physical-entry provenance still missing here.
+Removed-block/truncated dispatcher and prior refusals stay intact. REA/private
+parsing/evaluators/full symbols/upstream builds/external refetch/VM NOT RUN on M1.
+
+All14 frozen closures, retained13-file package, clean client57a9339 and375 prior
+intake evidence files verified unchanged. No31U native-use file; discovery/device
+opens/target requests/native invocations0. **Neither Mac restarted. Native31U
+HOLD / NOT RUN; GPU acceleration/Linux SMP NOT RUN; CPU1 UNVERIFIED.** No transfer,
+install, live/policy check or settings change. M5 continues host-bootstrap and
+G17C mapping/publication/completion qualification. Evidence:
+`native/boot/attempt31u-m1-offline-2026-10-23.md` and reviewed metadata JSON.
+
+
 ### Current — 31U offline handoff ready; M1 review next, 2026-10-23
 
 Root completed integration and publication preparation. CPU, GPU and public-source
