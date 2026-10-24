@@ -1,0 +1,562 @@
+{
+  "boot_acceptance": "NOT TESTED",
+  "cpu1_execution": "UNVERIFIED",
+  "cpu2_execution": "NOT RUN",
+  "cpu2_plan": {
+    "controller_present": false,
+    "deployment_ready": false,
+    "execution": {
+      "elapsed_seconds": 0.072,
+      "exit": 0,
+      "stdout_sha256": "b7b0259d89f485a7a7565595e0dd6bb4d0d2fbaa2561447fd31ea4d950666b91"
+    },
+    "expected_mpidr_low24": 262146,
+    "hardware_operations": 0,
+    "identity_is_observed": false,
+    "non_target_reset_fresh_spans": [
+      {
+        "bytes": 16,
+        "offset": 589856
+      },
+      {
+        "bytes": 464,
+        "offset": 589888
+      }
+    ],
+    "non_target_spin_zero_spans": [
+      {
+        "bytes": 64,
+        "offset": 590416
+      },
+      {
+        "bytes": 1856,
+        "offset": 590544
+      }
+    ],
+    "required_live_preflight": "NOT SATISFIED",
+    "result": "OFFLINE_CPU2_BINDINGS_PASS",
+    "retained_optional_bytes_check": "NOT RUN; public pinned layout used",
+    "target_cpu": 2
+  },
+  "date_local": "2026-10-24",
+  "device_opens": 0,
+  "either_mac_restarted": false,
+  "external_messages_sent": 0,
+  "fixture_execution": false,
+  "fixture_generation": {
+    "all_hashes_match_reference": true,
+    "cases": 20,
+    "classification": "NOT_INSPECTED",
+    "exit": 0,
+    "nonexecutable": true
+  },
+  "fixture_installation": false,
+  "gpu_native_acceleration": "NOT RUN",
+  "linux_smp": "NOT RUN",
+  "local_read_only_inspector": {
+    "case_exits": [
+      71,
+      71,
+      71,
+      71,
+      71,
+      71,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "cases": 20,
+    "completed_matrix": true,
+    "counts": {
+      "PROPERTIES_DERIVED": 5,
+      "PROPERTY_ERROR": 9,
+      "TOOL_ERROR": 6
+    },
+    "elapsed_seconds": 3.159,
+    "environment": {
+      "build": "25A362",
+      "kmutil_sha256": "777d9def067162eb5bd107d6dc1e42d1b5e08530439a041ec450c6322081a458",
+      "product_version": "26.0.1"
+    },
+    "exit": 0,
+    "fixture_execution": false,
+    "fixture_installation": false,
+    "hardware_operations": 0,
+    "matches_reference": true,
+    "result_sha256": "634b0e18ad963d03c3aa1e24c550fbe372292cfaa9b34045feb2381b7b6cd585"
+  },
+  "manifest": {
+    "exit": 0,
+    "pins": 18,
+    "sha256": "52f50dc70dc4605cf8cc0fcf320c26bb3d7997aa2566ab247542000f9844a3a9"
+  },
+  "native31y": "HOLD / NOT RUN",
+  "native_cpu_startup": "NOT RUN",
+  "native_invocations": 0,
+  "new_discovery_queries": 0,
+  "normalized_inspector_cases": [
+    {
+      "bytes": 16384,
+      "case": "flat-execute",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "Could not parse binary: Unable to find '__info' section."
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "bafedbd2c444f5e9e054e4c3de0cc3c8b0a586b15f17ad09d36ec54409bc1557",
+      "stage": "baseline"
+    },
+    {
+      "bytes": 16384,
+      "case": "flat-fileset",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "Could not parse binary: Unable to find '__info' section."
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "27bf2b8fc53d84259f8a740799371cca5f93c18ff444505e713f6f9f479b4abc",
+      "stage": "baseline"
+    },
+    {
+      "bytes": 32768,
+      "case": "one-entry-fileset",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "Could not parse binary: Unable to find '__info' section."
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "a147ad70fa4bf4811db8ec048755f0513bf11a3178ac2faa4525664b0e214d5d",
+      "stage": "baseline"
+    },
+    {
+      "bytes": 32768,
+      "case": "flat-execute",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "An error occurred while loading boot kernel collection: Prelink info section has no _PrelinkKCID"
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "243604b65cdb60f0e861532f1704811c62cf4dffa1f91932ed8333da5ce2b6ab",
+      "stage": "metadata"
+    },
+    {
+      "bytes": 32768,
+      "case": "flat-fileset",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "An error occurred while loading boot kernel collection: Prelink info section has no _PrelinkKCID"
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "97200e68caa9abbff4069d178b8e1fe0c330697458580621b13b146ec607ea9e",
+      "stage": "metadata"
+    },
+    {
+      "bytes": 49152,
+      "case": "one-entry-fileset",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "An error occurred while loading boot kernel collection: Prelink info section has no _PrelinkKCID"
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "f14de72c6c8b442f454ee4eb4c998f5247056bddfd048a2ccf4791698ae4a08f",
+      "stage": "metadata"
+    },
+    {
+      "bytes": 32768,
+      "case": "flat-execute",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __TEXT_EXEC segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "36840dc84987df17064b5a3f5a7fff81a478f6b637ed213c975ea1c773fcb772",
+      "stage": "collection-id"
+    },
+    {
+      "bytes": 32768,
+      "case": "flat-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __TEXT_EXEC segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "74d0af0b7f3575f13a7a939b1449c9755a960a402b3e7acc95546657546484fc",
+      "stage": "collection-id"
+    },
+    {
+      "bytes": 49152,
+      "case": "one-entry-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __TEXT_EXEC segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "6b6f61be0df354a8d716b638b68ca69d1971e886911607e776cf8f23b68ea3c2",
+      "stage": "collection-id"
+    },
+    {
+      "bytes": 49152,
+      "case": "flat-execute",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __LINKEDIT segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "03f1d05543ece343a69e4139ff842e443ed7ca41ed77ca2af79bdac2c695f71b",
+      "stage": "exec-segment"
+    },
+    {
+      "bytes": 49152,
+      "case": "flat-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __LINKEDIT segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "337e3287cb5f6575caac4f18c67ec195b6030702702763c5f85d6321d33b6c64",
+      "stage": "exec-segment"
+    },
+    {
+      "bytes": 65536,
+      "case": "one-entry-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __LINKEDIT segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "4001b1a268fd1905db20948221c624e70dd5133474f42f691bd70aba1cde57f4",
+      "stage": "exec-segment"
+    },
+    {
+      "bytes": 65536,
+      "case": "flat-execute",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Arithmetic Error: arithmetic overflow detected subtracting FilesetOffset(rawValue: 49152) from FilesetOffset(rawValue: 32768)"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "3b42d6af61b656798f469d4777d91f30c005526e1e179f7d175721be4da6ba1d",
+      "stage": "linkedit"
+    },
+    {
+      "bytes": 65536,
+      "case": "flat-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Arithmetic Error: arithmetic overflow detected subtracting FilesetOffset(rawValue: 49152) from FilesetOffset(rawValue: 32768)"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "ad02016ff3c353e67ce71d95e74c109867e1c7fcc2dcdec46450275d921af103",
+      "stage": "linkedit"
+    },
+    {
+      "bytes": 81920,
+      "case": "one-entry-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Arithmetic Error: arithmetic overflow detected subtracting FilesetOffset(rawValue: 65536) from FilesetOffset(rawValue: 49152)"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "9640940ec0c183f2871a586e7b089a25a84ce130e8bbd957158bf5d806c610e5",
+      "stage": "linkedit"
+    },
+    {
+      "bytes": 65536,
+      "case": "flat-execute",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 0,
+        "kcbz": 0,
+        "kcep": 18446741874803771392,
+        "kclf": 49152,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 32768,
+        "kcsf": 0,
+        "kcsz": 0,
+        "kcwf": 32768,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "40324d47c68fc1ad5ac4c2cde83eea090a79493951fa989c5e85e8adfd1df6aa",
+      "stage": "ordered"
+    },
+    {
+      "bytes": 65536,
+      "case": "flat-fileset",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 0,
+        "kcbz": 0,
+        "kcep": 18446741874803771392,
+        "kclf": 49152,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 32768,
+        "kcsf": 0,
+        "kcsz": 0,
+        "kcwf": 32768,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "7b1e183dd82c1c41e5dc0aaab1fd0ffc35afe9595e85c2ccc2ba9930135bfea9",
+      "stage": "ordered"
+    },
+    {
+      "bytes": 81920,
+      "case": "one-entry-fileset",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 0,
+        "kcbz": 0,
+        "kcep": 18446741874803787776,
+        "kclf": 65536,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 49152,
+        "kcsf": 0,
+        "kcsz": 0,
+        "kcwf": 49152,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "9e55f047e1c401a6b174be2eb0ccfa8f10cc6e1d5b8980889cfef6f251cba4a4",
+      "stage": "ordered"
+    },
+    {
+      "bytes": 98304,
+      "case": "flat-execute",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 32768,
+        "kcbz": 32768,
+        "kcep": 18446741874803787776,
+        "kclf": 81920,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 65536,
+        "kcsf": 16384,
+        "kcsz": 32768,
+        "kcwf": 65536,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "d42fd181ea245971dc6a6e111c2d514a455b45e2d537547c4b88dca7a9b26f16",
+      "stage": "boot-segments"
+    },
+    {
+      "bytes": 98304,
+      "case": "flat-fileset",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 32768,
+        "kcbz": 32768,
+        "kcep": 18446741874803787776,
+        "kclf": 81920,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 65536,
+        "kcsf": 16384,
+        "kcsz": 32768,
+        "kcwf": 65536,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "1c70c41989f84070d6874e84250724e05313bbd59ab0dba00bfea8058a2ed45a",
+      "stage": "boot-segments"
+    }
+  ],
+  "not_run_on_m1": [
+    "REA/private instruction decoding",
+    "private firmware/evaluator reproduction",
+    "full-symbol audit",
+    "upstream compilation/external source refetch",
+    "Linux ASan/UBSan",
+    "VM execution",
+    "live target/version/policy checks"
+  ],
+  "portable_tests": {
+    "cpu2": {
+      "elapsed_seconds": 0.132,
+      "exit": 0,
+      "methods": 9,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format": {
+      "elapsed_seconds": 0.078,
+      "exit": 0,
+      "methods": 14,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "new_python_methods": 23,
+    "separate31w_c_groups": 111,
+    "total_with_separate31w_python_methods": 266
+  },
+  "preservation": {
+    "31w_released_outputs_match": true,
+    "31w_stdout_sha256": "494f820637d72344701dc4663806c110e8bfb7d6e6cfe0e525ce93485908cf6c",
+    "31y_full_normalized_signature_match": true,
+    "both_fixture_sets_hash_and_nonexecutable_permissions": "PASS",
+    "caffeine_cleanup": "owned_assertion_already_exited",
+    "client_clean": true,
+    "client_commit": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "compiler_temporaries_removed": true,
+    "frozen": {
+      "attempt31h": {
+        "pins": 186,
+        "result": "PASS_UNCHANGED",
+        "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+      },
+      "attempt31i": {
+        "pins": 202,
+        "result": "PASS_UNCHANGED",
+        "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+      },
+      "attempt31j": {
+        "pins": 226,
+        "result": "PASS_UNCHANGED",
+        "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+      },
+      "attempt31j-host": {
+        "pins": 6,
+        "result": "PASS_UNCHANGED",
+        "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+      },
+      "attempt31k": {
+        "pins": 254,
+        "result": "PASS_UNCHANGED",
+        "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+      },
+      "attempt31l": {
+        "pins": 281,
+        "result": "PASS_UNCHANGED",
+        "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+      },
+      "attempt31m": {
+        "pins": 306,
+        "result": "PASS_UNCHANGED",
+        "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+      },
+      "attempt31n": {
+        "pins": 330,
+        "result": "PASS_UNCHANGED",
+        "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+      },
+      "attempt31o": {
+        "pins": 348,
+        "result": "PASS_UNCHANGED",
+        "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+      },
+      "attempt31p": {
+        "pins": 379,
+        "result": "PASS_UNCHANGED",
+        "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c"
+      },
+      "attempt31q": {
+        "pins": 402,
+        "result": "PASS_UNCHANGED",
+        "sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6"
+      },
+      "attempt31r": {
+        "pins": 420,
+        "result": "PASS_UNCHANGED",
+        "sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4"
+      },
+      "attempt31s": {
+        "pins": 441,
+        "result": "PASS_UNCHANGED",
+        "sha256": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158"
+      },
+      "attempt31t": {
+        "pins": 458,
+        "result": "PASS_UNCHANGED",
+        "sha256": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7"
+      },
+      "attempt31u": {
+        "pins": 475,
+        "result": "PASS_UNCHANGED",
+        "sha256": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25"
+      },
+      "attempt31v": {
+        "pins": 492,
+        "result": "PASS_UNCHANGED",
+        "sha256": "7b2cd432821583a351effd58eb53eb11eafc621c91a31fdab4579669c91e53cd"
+      },
+      "attempt31w": {
+        "pins": 509,
+        "result": "PASS_UNCHANGED",
+        "sha256": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c"
+      },
+      "attempt31x": {
+        "pins": 6,
+        "result": "PASS_UNCHANGED",
+        "sha256": "84e612d0591ed9c9a345e77a5b1a6f9e3d9d8f42180ccc24c508e825ea480ea9"
+      }
+    },
+    "frozen_manifest_count": 18,
+    "prior_evidence_files": 393,
+    "prior_evidence_unchanged": true,
+    "result": "PASS",
+    "retained_package_files": 13
+  },
+  "public_scope": "Original notes, synthetic fixture classifications and reviewed metadata only; raw logs/images remain ignored.",
+  "reference_sha256": "821945f643248e10c720904814bb8e9752d0233ca9bdd43cd9ff978e45738f48",
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "review_blockers": [],
+  "reviewed_commit": "0f382bb74c2c0783a53cb8a41d1a900d9a6c82e8",
+  "schema": "ilinux-attempt31y-m1-offline-v1",
+  "skips": 0,
+  "source_repairs": 0,
+  "target_requests": 0,
+  "tools": {
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "python": "3.13.5"
+  }
+}

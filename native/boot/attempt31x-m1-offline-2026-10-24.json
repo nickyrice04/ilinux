@@ -1,0 +1,44 @@
+{
+  "cpu1_execution": "UNVERIFIED",
+  "cpu2_execution": "NOT RUN",
+  "date_local": "2026-10-24",
+  "device_opens": 0,
+  "either_mac_restarted": false,
+  "external_messages_sent": 0,
+  "external_outreach": "DECLINED; frozen draft superseded by31Y; no contact",
+  "gpu_native_acceleration": "NOT RUN",
+  "linux_smp": "NOT RUN",
+  "manifest": {
+    "exit": 0,
+    "pins": 6,
+    "sha256": "84e612d0591ed9c9a345e77a5b1a6f9e3d9d8f42180ccc24c508e825ea480ea9"
+  },
+  "native31x": "HOLD / NOT RUN",
+  "native_invocations": 0,
+  "new_discovery_queries": 0,
+  "new_executable_tests": 0,
+  "not_run_on_m1": [
+    "REA/private instruction decoding",
+    "private firmware/evaluator reproduction",
+    "full-symbol audit",
+    "upstream compilation/external source refetch",
+    "Linux ASan/UBSan",
+    "VM execution",
+    "live target/version/policy checks"
+  ],
+  "private_audit_reproduced": false,
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "review_blockers": [],
+  "reviewed_commit": "0f382bb74c2c0783a53cb8a41d1a900d9a6c82e8",
+  "schema": "ilinux-attempt31x-m1-offline-v1",
+  "scope": "Research review and source integrity; 31W tests are separate.",
+  "skips": 0,
+  "source_repairs": 0,
+  "strongest_lead": "Applicable resident-monitor host or independently qualified missing raw-start prerequisite; not yet a verified workaround.",
+  "target_requests": 0,
+  "tools": {
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "python": "3.13.5"
+  }
+}

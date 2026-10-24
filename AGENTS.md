@@ -99,6 +99,31 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest M1 — 31W/X/Y offline PASS; inspector matrix reproduced, 2026-10-24
+
+**Independent M1 review on `0f382bb`: OFFLINE_PASS_NATIVE_HOLD.**
+31W509 pins/243 Python methods/111 portable C groups PASS;31X6 research pins PASS;
+31Y18 pins/23 new Python methods PASS. Total266 Python methods,111 C groups,
+no skips/repairs. Python3.13.5/Apple clang17.0.0;31W exit0 in9.555s and review bytes
+match release (`494f8206…908cf6c`). Linux sanitizers/REA/private decoding/VM NOT RUN on M1.
+
+M1 read-only inspector on macOS26.0.1/25A362 (actual hash777d9def…081a458)
+independently matches the **entire20-case25G83 reference signature**, exit0 in3.159s:
+six load errors, nine property errors despite exit0, five derivations. Two fixtures
+derive nonzero kcbz. Generated/inspected fixtures are original, non-executable and
+ignored. Parser agreement is not installer/firmware acceptance or CPU startup.
+CPU2 bindings PASS but controller_present/deployment_ready=false; live preflight
+NOT SATISFIED. Full version-matched monitor entry/memory/fixups contract still
+needed. No actionable issue found in the offline contracts; older refusals retained.
+
+All18 earlier closures, retained13-file package, clean client57a9339 and393 prior
+intake evidence files verified unchanged. No31W/X/Y native receipt, target requests
+or device opens. **Neither Mac restarted; native CPU/GPU/live checks HOLD / NOT RUN.**
+No external contact, transfer, installation or settings change. Separate dated
+review pairs for31W/X/Y published; detailed matrix and limits:
+`native/boot/attempt31y-m1-offline-2026-10-24.md` and JSON.
+
+
 ### Latest — 31Y offline alternate-host contract, 2026-10-24
 
 The user declined external outreach; no message was posted. An original,

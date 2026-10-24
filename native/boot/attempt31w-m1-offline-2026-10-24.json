@@ -1,0 +1,54 @@
+{
+  "cpu1_execution": "UNVERIFIED",
+  "cpu2_execution": "NOT RUN",
+  "date_local": "2026-10-24",
+  "device_opens": 0,
+  "either_mac_restarted": false,
+  "execution": {
+    "elapsed_seconds": 9.555,
+    "exit": 0,
+    "stdout_sha256": "494f820637d72344701dc4663806c110e8bfb7d6e6cfe0e525ce93485908cf6c"
+  },
+  "external_messages_sent": 0,
+  "gpu_native_acceleration": "NOT RUN",
+  "linux_smp": "NOT RUN",
+  "native31w": "HOLD / NOT RUN",
+  "native_invocations": 0,
+  "new_discovery_queries": 0,
+  "new_pressure_c_groups": 8,
+  "new_python_methods": 9,
+  "not_run_on_m1": [
+    "REA/private instruction decoding",
+    "private firmware/evaluator reproduction",
+    "full-symbol audit",
+    "upstream compilation/external source refetch",
+    "Linux ASan/UBSan",
+    "VM execution",
+    "live target/version/policy checks"
+  ],
+  "portable_c_groups": 111,
+  "preservation_summary": {
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "details": "attempt31y-m1-offline-2026-10-24.json",
+    "prior_evidence_unchanged": true,
+    "retained_package_files": 13
+  },
+  "previous_c_groups": 103,
+  "previous_python_methods": 234,
+  "python_methods": 243,
+  "released_host_curated_vm_outputs_match": true,
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "review_blockers": [],
+  "reviewed_commit": "0f382bb74c2c0783a53cb8a41d1a900d9a6c82e8",
+  "schema": "ilinux-attempt31w-m1-offline-v1",
+  "skips": 0,
+  "source_manifest_sha256": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c",
+  "source_pins": 509,
+  "source_repairs": 0,
+  "target_requests": 0,
+  "tools": {
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "python": "3.13.5"
+  }
+}
