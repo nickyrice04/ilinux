@@ -3954,3 +3954,37 @@ requiring an unverified Apple fix. Continue useful original GPU work offline;
 qualify the firmware-side meaning and completion path before adding a native
 adapter. The new strict acceptance policy and stop-on-full policy are deliberate
 Linux design choices, not assertions of private implementation equivalence.
+
+
+### 2026-10-24 · 31X reopen CPU research; pursue the accepted host, retain native hold
+
+The renewed CPU-only investigation identifies the reported resident-SPTM host
+as the strongest software lead. Public tests describe all 17 secondaries and
+cluster-specific work, but come from one author and a different board/firmware;
+the successful host bootstrap remains unavailable in the located public source.
+No local workaround or Apple-only necessity is established.
+
+REA: one successful query and one provider refusal in two isolated VM batches.
+The context initializer runs after entry begins; three checked wait loops cannot
+advance to payload entry after one event. Whole-function pseudocode stays refused.
+Independent checks cover 474 instruction words with zero mismatches. The separate
+audit confirms ten consumed CPU1 starts, 18 topology records and seven retained
+boot021 source hashes; no new implementation defect was found. All 17 prior
+frozen manifests and their contents remain unchanged; 66 public-source records
+were verified. These are research checks, not native CPU execution or performance.
+
+Next: obtain the reported host source/build/context and physical-secondary
+evidence, qualify it for J716c/T6050, then design a bounded test. CPU2 remains an
+untested control, not a discovered fix. No new native controller or image is
+prepared. **Native 31X HOLD / NOT RUN; no restart.** macOS, installed objects,
+volumes and security settings are untouched. M1 follows
+`tools/m1n1-client/attempt31x-instructions.md`; evidence is in the three 31X
+research notes and `native/boot/attempt31x/validation.json`.
+
+Decision: pursue the actual resident-SPTM host behind the attributed all-core
+report. Do not implement a guessed call to the downstream context initializer,
+or treat a post-start event as a fix for unconditional wait loops. A useful
+physical test requires an applicable accepted host or an independently qualified
+missing prerequisite. Lack of a public implementation is not proof that Apple
+alone can resolve the issue. This research-only reopening does not authorize
+changes to installed objects, firmware, storage or startup security.

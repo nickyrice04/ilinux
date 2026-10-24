@@ -1,0 +1,219 @@
+{
+  "schema": "ilinux-cpu31x-context-wait-discriminator-v1",
+  "date": "2026-10-24",
+  "status": "BOUNDED_STATIC_EVIDENCE_NATIVE_NOT_RUN",
+  "attempted_queries": 2,
+  "completed_queries": 2,
+  "successful_queries": 1,
+  "query_failures": 1,
+  "queries": [
+    {
+      "label": "early-entry-context",
+      "requested_address": "0xfffffff0270a0000",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "output_sha256": "f4d7726c0c0ac449d00250905b781c5d1c004ad216cf49914fdc733fb4fe1b3b",
+      "cli_exit": 1,
+      "seconds": 22.169641552,
+      "provider_procedure_available": false,
+      "error_code": "invalid_request",
+      "error_category": "invalid_input",
+      "reason": "No procedure exists at requested address",
+      "returned_body": false,
+      "whole_function_pseudocode_accepted": false,
+      "batch": "a"
+    },
+    {
+      "label": "entry-context-owner",
+      "requested_address": "0xfffffff0270ee12c",
+      "returned_entry": "0xfffffff0270ee12c",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "output_sha256": "9c513342a8a448fdc371f2d6fbed21dafb52ec1acf1b609f8f77b78a44068c15",
+      "cli_exit": 0,
+      "seconds": 22.685408011,
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "body_anchors": [
+        {
+          "start": "0xfffffff0270ee12c",
+          "end_inclusive": "0xfffffff0270f027f",
+          "carrier_offset": 958764,
+          "derived_offset": 958764,
+          "bytes": 8532,
+          "sha256": "e123598b71c9a1e81c7ca173bba6a742651f405156dcd96fd3990dcba46ec792"
+        }
+      ],
+      "assembly_instructions": 2133,
+      "pcode_operations": 3000,
+      "pcode_truncated": true,
+      "pcode_outside_body": 0,
+      "decompiler_warning_classes": [
+        "provider_removed_blocks"
+      ],
+      "whole_function_pseudocode_accepted": false,
+      "whole_function_refusal_reason": "Truncated native value flow and provider removed blocks; only independently checked bounded facts used",
+      "batch": "b"
+    }
+  ],
+  "input_provenance": {
+    "sptm_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+    "sptm_bytes": 1376288,
+    "mboot_decoded_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+    "mboot_analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+    "sptm_build_binding": "Inherited retained25G83 artifact record; no fresh installed/running image match",
+    "sptm_prior_provenance": "reverse-engineering/findings/cpu-startup31w/validation.json",
+    "sptm_query_copy_identical": true,
+    "personalized_objects_read": 0
+  },
+  "batches": [
+    {
+      "batch": "a",
+      "query_script_sha256": "57d76fd6f150f1069364d130f3fd9711e50c73b129251263a70c260bec96b1b0",
+      "query_list_sha256": "0bc9a586589be63df8a37b33d46c775f058e02f707cd35a6544bb2596c5d7341",
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false,
+      "vm_setup_exit": 0,
+      "vm_job_exit": 1
+    },
+    {
+      "batch": "b",
+      "query_script_sha256": "f493c2a95c70b104bf4392186e5506a4ff5ad9c317c66ee42fee58001a8d50d0",
+      "query_list_sha256": "35d66078800ce3ac6c3f31754bd399cbb9f63972db9d08bcae55e26dc860d6d3",
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false,
+      "vm_setup_exit": 0,
+      "vm_job_exit": 0
+    }
+  ],
+  "independent_bounded_blocks": [
+    {
+      "image": "SPTM",
+      "label": "early-entry-and-tail",
+      "start": "0xfffffff0270a0000",
+      "end_exclusive": "0xfffffff0270a02dc",
+      "carrier_file_offset": 638976,
+      "instruction_words": 183,
+      "code_bytes": 732,
+      "sha256": "2f5a49fd0a50edd2afbcb70dad9ffe4ef4ac31c93597ff41ec01ddd2ee95fde4",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "image": "SPTM",
+      "label": "context-validation-and-install",
+      "start": "0xfffffff0270ee12c",
+      "end_exclusive": "0xfffffff0270ee554",
+      "carrier_file_offset": 958764,
+      "instruction_words": 266,
+      "code_bytes": 1064,
+      "sha256": "eb187bcfa4d459b6a684a227308a15a4b6fc65e8321a6b773af143013fed8519",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "image": "SPTM",
+      "label": "primary-side-wait",
+      "start": "0xfffffff0270af4f0",
+      "end_exclusive": "0xfffffff0270af51c",
+      "carrier_file_offset": 701680,
+      "instruction_words": 11,
+      "code_bytes": 44,
+      "sha256": "a1c9d61fe6edf41e9c1c67ceefb437b9713de516faadddb08676d9e73e5ab483",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "image": "mBoot",
+      "label": "final-trampoline-wait",
+      "start": "0x100c1aeba20",
+      "end_exclusive": "0x100c1aeba58",
+      "carrier_file_offset": 293408,
+      "instruction_words": 14,
+      "code_bytes": 56,
+      "sha256": "ae87e3dedcb538ddf3591000aeacd235ac98c65511eb4e62569abdbe19d646bf",
+      "llvm_word_mismatches": 0
+    }
+  ],
+  "independent_unique_instruction_words": 474,
+  "independent_code_bytes": 1896,
+  "new_words_beyond_prior_published_ranges": 283,
+  "overlap_prior_published_ranges": 191,
+  "llvm_word_mismatches": 0,
+  "independent_tool": "Apple LLVM version 21.0.0",
+  "coverage_limit": "Bounded checks only; large provider body is not independently decoded in full and whole-function pseudocode is refused. Earlier whole-image disassembly existed.",
+  "context_ownership": {
+    "caller_site": "0xfffffff0270a0198",
+    "initializer": "0xfffffff0270ee12c",
+    "context_install_site": "0xfffffff0270ee550",
+    "context_register": "TPIDRRO_EL0",
+    "caller_context_read_site": "0xfffffff0270a01f0",
+    "indirect_dispatch_site": "0xfffffff0270a0270",
+    "dispatch_record_pointer_field_offset": 24,
+    "typed_handoff_validation_before_context_install": true,
+    "initializer_identified_as_physical_secondary_release": false,
+    "physical_entry_role": "UNKNOWN",
+    "inference_limit": "The checked path must already execute to install and consume this context; this is not evidence of a pre-first-fetch operation or raw-boot callable service"
+  },
+  "wait_discriminator": {
+    "prediction": "A missed-event workaround requires a reachable event-wait path with an exit condition leading to payload entry.",
+    "bounded_pre_dispatch_waits": 0,
+    "checked_wait_loops": [
+      {
+        "image": "SPTM",
+        "wait_site": "0xfffffff0270a02d4",
+        "back_edge_site": "0xfffffff0270a02d8",
+        "back_edge_target": "0xfffffff0270a02d4",
+        "unconditional_back_edge": true,
+        "exit_test_between_wait_and_back_edge": false,
+        "one_event_does_not_advance_to_payload": true
+      },
+      {
+        "image": "SPTM",
+        "wait_site": "0xfffffff0270af514",
+        "back_edge_site": "0xfffffff0270af518",
+        "back_edge_target": "0xfffffff0270af514",
+        "unconditional_back_edge": true,
+        "exit_test_between_wait_and_back_edge": false,
+        "one_event_does_not_advance_to_payload": true
+      },
+      {
+        "image": "mBoot",
+        "wait_site": "0x100c1aeba50",
+        "back_edge_site": "0x100c1aeba54",
+        "back_edge_target": "0x100c1aeba50",
+        "unconditional_back_edge": true,
+        "exit_test_between_wait_and_back_edge": false,
+        "one_event_does_not_advance_to_payload": true
+      }
+    ],
+    "mboot_aligned_raw_scan_wait_count": 1,
+    "mboot_scan_site_independently_decoded": true,
+    "known_wait_holding_pen_hypothesis": "FALSIFIED_FOR_THE_THREE_CHECKED_LOOPS",
+    "post_pair_sev_as_native_fix": "NOT_QUALIFIED",
+    "limits": [
+      "ROM, an unobserved firmware path and effective CPU1 PC remain unknown.",
+      "No claim that SEV has no effect on every path; only these loops are qualified.",
+      "The SPTM wait nearaf514 lies outside the31W provider body and is checked separately, not used to repair that refusal."
+    ],
+    "bounded_pre_dispatch_scope": "Independently checked direct-entry instruction interval only; not every transitive callee or the full initializer body"
+  },
+  "discarded_before_query": {
+    "target": "0xfffffff0270afa70",
+    "reason": "Cache-geometry maintenance after dynamic dispatch; not selected as a startup prerequisite",
+    "executed_rea": false
+  },
+  "decision": {
+    "raw_software_workaround": "NOT_ESTABLISHED",
+    "accepted_host_context": "STILL_REQUIRED_FOR_ALTERNATE_ROUTE",
+    "apple_only_impossibility": "NOT_ESTABLISHED",
+    "new_native_experiment_qualified": false,
+    "new_cpu_implementation": false
+  },
+  "physical_hardware_operations": 0,
+  "firmware_replay": false,
+  "protection_bypass": false,
+  "prior_refusals_preserved": true
+}

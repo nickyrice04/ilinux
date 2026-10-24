@@ -1,5 +1,31 @@
 # Progress Log
 
+## 2026-10-24 · 31X strongest CPU lead and remaining dependency
+
+The renewed CPU-only investigation identifies the reported resident-SPTM host
+as the strongest software lead. Public tests describe all 17 secondaries and
+cluster-specific work, but come from one author and a different board/firmware;
+the successful host bootstrap remains unavailable in the located public source.
+No local workaround or Apple-only necessity is established.
+
+REA: one successful query and one provider refusal in two isolated VM batches.
+The context initializer runs after entry begins; three checked wait loops cannot
+advance to payload entry after one event. Whole-function pseudocode stays refused.
+Independent checks cover 474 instruction words with zero mismatches. The separate
+audit confirms ten consumed CPU1 starts, 18 topology records and seven retained
+boot021 source hashes; no new implementation defect was found. All 17 prior
+frozen manifests and their contents remain unchanged; 66 public-source records
+were verified. These are research checks, not native CPU execution or performance.
+
+Next: obtain the reported host source/build/context and physical-secondary
+evidence, qualify it for J716c/T6050, then design a bounded test. CPU2 remains an
+untested control, not a discovered fix. No new native controller or image is
+prepared. **Native 31X HOLD / NOT RUN; no restart.** macOS, installed objects,
+volumes and security settings are untouched. M1 follows
+`tools/m1n1-client/attempt31x-instructions.md`; evidence is in the three 31X
+research notes and `native/boot/attempt31x/validation.json`.
+
+
 ## 2026-10-23 · 31W CPU stop criteria and GPU pressure composition
 
 M1's31V review `9befeb3` is incorporated. One CPU and two GPU REA queries

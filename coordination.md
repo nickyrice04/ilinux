@@ -6,6 +6,21 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31X CPU-only handoff; no hardware attempt prepared, 2026-10-24
+
+Root integrated separate CPU REA, public-source and independent launcher audits.
+The user reopened CPU research; existing unrelated Omarchy changes and prior
+decisions are preserved. Strongest lead: the reported accepted resident-SPTM host,
+whose successful bootstrap remains missing. The downstream context initializer
+and three unconditional wait loops do not qualify a raw-start fix. No Apple-only
+impossibility is inferred. No GPU work this pass; all prior closures stay frozen.
+
+M1 owns independent review using `tools/m1n1-client/attempt31x-instructions.md`.
+No restart, proxy, transfer or native receipt. The outstanding source request is
+drafted there; no message to others is authorized by the file itself. Root needs
+the actual host revision/context and physical-entry evidence before preparing a
+new test. See the three 31X notes and the research validation receipt.
+
 ### Current — 31W offline handoff ready; no CPU boot queued, 2026-10-23
 
 CPU/GPU/public-source research and independent code/intake/public-scope reviews

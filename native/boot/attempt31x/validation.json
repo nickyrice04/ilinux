@@ -1,0 +1,153 @@
+{
+  "apple_only_necessity": "NOT_PROVEN",
+  "cpu1_execution": "UNVERIFIED",
+  "cpu_rea": {
+    "attempted_queries": 2,
+    "independent_instruction_words": 474,
+    "instruction_word_mismatches": 0,
+    "physical_entry_role": "UNKNOWN",
+    "query_failures": 1,
+    "record": "reverse-engineering/findings/cpu-startup31x/validation.json",
+    "sha256": "3199f0fb42a2b3ff267b3bdc0ca249ea8b7a11846e9c8c4ed221056c9b070e10",
+    "successful_queries": 1,
+    "vm_batches": 2,
+    "vm_job_exits": [
+      1,
+      0
+    ],
+    "vm_setup_exits": [
+      0,
+      0
+    ],
+    "whole_function_pseudocode": "REFUSED"
+  },
+  "date": "2026-10-24",
+  "frozen": {
+    "attempt31h": {
+      "pins": 186,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "attempt31i": {
+      "pins": 202,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "attempt31j": {
+      "pins": 226,
+      "result": "PASS_UNCHANGED",
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "attempt31j-host": {
+      "pins": 6,
+      "result": "PASS_UNCHANGED",
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    },
+    "attempt31k": {
+      "pins": 254,
+      "result": "PASS_UNCHANGED",
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "attempt31l": {
+      "pins": 281,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "attempt31m": {
+      "pins": 306,
+      "result": "PASS_UNCHANGED",
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    },
+    "attempt31n": {
+      "pins": 330,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+    },
+    "attempt31o": {
+      "pins": 348,
+      "result": "PASS_UNCHANGED",
+      "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+    },
+    "attempt31p": {
+      "pins": 379,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c"
+    },
+    "attempt31q": {
+      "pins": 402,
+      "result": "PASS_UNCHANGED",
+      "sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6"
+    },
+    "attempt31r": {
+      "pins": 420,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4"
+    },
+    "attempt31s": {
+      "pins": 441,
+      "result": "PASS_UNCHANGED",
+      "sha256": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158"
+    },
+    "attempt31t": {
+      "pins": 458,
+      "result": "PASS_UNCHANGED",
+      "sha256": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7"
+    },
+    "attempt31u": {
+      "pins": 475,
+      "result": "PASS_UNCHANGED",
+      "sha256": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25"
+    },
+    "attempt31v": {
+      "pins": 492,
+      "result": "PASS_UNCHANGED",
+      "sha256": "7b2cd432821583a351effd58eb53eb11eafc621c91a31fdab4579669c91e53cd"
+    },
+    "attempt31w": {
+      "pins": 509,
+      "result": "PASS_UNCHANGED",
+      "sha256": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c"
+    }
+  },
+  "frozen_manifest_count": 17,
+  "independent_audit": {
+    "all_consumed_targets": "CPU1",
+    "private_audit_sha256": "6fe6b212e61a57ba730bcbf25726d0efdf1c6500ff9bf0e43f0a295f5f3d2568",
+    "result": "READ_ONLY_AUDIT_PASS",
+    "retained_boot021_hash_matches": 7,
+    "started_attempts": [
+      "31C",
+      "31D",
+      "31E",
+      "31F",
+      "31G",
+      "31J",
+      "31K",
+      "31L",
+      "31M",
+      "31N"
+    ],
+    "topology_records": 18
+  },
+  "m1_independent_review": "NOT_RUN",
+  "native": "NOT_RUN",
+  "new_driver_or_controller": false,
+  "performance_measurement": "NOT_RUN",
+  "physical_hardware_operations": 0,
+  "public_source_review": {
+    "downloaded_code_executed": false,
+    "exact_local_board_firmware_reproduction": false,
+    "positive_reports_are_one_author": true,
+    "private_verification_sha256": "5fdcb7bc5aa5c518f04a1c80d6fab0937359f6535f701e3be77aac5b7ef01f3b",
+    "recorded_retrieval_failures": 18,
+    "retained_bytes": 1007698,
+    "retained_files_verified": 66,
+    "working_host_source_located": false
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_RESEARCH_COMPLETE_NATIVE_HOLD",
+  "schema": "ilinux-31x-cpu-research-receipt-v1",
+  "strongest_lead": "REPORTED_ACCEPTED_RESIDENT_SPTM_HOST; BOOTSTRAP_NOT_LOCATED",
+  "test_scope": "Static analysis and file integrity only; no new executable driver tests or native CPU simulation",
+  "verified_software_workaround": false
+}
