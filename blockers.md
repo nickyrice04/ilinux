@@ -1,5 +1,27 @@
 # Blockers
 
+## Current — 31Y full monitor entry contract remains unqualified
+
+The original format probe clears one offline uncertainty: the local inspector
+can derive the relevant nonzero selector from ordinary synthetic segment layout.
+It does not test installation or boot acceptance. A public raw wrapper still lacks
+the documented monitor-to-OS entry adapter; a register shuffle alone omits memory
+ownership and fixups completion. The complete matching T6050/25G83 contract is not
+in the located public headers. This is a specific software research dependency,
+not evidence that Apple is the only party able to resolve the CPU problem.
+
+Next: qualify that entry/argument/lifecycle contract using applicable public or
+locally retained evidence, then implement and test an original adapter. CPU2 is a
+separate controlled physical comparison whose bindings are now offline-tested;
+its controller, rebuilt start leaf and live guards remain unfinished. No new
+boot is ready. The user declined external outreach; continue without posting.
+
+23 original-code tests pass on macOS and isolated Linux;20 local read-only image
+inspections match the versioned reference. Those tests do not emulate Apple reset
+or monitor acceptance. See `research/native31y-format-probe.md`,
+`research/native31y-host-source.md`, and `native/boot/attempt31y/validation.json`.
+
+
 ## Current — 31X accepted host source missing; Apple-only necessity unproved
 
 The renewed CPU-only investigation identifies the reported resident-SPTM host

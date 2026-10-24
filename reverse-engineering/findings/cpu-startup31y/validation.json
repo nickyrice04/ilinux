@@ -1,0 +1,135 @@
+{
+  "schema": "ilinux-cpu-startup31y-validation-v1",
+  "date": "2026-10-24",
+  "scope": "Offline retained-tool analysis and independent bounded verification; not boot acceptance or native CPU startup",
+  "input": {
+    "member": "retained31Q-kmutil-arm64e",
+    "sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+    "fat_sha256_inherited_from31q": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+    "provenance": "31Q verified extraction from the then-current fat executable;31Y rehashes the retained slice only",
+    "historical_installer_identity_verified": false,
+    "installed_tool_identity_refreshed_by_this_check": false
+  },
+  "rea": {
+    "query_count": 1,
+    "successful_queries": 1,
+    "refusals": 0,
+    "target": "0x100024e64",
+    "returned_entry": "0x100024e64",
+    "seconds": 90.600804168,
+    "timeout_seconds": 100,
+    "cli_exit": 0,
+    "vm_setup_exit": 0,
+    "vm_job_exit": 0,
+    "environment": {
+      "interfaces": [
+        "lo"
+      ],
+      "physical_usb": false
+    },
+    "query_script_sha256": "56ce086f135766183f0ebc942657bbd76603807820468b1c7845df0bdfbb9f23",
+    "query_list_sha256": "8167f3aae04e3e7b1aa7cd331f110861993ad566b2bdc34ee8d2bf2b44b32a57",
+    "dossier_sha256": "f51b13cad3df8dc77a1939a2dc160f22ae68c56dfba74558c902b3fdd383c193",
+    "body_anchors": [
+      {
+        "start": "0x100024e64",
+        "end_inclusive": "0x100025033",
+        "carrier_offset": 151140,
+        "derived_offset": 151140,
+        "bytes": 464,
+        "sha256": "a790e72f39ee087bf511cc38c29bf60e6eec7bebdf862829004b4a98006e857f"
+      }
+    ],
+    "assembly_instructions": 116,
+    "pcode_operations": 136,
+    "pcode_outside_body": 0,
+    "native_value_flow_truncated": false,
+    "decompiler_warning_classes": [],
+    "whole_tool_or_analyzer_semantics_qualified": false,
+    "prior_refusals_unchanged": true
+  },
+  "independent_verification": {
+    "method": "Retained thin-file mapping and bytes against retained LLVM disassembly; exact LC_FUNCTION_STARTS boundaries; direct call and selector machine-field checks",
+    "instruction_words": 139,
+    "bytes": 556,
+    "mismatches": 0,
+    "checked_ranges": [
+      {
+        "label": "file-image-properties",
+        "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+        "start": "0x100024e64",
+        "end_exclusive": "0x100025034",
+        "instruction_words": 116,
+        "code_bytes": 464,
+        "sha256": "a790e72f39ee087bf511cc38c29bf60e6eec7bebdf862829004b4a98006e857f",
+        "llvm_word_mismatches": 0,
+        "slice_bytes_match_original": true
+      },
+      {
+        "label": "property-method-wrapper",
+        "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+        "start": "0x1000f79b8",
+        "end_exclusive": "0x1000f79f8",
+        "instruction_words": 16,
+        "code_bytes": 64,
+        "sha256": "4494161de769b54b89355816b5cebb92d2e40780db73dbb39b8ddd4a10d3d188",
+        "llvm_word_mismatches": 0,
+        "slice_bytes_match_original": true
+      },
+      {
+        "label": "property-method-thunk",
+        "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+        "start": "0x1000f849c",
+        "end_exclusive": "0x1000f84b8",
+        "instruction_words": 7,
+        "code_bytes": 28,
+        "sha256": "33b6938f261be7a7aa04741efec6d1225ba4fee76cb791b106b6326a96ce15d4",
+        "llvm_word_mismatches": 0,
+        "slice_bytes_match_original": true
+      }
+    ],
+    "full_image_disassembly_preexisted": true,
+    "original_verifier_sha256": "54c1ab910c3d8e6019acf2373776356a65cd53feae176abd185f51d5b11920f5"
+  },
+  "behavior": {
+    "analyzer_call": {
+      "site": "0x100024ed0",
+      "target": "0x100024450"
+    },
+    "collection_serializer_call": {
+      "site": "0x100025004",
+      "target": "0x1000235a0"
+    },
+    "raw_serializer_call": {
+      "site": "0x100025010",
+      "target": "0x100023420"
+    },
+    "serializer_mode_source": "Preserved bit0 of incoming x3; not the analyzer-return classification at this selection site",
+    "forwarding_chain": [
+      "0x1000f849c",
+      "0x1000f79b8",
+      "0x100024e64"
+    ],
+    "indirect_cli_binding_verified": false,
+    "all_analyzer_field_derivations_verified": false
+  },
+  "related_evidence": {
+    "format_probe": "research/native31y-format-probe.md",
+    "public_host_abi": "research/native31y-host-source.md",
+    "prior_firmware_gate": "research/native31q-firmware.md"
+  },
+  "implementation": {
+    "enabled": "Original offline format fixtures and strict property-result classification",
+    "native_adapter_enabled": false,
+    "missing": "Applicable full monitor-to-host argument/version, memory ownership and fixups contract; local acceptance and physical-secondary evidence"
+  },
+  "claims": {
+    "boot_acceptance": false,
+    "native_cpu_startup": false,
+    "historical_raw_branch_observed": false,
+    "apple_only_necessity": false,
+    "installer_invoked": false,
+    "policy_or_security_changes": false,
+    "proprietary_bytes_or_pseudocode_published": false
+  }
+}

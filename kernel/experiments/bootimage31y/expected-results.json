@@ -1,0 +1,315 @@
+{
+  "boot_acceptance": "NOT_TESTED",
+  "cases": [
+    {
+      "bytes": 16384,
+      "case": "flat-execute",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "Could not parse binary: Unable to find '__info' section."
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "bafedbd2c444f5e9e054e4c3de0cc3c8b0a586b15f17ad09d36ec54409bc1557",
+      "stage": "baseline"
+    },
+    {
+      "bytes": 16384,
+      "case": "flat-fileset",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "Could not parse binary: Unable to find '__info' section."
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "27bf2b8fc53d84259f8a740799371cca5f93c18ff444505e713f6f9f479b4abc",
+      "stage": "baseline"
+    },
+    {
+      "bytes": 32768,
+      "case": "one-entry-fileset",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "Could not parse binary: Unable to find '__info' section."
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "a147ad70fa4bf4811db8ec048755f0513bf11a3178ac2faa4525664b0e214d5d",
+      "stage": "baseline"
+    },
+    {
+      "bytes": 32768,
+      "case": "flat-execute",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "An error occurred while loading boot kernel collection: Prelink info section has no _PrelinkKCID"
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "243604b65cdb60f0e861532f1704811c62cf4dffa1f91932ed8333da5ce2b6ab",
+      "stage": "metadata"
+    },
+    {
+      "bytes": 32768,
+      "case": "flat-fileset",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "An error occurred while loading boot kernel collection: Prelink info section has no _PrelinkKCID"
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "97200e68caa9abbff4069d178b8e1fe0c330697458580621b13b146ec607ea9e",
+      "stage": "metadata"
+    },
+    {
+      "bytes": 49152,
+      "case": "one-entry-fileset",
+      "classification": "TOOL_ERROR",
+      "diagnostic": [
+        "An error occurred while loading boot kernel collection: Prelink info section has no _PrelinkKCID"
+      ],
+      "exit": 71,
+      "properties": null,
+      "sha256": "f14de72c6c8b442f454ee4eb4c998f5247056bddfd048a2ccf4791698ae4a08f",
+      "stage": "metadata"
+    },
+    {
+      "bytes": 32768,
+      "case": "flat-execute",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __TEXT_EXEC segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "36840dc84987df17064b5a3f5a7fff81a478f6b637ed213c975ea1c773fcb772",
+      "stage": "collection-id"
+    },
+    {
+      "bytes": 32768,
+      "case": "flat-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __TEXT_EXEC segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "74d0af0b7f3575f13a7a939b1449c9755a960a402b3e7acc95546657546484fc",
+      "stage": "collection-id"
+    },
+    {
+      "bytes": 49152,
+      "case": "one-entry-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __TEXT_EXEC segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "6b6f61be0df354a8d716b638b68ca69d1971e886911607e776cf8f23b68ea3c2",
+      "stage": "collection-id"
+    },
+    {
+      "bytes": 49152,
+      "case": "flat-execute",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __LINKEDIT segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "03f1d05543ece343a69e4139ff842e443ed7ca41ed77ca2af79bdac2c695f71b",
+      "stage": "exec-segment"
+    },
+    {
+      "bytes": 49152,
+      "case": "flat-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __LINKEDIT segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "337e3287cb5f6575caac4f18c67ec195b6030702702763c5f85d6321d33b6c64",
+      "stage": "exec-segment"
+    },
+    {
+      "bytes": 65536,
+      "case": "one-entry-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Fileset Error: Failed to find __LINKEDIT segment"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "4001b1a268fd1905db20948221c624e70dd5133474f42f691bd70aba1cde57f4",
+      "stage": "exec-segment"
+    },
+    {
+      "bytes": 65536,
+      "case": "flat-execute",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Arithmetic Error: arithmetic overflow detected subtracting FilesetOffset(rawValue: 49152) from FilesetOffset(rawValue: 32768)"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "3b42d6af61b656798f469d4777d91f30c005526e1e179f7d175721be4da6ba1d",
+      "stage": "linkedit"
+    },
+    {
+      "bytes": 65536,
+      "case": "flat-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Arithmetic Error: arithmetic overflow detected subtracting FilesetOffset(rawValue: 49152) from FilesetOffset(rawValue: 32768)"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "ad02016ff3c353e67ce71d95e74c109867e1c7fcc2dcdec46450275d921af103",
+      "stage": "linkedit"
+    },
+    {
+      "bytes": 81920,
+      "case": "one-entry-fileset",
+      "classification": "PROPERTY_ERROR",
+      "diagnostic": [
+        "Mach-O boot properties could not be derived: Arithmetic Error: arithmetic overflow detected subtracting FilesetOffset(rawValue: 65536) from FilesetOffset(rawValue: 49152)"
+      ],
+      "exit": 0,
+      "properties": null,
+      "sha256": "9640940ec0c183f2871a586e7b089a25a84ce130e8bbd957158bf5d806c610e5",
+      "stage": "linkedit"
+    },
+    {
+      "bytes": 65536,
+      "case": "flat-execute",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 0,
+        "kcbz": 0,
+        "kcep": 18446741874803771392,
+        "kclf": 49152,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 32768,
+        "kcsf": 0,
+        "kcsz": 0,
+        "kcwf": 32768,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "40324d47c68fc1ad5ac4c2cde83eea090a79493951fa989c5e85e8adfd1df6aa",
+      "stage": "ordered"
+    },
+    {
+      "bytes": 65536,
+      "case": "flat-fileset",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 0,
+        "kcbz": 0,
+        "kcep": 18446741874803771392,
+        "kclf": 49152,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 32768,
+        "kcsf": 0,
+        "kcsz": 0,
+        "kcwf": 32768,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "7b1e183dd82c1c41e5dc0aaab1fd0ffc35afe9595e85c2ccc2ba9930135bfea9",
+      "stage": "ordered"
+    },
+    {
+      "bytes": 81920,
+      "case": "one-entry-fileset",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 0,
+        "kcbz": 0,
+        "kcep": 18446741874803787776,
+        "kclf": 65536,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 49152,
+        "kcsf": 0,
+        "kcsz": 0,
+        "kcwf": 49152,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "9e55f047e1c401a6b174be2eb0ccfa8f10cc6e1d5b8980889cfef6f251cba4a4",
+      "stage": "ordered"
+    },
+    {
+      "bytes": 98304,
+      "case": "flat-execute",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 32768,
+        "kcbz": 32768,
+        "kcep": 18446741874803787776,
+        "kclf": 81920,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 65536,
+        "kcsf": 16384,
+        "kcsz": 32768,
+        "kcwf": 65536,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "d42fd181ea245971dc6a6e111c2d514a455b45e2d537547c4b88dca7a9b26f16",
+      "stage": "boot-segments"
+    },
+    {
+      "bytes": 98304,
+      "case": "flat-fileset",
+      "classification": "PROPERTIES_DERIVED",
+      "diagnostic": [],
+      "exit": 0,
+      "properties": {
+        "kcbf": 32768,
+        "kcbz": 32768,
+        "kcep": 18446741874803787776,
+        "kclf": 81920,
+        "kclo": 18446741874803752960,
+        "kclz": 16384,
+        "kcrf": 0,
+        "kcrz": 65536,
+        "kcsf": 16384,
+        "kcsz": 32768,
+        "kcwf": 65536,
+        "kcwz": 16384,
+        "kcxf": 0,
+        "kcxz": 0
+      },
+      "sha256": "1c70c41989f84070d6874e84250724e05313bbd59ab0dba00bfea8058a2ed45a",
+      "stage": "boot-segments"
+    }
+  ],
+  "cpu_startup": "NOT_TESTED",
+  "kmutil_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+  "os_build": "25G83",
+  "os_version": "26.6.2",
+  "schema": 1
+}

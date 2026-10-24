@@ -1,5 +1,37 @@
 # Progress Log
 
+## 2026-10-24 · 31Y format discriminator and CPU2 plan
+
+The user declined external outreach; no message was posted. An original,
+read-only format experiment now produces the relevant nonzero boot property
+from public boot/SPTM segment roles. Twenty cases match the macOS25G83 reference:
+six loading errors, nine property errors (despite exit0), five derivations.
+This qualifies parser behavior only, not installation, firmware acceptance or
+physical secondary entry. REA independently narrows the wrapper's serializer
+choice; its indirect CLI binding remains unproved.
+
+Public XNU exposes a concrete missing interface: an already running SPTM supplies
+an entry reason and two argument pointers, followed by memory/fixups obligations.
+Public Aura's raw entry does not implement that interface. The matching T6050
+argument/header and lifecycle contract remains unqualified. An original adapter
+is a plausible software route; no working workaround or Apple-only necessity is
+proved. A separate original CPU2 planner derives a same-M0 control and corrects
+the observer ranges needed for CPU2, but contains no native controller.
+
+**23 tests (14 format, nine CPU2) PASS on macOS and isolated ARM64 Linux.**
+All20 generated fixtures match across systems; the local inspector's complete
+matrix matches its reference. Independent review fixed unknown-output handling
+and rejected80 diagnostic variants. One REA query completed;139 instruction words
+match independently. Public review verified28 files; all18 older source manifests
+and their contents remain unchanged. No native or performance result is claimed.
+
+**Native31Y HOLD / NOT RUN; no restart.** macOS, installed objects, security and
+volumes are untouched. M1 follows `tools/m1n1-client/attempt31y-instructions.md`;
+receipt: `native/boot/attempt31y/validation.json`. The next engineering dependency
+is the applicable monitor-to-OS entry/memory/fixups contract, not another unchanged
+CPU1 start. GPU work and the known working boot remain unchanged.
+
+
 ## 2026-10-24 · 31X strongest CPU lead and remaining dependency
 
 The renewed CPU-only investigation identifies the reported resident-SPTM host

@@ -6,6 +6,22 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31Y offline review handoff, 2026-10-24
+
+Root completed the original format harness and integration; independent agents
+reviewed its output handling and the original CPU2 binding plan. CPU REA and
+public-source analysis identify the monitor-to-OS entry/memory/fixups contract as
+the next dependency. All23 focused tests pass on host and isolated Linux;20 local
+read-only inspections match the reference. Prior18 source closures are unchanged.
+Both repositories' quiet/VM locks are released. Unrelated Omarchy work and prior
+uncommitted decisions are preserved. No GPU change this pass.
+
+M1 owns independent offline review under `tools/m1n1-client/attempt31y-instructions.md`.
+No native controller/image, restart or proxy session is prepared. Native31Y stays
+HOLD/NOT RUN. Root continues version-matched entry-contract qualification before
+an original native adapter. The user declined external outreach: no messages;
+this supersedes the pending request described in the frozen31X draft.
+
 ### Current — 31X CPU-only handoff; no hardware attempt prepared, 2026-10-24
 
 Root integrated separate CPU REA, public-source and independent launcher audits.

@@ -3988,3 +3988,22 @@ physical test requires an applicable accepted host or an independently qualified
 missing prerequisite. Lack of a public implementation is not proof that Apple
 alone can resolve the issue. This research-only reopening does not authorize
 changes to installed objects, firmware, storage or startup security.
+
+
+## 2026-10-24 · 31Y: continue original alternate-host work without outreach
+
+The user declined the proposed Discord message. Do not post or duplicate that
+request from either machine. Continue local analysis and public-source research.
+The read-only format matrix now derives the relevant property from original
+fixtures, but does not establish installation or boot acceptance. Public XNU
+identifies an entry/argument/memory/fixups interface absent from the raw wrapper;
+qualify the local version before writing a native adapter. Waiting for unavailable
+host source is not the only research route, and Apple-only necessity is unproved.
+
+Preserve the twenty-case reference, including exit-zero failures. Unknown positive
+and negative diagnostics must refuse a reference match.23 focused tests pass on
+macOS and isolated Linux;20 fixture hashes match across systems. The original
+CPU2 binding planner is offline-only: any live comparison still needs a reviewed
+controller, target-specific observations and separately qualified startup leaf.
+No image is installed, no security/volume settings change, and no restart is
+prepared. M1 receives an offline review handoff; prior closures stay frozen.

@@ -1,0 +1,210 @@
+{
+  "apple_only_necessity": "NOT_PROVEN",
+  "boot_security_changes": false,
+  "cpu1_execution": "UNVERIFIED",
+  "cpu2": {
+    "controller_implemented": false,
+    "deliverable": "OFFLINE_BINDING_PLAN_ONLY",
+    "fresh_target_preflight": "NOT_RUN",
+    "retained_image_and_seven_sources_rehashed": true
+  },
+  "cpu_rea": {
+    "indirect_cli_binding_verified": false,
+    "instruction_words": 139,
+    "mismatches": 0,
+    "record": "reverse-engineering/findings/cpu-startup31y/validation.json",
+    "seconds": 90.600804168,
+    "sha256": "951fcfcc8867cb14f8d2f05abe8955d917821ef4a236a5bb3acdde36a9d7d335",
+    "successful_queries": 1
+  },
+  "date": "2026-10-24",
+  "external_messages_sent": 0,
+  "frozen": {
+    "attempt31h": {
+      "pins": 186,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+    },
+    "attempt31i": {
+      "pins": 202,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+    },
+    "attempt31j": {
+      "pins": 226,
+      "result": "PASS_UNCHANGED",
+      "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+    },
+    "attempt31j-host": {
+      "pins": 6,
+      "result": "PASS_UNCHANGED",
+      "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+    },
+    "attempt31k": {
+      "pins": 254,
+      "result": "PASS_UNCHANGED",
+      "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+    },
+    "attempt31l": {
+      "pins": 281,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+    },
+    "attempt31m": {
+      "pins": 306,
+      "result": "PASS_UNCHANGED",
+      "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+    },
+    "attempt31n": {
+      "pins": 330,
+      "result": "PASS_UNCHANGED",
+      "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+    },
+    "attempt31o": {
+      "pins": 348,
+      "result": "PASS_UNCHANGED",
+      "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+    },
+    "attempt31p": {
+      "pins": 379,
+      "result": "PASS_UNCHANGED",
+      "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c"
+    },
+    "attempt31q": {
+      "pins": 402,
+      "result": "PASS_UNCHANGED",
+      "sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6"
+    },
+    "attempt31r": {
+      "pins": 420,
+      "result": "PASS_UNCHANGED",
+      "sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4"
+    },
+    "attempt31s": {
+      "pins": 441,
+      "result": "PASS_UNCHANGED",
+      "sha256": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158"
+    },
+    "attempt31t": {
+      "pins": 458,
+      "result": "PASS_UNCHANGED",
+      "sha256": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7"
+    },
+    "attempt31u": {
+      "pins": 475,
+      "result": "PASS_UNCHANGED",
+      "sha256": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25"
+    },
+    "attempt31v": {
+      "pins": 492,
+      "sha256": "7b2cd432821583a351effd58eb53eb11eafc621c91a31fdab4579669c91e53cd"
+    },
+    "attempt31w": {
+      "pins": 509,
+      "sha256": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c"
+    },
+    "attempt31x": {
+      "pins": 6,
+      "result": "PASS_UNCHANGED",
+      "sha256": "84e612d0591ed9c9a345e77a5b1a6f9e3d9d8f42180ccc24c508e825ea480ea9"
+    }
+  },
+  "frozen_manifest_count": 18,
+  "host": {
+    "build": "25G83",
+    "cpu2_tests": 9,
+    "format_tests": 14,
+    "os": "macOS",
+    "python": "3.9.6",
+    "result": "PASS",
+    "test_methods": 23,
+    "tested_sources": {
+      "kernel/experiments/bootimage31y/expected-results.json": "821945f643248e10c720904814bb8e9752d0233ca9bdd43cd9ff978e45738f48",
+      "kernel/experiments/bootimage31y/probe.py": "87f6a21d565155e4275d8b605005d9c46969d9df40c80a248397623b9cc8683b",
+      "kernel/experiments/bootimage31y/test_probe.py": "bd9c7257e7c5c9c1579ef49fc9cce6bf5df893f09acf6e88c6f16892f9a71d60",
+      "kernel/experiments/smp31y-target/plan.py": "9aaf526932e3bf7f24e71e685a25ab318dae64c7739fce7221e83417df908670",
+      "kernel/experiments/smp31y-target/test_plan.py": "e13f143a07301b1c6938255c8bd7287e6441166c44bd8e4f60e21a414137c30e"
+    },
+    "version": "26.6.2"
+  },
+  "independent_review": {
+    "added_diagnostic_variants_refused": 80,
+    "cpu2_plan": "PASS_OFFLINE_SCOPE",
+    "fixture_hashes_unchanged": true,
+    "format_harness": "PASS_AFTER_OUTPUT_ENVELOPE_FIXES",
+    "negative_and_positive_reference_cases_checked": 20
+  },
+  "installed_object_changes": false,
+  "isolated_linux_vm": {
+    "fixtures_match_macos": 20,
+    "job_exit": 0,
+    "kmutil_in_vm": "NOT_RUN",
+    "linux_release": "7.1.6-1-aarch64-ARCH",
+    "machine": "aarch64",
+    "native_cpu_startup": "NOT_RUN",
+    "network": false,
+    "physical_hardware_operations": 0,
+    "physical_usb": false,
+    "receipt_sha256": "1f34fa0ef40e6b267ce0c83442751f0a7205d2b16243aaa73471d603ff455f56",
+    "result": "PASS",
+    "setup_exit": 0,
+    "sources": {
+      "kernel/experiments/bootimage31y/expected-results.json": "821945f643248e10c720904814bb8e9752d0233ca9bdd43cd9ff978e45738f48",
+      "kernel/experiments/bootimage31y/probe.py": "87f6a21d565155e4275d8b605005d9c46969d9df40c80a248397623b9cc8683b",
+      "kernel/experiments/bootimage31y/test_probe.py": "bd9c7257e7c5c9c1579ef49fc9cce6bf5df893f09acf6e88c6f16892f9a71d60",
+      "kernel/experiments/smp31y-target/plan.py": "9aaf526932e3bf7f24e71e685a25ab318dae64c7739fce7221e83417df908670",
+      "kernel/experiments/smp31y-target/test_plan.py": "e13f143a07301b1c6938255c8bd7287e6441166c44bd8e4f60e21a414137c30e"
+    },
+    "test_methods": 23,
+    "tests": [
+      {
+        "exit": 0,
+        "output_sha256": "f196bef0973ff999dcbcf679ca035393cbb4be84e582dd7f9d09005e1f656ac4",
+        "script": "kernel/experiments/bootimage31y/test_probe.py",
+        "tests": 14
+      },
+      {
+        "exit": 0,
+        "output_sha256": "df9561bfe4b17e0102bbeffafe70223d77966f4af2e504901a54e57f0c10732e",
+        "script": "kernel/experiments/smp31y-target/test_plan.py",
+        "tests": 9
+      }
+    ]
+  },
+  "linux_smp": "NOT_RUN",
+  "local_read_only_inspector": {
+    "cases": 20,
+    "command": "kmutil inspect; explicit synthetic fixture paths only",
+    "counts": {
+      "PROPERTIES_DERIVED": 5,
+      "PROPERTY_ERROR": 9,
+      "TOOL_ERROR": 6
+    },
+    "fixture_execution": false,
+    "initial_sandbox_result": "DASession environment failure before parsing; excluded from image results",
+    "installer_invoked": false,
+    "kmutil_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+    "matches_reference": true,
+    "private_result_sha256": "eec95adc1bcd5350e696b8b321ba19dea1cb5953d7c5692e4056118df0b950ad",
+    "reference": "kernel/experiments/bootimage31y/expected-results.json",
+    "reference_sha256": "821945f643248e10c720904814bb8e9752d0233ca9bdd43cd9ff978e45738f48"
+  },
+  "m1_independent_review": "NOT_RUN",
+  "native": "NOT_RUN",
+  "next_gate": "Version-matched SPTM-to-OS arguments, memory ownership, fixups and entry implementation; then boot acceptance and physical-secondary evidence",
+  "performance_measurement": "NOT_RUN",
+  "physical_hardware_operations": 0,
+  "proprietary_material_published": false,
+  "public_source": {
+    "downloaded_code_executed": false,
+    "matching_sptm_header_and_lifecycle_qualified": false,
+    "retained_bytes": 425816,
+    "retained_files_verified": 28,
+    "retrieval_failures": 3,
+    "verification_sha256": "3f97800bcd3929e97e65637ed6b4fa26c676cd7bd8b739ecf37bc29e154ca92e"
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_TESTS_PASS_NATIVE_HOLD",
+  "schema": "ilinux-31y-offline-format-receipt-v1",
+  "verified_software_workaround": false
+}
