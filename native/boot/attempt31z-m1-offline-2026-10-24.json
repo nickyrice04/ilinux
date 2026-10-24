@@ -1,0 +1,296 @@
+{
+  "apple_only_necessity": "NOT PROVEN",
+  "boot_acceptance": "NOT TESTED",
+  "coverage": {
+    "byte_positions": 848,
+    "independent_bitmap_oracle_cases": 2304,
+    "rejected_lengths": 854
+  },
+  "cpu1_execution": "UNVERIFIED",
+  "cpu2_execution": "NOT RUN",
+  "date_local": "2026-10-24",
+  "device_opens": 0,
+  "either_mac_restarted": false,
+  "execution": [
+    {
+      "command": [
+        "shasum",
+        "-a",
+        "256",
+        "-c",
+        "native/boot/attempt31z/source-sha256.txt"
+      ],
+      "exit": 0,
+      "label": "manifest",
+      "seconds": 0.021,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1add7bb85edb4f961c59f0c492129e19918a430b59dde66b89885fba97cd9bae"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/sptm31z-adapter/run.py",
+        "--output",
+        "build/31z-adapter-m1-review",
+        "--sanitize",
+        "--freestanding"
+      ],
+      "exit": 0,
+      "label": "adapter",
+      "seconds": 2.495,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1a157d7ef21b5d75b35f7ecd8cd0923ee00416d70e527a8835b44c6fced6f7ce"
+    }
+  ],
+  "external_messages_sent": 0,
+  "freestanding": {
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "executed": false,
+    "linked": false,
+    "objects": [
+      {
+        "file": "entry-aarch64.o",
+        "sha256": "73b30bacb0b0b4ee776b7b9fd418df11bb87968ae2fc67763b288d8a2b7698e4",
+        "undefined_symbols": []
+      },
+      {
+        "file": "memory-aarch64.o",
+        "sha256": "a887f0644777f3a18cb9b385e36226006357855a5be77c4d5663c98b28642b54",
+        "undefined_symbols": [
+          "memcpy",
+          "memset"
+        ]
+      }
+    ],
+    "requested": true,
+    "symbol_check": "PASS"
+  },
+  "gpu_native_acceleration": "NOT RUN",
+  "installed_boot021_changed": false,
+  "linux_smp": "NOT RUN",
+  "live_target_version_checks": "NOT RUN",
+  "macos_security_volume_default_changes": false,
+  "manifest": {
+    "pins": 17,
+    "sha256": "2332878cf180e95df264a7b04fe1b24ce458074267dab461046f0ddaf0b8e9df",
+    "status": "PASS"
+  },
+  "native31z": "HOLD / NOT RUN",
+  "native_cpu_startup": "NOT RUN",
+  "native_invocations": 0,
+  "new_discovery_queries": 0,
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "compiler_tmp_empty": true,
+    "frozen": {
+      "attempt31h": {
+        "pins": 186,
+        "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31i": {
+        "pins": 202,
+        "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31j": {
+        "pins": 226,
+        "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31j-host": {
+        "pins": 6,
+        "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31k": {
+        "pins": 254,
+        "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31l": {
+        "pins": 281,
+        "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31m": {
+        "pins": 306,
+        "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31n": {
+        "pins": 330,
+        "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31o": {
+        "pins": 348,
+        "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31p": {
+        "pins": 379,
+        "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31q": {
+        "pins": 402,
+        "sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31r": {
+        "pins": 420,
+        "sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31s": {
+        "pins": 441,
+        "sha256": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31t": {
+        "pins": 458,
+        "sha256": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31u": {
+        "pins": 475,
+        "sha256": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31v": {
+        "pins": 492,
+        "sha256": "7b2cd432821583a351effd58eb53eb11eafc621c91a31fdab4579669c91e53cd",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31w": {
+        "pins": 509,
+        "sha256": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31x": {
+        "pins": 6,
+        "sha256": "84e612d0591ed9c9a345e77a5b1a6f9e3d9d8f42180ccc24c508e825ea480ea9",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31y": {
+        "pins": 18,
+        "sha256": "52f50dc70dc4605cf8cc0fcf320c26bb3d7997aa2566ab247542000f9844a3a9",
+        "status": "PASS_UNCHANGED"
+      }
+    },
+    "frozen_file_hash_checks": 5739,
+    "frozen_manifest_count": 19,
+    "new_native_use_files": "NONE",
+    "owned_caffeinate_cleanup": "ALREADY_EXITED",
+    "prior_evidence_files_recursively_hashed": 499,
+    "prior_evidence_unchanged": true,
+    "result": "PASS",
+    "retained_package_files": 13
+  },
+  "public_scope": "Original review prose and sanitized synthetic-test metadata only; raw logs and all generated binaries remain ignored.",
+  "remaining_native_gates": [
+    "Accepted host image and actual stack/translation/entry environment",
+    "Complete matching monitor record and helper/fixups/exception lifecycle",
+    "Argument lifetime, physical RAM ownership and every live reservation",
+    "Boot-first ordered registration and per-CPU continuation",
+    "Physical-secondary observation"
+  ],
+  "research_review": {
+    "lifecycle_validator": false,
+    "m1_independent_reproduction": {
+      "31y_inspector_matrix": "NOT RERUN",
+      "REA": "NOT RUN",
+      "external_source_retrieval": "NOT RUN",
+      "linux_sanitizers": "NOT RUN",
+      "m5_vm_execution": "NOT RUN",
+      "older_executable_suites": "NOT RERUN",
+      "private_kernel_decoding": "NOT RUN",
+      "sdk_conditional_layout_compilation": "NOT RUN"
+    },
+    "m5_reported_monitor_copy_bytes": 848,
+    "m5_reported_rea_outcomes": {
+      "cancelled": 2,
+      "completed_limited": 2,
+      "independent_words_checked": 1672,
+      "mismatches": 0,
+      "requests": 4,
+      "whole_function_pseudocode_accepted": 0
+    },
+    "m5_reported_sdk_record_sizes": [
+      832,
+      840,
+      856,
+      864,
+      872,
+      880
+    ],
+    "matching_complete_profile_qualified": false,
+    "native_controller": false,
+    "registration_argument_qualification": "M5 evidence: one zero-extended uint32 ADT affinity argument; boot CPU/resident monitor/order prerequisites.",
+    "registration_planner": false
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "review_blockers": [],
+  "review_conclusions": [
+    "No actionable defect found within documented offline component and caller contract.",
+    "Full-width reason classification retains raw arguments; unknown reasons grant no typed role.",
+    "Only cold, consistent explicit profile permits exact 848-byte owned copy; no captured address is dereferenced.",
+    "Only little-endian physical first-available value at offset24 is decoded; remaining snapshot stays opaque/private.",
+    "Profile selection is a caller assertion, not authentication or evidence of an actual monitor handoff.",
+    "Planner validates overflow, alignment, containment and disjoint reservations before changing output.",
+    "Sorted complement fits at most17 available extents for16 reservations; disjoint total cannot exceed the validated RAM interval.",
+    "Supplied physical bounds, page granule, stable argument source and complete live reservations remain caller obligations.",
+    "Runtime symbol inspection reports dependencies only; ELF objects are neither linked nor executed."
+  ],
+  "reviewed_commit": "516ed2ceded7fa7f4625d1981c7a4932e30afcce",
+  "runner_results_sha256": "bb129f54cc55a653c376db69c23643824d4911c17850483f96787a55d8d91953",
+  "schema": "ilinux-attempt31z-m1-offline-v1",
+  "skips": 0,
+  "source_bindings_match_released_host_vm": true,
+  "source_bindings_sha256": "dedeb9a2ba256ccde2e79520fcd52603d534702af61eb080b81a4390effafd9d",
+  "source_repairs": 0,
+  "target_requests": 0,
+  "test_markers_match_released_host_vm": true,
+  "tests": [
+    {
+      "groups": 8,
+      "marker": "SPTM31Z_ENTRY_PASS groups=8 length_cases=854 byte_position_cases=848 native=NOT_DEPLOYABLE",
+      "name": "entry",
+      "status": "PASS",
+      "variant": "optimized"
+    },
+    {
+      "groups": 8,
+      "marker": "SPTM31Z_MEMORY_PASS groups=8 bitmap_cases=2304 native=NOT_DEPLOYABLE",
+      "name": "memory",
+      "status": "PASS",
+      "variant": "optimized"
+    },
+    {
+      "groups": 8,
+      "marker": "SPTM31Z_ENTRY_PASS groups=8 length_cases=854 byte_position_cases=848 native=NOT_DEPLOYABLE",
+      "name": "entry",
+      "status": "PASS",
+      "variant": "sanitized"
+    },
+    {
+      "groups": 8,
+      "marker": "SPTM31Z_MEMORY_PASS groups=8 bitmap_cases=2304 native=NOT_DEPLOYABLE",
+      "name": "memory",
+      "status": "PASS",
+      "variant": "sanitized"
+    }
+  ],
+  "tools": {
+    "build": "25A362",
+    "clang": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "macos": "26.0.1",
+    "python": "3.13.5"
+  },
+  "unique_c_groups": 16
+}

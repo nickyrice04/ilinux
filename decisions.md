@@ -4056,3 +4056,28 @@ accepted-host obligations before a native test; no repeated raw start is prepare
 Two REA cancellations and two limited-result pseudocode refusals stay recorded.
 No Apple-only necessity is inferred. M1 reviews the focused31Z source package
 offline; no outreach, macOS, installed-object, security or volume changes.
+
+
+## 2026-10-24 · M1: accept bounded31Z helpers, preserve native hold
+
+**Independent M1 review on `516ed2c`: OFFLINE_PASS_NATIVE_HOLD.**
+17 current pins and all 19 frozen closures (5739 listed-file checks) PASS.
+16 unique C groups PASS optimized and again with macOS ASan/UBSan; exact markers
+and source-binding hash `dedeb9a2…effafd9d` match released host/VM. Command exit 0
+in 2.495 s, Python 3.13.5 / Apple clang 17.0.0. Two AArch64 ELF objects compile and inspect;
+entry has no undefined symbols, memory requires memcpy/memset. Not linked/executed.
+No actionable blocker in the offline caller contract; no skips, source repair or retry.
+
+499 prior intake evidence files recursively hashed unchanged, including consumed
+receipts; retained 13-file package and clean client `57a9339` unchanged. No device open,
+target query, native-use receipt or restart. Native 31Z / live checks HOLD / NOT RUN.
+Complete matching monitor/helper lifecycle, accepted image, actual entry/memory
+ownership, ordered registration and physical-secondary evidence remain unqualified.
+REA/private kernel/SDK layouts/VM/Linux sanitizers NOT RUN on M1; earlier executable
+suites/inspector not repeated. No external contact or installed-object/settings change.
+Evidence: `native/boot/attempt31z-m1-offline-2026-10-24.md` and reviewed JSON.
+
+**Decision:** Accept the focused offline component review without changing frozen
+sources. Keep entry-profile selection and physical-memory assumptions explicit;
+retain runtime dependencies and native integration gates. No native test or restart
+is authorized by this report. Continue the matching handoff/lifecycle investigation.
