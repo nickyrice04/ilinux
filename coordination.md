@@ -6,6 +6,20 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Active — 31AA helper handoff and CPU registration adapter, 2026-10-24
+
+Root incorporated M1 review `6106a6c`; all 31Z source bindings and test markers
+match. Root owns integration, VM execution, receipts and publication. CPU research
+owns bounded local helper/fixups qualification; public research owns matching
+declarations and lifecycle contracts; the separate original-code implementer owns
+`kernel/experiments/sptm31aa-adapter/` without reading Apple decompilation.
+All 20 earlier closures remain frozen. No native boot is prepared, no external
+outreach or macOS/settings/installed-object/volume changes. Unrelated work remains
+untouched. Only root starts the shared VMs under both repositories' locks.
+Published as the registration planner, its host and VM tests (11 unique C groups, host and VM
+identical) and the public-contract note; the local REA batch on helper initialization and fixups
+is not summarized or published, and no boot package is prepared.
+
 ### Current — M1 31Z review complete; offline integration remains, 2026-10-24
 
 **Independent M1 review on `516ed2c`: OFFLINE_PASS_NATIVE_HOLD.**

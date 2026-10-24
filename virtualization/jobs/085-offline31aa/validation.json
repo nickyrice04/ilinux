@@ -1,0 +1,46 @@
+{
+ "compiler": "cc (GCC) 16.1.1 20260430",
+ "date_local": "2026-10-24",
+ "freestanding_in_vm": "NOT_RUN; the host AArch64 cross-compilation is recorded by the runner's results",
+ "hardware_operations": 0,
+ "host_and_vm_markers_identical": true,
+ "host_and_vm_sources_identical": true,
+ "job": {
+  "end_utc": "2026-10-24T22:38:40Z",
+  "exit": 0,
+  "start_utc": "2026-10-24T22:38:39Z"
+ },
+ "job_source_sha256": "a313b51e611edfdb3dabaf710795fa6d47ec7f54f29e5bbd97c7e009349423dc",
+ "linux": "Linux 7.1.6-vzrun2 aarch64",
+ "native": "NOT_RUN",
+ "output_hashes": {
+  "adapter/results.json": "b21bc787a17a0cfcfcf585ca7be784b9795b31857a68fa7aa2e54eada9cb379f",
+  "kernel.txt": "ca6cc9dbb2015c8a61d082f2b49695fffc1688d0015e050cd1dfdcb7104633b6",
+  "network-preflight.json": "0c7f122829ecdbf9618a9b5f2aee9affe0605c3228c0e7b887c0281cff8907d0",
+  "run-detail.log": "16661392d7ae215300982342861be07e6601f7aeaa6a173ba252c296ce014003"
+ },
+ "restart_ready": false,
+ "result": "PASS",
+ "schema": "ilinux-offline31aa-vm-validation-v1",
+ "source_bindings_sha256": "dc9177156a783fc08a74a54926f7c00f3e3788a68badca9f5d039f2534f2b87e",
+ "tests": [
+  {
+   "groups": 11,
+   "marker": "SPTM31AA_REGISTRATION_PASS groups=11 permutations=120 duplicate_cases=56 project_cpus=18 native=NOT_DEPLOYABLE",
+   "status": "PASS",
+   "variant": "optimized"
+  },
+  {
+   "groups": 11,
+   "marker": "SPTM31AA_REGISTRATION_PASS groups=11 permutations=120 duplicate_cases=56 project_cpus=18 native=NOT_DEPLOYABLE",
+   "status": "PASS",
+   "variant": "sanitized"
+  }
+ ],
+ "unique_c_groups": 11,
+ "variants": [
+  "optimized",
+  "ASan+UBSan"
+ ],
+ "vm_started_with": "vm-job.sh with VZRUN_EXTRA=--no-net; network preflight saw only lo"
+}

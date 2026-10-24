@@ -1,0 +1,28 @@
+{
+ "apple_only_necessity": "NOT_PROVEN",
+ "boot_package_prepared": false,
+ "boot_security_changes": false,
+ "date": "2026-10-24",
+ "external_messages_sent": 0,
+ "host_run": "python3 run.py --sanitize --freestanding: PASS, 11 unique C groups (Apple clang, macOS)",
+ "installed_object_changes": false,
+ "limits": [
+  "Width checks cannot authenticate a CPU identity; the caller must bind ADT reg values and the boot identity.",
+  "The module's ordinals are predictions from the planned order, not observed monitor results.",
+  "Helper-state initialization and image-fixup analysis from the earlier local REA batch is retained only in ignored build storage and is NOT summarized or published in this package."
+ ],
+ "linux_smp": "NOT_RUN",
+ "m1_instructions": "tools/m1n1-client/attempt31aa-instructions.md",
+ "macos_modifications": false,
+ "native_cpu_startup": "NOT_RUN",
+ "native_gpu": "NOT_RUN",
+ "performance_measurement": "NOT_RUN",
+ "restart_ready": false,
+ "result": "OFFLINE_PASS_NATIVE_HOLD",
+ "schema": "ilinux-attempt31aa-validation-v1",
+ "scope": "original registration planner only; no monitor call, no CPU start, no boot package",
+ "source_manifest": "native/boot/attempt31aa/source-sha256.txt",
+ "source_manifest_entries": 14,
+ "vm_run": "virtualization/jobs/085-offline31aa/validation.json: PASS, same source bindings and markers (GCC 16.1.1, Linux, no network)",
+ "volume_changes": false
+}

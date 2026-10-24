@@ -3955,6 +3955,61 @@ qualify the firmware-side meaning and completion path before adding a native
 adapter. The new strict acceptance policy and stop-on-full policy are deliberate
 Linux design choices, not assertions of private implementation equivalence.
 
+## 2026-10-23 · SMP parked on the 31W triggers; frequency and memory first; a quarter-pixel render path for the desktop
+
+The user decided on 2026-10-23, after a review of attempts 27 to 30 and the 31A–31W campaign, that
+native secondary-core work is parked. It reopens only on the 31W triggers: an accepted host
+bootstrap with physical-secondary provenance from a reported successful T6050 run, an independently
+qualified missing startup condition in the raw path with an observable prediction, or a firmware fix
+tied to a specific build and setup. No further unchanged CPU1 start is run.
+
+What the CPU problem is, measured natively: one core of 18 (CPU1 powers on and never executes a
+visible instruction, 31A–31N); that core at p-state 6, 2.652 GHz of a 4.380 GHz table (attempt 28,
+single-core FMA 60.5 GFLOP/s against macOS's 125 on a Super core); and a memory anomaly, about
+330 ns per cache miss against 90 ns for page-local access and 48 GB/s single-core bandwidth against
+macOS's 140 (attempts 28 and 29). The compositor needs 256 to 513 ms per frame at 3456×2160 in
+software on that core (attempt 30). The earlier "a fifth of macOS single-thread" figure (attempt 20,
+measured under a running desktop) is superseded by "about half".
+
+The order now: a bounded write-enabled frequency run as the next native attempt (at most 1.65×,
+the driver and the cpu-observe profile exist), the memory/DCS/fabric state investigated offline with
+a fair macOS baseline (the DMP-disabled chase) before any write, and a quarter-pixel render path
+for the desktop tested in the VM first. Heavy agent and REA work stays in the macOS VM until native
+CPU capacity improves. The m1n1 maintainers' AI notice is treated as decided by use: the 31 campaign
+built and ran modified public m1n1 throughout, and nothing is sent upstream.
+
+## 2026-10-23 · Native Linux is on hold under the macOS-parity rule
+
+The user decided on 2026-10-23 that they will not trade macOS performance for a significantly worse
+Linux experience, and that the blocked native work is not pushed further unless there is an identified
+solution or real confidence that Apple may address it. Neither held at the decision. No solution is
+identified: fourteen native sessions (31A–31N) and the 31W research found no raw-boot path to a second
+core, and the one alternative route is a single unverified third-party report on a different machine.
+No sign from Apple: the public reports span macOS betas up to 27.0 beta 5, and the only statement that
+Apple was told comes from a third-party FAQ.
+
+Consequences. No new native attempt is prepared or started. The three offline preparations proposed
+earlier the same day (a write-enabled frequency step-up, the memory/DCS investigation, a quarter-pixel
+render path) were stopped before they wrote any file. They improve only the one running core. At the
+table's top state it would deliver about 100 GFLOP/s (the measured 22.8 FLOP per cycle times 4.38 GHz,
+an estimate) against macOS's 125 on a Super core, and it is one core of 18, so they cannot meet the
+rule's bar alone. They are not abandoned: if the hold lifts, they are the first levers. This entry
+supersedes the order in the previous entry (frequency, memory and render first); that entry's decision
+to park the secondary-core work and its 31W reopening triggers stand.
+
+What continues. macOS stays the primary system. Linux work that keeps macOS performance continues where
+it helps, chiefly Linux in a VM for agent and REA work (97 to 101% of native CPU speed in the project's
+measurements, `reports/performance-parity.md`). The repository stays public and the native evidence
+stays as the baseline: attempts 25 to 30 show the two-stage boot, the keyboard, the USB link and SSH
+working, so reviving the track is cheap. The read-only storage launcher change (attempt 28) stays
+unapplied.
+
+Reopen when one of the 31W triggers appears: an accepted host bootstrap with physical-secondary
+provenance from a reported successful T6050 run; an independently qualified missing startup condition
+in the raw path with an observable prediction; or an Apple or independently reproducible fix tied to a
+specific build. Check the public sources named in `research/native31w-upstream.md` at the start of a
+session.
+
 
 ### 2026-10-24 · 31X reopen CPU research; pursue the accepted host, retain native hold
 
@@ -4081,3 +4136,11 @@ Evidence: `native/boot/attempt31z-m1-offline-2026-10-24.md` and reviewed JSON.
 sources. Keep entry-profile selection and physical-memory assumptions explicit;
 retain runtime dependencies and native integration gates. No native test or restart
 is authorized by this report. Continue the matching handoff/lifecycle investigation.
+
+## 2026-10-24 · The user lifts the hold on the CPU startup track
+
+The user reversed the 2026-10-23 hold on 2026-10-24 and asked for every available effort to find a way
+to start the other cores, or to confirm that it waits for Apple. The macOS-parity rule stands: a native
+boot is prepared only for a meaningful new test, and macOS stays intact. The frequency, memory and
+render preparations stay unstarted; the 31AA registration planner continues the 31Z adapter work that
+another tool left unpublished, offline, with no boot package, no monitor call and no restart.
