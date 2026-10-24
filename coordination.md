@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31Z offline adapter handoff; no boot queued, 2026-10-24
+
+Root incorporated M1 review776b54f and completed integration and isolated VM084.
+CPU REA qualified bounded local consumer behavior; public-source research located
+SDK contracts and independently reviewed the original C. The implementer did not
+read Apple decompilation. Four REA requests produced two cancellations and two
+limited dossiers; no whole-function pseudocode accepted.1672 words independently
+checked with zero mismatches. Source data and SDK headers remain private.
+
+16 unique entry/memory C groups pass macOS and ARM64 Linux optimized and
+ASan/UBSan runs with identical source bindings; host AArch64 object compilation
+passes. The first minimal VM lacked sanitizer runtimes; that failure is retained,
+and the final existing Arch VM supplies the successful Linux evidence. Neither
+result proves native monitor acceptance. No registration planner or native
+controller is implemented. All19 prior closures and unrelated work are preserved.
+
+M1 owns focused independent review under
+`tools/m1n1-client/attempt31z-instructions.md`. Root continues the matching
+848-byte handoff/helper contract and accepted-host integration, then ordered
+registration/per-CPU continuation qualification. No stale raw-start retry is
+prepared. Both VM/quiet locks are released. Native31Z HOLD / NOT RUN; no restart,
+macOS/security/volume/installed-object change or external message.
+
+
 ### Current — M1 31W/X/Y review complete; entry-contract work next, 2026-10-24
 
 **Independent M1 review on `0f382bb`: OFFLINE_PASS_NATIVE_HOLD.**

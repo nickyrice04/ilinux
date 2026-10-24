@@ -1,5 +1,41 @@
 # Progress Log
 
+## 2026-10-24 · 31Z local SPTM contract and original entry/memory helpers
+
+Reviewed M1 commit776b54f; its full20-case inspector result reproduces31Y.
+Installed SDK headers and current/retained kernel evidence now qualify selected
+entry, memory and registration requirements. The local cold consumer copies848
+monitor bytes; none of the measured SDK profiles matches. The independently
+corroborated +24 field is a physical allocation boundary. CPU registration uses
+zero-extended32-bit ADT affinity, not the diagnostic MPIDR with Aff2 bits, and
+requires the boot CPU and resident monitor before lockdown.
+
+Implemented original portable C entry classification, an opaque848-byte snapshot,
+the selected physical-field decoder and exact memory-range planning with retained
+reservations.16 unique groups pass optimized and ASan/UBSan on macOS and an
+isolated ARM64 Arch VM. Coverage includes854 rejected lengths,848 byte-position
+checks and2304 independent bitmap-oracle cases. Final sources and markers match
+across systems. Two freestanding AArch64 objects compile; they are not linked or
+bootable. The memory object requires memcpy/memset at future integration.
+
+REA outcomes: two cancellations on the full kernel, two limited completed
+dossiers on an analysis-only carrier; whole-function pseudocode refused for both.
+Independent source/LLVM checks cover1672 words with zero mismatches. Public review
+retained8 source fetches;6 installed SDK headers stay private.4 baseline plus12
+conditional compile-only layout checks completed. The initial minimal Linux VM
+passed optimized tests but lacked sanitizer runtime libraries; final VM084 passed
+both variants using existing tools. Failures and limits remain in the receipts.
+
+No registration planner, lifecycle validator, native entry or CPU-start controller
+is implemented. Complete matching handoff/helper state, accepted host image and
+physical entry remain the next dependencies. No hardware performance result or
+Apple-only necessity is established. All19 earlier source closures are unchanged;
+macOS, installed objects, policies and volumes are untouched. No outreach.
+**Native31Z HOLD / NOT RUN; no restart.** M1 instructions:
+`tools/m1n1-client/attempt31z-instructions.md`; evidence:
+`native/boot/attempt31z/validation.json`, `research/native31z-handoff.md` and
+`research/native31z-public-contract.md`.
+
 ## 2026-10-24 · M1: 31W/X/Y review and local inspector reproduction PASS
 
 **Independent M1 review on `0f382bb`: OFFLINE_PASS_NATIVE_HOLD.**

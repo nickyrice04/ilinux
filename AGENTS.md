@@ -99,6 +99,31 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31Z entry and memory components tested; native hold, 2026-10-24
+
+M1 review776b54f is incorporated; its20-case inspector signature matches31Y.
+REA plus independent instruction checks qualify the current T6050 cold consumer's
+848-byte monitor snapshot, selected +24 physical boundary, and single-argument
+CPU registration using zero-extended32-bit ADT affinity. Installed SDK comparison
+profiles differ from848; do not substitute their complete layouts. Registration
+requires an already resident monitor and boot-CPU ordering before lockdown.
+This does not establish the missing step in historical raw boots.
+
+Original C now preserves entry words, snapshots the explicit local record without
+dereferencing captured pointers, decodes only the qualified field, and computes
+physical allocation ranges while retaining reservations. **16 unique C groups
+PASS on macOS and ARM64 Linux, optimized and ASan/UBSan; AArch64 objects compile.**
+No registration planner, lifecycle validator or native entry/controller is built.
+Two REA requests cancelled; two returned limited evidence; whole-function
+pseudocode remained refused. Independent checks cover1672 words, zero mismatches.
+
+**Native31Z HOLD / NOT RUN; no restart.** Complete matching memory/helper/fixups
+contract, accepted host image and actual entry/per-CPU state remain unresolved.
+No Apple-only necessity is proved. No macOS, installed-object, security or volume
+changes; no outreach. All19 earlier source closures remain unchanged. M1 follows
+`tools/m1n1-client/attempt31z-instructions.md` for focused offline review.
+Evidence: `native/boot/attempt31z/validation.json` and the two31Z research notes.
+
 ### Latest M1 — 31W/X/Y offline PASS; inspector matrix reproduced, 2026-10-24
 
 **Independent M1 review on `0f382bb`: OFFLINE_PASS_NATIVE_HOLD.**

@@ -1,0 +1,128 @@
+{
+  "compiler": "cc (GCC) 16.1.1 20260430",
+  "date_local": "2026-10-24",
+  "earlier_minimal_vm": {
+    "missing": [
+      "libasan_preinit.o",
+      "libasan",
+      "libubsan"
+    ],
+    "not_a_native_hardware_result": true,
+    "optimized_groups": 16,
+    "receipt_sha256": "6fae8845d75921cd577cb896ee9d664b74492b2f3ae1f5200103288a8ca3d19d",
+    "sanitizer_link": "FAILED_MISSING_RUNTIME_LIBRARIES",
+    "source_version": "pre-final comment refinement"
+  },
+  "freestanding_in_vm": "NOT_RUN; host AArch64 cross-compilation is separately recorded",
+  "hardware_operations": 0,
+  "host_and_vm_markers_identical": true,
+  "host_and_vm_sources_identical": true,
+  "job": {
+    "end_utc": "2026-10-24T22:05:49Z",
+    "exit": 0,
+    "start_utc": "2026-10-24T22:05:48Z"
+  },
+  "job_source_sha256": "67aaad0582f59ccb2390caf4e92519cd6c41587609ca6d94110fad004f1e2656",
+  "linux": "Linux 7.1.6-vzrun2 aarch64",
+  "native": "NOT_RUN",
+  "output_hashes": {
+    "adapter/results.json": "9e6292e544635ac3974b2870d3bcd0b92262eb910a0f0a1fc511432f089c4a7f",
+    "adapter/source-bindings.json": "dedeb9a2ba256ccde2e79520fcd52603d534702af61eb080b81a4390effafd9d",
+    "kernel.txt": "ca6cc9dbb2015c8a61d082f2b49695fffc1688d0015e050cd1dfdcb7104633b6",
+    "network-preflight.json": "0c7f122829ecdbf9618a9b5f2aee9affe0605c3228c0e7b887c0281cff8907d0",
+    "run-detail.log": "5458828bb6bd0a4cd49051c0807d9f5db20aee65b931e7a51718e42c68b17b30",
+    "run.log": "67083e9a7977339c3ad7ea561a977651a6fa3eb110e21b7bdd4637cdcb7f7c69"
+  },
+  "restart_ready": false,
+  "result": "PASS",
+  "schema": "ilinux-offline31z-vm-validation-v1",
+  "source_bindings": [
+    {
+      "bytes": 3390,
+      "file": "entry.c",
+      "sha256": "432c34367b59ce404abf95f9c82ae4ac4ef0315376711080920a732ed7e17982"
+    },
+    {
+      "bytes": 4965,
+      "file": "entry.h",
+      "sha256": "9d33e198ed5bbb89b84b28d4c6976f5a9a03f8d214536f05707bb5ddb6b5337c"
+    },
+    {
+      "bytes": 3130,
+      "file": "memory.c",
+      "sha256": "352bed8641220c2846b269bb4ad52331d22d50f170413a688f8508bf5f2e5d2c"
+    },
+    {
+      "bytes": 2854,
+      "file": "memory.h",
+      "sha256": "b249bb1f11543fb9abbef7ba6be99efcbf32fb7a47cd582f2f95b12e4351c434"
+    },
+    {
+      "bytes": 11334,
+      "file": "test_entry.c",
+      "sha256": "ab38e8fb36601b2789ad0ebeca405fa02cc945331b604a729bc87a6e9e224b85"
+    },
+    {
+      "bytes": 8885,
+      "file": "test_memory.c",
+      "sha256": "5953a43abacd345b6c3260e866dd3e832c52664e589aade462c08e7147429fe8"
+    },
+    {
+      "bytes": 8710,
+      "file": "run.py",
+      "sha256": "89b235a13b7c0614c4fb34a4ff26d77cafa205eb0632498956059f75018150bc"
+    },
+    {
+      "bytes": 6486,
+      "file": "README.md",
+      "sha256": "5a5d62d3e00ea794257fd34dfba1b7afd907a69dfe4fbd943ffa092e33f3e923"
+    }
+  ],
+  "source_bindings_sha256": "dedeb9a2ba256ccde2e79520fcd52603d534702af61eb080b81a4390effafd9d",
+  "tests": [
+    {
+      "groups": 8,
+      "marker": "SPTM31Z_ENTRY_PASS groups=8 length_cases=854 byte_position_cases=848 native=NOT_DEPLOYABLE",
+      "name": "entry",
+      "status": "PASS",
+      "variant": "optimized"
+    },
+    {
+      "groups": 8,
+      "marker": "SPTM31Z_MEMORY_PASS groups=8 bitmap_cases=2304 native=NOT_DEPLOYABLE",
+      "name": "memory",
+      "status": "PASS",
+      "variant": "optimized"
+    },
+    {
+      "groups": 8,
+      "marker": "SPTM31Z_ENTRY_PASS groups=8 length_cases=854 byte_position_cases=848 native=NOT_DEPLOYABLE",
+      "name": "entry",
+      "status": "PASS",
+      "variant": "sanitized"
+    },
+    {
+      "groups": 8,
+      "marker": "SPTM31Z_MEMORY_PASS groups=8 bitmap_cases=2304 native=NOT_DEPLOYABLE",
+      "name": "memory",
+      "status": "PASS",
+      "variant": "sanitized"
+    }
+  ],
+  "unique_c_groups": 16,
+  "variants": [
+    "optimized",
+    "ASan+UBSan"
+  ],
+  "vm": {
+    "curated_source_read_only": true,
+    "existing_workspace_virtual_disk": true,
+    "interfaces": [
+      "lo"
+    ],
+    "memory_gib": 4,
+    "network_enabled": false,
+    "physical_usb": false,
+    "vcpus": 2
+  }
+}

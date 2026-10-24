@@ -1,5 +1,27 @@
 # Blockers
 
+## Current — 31Z selected handoff fields qualified; complete native host still missing
+
+The current kernel's848-byte monitor copy disagrees with every SDK configuration
+measured in31Z. The entry words, one physical-memory boundary field and CPU
+registration argument are qualified individually; the remaining record and opaque
+helper state must not be inferred from another SDK version. Registration requires
+an already resident monitor; the contract does not explain by itself whether the
+historical raw boots lacked that prerequisite.
+
+Original entry/snapshot/memory helpers now pass16 C groups on macOS and ARM64
+Linux including sanitizers. They cannot yet be used as a native boot adapter.
+Next: resolve the matching producer/consumer and helper lifecycle, actual entry
+stack/translation and memory ownership, accepted-image construction, and ordered
+registration/per-CPU continuation. No registration planner or lifecycle validator
+is implemented. Physical-secondary evidence is still required before a claimed
+workaround. A need to wait for Apple remains unproved.
+
+No new boot is prepared. No changes to macOS, installed objects, firmware,
+security or volumes, and no external outreach. See the31Z research notes and
+`native/boot/attempt31z/validation.json`. M1 performs only the focused offline
+review in `tools/m1n1-client/attempt31z-instructions.md`.
+
 ## Current — M1 confirms format matrix; native entry contract still unqualified
 
 **Independent M1 review on `0f382bb`: OFFLINE_PASS_NATIVE_HOLD.**

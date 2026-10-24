@@ -4036,3 +4036,23 @@ review pairs for31W/X/Y published; detailed matrix and limits:
 **Decision:** Preserve cross-version parser agreement as a measured offline
 discriminator. It does not authorize configure-boot, a native CPU2 attempt or
 restarts. Continue original monitor entry-contract qualification without outreach.
+
+
+## 2026-10-24 · 31Z: implement qualified components; retain native hold
+
+M1 review776b54f confirms the31Y inspector signature. Current-kernel evidence
+and installed SDK contracts qualify selected entry/memory/registration facts,
+including an848-byte local monitor snapshot that matches no measured SDK layout.
+Use only independently qualified fields; do not extrapolate opaque helper state.
+The original C components preserve entry state, decode the selected physical
+boundary, and plan allocation extents with retained reservations.16 unique C
+groups pass macOS/ARM64 Linux optimized and sanitizers; two AArch64 objects compile.
+This is useful adapter work, not a native controller or a CPU startup result.
+
+Real CPU registration is a boot-CPU/resident-monitor prerequisite with one
+zero-extended ADT affinity argument. Registration planning/validation and the
+helper/fixups lifecycle remain unimplemented. Resolve the matching handoff and
+accepted-host obligations before a native test; no repeated raw start is prepared.
+Two REA cancellations and two limited-result pseudocode refusals stay recorded.
+No Apple-only necessity is inferred. M1 reviews the focused31Z source package
+offline; no outreach, macOS, installed-object, security or volume changes.
