@@ -1,5 +1,36 @@
 # Progress Log
 
+## 2026-10-25 · M5: 31AD ordered-fileset candidate packaged offline; pushed for M1 review
+
+Following the 31AC fileset rejection (exit 71), M5 built the 31AD package. The
+offline hypothesis (not a diagnosis): the 31AC image placed `__TEXT_EXEC` after
+`__TEXT_BOOT_EXEC`, so the installer's split-protection file-offset check
+underflows an unsigned subtraction. The real Recovery error and analyzer profile
+were never observed (`actual_recovery_profile UNOBSERVED`), so the exit-71 cause
+remains Unknown; 31AD tests the hypothesis. 31AD relinks the unchanged,
+hash-pinned 31AC payload so normal text precedes boot text and wraps it in a
+nested `MH_FILESET` (196608 bytes). Code bytes are unchanged (image.ld placement
+and the wrapper only).
+
+Host offline evidence PASS on macOS (Python 3.9.6, Apple clang 21.0.0): 75
+packaging/renderer methods (bootimage31ad test_ordered 32 + test_image 23,
+recovery31ad test_render 5 + test_write_render 7, omarchy-kconfig 8) and five
+freestanding AArch64 objects (COMPILE_PASS_NOT_LINKED, source bindings
+`ac5b7fcc…1ea8fcca`); reused visible31ac/observer31ab sources byte-identical to
+frozen pins. The ordered guard rejects both flat roots and the unordered nested
+control.
+
+**NOT RUN** (no ELF linker on macOS; pending isolated-VM job 088): the two-base
+link, the 26-case QEMU run, the 196608-byte candidate and its real SHA-256, the
+original-only archive/release, and the production install/diagnosis one-paste
+pages (the rollback paste is fully determined now). Native Recovery install,
+30-second marker, rollback execution, Linux, SMP, GPU and performance **NOT RUN**.
+macOS, boot policy, SIP, volumes and security untouched; no restart.
+`install_authorized` false; the 31AC approval does not carry to this new image.
+Pushed for independent M1 review. Package: `native/boot/attempt31ad/`
+(README, manifest, validation, source-sha256); review + Recovery sequence:
+`tools/m1n1-client/attempt31ad-instructions.md`.
+
 ## 2026-10-25 · M1: 31AC install rejected; exact rollback and original return reported
 
 On execution handoff `6aa6acd`, paired-Recovery guard and candidate size/hash

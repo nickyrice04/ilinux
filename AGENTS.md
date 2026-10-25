@@ -99,6 +99,29 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AD ordered-fileset candidate packaged offline for M1 review, 2026-10-25
+
+M5 prepared the 31AD package answering the 31AC fileset rejection (exit 71). The
+offline analysis raises a **Hypothesis, not a diagnosis**: the 31AC image placed
+`__TEXT_EXEC` after `__TEXT_BOOT_EXEC`, underflowing the installer's
+split-protection file-offset check; the real Recovery error was never observed, so
+the cause stays Unknown. 31AD relinks the unchanged, hash-pinned 31AC payload so
+normal text precedes boot text and wraps it in a nested `MH_FILESET` (196608
+bytes); code bytes are unchanged. Host offline evidence PASS: 75
+packaging/renderer methods and five freestanding AArch64 objects
+(COMPILE_PASS_NOT_LINKED); reused visible31ac/observer31ab sources byte-identical
+to frozen pins.
+
+The candidate image, 26-case QEMU run, archive and production one-paste pages are
+**NOT RUN** — macOS has no ELF linker; they are pending the isolated-VM link job
+(088). Native install/boot/rollback/Linux/SMP/GPU/performance **NOT RUN**; macOS,
+security and volumes untouched; no restart. `install_authorized` is false — the
+31AC approval does not carry to this new image; a fresh explicit human approval of
+the exact candidate is required. Pushed for independent M1 review. Evidence:
+`native/boot/attempt31ad/validation.json`; review + Recovery sequence:
+`tools/m1n1-client/attempt31ad-instructions.md`; root cause:
+`research/native31ad-fileset-ordering.md`.
+
 ### Latest — 31AC install exit 71; rollback/return reported, 2026-10-25
 
 One human-operated lab candidate configure invocation failed after confirmation:

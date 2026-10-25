@@ -4362,3 +4362,38 @@ establish a component-level cause. M5 can investigate the packaged format and
 installer contract offline, with no automatic boot/settings change. Preserve all
 frozen source/reviews/authorization and consumed receipts. Sanitized result:
 `native/boot/attempt31ac-recovery-2026-10-25-result.md` and JSON.
+
+## D-050 · 2026-10-25 · 31AD reorders the fileset; cause stays a hypothesis
+
+**Decision:** Build the next candidate (31AD) by relinking the unchanged,
+hash-pinned 31AC payload so the normal executable text precedes the
+boot-executable text, and wrap it in a nested `MH_FILESET` (196608 bytes), so both
+headers satisfy `__TEXT_EXEC.fileoff <= __TEXT_BOOT_EXEC.fileoff`. Finish and push
+the package to the offline bar — host packaging/renderer tests, the compile-only
+check, the receipt set and the one-paste Recovery tooling — for independent M1
+review, and explicitly do **not** treat it as ready to install or restart.
+
+**Context:** 31AC's `configure-boot` failed with a reported fileset error, exit 71
+(D-049). Offline analysis of the 31AC image's own geometry found `__TEXT_EXEC`
+(fileoff 131072) placed after `__TEXT_BOOT_EXEC` (fileoff 65536), which underflows
+an unsigned subtraction in the installer's split-protection ordering check — a
+plausible cause. But the actual Recovery error text and the gating analyzer
+profile were never captured, and the offline analyzer derived that profile as
+false on the path it could follow. So the cause of exit 71 remains **Unknown**;
+the ordering defect is a Hypothesis that 31AD tests, not a confirmed fix.
+
+**Alternatives considered:** wrapping the old payload in a nested fileset without
+reordering (rejected — it preserves the invalid relative order); altering install
+flags or retrying 31AC (rejected — no retry with changed flags after a rejection);
+attempting a native boot now (rejected — host protection and the parity gate).
+
+**Consequences:** The candidate image, the 26-case QEMU run and the archive are
+NOT RUN on macOS (no ELF linker) and require the isolated-VM job 088; until then
+the candidate SHA-256 and the production install/diagnosis one-paste pages do not
+exist, and no dummy pin is shipped. A write needs, in order: the VM-built
+candidate, independent M1 review, and a **fresh** explicit human approval of the
+exact 31AD candidate (the 31AC approval does not carry over). A successful install
+would make the ordering hypothesis Likely, not prove native entry/SMP/performance;
+a second rejection leaves the cause Unknown. macOS, boot policy, SIP, volumes and
+security stay intact; no restart. Package: `native/boot/attempt31ad/`; root cause:
+`research/native31ad-fileset-ordering.md`.

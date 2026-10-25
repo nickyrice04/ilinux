@@ -1,0 +1,60 @@
+{
+  "schema": "ilinux-native31ad-delivery-v1",
+  "status": "PENDING_VM_LINK",
+  "candidate_built": false,
+  "archive_built": false,
+  "experiment": "corrected split-protection ordered nested-fileset candidate derived from the frozen 31AC payload; no secondary release or Linux boot",
+  "supersedes_cause": "31AC configure-boot exit 71 (reported fileset error); see research/native31ad-fileset-ordering.md (Hypothesis, not a confirmed diagnosis)",
+  "ordering_invariant": "__TEXT_EXEC.fileoff <= __TEXT_BOOT_EXEC.fileoff in both outer and inner headers",
+  "candidate": {
+    "filename": "ilinux-31ad-ordered.macho",
+    "bytes": 196608,
+    "sha256": null,
+    "url": null,
+    "note": "Produced only by VM job 088 (visible31ad link -> bootimage31ad ordered.py). Real sha256 and release URL are filled in after that build and independent review. No dummy pin is shipped; the renderers and verifier refuse until a real 196608-byte image exists.",
+    "geometry_source": "kernel/experiments/bootimage31ad/README.md",
+    "generator": "kernel/experiments/bootimage31ad/ordered.py",
+    "validator": "kernel/experiments/bootimage31ad/validate_ordered.py"
+  },
+  "rollback": {
+    "filename": "m1n1-boot021.bin",
+    "bytes": 3932160,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "raw_entry": 2048,
+    "raw_lowest_virtual_address": 0,
+    "staged_path": "/Volumes/iLinux Boot Lab - Data/Users/Shared/iLinuxBoot/m1n1.bin",
+    "source": "m1n1 57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "marker": "##m1n1_ver##ilinux-57a9339-boot021",
+    "note": "Exact, immutable, pre-existing lab rollback. Unchanged from 31AC. The 31AD rollback paste phase is fully determined by these pins and needs no new build."
+  },
+  "archive": {
+    "filename": "ilinux-31ad-entry-test.tar.gz",
+    "bytes": null,
+    "sha256": null,
+    "url": null,
+    "note": "Original-only archive (candidate + licenses + boot021 + source.json + SHA256SUMS). Built and released after the candidate exists and passes independent review."
+  },
+  "recovery_one_paste": {
+    "renderers": "tools/recovery31ad/write_render.py (install + rollback), tools/recovery31ad/render.py (read-only diagnosis)",
+    "write_profile_schema": "ilinux31ad-write-v1",
+    "diagnose_profile_schema": "ilinux31ad-diagnose-v1",
+    "note": "The rollback one-paste block is renderable now (all pins known). The install and diagnosis pages require the real candidate pin above; no production page with real pins is rendered until then."
+  },
+  "host_offline_evidence": "native/boot/attempt31ad/validation.json",
+  "instructions": "tools/m1n1-client/attempt31ad-instructions.md",
+  "install_authorized": false,
+  "authorization_note": "The 31AC authorization does NOT carry to this new image. A fresh, explicit human approval of the exact 31AD candidate and the full replace/observe/rollback plan is required before any write.",
+  "native_execution": "NOT_RUN",
+  "new_volume_required": false,
+  "no_new_security_downgrade": true,
+  "policies_expected": {
+    "lab": "Permissive",
+    "original": "Full"
+  },
+  "target": {
+    "board": "J716c",
+    "chip": "t6050",
+    "model": "Mac17,6",
+    "role": "M5 target only; M1 helper does not run Recovery write commands"
+  }
+}

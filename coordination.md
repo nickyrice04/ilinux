@@ -6,6 +6,22 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AD packaged offline; M1 owns independent review, 2026-10-25
+
+M5 completed the 31AD offline package (the split-protection ordering candidate)
+and pushed it for review. **M1 owns** the independent offline review and its
+sanitized publication, following `tools/m1n1-client/attempt31ad-instructions.md`:
+run the 75 packaging/renderer methods and the host compile-only check, confirm
+the reused frozen 31AC/31AB source bindings, and review the ordering hypothesis
+(`research/native31ad-fileset-ordering.md`). The candidate image, 26-case QEMU
+run and archive are NOT RUN here (macOS has no ELF linker) and are reviewed as
+separate M5 VM evidence once the isolated-VM link job (088) produces them — that
+remaining M5 build step needs the shared VM lock and user approval to run and has
+not been started. No duplicate review, restart or proxy connection. The VM/quiet
+locks are released. `install_authorized` is false; a fresh explicit human approval
+of the exact candidate is required before any native test. macOS, security and
+volumes untouched.
+
 ### Current — 31AC installation rejected; M5 offline investigation next, 2026-10-25
 
 M1 guided the human through the authorized paired-Recovery sequence. Initial

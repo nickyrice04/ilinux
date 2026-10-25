@@ -1,5 +1,27 @@
 # Blockers
 
+## Current — 31AD prepared but gated; candidate build, M1 review and fresh approval outstanding
+
+31AD is the offline candidate that reorders the 31AC payload to satisfy the
+Mach-O split-protection ordering invariant. It does **not** resolve the 31AC
+blocker: the exit-71 cause is still Unknown (the real Recovery error and analyzer
+profile were never observed), so the ordering fix is a **Hypothesis**. Three gates
+remain before any native test, none met:
+
+1. **Candidate not built.** macOS has no ELF linker, so the canonical link, the
+   26-case QEMU run and the 196608-byte ordered image are NOT RUN. They require
+   the isolated-VM job (`virtualization/jobs/088-ordered31ad/`). Until then the
+   candidate SHA-256, the archive and the production one-paste install/diagnosis
+   pages do not exist (no dummy pin is shipped).
+2. **Independent M1 review** of the package and, when built, the candidate: NOT DONE.
+3. **Fresh explicit human authorization** of the exact 31AD candidate and the full
+   replace/observe/rollback plan: NOT GIVEN. The 31AC approval does not carry over.
+
+Host offline evidence PASS (75 methods, five AArch64 objects). Native install,
+boot, rollback, Linux, SMP, GPU and performance NOT RUN; macOS and all
+security/volumes untouched; no restart. Evidence:
+`native/boot/attempt31ad/validation.json`.
+
 ## Current — 31AC Recovery installer acceptance failed; native entry NOT RUN
 
 The one authorized candidate configure invocation produced a human-reported

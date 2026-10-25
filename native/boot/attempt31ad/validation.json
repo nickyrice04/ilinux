@@ -1,0 +1,65 @@
+{
+  "schema": "ilinux-native31ad-validation-v1",
+  "attempt": "31AD",
+  "date": "2026-10-25",
+  "summary": "Offline M5 package for a corrected split-protection ordered nested-fileset candidate. Host packaging/renderer/compile-only evidence PASS. The candidate image, QEMU execution, archive and native steps are NOT RUN and are pending the isolated-VM link job. Prepared for independent M1 review; installation NOT AUTHORIZED.",
+  "host_environment": {
+    "os": "macOS-26.6.2-arm64 (Darwin 25.6.0)",
+    "python": "3.9.6",
+    "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2), target arm64-apple-darwin25.6.0"
+  },
+  "offline_tests_run": [
+    {"suite": "kernel/experiments/bootimage31ad/test_ordered.py", "methods": 32, "result": "PASS", "covers": "ordered nested fileset: entry/header/segment/section/thread/metadata/payload corruptions; both flat root types and the unordered nested control fail the range-order guard"},
+    {"suite": "kernel/experiments/bootimage31ad/test_image.py", "methods": 23, "result": "PASS", "covers": "retained unordered nested-only control history (structural PASS without the ordering guard)"},
+    {"suite": "tools/recovery31ad/test_render.py", "methods": 5, "result": "PASS", "covers": "read-only diagnosis page renderer; refuses profiles without exact pins"},
+    {"suite": "tools/recovery31ad/test_write_render.py", "methods": 7, "result": "PASS", "covers": "install + rollback one-paste renderer; geometry 196608 enforced, rollback-as-candidate refused, dummy pins refused"},
+    {"suite": "kernel/experiments/omarchy-kconfig/test_kconfig_fragment.py", "methods": 8, "result": "PASS", "covers": "Omarchy RAM-root kconfig fragment (unrelated to the boot candidate; kept current)"}
+  ],
+  "offline_tests_total_methods": 75,
+  "host_compile_only": {
+    "command": "python3 -I kernel/experiments/visible31ad/run.py --output build/31ad-visible-host-review --cc clang --target aarch64-none-elf --compile-only",
+    "status": "COMPILE_PASS_NOT_LINKED",
+    "native": "NOT_QUALIFIED",
+    "objects": ["entry.o", "probe.o", "runtime.o", "bridge.o", "observer.o"],
+    "object_count": 5,
+    "source_bindings_sha256": "ac5b7fcca628ff7fcec720dfcfefb537d0766ace161531cd47fed40c1ea8fcca",
+    "payload_executed": false,
+    "note": "Five freestanding AArch64 objects compile on the host. No ELF linker is available on macOS, so the canonical two-base link and the 26-case QEMU run are NOT RUN here."
+  },
+  "reused_frozen_sources_verified_byte_identical": {
+    "kernel/experiments/visible31ac/layout.h": "d69dc76545e9e46abfdc6b60b40007086b8a8c637f06e2580880aab28a2d2694",
+    "kernel/experiments/visible31ac/entry.S": "d9abf92f865bdf080b2ad4a2343ea4c0209e1f0632e3494bfd5eaa101ae03b7c",
+    "kernel/experiments/visible31ac/probe.S": "95612bfdae6eca9ccc38040db4a8395fbc6e1cfe355f62382265cd042e919fb5",
+    "kernel/experiments/visible31ac/bridge.c": "503d33177919e38e3b6d87c0681e699113de35b9ab6474c7fe196dd983b97baf",
+    "kernel/experiments/visible31ac/runtime.S": "cdab3451d515f337dc99a5f8a3f536c5a8a4bbee6de300873d52fb316b0b9439",
+    "kernel/experiments/observer31ab/observer.c": "0f5dbef5e8b9497ea792bba1ac4addf8a3c33c32ada62b9da9082c4985706b43",
+    "kernel/experiments/observer31ab/observer.h": "58cdd504661afcc06f7bef477315a50bd6e724c477f4eb1b54972eb9a7852868",
+    "note": "31AD changes only link placement (image.ld) and the fileset wrapper. The code bytes are the frozen 31AC/31AB sources, unchanged."
+  },
+  "root_cause": {
+    "status": "HYPOTHESIS",
+    "statement": "The 31AC candidate places __TEXT_EXEC.fileoff (131072) after __TEXT_BOOT_EXEC.fileoff (65536); the installer's split-protection file-offset check subtracts these as unsigned and underflows, which is a plausible cause of the reported fileset error / exit 71.",
+    "qualification": "The actual Recovery error text and gating analyzer profile were never observed (actual_recovery_profile UNOBSERVED). The offline analyzer derived the gating profile as false on the path it could follow. No component-level cause is confirmed; the cause of exit 71 remains Unknown.",
+    "detail": "research/native31ad-fileset-ordering.md"
+  },
+  "candidate": {
+    "built": false,
+    "expected_bytes": 196608,
+    "sha256": null,
+    "note": "Not built on the host (no ELF linker). Produced by VM job 088; real sha256 filled in after that build and independent review. No dummy pin shipped."
+  },
+  "not_run": [
+    "VM job 088: canonical two-base link (visible31ad/run.py cc/ld -> payload.bin)",
+    "26-case QEMU execution (visible31ad-test): 8 paints, 16 refusals, 2 fatal-vector captures",
+    "ordered image generation (bootimage31ad/ordered.py -> 196608-byte candidate) and validate_ordered.py PASS on the real image",
+    "original-only archive build and GitHub release",
+    "production recovery install/diagnosis one-paste render (write_render.py / render.py need the real candidate pin)",
+    "native Recovery install (kmutil configure-boot), 30-second marker observation, boot021 rollback execution",
+    "Linux boot, secondary CPU (SMP), GPU acceleration, performance/energy measurement"
+  ],
+  "native_execution": "NOT_RUN",
+  "install_authorized": false,
+  "restart_ready": false,
+  "host_protection": "macOS, boot policy, SIP, APFS layout, volumes and security levels untouched. No restart, device open, monitor call, outreach or installed-object/settings change by this package.",
+  "next": "Independent M1 offline review (tools/m1n1-client/attempt31ad-instructions.md). In parallel or after, the M5 isolated-VM link job (088) produces the real candidate for pinning, archiving and rendering. A fresh explicit human authorization of the exact candidate is required before any native test."
+}
