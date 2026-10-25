@@ -1,5 +1,33 @@
 # Progress Log
 
+## 2026-10-25 · 31AB: executable original entry and bounded observer work
+
+Incorporated M1's 31AA reviews without changing their frozen implementation.
+The original resident-host entry now links, has a complete instruction/relocation
+audit, and produces byte-identical payloads at two bases. Nine actual standard
+ARM emulator cases pass, including EL1, EL2, VHE and three deliberate BRK vector
+entries. The packaged original 112 KiB Mach-O image passes read-only boot-property
+derivation. No monitor transition or Apple firmware executes in these tests.
+
+REA qualifies the selected cold-entry state and physical-aperture lookup, then
+traces the producer of the count/table pointers. Separate original marker and
+translation components make the next observation practical without assuming a
+physical framebuffer address is directly writable. Their exact results, versions,
+bindings and remaining integration limits are in the 31AB receipt. Proprietary
+artifacts and raw disassembly remain private ignored data.
+
+No local all-core workaround exists yet; the software route remains viable enough
+to investigate and an Apple-only restriction is not proved. Next integrate an
+observable resident entry, then qualify its monitor lifecycle before one bounded
+physical-secondary test. No unchanged raw-start retry, restart, installation,
+security/volume change or external message was performed. The known working boot,
+GPU work, 22 prior closures and unrelated Omarchy changes remain intact.
+
+Evidence: `native/boot/attempt31ab/validation.json`,
+`virtualization/jobs/086-offline31ab/validation.json`,
+`research/native31ab-route.md`. M1's focused review is described in
+`tools/m1n1-client/attempt31ab-instructions.md`.
+
 ## 2026-10-25 · M1: 31AA planner tests and research-supplement review PASS
 
 **Independent M1 review on `5ef5778`: OFFLINE_PASS_NATIVE_HOLD.**

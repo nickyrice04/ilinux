@@ -1,0 +1,45 @@
+/* SPDX-License-Identifier: MIT */
+#ifndef ILINUX_SPTM31AB_LAYOUT_H
+#define ILINUX_SPTM31AB_LAYOUT_H
+
+/* Original diagnostic record and image geometry; not a firmware wire format. */
+#define HOST_IMAGE_BYTES 0x14000
+#define HOST_CAPTURE_OFFSET 0x4000
+#define HOST_CAPTURE_BYTES 0x100
+#define HOST_STACK_BOTTOM_OFFSET 0x8000
+#define HOST_STACK_TOP_OFFSET 0xc000
+#define HOST_ENTRY_OFFSET 0xc000
+#define HOST_VECTOR_OFFSET 0xc800
+#define HOST_EARLY_TRANSPORT_OFFSET 0xf000
+#define HOST_LATE_TEXT_OFFSET 0x10000
+
+#define REC_MAGIC 0x424131334d545053
+#define REC_VERSION 1
+#define REC_MAGIC_OFFSET 0x00
+#define REC_VERSION_OFFSET 0x08
+#define REC_PHASE 0x10
+#define REC_CURRENT_EL 0x18
+#define REC_DAIF 0x20
+#define REC_INCOMING_SP 0x28
+#define REC_X0 0x30
+#define REC_X1 0x38
+#define REC_X2 0x40
+#define REC_OWNED_SP 0x48
+#define REC_VECTOR_BASE 0x50
+#define REC_HCR_EL2 0x58
+#define REC_HCR_PRESENT 0x60
+#define REC_FAULT_SLOT 0x68
+#define REC_FAULT_EL 0x70
+#define REC_FAULT_ESR 0x78
+#define REC_FAULT_ELR 0x80
+#define REC_FAULT_FAR 0x88
+#define REC_FAULT_SPSR 0x90
+#define REC_FAULT_SP 0x98
+#define REC_FAULT_DAIF 0xa0
+
+#define PHASE_CAPTURED 1
+#define PHASE_VECTORS_PARKED 2
+#define PHASE_FATAL_EXCEPTION 3
+#define PHASE_UNSUPPORTED_EL 0x80
+
+#endif

@@ -1,5 +1,22 @@
 # Blockers
 
+## Current — 31AB narrows the missing observable resident entry
+
+Original entry instructions now link and execute under standard ARM emulation;
+image-format inspection also passes. These resolve offline code questions, not
+native firmware acceptance. The entry still lacks an integrated native observer.
+The new range-table, marker and AT/PAR components must be composed under the
+actual entry mapping/profile, with a bounded visible result, before a useful
+physical acceptance test is ready. No full848 decoder or complete USB stack is
+a blanket prerequisite for that test.
+
+Monitor-call lifecycle, exception continuation and physical secondary release
+remain later steps. No Apple-only necessity is established: failure of the raw
+path and lack of a published resident host do not exclude this software route.
+Do not turn synthetic success into a native claim or a silent screen into proof
+of an immutable restriction. `research/native31ab-route.md` defines the evidence
+needed for either conclusion. Native boot remains HOLD; no restart is requested.
+
 ## Current — M1 verifies31AA; minimal native entry contract remains
 
 **Independent M1 review on `5ef5778`: OFFLINE_PASS_NATIVE_HOLD.**

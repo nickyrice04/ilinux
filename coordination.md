@@ -6,6 +6,26 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AB executable entry and observer components, 2026-10-25
+
+Root incorporated M1's `c4a794f` planner and research reviews. CPU research owns
+the bounded local entry/exception qualification; public research independently
+checks SDK contracts and applicable host implementations. The original-code
+implementer owns `kernel/experiments/sptm31ab-host/` without reading Apple
+decompilation. Root owns image packaging, isolated VM execution, integration and
+publication. All 22 current frozen closures stay unchanged; unrelated Omarchy
+work is preserved. No outreach, installation or native operation is authorized
+by this checkpoint. Prepare a boot only for a meaningful new physical test.
+
+The original entry has now been linked and executed under ordinary ARM emulation.
+The original-code implementer also owns the bounded observer component; public
+research owns the separate architectural translation probe and synthetic fixture.
+Root owns their integrated offline receipt and publication. These components
+are separate and do not yet supply a native observer or monitor lifecycle.
+M1 reviews `tools/m1n1-client/attempt31ab-instructions.md`; root continues the
+observable-entry integration. Neither a working workaround nor an Apple-only
+restriction is established. No restart follows from the offline review.
+
 ### Current — M1 31AA reviews published; minimal host work continues, 2026-10-25
 
 **Independent M1 review on `5ef5778`: OFFLINE_PASS_NATIVE_HOLD.**

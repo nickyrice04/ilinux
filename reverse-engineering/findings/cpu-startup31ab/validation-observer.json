@@ -1,0 +1,402 @@
+{
+  "schema": "ilinux-cpu-startup31ab-observer-validation-v1",
+  "date": "2026-10-25",
+  "scope": "Existing physical-aperture lookup, selected cold producer fields and observer prerequisites; offline only",
+  "analysis_carrier": {
+    "schema": 1,
+    "source_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+    "derived_sha256": "f4b52b3ba2ad78fc2162fc6b83d1c87e5c5466705ae5b9369ed60e705fbf8756",
+    "member": "kernel-aperture-analysis-only",
+    "mappings": [
+      {
+        "label": "range-translation-candidate",
+        "vmaddr": "0xfffffe0007c784c0",
+        "bytes": 140,
+        "source_offset": 13059264,
+        "derived_offset": 13059264,
+        "sha256": "9a07ae5d7056a03bce4232c3aeca3ab1315c4e156b9ce2463a8fe6823d1ae426"
+      }
+    ],
+    "declared_entry": "0xfffffe0007ca0000",
+    "declared_entry_mapped": false,
+    "preserved_original_file_offsets": true,
+    "retained_function_starts": [
+      "0xfffffe0007c784c0"
+    ],
+    "generated_metadata": [
+      "Mach-O header/segments",
+      "filtered function starts",
+      "analysis-only symbol labels"
+    ],
+    "omitted_context": [
+      "Most code, all original data and original link-edit",
+      "Unmapped callees and referenced data stay unknown"
+    ],
+    "executable_or_deployable": false
+  },
+  "counts": {
+    "fresh_requests": 2,
+    "completed_dossiers": 2,
+    "provider_failures": 0,
+    "provider_body_instructions": 457,
+    "pcode_operations": 2535,
+    "pcode_outside_provider_body": 0,
+    "independent_ranges": 8,
+    "independent_instruction_sized_words": 566,
+    "independent_bytes": 2264,
+    "mismatches": 0,
+    "queried_body_words": 457,
+    "exported_wrapper_words": 13,
+    "discarded_candidate_width_check_words": 1,
+    "superseded_input_guest_queries": 0,
+    "prior_CPU_A_call_order_words_reverified": 3,
+    "unqueried_initializer_context_words": 90,
+    "unqueried_initializer_caller_words": 2
+  },
+  "independent_ranges": [
+    {
+      "label": "physical-aperture-translation-helper",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe0007c784c0",
+      "end_exclusive": "0xfffffe0007c7854c",
+      "instruction_words": 35,
+      "code_bytes": 140,
+      "sha256": "9a07ae5d7056a03bce4232c3aeca3ab1315c4e156b9ce2463a8fe6823d1ae426",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true
+    },
+    {
+      "label": "exported-ml_static_ptovirt-wrapper",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe0007508698",
+      "end_exclusive": "0xfffffe00075086cc",
+      "instruction_words": 13,
+      "code_bytes": 52,
+      "sha256": "ef21db262856951587d0a3ed2a45f6bd117b81cbbccad91f4837a17f4c0ecb81",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true
+    },
+    {
+      "label": "discarded-candidate-one-byte-output",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe0007c78650",
+      "end_exclusive": "0xfffffe0007c78654",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "479850cf6752b007eebdc49a35da0b2d9065fe7af51319027b8bc09d7c3f561a",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true
+    },
+    {
+      "label": "selected-cold-helper-record-producer",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270bf958",
+      "end_exclusive": "0xfffffff0270bfff0",
+      "instruction_words": 422,
+      "code_bytes": 1688,
+      "sha256": "9f3720eac72ffa9755e94c02f3a28ade3bdd047bab06a8f5bc5cd5c3ebd862f4",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true
+    },
+    {
+      "label": "cold-preparation-call-order-reverified-from-CPU-A",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270bf868",
+      "end_exclusive": "0xfffffff0270bf874",
+      "instruction_words": 3,
+      "code_bytes": 12,
+      "sha256": "7ca11529ebe5eafcbce78a67937f6595a466f93e621daa46adb48efb84592c40",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true
+    },
+    {
+      "label": "count-initializer-candidate-bounded-independent-context",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270e0248",
+      "end_exclusive": "0xfffffff0270e03b0",
+      "instruction_words": 90,
+      "code_bytes": 360,
+      "sha256": "b6a7a6d9f88c0559212086929132851d87b4e164c457abbd5cda2ee0c39589d7",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true
+    },
+    {
+      "label": "count-initializer-tail-caller",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270bcc98",
+      "end_exclusive": "0xfffffff0270bcc9c",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "0ad3fc49f682c5e30f0e4156174097de224378f8fea9ee085d1de276c735688d",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true
+    },
+    {
+      "label": "count-initializer-second-caller",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270e1c40",
+      "end_exclusive": "0xfffffff0270e1c44",
+      "instruction_words": 1,
+      "code_bytes": 4,
+      "sha256": "83e621b5da4ac29c4b6329ed99a8613be91066e36295cb7028d5997f67a86c1b",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true
+    }
+  ],
+  "behavior": {
+    "function": "0xfffffe0007c784c0",
+    "direction_basis": "retained exported ml_static_ptovirt wrapper directly calls this function",
+    "direction": "physical address to existing physical-aperture virtual address",
+    "input_argument": 0,
+    "output_pointer_argument": 1,
+    "output_bytes": 8,
+    "helper_count_pointer_offset": 8,
+    "count_bytes": 4,
+    "helper_table_pointer_offset": 16,
+    "record_stride": 24,
+    "record_fields": [
+      {
+        "offset": 0,
+        "bytes": 8,
+        "role": "physical base"
+      },
+      {
+        "offset": 8,
+        "bytes": 8,
+        "role": "virtual base"
+      },
+      {
+        "offset": 16,
+        "bytes": 4,
+        "role": "16KiB page count"
+      }
+    ],
+    "matching_interval": "physical base inclusive, physical base plus page span exclusive",
+    "result": "virtual base plus physical offset; zero result rejected",
+    "output_written_only_on_success": true,
+    "arithmetic_overflow_rejection_qualified": false,
+    "return_values": {
+      "success": 0,
+      "uninitialized": 1,
+      "invalid_output_pointer": 2,
+      "not_found_or_zero_translation": 4
+    },
+    "calls_or_translation_cache_operations": false,
+    "permission_or_cache_contract_qualified": false,
+    "complete_table_producer_or_runtime_contents_qualified": false,
+    "selected_monitor_producer": {
+      "record_base": "0xfffffff0271042c0",
+      "helper_offset_in_outer_record": 416,
+      "helper_version_u32": 10,
+      "count_pointer_helper_offset": 8,
+      "table_pointer_helper_offset": 16,
+      "count_pointer_value": "0xfffffff027105ac8",
+      "table_pointer_value": "0xfffffff027105ad0",
+      "pointer_address_domain": "monitor DATA virtual addresses; normal-world mapping not established",
+      "called_on_checked_normal_cold_preparation_branch_before_common_exit": true,
+      "all_possible_path_dominance_proved": false,
+      "count_zero_in_retained_file": true,
+      "count_at_runtime_known": false,
+      "separate_count_initializer_candidate_found": true,
+      "initializer_runtime_count_value": "UNKNOWN; linear-inventory constant not accepted across branches",
+      "initializer_order_relative_to_handoff_or_FIXUPS_COMPLETE": "UNKNOWN",
+      "pre_FIXUPS_COMPLETE_table_initialized_or_accessible": "UNKNOWN",
+      "complete848_record_layout_proved": false,
+      "native_permissions_or_cache_proved": false
+    }
+  },
+  "sanitized_adt_observer_check": {
+    "source": "hardware/adt/adt-sanitized.json",
+    "sha256": "6f143434d2f05310067559f8fa3836ae564dd9934ebc5912660f2a9f5a8a73af",
+    "nodes_scanned": 656,
+    "search": "retained values only: framebuffer/vram/video/rowbytes/stride/width/height",
+    "geometry_or_framebuffer_values_found": false,
+    "irrelevant_matches": 7,
+    "limits": [
+      "Property names without values do not supply addresses",
+      "No raw or personalized objects read",
+      "This sanitized running-system tree is not a new accepted-host boot argument snapshot"
+    ]
+  },
+  "superseded_before_run": {
+    "reason": "Independent memory-width audit disqualified second target as physical-address translation: output is one byte. No VM launch or query occurred. Retained first candidate only.",
+    "guest_queries": 0,
+    "files": {
+      "query-b.py": "254d3a2691ad1832fddb10e01ead700a7251498dfefe3894632339b74d3df0d4",
+      "queries-b.json": "37b34df8043aeb4338e0e59bf080c1778eddbcfcd6269b1d0d3b86984d531a3d",
+      "kernel-aperture.analysis.macho": "17b962e1f3229e1b869a9094e8a404d7b0f86a001e7aba7e80668364a61d4aa4"
+    }
+  },
+  "query_files": {
+    "query-b.py": "174a84767c0614f21a24bb50892388efb2a03d435c0d19bfb899eff4a8cd2e8f",
+    "queries-b.json": "c1520f9f8015f55ca5c2f141918dccc8f2f6f0f9af5c0740de6b7d694ada2e04",
+    "query-c.py": "c46e92fa971444074ee64b9231159b19946af5475d3f031424adf4015081e12b",
+    "queries-c.json": "0bae72f54698a9476a932c152a6201308629a4b962a72f74175bb6c2aa97d2d0"
+  },
+  "private_verifier_sha256": "93c8a07215b95685be4148f818b9c24cbf0c407213c3388aefe2a23da17919fd",
+  "semantic_checker_sha256": "f8e01a2d501f845ddc7964ae72f0c195336785cc858a888eb9aee95ae3dfb00a",
+  "implementation_consequence": {
+    "original_bounded_address_resolver_contract_qualified": true,
+    "native_framebuffer_writer_qualified": false,
+    "whole848_decoder_needed_for_this_lookup": false,
+    "all_helper_services_needed_for_this_lookup": false,
+    "runtime_table_values_available_in_retained_sanitized_ADT": false,
+    "original_code_implemented_by_this_finding": false
+  },
+  "limits": [
+    "Selected consumer and producer fields agree; neither establishes a complete outer record ABI or historical runtime identity",
+    "Carrier omits original data, most code and original link-edit; source entry is unmapped",
+    "Translated address is not a proof of writable permissions, memory type or scanout visibility",
+    "The local helper trusts provider table arithmetic; original external-input handling must bound count, overflow and complete access extent",
+    "The SDK opaque table pointer does not publish this range layout for other firmware versions",
+    "Actual cold x1 video descriptor, mapping and allocation extent must come from the tested boot",
+    "Pre-fixups table access was not observed; it remains a separate runtime hypothesis",
+    "No framebuffer write, monitor call, permission change, live readback or native boot was performed",
+    "Producer stores the selected count/table pointers before the checked normal cold exit; table population before exit or service15 remains unqualified",
+    "The separate initializer and its two direct callers are bounded static leads, not a proved cold-path or dispatch-endpoint binding",
+    "Three call-order words are reverified from frozen CPU-A; counts are unique within this supplement, not wholly new across31AB",
+    "Frozen CPU-A and earlier whole-function refusals remain unchanged and are not recounted here"
+  ],
+  "native_execution": "NOT RUN",
+  "boot_acceptance": "NOT TESTED",
+  "deployment_ready": false,
+  "sources": {
+    "kernel_consumer": {
+      "artifact": "retained kernel.release.t6050",
+      "sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "bytes": 17168528,
+      "prior_provenance": "reverse-engineering/findings/cpu-startup31z/validation.json",
+      "31Z_installed_25G83_match_carried_forward": true,
+      "installed_kernel_or_historical_boot_identity_rechecked": false
+    },
+    "monitor_producer": {
+      "artifact": "retained decoded SPTM Mach-O",
+      "sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "bytes": 1376288,
+      "prior_provenance": "reverse-engineering/findings/cpu-startup31w/validation.json",
+      "inherited_build_association": "macOS26.6.2/25G83; prior record, not refreshed installed or running firmware identity",
+      "analysis_wrapper_used": false,
+      "unchanged_input_from_CPU_A": true,
+      "LC_FUNCTION_STARTS_present": false,
+      "boundary_basis": "entry markers and next entry marker, checked against returned provider body and original bytes"
+    }
+  },
+  "queries": [
+    {
+      "run": {
+        "input_sha256": "f4b52b3ba2ad78fc2162fc6b83d1c87e5c5466705ae5b9369ed60e705fbf8756",
+        "exit": 0,
+        "seconds": 16.468619091,
+        "command": "function",
+        "address": "0xfffffe0007c784c0"
+      },
+      "result_sha256": "ede3722efb034cc522293c20d8bdac142520ea0de29e4dea4d82c5fb610beb14",
+      "body_gate": {
+        "evidence_id": "ev_3447e4658073019780725c474313e54852314c1ec8a8188a730daaaed35d2f4c",
+        "member": "kernel-aperture-analysis-only",
+        "function": "_analysis_range_translation_candidate",
+        "body_anchors": [
+          {
+            "start": "0xfffffe0007c784c0",
+            "end_inclusive": "0xfffffe0007c7854b",
+            "carrier_offset": 13059264,
+            "derived_offset": 13059264,
+            "bytes": 140,
+            "sha256": "9a07ae5d7056a03bce4232c3aeca3ab1315c4e156b9ce2463a8fe6823d1ae426"
+          }
+        ],
+        "assembly_instructions": 35,
+        "original_bytes_verified": true,
+        "pcode_operations": 64,
+        "pcode_outside_body": 0,
+        "outside_addresses": [],
+        "pseudocode_gate": "manual_review_required",
+        "decompiler_warning_classes": [],
+        "limits": [
+          "No semantic or runtime equivalence claim",
+          "Unresolved indirect calls and collection fixups remain unknown",
+          "Whole-function pseudocode must not guide implementation after a rejected gate"
+        ]
+      },
+      "native_value_flow_truncated": false,
+      "whole_function_pseudocode_used": false
+    },
+    {
+      "run": {
+        "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+        "exit": 0,
+        "seconds": 22.251830594000005,
+        "command": "function",
+        "address": "0xfffffff0270bf958"
+      },
+      "result_sha256": "1f079858ba0991d06d3ad0bba72edf347bc05e7f863fcebe004a769a887a5fc6",
+      "body_gate": {
+        "evidence_id": "ev_da2e9dda8e62b6fcc8f44c034b1317920ce034073c30eda653d1ba6ad5a09173",
+        "member": "retained SPTM decoded Mach-O; unchanged copy",
+        "function": "FUN_fffffff0270bf958",
+        "body_anchors": [
+          {
+            "start": "0xfffffff0270bf958",
+            "end_inclusive": "0xfffffff0270bffef",
+            "carrier_offset": 768344,
+            "derived_offset": 768344,
+            "bytes": 1688,
+            "sha256": "9f3720eac72ffa9755e94c02f3a28ade3bdd047bab06a8f5bc5cd5c3ebd862f4"
+          }
+        ],
+        "assembly_instructions": 422,
+        "original_bytes_verified": true,
+        "pcode_operations": 2471,
+        "pcode_outside_body": 0,
+        "outside_addresses": [],
+        "pseudocode_gate": "manual_review_required",
+        "decompiler_warning_classes": [],
+        "limits": [
+          "No semantic or runtime equivalence claim",
+          "Unresolved indirect calls and collection fixups remain unknown",
+          "Whole-function pseudocode must not guide implementation after a rejected gate"
+        ]
+      },
+      "native_value_flow_truncated": false,
+      "whole_function_pseudocode_used": false
+    }
+  ],
+  "private_base_verifier_sha256": "6c18231c2e6d022f8534bd56b3c288f45cebef0964a4579c9bc5b94de132d567",
+  "private_ordering_handoff_sha256": "dbeee7e83dd26bc955d8127fe5c96a05cce802436b01dc30ac6a7c3548d41c00",
+  "executions": [
+    {
+      "batch": "CPU-B",
+      "vm_owner": "root agent",
+      "setup_exit": 0,
+      "job_exit": 0,
+      "environment": {
+        "interfaces": [
+          "lo"
+        ],
+        "expected_no_network_device": true,
+        "physical_usb": false
+      },
+      "console_sha256": "08befda166cd595be7ecae0617df1e100cc4e243547ddce0881073c7c7139d1a",
+      "job_log_sha256": "438610c2ddc4d503816e1732000ab928b7ed332d8e6b8e946af28e59a6484382",
+      "query_timeout_seconds": 100,
+      "kill_grace_seconds": 5
+    },
+    {
+      "batch": "CPU-C",
+      "vm_owner": "root agent",
+      "setup_exit": 0,
+      "job_exit": 0,
+      "environment": {
+        "interfaces": [
+          "lo"
+        ],
+        "expected_no_network_device": true,
+        "physical_usb": false
+      },
+      "console_sha256": "16b7f5b88d63f41bac23236cb58c85285f2fee29691a8e0719a235e6d500b7ff",
+      "job_log_sha256": "0806ad7aa750e4c0c868a932d8ecb39fab064923bb205ca23fb55c1202485e45",
+      "query_timeout_seconds": 100,
+      "kill_grace_seconds": 5
+    }
+  ]
+}

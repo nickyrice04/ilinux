@@ -99,6 +99,23 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AB original host executes offline; resident route remains active
+
+M1's `c4a794f` review is incorporated. Original entry code now links at two
+bases with identical payload bytes, passes its complete instruction/relocation
+audit, and executes in nine standard ARM emulator cases: EL1, EL2 and VHE entry,
+plus actual fatal-vector BRKs. Read-only boot-format inspection derives the
+expected properties for its original 112 KiB Mach-O image. Neither test executes
+Apple firmware or GENTER, and neither proves native acceptance or CPU startup.
+
+REA narrows the cold handoff and framebuffer range-table contract. Separate
+original observer and translation components target the next missing observation;
+they are not yet integrated into a native display path. Exact tests and limits:
+`native/boot/attempt31ab/validation.json`. The 22 prior closures are unchanged.
+Continue the resident-monitor software route; no Apple-only necessity is proved.
+No native release, restart, outreach or macOS/installed-object/settings change.
+M1 follows `tools/m1n1-client/attempt31ab-instructions.md` for focused offline review.
+
 ### Latest M1 — 31AA planner and research review PASS, 2026-10-25
 
 **Independent M1 review on `5ef5778`: OFFLINE_PASS_NATIVE_HOLD.**

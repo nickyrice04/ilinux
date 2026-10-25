@@ -4197,3 +4197,35 @@ Evidence: `native/boot/attempt31aa-m1-offline-2026-10-25.md` and
 planner suite now has its own M1 result, reused for the supplement. Qualify only
 actual host dependencies rather than every unused monitor-record byte. Continue
 offline CPU research; this review authorizes no native run or restart.
+
+## 2026-10-25 · 31AB: execute original code and narrow the next physical question
+
+**Decision:** Continue the resident-monitor software route. Publish the original
+linked entry, separate bounded observer/translation components and source-bound
+offline evidence. Do not label the unresolved startup problem an Apple-only
+restriction, and do not repeat an unchanged raw start.
+
+The entry passes two-base linking/auditing and nine actual standard ARM execution
+cases. Ten architectural translation cases pass separately. The observer's
+12 unique C groups pass optimized and ASan/UBSan on macOS and ARM64 Linux; eight
+packaging tests pass on both. Read-only inspection derives boot properties for
+the original 112 KiB image. These are distinct scopes: no Apple firmware,
+GENTER, native display or physical-secondary execution is established.
+
+REA confirms selected cold handoff state, lookup geometry and pre-exit pointer
+provisioning. It does not prove count initialization timing or pre-service15
+accessibility. The next integration may check those bounded runtime conditions;
+it need not reconstruct every unused monitor field. Translation success alone
+still does not establish all downstream protections or visible scanout.
+
+Retain the first translation audit failure and its repair: an inverted modulo
+predicate rejected a valid aligned symbol before execution. The corrected check
+accepts the real ELF and rejects a deliberately unaligned symbol; all ten actual
+cases then pass. Do not hide setup failures or multiply unique counts by platform,
+sanitizer variant or link base. The 22 prior closures remain unchanged.
+
+M1 performs the focused 31AB offline review. Next compose an observable host,
+then prepare a reviewed native acceptance test, followed by one secondary and
+eventually all core types. No restart, installation, policy/volume change or
+external message is requested by this checkpoint. Evidence and remaining limits:
+`native/boot/attempt31ab/validation.json` and `research/native31ab-route.md`.

@@ -1,0 +1,186 @@
+{
+  "apple_only_necessity": "NOT_PROVEN",
+  "boot_package_prepared": false,
+  "boot_security_changes": false,
+  "date": "2026-10-25",
+  "entry_host_compile": {
+    "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "receipt": {
+      "path": "build/research31ab/host-final-objects/results.json",
+      "sha256": "c919abb4a2f94e25f01a18dd870b7db48ff814dc7be27abbfc6587be69564f99"
+    },
+    "source_bindings_sha256": "f1cdd9d9dc957040a8774a3d7e5015e69a7cd84c1db58e0dfd0890efeba156ee",
+    "status": "PASS_COMPILE_ONLY"
+  },
+  "external_messages_sent": 0,
+  "installed_object_changes": false,
+  "linux_smp": "NOT_RUN",
+  "m1_instructions": "tools/m1n1-client/attempt31ab-instructions.md",
+  "m1_intake": [
+    {
+      "path": "native/boot/attempt31aa-m1-offline-2026-10-25.md",
+      "sha256": "71c9800b28c436212ba648fd16fd9a7912887e0119b8f09e34c05ca0ae7fd68b"
+    },
+    {
+      "path": "native/boot/attempt31aa-m1-offline-2026-10-25.json",
+      "sha256": "8a3deb8b413d6cdb4947d827f4db2dcd293129649bda37cf1e757ac91c941df0"
+    },
+    {
+      "path": "native/boot/attempt31aa-research-m1-offline-2026-10-25.md",
+      "sha256": "3fb9f0e3788b3b556a5db9f145bcd9558c1a8facad630ed29644586ec8b15451"
+    },
+    {
+      "path": "native/boot/attempt31aa-research-m1-offline-2026-10-25.json",
+      "sha256": "83c197bdcb98beb4aac0e79357dab2991c1d74b4534610d4f07c011d2db84e5d"
+    }
+  ],
+  "m1_intake_commit": "c4a794f56357d613e933c1287395fbdca314c1c0",
+  "macos_modifications": false,
+  "monitor_calls": "NOT_RUN",
+  "native_cpu_startup": "NOT_RUN",
+  "native_framebuffer": "NOT_RUN",
+  "native_gpu": "NOT_RUN",
+  "observer_host": {
+    "oracle_cases_per_variant": 1200,
+    "receipt": {
+      "path": "build/research31ab/observer-host-initial/results.json",
+      "sha256": "a5834e4c7282301a1ac991d02366b30ba58d5d5685ab34f92ad83fea82bfc6bd"
+    },
+    "source_bindings_sha256": "92c956fcb3912c4b8d8a01091f13a0ca5a7763fa486dc10d082478e5df79a155",
+    "status": "PASS",
+    "unique_c_groups": 12,
+    "variants": [
+      "optimized",
+      "ASan/UBSan"
+    ]
+  },
+  "offline_original_image_prepared": true,
+  "packaged_image": {
+    "base": "0xfffffe0007004000",
+    "chained_fixups_command": false,
+    "entry": "0xfffffe0007010000",
+    "firmware_acceptance": "NOT_TESTED",
+    "image_bytes": 114688,
+    "image_sha256": "3050ec8d71cfd34defa8e91c3b212a422489e0528286f892d8108db09dc3da78",
+    "installation_performed": false,
+    "monitor_calls": "NOT_RUN",
+    "native": "NOT_QUALIFIED",
+    "payload_bytes": 81920,
+    "payload_offsets_preserved": true,
+    "payload_sha256": "d6c44bf955e0e4d7b3b8739af818863168bd44c363d5b92d177ecc2c34c9f6fd",
+    "physical_secondary_execution": "NOT_RUN",
+    "purpose": "OFFLINE_ORIGINAL_ENTRY_DIAGNOSTIC",
+    "schema": 1
+  },
+  "packaging_host_tests": {
+    "log": {
+      "path": "build/research31ab/packaging/tests-final.log",
+      "sha256": "60bb849356ffbc091f601e17fc6ae0b2eb5e26d734d433da020c6e775efbf97f"
+    },
+    "status": "PASS",
+    "unique_python_methods": 8
+  },
+  "performance_measurement": "NOT_RUN",
+  "preserved_frozen_closures": {
+    "listed_file_checks": 5794,
+    "manifests": 22,
+    "prior_manifest_sha256": "222ef5455a81df508eafa069b82500234f7f08c522e4e3fd153d3eade8c64a1a",
+    "status": "PASS",
+    "unique_files": 563
+  },
+  "public_source_receipts": [
+    {
+      "path": "build/research31ab/public/verification.json",
+      "sha256": "3ed8ac69b1fc54aad139b663a5db08787839d3814a74c2d1f4a21da4e89c4f97"
+    },
+    {
+      "path": "build/research31ab/public/observer-layout/verification.json",
+      "sha256": "318e795f59e2505063c602f6e12d6ac1b8378d03e53f850d238cabd72352b0ce"
+    },
+    {
+      "path": "build/research31ab/public/translation/verification.json",
+      "sha256": "8c5ec35fb67173aeeff3f6bad4113474bc1d943a058046cebd437b6d4d7aa3d8"
+    },
+    {
+      "path": "build/research31ab/public/fresh-heads/summary.json",
+      "sha256": "2f8113cee8824076e0ebe42777ace0fa14d17a82b831336c1bec020b8218738f"
+    },
+    {
+      "path": "build/research31ab/public/fresh-heads/compare-summary.json",
+      "sha256": "160e45e44bffc39586ee310f4592ba871c3a9fda267bd4ed906f036c28da449a"
+    }
+  ],
+  "rea": {
+    "batches": 3,
+    "count_initializer_ordering": "UNKNOWN",
+    "entry_receipt": {
+      "path": "reverse-engineering/findings/cpu-startup31ab/validation.json",
+      "sha256": "847686738a5c8102b1d5fca595f8b32c38fb1c0a336803532d196708a617d63c"
+    },
+    "independent_ranges": "entry150 words and observer566 words; three words reverify the entry finding; zero mismatches",
+    "native_firmware_identity": "inherited retained-artifact provenance; no fresh installed-object binding",
+    "observer_receipt": {
+      "path": "reverse-engineering/findings/cpu-startup31ab/validation-observer.json",
+      "sha256": "f0b9f2b30099c02e00ea9f87458785f3093d80d2cab4048b1d645b070abe5a82"
+    },
+    "preserved_refusal": "common OS exit crosses provider body; independent complete84-byte instruction check only",
+    "query_cli_exits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "requests": 4,
+    "whole_function_pseudocode_used": false
+  },
+  "read_only_inspection": {
+    "classification": "PROPERTIES_DERIVED",
+    "diagnostic": [],
+    "exit": 0,
+    "inspector_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+    "properties": {
+      "kcbf": 49152,
+      "kcbz": 32768,
+      "kcep": 18446741874803802112,
+      "kclf": 98304,
+      "kclo": 18446741874803752960,
+      "kclz": 16384,
+      "kcrf": 0,
+      "kcrz": 81920,
+      "kcsf": 16384,
+      "kcsz": 49152,
+      "kcwf": 81920,
+      "kcwz": 16384,
+      "kcxf": 0,
+      "kcxz": 0
+    },
+    "stderr_sha256": "060367c79e74c046faa789655d564236101c67f510579647685ce3529756eb12",
+    "stdout_sha256": "9c2bab0e476e7bb1bef49398a6cbc2650b2dc81e4c14c97199640879fb25d3d0"
+  },
+  "remaining": [
+    "Integrate qualified bounded argument/table reads, actual translation profile and visible marker into the original host.",
+    "Qualify native image acceptance and observable cold entry before monitor calls.",
+    "Implement required fixups/exception lifecycle and test one physical secondary with its own execution evidence.",
+    "Only then extend to all18 source-identified cores, both class tags, Linux SMP, frequency/idle and measured performance."
+  ],
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "schema": "ilinux-attempt31ab-validation-v1",
+  "scope": "original linked entry and uncalled transport; separate observer and actual architectural-translation test components; bounded REA findings",
+  "source_manifest": "native/boot/attempt31ab/source-sha256.txt",
+  "source_manifest_entries": 44,
+  "translation_host": {
+    "receipt": {
+      "path": "build/research31ab/translation-compile3/results.json",
+      "sha256": "797dcd5f8aca0a924bfdd321f6c6f72f78ee12777cd040cb421dcccf0b5e2d59"
+    },
+    "source_bindings_sha256": "66619009f4c83158f8629d8ba90281f23e33a5f8778893167aeaf764dcc4057b",
+    "status": "COMPILE_PASS_NOT_EXECUTED"
+  },
+  "vm_validation": {
+    "path": "virtualization/jobs/086-offline31ab/validation.json",
+    "sha256": "055b194db2c77da7704d8bd689b201a8280bc90c74d6b632fb2663bd4c11a4ae"
+  },
+  "volume_changes": false,
+  "working_cpu_workaround": "NOT_DEMONSTRATED"
+}

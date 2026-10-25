@@ -1,0 +1,398 @@
+{
+  "date": "2026-10-25",
+  "entry_instruction_execution": {
+    "apple_firmware": false,
+    "case_count": 9,
+    "cases": [
+      {
+        "bootstrap_sha256": "8d99f88052f8caf0dae0491dfaca8455e2db1e1e2f989715984457d5fb286fb0",
+        "case": "e1-404-e",
+        "model_el": 1,
+        "phase": 2,
+        "status": "PASS",
+        "test_payload_sha256": "748181694b1c11b6deef74aee1dd071cda0fb610804d958a79bc2d9d97231797",
+        "vhe_fixture": false
+      },
+      {
+        "bootstrap_sha256": "8d99f88052f8caf0dae0491dfaca8455e2db1e1e2f989715984457d5fb286fb0",
+        "case": "e2-404-e",
+        "model_el": 2,
+        "phase": 2,
+        "status": "PASS",
+        "test_payload_sha256": "748181694b1c11b6deef74aee1dd071cda0fb610804d958a79bc2d9d97231797",
+        "vhe_fixture": false
+      },
+      {
+        "bootstrap_sha256": "623296c858bd3aa75e7f783da0281ed4fb2743ef9f74040c86045958e4bdd1e0",
+        "case": "e1-410-e",
+        "model_el": 1,
+        "phase": 2,
+        "status": "PASS",
+        "test_payload_sha256": "748181694b1c11b6deef74aee1dd071cda0fb610804d958a79bc2d9d97231797",
+        "vhe_fixture": false
+      },
+      {
+        "bootstrap_sha256": "623296c858bd3aa75e7f783da0281ed4fb2743ef9f74040c86045958e4bdd1e0",
+        "case": "e2-410-e",
+        "model_el": 2,
+        "phase": 2,
+        "status": "PASS",
+        "test_payload_sha256": "748181694b1c11b6deef74aee1dd071cda0fb610804d958a79bc2d9d97231797",
+        "vhe_fixture": false
+      },
+      {
+        "bootstrap_sha256": "8d99f88052f8caf0dae0491dfaca8455e2db1e1e2f989715984457d5fb286fb0",
+        "case": "e1-404-f",
+        "model_el": 1,
+        "phase": 3,
+        "status": "PASS",
+        "test_payload_sha256": "f603118e6868aae801c115b897db759942975de70e04e466d2e576ebb5a3b0dd",
+        "vhe_fixture": false
+      },
+      {
+        "bootstrap_sha256": "8d99f88052f8caf0dae0491dfaca8455e2db1e1e2f989715984457d5fb286fb0",
+        "case": "e2-404-f",
+        "model_el": 2,
+        "phase": 3,
+        "status": "PASS",
+        "test_payload_sha256": "f603118e6868aae801c115b897db759942975de70e04e466d2e576ebb5a3b0dd",
+        "vhe_fixture": false
+      },
+      {
+        "bootstrap_sha256": "5b8735be3bfda09939607ad7e53a1a674c7940dae62794210cb1ba1490df34e0",
+        "case": "e2-404-ev",
+        "model_el": 2,
+        "phase": 2,
+        "status": "PASS",
+        "test_payload_sha256": "748181694b1c11b6deef74aee1dd071cda0fb610804d958a79bc2d9d97231797",
+        "vhe_fixture": true
+      },
+      {
+        "bootstrap_sha256": "40088afa096d2556a148503b89c46ba8a5734d20543dcff53ed61119f02b209d",
+        "case": "e2-410-ev",
+        "model_el": 2,
+        "phase": 2,
+        "status": "PASS",
+        "test_payload_sha256": "748181694b1c11b6deef74aee1dd071cda0fb610804d958a79bc2d9d97231797",
+        "vhe_fixture": true
+      },
+      {
+        "bootstrap_sha256": "5b8735be3bfda09939607ad7e53a1a674c7940dae62794210cb1ba1490df34e0",
+        "case": "e2-404-fv",
+        "model_el": 2,
+        "phase": 3,
+        "status": "PASS",
+        "test_payload_sha256": "f603118e6868aae801c115b897db759942975de70e04e466d2e576ebb5a3b0dd",
+        "vhe_fixture": true
+      }
+    ],
+    "monitor_calls": 0,
+    "payload_sha256": "d6c44bf955e0e4d7b3b8739af818863168bd44c363d5b92d177ecc2c34c9f6fd",
+    "result": {
+      "path": "build/research31ab/emulate-job/out/emulation/results.json",
+      "sha256": "0dbcee7838c5b8b10b6f9c9a61d84e134cc8e109535691d685bc21c90e89f1a3"
+    },
+    "scope": "standard ARM virt, EL1/EL2/nonVHE/VHE; two addresses; three actual BRKs in slot4",
+    "status": "PASS"
+  },
+  "entry_link": {
+    "images": [
+      {
+        "base": 0,
+        "elf_sha256": "a6d5f247b4866fd0538b85f2f94fef0add7c26ca724d9d0c143312aa7d5c26f2",
+        "label": "canonical",
+        "payload_sha256": "d6c44bf955e0e4d7b3b8739af818863168bd44c363d5b92d177ecc2c34c9f6fd",
+        "tests": {
+          "groups": 6,
+          "mutation_refusals": 16,
+          "status": "PASS"
+        }
+      },
+      {
+        "base": 1073741824,
+        "elf_sha256": "7876986ab4a28872f23b23f94527e126c36ed48ebf3e08b4e1b65fd3593b0288",
+        "label": "slid",
+        "payload_sha256": "d6c44bf955e0e4d7b3b8739af818863168bd44c363d5b92d177ecc2c34c9f6fd",
+        "tests": {
+          "groups": 6,
+          "mutation_refusals": 16,
+          "status": "PASS"
+        }
+      }
+    ],
+    "mutation_refusals_per_image": 16,
+    "payload_bytes": 81920,
+    "payload_sha256": "d6c44bf955e0e4d7b3b8739af818863168bd44c363d5b92d177ecc2c34c9f6fd",
+    "slide_bytes_identical": true,
+    "source_bindings_sha256": "f1cdd9d9dc957040a8774a3d7e5015e69a7cd84c1db58e0dfd0890efeba156ee",
+    "unique_audit_groups": 6
+  },
+  "environment": {
+    "compiler": "cc (GCC) 16.1.1 20260430",
+    "freestanding_clang": "clang version 23.1.1",
+    "guest_kernel": "Linux 7.1.6-vzrun2 aarch64",
+    "linker": "GNU ld (GNU Binutils) 2.46.0",
+    "network": "vzrun --no-net; test preflights loopback only",
+    "outer_memory_gib": 4,
+    "outer_vcpu": 2,
+    "physical_usb": false,
+    "qemu": "QEMU emulator version 11.1.2",
+    "shared_vm_and_quiet_locks": "both repositories; released"
+  },
+  "failures_and_setup": [
+    {
+      "receipt": {
+        "path": "build/research31ab/setup-no-executable.json",
+        "sha256": "b9824434dca1bc8709bb36c4aad352603ba22440adc8c6713f3d3f45efb78c29"
+      },
+      "result": "job not run: missing executable bit on job script; fixed then rerun",
+      "stage": "initial VM086 setup"
+    },
+    {
+      "result": "existing host build lacks TCG; no payload execution; moved instruction tests into Linux VM",
+      "stage": "host QEMU setup"
+    },
+    {
+      "result": "offline Python dependencies then absent test subproject prevented build; retained logs, no QEMU source changes",
+      "stage": "guest QEMU source build"
+    },
+    {
+      "result": "QEMU 11.1.2 and dependencies installed inside existing Linux VM from package/signature data using unchanged pacman policy; no macOS install or verification override",
+      "stage": "guest runtime preparation"
+    },
+    {
+      "result": "guest docker0 caused loopback-only refusal before tests; guest service stopped, bridge removed; no host-network change",
+      "stage": "instruction preflight"
+    },
+    {
+      "result": "QEMU DTB overlap before entry execution; test bases moved above DTB; original payload unchanged",
+      "stage": "entry fixture placement"
+    },
+    {
+      "failed_result": {
+        "path": "build/research31ab/component-job/out/translation/results.json",
+        "sha256": "2bb6cfe9cc9276026ef7dee8e66bb822f63195320f6eb92cd2fe123109f4bfa3"
+      },
+      "result": "observer PASS; translation audit rejected valid 120-byte symbol due inverted modulo predicate before QEMU execution",
+      "stage": "first observer/translation VM"
+    },
+    {
+      "regression": {
+        "path": "build/research31ab/public/translation/audit-regression.json",
+        "sha256": "03be25b683e381f965dc55bc261ae5bff0f72ca5bf698822417acfe2b6c43665"
+      },
+      "result": "predicate corrected to extent % 4 == 0; actual ELF accepted and extent121 mutation rejected; translation-only execution then PASS10",
+      "stage": "translation audit repair"
+    }
+  ],
+  "isolated_runtime_receipts": [
+    {
+      "path": "build/research31ab/emulate-job/out/qemu-package-install.log",
+      "sha256": "3ac01c027cecf606d6cbe4f7dbf0cecc85af04b7150833f31caa9f0d708af6ce"
+    },
+    {
+      "path": "build/research31ab/emulate-job/packages/manifest.json",
+      "sha256": "9ede8571040cb6def5a4078f5532e36f35a414b087e8f5397d68beba6b9be404"
+    },
+    {
+      "path": "build/research31ab/component-job/out/component-network.json",
+      "sha256": "57d0de6b32077503645efa0bca32cc088db2070823deb105e7a917b705fff115"
+    },
+    {
+      "path": "build/research31ab/translation-job/out/run.log",
+      "sha256": "d4ae5b9f2825d2077606523844ee6d2607fb9416a6846cb02637e6be4e1a2e26"
+    },
+    {
+      "path": "build/research31ab/translation-job/out/setup.log",
+      "sha256": "305ec3b8066bc2797e7f836f5a7d24179a564c3ec46b0ceb5347bf5bd8d489cf"
+    }
+  ],
+  "limits": [
+    "No Apple firmware, GENTER, guarded monitor, physical CPU start or native framebuffer was executed.",
+    "Cortex-A57 AT fixture uses owned 4KiB tables and 64-bit PAR; M5 native profile is unqualified.",
+    "AT can affect access flags/cache state under other hardware configurations; no universal side-effect-free claim.",
+    "The reusable observer C object still requires memcpy/memset at a future freestanding link.",
+    "Test timings are not CPU, GPU, memory or energy benchmarks.",
+    "The entry and observer/translation components are not yet linked into one native-observable image."
+  ],
+  "native": "NOT_RUN",
+  "observer": {
+    "freestanding": {
+      "compiled": true,
+      "executed": false,
+      "linked": false,
+      "undefined_symbols": [
+        "memcpy",
+        "memset"
+      ]
+    },
+    "result": {
+      "path": "build/research31ab/component-job/out/observer/results.json",
+      "sha256": "8fd07f0330876dce1d0a8373fb7c42d1caa926a82849e10ecfa705047ea77a7d"
+    },
+    "source_bindings_sha256": "92c956fcb3912c4b8d8a01091f13a0ca5a7763fa486dc10d082478e5df79a155",
+    "status": "PASS",
+    "unique_c_groups": 12,
+    "variants": [
+      {
+        "groups": 12,
+        "marker": "OBSERVER31AB_PASS groups=12 translation_oracle_cases=1200 native=NOT_DEPLOYABLE",
+        "status": "PASS",
+        "translation_oracle_cases": 1200,
+        "variant": "optimized"
+      },
+      {
+        "groups": 12,
+        "marker": "OBSERVER31AB_PASS groups=12 translation_oracle_cases=1200 native=NOT_DEPLOYABLE",
+        "status": "PASS",
+        "translation_oracle_cases": 1200,
+        "variant": "sanitized"
+      }
+    ]
+  },
+  "packaging_tests": {
+    "log": {
+      "path": "virtualization/jobs/086-offline31ab/out/run-detail.log",
+      "sha256": "79288f99bd3aa814688c931dd6d43b181bdffedd9d6b1b87c17559a230ff3d49"
+    },
+    "status": "PASS",
+    "unique_python_methods": 8
+  },
+  "schema": "ilinux-vm086-validation-v1",
+  "status": "PASS",
+  "translation": {
+    "audit": {
+      "elf_entry": "0x40480000",
+      "load_segments": 2,
+      "par_save_restore_pair": true,
+      "probe_bytes": 120,
+      "probe_instructions": 30,
+      "relocations": 0,
+      "single_at_s1e2w": true,
+      "undefined_symbols": 0
+    },
+    "candidate_bytes_unchanged": 24576,
+    "capture_sha256": "5b492ee44504183f9d875b5b9c71917ef602fd4a0499a836c4da5e94a2540e55",
+    "case_count": 10,
+    "cases": [
+      {
+        "case": "mmu-off-refusal",
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x0",
+        "probe_status": 4,
+        "status": "PASS",
+        "virtual_address": "0x80000000"
+      },
+      {
+        "case": "daif-open-refusal",
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x0",
+        "probe_status": 3,
+        "status": "PASS",
+        "virtual_address": "0x80000000"
+      },
+      {
+        "case": "tge-refusal",
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x0",
+        "probe_status": 2,
+        "status": "PASS",
+        "virtual_address": "0x80000000"
+      },
+      {
+        "attribute": "0x44",
+        "case": "rw-normal-nc",
+        "expected_pa_matches": true,
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x4400000040200b00",
+        "probe_status": 0,
+        "status": "PASS",
+        "translated_physical_address": "0x40200000",
+        "virtual_address": "0x80000000"
+      },
+      {
+        "case": "read-only-permission-fault",
+        "fault_status": 15,
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x81f",
+        "probe_status": 0,
+        "status": "PASS",
+        "virtual_address": "0x80001000"
+      },
+      {
+        "case": "unmapped-translation-fault",
+        "fault_status": 7,
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x80f",
+        "probe_status": 0,
+        "status": "PASS",
+        "virtual_address": "0x80002000"
+      },
+      {
+        "attribute": "0xff",
+        "case": "rw-normal-wb",
+        "expected_pa_matches": true,
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0xff00000040203b80",
+        "probe_status": 0,
+        "status": "PASS",
+        "translated_physical_address": "0x40203000",
+        "virtual_address": "0x80003000"
+      },
+      {
+        "attribute": "0x44",
+        "case": "different-physical-page",
+        "expected_pa_matches": false,
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x4400000040204b00",
+        "probe_status": 0,
+        "status": "PASS",
+        "translated_physical_address": "0x40204000",
+        "virtual_address": "0x80004000"
+      },
+      {
+        "attribute": "0x44",
+        "case": "nonzero-page-offset",
+        "expected_pa_matches": true,
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x4400000040200b00",
+        "probe_status": 0,
+        "status": "PASS",
+        "translated_physical_address": "0x40200fff",
+        "virtual_address": "0x80000fff"
+      },
+      {
+        "case": "access-flag-fault",
+        "fault_status": 11,
+        "par_after": "0x44000000402aa800",
+        "par_before": "0x44000000402aa800",
+        "par_raw": "0x817",
+        "probe_status": 0,
+        "status": "PASS",
+        "virtual_address": "0x80005000"
+      }
+    ],
+    "cpu_model": "cortex-a57",
+    "fixture_sha256": "6ae760d01124efc09a74cc9c2603091ba23a8943b6b54d97d71839356fd7aae8",
+    "hardware_af_management": false,
+    "source_bindings_sha256": "66619009f4c83158f8629d8ba90281f23e33a5f8778893167aeaf764dcc4057b",
+    "source_files_unchanged": true,
+    "status": "PASS",
+    "table_bytes_checked": 12288,
+    "tables_sha256": "2b482702d8aea38ce4cd2f6b02cec028b70674bd8f068d5ba1e18cb20e18fee1",
+    "target_sha256": "5faad720b77e56ce309cd593d9064a97dd6270f02bbed623725b6095686dcc6f"
+  },
+  "translation_result": {
+    "path": "build/research31ab/translation-job/out/translation/results.json",
+    "sha256": "d193d1f10ba688a428201a03a16e9c3f3cee45d81016ce138eae9c012f858b38"
+  }
+}
