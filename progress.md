@@ -1,5 +1,31 @@
 # Progress Log
 
+## 2026-10-25 · 31AC integrated entry and meaningful native test prepared
+
+31AC integrates the original resident-entry recorder, bounded snapshots, actual
+translation checks and visible marker. The same payload passes26 complete QEMU
+cases:8 paints,16 no-paint refusals and2 actual fatal-vector captures. It covers
+EL2 non-VHE/VHE,4/16KiB pages,30/32-bit pixels and NC/WB cache paths. Two-base
+linking is byte-identical; host compilation, eight packaging tests and read-only
+boot-property derivation pass. Native firmware acceptance remains NOT RUN.
+
+The original-only archive includes the180224-byte diagnostic, exact immutable
+boot021 rollback and licenses. Manifest, delivery verifier and paired-Recovery
+instructions are ready for M1 review. The user must separately authorize the
+lab custom-object replacement, temporary Startup Disk changes, one30-second
+observation and exact rollback. No new security downgrade or volume is proposed.
+No installation, native boot, settings/security/volume change or outreach occurred.
+
+A visible marker proves reaching its store/display path, not terminal cache/park
+completion, monitor readiness, Linux, SMP or performance. A blank result stays
+inconclusive. This is a new resident-entry acceptance experiment, not another raw
+CPU retry. M1 review28ba410 is incorporated; all23 prior source closures and
+unrelated work remain unchanged. Both VM/quiet locks are released.
+
+Evidence: `native/boot/attempt31ac/validation.json`; handoff:
+`tools/m1n1-client/attempt31ac-instructions.md`.
+
+
 ## 2026-10-25 · M1: 31AB packaging, observer and compile-only checks PASS
 
 **Independent M1 review on `1354755`: OFFLINE_PASS_NATIVE_HOLD.**

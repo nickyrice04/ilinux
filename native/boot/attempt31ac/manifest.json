@@ -1,0 +1,54 @@
+{
+  "archive": {
+    "bytes": 249011,
+    "filename": "ilinux-31ac-entry-test.tar.gz",
+    "sha256": "7cc585d69ebd023e2683b9842320b96ba30c9056e5082fa61aa18b74a0f60fdd",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ac/ilinux-31ac-entry-test.tar.gz"
+  },
+  "candidate": "ilinux-31ac.macho",
+  "experiment": "one bounded resident-entry/visible-marker acceptance test; no secondary release or Linux boot",
+  "files": {
+    "README.txt": {
+      "bytes": 506,
+      "sha256": "e00fd1e85ca88f8a533f03568ef8139f385ff2abf5f3d102bc105c4f081b66f0"
+    },
+    "iLinux-LICENSE": {
+      "bytes": 1067,
+      "sha256": "566069bb67afe27dc4dccb4127aca65f0d737755087a1a0db9dad97a582fb9ea"
+    },
+    "ilinux-31ac.macho": {
+      "bytes": 180224,
+      "sha256": "261d44447442f32ba6c41bbf0f69179e8c9eb4c33507b60762f0ea8c2e54ab72"
+    },
+    "m1n1-LICENSE": {
+      "bytes": 17984,
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+    },
+    "m1n1-boot021.bin": {
+      "bytes": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "m1n1-source.json": {
+      "bytes": 211,
+      "sha256": "9e48b59f042b97cf57268a5e0d6abb206c57fd2b873bb7742c393ad7f6c310ae"
+    }
+  },
+  "install_authorized": false,
+  "instructions": "tools/m1n1-client/attempt31ac-instructions.md",
+  "native_execution": "NOT_RUN",
+  "new_volume_required": false,
+  "no_new_security_downgrade": true,
+  "policies_expected": {
+    "lab": "Permissive",
+    "original": "Full"
+  },
+  "rollback_raw_entry": 2048,
+  "rollback_raw_lowest_virtual_address": 0,
+  "schema": "ilinux-native31ac-delivery-v1",
+  "target": {
+    "board": "J716c",
+    "chip": "t6050",
+    "model": "Mac17,6",
+    "role": "M5 target only; M1 helper does not run Recovery write commands"
+  }
+}

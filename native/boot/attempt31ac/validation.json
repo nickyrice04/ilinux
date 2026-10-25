@@ -1,0 +1,444 @@
+{
+  "apple_only_necessity": "NOT_PROVEN",
+  "artifact_manifest": {
+    "path": "native/boot/attempt31ac/manifest.json",
+    "sha256": "2d0978ddcc15a63a665917fe57d2fab3ed5784a2e92763dfcbd8e3595fcc5543"
+  },
+  "complete_payload_execution": {
+    "WB_completed_equals_independent_line_set": true,
+    "actual_profile_assertions": true,
+    "all_other_vectors": "STATIC_AUDIT_ONLY",
+    "case_summary": [
+      {
+        "capture_sha256": "df12c489f4ec6395ff214893cdfdc9fd92967b3a357da52bb9ec222ee78a40d1",
+        "case": "4k-valid",
+        "expected_status": 0,
+        "framebuffer_sha256": "67a4dd9e761ac1e8e21c4bfe250ca98f2fce78f0c9aa6f0486b924d508ff2143",
+        "mode": "4k",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "efdc3cf58b000c4e1fb917df81370f5378086ecdb06c14a4a33ec2340a74c706",
+        "case": "4k-vhe-valid",
+        "expected_status": 0,
+        "framebuffer_sha256": "67a4dd9e761ac1e8e21c4bfe250ca98f2fce78f0c9aa6f0486b924d508ff2143",
+        "mode": "4k-vhe",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "042dfcb198e6b3f1318001ccb8a70bd5fdca117c33b591568ffc17926d57148f",
+        "case": "16k-vhe-valid",
+        "expected_status": 0,
+        "framebuffer_sha256": "67a4dd9e761ac1e8e21c4bfe250ca98f2fce78f0c9aa6f0486b924d508ff2143",
+        "mode": "16k-vhe",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "53c87ea3ff583b0b3367ec07d4e792d633d8f17003f64bd6dcc1d2e779fc4fc7",
+        "case": "16k-vhe-wb",
+        "expected_status": 0,
+        "framebuffer_sha256": "67a4dd9e761ac1e8e21c4bfe250ca98f2fce78f0c9aa6f0486b924d508ff2143",
+        "mode": "16k-vhe",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "5890483e2d48753328b5b765e234e5e0ace78a1231009aedabf83dc2ff43de46",
+        "case": "4k-reason",
+        "expected_status": 1,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "d1c17755b6121d1a6d501ab87b8cba5289265df6fad83dbcd8e17dbcbfdf72bb",
+        "case": "4k-reason-wide",
+        "expected_status": 1,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "e9033c6bec1197b4b0e22ee64621f240711d99a8dba6e132a7dc0bfdb940222c",
+        "case": "4k-boot-unmapped",
+        "expected_status": 8,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "6c6a66e79c99c28eef01d007986209a0f7179c7f5878576230e939a667a279fc",
+        "case": "4k-monitor-unmapped",
+        "expected_status": 9,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "36a6c8d1ab503392ccf880c1eca0bcd8a7162ef0b746e1f1f666502bca262c79",
+        "case": "4k-count-unmapped",
+        "expected_status": 11,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "28c4f6676a0acdc8624294f45cb783c4a2b9d6255fa351b8a7916d1dd67f19bb",
+        "case": "4k-table-unmapped",
+        "expected_status": 13,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "58c1f9e2f6b1737943029f895fb94206e973cc28173b36ce26ccfc15ad3fd7bd",
+        "case": "4k-count-zero",
+        "expected_status": 12,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "d499b16a20ae104385d8470f1e6443bff01cfaabe54298454912b6e594779adb",
+        "case": "4k-count-large",
+        "expected_status": 12,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "e37de389ce4dc8d628df879403aa1d6de8696915e7a72062009aab5eb6c9f5e8",
+        "case": "4k-version",
+        "expected_status": 10,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "f6a2cfacd9371ee17ea74442cbd9d4a609da31503287e0756a3a0a7c3836214b",
+        "case": "4k-video-version",
+        "expected_status": 15,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "4df3db9436633514bf36fa32f6cd22bec261ce1117d55ed1f4265ef85e4df92c",
+        "case": "4k-range-wrap",
+        "expected_status": 14,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "fdebcc5f5b8616f1b29af97b6e0b58fa59b0236a1d9e6ed79c4fa707daa985eb",
+        "case": "4k-ro-last",
+        "expected_status": 17,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "a07ae3b4d44d418897514dd6674b886e0328fd916cd31bf8224214a3a415bc51",
+        "case": "4k-unmapped-last",
+        "expected_status": 17,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "5ad3cd65c41655c27b2e02f02b4ee0e958741106b7841dcf029b05804101221f",
+        "case": "4k-wb",
+        "expected_status": 0,
+        "framebuffer_sha256": "67a4dd9e761ac1e8e21c4bfe250ca98f2fce78f0c9aa6f0486b924d508ff2143",
+        "mode": "4k",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "c0153cf641a0495199509a1cf9696c9332f68363d35abc7baaffa402401e3f18",
+        "case": "4k-vhe-wb",
+        "expected_status": 0,
+        "framebuffer_sha256": "67a4dd9e761ac1e8e21c4bfe250ca98f2fce78f0c9aa6f0486b924d508ff2143",
+        "mode": "4k-vhe",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "efdc3cf58b000c4e1fb917df81370f5378086ecdb06c14a4a33ec2340a74c706",
+        "case": "4k-vhe-depth30",
+        "expected_status": 0,
+        "framebuffer_sha256": "30735f98a3f8c50f12e64342c1cb6c202cd25c47ecd4ec2fc8cb259df5c7f448",
+        "mode": "4k-vhe",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "c0153cf641a0495199509a1cf9696c9332f68363d35abc7baaffa402401e3f18",
+        "case": "4k-vhe-wb30",
+        "expected_status": 0,
+        "framebuffer_sha256": "30735f98a3f8c50f12e64342c1cb6c202cd25c47ecd4ec2fc8cb259df5c7f448",
+        "mode": "4k-vhe",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "752f6b8b110a31e0ef2fcc6eb981cd5698a861eed5fe487ba6dd982ce1d168f4",
+        "case": "4k-device",
+        "expected_status": 19,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "3bca1dfe0472dd21689105e0f92d042e2e9f646ab7cd7b2e50e43d78d584cebd",
+        "case": "4k-wrong-pa",
+        "expected_status": 18,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "6b593fbe695508040532414a8ec9abd9272e1de2962b26ff48b6fd0557d1fa24",
+        "case": "4k-image-alias",
+        "expected_status": 20,
+        "framebuffer_sha256": "f790d342cca81bc826050f0b6ce23ce7b4c06c7f174ce97c499653e4202fd450",
+        "mode": "4k",
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "fb2885f0d3a31eba9ca6fb58adcf7fcf0bdf7f5628eea82dd7012f2a92ec1a60",
+        "case": "4k-fault-after-paint",
+        "expected_status": 22,
+        "framebuffer_sha256": "67a4dd9e761ac1e8e21c4bfe250ca98f2fce78f0c9aa6f0486b924d508ff2143",
+        "mode": "4k",
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "capture_sha256": "65348cb07cb5fdd41bcadbe911fc119d593aa8e10aad34991bdc52927455d598",
+        "case": "4k-vhe-fault-after-paint",
+        "expected_status": 22,
+        "framebuffer_sha256": "67a4dd9e761ac1e8e21c4bfe250ca98f2fce78f0c9aa6f0486b924d508ff2143",
+        "mode": "4k-vhe",
+        "painted_pixels": 512,
+        "status": "PASS"
+      }
+    ],
+    "cases": 26,
+    "completed_paints": 8,
+    "exact_rectangle_pattern_and_footprint": true,
+    "input_and_table_bytes_unchanged": true,
+    "no_paint_refusals": 16,
+    "own_vector_runtime_slot": 4,
+    "post_paint_actual_BRK_faults": 2,
+    "receipt": {
+      "path": "build/research31ac/job/out/integration4/results.json",
+      "sha256": "a55f6b31de0b1638d0c85b199bdd773d8d66dbdb039c0b5d1d7941be4395b80a"
+    },
+    "source_bindings_sha256": "17e5e678b7522b426a5d2e272e69640a0f3e1b3dd76295972097c544bf8e67f8",
+    "source_files_unchanged": true,
+    "status": "PASS"
+  },
+  "date": "2026-10-25",
+  "external_messages_sent": 0,
+  "format_inspection": {
+    "classification": "PROPERTIES_DERIVED",
+    "diagnostic": [],
+    "exit": 0,
+    "properties": {
+      "kcbf": 65536,
+      "kcbz": 81920,
+      "kcep": 18446741874803818496,
+      "kclf": 163840,
+      "kclo": 18446741874803752960,
+      "kclz": 16384,
+      "kcrf": 0,
+      "kcrz": 147456,
+      "kcsf": 16384,
+      "kcsz": 114688,
+      "kcwf": 147456,
+      "kcwz": 16384,
+      "kcxf": 0,
+      "kcxz": 0
+    },
+    "stderr_sha256": "060367c79e74c046faa789655d564236101c67f510579647685ce3529756eb12",
+    "stdout_sha256": "eb2141a6ca78431264721ecf4009f43fbc2a05be40c426c75668d70250c3005e"
+  },
+  "host": {
+    "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "receipt": {
+      "path": "build/research31ac/host-compile/results.json",
+      "sha256": "cfd6e98be1d43f8624125db2831d715feeb5c52106ee00170b5469e7dcda6097"
+    },
+    "source_bindings_sha256": "e528ea024cf8fc987ca32e1e7c0dc7d8351e47735ef619868e505783be1cbd1b",
+    "status": "COMPILE_PASS_NOT_LINKED"
+  },
+  "inspection_tool_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+  "installed_object_changes": false,
+  "limits": [
+    "Actual firmware acceptance and scanout remain empirical; parser/emulator success is not native proof.",
+    "Native entry pointers and matching selected ABI are runtime hypotheses checked only for the qualified fields.",
+    "D128 optional capability/TCR2 paths and higher/guarded exception routing are not executed by these fixtures.",
+    "Alias protection covers payload/source physical pages, not appended metadata/linkedit pages unused by this payload.",
+    "A trap during actual stores/cleaning can leave partial visual output. The RAM record has no separately qualified native readback channel.",
+    "No performance or power parity claim."
+  ],
+  "linux_smp": "NOT_RUN",
+  "m1_review": {
+    "commit": "28ba410",
+    "files": [
+      {
+        "path": "native/boot/attempt31ab-m1-offline-2026-10-25.md",
+        "sha256": "781918aa558e50bcce4dd56194eab996880911772dcb8895269587983c5e8669"
+      },
+      {
+        "path": "native/boot/attempt31ab-m1-offline-2026-10-25.json",
+        "sha256": "7c8a92fc591ce3f8600e9e1e7a7e055e6e503f4de4e6a5cc254b9a98ff7309e8"
+      }
+    ],
+    "verdict": "OFFLINE_PASS_NATIVE_HOLD"
+  },
+  "macos_changes": false,
+  "native_execution": "NOT_RUN",
+  "native_gpu": "NOT_RUN",
+  "native_test": {
+    "image": "manifest.json",
+    "instructions": "tools/m1n1-client/attempt31ac-instructions.md",
+    "meaningful_new_hypothesis": true,
+    "negative": "Inconclusive among firmware rejection, entry/profile/input/mapping refusal, fault, or invisible scanout. Preserve exact errors and do not rerun unchanged.",
+    "not_required": [
+      "new volumes",
+      "new security downgrade",
+      "original macOS changes",
+      "USB proxy connection"
+    ],
+    "observe_seconds": 30,
+    "positive": "Original entry reached the marker store/display path. Not proof of final clean/park, SPTM service readiness, Linux or SMP.",
+    "ready_for_M1_offline_review": true,
+    "required_approved_actions": [
+      "temporary lab Startup Disk selection",
+      "lab-only Mach-O custom boot-object replacement",
+      "one bounded diagnostic boot",
+      "exact boot021 raw rollback and MacintoshHD default restoration"
+    ],
+    "signature": "32x16 top-left bordered pink/black checker in32-bit format; separate30-bit palette"
+  },
+  "objective": "Determine whether the original Mach-O resident-entry path reaches a bounded visible marker, before monitor calls or CPU release.",
+  "packaging": {
+    "base": "0xfffffe0007004000",
+    "chained_fixups_command": false,
+    "entry": "0xfffffe0007014000",
+    "firmware_acceptance": "NOT_TESTED",
+    "image_bytes": 180224,
+    "image_sha256": "261d44447442f32ba6c41bbf0f69179e8c9eb4c33507b60762f0ea8c2e54ab72",
+    "installation_performed": false,
+    "monitor_calls": "NOT_RUN",
+    "native": "PREPARED_FOR_REVIEW",
+    "payload_bytes": 147456,
+    "payload_offsets_preserved": true,
+    "payload_sha256": "735fe28fb5148ff5c111ac0c9c1a3796957350325703c334ea9d2ca68a85ba96",
+    "physical_secondary_execution": "NOT_RUN",
+    "purpose": "OFFLINE_ORIGINAL_ENTRY_DIAGNOSTIC",
+    "schema": 1
+  },
+  "performance": "NOT_MEASURED",
+  "physical_secondary_start": "NOT_RUN",
+  "preserved": {
+    "frozen_unique_files_including_new_M1_pair": 608,
+    "prior_closures": 23,
+    "prior_listed_file_checks": 5838,
+    "status": "PASS_UNCHANGED"
+  },
+  "research": {
+    "basis": "Reuse retained31AB REA;195 additional independently compared instruction words across6 ranges, zero mismatches; finite architectural/public qualification",
+    "contract": "research/native31ac-contract.md",
+    "launch_review": {
+      "path": "build/research31ac/launch-review/verification.json",
+      "sha256": "59997001b6f9dc7d7c0429da49223c24747b857c93158b6af06d574e76e25076"
+    },
+    "new_REA_requests": 0,
+    "private_local_receipt": {
+      "path": "build/research31ac/cpu/profile-validation.json",
+      "sha256": "5974a18c45d0ded382b8176cdd9da4f8a971dc9bd9a0a765e4e713077689a240"
+    }
+  },
+  "result": "OFFLINE_PASS_MEANINGFUL_NATIVE_EXPERIMENT_PREPARED",
+  "retained_review_and_setup_notes": [
+    "Earlier complete-payload suites passed23 then24 cases; final26-case result supersedes them without multiplying counts.",
+    "Review found a harness exit-status defect for final source-change failure; corrected before final source-bound run.",
+    "Initial sandboxed kmutil inspection failed creating a DiskArbitration session (signal5); repeated read-only with required access and derived properties. No format or security bypass.",
+    "QEMU fixture owns its page tables; those bootstrap/control writes are absent from the native image.",
+    "Reusable VM run.sh publishes the equivalent documented commands; this session invoked them interactively in the isolated VM."
+  ],
+  "schema": "ilinux-native31ac-validation-v1",
+  "security_volume_default_changes": false,
+  "source_manifest": "native/boot/attempt31ac/source-sha256.txt",
+  "source_manifest_entries": 31,
+  "tests": {
+    "actual_archive_result": {
+      "path": "build/research31ac/delivery-check.json",
+      "sha256": "3c06ef0103276a4a0027c60084ec68089a72bc108fe9385a40e0c64e5e937cd6"
+    },
+    "delivery_additional_refusal_subcases": 6,
+    "delivery_log": {
+      "path": "build/research31ac/delivery-tests.log",
+      "sha256": "27c4a39d34ece4cbc66cc59cb0870c7abe4cc0a5f009205bdd0ea06a93f8b3ac"
+    },
+    "delivery_python_methods": 3,
+    "delivery_result": "PASS",
+    "packaging_log": {
+      "path": "build/research31ac/packaging-tests.log",
+      "sha256": "f0b119776ea5fb41a11741de7ef70dff790dde8fef79e2037096fd394f6f3c75"
+    },
+    "packaging_python_methods": 8,
+    "packaging_result": "PASS"
+  },
+  "user_install_approval": "REQUIRED_NOT_YET_GIVEN",
+  "vm": {
+    "compiler": "cc (GCC) 16.1.1 20260430",
+    "kernel": "Linux7.1.6-vzrun2 aarch64",
+    "layout": {
+      "path": "build/research31ac/job/out/build1/layout.json",
+      "sha256": "10c05008a74c2e391990ee6f37996f637478a89ea2de08fd1b237f3262d52f1c"
+    },
+    "link_result": {
+      "path": "build/research31ac/job/out/build1/results.json",
+      "sha256": "c3b3e18e3f18d3c5ae054996e3454800591b8bcc7e36f8b0f1eda6b8cd9e05c6"
+    },
+    "linker": "GNU ld (GNU Binutils) 2.46.0",
+    "lock_state": "both repositories VM/quiet locks released",
+    "model": "standard ARM virt / max / one TCG CPU",
+    "monitor_calls": 0,
+    "network": "--no-net, loopback-only preflight",
+    "outer_cpus": 2,
+    "outer_memory_gib": 4,
+    "payload_bytes": 147456,
+    "payload_sha256": "735fe28fb5148ff5c111ac0c9c1a3796957350325703c334ea9d2ca68a85ba96",
+    "physical_usb": false,
+    "qemu": "QEMU emulator version 11.1.2",
+    "retained_relocations": 0,
+    "source_bindings_sha256": "e528ea024cf8fc987ca32e1e7c0dc7d8351e47735ef619868e505783be1cbd1b",
+    "two_base_bytes_identical": true,
+    "undefined_symbols": 0
+  }
+}

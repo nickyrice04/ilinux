@@ -6,6 +6,22 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AC integrated native-entry package prepared, 2026-10-25
+
+M1 review `28ba410` passes with exact31AB bindings. Root owns integration,
+packaging, VM execution and publication. Original implementation owns new
+`kernel/experiments/visible31ac/`; CPU research owns the selected argument/mapping
+contract; public research owns lab-only installation/restore instructions and
+independent architecture checks. All23 prior source closures remain frozen.
+Unrelated Omarchy work stays untouched. Only root starts shared VMs under both
+repositories' locks. No outreach or installed boot/security/volume change.
+
+The integrated image now passes26 complete-payload cases and the concrete
+native acceptance experiment is prepared. M1 reviews the pinned package first. The existing lab slot may need a separately
+authorized replacement; prepare that exact action for review, with pinned restore
+material, before requesting it. No blanket full-record or all-firmware decoding
+gate is required for bounded runtime argument and mapping checks.
+
 ### Current — M1 31AB review complete; observable integration next, 2026-10-25
 
 **Independent M1 review on `1354755`: OFFLINE_PASS_NATIVE_HOLD.**
