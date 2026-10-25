@@ -1,0 +1,341 @@
+{
+  "apple_only_necessity": "NOT_PROVEN",
+  "boot_package_prepared": false,
+  "boot_security_changes": false,
+  "coverage": {
+    "duplicate_cases": 56,
+    "hardware_scheduler_or_performance_validation": false,
+    "order_permutations": 120,
+    "oversized_affinity_positions": 64,
+    "source_class_counts": {
+      "M": 12,
+      "P": 6
+    },
+    "source_cpu_records": 18
+  },
+  "date_local": "2026-10-25",
+  "external_messages_sent": 0,
+  "host_reverification": {
+    "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "freestanding": {
+      "executed": false,
+      "linked": false,
+      "object_sha256": "26cd412a69be31ce939760448e40fa03277e8dfa67327f6e3843f5350426bf50",
+      "requested": true,
+      "symbol_check": "PASS",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "sptm31z_get_boot_words"
+      ]
+    },
+    "host": "macOS-26.6.2-arm64-arm-64bit",
+    "receipt_sha256": "3a39fd53ac163e15792123dd5dce8b646b7ae7dfc92712ee164fb1185b68d143",
+    "result": "PASS",
+    "source_bindings": [
+      {
+        "bytes": 1726,
+        "file": "kernel/experiments/sptm31aa-adapter/registration.c",
+        "sha256": "fdcff5c54a3c343d8daf06db0ece76aa978203a86e3414f0e7649720fd37366b"
+      },
+      {
+        "bytes": 3616,
+        "file": "kernel/experiments/sptm31aa-adapter/registration.h",
+        "sha256": "7319a2ac6a5a79269ad92b88553c6d5f414555b7755305a8c443b42e7d926dce"
+      },
+      {
+        "bytes": 11395,
+        "file": "kernel/experiments/sptm31aa-adapter/test_registration.c",
+        "sha256": "db9de82e2cb25d45b7d3c20a2a6179fe92814ca94e177cbf3dc017bcec9e6c4c"
+      },
+      {
+        "bytes": 10670,
+        "file": "kernel/experiments/sptm31aa-adapter/run.py",
+        "sha256": "5cc8a7d21e09d7aabc4c9979b816331474f0e278ee9a9c0890fbef7a4941c6a9"
+      },
+      {
+        "bytes": 5879,
+        "file": "kernel/experiments/sptm31aa-adapter/README.md",
+        "sha256": "ec46c1a01c988e07248aeeba53f3ffa6bf058de8cdca2280681b4eea193d4a13"
+      },
+      {
+        "bytes": 3390,
+        "file": "kernel/experiments/sptm31z-adapter/entry.c",
+        "sha256": "432c34367b59ce404abf95f9c82ae4ac4ef0315376711080920a732ed7e17982"
+      },
+      {
+        "bytes": 4965,
+        "file": "kernel/experiments/sptm31z-adapter/entry.h",
+        "sha256": "9d33e198ed5bbb89b84b28d4c6976f5a9a03f8d214536f05707bb5ddb6b5337c"
+      },
+      {
+        "bytes": 3130,
+        "file": "kernel/experiments/sptm31z-adapter/memory.c",
+        "sha256": "352bed8641220c2846b269bb4ad52331d22d50f170413a688f8508bf5f2e5d2c"
+      },
+      {
+        "bytes": 2854,
+        "file": "kernel/experiments/sptm31z-adapter/memory.h",
+        "sha256": "b249bb1f11543fb9abbef7ba6be99efcbf32fb7a47cd582f2f95b12e4351c434"
+      },
+      {
+        "bytes": 8710,
+        "file": "kernel/experiments/sptm31z-adapter/run.py",
+        "sha256": "89b235a13b7c0614c4fb34a4ff26d77cafa205eb0632498956059f75018150bc"
+      },
+      {
+        "bytes": 1073127,
+        "file": "hardware/adt/adt-sanitized.json",
+        "sha256": "6f143434d2f05310067559f8fa3836ae564dd9934ebc5912660f2a9f5a8a73af"
+      },
+      {
+        "bytes": 7453,
+        "file": "native/boot/attempt31g/topology-observation.json",
+        "sha256": "b055f570f79c6b423fb917afcd73a2c9a87aded2cf6057f9dc708048eae2db42"
+      }
+    ],
+    "source_bindings_sha256": "dc9177156a783fc08a74a54926f7c00f3e3788a68badca9f5d039f2534f2b87e",
+    "tests": [
+      {
+        "groups": 11,
+        "marker": "SPTM31AA_REGISTRATION_PASS groups=11 permutations=120 duplicate_cases=56 project_cpus=18 native=NOT_DEPLOYABLE",
+        "status": "PASS",
+        "variant": "optimized"
+      },
+      {
+        "groups": 11,
+        "marker": "SPTM31AA_REGISTRATION_PASS groups=11 permutations=120 duplicate_cases=56 project_cpus=18 native=NOT_DEPLOYABLE",
+        "status": "PASS",
+        "variant": "sanitized"
+      }
+    ],
+    "unique_c_groups": 11
+  },
+  "independent_review": {
+    "cpu_findings_and_public_sources": "PASS_NO_BLOCKER",
+    "native_hardware_claims": "NONE",
+    "reviewer_reran_tests": false,
+    "root_receipt_and_m1_instructions": "PASS_NO_BLOCKER"
+  },
+  "installed_object_changes": false,
+  "limits": [
+    "Registration plan predictions are not monitor-assigned results or physical starts",
+    "Public GENTER encoding equality does not establish runtime entry or register preservation",
+    "No-chain metadata absence alone does not prove an arbitrary image relocation-free",
+    "Local REA and SDK/private checks were not independently reproduced on M1"
+  ],
+  "linux_smp": "NOT_RUN",
+  "m1_instructions": "tools/m1n1-client/attempt31aa-research-instructions.md",
+  "macos_modifications": false,
+  "native_cpu_startup": "NOT_RUN",
+  "native_gpu": "NOT_RUN",
+  "native_transport_implemented": false,
+  "performance_measurement": "NOT_RUN",
+  "preservation": {
+    "frozen": {
+      "attempt31aa": {
+        "pins": 14,
+        "result": "PASS_UNCHANGED",
+        "sha256": "7260ea2e2966809622ed32437e35324eac25bacc9e6d2049e67834236a1e3252"
+      },
+      "attempt31h": {
+        "pins": 186,
+        "result": "PASS_UNCHANGED",
+        "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155"
+      },
+      "attempt31i": {
+        "pins": 202,
+        "result": "PASS_UNCHANGED",
+        "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6"
+      },
+      "attempt31j": {
+        "pins": 226,
+        "result": "PASS_UNCHANGED",
+        "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765"
+      },
+      "attempt31j-host": {
+        "pins": 6,
+        "result": "PASS_UNCHANGED",
+        "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e"
+      },
+      "attempt31k": {
+        "pins": 254,
+        "result": "PASS_UNCHANGED",
+        "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c"
+      },
+      "attempt31l": {
+        "pins": 281,
+        "result": "PASS_UNCHANGED",
+        "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f"
+      },
+      "attempt31m": {
+        "pins": 306,
+        "result": "PASS_UNCHANGED",
+        "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97"
+      },
+      "attempt31n": {
+        "pins": 330,
+        "result": "PASS_UNCHANGED",
+        "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a"
+      },
+      "attempt31o": {
+        "pins": 348,
+        "result": "PASS_UNCHANGED",
+        "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39"
+      },
+      "attempt31p": {
+        "pins": 379,
+        "result": "PASS_UNCHANGED",
+        "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c"
+      },
+      "attempt31q": {
+        "pins": 402,
+        "result": "PASS_UNCHANGED",
+        "sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6"
+      },
+      "attempt31r": {
+        "pins": 420,
+        "result": "PASS_UNCHANGED",
+        "sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4"
+      },
+      "attempt31s": {
+        "pins": 441,
+        "result": "PASS_UNCHANGED",
+        "sha256": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158"
+      },
+      "attempt31t": {
+        "pins": 458,
+        "result": "PASS_UNCHANGED",
+        "sha256": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7"
+      },
+      "attempt31u": {
+        "pins": 475,
+        "result": "PASS_UNCHANGED",
+        "sha256": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25"
+      },
+      "attempt31v": {
+        "pins": 492,
+        "result": "PASS_UNCHANGED",
+        "sha256": "7b2cd432821583a351effd58eb53eb11eafc621c91a31fdab4579669c91e53cd"
+      },
+      "attempt31w": {
+        "pins": 509,
+        "result": "PASS_UNCHANGED",
+        "sha256": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c"
+      },
+      "attempt31x": {
+        "pins": 6,
+        "result": "PASS_UNCHANGED",
+        "sha256": "84e612d0591ed9c9a345e77a5b1a6f9e3d9d8f42180ccc24c508e825ea480ea9"
+      },
+      "attempt31y": {
+        "pins": 18,
+        "result": "PASS_UNCHANGED",
+        "sha256": "52f50dc70dc4605cf8cc0fcf320c26bb3d7997aa2566ab247542000f9844a3a9"
+      },
+      "attempt31z": {
+        "pins": 17,
+        "result": "PASS_UNCHANGED",
+        "sha256": "2332878cf180e95df264a7b04fe1b24ce458074267dab461046f0ddaf0b8e9df"
+      }
+    },
+    "frozen_manifest_count": 21,
+    "published_31aa_code_or_manifest_changed": false,
+    "unrelated_omarchy_work_changed": false
+  },
+  "prior_code_publication": "d2df23b9b7a6cf6d2a6c6ec4031dc8bc3343cdbd",
+  "public_sources": {
+    "compile_only_translation_units": 1,
+    "emitted_function_definitions": 0,
+    "fetch_attempts": 12,
+    "http404": 2,
+    "measured_constants": 31,
+    "nonblocking_note": "Frozen public note links GXF register at line704; definition is visible nearby at707, used by supplement",
+    "private_verification_sha256": "1a89b5c1fc1286ba968b10b9e1ef9cd1e2c092213e7011884a8ce8c46de2e1db",
+    "published_note": "research/native31aa-public-contract.md",
+    "published_note_sha256": "cb87767e5ef150411ea4f2b4ae45cd9a6db2d8c986a532f3e363c33b0fd51807",
+    "retained_bytes": 318002,
+    "reused_31z_bindings_verified": 7,
+    "sdk_output_linked_or_executed": false,
+    "successful_fetches": 10
+  },
+  "research": {
+    "counts": {
+      "completed_dossiers": 2,
+      "cross_boundary_pseudocode_refusals": 1,
+      "independent_bytes": 2204,
+      "independent_instruction_sized_words": 551,
+      "independent_ranges": 7,
+      "mismatches": 0,
+      "newly_queried_body_words": 466,
+      "previously_checked_words_reverified": 14,
+      "provider_failures": 0,
+      "requests": 2,
+      "whole_function_pseudocode_accepted": 0
+    },
+    "cpu_record": "reverse-engineering/findings/cpu-startup31aa/validation.json",
+    "cpu_record_sha256": "785233084a3e2d94020c03b2c74d4c7734994e8dd4158d2d6f9150c90a7e8c9e",
+    "execution": {
+      "console_sha256": "9cf9eef23ea4f9743de37476a70ff51a044b99ef25dbd121f01b78629da29c5e",
+      "environment": {
+        "expected_no_network_device": true,
+        "interfaces": [
+          "lo"
+        ],
+        "physical_usb": false
+      },
+      "job_exit": 0,
+      "job_log_sha256": "07c22d57a855dca96efe92c25c7e2b13e2eea6cd7277ea734d59c47f548cc181",
+      "new_queries_after_resume": 0,
+      "prelaunch_sandbox_refusal": {
+        "guest_queries": 0,
+        "retained": true,
+        "sha256": "6701f74d69d52d329f395f40d6aee2d3af4947d1ebc690692b6be3033be6704d"
+      },
+      "setup_exit": 0,
+      "vm_owner": "root agent"
+    },
+    "note": "research/native31aa-handoff.md",
+    "qualified_findings": [
+      "helper initializer is local utility without monitor activation",
+      "bounded local absence-of-chained-fixups branch skips chain walk",
+      "fixed bootstrap transport is distinct from optional kernel-specific hooks",
+      "unused monitor-record fields may remain opaque"
+    ],
+    "retained_kernel_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+    "runtime_or_installed_boot_identity_refreshed": false,
+    "unqualified": [
+      "accepted original image",
+      "complete dispatch preservation and permitted entry states",
+      "own exception-return continuation",
+      "physical secondary entry and release"
+    ],
+    "whole_function_pseudocode_accepted": 0
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "retained_linux_verification": {
+    "compiler": "cc (GCC) 16.1.1 20260430",
+    "current_sources_and_host_markers_match": true,
+    "generated_topology_fixture_matches": true,
+    "published_receipt": "virtualization/jobs/085-offline31aa/validation.json",
+    "published_receipt_sha256": "c38f3894770e26b1b706afbdb1e10bcf83e89c6e609a73676911e176fc9cd168",
+    "reason": "Already completed final VM run matches all 12 current source bindings and published receipt",
+    "rerun_on_resume": false,
+    "result": "PASS",
+    "runner_receipt_sha256": "b21bc787a17a0cfcfcf585ca7be784b9795b31857a68fa7aa2e54eada9cb379f",
+    "unique_c_groups": 11
+  },
+  "reviewed_m1": {
+    "commit": "6106a6c",
+    "native": "HOLD / NOT RUN",
+    "report_sha256": "751aa0100c5c21bcc93892bad420e09de432cfcf824b54484eb591295f35d931",
+    "result": "OFFLINE_PASS_NATIVE_HOLD",
+    "source_bindings_match": true,
+    "test_markers_match": true,
+    "unique_c_groups": 16
+  },
+  "schema": "ilinux-attempt31aa-research-validation-v1",
+  "scope": "Local REA research supplement and independent verification of the already published original CPU registration planner; no implementation changes",
+  "volume_changes": false
+}

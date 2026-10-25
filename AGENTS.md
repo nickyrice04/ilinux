@@ -99,6 +99,31 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AA adapter and local handoff supplement, 2026-10-25
+
+M1's 31Z review is incorporated. Commit `d2df23b` published the original ordered
+CPU-registration planner; this follow-up completes its separate local REA record.
+The planner preserves all 18 source CPU records and class tags, requires boot-first
+ordering and unique ADT affinities, and makes no monitor call. All 11 C groups pass
+optimized and ASan/UBSan on macOS and ARM64 Linux with identical final source
+bindings and fixtures. AArch64 object compilation passes; native execution is
+NOT RUN. The frozen 31AA implementation and all earlier closures are unchanged.
+
+Local analysis supports a smaller host contract: unused monitor fields can remain
+opaque, fixed bootstrap dispatch does not inherently require `libsptm_init`, and
+an image with genuinely no chained fixups can skip pointer rebasing. This does
+not remove image-placement, stack/vector, memory-ownership, dispatch-preservation
+or exception-return requirements. The helper initializer is a local utility,
+not monitor activation. The image-fixup whole-function decompilation remains
+refused; only independently checked branches support the narrow local claim.
+
+Continue CPU software work; no Apple-only necessity is established. No boot is
+prepared until a meaningful new physical test is qualified. macOS, installed
+objects, policies and volumes are untouched; no outreach. M1 follows
+`tools/m1n1-client/attempt31aa-research-instructions.md`, reusing a completed
+31AA code review if its exact bindings already match. Evidence lives in
+`native/boot/attempt31aa-research/validation.json` and the 31AA research notes.
+
 ### Latest M1 — 31Z offline component review PASS; native hold, 2026-10-24
 
 **Independent M1 review on `516ed2c`: OFFLINE_PASS_NATIVE_HOLD.**

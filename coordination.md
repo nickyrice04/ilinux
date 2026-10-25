@@ -6,6 +6,23 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AA local research supplement completed, 2026-10-25
+
+Another session published the registration planner, final test receipts and public
+contract in `d2df23b` while this session was paused. Root preserved that frozen
+package, verified its final VM source bindings, and reran the final host tests.
+All 11 groups, fixture and source bindings match. CPU analysis now completes the
+separate retained REA record; public research independently verifies its sources
+and scope. No additional VM or native run is needed for unchanged source code.
+
+M1 owns the review in `tools/m1n1-client/attempt31aa-research-instructions.md`.
+If its exact 31AA code review is already complete, reuse it and review the new
+research separately. CPU work continues on the minimal image/entry/exception
+contract. No native boot is prepared, no external outreach or host settings change
+occurred, and unrelated Omarchy work remains untouched. Both VM/quiet locks are
+released. The older statement that local 31AA REA is unpublished is superseded
+by this supplement; the original 31AA package itself remains unchanged.
+
 ### Active — 31AA helper handoff and CPU registration adapter, 2026-10-24
 
 Root incorporated M1 review `6106a6c`; all 31Z source bindings and test markers

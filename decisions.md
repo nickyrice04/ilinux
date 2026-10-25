@@ -4144,3 +4144,27 @@ to start the other cores, or to confirm that it waits for Apple. The macOS-parit
 boot is prepared only for a meaningful new test, and macOS stays intact. The frequency, memory and
 render preparations stay unstarted; the 31AA registration planner continues the 31Z adapter work that
 another tool left unpublished, offline, with no boot package, no monitor call and no restart.
+
+
+## 2026-10-25 · Complete 31AA research without widening the native scope
+
+Preserve the registration planner and final tests published in `d2df23b`. Publish
+the previously retained local REA findings as a separate, hash-bound supplement
+without changing the frozen 31AA package. The final committed sources pass all
+11 host C groups with sanitizers and AArch64 compilation, and match the retained
+final Linux VM source bindings, fixture and markers.
+
+The next original host can minimize dependencies: unused monitor fields remain
+opaque, fixed bootstrap dispatch need not initialize unrelated helper services,
+and a genuinely relocation-free early image can follow the no-chained-fixups
+path. These are bounded findings, not permission to skip image-placement, vector,
+exception-return or transport-preservation requirements. The image helper's
+whole-function decompilation remains refused; independently checked branches
+support only the narrower local behavior.
+
+Continue CPU work on the concrete minimal entry/exception contract. No new native
+wrapper, installed object or boot package is supplied by this supplement. Prepare
+a physical attempt only when it tests a meaningful newly qualified hypothesis.
+No Apple-only necessity is established. M1 reviews the new research and reuses a
+completed exact-source 31AA code review where available; no redundant reboot,
+security check or external outreach is requested.

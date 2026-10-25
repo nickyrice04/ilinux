@@ -1,0 +1,428 @@
+{
+  "schema": "ilinux-cpu-startup31aa-validation-v1",
+  "date": "2026-10-25",
+  "query_date": "2026-10-24",
+  "scope": "Offline retained-kernel contract qualification; no native execution or acceptance",
+  "source": {
+    "artifact": "retained kernel.release.t6050",
+    "sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+    "bytes": 17168528,
+    "provenance_reference": "reverse-engineering/findings/cpu-startup31z/validation.json",
+    "31Z_current_installed_match_carried_forward": true,
+    "current_installed_identity_rechecked_this_pass": false,
+    "historical_lab_boot_identity_refreshed": false
+  },
+  "analysis_carrier": {
+    "schema": 1,
+    "source_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+    "derived_sha256": "68e10ccfd2a55e30a16e41785a1b3686ede7776be9d61584dedd9ee40aa534e1",
+    "member": "kernel-contract-analysis-only",
+    "mappings": [
+      {
+        "label": "helper-state-initializer",
+        "vmaddr": "0xfffffe0007c78324",
+        "bytes": 412,
+        "source_offset": 13058852,
+        "derived_offset": 13058852,
+        "sha256": "21d7f5e99f54aa9a82f10eddc2c5a30016e8a6986aa34ad6143dd82376e5918a"
+      },
+      {
+        "label": "boot-code-context",
+        "vmaddr": "0xfffffe0007ca0000",
+        "bytes": 32768,
+        "source_offset": 13221888,
+        "derived_offset": 13221888,
+        "sha256": "552b722255f816496d535e0b5c3c0af7e5bea7d512cfb5d7b0f7ba8b380c7184"
+      }
+    ],
+    "declared_entry": "0xfffffe0007ca0000",
+    "preserved_original_file_offsets": true,
+    "retained_function_starts": [
+      "0xfffffe0007c78324",
+      "0xfffffe0007ca0000",
+      "0xfffffe0007ca0024",
+      "0xfffffe0007ca0040",
+      "0xfffffe0007ca0098",
+      "0xfffffe0007ca00cc",
+      "0xfffffe0007ca00e0",
+      "0xfffffe0007ca00f0",
+      "0xfffffe0007ca0158",
+      "0xfffffe0007ca4000",
+      "0xfffffe0007ca4014",
+      "0xfffffe0007ca4058",
+      "0xfffffe0007ca4158",
+      "0xfffffe0007ca43cc",
+      "0xfffffe0007ca4488",
+      "0xfffffe0007ca4a34",
+      "0xfffffe0007ca4af0",
+      "0xfffffe0007ca4d50",
+      "0xfffffe0007ca50bc",
+      "0xfffffe0007ca50c8",
+      "0xfffffe0007ca50e0",
+      "0xfffffe0007ca512c",
+      "0xfffffe0007ca5140"
+    ],
+    "generated_metadata": [
+      "Mach-O header/segments",
+      "filtered function starts",
+      "analysis-only symbol labels"
+    ],
+    "omitted_context": [
+      "Most code, all original data and original link-edit",
+      "Unmapped callees and referenced data stay unknown"
+    ],
+    "executable_or_deployable": false
+  },
+  "queries": [
+    {
+      "label": "helper-state-initializer",
+      "run": {
+        "input_sha256": "68e10ccfd2a55e30a16e41785a1b3686ede7776be9d61584dedd9ee40aa534e1",
+        "exit": 0,
+        "seconds": 16.885418924999996,
+        "command": "function",
+        "address": "0xfffffe0007c78324"
+      },
+      "result_sha256": "0ff5ca4b5d45fb9663b736fc4e0a041fd1b0b8aa62083695d3c25d306307863b",
+      "body_gate": {
+        "evidence_id": "ev_6f4a18f4fed3ce7cc1cbae9cc143173b485cb2dd469f4fa6997be4ecc994b5b2",
+        "member": "kernel-contract-analysis-only",
+        "function": "_analysis_helper_state",
+        "body_anchors": [
+          {
+            "start": "0xfffffe0007c78324",
+            "end_inclusive": "0xfffffe0007c784bf",
+            "carrier_offset": 13058852,
+            "derived_offset": 13058852,
+            "bytes": 412,
+            "sha256": "21d7f5e99f54aa9a82f10eddc2c5a30016e8a6986aa34ad6143dd82376e5918a"
+          }
+        ],
+        "assembly_instructions": 103,
+        "original_bytes_verified": true,
+        "pcode_operations": 186,
+        "pcode_outside_body": 0,
+        "outside_addresses": [],
+        "pseudocode_gate": "manual_review_required",
+        "decompiler_warning_classes": [],
+        "limits": [
+          "No semantic or runtime equivalence claim",
+          "Unresolved indirect calls and collection fixups remain unknown",
+          "Whole-function pseudocode must not guide implementation after a rejected gate"
+        ]
+      },
+      "native_value_flow_truncated": false,
+      "whole_function_pseudocode_accepted": false,
+      "whole_function_pseudocode_status": "not_used; bounded independent field analysis"
+    },
+    {
+      "label": "image-fixups-contract",
+      "run": {
+        "input_sha256": "68e10ccfd2a55e30a16e41785a1b3686ede7776be9d61584dedd9ee40aa534e1",
+        "exit": 0,
+        "seconds": 16.853948967,
+        "command": "function",
+        "address": "0xfffffe0007ca4488"
+      },
+      "result_sha256": "1a6fb621282e0a83928d4172834d562bb62c75c945270e71711931c0f5b5204c",
+      "body_gate": {
+        "evidence_id": "ev_9235fc2d2904121698e2ffebabc2a56be60f972bee941182d7885abf95bbd25f",
+        "member": "kernel-contract-analysis-only",
+        "function": "_analysis_image_fixups",
+        "body_anchors": [
+          {
+            "start": "0xfffffe0007ca4488",
+            "end_inclusive": "0xfffffe0007ca4a33",
+            "carrier_offset": 13239432,
+            "derived_offset": 13239432,
+            "bytes": 1452,
+            "sha256": "fe6ce65db9baf805cf1988ab1b2dcd58f0df7c0674a656b35d95c7ebc7b32c67"
+          }
+        ],
+        "assembly_instructions": 363,
+        "original_bytes_verified": true,
+        "pcode_operations": 541,
+        "pcode_outside_body": 42,
+        "outside_addresses": [
+          "0xfffffe0007ca4ab8",
+          "0xfffffe0007ca4abc",
+          "0xfffffe0007ca4ac0",
+          "0xfffffe0007ca4ac8",
+          "0xfffffe0007ca4acc",
+          "0xfffffe0007ca4ad0",
+          "0xfffffe0007ca4ad4",
+          "0xfffffe0007ca4ad8",
+          "0xfffffe0007ca4adc",
+          "0xfffffe0007ca4aec"
+        ],
+        "pseudocode_gate": "rejected_cross_boundary",
+        "decompiler_warning_classes": [
+          "provider_removed_blocks"
+        ],
+        "limits": [
+          "No semantic or runtime equivalence claim",
+          "Unresolved indirect calls and collection fixups remain unknown",
+          "Whole-function pseudocode must not guide implementation after a rejected gate"
+        ]
+      },
+      "native_value_flow_truncated": false,
+      "whole_function_pseudocode_accepted": false,
+      "whole_function_pseudocode_status": "refused_cross_boundary_removed_blocks"
+    }
+  ],
+  "counts": {
+    "requests": 2,
+    "completed_dossiers": 2,
+    "provider_failures": 0,
+    "cross_boundary_pseudocode_refusals": 1,
+    "whole_function_pseudocode_accepted": 0,
+    "independent_instruction_sized_words": 551,
+    "independent_bytes": 2204,
+    "mismatches": 0,
+    "independent_ranges": 7,
+    "newly_queried_body_words": 466,
+    "previously_checked_words_reverified": 14
+  },
+  "independent_ranges": [
+    {
+      "label": "helper-state-initializer",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe0007c78324",
+      "end_exclusive": "0xfffffe0007c784c0",
+      "instruction_words": 103,
+      "code_bytes": 412,
+      "sha256": "21d7f5e99f54aa9a82f10eddc2c5a30016e8a6986aa34ad6143dd82376e5918a",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true,
+      "full_LC_FUNCTION_STARTS_span": true
+    },
+    {
+      "label": "image-fixup-wrapper",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe0007ca4488",
+      "end_exclusive": "0xfffffe0007ca4a34",
+      "instruction_words": 363,
+      "code_bytes": 1452,
+      "sha256": "fe6ce65db9baf805cf1988ab1b2dcd58f0df7c0674a656b35d95c7ebc7b32c67",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true,
+      "full_LC_FUNCTION_STARTS_span": true
+    },
+    {
+      "label": "registration-dispatch-stub",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe0007c78f94",
+      "end_exclusive": "0xfffffe0007c78fbc",
+      "instruction_words": 10,
+      "code_bytes": 40,
+      "sha256": "2f2a544490b03a273147e80f834d3854c11113afda76e9c19bc625236b2b96c6",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true,
+      "full_LC_FUNCTION_STARTS_span": true
+    },
+    {
+      "label": "exception-registration-dispatch-stub",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe0007c79174",
+      "end_exclusive": "0xfffffe0007c7919c",
+      "instruction_words": 10,
+      "code_bytes": 40,
+      "sha256": "5f3df41246556afc69df10b24db5aee70102fd8ae7e0148c32921334d314d191",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true,
+      "full_LC_FUNCTION_STARTS_span": true
+    },
+    {
+      "label": "dispatch-before-hook",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe00072f68e8",
+      "end_exclusive": "0xfffffe00072f6954",
+      "instruction_words": 27,
+      "code_bytes": 108,
+      "sha256": "57e54010c10546c35fb1165ffbf3303c60da19b963ec2d7531a814af386f5cf7",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true,
+      "full_LC_FUNCTION_STARTS_span": true
+    },
+    {
+      "label": "dispatch-after-hook",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe00072f6954",
+      "end_exclusive": "0xfffffe00072f69dc",
+      "instruction_words": 34,
+      "code_bytes": 136,
+      "sha256": "6ded8381fa216d0de730ccb40ad7e6c09645ba2b4f378a7ab2ac4cf34e0a4228",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true,
+      "full_LC_FUNCTION_STARTS_span": true
+    },
+    {
+      "label": "direct-fixups-completion-boundary",
+      "input_sha256": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0",
+      "start": "0xfffffe0007ca007c",
+      "end_exclusive": "0xfffffe0007ca008c",
+      "instruction_words": 4,
+      "code_bytes": 16,
+      "sha256": "e4ac4f5375b88e2d37708a6b5e01f3d31e4e2f5732a016aec7dce3c58004ba48",
+      "llvm_word_mismatches": 0,
+      "slice_bytes_match_original": true,
+      "full_LC_FUNCTION_STARTS_span": false
+    }
+  ],
+  "query_files": {
+    "query-a.py": "921d3dcb4613d174b1824bbe6227eddec9a7072fb434636521e7f0804735505a",
+    "queries-a.json": "c5144ed6a27b6377cb12d041ea975635bcf20841ec3d2bd57f154d147ac1b745"
+  },
+  "private_verifier_sha256": "9bc119fda28402074e9fc5df29d8673f51434f7c7a25fe986c4faf070adbe68d",
+  "execution": {
+    "setup_exit": 0,
+    "job_exit": 0,
+    "environment": {
+      "interfaces": [
+        "lo"
+      ],
+      "expected_no_network_device": true,
+      "physical_usb": false
+    },
+    "console_sha256": "9cf9eef23ea4f9743de37476a70ff51a044b99ef25dbd121f01b78629da29c5e",
+    "job_log_sha256": "07c22d57a855dca96efe92c25c7e2b13e2eea6cd7277ea734d59c47f548cc181",
+    "prelaunch_sandbox_refusal": {
+      "guest_queries": 0,
+      "retained": true,
+      "sha256": "6701f74d69d52d329f395f40d6aee2d3af4947d1ebc690692b6be3033be6704d"
+    },
+    "vm_owner": "root agent",
+    "new_queries_after_resume": 0
+  },
+  "behavior": {
+    "helper": {
+      "entry": "0xfffffe0007c78324",
+      "incoming_record_offset_from_31Z": 416,
+      "version_offset": 0,
+      "version_bytes": 4,
+      "maximum_consumed_extent": 224,
+      "null_result": 2,
+      "non_null_result": 0,
+      "actual_incoming_version_observed": false,
+      "version_gates": [
+        {
+          "minimum": 3,
+          "field_offsets": [
+            128
+          ]
+        },
+        {
+          "minimum": 4,
+          "field_offsets": [
+            136
+          ]
+        },
+        {
+          "minimum": 5,
+          "field_offsets": [
+            144,
+            152
+          ]
+        },
+        {
+          "minimum": 6,
+          "field_offsets": [
+            160
+          ]
+        },
+        {
+          "minimum": 7,
+          "field_offsets": [
+            168
+          ]
+        },
+        {
+          "minimum": 8,
+          "field_offsets": [
+            176,
+            184,
+            192,
+            200
+          ]
+        },
+        {
+          "minimum": 9,
+          "field_offsets": [
+            208
+          ]
+        },
+        {
+          "minimum": 10,
+          "field_offsets": [
+            216
+          ]
+        }
+      ],
+      "calls_other_functions": false,
+      "monitor_activation": false,
+      "complete_outer_layout_qualified": false,
+      "SDK26_5_field_comparison": "selected widths/positions agree through224; no producer/version identity inferred"
+    },
+    "no_chained_fixup_edge": {
+      "public_command": "LC_DYLD_CHAINED_FIXUPS",
+      "command_field_width": 32,
+      "command_field_offset": 0,
+      "recognition_site": "0xfffffe0007ca45fc",
+      "pointer_capture_site": "0xfffffe0007ca45d0",
+      "initial_absent_state_site": "0xfffffe0007ca4540",
+      "absent_edge_site": "0xfffffe0007ca47c4",
+      "absent_edge_destination": "0xfffffe0007ca4960",
+      "absence_skips_chain_walk": true,
+      "whole_function_semantics_claim": false,
+      "continuation_role_public_comparator": "collection/image address metadata handling; not a whole-function local proof"
+    },
+    "transport_encoding_checks": [
+      {
+        "site": "0xfffffe0007c78fa8",
+        "matches_pinned_public_genter_encoding": true
+      },
+      {
+        "site": "0xfffffe0007c79188",
+        "matches_pinned_public_genter_encoding": true
+      },
+      {
+        "site": "0xfffffe0007ca0088",
+        "matches_pinned_public_genter_encoding": true
+      }
+    ],
+    "dispatch_dependencies": {
+      "fixed_dispatch_ids": [
+        14,
+        15,
+        18
+      ],
+      "register_and_exception_stubs_read_helper_state_directly": false,
+      "XNU_hooks_have_thread_preemption_and_exception_obligations": true,
+      "before_hook": "0xfffffe00072f68e8",
+      "after_hook": "0xfffffe00072f6954",
+      "null_thread_paths_present": true,
+      "direct_fixups_completion_precedes_library_initialization": true,
+      "local_GENTER_semantics_derived_from": "pinned SDK/public comparator and exact encoding equality; LLVM mnemonic unknown",
+      "native_wrapper_fully_qualified": false
+    },
+    "whole_848_byte_decode_is_universal_prerequisite": false
+  },
+  "implementation_scope": {
+    "original_registration_planner": "separately committed31AA component; no code changed by this research supplement",
+    "native_transport_or_controller_implemented_here": false,
+    "relocation_free_early_image": "qualified design candidate; not built or boot accepted by this evidence"
+  },
+  "limits": [
+    "Helper and outer-record producer identity remain unobserved; no complete848-byte layout inference",
+    "Image-wrapper whole-function pseudocode refused; only independently checked no-chain edge used",
+    "Carrier omits original data and most code; generated labels/metadata are not source",
+    "GENTER encoding equality does not establish all clobbers, permitted entry states or exception return ABI",
+    "XNU hooks are not a portable scheduler/exception implementation",
+    "Absence of chained-fixup metadata does not prove an arbitrary image has no relocation or PAC dependencies",
+    "No resident monitor, accepted native image, physical-secondary startup or Apple-only necessity established"
+  ],
+  "related_public_contract": "research/native31aa-public-contract.md",
+  "native_execution": "NOT RUN",
+  "boot_acceptance": "NOT TESTED",
+  "deployment_ready": false
+}

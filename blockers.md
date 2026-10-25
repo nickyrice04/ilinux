@@ -1,5 +1,25 @@
 # Blockers
 
+## Current — 31AA needs a minimal native entry/exception contract
+
+The registration planner is implemented and tested, including the recorded
+18-CPU topology and both source class tags. It prepares arguments without calling
+the monitor. The local helper and image-fixup findings remove two overbroad
+prerequisites: a host need not decode unused monitor fields, and an image genuinely
+free of chained pointer fixups need not perform pointer rebasing. Fixed bootstrap
+dispatch also precedes the optional local helper initialization in the cold path.
+
+Next qualify the original host's actual image placement, mapped entry stack and
+vectors, transport register preservation, permitted interrupt/execution state
+and monitored exception-return continuation. Every helper service and referenced
+object actually used still needs a version/mapping/lifetime contract. A valid
+argument plan or an empty-fixup path does not establish image acceptance, resident
+monitor state or physical-secondary entry. No unchanged raw-start retry is ready.
+
+CPU research remains active; an Apple-only dependency is not proved. The focused
+31AA research supplement preserves all published code and test records. Native
+startup and performance measurements remain NOT RUN; macOS remains intact.
+
 ## Current — M1 31Z checks PASS; native integration remains unqualified
 
 **Independent M1 review on `516ed2c`: OFFLINE_PASS_NATIVE_HOLD.**

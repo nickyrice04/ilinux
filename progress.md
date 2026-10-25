@@ -1,5 +1,34 @@
 # Progress Log
 
+## 2026-10-25 · Complete the 31AA local handoff research supplement
+
+Preserved the other session's `d2df23b` publication of the original registration
+planner and its final Linux VM test. Independently reran the committed planner
+on macOS: all 11 unique C groups pass optimized and ASan/UBSan; the AArch64
+relocatable object compiles. Its 12 source bindings, generated 18-CPU fixture and
+test markers match the retained final VM085 run exactly. No frozen implementation
+or earlier source closure was changed. Source class tags remain metadata, not
+evidence of heterogeneous scheduling or measured performance.
+
+Completed the previously unpublished local REA record. Both bounded queries
+returned; the small helper initializer has complete bounded evidence, while the
+image-fixup whole-function result remains refused. Independent branch analysis
+supports the local no-chained-fixups path and distinguishes fixed monitor dispatch
+from the helper utility and XNU-specific surrounding hooks. Public and local
+evidence now support investigating an original image without pointer fixups,
+while preserving image metadata and the vector/fixups-completion protocol.
+
+The remaining contract is the minimum actually used by the original host, rather
+than every unused byte in the 848-byte record. Dispatch preservation, permitted
+entry state, mapped stacks/vectors, exception continuation and physical-secondary
+observation remain unresolved. No monitor invocation, native boot or performance
+result is claimed. No macOS, installed-object, security, volume or outreach change.
+M1 receives a separate research supplement; no restart is requested.
+
+See `native/boot/attempt31aa-research/validation.json`,
+`research/native31aa-handoff.md` and
+`tools/m1n1-client/attempt31aa-research-instructions.md`.
+
 ## 2026-10-24 · M1: 31Z entry/memory review and sanitizer checks PASS
 
 **Independent M1 review on `516ed2c`: OFFLINE_PASS_NATIVE_HOLD.**
