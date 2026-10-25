@@ -1,5 +1,29 @@
 # Blockers
 
+## Current — M1 confirms31AB component checks; native observer remains separate
+
+**Independent M1 review on `1354755`: OFFLINE_PASS_NATIVE_HOLD.**
+44 pins PASS; 8 packaging Python methods and 12 observer C groups PASS optimized
+and with macOS ASan/UBSan (1200 oracle cases per variant). Entry/translation
+compile-only and observer freestanding checks produce five AArch64 ELF objects.
+All component source bindings match published host/VM. Python 3.13.5 / Apple clang 17;
+no source repair, retry or actionable offline issue. Exact 31AA reviews reused.
+
+No suitable ELF linker/QEMU available here: link audit, two-base payload equality,
+nine entry and ten translation emulator cases, and actual Mach-O property derivation
+NOT RUN on M1; reviewed as separate M5 evidence. No private REA/SDK/Apple decoding,
+external-source retrieval or VM/Linux sanitizer reproduction. Current count/table
+initialization timing and pre-service15 readability remain unknown. Separate RAM
+observer/AT components still need native integration and visible entry evidence.
+
+All 22 frozen closures/5794 entry checks (563 distinct files), retained 13-file
+package, clean client `57a9339` and 522 prior evidence files verify unchanged, including
+consumed receipts. Native/live/SMP/GPU/framebuffer/performance NOT RUN; no restart,
+device open, monitor call, outreach or installed-object/settings change. CPU software
+research remains active; no native test is ready and Apple-only necessity is unproved.
+Evidence: `native/boot/attempt31ab-m1-offline-2026-10-25.md` and reviewed JSON.
+
+
 ## Current — 31AB narrows the missing observable resident entry
 
 Original entry instructions now link and execute under standard ARM emulation;

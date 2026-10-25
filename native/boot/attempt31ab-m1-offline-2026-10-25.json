@@ -1,0 +1,357 @@
+{
+  "apple_only_necessity": "NOT PROVEN",
+  "components": {
+    "entry": {
+      "objects": [
+        {
+          "file": "entry.o",
+          "format": "ELF64_LE_AARCH64_RELOCATABLE",
+          "sha256": "a06c10b2c27d291977d7865aecf6479e51018303dfe9bd05a9564574fbdbc849",
+          "undefined_symbols": []
+        },
+        {
+          "file": "transport.o",
+          "format": "ELF64_LE_AARCH64_RELOCATABLE",
+          "sha256": "f6b29d84856375ea942bda287baad102f0b19d7734231696ad7fffb7bdfb6526",
+          "undefined_symbols": []
+        }
+      ],
+      "results_sha256": "6c0a1833231955aa8b081611303188fc1e27681f756a4b35d89fbdc8aa5f9b79",
+      "source_binding_count": 9,
+      "source_bindings_match_released_host_vm": true,
+      "source_bindings_sha256": "f1cdd9d9dc957040a8774a3d7e5015e69a7cd84c1db58e0dfd0890efeba156ee",
+      "status": "PASS"
+    },
+    "observer": {
+      "objects": [
+        {
+          "file": "observer-aarch64.o",
+          "format": "ELF64_LE_AARCH64_RELOCATABLE",
+          "sha256": "22bbcc121a453d1c9576a4a8ad657cebd3d43fc00c8c707608b468a646f5e53e",
+          "undefined_symbols": [
+            "memcpy",
+            "memset"
+          ]
+        }
+      ],
+      "results_sha256": "62d609b2e31cb472aa3cdd7b4dc0ee27af9246ab01c826affd52896459c89e6b",
+      "source_binding_count": 6,
+      "source_bindings_match_released_host_vm": true,
+      "source_bindings_sha256": "92c956fcb3912c4b8d8a01091f13a0ca5a7763fa486dc10d082478e5df79a155",
+      "status": "PASS"
+    },
+    "translation": {
+      "objects": [
+        {
+          "file": "probe.o",
+          "format": "ELF64_LE_AARCH64_RELOCATABLE",
+          "sha256": "d1706aa727c2138ca5a2e6c7ce8dfc1c901d3f38c65fb9e9c7f4123dbc089bfd",
+          "undefined_symbols": []
+        },
+        {
+          "file": "fixture.o",
+          "format": "ELF64_LE_AARCH64_RELOCATABLE",
+          "sha256": "f7ec81e88f769a8632659a461e8eab93ec1c38df1f0cf6f8012b983a80c433e5",
+          "undefined_symbols": [
+            "fixture_l1",
+            "fixture_l2",
+            "fixture_l3",
+            "translation31ab_s1e2w"
+          ]
+        }
+      ],
+      "results_sha256": "df121a46dcf73b40d345cc4290d8853b3f3121b5b642a5cdf5a2e130b377fc4d",
+      "source_binding_count": 6,
+      "source_bindings_match_released_host_vm": true,
+      "source_bindings_sha256": "66619009f4c83158f8629d8ba90281f23e33a5f8778893167aeaf764dcc4057b",
+      "status": "COMPILE_PASS_NOT_EXECUTED"
+    }
+  },
+  "date_local": "2026-10-25",
+  "device_opens": 0,
+  "discovery_queries": 0,
+  "either_mac_restarted": false,
+  "execution": [
+    {
+      "command": [
+        "shasum",
+        "-a",
+        "256",
+        "-c",
+        "native/boot/attempt31ab/source-sha256.txt"
+      ],
+      "exit": 0,
+      "label": "manifest",
+      "seconds": 0.041,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "2e3fc43a283d42506f36eeca533dc90a179be0547a8a62e26256d7d307850727"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "kernel/experiments/bootimage31ab",
+        "-p",
+        "test_image.py"
+      ],
+      "exit": 0,
+      "label": "packaging-tests",
+      "seconds": 0.078,
+      "stderr_sha256": "60bb849356ffbc091f601e17fc6ae0b2eb5e26d734d433da020c6e775efbf97f",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/sptm31ab-host/run.py",
+        "--output",
+        "build/31ab-entry-m1-review",
+        "--cc",
+        "clang",
+        "--target",
+        "aarch64-none-elf",
+        "--compile-only"
+      ],
+      "exit": 0,
+      "label": "entry",
+      "seconds": 0.128,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e99d318e90a81a6c85429dae49bab2b1f57670ec54c88ff6cdf1f0a02f8212db"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/observer31ab/run.py",
+        "--output",
+        "build/31ab-observer-m1-review",
+        "--sanitize",
+        "--freestanding"
+      ],
+      "exit": 0,
+      "label": "observer",
+      "seconds": 1.256,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "4d48053addfa1fc71263a6f1ac3dcc4f57272f97239c16a602a5772867933f4f"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/translation31ab/run.py",
+        "--output",
+        "build/31ab-translation-m1-review",
+        "--cc",
+        "clang",
+        "--target",
+        "aarch64-none-elf",
+        "--compile-only"
+      ],
+      "exit": 0,
+      "label": "translation",
+      "seconds": 0.128,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d2bbf31d306fcca6215b541c1a09e6b83aa28376fa9b74156d94d38e1999a276"
+    }
+  ],
+  "external_messages_sent": 0,
+  "installed_boot021_changed": false,
+  "linux_smp": "NOT RUN",
+  "live_target_version_checks": "NOT RUN",
+  "m1_scope": {
+    "ELF_link_audit_executed": false,
+    "actual_linked_payload_built": false,
+    "entry": "COMPILE ONLY; two AArch64 ELF relocatable objects",
+    "entry_emulator_cases_executed": 0,
+    "observer": "Optimized and macOS ASan/UBSan execution plus freestanding compilation",
+    "original_macho_packaged_from_linked_payload": false,
+    "packaging": "Eight original geometry/format unit tests on synthetic payloads",
+    "read_only_image_inspection": "NOT RUN",
+    "translation": "COMPILE_PASS_NOT_EXECUTED; two AArch64 ELF relocatable objects",
+    "translation_emulator_cases_executed": 0
+  },
+  "macos_security_volume_default_changes": false,
+  "manifest": {
+    "pins": 44,
+    "sha256": "f697bdd660f7030f7afd05c99a5078e00c2795192c22d8a9da7ad61635d456bd",
+    "status": "PASS"
+  },
+  "monitor_calls": 0,
+  "native31ab": "HOLD / NOT RUN",
+  "native_cpu_startup": "NOT RUN",
+  "native_framebuffer": "NOT RUN",
+  "native_gpu": "NOT RUN",
+  "native_invocations": 0,
+  "next_work": [
+    "Integrate bounded cold arguments/count-table reads and observer with qualified entry mappings.",
+    "Qualify native write translation/expected physical pages/attributes/visibility without modifying mappings to force success.",
+    "Prepare meaningful observable image-acceptance test before any monitor-call or physical-secondary test."
+  ],
+  "not_reproduced_on_m1": [
+    "REA",
+    "private Apple instruction comparisons",
+    "SDK layout measurements",
+    "external source retrieval or firmware model execution",
+    "M5 VM execution and Linux sanitizers",
+    "two-base link and ELF/instruction mutation audit",
+    "nine entry and ten translation emulator cases",
+    "read-only derived properties on the actual linked Mach-O"
+  ],
+  "observer_oracle_queries_per_variant": 1200,
+  "observer_variants": [
+    {
+      "groups": 12,
+      "marker": "OBSERVER31AB_PASS groups=12 translation_oracle_cases=1200 native=NOT_DEPLOYABLE",
+      "status": "PASS",
+      "translation_oracle_cases": 1200,
+      "variant": "optimized"
+    },
+    {
+      "groups": 12,
+      "marker": "OBSERVER31AB_PASS groups=12 translation_oracle_cases=1200 native=NOT_DEPLOYABLE",
+      "status": "PASS",
+      "translation_oracle_cases": 1200,
+      "variant": "sanitized"
+    }
+  ],
+  "optional_check_limits": [
+    "No suitable AArch64 ELF linker found in PATH or known Homebrew LLVM prefixes.",
+    "No QEMU system emulator/isolated execution environment used on M1; no tools installed or shared VM launched.",
+    "Compilation does not reproduce the linked-image audit, exact payload bytes, emulator execution or native acceptance."
+  ],
+  "packaging_log_matches_released_host": true,
+  "performance_measurements": "NOT RUN",
+  "physical_secondary_observation": "NOT RUN",
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "compiler_tmp_empty": true,
+    "frozen_listed_file_checks": 5794,
+    "frozen_manifests": 22,
+    "frozen_unique_files": 563,
+    "native_use_files": "NONE",
+    "owned_caffeinate_cleanup": "ALREADY_EXITED",
+    "prior_evidence": "PASS_UNCHANGED",
+    "prior_evidence_files": 522,
+    "retained_package_files": 13
+  },
+  "prior_exact_reviews_reused": [
+    {
+      "path": "native/boot/attempt31aa-m1-offline-2026-10-25.md",
+      "sha256": "71c9800b28c436212ba648fd16fd9a7912887e0119b8f09e34c05ca0ae7fd68b"
+    },
+    {
+      "path": "native/boot/attempt31aa-m1-offline-2026-10-25.json",
+      "sha256": "8a3deb8b413d6cdb4947d827f4db2dcd293129649bda37cf1e757ac91c941df0"
+    },
+    {
+      "path": "native/boot/attempt31aa-research-m1-offline-2026-10-25.md",
+      "sha256": "3fb9f0e3788b3b556a5db9f145bcd9558c1a8facad630ed29644586ec8b15451"
+    },
+    {
+      "path": "native/boot/attempt31aa-research-m1-offline-2026-10-25.json",
+      "sha256": "83c197bdcb98beb4aac0e79357dab2991c1d74b4534610d4f07c011d2db84e5d"
+    }
+  ],
+  "public_scope": "Original review prose and sanitized test metadata only; raw logs, generated binaries and proprietary artifacts remain ignored.",
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "retries": 0,
+  "review_blockers": [],
+  "review_findings": [
+    "No actionable issue found within documented original offline contracts; optional link/emulator limitations remain explicit.",
+    "Entry captures full argument/state words without incoming-stack or pointer dereference; owns diagnostic storage/stack/vectors; transports remain uncalled.",
+    "Fatal recorder terminates; it is not monitored exception continuation or proof of higher/guarded exception coverage.",
+    "Observer bounds range snapshots, arithmetic, overlaps, contiguous translation, descriptor geometry and all RAM rows before stores.",
+    "Observer uses only ordinary caller RAM; numeric PA/VA fields do not supply hardware access, permission, cache or scanout evidence.",
+    "Translation probe is separate, stackless and unsupported outside its qualified ordinary EL2/64-bit-PAR profile; execution status and PAR.F are distinct.",
+    "PAR restoration is a normal-return promise only; AT can affect translation state/access flags on other profiles.",
+    "Compile-only fixture includes synthetic page-table setup and must remain excluded from a resident native image."
+  ],
+  "reviewed_commit": "1354755a3ea4afc3ca084b1ec7ea47c99331d9c4",
+  "schema": "ilinux-attempt31ab-m1-offline-v1",
+  "skips_in_executed_suites": 0,
+  "source_repairs": 0,
+  "target_requests": 0,
+  "tools": {
+    "build": "25A362",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "known_homebrew_llvm_linker_available": false,
+    "macos": "26.0.1",
+    "optional_tools_available": {
+      "aarch64-linux-gnu-gcc": false,
+      "ld.lld": false,
+      "llvm-objdump": false,
+      "llvm-readelf": false,
+      "qemu-system-aarch64": false
+    },
+    "python": "3.13.5"
+  },
+  "unique_c_groups": 12,
+  "unique_python_methods": 8,
+  "upstream_evidence_review": {
+    "entry_emulation": {
+      "BRK_cases": 3,
+      "BRK_vector_slot": 4,
+      "apple_firmware": false,
+      "cases": 9,
+      "monitor_calls": 0
+    },
+    "entry_link": {
+      "audit_groups": 6,
+      "bases": 2,
+      "mutation_refusals_per_base": 16,
+      "payload_bytes": 81920,
+      "payload_sha256": "d6c44bf955e0e4d7b3b8739af818863168bd44c363d5b92d177ecc2c34c9f6fd",
+      "slide_bytes_identical": true
+    },
+    "packaged_image": {
+      "bytes": 114688,
+      "read_only_property_derivation": "PROPERTIES_DERIVED; parser result only",
+      "sha256": "3050ec8d71cfd34defa8e91c3b212a422489e0528286f892d8108db09dc3da78"
+    },
+    "rea": {
+      "CLI_exits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "batches": 3,
+      "common_exit_whole_function_refusal": "RETAINED",
+      "count_initialization_before_handoff_or_service15": "UNKNOWN",
+      "entry_words": 150,
+      "observer_words": 566,
+      "prior_entry_words_reverified_in_observer": 3,
+      "requests": 4,
+      "running_or_installed_firmware_identity_refreshed": false,
+      "whole_function_pseudocode_used": false,
+      "zero_mismatches_reported": true
+    },
+    "reproduced_on_m1": false,
+    "setup_failures_retained": [
+      "initial VM086 setup",
+      "host QEMU setup",
+      "guest QEMU source build",
+      "guest runtime preparation",
+      "instruction preflight",
+      "entry fixture placement",
+      "first observer/translation VM",
+      "translation audit repair"
+    ],
+    "translation_emulation": {
+      "EL_and_E2H_refusals_execution_covered": false,
+      "candidate_bytes_unchanged": 24576,
+      "cases": 10,
+      "cpu_model": "cortex-a57",
+      "hardware_af_management": false,
+      "table_bytes_checked": 12288
+    }
+  },
+  "working_cpu_workaround": "NOT DEMONSTRATED"
+}
