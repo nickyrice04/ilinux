@@ -6,6 +6,23 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AC installation rejected; M5 offline investigation next, 2026-10-25
+
+M1 guided the human through the authorized paired-Recovery sequence. Initial
+guard/candidate checks PASS; one actual candidate configure failed after Apple
+confirmation with reported fileset error and exit 71. Fresh base guard PASS/0
+before exact boot021 rollback; human reported reinstall success, safe Macintosh
+HD return and separately confirmed it as default. Numeric rollback exit/full
+postcheck were not separately captured. No diagnostic boot or candidate retry.
+
+M5 can investigate the packaged-format/Recovery installer acceptance offline;
+root cause remains Unknown because the complete error text was not captured.
+No new boot/settings action follows. 31AC native/live version/Linux/SMP/GPU/
+performance remain NOT RUN. All frozen material and consumed receipts preserved;
+31 pins, clean client and 539 prior evidence files reverified. New sanitized
+handoff: `native/boot/attempt31ac-recovery-2026-10-25-result.md` and JSON.
+Earlier NOT RUN installation/rollback checkpoints below are historical.
+
 ### Current — 31AC approved; M1 owns Recovery guidance, 2026-10-25
 
 M1 review `f6fae6c` passes. Human approval now covers temporary lab Startup Disk,

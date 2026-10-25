@@ -4344,3 +4344,21 @@ approval fields; the new receipt and handoff supersede that hold, not their byte
 `tools/m1n1-client/attempt31ac-authorized-handoff.md` and the unchanged reviewed
 Recovery commands. No proxy launch or unchanged second test. An absent marker
 does not establish an Apple-only CPU restriction.
+
+## 2026-10-25 · Stop31AC at installer rejection; retain reported rollback evidence
+
+**Decision:** After one candidate configure failed with human-reported fileset
+error/exit 71, do not retry, change flags or attempt a diagnostic boot. Do not
+assume failure left the slot untouched. The fresh base guard passed with exit 0,
+so guide only the already authorized exact boot021 rollback and original return.
+Human reported reinstall success, safely returned and separately confirmed
+Macintosh HD as default. Numeric rollback exit/full postcheck were not separately
+captured; retain this evidence limit instead of calling it an independent M1
+measurement. Full/Permissive are the reported guarded policy states.
+
+**Consequences:** Candidate boot/entry/marker/live version/Linux/SMP/GPU/performance
+remain NOT RUN. The failure is at installation; fileset wording alone does not
+establish a component-level cause. M5 can investigate the packaged format and
+installer contract offline, with no automatic boot/settings change. Preserve all
+frozen source/reviews/authorization and consumed receipts. Sanitized result:
+`native/boot/attempt31ac-recovery-2026-10-25-result.md` and JSON.

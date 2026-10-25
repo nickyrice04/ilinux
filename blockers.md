@@ -1,5 +1,20 @@
 # Blockers
 
+## Current — 31AC Recovery installer acceptance failed; native entry NOT RUN
+
+The one authorized candidate configure invocation produced a human-reported
+fileset error and exit 71 after confirmation. Exact candidate hash/size and actual
+lab-paired Recovery guard had passed. The full error text is unavailable, so the
+specific format/installer failure remains Unknown; this is not firmware entry
+evidence or proof of an Apple-only CPU restriction. No candidate retry/raw fallback.
+
+Fresh post-failure guard PASS/0; exact boot021 reinstall success, safe original
+return and original default restoration reported by the human. Numeric rollback
+exit/full postcheck not separately captured. Investigate offline before proposing
+any changed experiment. 31AC diagnostic boot/live version/Linux/SMP/GPU/performance
+NOT RUN. No restart, new security downgrade or volume action authorized by this
+result. Evidence: `native/boot/attempt31ac-recovery-2026-10-25-result.md` and JSON.
+
 ## Current — 31AC approval resolved; physical Recovery sequence next
 
 M1 `f6fae6c` review PASS; the human has now authorized the exact lab-only

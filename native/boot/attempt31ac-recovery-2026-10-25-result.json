@@ -1,0 +1,88 @@
+{
+  "schema": "ilinux-attempt31ac-recovery-result-v1",
+  "date_local": "2026-10-25",
+  "execution_handoff_commit": "6aa6acde78a68e1ba2a3e7099eb7264ebbd94abd",
+  "implementation_commit": "8c5b691210a1923d647412985c8bfa53a6c9feba",
+  "m1_review_commit": "f6fae6ce053722c796ff11e9bcc5575b12952037",
+  "result": "INSTALL_FAILED_ROLLBACK_REPORTED_RETURNED",
+  "m5_execution_evidence": "Human-operated and human-reported; no remote M1 Recovery execution",
+  "candidate": {
+    "bytes": 180224,
+    "sha256": "261d44447442f32ba6c41bbf0f69179e8c9eb4c33507b60762f0ea8c2e54ab72",
+    "m1_reverification": "PASS",
+    "m5_size_and_hash": "PASS_HUMAN_REPORTED",
+    "m5_candidate_guard": "PASS_HUMAN_REPORTED",
+    "m5_candidate_guard_exit": 0
+  },
+  "recovery_guard": {
+    "initial": "PASS_HUMAN_REPORTED_AND_PRIVATE_PHOTO",
+    "initial_exit": 0,
+    "original_policy": "Full",
+    "lab_policy": "Permissive",
+    "lab_paired_1tr": true,
+    "post_failure": "PASS_HUMAN_REPORTED",
+    "post_failure_exit": 0,
+    "m1_independent_target_query": "NOT RUN"
+  },
+  "transfer": {
+    "scope": "Only the verified extracted package directory",
+    "candidate_http_gets_observed": 1,
+    "candidate_http_status": 200,
+    "m1_server_stopped": true,
+    "staged_boot021_path_overwritten_by_transfer": false
+  },
+  "installation": {
+    "guard_typo_no_write_branch_observed": true,
+    "candidate_configure_invocations_reported": 1,
+    "mode": "Mach-O; no raw fallback",
+    "apple_confirmation_answered": true,
+    "exit_code_human_reported": 71,
+    "error_summary_human_reported": "fileset error",
+    "complete_error_text": null,
+    "error_root_cause": "Unknown",
+    "failure_assumed_atomic": false,
+    "candidate_retry_invocations": 0
+  },
+  "rollback": {
+    "bytes": 3932160,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "fresh_guard_pass_before_write": true,
+    "guided_mode": "raw",
+    "guided_entry_point": 2048,
+    "guided_lowest_virtual_address": 0,
+    "result": "SUCCESS_BRANCH_HUMAN_REPORTED",
+    "success_branch_requires": "Restore exit 0 and original Full/lab Permissive postcheck",
+    "numeric_exit_separately_captured": null,
+    "full_postcheck_separately_captured": false,
+    "m1_independent_installed_slot_verification": "NOT RUN",
+    "live_boot021_execution_version_check": "NOT RUN"
+  },
+  "return": {
+    "macintosh_hd_desktop": "CONFIRMED_BY_HUMAN",
+    "macintosh_hd_default_startup_disk": "SEPARATELY_CONFIRMED_BY_HUMAN",
+    "preparatory_lab_default_restart_flow": "Not separately confirmed; actual paired Recovery guard passed",
+    "fresh_desktop_os_build_query": "NOT RUN"
+  },
+  "native_entry_observed": false,
+  "candidate_native_boot": "NOT RUN",
+  "candidate_native_boot_invocations": 0,
+  "thirty_second_marker_observation": "NOT RUN",
+  "live_target_version_checks": "NOT RUN",
+  "monitor_calls": "NOT RUN",
+  "physical_secondary_startup": "NOT RUN",
+  "linux_smp_gpu_performance": "NOT RUN",
+  "m1_usb_device_opens_for_this_attempt": 0,
+  "m1_proxy_requests_for_this_attempt": 0,
+  "m1_restart_for_this_attempt": false,
+  "new_security_downgrade_or_volume_operation": "NONE_REPORTED_OR_GUIDED",
+  "preservation": {
+    "source_pins_reverified": 31,
+    "prior_evidence_files_verified_unchanged": 539,
+    "consumed_receipts_preserved": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "client_clean": true,
+    "frozen_source_and_authorization_modified": false,
+    "prior_offline_tests_reused_not_rerun": true
+  },
+  "next_action": "Offline investigation only; no automatic candidate retry or new boot"
+}

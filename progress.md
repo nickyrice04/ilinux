@@ -1,5 +1,24 @@
 # Progress Log
 
+## 2026-10-25 · M1: 31AC install rejected; exact rollback and original return reported
+
+On execution handoff `6aa6acd`, paired-Recovery guard and candidate size/hash
+checks PASS. One candidate Mach-O configure invocation failed after confirmation:
+human reported fileset error and stored exit 71. A prior mistyped function guard
+took the no-write branch; it was not an install invocation. No raw fallback,
+candidate retry or diagnostic selection followed. Fresh base guard PASS/0 before
+the approved exact boot021 rollback. Human reported reinstall success, safe return
+to Macintosh HD, then separately confirmed original default Startup Disk.
+
+The rollback numeric exit/full postcheck were not separately captured; success
+is the reported guarded branch, not independent M1 installed-slot verification.
+31AC native boot, marker observation, live version, Linux/SMP/GPU/performance
+remain NOT RUN. Root cause Unknown; complete fileset error text unavailable.
+31 pins, clean client `57a9339` and 539 prior evidence files reverified unchanged;
+old reviews/receipts untouched. Temporary package-only HTTP server stopped.
+No new tests or physical action needed for this documentation handoff. Evidence:
+`native/boot/attempt31ac-recovery-2026-10-25-result.md` and JSON.
+
 ## 2026-10-25 · 31AC approved; lab Startup Disk selected for Recovery handoff
 
 Reviewed M1 `f6fae6c`: PASS, no actionable offline blocker. Direct human approval

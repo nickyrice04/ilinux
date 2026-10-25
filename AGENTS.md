@@ -99,6 +99,21 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AC install exit 71; rollback/return reported, 2026-10-25
+
+One human-operated lab candidate configure invocation failed after confirmation:
+fileset error, exit **71**. Initial and fresh post-failure Recovery guards PASS,
+exit 0, original Full/lab Permissive/lab-paired 1TR. No candidate retry or boot.
+Human reported the exact boot021 reinstall success branch, safe Macintosh HD
+return and separately confirmed original default restoration. Numeric rollback
+exit/full postcheck were not separately captured; no M1 target query is claimed.
+31AC native entry/30-second observation/live version/Linux/SMP/GPU/performance
+**NOT RUN**. All 31 frozen pins, clean client `57a9339` and 539 prior evidence
+files verify unchanged. Next is offline fileset/installer-contract investigation,
+not another boot or security change. Full result and limits:
+`native/boot/attempt31ac-recovery-2026-10-25-result.md` and JSON.
+Older authorization/checkpoint paragraphs below are historical.
+
 ### Latest — 31AC human authorization given; restart handoff, 2026-10-25
 
 M1 review `f6fae6c` PASS has no actionable blocker. The human now explicitly
