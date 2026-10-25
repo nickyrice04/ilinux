@@ -1,0 +1,334 @@
+{
+  "Linux_SMP_GPU_performance": "NOT RUN",
+  "additional_delivery_namespace_refusal_subcases": 6,
+  "approval_required_actions": [
+    "temporary lab Startup Disk selection",
+    "lab-only Mach-O custom boot-object replacement",
+    "one bounded diagnostic boot",
+    "exact boot021 raw rollback and MacintoshHD default restoration"
+  ],
+  "archive": {
+    "bytes": 249011,
+    "filename": "ilinux-31ac-entry-test.tar.gz",
+    "sha256": "7cc585d69ebd023e2683b9842320b96ba30c9056e5082fa61aa18b74a0f60fdd",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ac/ilinux-31ac-entry-test.tar.gz",
+    "verified_before_extraction": true
+  },
+  "artifact_geometry_roundtrip": {
+    "candidate_bytes": 180224,
+    "candidate_sha256": "261d44447442f32ba6c41bbf0f69179e8c9eb4c33507b60762f0ea8c2e54ab72",
+    "payload_recovered_bytes": 147456,
+    "payload_sha256": "735fe28fb5148ff5c111ac0c9c1a3796957350325703c334ea9d2ca68a85ba96",
+    "source_packager_roundtrip": "BYTE_IDENTICAL_TO_DOWNLOADED_MACHO"
+  },
+  "artifact_manifest_sha256": "2d0978ddcc15a63a665917fe57d2fab3ed5784a2e92763dfcbd8e3595fcc5543",
+  "candidate": {
+    "bytes": 180224,
+    "sha256": "261d44447442f32ba6c41bbf0f69179e8c9eb4c33507b60762f0ea8c2e54ab72"
+  },
+  "compile_status": "COMPILE_PASS_NOT_LINKED",
+  "date_local": "2026-10-25",
+  "delivery_methods": 3,
+  "device_opens": 0,
+  "either_mac_restarted": false,
+  "execution": [
+    {
+      "command": [
+        "shasum",
+        "-a",
+        "256",
+        "-c",
+        "native/boot/attempt31ac/source-sha256.txt"
+      ],
+      "exit": 0,
+      "label": "manifest",
+      "seconds": 0.038,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "204997224316b9c1710e3e2ea4660a0d1a41c6816a1434bb61a5ef8a7b32760d"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "native/boot/attempt31ac/verify.py",
+        "--archive",
+        "build/native-intake/attempt31ac-offline/ilinux-31ac-entry-test.tar.gz"
+      ],
+      "exit": 0,
+      "label": "archive-verify",
+      "seconds": 0.077,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3c06ef0103276a4a0027c60084ec68089a72bc108fe9385a40e0c64e5e937cd6"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-B",
+        "native/boot/attempt31ac/test_verify.py"
+      ],
+      "exit": 0,
+      "label": "delivery-tests",
+      "seconds": 0.076,
+      "stderr_sha256": "7d59a8fbca92ef540f42b6883247c3844892d23f501b6cf2621d0e535813fb81",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "kernel/experiments/bootimage31ac",
+        "-p",
+        "test_image.py"
+      ],
+      "exit": 0,
+      "label": "packaging-tests",
+      "seconds": 0.077,
+      "stderr_sha256": "637ad693971420b70a01476cd5d51065ecc3c7af270c41cfe91899ec8c2db4bd",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/visible31ac/run.py",
+        "--output",
+        "build/31ac-visible-m1-review",
+        "--cc",
+        "clang",
+        "--target",
+        "aarch64-none-elf",
+        "--compile-only"
+      ],
+      "exit": 0,
+      "label": "compile",
+      "seconds": 0.346,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a21679306648e11ab391387bcb3a5e592130a1aefe88667d785b30e8564979a2"
+    }
+  ],
+  "external_messages_sent": 0,
+  "extraction": {
+    "archive_verified_before_extraction": true,
+    "downloaded_files_executed": false,
+    "members": [
+      {
+        "bytes": 506,
+        "name": "README.txt",
+        "regular": true,
+        "sha256": "e00fd1e85ca88f8a533f03568ef8139f385ff2abf5f3d102bc105c4f081b66f0"
+      },
+      {
+        "bytes": 487,
+        "name": "SHA256SUMS",
+        "regular": true,
+        "sha256": "3b4f6545cb6b03ec9e502a29fb677ddf687d5d269998d19d4bc78c122dbeb620"
+      },
+      {
+        "bytes": 1067,
+        "name": "iLinux-LICENSE",
+        "regular": true,
+        "sha256": "566069bb67afe27dc4dccb4127aca65f0d737755087a1a0db9dad97a582fb9ea"
+      },
+      {
+        "bytes": 180224,
+        "name": "ilinux-31ac.macho",
+        "regular": true,
+        "sha256": "261d44447442f32ba6c41bbf0f69179e8c9eb4c33507b60762f0ea8c2e54ab72"
+      },
+      {
+        "bytes": 17984,
+        "name": "m1n1-LICENSE",
+        "regular": true,
+        "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+      },
+      {
+        "bytes": 3932160,
+        "name": "m1n1-boot021.bin",
+        "regular": true,
+        "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+      },
+      {
+        "bytes": 211,
+        "name": "m1n1-source.json",
+        "regular": true,
+        "sha256": "9e48b59f042b97cf57268a5e0d6abb206c57fd2b873bb7742c393ad7f6c310ae"
+      }
+    ],
+    "native": "NOT RUN",
+    "rollback_marker_matches": true,
+    "rollback_matches_retained_package": true,
+    "status": "PASS",
+    "verified_manifest_files": 6
+  },
+  "installed_boot021_changed": false,
+  "lab_installation": "NOT RUN",
+  "live_target_version_checks": "NOT RUN",
+  "manifest": {
+    "pins": 31,
+    "sha256": "d1e017880ab416d2818e049f2a3391dfdc89097510b1453ee37ad8f8d7775476",
+    "status": "PASS"
+  },
+  "metadata_count_correction": {
+    "actual_frozen_unique_files": 606,
+    "all_manifests_and_listed_hashes_pass": true,
+    "incorrect_expected_unique_files": 607,
+    "listed_checks": 5838,
+    "manifests": 23,
+    "previous_verification_stopped_before_report_or_publication": true,
+    "source_or_test_failure": false,
+    "stage": "M1 preservation metadata assertion",
+    "tests_rerun": false
+  },
+  "monitor_calls": 0,
+  "native_execution": "NOT RUN",
+  "native_framebuffer": "NOT RUN",
+  "native_invocations": 0,
+  "objects": [
+    {
+      "file": "entry.o",
+      "format": "ELF64_LE_AARCH64_RELOCATABLE",
+      "sha256": "6ff58123bea3da6b0292089774014083aaa5a17c984d83283ef03651da47f59c"
+    },
+    {
+      "file": "probe.o",
+      "format": "ELF64_LE_AARCH64_RELOCATABLE",
+      "sha256": "a12da523977c8939ae3c7a11f39519aea3163c5cd65eeddc5a298ffb7eb4d9ad"
+    },
+    {
+      "file": "runtime.o",
+      "format": "ELF64_LE_AARCH64_RELOCATABLE",
+      "sha256": "044beae2ede9e40e4e2082848ded6388c48454d1dd9b1fbf4a72c6009dd69eb6"
+    },
+    {
+      "file": "bridge.o",
+      "format": "ELF64_LE_AARCH64_RELOCATABLE",
+      "sha256": "016acf3d7459685fc6b135c346f2605a6696e474797141624f6b478a7eaf8ac3"
+    },
+    {
+      "file": "observer.o",
+      "format": "ELF64_LE_AARCH64_RELOCATABLE",
+      "sha256": "7e8a3d46e9bd27e83519abef89a2446f3fddaa98c1df26e2aa55d28d730c1b94"
+    }
+  ],
+  "packaging_methods": 8,
+  "physical_secondary_start": "NOT RUN",
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "compiler_tmp_empty": true,
+    "frozen_listed_file_checks": 5838,
+    "frozen_manifests": 23,
+    "frozen_unique_files": 606,
+    "owned_caffeinate_cleanup": "ALREADY_EXITED",
+    "prior_evidence": "PASS_UNCHANGED",
+    "prior_evidence_files": 539,
+    "recovery_helper_source_hash_verified": true,
+    "retained_package_files": 13,
+    "unique_files_with_prior_m1_pair": 608
+  },
+  "proxy_requests": 0,
+  "public_scope": "Original review prose and sanitized hashes/test metadata; downloaded binaries and all raw logs remain ignored.",
+  "ready_for_concrete_user_review": true,
+  "recovery_guide_syntax": {
+    "blocks": [
+      {
+        "block": 1,
+        "exit": 0,
+        "source_sha256": "2cdf06a475ed60796d9b8cebb60dc43466121acb7e128cad8963b7300b773a8e"
+      },
+      {
+        "block": 2,
+        "exit": 0,
+        "source_sha256": "cbb9e52344354b45b7db38c2062b24ebd3aaba49cdcdedc000da3787e0e439f1"
+      },
+      {
+        "block": 3,
+        "exit": 0,
+        "source_sha256": "6df035bdf0053fe24c05b712f7215985126a8755fa2cad37ec3869c569373f50"
+      },
+      {
+        "block": 4,
+        "exit": 0,
+        "source_sha256": "9f7ccd8722765f552616cd24d06979850145d39f9258daa753adc63764925eba"
+      },
+      {
+        "block": 5,
+        "exit": 0,
+        "source_sha256": "24dad80e54f3afa911d2d8a05da847539c0fe6e7ad3d9dd224d9b2f4e0485494"
+      },
+      {
+        "block": 6,
+        "exit": 0,
+        "source_sha256": "f1a74eccc8f70f8487a330711d20827683c58b10ea4b5c30ffcfe2735cd6f676"
+      }
+    ],
+    "executed": false,
+    "scope": "bash -n syntax only; no Recovery commands executed"
+  },
+  "research_and_procedure_review": [
+    "Integrated bounded read/write AT and snapshot validation precede framebuffer stores; whole monitor record decoding is not required.",
+    "Physical aliases of payload/source pages are refused; appended metadata/link-edit pages are explicitly outside the protection list.",
+    "All pixel rows and WB clean extents are planned before stores; actual later faults can leave partial output.",
+    "Visible32x16 marker establishes reaching its store/display path only, not final clean/park or monitor readiness.",
+    "Known EL2/nonVHE/VHE profiles and finite D128 checks are not firmware acceptance or proof of every native protection.",
+    "New paired-Recovery guard preserves expected Full/Permissive levels, validates separate lab group/build/helper/rollback; frozen old Full/Full preflight is not invoked.",
+    "Candidate Mach-O configure command and exact raw boot021 rollback use distinct reviewed modes; no raw fallback, altered options or automatic retry.",
+    "Temporary lab default, possible preparatory boot021 start, single30-second observation, rollback and original-default restoration require explicit human approval."
+  ],
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "reused_exact31ab_review": [
+    {
+      "path": "native/boot/attempt31ab-m1-offline-2026-10-25.md",
+      "sha256": "781918aa558e50bcce4dd56194eab996880911772dcb8895269587983c5e8669"
+    },
+    {
+      "path": "native/boot/attempt31ab-m1-offline-2026-10-25.json",
+      "sha256": "7c8a92fc591ce3f8600e9e1e7a7e055e6e503f4de4e6a5cc254b9a98ff7309e8"
+    }
+  ],
+  "review_blockers": [],
+  "reviewed_commit": "8c5b691210a1923d647412985c8bfa53a6c9feba",
+  "reviewed_upstream_not_reproduced": {
+    "D128_optional_paths": "NOT EXECUTION COVERED",
+    "M5_VM_Linux_execution_on_m1": "NOT RUN",
+    "REA_private_instruction_comparison_SDK_layout_retrieval_on_m1": "NOT RUN",
+    "actual_macho_read_only_inspector_on_m1": "NOT RUN; source packager roundtrip performed instead",
+    "actual_post_paint_BRK_faults": 2,
+    "complete_payload_cases": 26,
+    "link_and_26_cases_on_m1": "NOT RUN; existing ELF linker/QEMU unavailable as recorded in prior M1 review",
+    "no_paint_refusals": 16,
+    "other_vectors": "STATIC AUDIT ONLY",
+    "runtime_vector_slot": 4,
+    "successful_paints": 8
+  },
+  "rollback": {
+    "byte_identical_to_retained_boot042_package": true,
+    "bytes": 3932160,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "marker_verified": true,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+  },
+  "rollback_installation": "NOT RUN",
+  "schema": "ilinux-attempt31ac-m1-offline-v1",
+  "security_volume_default_changes": false,
+  "skips_in_executed_suites": 0,
+  "source_binding_count": 11,
+  "source_bindings_match_published_host_vm": true,
+  "source_bindings_sha256": "e528ea024cf8fc987ca32e1e7c0dc7d8351e47735ef619868e505783be1cbd1b",
+  "source_repairs": 0,
+  "target_queries": 0,
+  "test_retries": 0,
+  "tools": {
+    "build": "25A362",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "macos": "26.0.1",
+    "python": "3.13.5"
+  },
+  "unique_python_methods": 11,
+  "user_install_approval": "REQUIRED_NOT_YET_GIVEN"
+}

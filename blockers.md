@@ -1,5 +1,29 @@
 # Blockers
 
+## Current — 31AC independently reviewed; native authorization pending
+
+**Independent M1 review on `8c5b691`: OFFLINE_PASS_NATIVE_HOLD.**
+31 source pins PASS. Published 249011-byte archive hash verified against Git before
+safe extraction; six artifact files plus checksum inventory PASS. Candidate 180224
+bytes/261d4444…e54ab72 and exact boot021 rollback verified; rollback byte-identical
+to retained package. 8 packaging + 3 delivery Python methods PASS; five AArch64
+objects compile. All 11 source bindings match host/VM; actual downloaded Mach-O
+roundtrips byte-identically through the source packager. Exact 31AB review reused.
+
+No actionable offline blocker. Link/audit/26 runtime cases, native properties,
+REA/private/SDK/VM checks NOT RUN on M1; separate M5 evidence reviewed. One M1
+preservation-count assertion corrected before publication; no source/test change.
+All 23 frozen closures/5838 file checks and 539 prior evidence files unchanged,
+including consumed receipts; clean client `57a9339` and retained 13-file package intact.
+
+The concrete lab replacement/temporary-default/one 30-second boot/exact rollback
+sequence is ready for separate user review; installation approval NOT GIVEN.
+A visible marker proves store/display-path entry only; silence remains ambiguous.
+No installation, restart, proxy, monitor call, settings change or outreach.
+Native/live/Linux/SMP/GPU/performance NOT RUN. Evidence:
+`native/boot/attempt31ac-m1-offline-2026-10-25.md` and reviewed JSON.
+
+
 ## Current — native acceptance is the next discriminating experiment
 
 31AC integrates the original resident-entry recorder, bounded snapshots, actual
