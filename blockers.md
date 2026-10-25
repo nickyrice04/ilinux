@@ -1,5 +1,23 @@
 # Blockers
 
+## Current — 31AD missing suite and real candidate evidence
+
+M1 reviewed `f806f70`: all 35 source pins, 67 available packaging/renderer
+methods and five AArch64 compile-only objects PASS; all 11 source bindings
+match M5. The advertised eight-method kconfig command exits 2 because its test
+file is absent from the checkout and tracked Git: those methods are NOT RUN.
+Existing project LLD 23.1.3 was found outside PATH; one unchanged canonical
+link failed at image.ld counter/extent checks. Audit/slid link and QEMU NOT RUN;
+no real ordered candidate/archive produced. No source repair or alternate retry.
+
+M5 next: publish the missing suite or correct the 75-method claim, and complete
+the intended GNU-link/26-case VM/candidate evidence. The original fileset cause
+remains Unknown and ordering remains a Hypothesis. No Recovery block, native
+boot, proxy, VM start, Mac restart or installed-object/security/volume/default
+change occurred. All 25 frozen manifests/5904 listed checks/661 distinct files
+and 570 prior evidence files unchanged; clean client and consumed receipts
+intact. Evidence: `native/boot/attempt31ad-m1-offline-2026-10-25.md` and JSON.
+
 ## Current — 31AD prepared but gated; candidate build, M1 review and fresh approval outstanding
 
 31AD is the offline candidate that reorders the 31AC payload to satisfy the

@@ -4397,3 +4397,31 @@ would make the ordering hypothesis Likely, not prove native entry/SMP/performanc
 a second rejection leaves the cause Unknown. macOS, boot policy, SIP, volumes and
 security stay intact; no restart. Package: `native/boot/attempt31ad/`; root cause:
 `research/native31ad-fileset-ordering.md`.
+
+## 2026-10-25 · M1: retain partial31AD result and native hold
+
+M1 reviewed `f806f70`: all 35 source pins, 67 available packaging/renderer
+methods and five AArch64 compile-only objects PASS; all 11 source bindings
+match M5. The advertised eight-method kconfig command exits 2 because its test
+file is absent from the checkout and tracked Git: those methods are NOT RUN.
+Existing project LLD 23.1.3 was found outside PATH; one unchanged canonical
+link failed at image.ld counter/extent checks. Audit/slid link and QEMU NOT RUN;
+no real ordered candidate/archive produced. No source repair or alternate retry.
+
+M5 next: publish the missing suite or correct the 75-method claim, and complete
+the intended GNU-link/26-case VM/candidate evidence. The original fileset cause
+remains Unknown and ordering remains a Hypothesis. No Recovery block, native
+boot, proxy, VM start, Mac restart or installed-object/security/volume/default
+change occurred. All 25 frozen manifests/5904 listed checks/661 distinct files
+and 570 prior evidence files unchanged; clean client and consumed receipts
+intact. Evidence: `native/boot/attempt31ad-m1-offline-2026-10-25.md` and JSON.
+
+**Decision:** Report 67 actual passing methods plus eight NOT RUN, preserving the
+missing-file exit 2. Keep the compile-only PASS separate from the optional
+LLD/script link failure. Do not repair a frozen source tree or change link flags
+to turn this review into a pass. Do not treat stub configure/clipboard tests as
+Recovery evidence or the local range guard as Apple's original error diagnosis.
+
+The M1 test request authorizes the available offline work; a physical sequence
+is not ready while the actual candidate pin/VM evidence remain missing. Preserve
+the existing boot021/client, Macintosh HD/default and Full/Permissive report.
