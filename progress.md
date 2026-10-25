@@ -1,5 +1,31 @@
 # Progress Log
 
+## 2026-10-25 · M5: 31AD candidate built and released; M1 partial-review findings addressed
+
+M1's partial review (`3720a89`) is incorporated and both findings addressed.
+Finding 1 (kconfig suite absent at f806f70): the unrelated Omarchy
+`omarchy-kconfig` suite is removed from the 31AD package and count; the
+reproducible total is **70 methods across five committed suites** (test_ordered
+32, test_image 23, test_render 5, test_write_render 7, test_verify 3). Finding 2
+(real candidate + link/QEMU evidence): the isolated-VM job (088) GNU-ld two-base
+link is byte-equal (`6da621da…`) and the 26 QEMU cases PASS; `ordered.py` built
+the 196608-byte candidate (sha256 `406be900…cc16309`); `validate_ordered.py`
+returns STRUCTURAL_PROFILE_PASS (text_exec 32768 ≤ boot_exec 98304). The
+original-only archive (`3f3eb70e…`) verifies PASS (verify.py + 3 test_verify
+methods), the manifest is pinned, and prerelease `native-j716c-31ad` carries four
+assets; the pinned URLs resolve with matching hashes. The install/rollback and
+read-only diagnosis one-paste pages are rendered privately (approval header baked
+in). The earlier "macOS has no ELF linker" phrasing is corrected per M1: a host
+project-local LLD exists but rejects the GNU-ld `image.ld` script; the canonical
+link is GNU ld in the VM.
+
+Native install, 30-second marker, rollback execution, Linux, SMP, GPU and
+performance remain **NOT RUN**. macOS, boot policy, SIP, volumes and security
+untouched; no restart. `install_authorized` false. Remaining restart gate: M1
+review of the released candidate, then a fresh explicit human authorization of the
+exact candidate (the 31AC approval does not carry over). Receipt:
+`native/boot/attempt31ad/validation.json`.
+
 ## 2026-10-25 · M1: 31AD tests run; missing suite and failed optional link
 
 M1 reviewed `f806f70`: all 35 source pins, 67 available packaging/renderer

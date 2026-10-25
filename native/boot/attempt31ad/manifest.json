@@ -1,49 +1,74 @@
 {
   "schema": "ilinux-native31ad-delivery-v1",
-  "status": "PENDING_VM_LINK",
-  "candidate_built": false,
-  "archive_built": false,
   "experiment": "corrected split-protection ordered nested-fileset candidate derived from the frozen 31AC payload; no secondary release or Linux boot",
-  "supersedes_cause": "31AC configure-boot exit 71 (reported fileset error); see research/native31ad-fileset-ordering.md (Hypothesis, not a confirmed diagnosis)",
-  "ordering_invariant": "__TEXT_EXEC.fileoff <= __TEXT_BOOT_EXEC.fileoff in both outer and inner headers",
-  "candidate": {
-    "filename": "ilinux-31ad-ordered.macho",
-    "bytes": 196608,
-    "sha256": null,
-    "url": null,
-    "note": "Produced only by VM job 088 (visible31ad link -> bootimage31ad ordered.py). Real sha256 and release URL are filled in after that build and independent review. No dummy pin is shipped; the renderers and verifier refuse until a real 196608-byte image exists.",
-    "geometry_source": "kernel/experiments/bootimage31ad/README.md",
-    "generator": "kernel/experiments/bootimage31ad/ordered.py",
-    "validator": "kernel/experiments/bootimage31ad/validate_ordered.py"
+  "archive": {
+    "bytes": 251825,
+    "filename": "ilinux-31ad-entry-test.tar.gz",
+    "sha256": "3f3eb70ea933d6e2aa3becb2aa08f721f5a8bbc48666bd496f0b18a7ebfcf61e",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ad/ilinux-31ad-entry-test.tar.gz"
   },
+  "candidate": "ilinux-31ad-ordered.macho",
+  "candidate_bytes": 196608,
+  "candidate_sha256": "406be900521795608073fa9f050f4e5f00b595793c95b0a155e510893cc16309",
+  "candidate_url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ad/ilinux-31ad-ordered.macho",
+  "files": {
+    "README.txt": {
+      "bytes": 553,
+      "sha256": "62839a7a14de633e4705c1894425a49b8918e6a73a734b7def0a704d62a70b1d"
+    },
+    "iLinux-LICENSE": {
+      "bytes": 1067,
+      "sha256": "566069bb67afe27dc4dccb4127aca65f0d737755087a1a0db9dad97a582fb9ea"
+    },
+    "ilinux-31ad-ordered.macho": {
+      "bytes": 196608,
+      "sha256": "406be900521795608073fa9f050f4e5f00b595793c95b0a155e510893cc16309"
+    },
+    "m1n1-LICENSE": {
+      "bytes": 17984,
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+    },
+    "m1n1-boot021.bin": {
+      "bytes": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "m1n1-source.json": {
+      "bytes": 211,
+      "sha256": "9e48b59f042b97cf57268a5e0d6abb206c57fd2b873bb7742c393ad7f6c310ae"
+    }
+  },
+  "ordering_invariant": "__TEXT_EXEC.fileoff <= __TEXT_BOOT_EXEC.fileoff in both outer and inner headers",
+  "ordering_satisfied": {
+    "text_exec_fileoff": 32768,
+    "boot_exec_fileoff": 98304,
+    "checked_text_to_boot_bytes": 65536,
+    "validator": "kernel/experiments/bootimage31ad/validate_ordered.py",
+    "validator_status": "STRUCTURAL_PROFILE_PASS"
+  },
+  "linked_payload_sha256": "6da621da67de37437300e7205e8c3919dcac997600f7eb6e8fedae29e6b0fc88",
+  "qemu_cases": {
+    "total": 26,
+    "paints": 8,
+    "refusals": 16,
+    "fault_after_paint": 2,
+    "status": "PASS",
+    "native": "NOT_RUN"
+  },
+  "supersedes_cause": "31AC configure-boot exit 71 (reported fileset error); the fix is a Hypothesis, not a confirmed diagnosis",
+  "root_cause": "research/native31ad-fileset-ordering.md",
   "rollback": {
     "filename": "m1n1-boot021.bin",
     "bytes": 3932160,
     "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
-    "raw_entry": 2048,
-    "raw_lowest_virtual_address": 0,
     "staged_path": "/Volumes/iLinux Boot Lab - Data/Users/Shared/iLinuxBoot/m1n1.bin",
     "source": "m1n1 57a9339ffd1876e78297b17d34dece8cff8fa1ba",
-    "marker": "##m1n1_ver##ilinux-57a9339-boot021",
-    "note": "Exact, immutable, pre-existing lab rollback. Unchanged from 31AC. The 31AD rollback paste phase is fully determined by these pins and needs no new build."
+    "marker": "##m1n1_ver##ilinux-57a9339-boot021"
   },
-  "archive": {
-    "filename": "ilinux-31ad-entry-test.tar.gz",
-    "bytes": null,
-    "sha256": null,
-    "url": null,
-    "note": "Original-only archive (candidate + licenses + boot021 + source.json + SHA256SUMS). Built and released after the candidate exists and passes independent review."
-  },
-  "recovery_one_paste": {
-    "renderers": "tools/recovery31ad/write_render.py (install + rollback), tools/recovery31ad/render.py (read-only diagnosis)",
-    "write_profile_schema": "ilinux31ad-write-v1",
-    "diagnose_profile_schema": "ilinux31ad-diagnose-v1",
-    "note": "The rollback one-paste block is renderable now (all pins known). The install and diagnosis pages require the real candidate pin above; no production page with real pins is rendered until then."
-  },
-  "host_offline_evidence": "native/boot/attempt31ad/validation.json",
-  "instructions": "tools/m1n1-client/attempt31ad-instructions.md",
+  "rollback_raw_entry": 2048,
+  "rollback_raw_lowest_virtual_address": 0,
   "install_authorized": false,
   "authorization_note": "The 31AC authorization does NOT carry to this new image. A fresh, explicit human approval of the exact 31AD candidate and the full replace/observe/rollback plan is required before any write.",
+  "instructions": "tools/m1n1-client/attempt31ad-instructions.md",
   "native_execution": "NOT_RUN",
   "new_volume_required": false,
   "no_new_security_downgrade": true,

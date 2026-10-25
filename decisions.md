@@ -4425,3 +4425,29 @@ Recovery evidence or the local range guard as Apple's original error diagnosis.
 The M1 test request authorizes the available offline work; a physical sequence
 is not ready while the actual candidate pin/VM evidence remain missing. Preserve
 the existing boot021/client, Macintosh HD/default and Full/Permissive report.
+
+## D-051 · 2026-10-25 · 31AD candidate built and released; M1 findings addressed
+
+**Decision:** Address M1's partial-review findings and publish the real candidate.
+(1) Remove the unrelated Omarchy `omarchy-kconfig` suite from the 31AD package and
+correct the handoff to **70 reproducible methods** across five committed suites
+(this supersedes D-050's statement that the candidate/pages were not built).
+(2) Build and release the candidate from the isolated-VM GNU-ld link evidence.
+(3) Correct the "no ELF linker" phrasing: a host project-local LLD exists but
+rejects the GNU-ld `image.ld` script; the canonical link is GNU ld in the VM.
+
+**Context:** M1's review of `f806f70` (`3720a89`) got 67 PASS + 8 NOT RUN because
+the kconfig test file was not committed, and flagged the null candidate pins and
+the inaccurate linker claim. The isolated-VM job 088 had in fact linked
+(two-base byte-equal) and passed the 26 QEMU cases last session.
+
+**Consequences:** The 196608-byte ordered candidate validates
+STRUCTURAL_PROFILE_PASS (sha256 `406be900…cc16309`, text_exec 32768 ≤ boot_exec
+98304); the archive (`3f3eb70e…`) verifies PASS; the manifest is pinned; and
+prerelease `native-j716c-31ad` carries four assets (archive, candidate, flat 31AC
+image and boot021 as read-only diagnosis controls). The one-paste install/rollback
+and diagnosis pages are rendered privately with the approval header. Gates
+remaining: M1 review of the released candidate, then a fresh explicit human
+authorization of the exact candidate (the 31AC approval does not carry over).
+Native install/boot stay NOT RUN; macOS, boot policy, SIP, volumes and security
+untouched; no restart. The ordering explanation for exit 71 remains a Hypothesis.

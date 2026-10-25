@@ -28,14 +28,16 @@ python3 -I kernel/experiments/bootimage31ad/test_ordered.py
 python3 -I kernel/experiments/bootimage31ad/test_image.py
 python3 -I tools/recovery31ad/test_render.py
 python3 -I tools/recovery31ad/test_write_render.py
-python3 -I kernel/experiments/omarchy-kconfig/test_kconfig_fragment.py
+python3 -I native/boot/attempt31ad/test_verify.py
 python3 -I kernel/experiments/visible31ad/run.py \
     --output build/31ad-visible-m1-review --cc clang \
     --target aarch64-none-elf --compile-only
 ```
 
-Expect 75 packaging/renderer methods PASS and five AArch64 objects
-(`COMPILE_PASS_NOT_LINKED`). Compare the recorded `source_bindings_sha256`
+Expect 70 methods PASS across these five committed suites and five AArch64 objects
+(`COMPILE_PASS_NOT_LINKED`). (The `omarchy-kconfig` suite is a separate
+Omarchy-track concern, not part of this candidate, and is not in the package.)
+Compare the recorded `source_bindings_sha256`
 (`ac5b7fcca628ff7fcec720dfcfefb537d0766ace161531cd47fed40c1ea8fcca`) and confirm
 the reused `visible31ac` / `observer31ab` sources are byte-identical to their
 frozen 31AC/31AB pins. Confirm the ordering guard rejects both flat root types
@@ -50,20 +52,24 @@ print("range_check API present:", hasattr(v, "range_check"))
 PY
 ```
 
-On an M1 without an ELF linker/QEMU, record the two-base link, the 26 runtime
-cases, the ordered-image generation and `validate_ordered.py` on the real image
-as **NOT RUN on M1**, and review them as separate M5 VM evidence once produced.
-Do not install tools to fill that gap or treat the Mach-O parser/guard as a boot.
-Report the exact commit, hashes, commands, tool versions, actual outcomes and
-actionable findings.
+The canonical two-base link uses GNU ld in the VM. A host ELF linker is not
+required for this review; note that a project-local LLD rejects the GNU-ld
+`image.ld` script (location-counter error), which is a linker-script
+compatibility difference, not an absent linker and not the 31AC cause. Record the
+two-base link, the 26 runtime cases, the ordered-image generation and
+`validate_ordered.py` on the real image as separate M5 VM evidence (now published,
+see §2). Do not treat the Mach-O parser/guard as a boot. Report the exact commit,
+hashes, commands, tool versions, actual outcomes and actionable findings.
 
-## 2. Review the candidate when the VM link completes (pending)
+## 2. Review the released candidate (published)
 
-The real candidate comes only from the isolated VM
-(`virtualization/jobs/088-ordered31ad/run.sh`): `visible31ad/run.py` links
-`payload.bin`, `visible31ad-test/run.py` runs the 26 QEMU cases, and
-`bootimage31ad/ordered.py` wraps the linked payload into the 196608-byte image.
-When that evidence is published, verify offline:
+The candidate is built and published as prerelease `native-j716c-31ad`. It comes
+from the isolated VM (`virtualization/jobs/088-ordered31ad/run.sh`):
+`visible31ad/run.py` links `payload.bin` (GNU ld, two-base byte-equal),
+`visible31ad-test/run.py` runs the 26 QEMU cases (PASS), and
+`bootimage31ad/ordered.py` wraps the linked payload into the 196608-byte image
+(sha256 `406be900…cc16309`). Fetch the archive from the release and verify offline
+with `native/boot/attempt31ad/verify.py --archive <file>`, then:
 
 * `validate_ordered.py <image> --payload <payload.bin>` PASS, and both parsed
   headers satisfy `__TEXT_EXEC.fileoff <= __TEXT_BOOT_EXEC.fileoff`;

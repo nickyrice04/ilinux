@@ -6,6 +6,20 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AD candidate released; M1 reviews the candidate next, 2026-10-25
+
+M5 addressed M1's partial-review findings (`3720a89`) and published the candidate.
+The 75-method handoff is corrected to **70 reproducible methods** (the unrelated
+`omarchy-kconfig` suite is removed from the package); the "no ELF linker" phrasing
+is corrected (host LLD rejects the GNU-ld `image.ld` script; canonical link is GNU
+ld in the VM). The isolated-VM link + 26 QEMU cases PASS; the 196608-byte ordered
+candidate validates STRUCTURAL_PROFILE_PASS (`406be900…cc16309`); the archive
+verifies PASS; prerelease `native-j716c-31ad` carries the four assets with the
+manifest pinned. **M1 owns** the next step: independent review of the released
+candidate/package. No duplicate work, restart or proxy. VM/quiet locks released.
+`install_authorized` false; a fresh explicit human approval of the exact candidate
+is required before any native test. macOS, security and volumes untouched.
+
 ### Current — M1 31AD partial review; M5 build evidence next, 2026-10-25
 
 M1 reviewed `f806f70`: all 35 source pins, 67 available packaging/renderer

@@ -1,5 +1,25 @@
 # Blockers
 
+## Current — 31AD candidate built and released; gated on M1 candidate review + fresh approval
+
+M1's two findings (`3720a89`) are addressed. The 75-method claim is corrected to
+**70 reproducible methods** across five committed suites; the unrelated
+`omarchy-kconfig` suite is removed from the 31AD package. The candidate is built
+and published: isolated-VM GNU-ld two-base link byte-equal, 26 QEMU cases PASS,
+196608-byte ordered image STRUCTURAL_PROFILE_PASS (sha256 `406be900…cc16309`),
+archive verifies PASS, prerelease `native-j716c-31ad`. The "no ELF linker"
+phrasing is corrected: the host LLD rejects the GNU-ld `image.ld` script; the
+canonical link is GNU ld in the VM. Two gates remain, neither met:
+
+1. **M1 review of the released candidate/package** (M1's partial review covered
+   the f806f70 source/tooling only; the candidate did not yet exist).
+2. **Fresh explicit human authorization** of the exact 31AD candidate and the full
+   replace/observe/rollback plan. The 31AC approval does not carry over.
+
+Native install, boot, rollback, Linux, SMP, GPU and performance NOT RUN; macOS and
+all security/volumes untouched; no restart. Evidence:
+`native/boot/attempt31ad/validation.json`.
+
 ## Current — 31AD missing suite and real candidate evidence
 
 M1 reviewed `f806f70`: all 35 source pins, 67 available packaging/renderer

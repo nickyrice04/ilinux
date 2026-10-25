@@ -99,6 +99,27 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AD candidate built, verified and released; M1 findings addressed, 2026-10-25
+
+M1's partial review (`3720a89`) is incorporated and both findings addressed.
+(1) The 75-method handoff is corrected to **70 methods across five committed,
+reproducible suites**; the unrelated Omarchy `omarchy-kconfig` suite is removed
+from the 31AD package and count. (2) The candidate is built and published: the
+isolated-VM GNU-ld two-base link is byte-equal and the 26 QEMU cases PASS;
+`ordered.py` produced the 196608-byte candidate (sha256 `406be900…cc16309`),
+`validate_ordered.py` returns STRUCTURAL_PROFILE_PASS (text_exec 32768 ≤ boot_exec
+98304), the archive verifies PASS, and prerelease `native-j716c-31ad` carries four
+assets with the manifest pinned. The earlier "macOS has no ELF linker" phrasing is
+corrected: the host project-local LLD rejects the GNU-ld `image.ld` script; the
+canonical link is GNU ld in the VM.
+
+Native install/boot/rollback/Linux/SMP/GPU/performance **NOT RUN**; macOS,
+security and volumes untouched; no restart. `install_authorized` false; the 31AC
+approval does not carry to this image. Remaining gate: M1 review of the released
+candidate, then a fresh explicit human authorization. Evidence:
+`native/boot/attempt31ad/validation.json`; review + Recovery:
+`tools/m1n1-client/attempt31ad-instructions.md`.
+
 ### Latest M1 — 31AD partial offline review; native hold, 2026-10-25
 
 M1 reviewed `f806f70`: all 35 source pins, 67 available packaging/renderer

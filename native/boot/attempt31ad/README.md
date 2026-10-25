@@ -18,27 +18,29 @@ python3 -I kernel/experiments/bootimage31ad/test_ordered.py   # 32 methods
 python3 -I kernel/experiments/bootimage31ad/test_image.py     # 23 methods (control history)
 python3 -I tools/recovery31ad/test_render.py                  # 5 methods
 python3 -I tools/recovery31ad/test_write_render.py            # 7 methods
-python3 -I kernel/experiments/omarchy-kconfig/test_kconfig_fragment.py  # 8 methods
+python3 -I native/boot/attempt31ad/test_verify.py             # 3 methods (delivery verifier)
 python3 -I kernel/experiments/visible31ad/run.py \
   --output build/31ad-visible-host-review --cc clang \
   --target aarch64-none-elf --compile-only                    # 5 AArch64 objects
 ```
 
-All 75 test methods PASS; the compile-only check emits five freestanding objects
-(`COMPILE_PASS_NOT_LINKED`). The reused `visible31ac` / `observer31ab` sources are
-byte-identical to their frozen 31AC/31AB pins. Exact results, host environment and
-source bindings are in [`validation.json`](validation.json).
+All 70 methods across these five committed suites PASS; the compile-only check
+emits five freestanding objects (`COMPILE_PASS_NOT_LINKED`). (The Omarchy-track
+`omarchy-kconfig` suite is a separate concern, not part of this candidate, and is
+excluded.) The reused `visible31ac` / `observer31ab` sources are byte-identical to
+their frozen 31AC/31AB pins. The isolated-VM link job (088) ran:
+the two-base link is byte-identical and the 26 QEMU cases PASS. `ordered.py`
+produced the 196608-byte candidate (sha256 `406be900…cc16309`) and
+`validate_ordered.py` returns `STRUCTURAL_PROFILE_PASS` with
+`text_exec 32768 <= boot_exec 98304`. The original-only archive verifies PASS and
+is published as prerelease `native-j716c-31ad`. Exact results, environment and
+pins are in [`validation.json`](validation.json) and [`manifest.json`](manifest.json).
 
-## What is NOT done (requires the isolated VM, then review and approval)
+## What is NOT done (requires independent review, then a fresh approval)
 
-* The canonical two-base link and the 26-case QEMU run (VM job
-  `virtualization/jobs/088-ordered31ad/`): **NOT RUN** — macOS has no ELF linker.
-* The 196608-byte ordered candidate (`bootimage31ad/ordered.py`), its real
-  SHA-256, the original-only archive and its release: **not produced**. No dummy
-  pin is shipped; see [`manifest.json`](manifest.json).
-* The production one-paste Recovery pages (`tools/recovery31ad/`): the **rollback**
-  block is fully determined now; the **install** and **diagnosis** pages need the
-  real candidate pin.
+* **Independent M1 offline review** of the released package and candidate.
+* **A fresh explicit human authorization** of the exact 31AD candidate and the
+  full replace/observe/rollback plan. The 31AC approval does not carry over.
 * Native Recovery install, 30-second marker observation, boot021 rollback, Linux,
   SMP, GPU and performance: **NOT RUN / HOLD**.
 
