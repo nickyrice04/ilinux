@@ -4322,3 +4322,25 @@ Native/live/Linux/SMP/GPU/performance NOT RUN. Evidence:
 Source/package review supports the bounded new experiment, while installation and
 Startup Disk changes require a separate explicit decision. No physical action is
 implied by the review. Preserve the prior policy levels and exact rollback plan.
+
+## 2026-10-25 · Accept human authorization for exact31AC Recovery sequence
+
+**Decision:** M1 review `f6fae6c` has passed with no actionable offline blocker,
+so the human's subsequent direct approval authorizes the reviewed temporary lab
+Startup Disk flow (including possible preparatory boot021 start), exact lab-only
+Mach-O installation, one 30-second observation, exact boot021 raw rollback and
+Macintosh HD default restoration. No repeated approval or offline review is needed
+for those unchanged actions. Preserve original Full/lab Permissive; no further
+security downgrade or volume/firmware operation is authorized.
+
+**Checkpoint:** M5 archive/source/staged rollback/helper rechecks PASS. Human
+authenticated Startup Disk and lab selection is visible; agent leaves Restart
+untouched for the human. Completed default change, Recovery guard, installation,
+observation and rollback remain unconfirmed/NOT RUN. Record subsequent outcomes
+separately. The frozen manifest and historical reviews retain publication-time
+approval fields; the new receipt and handoff supersede that hold, not their bytes.
+
+**Next:** M1 guides the human using
+`tools/m1n1-client/attempt31ac-authorized-handoff.md` and the unchanged reviewed
+Recovery commands. No proxy launch or unchanged second test. An absent marker
+does not establish an Apple-only CPU restriction.

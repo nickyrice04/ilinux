@@ -1,5 +1,21 @@
 # Progress Log
 
+## 2026-10-25 · 31AC approved; lab Startup Disk selected for Recovery handoff
+
+Reviewed M1 `f6fae6c`: PASS, no actionable offline blocker. Direct human approval
+now covers the reviewed lab replacement/temporary-default/one-test/rollback
+sequence. Archive and 31 source pins reverify; existing staged boot021 and helper
+match exact hashes without modification or execution. Independent sequence audit
+found no blocker. Original Full/lab Permissive are required throughout.
+
+Human completed the displayed authentication. System Settings now shows iLinux
+Boot Lab selected; Restart was not clicked and the completed default-change flow
+is not yet confirmed. No Recovery installation or native result is claimed.
+Next: M1 reads `tools/m1n1-client/attempt31ac-authorized-handoff.md`, guides the
+human into lab-paired Recovery, then follows the frozen install/one-observation/
+exact-rollback sequence. No new security downgrade, volume change or proxy run.
+Separate authorization receipt preserves all frozen package/review bytes.
+
 ## 2026-10-25 · M1: 31AC offline package/source review PASS
 
 **Independent M1 review on `8c5b691`: OFFLINE_PASS_NATIVE_HOLD.**

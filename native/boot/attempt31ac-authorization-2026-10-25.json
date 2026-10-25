@@ -1,0 +1,63 @@
+{
+  "schema": "ilinux-attempt31ac-authorization-v1",
+  "date_local": "2026-10-25",
+  "basis": "Direct human instruction in the M5 session, conditional on M1 review passing",
+  "review_commit": "f6fae6c",
+  "reviewed_implementation_commit": "8c5b691210a1923d647412985c8bfa53a6c9feba",
+  "review_result": "OFFLINE_PASS_NATIVE_HOLD",
+  "review_actionable_blockers": [],
+  "authorization_given": true,
+  "approval_hold_superseded": true,
+  "scope": [
+    "temporary iLinux Boot Lab Startup Disk selection and possible preparatory boot021 start",
+    "exact reviewed lab-only Mach-O custom-object replacement in lab-paired Recovery",
+    "one 30-second visible-entry observation",
+    "exact reviewed boot021 raw rollback",
+    "return to Macintosh HD and restoration as default Startup Disk"
+  ],
+  "original_security_required": "Full",
+  "lab_security_required": "Permissive",
+  "new_security_downgrade_authorized": false,
+  "volume_or_firmware_operations_authorized": false,
+  "candidate": {
+    "bytes": 180224,
+    "sha256": "261d44447442f32ba6c41bbf0f69179e8c9eb4c33507b60762f0ea8c2e54ab72"
+  },
+  "archive": {
+    "bytes": 249011,
+    "sha256": "7cc585d69ebd023e2683b9842320b96ba30c9056e5082fa61aa18b74a0f60fdd",
+    "m5_reverification": "PASS"
+  },
+  "source_pins": {"count": 31, "m5_reverification": "PASS"},
+  "existing_staged_rollback": {
+    "bytes": 3932160,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "m5_read_only_verification": "PASS",
+    "modified": false
+  },
+  "existing_staged_helper": {
+    "bytes": 3590,
+    "sha256": "e65636d03cfb7a7000f86810fdc8888e209b99bedaa1b36ca7a125de4bf72188",
+    "m5_read_only_verification": "PASS",
+    "executed": false,
+    "modified": false
+  },
+  "ui_checkpoint": {
+    "application": "System Settings",
+    "page": "Startup Disk",
+    "human_authentication_completed": true,
+    "selected_entry": "iLinux Boot Lab",
+    "restart_clicked_by_agent": false,
+    "completed_default_change_confirmed": false
+  },
+  "recovery_guard": "NOT RUN",
+  "candidate_installation": "NOT RUN",
+  "native_observation": "NOT RUN",
+  "rollback_installation": "NOT RUN",
+  "final_original_default_restoration": "NOT RUN",
+  "current_security_policy_requery": "NOT RUN; no redundant desktop recheck requested",
+  "policy_level_change_performed": false,
+  "linux_smp_gpu_performance": "NOT RUN",
+  "frozen_package_modified": false,
+  "handoff": "tools/m1n1-client/attempt31ac-authorized-handoff.md"
+}

@@ -6,6 +6,21 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AC approved; M1 owns Recovery guidance, 2026-10-25
+
+M1 review `f6fae6c` passes. Human approval now covers temporary lab Startup Disk,
+possible preparatory boot021 start, exact lab Mach-O replacement, one 30-second
+observation, exact boot021 rollback and original-default restoration. M5 owns
+this authorization/handoff and read-only artifact rechecks; M1 guides the human
+on M5 Recovery using the frozen procedure. No duplicate review, M1 restart or
+proxy connection. Independent read-only sequence audit found no concrete blocker.
+
+Human authenticated Startup Disk; lab selection is visible, Restart untouched.
+Default-change completion unconfirmed; Recovery guard/install/test/rollback NOT
+RUN. Preserve Full/Permissive and every frozen package. Current instructions:
+`tools/m1n1-client/attempt31ac-authorized-handoff.md`. Prior approval-pending
+statements below describe earlier publication checkpoints and are superseded.
+
 ### Current — M1 31AC review complete; human decision pending, 2026-10-25
 
 **Independent M1 review on `8c5b691`: OFFLINE_PASS_NATIVE_HOLD.**

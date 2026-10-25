@@ -99,6 +99,23 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AC human authorization given; restart handoff, 2026-10-25
+
+M1 review `f6fae6c` PASS has no actionable blocker. The human now explicitly
+authorizes the exact lab-only replacement, temporary Startup Disk flow (including
+possible preparatory boot021 start), one 30-second observation and exact rollback.
+Original Full/lab Permissive levels must remain. This supersedes the historical
+approval-pending statements below without changing any frozen source or receipt.
+
+M5 reverified the archive, all 31 source pins, existing staged boot021 and frozen
+Recovery helper: PASS, unchanged. Human completed Startup Disk authentication;
+the UI shows iLinux Boot Lab selected. Agent did not click Restart; completion of
+the default-change flow is unconfirmed. Recovery guard/install/native/rollback
+remain NOT RUN. M1 guides the human through paired Recovery and the approved
+sequence; do not rerun the offline review or use a proxy launcher.
+Current handoff: `tools/m1n1-client/attempt31ac-authorized-handoff.md`;
+authorization: `native/boot/attempt31ac-authorization-2026-10-25.json`.
+
 ### Latest M1 — 31AC package and procedure review PASS; approval pending, 2026-10-25
 
 **Independent M1 review on `8c5b691`: OFFLINE_PASS_NATIVE_HOLD.**

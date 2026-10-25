@@ -1,5 +1,19 @@
 # Blockers
 
+## Current — 31AC approval resolved; physical Recovery sequence next
+
+M1 `f6fae6c` review PASS; the human has now authorized the exact lab-only
+replacement, temporary default, one 30-second observation and boot021 rollback.
+The historical approval hold below is resolved. Artifact/source/staged-rollback/
+helper rechecks pass unchanged; independent sequence audit found no blocker.
+
+Lab Startup Disk selection is visible after human authentication; Restart is
+untouched and default-change completion is unconfirmed. Recovery pairing and
+target guard must pass in the actual Recovery session before the authorized
+write. Install/native/rollback remain NOT RUN. Original Full/lab Permissive must
+remain. M1 follows `tools/m1n1-client/attempt31ac-authorized-handoff.md` without
+repeating review or provisioning. No Apple-only CPU limitation is established.
+
 ## Current — 31AC independently reviewed; native authorization pending
 
 **Independent M1 review on `8c5b691`: OFFLINE_PASS_NATIVE_HOLD.**
