@@ -1,0 +1,241 @@
+{
+  "apple_only_necessity": "NOT PROVEN",
+  "boot_acceptance": "NOT TESTED",
+  "cpu1_execution": "UNVERIFIED",
+  "cpu_research_track": "ACTIVE; no native test prepared",
+  "date_local": "2026-10-25",
+  "device_opens": 0,
+  "discovery_queries": 0,
+  "either_mac_restarted": false,
+  "external_messages_sent": 0,
+  "installed_object_changes": false,
+  "linux_smp": "NOT RUN",
+  "live_target_version_checks": "NOT RUN",
+  "macos_security_volume_default_changes": false,
+  "manifest": {
+    "pins": 24,
+    "sha256": "fc4e0ec2c1e003d546cbe8e6741e6b711a4163a23de1f095844909b3a99f7a68",
+    "status": "PASS"
+  },
+  "manifest_execution": {
+    "command": [
+      "shasum",
+      "-a",
+      "256",
+      "-c",
+      "native/boot/attempt31aa-research/source-sha256.txt"
+    ],
+    "exit": 0,
+    "label": "research-manifest",
+    "seconds": 0.02,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "63190973127092b4e247d8a5dbeebbc52c6fd0f822aaacfcf73d5686ec6dd8af"
+  },
+  "native31aa_research": "OFFLINE ONLY; native checks NOT RUN",
+  "native_cpu_startup": "NOT RUN",
+  "native_gpu_acceleration": "NOT RUN",
+  "native_invocations": 0,
+  "performance_checks": "NOT RUN",
+  "physical_secondary_observation": "NOT RUN",
+  "planner_review": {
+    "freestanding": "PASS; AArch64 ELF relocatable, not linked/executed",
+    "report": "native/boot/attempt31aa-m1-offline-2026-10-25.json",
+    "report_sha256": "8a3deb8b413d6cdb4947d827f4db2dcd293129649bda37cf1e757ac91c941df0",
+    "source_bindings_sha256": "dc9177156a783fc08a74a54926f7c00f3e3788a68badca9f5d039f2534f2b87e",
+    "test_execution": "Completed once during this handoff, then reused for this research supplement; no second run.",
+    "unique_c_groups": 11
+  },
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "compiler_tmp_empty": true,
+    "fixture_independently_matches_pinned_adt": true,
+    "fixture_sha256": "870f0d1150a071a5a81e461bb7c2c829f47070531183d3385b810a6a6a251ca0",
+    "frozen": {
+      "attempt31aa": {
+        "pins": 14,
+        "sha256": "7260ea2e2966809622ed32437e35324eac25bacc9e6d2049e67834236a1e3252",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31h": {
+        "pins": 186,
+        "sha256": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31i": {
+        "pins": 202,
+        "sha256": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31j": {
+        "pins": 226,
+        "sha256": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31j-host": {
+        "pins": 6,
+        "sha256": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31k": {
+        "pins": 254,
+        "sha256": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31l": {
+        "pins": 281,
+        "sha256": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31m": {
+        "pins": 306,
+        "sha256": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31n": {
+        "pins": 330,
+        "sha256": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31o": {
+        "pins": 348,
+        "sha256": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31p": {
+        "pins": 379,
+        "sha256": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31q": {
+        "pins": 402,
+        "sha256": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31r": {
+        "pins": 420,
+        "sha256": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31s": {
+        "pins": 441,
+        "sha256": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31t": {
+        "pins": 458,
+        "sha256": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31u": {
+        "pins": 475,
+        "sha256": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31v": {
+        "pins": 492,
+        "sha256": "7b2cd432821583a351effd58eb53eb11eafc621c91a31fdab4579669c91e53cd",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31w": {
+        "pins": 509,
+        "sha256": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31x": {
+        "pins": 6,
+        "sha256": "84e612d0591ed9c9a345e77a5b1a6f9e3d9d8f42180ccc24c508e825ea480ea9",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31y": {
+        "pins": 18,
+        "sha256": "52f50dc70dc4605cf8cc0fcf320c26bb3d7997aa2566ab247542000f9844a3a9",
+        "status": "PASS_UNCHANGED"
+      },
+      "attempt31z": {
+        "pins": 17,
+        "sha256": "2332878cf180e95df264a7b04fe1b24ce458074267dab461046f0ddaf0b8e9df",
+        "status": "PASS_UNCHANGED"
+      }
+    },
+    "frozen_listed_file_checks": 5770,
+    "frozen_manifest_count": 21,
+    "manifest": {
+      "attempt31aa": {
+        "pins": 14,
+        "sha256": "7260ea2e2966809622ed32437e35324eac25bacc9e6d2049e67834236a1e3252",
+        "status": "PASS"
+      },
+      "attempt31aa-research": {
+        "pins": 24,
+        "sha256": "fc4e0ec2c1e003d546cbe8e6741e6b711a4163a23de1f095844909b3a99f7a68",
+        "status": "PASS"
+      }
+    },
+    "markers_match_published_host_vm": true,
+    "native_use_files": "NONE",
+    "owned_caffeinate_cleanup": "ALREADY_EXITED",
+    "prior_evidence": "PASS_UNCHANGED",
+    "prior_evidence_files": 510,
+    "retained_package_files": 13,
+    "reused31z_report": "native/boot/attempt31z-m1-offline-2026-10-24.json",
+    "reused31z_report_sha256": "751aa0100c5c21bcc93892bad420e09de432cfcf824b54484eb591295f35d931",
+    "reviewed_commit": "5ef577833ee6d544f7cf1769a0afc272f6650f14",
+    "source_bindings_match_published_host_vm": true
+  },
+  "public_scope": "Original review prose and sanitized test metadata only; no raw logs, proprietary artifacts or generated binaries.",
+  "remaining_native_gates": [
+    "Actual image placement and absence of relocation/PAC dependencies",
+    "Qualified entry level/guarded/interrupt state and readable arguments",
+    "Owned mapped stack, vectors and complete live-memory reservations",
+    "Dispatch register preservation and every service actually used",
+    "Own monitored exception-return continuation",
+    "Resident-monitor phase, ordered boot-first registration and physical-secondary observation"
+  ],
+  "research_review": {
+    "bounded_conclusions": [
+      "Unused monitor fields may stay opaque; qualify only consumed fields/services and preserve owned memory.",
+      "Helper initialization is a local utility, not monitor activation; fixed bootstrap dispatch is a separate dependency.",
+      "No-chain branch supports investigating a genuinely relocation-free early image; deleting metadata alone is insufficient.",
+      "Image-wrapper whole-function pseudocode remains refused; reported bounded instruction facts do not admit unexamined paths.",
+      "XNU hooks are not a portable scheduler or exception-return implementation.",
+      "No accepted original host image, resident-monitor observation or physical-secondary start is established."
+    ],
+    "image_fixup_whole_function_refusal": "RETAINED",
+    "linux_vm_or_linux_sanitizers_on_m1": "NOT RUN",
+    "local_record_sha256": "785233084a3e2d94020c03b2c74d4c7734994e8dd4158d2d6f9150c90a7e8c9e",
+    "private_source_and_analysis_independently_reproduced_on_m1": false,
+    "sdk_and_public_source_retrieval_on_m1": "NOT RUN",
+    "sdk_compile_only_on_m1": "NOT RUN",
+    "upstream_reported_rea_counts": {
+      "completed_dossiers": 2,
+      "cross_boundary_pseudocode_refusals": 1,
+      "independent_bytes": 2204,
+      "independent_instruction_sized_words": 551,
+      "independent_ranges": 7,
+      "mismatches": 0,
+      "newly_queried_body_words": 466,
+      "previously_checked_words_reverified": 14,
+      "provider_failures": 0,
+      "requests": 2,
+      "whole_function_pseudocode_accepted": 0
+    },
+    "validation_sha256": "f442758dadfe24aa845cd95d48638b2a6327dc7f44a1de4d963c8e8eb6de5bef",
+    "whole_function_pseudocode_accepted": 0
+  },
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "review_blockers": [],
+  "reviewed_commit": "5ef577833ee6d544f7cf1769a0afc272f6650f14",
+  "schema": "ilinux-attempt31aa-research-m1-offline-v1",
+  "skips": 0,
+  "source_repairs": 0,
+  "target_requests": 0,
+  "tools": {
+    "build": "25A362",
+    "clang": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "macos": "26.0.1",
+    "python": "3.13.5"
+  }
+}

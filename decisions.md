@@ -4168,3 +4168,32 @@ a physical attempt only when it tests a meaningful newly qualified hypothesis.
 No Apple-only necessity is established. M1 reviews the new research and reuses a
 completed exact-source 31AA code review where available; no redundant reboot,
 security check or external outreach is requested.
+
+
+## 2026-10-25 · M1: reuse exact source evidence and narrow the native gate
+
+**Independent M1 review on `5ef5778`: OFFLINE_PASS_NATIVE_HOLD.**
+31AA's 14 pins and the research supplement's 24 pins PASS. No prior M1 planner
+review existed: ran once, 11 unique C groups PASS optimized and with ASan/UBSan,
+exit 0 in 1.467 s. Python 3.13.5 / Apple clang 17.0.0. All 12 source bindings and
+markers match released host/VM; AArch64 ELF compile/inspection PASS, not linked or
+executed. The 18-CPU fixture independently matches pinned ADT. Exact 31Z review reused;
+older suites/inspector not repeated. No actionable offline blocker or source repair.
+
+Research narrows the whole 848-byte decoding gate to fields/services actually used;
+unused state can remain opaque. Absence of fixup metadata alone does not prove an image relocation-free. Fixup whole-function refusal retained. REA/private decoding/SDK measurements/
+source retrieval/VM/Linux sanitizers NOT RUN on M1. Image placement, entry/vector,
+memory ownership, transport preservation and own exception continuation still need
+qualification. CPU research active; no new native test is ready.
+
+All 21 preserved closures/5770 listed-file checks and 510 prior evidence files verify
+unchanged, including consumed receipts. Retained 13-file package and clean client
+57a9339 unchanged. Native/live/performance/physical-secondary checks NOT RUN; no
+restart, device open, monitor call, outreach or installed-object/settings change.
+Evidence: `native/boot/attempt31aa-m1-offline-2026-10-25.md` and
+`native/boot/attempt31aa-research-m1-offline-2026-10-25.md`, each with reviewed JSON.
+
+**Decision:** Preserve frozen implementation and consumed receipts. The focused
+planner suite now has its own M1 result, reused for the supplement. Qualify only
+actual host dependencies rather than every unused monitor-record byte. Continue
+offline CPU research; this review authorizes no native run or restart.

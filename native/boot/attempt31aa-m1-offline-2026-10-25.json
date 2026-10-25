@@ -1,0 +1,253 @@
+{
+  "boot_acceptance": "NOT TESTED",
+  "contract_limits": [
+    "An in-range diagnostic MPIDR can pass width validation; actual ADT provenance is a caller obligation.",
+    "Plan order and ordinals are predictions, not monitor registration results.",
+    "No monitor call, progress cursor, retry API or runtime permission is implemented.",
+    "Actual supported CPU set, boot identity, resident-monitor state, transport, memory ownership, entry and exception lifecycle remain native integration obligations."
+  ],
+  "coverage": {
+    "duplicate_cases": 56,
+    "hardware_scheduler_or_performance_validation": false,
+    "order_permutations": 120,
+    "oversized_affinity_positions": 64,
+    "source_class_counts": {
+      "M": 12,
+      "P": 6
+    },
+    "source_cpu_records": 18
+  },
+  "cpu1_execution": "UNVERIFIED",
+  "date_local": "2026-10-25",
+  "device_opens": 0,
+  "discovery_queries": 0,
+  "either_mac_restarted": false,
+  "execution": [
+    {
+      "command": [
+        "shasum",
+        "-a",
+        "256",
+        "-c",
+        "native/boot/attempt31aa/source-sha256.txt"
+      ],
+      "exit": 0,
+      "label": "planner-manifest",
+      "seconds": 0.038,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "7361ec170abc62288dca65d29ff407673fa2d4843545b2985db8990974a7ca72"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/sptm31aa-adapter/run.py",
+        "--output",
+        "build/31aa-adapter-m1-review",
+        "--sanitize",
+        "--freestanding"
+      ],
+      "exit": 0,
+      "label": "planner",
+      "seconds": 1.467,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3016ee1b52ddef39288d68b83869476281f1b6b7a65e0aeef46b81ce4ae93657"
+    }
+  ],
+  "external_messages_sent": 0,
+  "fixture": {
+    "boot": {
+      "adt_reg": 0,
+      "source_cpu_id": 0
+    },
+    "generated_header_sha256": "870f0d1150a071a5a81e461bb7c2c829f47070531183d3385b810a6a6a251ca0",
+    "native_binding_proved": false,
+    "records": [
+      {
+        "adt_reg": 0,
+        "source_class": 77,
+        "source_cpu_id": 0
+      },
+      {
+        "adt_reg": 1,
+        "source_class": 77,
+        "source_cpu_id": 1
+      },
+      {
+        "adt_reg": 2,
+        "source_class": 77,
+        "source_cpu_id": 2
+      },
+      {
+        "adt_reg": 3,
+        "source_class": 77,
+        "source_cpu_id": 3
+      },
+      {
+        "adt_reg": 4,
+        "source_class": 77,
+        "source_cpu_id": 4
+      },
+      {
+        "adt_reg": 5,
+        "source_class": 77,
+        "source_cpu_id": 5
+      },
+      {
+        "adt_reg": 256,
+        "source_class": 77,
+        "source_cpu_id": 6
+      },
+      {
+        "adt_reg": 257,
+        "source_class": 77,
+        "source_cpu_id": 7
+      },
+      {
+        "adt_reg": 258,
+        "source_class": 77,
+        "source_cpu_id": 8
+      },
+      {
+        "adt_reg": 259,
+        "source_class": 77,
+        "source_cpu_id": 9
+      },
+      {
+        "adt_reg": 260,
+        "source_class": 77,
+        "source_cpu_id": 10
+      },
+      {
+        "adt_reg": 261,
+        "source_class": 77,
+        "source_cpu_id": 11
+      },
+      {
+        "adt_reg": 512,
+        "source_class": 80,
+        "source_cpu_id": 12
+      },
+      {
+        "adt_reg": 513,
+        "source_class": 80,
+        "source_cpu_id": 13
+      },
+      {
+        "adt_reg": 514,
+        "source_class": 80,
+        "source_cpu_id": 14
+      },
+      {
+        "adt_reg": 515,
+        "source_class": 80,
+        "source_cpu_id": 15
+      },
+      {
+        "adt_reg": 516,
+        "source_class": 80,
+        "source_cpu_id": 16
+      },
+      {
+        "adt_reg": 517,
+        "source_class": 80,
+        "source_cpu_id": 17
+      }
+    ],
+    "source": "pinned_ADT_reg_in_source_order"
+  },
+  "fixture_independently_matches_pinned_adt": true,
+  "freestanding": {
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "executed": false,
+    "linked": false,
+    "object_sha256": "b8e559a397fe1c06a344ee1e9182bb0e927de27defb38ecf79d12231fabf3efd",
+    "requested": true,
+    "symbol_check": "PASS",
+    "undefined_symbols": [
+      "memcpy",
+      "memset",
+      "sptm31z_get_boot_words"
+    ]
+  },
+  "installed_object_changes": false,
+  "linux_smp": "NOT RUN",
+  "live_target_version_checks": "NOT RUN",
+  "m1_not_reproduced": [
+    "REA",
+    "private local-binary checks",
+    "SDK/public-source retrieval",
+    "SDK compile-only measurements",
+    "M5 VM execution",
+    "Linux sanitizers",
+    "older executable suites",
+    "31Y inspector matrix"
+  ],
+  "macos_security_volume_default_changes": false,
+  "manifest": {
+    "pins": 14,
+    "sha256": "7260ea2e2966809622ed32437e35324eac25bacc9e6d2049e67834236a1e3252",
+    "status": "PASS"
+  },
+  "native31aa": "HOLD / NOT RUN",
+  "native_cpu_startup": "NOT RUN",
+  "native_gpu_acceleration": "NOT RUN",
+  "native_invocations": 0,
+  "performance_checks": "NOT RUN",
+  "physical_secondary_observation": "NOT RUN",
+  "planner_tests": "EXECUTED_ONCE_ON_M1; no prior exact-source M1 review found",
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "compiler_tmp_empty": true,
+    "frozen_listed_file_checks": 5770,
+    "frozen_manifest_count": 21,
+    "native_use_files": "NONE",
+    "owned_caffeinate_cleanup": "ALREADY_EXITED",
+    "prior_evidence": "PASS_UNCHANGED",
+    "prior_evidence_files": 510,
+    "retained_package_files": 13
+  },
+  "public_scope": "Original review prose and sanitized test metadata only; no raw logs, proprietary artifacts or generated binaries.",
+  "restart_ready": false,
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "reused31z": {
+    "component_bindings_unchanged": true,
+    "report": "native/boot/attempt31z-m1-offline-2026-10-24.json",
+    "sha256": "751aa0100c5c21bcc93892bad420e09de432cfcf824b54484eb591295f35d931",
+    "suites_rerun": false
+  },
+  "review_blockers": [],
+  "reviewed_commit": "5ef577833ee6d544f7cf1769a0afc272f6650f14",
+  "runner_results_sha256": "d702123562087323de752d64c7f1833157226e9ca71f27bd35c80e4f42ecd428",
+  "schema": "ilinux-attempt31aa-m1-offline-v1",
+  "skips": 0,
+  "source_binding_count": 12,
+  "source_bindings_match_published_host_vm": true,
+  "source_bindings_sha256": "dc9177156a783fc08a74a54926f7c00f3e3788a68badca9f5d039f2534f2b87e",
+  "source_repairs": 0,
+  "target_requests": 0,
+  "test_markers_match_published_host_vm": true,
+  "tests": [
+    {
+      "groups": 11,
+      "marker": "SPTM31AA_REGISTRATION_PASS groups=11 permutations=120 duplicate_cases=56 project_cpus=18 native=NOT_DEPLOYABLE",
+      "status": "PASS",
+      "variant": "optimized"
+    },
+    {
+      "groups": 11,
+      "marker": "SPTM31AA_REGISTRATION_PASS groups=11 permutations=120 duplicate_cases=56 project_cpus=18 native=NOT_DEPLOYABLE",
+      "status": "PASS",
+      "variant": "sanitized"
+    }
+  ],
+  "tools": {
+    "build": "25A362",
+    "clang": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "macos": "26.0.1",
+    "python": "3.13.5"
+  },
+  "unique_c_groups": 11
+}
