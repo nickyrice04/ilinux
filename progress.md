@@ -1,5 +1,35 @@
 # Progress Log
 
+## 2026-10-26 · Direct 31AF result; qualify a silent diagnostic blind spot
+
+Human reports successful install and Apple-logo-only lab boot directly to M5;
+there is no M1 native result. Numeric exits, actual duration and capture unknown.
+Return to macOS confirmed; exact boot021 rollback/default restoration explicitly
+unconfirmed. Recorded direct report separately, consumed install/observation and
+prepared restoration-only M1 follow-up. No redundant desktop policy command.
+
+Three read-only reviews found whole-image readability, unsupported native EL/
+handoff state and absent independent observation still make a blank ambiguous.
+Fresh public maintainer evidence supports a serious firmware-dependency risk
+for raw SMP; no matching reproducible resident host was found in the bounded
+source review. This result does not itself test secondary startup.
+
+Implemented a new original wrapper around the frozen harness and exact released
+payload, never modifying native code. Host fixture self-test PASS. Isolated Linux
+VM/QEMU 11.1.2: 12 complete cases PASS under 4KiB ordinary EL2 and 16KiB VHE;
+two paint controls, ten missing-map status7 refusals without a pixel. Independently
+checked 48 unchanged payload/input/table/scratch pairs and ten refusal targets.
+Native cause remains unknown. First VM skipped the non-executable private job
+(zero cases), then was stopped; executable bit/pre-launch check fixed; separate
+successful run exit0/normal shutdown. Both locks released. No hardware/boot change.
+
+Decision: no new experiment restart; finish restoration, then bounded offline
+entry/producer qualification and independent observability. Files:
+`native/boot/attempt31af-human-2026-10-26-result.md`,
+`research/post31af-assessment.md`, `research/post31af-qualification.json`,
+`kernel/experiments/entry31af-qualification/`,
+`tools/m1n1-client/attempt31af-result-followup.md`.
+
 ## 2026-10-25 · M5 accepts 31AF review and human authorization
 
 M1 `5352c07` is OFFLINE_REVIEW_PASS with no actionable blocker; the omitted

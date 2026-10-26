@@ -1,5 +1,22 @@
 # Blockers
 
+## Current — 31AF logo-only; restore confirmation and native observation block tests
+
+2026-10-26: direct human installation-success/logo-only report received. Native
+entry unconfirmed; numeric exits and duration unavailable. macOS return confirmed,
+but exact boot021 rollback and Macintosh HD default restoration explicitly
+UNCONFIRMED. Resolve the existing restoration phase first; see
+`tools/m1n1-client/attempt31af-result-followup.md`. Install/observation consumed;
+no candidate retry or new physical experiment is authorized/prepared.
+
+12 new exact-payload synthetic cases PASS show that missing unused/reserved-page
+mappings can silently refuse after entry: two paints and ten no-pixel status7
+refusals. Native mappings/cause and incoming entry profile remain unknown; a
+qualified independent entry/failure signal is absent. Further screen-only variants
+are on hold. Public maintainer assessments lend weight to Apple firmware risk
+for raw SMP, but this observer does not establish it. Decision/limits:
+`research/post31af-assessment.md`, `research/post31af-qualification.json`.
+
 ## Current — 31AF authorized; M1 page readiness gates the M5 restart
 
 M1 review `5352c07` PASS has no actionable blocker; exact supplemental layout.h

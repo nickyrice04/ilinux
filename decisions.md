@@ -4722,3 +4722,29 @@ would remain inconclusive, not proof of an Apple-only barrier.
 
 Receipt: `native/boot/attempt31af-authorization-2026-10-25.json`.
 Current handoff: `tools/m1n1-client/attempt31af-authorized-handoff.md`.
+
+## 2026-10-26 · Pause silent boot variants after direct 31AF result
+
+**Decision:** Record the human's successful-install/logo-only report without
+inventing numeric exits, exact timing or native entry. macOS return is confirmed;
+exact boot021 rollback/default restoration are explicitly unconfirmed. The
+candidate install/observation is consumed; guide only the unfinished restoration
+under the existing authorization. No new experiment is ready.
+
+Original-source review identified remaining complete-image read dependencies,
+unmeasured entry profiles and inaccessible refusal state. A new original wrapper
+executes the unchanged released payload: 12 synthetic cases PASS (two paints,
+ten missing-map status7 refusals), 48 unchanged before/after pairs independently
+compared. This demonstrates diagnostic ambiguity, not the native cause. Retain
+the initial zero-case VM setup error separately; corrected run completed normally.
+Frozen sources and old receipts remain unchanged; no host boot/security changes.
+
+Give relevant public maintainer assessments of an M5 Pro/Max firmware problem
+real weight. Continue only bounded offline producer/entry investigation until a
+qualified independent signal, matching positive control or reproducible resident
+host makes a new restart informative. If a necessary state depends on unavailable
+host source or vendor correction, mark native multicore blocked pending external
+support. No claim that Apple alone is required and no near-term parity promise.
+Current rationale: `research/post31af-assessment.md`; validation:
+`research/post31af-qualification.json`; restoration follow-up:
+`tools/m1n1-client/attempt31af-result-followup.md`.

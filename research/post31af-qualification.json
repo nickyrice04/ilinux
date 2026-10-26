@@ -1,0 +1,331 @@
+{
+  "schema": "ilinux-post31af-qualification-validation-v1",
+  "date_local": "2026-10-26",
+  "status": "PASS",
+  "scope": "Synthetic diagnostic blind-spot demonstration; not diagnosis of native failure",
+  "payload_bytes": 393216,
+  "payload_sha256": "91d2ce73f79784b78c96e08c606d3622aa3246a7561fdbec4d1066ebe9bfaa7c",
+  "new_native_payload_generated": false,
+  "frozen_payload_modified": false,
+  "runtime_cases": 12,
+  "paint_controls": 2,
+  "omission_refusals": 10,
+  "translation_profiles": [
+    "ordinary EL2 / 4KiB",
+    "VHE EL2 / 16KiB"
+  ],
+  "omitted_image_offsets": [
+    16384,
+    180224,
+    344064,
+    0,
+    360448
+  ],
+  "omission_bytes_each": 16384,
+  "expected_refusal_phase": 128,
+  "expected_refusal_status": 7,
+  "complete_physical_payload_inputs_tables_scratch_before_after_pairs_independently_equal": 48,
+  "all_ten_refusal_framebuffers_unchanged": true,
+  "native_cause_proven": false,
+  "cases": [
+    {
+      "name": "non-vhe-control",
+      "status": "PASS",
+      "phase": 7,
+      "diagnostic_status": 0,
+      "painted_pixels": 8192,
+      "granule": 4096,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": null,
+        "reserved_sptm_has_unmapped_pages": false,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": true,
+        "whole_reserved_sptm_mapped_readonly": true
+      }
+    },
+    {
+      "name": "non-vhe-reserved-first",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 4096,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 16384
+        },
+        "reserved_sptm_has_unmapped_pages": true,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": false
+      }
+    },
+    {
+      "name": "non-vhe-reserved-middle",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 4096,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 180224
+        },
+        "reserved_sptm_has_unmapped_pages": true,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": false
+      }
+    },
+    {
+      "name": "non-vhe-reserved-last",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 4096,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 344064
+        },
+        "reserved_sptm_has_unmapped_pages": true,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": false
+      }
+    },
+    {
+      "name": "non-vhe-unused-header",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 4096,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 0
+        },
+        "reserved_sptm_has_unmapped_pages": false,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": true
+      }
+    },
+    {
+      "name": "non-vhe-unused-normal-text",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 4096,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 360448
+        },
+        "reserved_sptm_has_unmapped_pages": false,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": true
+      }
+    },
+    {
+      "name": "16k-vhe-control",
+      "status": "PASS",
+      "phase": 7,
+      "diagnostic_status": 0,
+      "painted_pixels": 8192,
+      "granule": 16384,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": null,
+        "reserved_sptm_has_unmapped_pages": false,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": true,
+        "whole_reserved_sptm_mapped_readonly": true
+      }
+    },
+    {
+      "name": "16k-vhe-reserved-first",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 16384,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 16384
+        },
+        "reserved_sptm_has_unmapped_pages": true,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": false
+      }
+    },
+    {
+      "name": "16k-vhe-reserved-middle",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 16384,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 180224
+        },
+        "reserved_sptm_has_unmapped_pages": true,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": false
+      }
+    },
+    {
+      "name": "16k-vhe-reserved-last",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 16384,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 344064
+        },
+        "reserved_sptm_has_unmapped_pages": true,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": false
+      }
+    },
+    {
+      "name": "16k-vhe-unused-header",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 16384,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 0
+        },
+        "reserved_sptm_has_unmapped_pages": false,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": true
+      }
+    },
+    {
+      "name": "16k-vhe-unused-normal-text",
+      "status": "PASS",
+      "phase": 128,
+      "diagnostic_status": 7,
+      "painted_pixels": 0,
+      "granule": 16384,
+      "mapping": {
+        "all_present_image_pages_readonly": true,
+        "omitted_image_range": {
+          "bytes": 16384,
+          "offset": 360448
+        },
+        "reserved_sptm_has_unmapped_pages": false,
+        "unmapped_pages_still_have_fixture_physical_storage": true,
+        "whole_image_mapped": false,
+        "whole_reserved_sptm_mapped_readonly": true
+      }
+    }
+  ],
+  "vm": {
+    "cpus": 2,
+    "memory_gib": 4,
+    "network_interfaces": [
+      "lo"
+    ],
+    "physical_devices_forwarded": false,
+    "apple_firmware_loaded": false,
+    "kernel": "7.1.6-vzrun2",
+    "python": "3.14.8",
+    "qemu_version": "QEMU emulator version 11.1.2",
+    "job_exit": 0,
+    "normal_shutdown": true,
+    "locks_released_both_workspaces": true
+  },
+  "fixture_toolchain": {
+    "cc": "cc",
+    "ld": "ld",
+    "objcopy": "objcopy",
+    "compiler_and_binutils_version_fresh_query": "NOT_RECORDED; exact per-case commands retained privately",
+    "configuration": "freestanding AArch64, general registers only, no-undefined link at synthetic0x42000000; no native payload recompile"
+  },
+  "source_bindings": [
+    {
+      "file": "kernel/experiments/entry31af-qualification/run.py",
+      "sha256": "5bc5c0431a4d1924762e54e54e5ab86ce1c99ffbcd39a3a95ba5cec237279ab9"
+    },
+    {
+      "file": "kernel/experiments/entry31af-qualification/README.md",
+      "sha256": "afd96590fcb837ff5c79185db2b83fe9ffabf2a1e7f4c3d97954fba9d5ec400b"
+    },
+    {
+      "file": "kernel/experiments/immutable31af-test/run.py",
+      "sha256": "6dacaebb09888da9b52d4e4ac1ca9b0823622022ca1c8f454d22e1e450c6f534"
+    },
+    {
+      "file": "kernel/experiments/immutable31af-test/bootstrap.S",
+      "sha256": "c40e44452e531e1de7ecd2646b8766856a82cb0fde79bf3f1f816805e2acbfb8"
+    },
+    {
+      "file": "kernel/experiments/immutable31af-test/README.md",
+      "sha256": "40cc80293da077be7a96745c76847e8a6f4041c42d5675559d7728ceea689ea0"
+    },
+    {
+      "file": "kernel/experiments/translation31ab/run.py",
+      "sha256": "26ddc30f52620e84e139a67f2a0a5dfafd7798cae19b77c65645f904e723a756"
+    },
+    {
+      "file": "native/boot/attempt31af/layout.json",
+      "sha256": "988e21ea24cf0b3a7ab0332877512dc7cbced8262f3e0d996cc3c9717b84cbe7"
+    }
+  ],
+  "source_bindings_sha256": "585dbb187333192a18cc0167e6713d2d57cb9b1df47becfedd796d9d03d14ded",
+  "job_source": {
+    "file": "virtualization/jobs/091-entry31af-qualification/run.sh",
+    "sha256": "52ad706d0410e10f3415f515dedf61bdbd8758d6857a5be68c132b0dab9eea12"
+  },
+  "runtime_summary_sha256": "f36df6e14cb3e5bc71e4bae215f259098737e419619a5fb79331dd5f9a33e43e",
+  "initial_vm_setup_failure": {
+    "reason": "Private job script lacked executable permission; dispatcher skipped it",
+    "cases_executed": 0,
+    "idle_guest_stopped_by_signal": true,
+    "correction": "Executable bit and pre-launch executable check; separate corrected VM run"
+  },
+  "native_hardware_run": false,
+  "host_boot_security_volume_changes": false,
+  "new_restart_ready": false,
+  "decision": "Pause marker-only native experiments; qualify actual loader/entry path and independent observation before another attempt",
+  "loaded_memory_model": {
+    "released_instruction_bytes_unchanged": true,
+    "on_disk_released_payload_unchanged": true,
+    "reserved_region_populated_with_synthetic_byte": "0xa5",
+    "reserved_offset": 16384,
+    "reserved_bytes": 344064,
+    "loaded_model_sha256": "df1a3863faa07a9a28b70ea721e13129ed426803779698a20308adaedd9efb58",
+    "qualification": "Synthetic prepopulated monitor reservation; the modeled RAM bytes differ from the zero reservation in the original file"
+  }
+}

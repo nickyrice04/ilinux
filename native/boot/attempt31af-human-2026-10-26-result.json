@@ -1,0 +1,47 @@
+{
+  "schema": "ilinux-attempt31af-human-result-v1",
+  "date_local": "2026-10-26",
+  "source": "Direct human report in M5 chat; no M1 native result available",
+  "authorization_commit": "97061e3",
+  "review_commit": "5352c0738834faf98fd5a73a928e85459c37e995",
+  "installation": {
+    "outcome": "SUCCESS_HUMAN_REPORTED",
+    "configure_exit": null,
+    "capture_exit": null,
+    "block_exit": null,
+    "policy_postcheck": "NOT_SEPARATELY_REPORTED",
+    "independent_capture_received": false,
+    "exact_installed_bytes_verified_after_installation": false
+  },
+  "native_observation": {
+    "attempted": true,
+    "reported_display": "Apple logo only",
+    "marker_reported": false,
+    "explicit_firmware_error_reported": false,
+    "entry_execution": "UNCONFIRMED",
+    "actual_duration_seconds": null,
+    "thirty_second_limit_verified": false,
+    "independent_photo_or_video_received": false
+  },
+  "return": {
+    "macos_return": "HUMAN_CONFIRMED",
+    "exact_boot021_rollback": "UNCONFIRMED",
+    "macintosh_hd_default_restoration": "UNCONFIRMED",
+    "fresh_policy_query_requested": false
+  },
+  "authorization_state": {
+    "candidate_install_and_observation": "CONSUMED",
+    "remaining_authorized_scope": "Complete or confirm the exact guarded boot021 rollback and Macintosh HD/default restoration from the existing sequence",
+    "unchanged_candidate_retry_authorized": false,
+    "new_native_experiment_authorized": false
+  },
+  "claims": {
+    "firmware_prohibition_proven": false,
+    "apple_update_required_proven": false,
+    "monitor_readiness": "UNCONFIRMED",
+    "physical_secondary_start_in_this_observer": "NOT_RUN",
+    "linux_in_this_observer": "NOT_RUN",
+    "performance_or_efficiency_in_this_observer": "NOT_RUN"
+  },
+  "next": "Resolve rollback/default uncertainty first; continue bounded offline entry qualification. No new experiment restart is ready."
+}

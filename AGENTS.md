@@ -99,6 +99,30 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AF human logo-only result; restoration unconfirmed, no new test
+
+2026-10-26: the human directly reports 31AF installed successfully and a lab boot
+showed only the Apple logo. Numeric exits, actual timing and independent captures
+were not supplied. Returned to macOS, but exact boot021 rollback and Macintosh HD
+default restoration are explicitly UNCONFIRMED. No redundant desktop policy
+query. The candidate install/observation is consumed; only the unfinished exact
+restoration remains authorized. M1 follow-up:
+`tools/m1n1-client/attempt31af-result-followup.md`. No candidate retry/new restart.
+
+Original-source audit found remaining whole-image readability and entry-profile
+assumptions. New isolated qualification executes the unchanged released payload:
+12 cases PASS, two paint controls and ten silent status-7 refusals after removing
+unused/reserved-page mappings. All 48 physical before/after pairs independently
+equal; native cause remains Unknown. Initial private VM job-permission setup
+failure ran no cases; corrected run exit0/normal shutdown, both locks released.
+
+Pause marker-only native experiments. Continue bounded offline loader/entry
+qualification and independent observability; actual SMP firmware dependence is
+credible in public maintainer reports but not proven by this observer. No new
+host/boot/security changes. Direct result and current decision:
+`native/boot/attempt31af-human-2026-10-26-result.md`,
+`research/post31af-assessment.md`, `research/post31af-qualification.json`.
+
 ### Latest — 31AF authorized; M1 prepares reviewed page before M5 restart
 
 M1 review `5352c07` PASS has no actionable blocker. The human explicitly approves

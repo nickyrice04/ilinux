@@ -6,6 +6,24 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AF consumed; M1 restoration-only, M5 offline entry qualification
+
+2026-10-26 direct human report: installed successfully, then Apple-logo-only lab
+boot. Actual numeric exits/duration/capture not received. macOS return confirmed;
+exact boot021 rollback and Macintosh HD default restoration explicitly unknown.
+M1 reconciles/completes only the unfinished restoration under the existing
+approval; follow `tools/m1n1-client/attempt31af-result-followup.md`. Do not repeat
+the candidate, a diagnostic boot, clipboard smoke or routine desktop policy query.
+
+M5's original-source review and new exact-payload synthetic qualification show a
+remaining whole-image-readability dependency. 12 cases PASS: two paints and ten
+status-7 refusals with no pixels; 48 unchanged before/after pairs independently
+checked. This is not native-cause proof. One VM setup error was corrected before
+any cases ran; successful run exited0/shut down; both locks released. No new
+native package or restart is ready. M5 next qualifies actual producer/entry and
+an independent observation before any new experiment. Details:
+`research/post31af-assessment.md`. All earlier frozen sources/receipts preserved.
+
 ### Current — 31AF approved; M1 serves reviewed page, then human restarts M5
 
 M1 review `5352c07` PASS satisfies the human's conditional authorization for
