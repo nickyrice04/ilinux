@@ -1,0 +1,465 @@
+{
+  "archive": {
+    "bytes": 256353,
+    "filename": "ilinux-31ae-entry-test.tar.gz",
+    "sha256": "6b0c0ae6fdce31b69c72861c27297f0cb4d8873c586448fced41ed4e02910fa1",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ae/ilinux-31ae-entry-test.tar.gz"
+  },
+  "candidate": {
+    "bytes": 196608,
+    "sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa"
+  },
+  "candidate_checks": {
+    "archive_verify": {
+      "archive_sha256": "6b0c0ae6fdce31b69c72861c27297f0cb4d8873c586448fced41ed4e02910fa1",
+      "installation_performed": false,
+      "native": "NOT_RUN",
+      "status": "PASS",
+      "verified_files": 9
+    },
+    "both_bash_syntax_exit": 0,
+    "recovered_payload_bytes": 147456,
+    "recovered_payload_sha256": "35bcecdff17ca1b927fccdffd057c9f149577df5698f250b7dbe93f5c71fe13b",
+    "recovery_execution": "NOT RUN",
+    "regenerated_page_and_both_blocks_equal_archive": true,
+    "rollback_equals_retained_boot021": true,
+    "rollback_marker_correct": true,
+    "server_started": false,
+    "source_packager_roundtrip_identical": true,
+    "standalone_equals_archived": true
+  },
+  "date_local": "2026-10-25",
+  "download_verification": [
+    {
+      "asset": "archive",
+      "bytes": 256353,
+      "exit": 0,
+      "sha256": "6b0c0ae6fdce31b69c72861c27297f0cb4d8873c586448fced41ed4e02910fa1",
+      "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ae/ilinux-31ae-entry-test.tar.gz",
+      "verified_before_extract": true
+    },
+    {
+      "asset": "candidate",
+      "bytes": 196608,
+      "exit": 0,
+      "sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa",
+      "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ae/ilinux-31ae-ordered.macho",
+      "verified_before_extract": true
+    }
+  ],
+  "findings": [
+    {
+      "finding": "The retained rejected 31AD image passes its frozen old validator and fails the new DATA-before-normal guard in both headers and modeled profiles.",
+      "label": "Confirmed"
+    },
+    {
+      "finding": "New actual candidate has DATA fileoff32768, normal executable81920, boot executable98304; data-to-normal distance49152 is nonnegative.",
+      "label": "Confirmed"
+    },
+    {
+      "finding": "Seven original source files and compile driver remain byte-identical; five exact previous compile objects reused. No host LLD retry.",
+      "label": "Confirmed"
+    },
+    {
+      "finding": "Native Recovery installer and firmware acceptance; desktop read-only inspector evidence is separate from Recovery acceptance.",
+      "label": "Unknown"
+    }
+  ],
+  "fresh_test_methods": 77,
+  "fresh_tests": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/bootimage31ae/test_ordered.py"
+      ],
+      "exit": 0,
+      "label": "ordered",
+      "methods": 51,
+      "seconds": 0.455
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "tools/recovery31ae/test_write_render.py"
+      ],
+      "exit": 0,
+      "label": "write-render",
+      "methods": 7,
+      "seconds": 9.219
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "tools/recovery31ae/test_prepare.py"
+      ],
+      "exit": 0,
+      "label": "prepare",
+      "methods": 11,
+      "seconds": 0.144
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "native/boot/attempt31ae/test_verify.py"
+      ],
+      "exit": 0,
+      "label": "delivery",
+      "methods": 3,
+      "seconds": 0.059
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/bootimage31ae/test_rejected31ad.py",
+        "build/native-intake/attempt31ad-release-offline/direct-assets/ilinux-31ad-ordered.macho"
+      ],
+      "exit": 0,
+      "label": "rejected31ad",
+      "methods": 5,
+      "seconds": 0.053
+    }
+  ],
+  "host_actions": {
+    "page_server_started": false,
+    "proxy_connections": 0,
+    "recovery_commands": 0,
+    "restart_either_device": false,
+    "security_or_volume_or_default_change": false,
+    "usb_device_opens": 0,
+    "vm_starts": 0
+  },
+  "install_authorized": false,
+  "live_target_version_checks": "NOT RUN",
+  "m5_summary_review_only": {
+    "apple_inspector": "Published exact-old PROPERTY_ERROR despite exit0 and new14-field PROPERTIES_DERIVED reviewed; not run on M1",
+    "gnu_two_base_link": "Reported PASS; payload digest matches delivered recovered payload; no raw linked ELF examined or local link rerun",
+    "qemu_26": "Published 26-case PASS summary and original harness reviewed; no local execution or independent raw-capture reproduction",
+    "rea": "Bounded provenance/1127-word zero-mismatch summary reviewed; no proprietary bytes or decompiler loaded; not independently reproduced"
+  },
+  "monitor_calls_linux_smp_gpu_performance": "NOT RUN",
+  "native31ae_entry_marker": "NOT RUN",
+  "native31ae_install": "NOT RUN",
+  "native31ae_rollback": "NOT RUN",
+  "next": "Fresh concrete human decision on exact31AE lab install, one30-second marker observation only after success, exactboot021 rollback and MacintoshHD/default restoration. No automatic action.",
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "consumed_receipts_reset": false,
+    "distinct_files": 691,
+    "frozen_previous_manifests": 25,
+    "listed_hash_checks": 5944,
+    "manifests": {
+      "attempt31aa": "7260ea2e2966809622ed32437e35324eac25bacc9e6d2049e67834236a1e3252",
+      "attempt31aa-research": "fc4e0ec2c1e003d546cbe8e6741e6b711a4163a23de1f095844909b3a99f7a68",
+      "attempt31ab": "f697bdd660f7030f7afd05c99a5078e00c2795192c22d8a9da7ad61635d456bd",
+      "attempt31ac": "d1e017880ab416d2818e049f2a3391dfdc89097510b1453ee37ad8f8d7775476",
+      "attempt31ad": "83cf88e6f8aa028bc425f0924c1ae962b275358f0a9bfefd64d062fa0d5bb6cb",
+      "attempt31ae": "aa27825f5082b1a5196b154e297002c62eee3677572062383b3b9d08b8a0229c",
+      "attempt31h": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155",
+      "attempt31i": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+      "attempt31j": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765",
+      "attempt31j-host": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e",
+      "attempt31k": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c",
+      "attempt31l": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f",
+      "attempt31m": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97",
+      "attempt31n": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a",
+      "attempt31o": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39",
+      "attempt31p": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c",
+      "attempt31q": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6",
+      "attempt31r": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4",
+      "attempt31s": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158",
+      "attempt31t": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7",
+      "attempt31u": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25",
+      "attempt31v": "7b2cd432821583a351effd58eb53eb11eafc621c91a31fdab4579669c91e53cd",
+      "attempt31w": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c",
+      "attempt31x": "84e612d0591ed9c9a345e77a5b1a6f9e3d9d8f42180ccc24c508e825ea480ea9",
+      "attempt31y": "52f50dc70dc4605cf8cc0fcf320c26bb3d7997aa2566ab247542000f9844a3a9",
+      "attempt31z": "2332878cf180e95df264a7b04fe1b24ce458074267dab461046f0ddaf0b8e9df"
+    },
+    "new31ae_pins": 38,
+    "prior_evidence_files_unchanged": 675,
+    "total_manifests": 26
+  },
+  "rendered_files": {
+    "install-paste.txt": {
+      "bytes": 6135,
+      "sha256": "0bc65c87184e9071a4d031b4817bbd671f99fda1d8b96171964fef062d6d5c8a"
+    },
+    "profile.json": {
+      "bytes": 276,
+      "sha256": "95f90eca87a218b7b965fe1f09374f388aaaf52a356dd4bfe8e9605cbe0f1f62"
+    },
+    "recovery.html": {
+      "bytes": 16609,
+      "sha256": "0fe332b30c6a8f93dd97e86830a603cbbad93f09467fdf1569854556599a9815"
+    },
+    "rollback-paste.txt": {
+      "bytes": 5872,
+      "sha256": "7b09569a39417c45f2dbb08787efaa0145744b059ccbfec4064efb8ee56f755e"
+    }
+  },
+  "result": "OFFLINE_REVIEW_PASS_NATIVE_NOT_RUN",
+  "review_commit": "f0847058eb6dff53e9f6543ebec07d83d3b50be4",
+  "schema": "ilinux-attempt31ae-m1-offline-review-v1",
+  "source_inventory_sha256": "aa27825f5082b1a5196b154e297002c62eee3677572062383b3b9d08b8a0229c",
+  "source_pins": 38,
+  "source_reuse": {
+    "all_other_boot_bytes_unchanged": true,
+    "apple_inspector_and_rea": "Reviewed published old/new classifications and bounded provenance only; raw proprietary evidence not available on M1; not rerun",
+    "boot_changed_words": [
+      {
+        "new_target_offset": "0x4000",
+        "old_target_offset": "0x8000",
+        "payload_offset": "0x14010",
+        "register": 6
+      },
+      {
+        "new_target_offset": "0x10000",
+        "old_target_offset": "0x14000",
+        "payload_offset": "0x14068",
+        "register": 7
+      },
+      {
+        "new_target_offset": "0x4000",
+        "old_target_offset": "0x8000",
+        "payload_offset": "0x15004",
+        "register": 16
+      }
+    ],
+    "compile_driver_byte_identical_to_31ad": true,
+    "compile_scope": "Five prior compile-only objects, exact original sources/flags unchanged; new link script not host-linked",
+    "m5_vm_evidence": "Reviewed published GNU two-base link and 26-case QEMU summary only; not rerun or raw-capture independently reproduced",
+    "new_vm_payload_sha256": "35bcecdff17ca1b927fccdffd057c9f149577df5698f250b7dbe93f5c71fe13b",
+    "objects_reused": [
+      {
+        "file": "entry.o",
+        "sha256": "6ff58123bea3da6b0292089774014083aaa5a17c984d83283ef03651da47f59c"
+      },
+      {
+        "file": "probe.o",
+        "sha256": "a12da523977c8939ae3c7a11f39519aea3163c5cd65eeddc5a298ffb7eb4d9ad"
+      },
+      {
+        "file": "runtime.o",
+        "sha256": "044beae2ede9e40e4e2082848ded6388c48454d1dd9b1fbf4a72c6009dd69eb6"
+      },
+      {
+        "file": "bridge.o",
+        "sha256": "016acf3d7459685fc6b135c346f2605a6696e474797141624f6b478a7eaf8ac3"
+      },
+      {
+        "file": "observer.o",
+        "sha256": "7e8a3d46e9bd27e83519abef89a2446f3fddaa98c1df26e2aa55d28d730c1b94"
+      }
+    ],
+    "old_vm_payload_sha256": "6da621da67de37437300e7205e8c3919dcac997600f7eb6e8fedae29e6b0fc88",
+    "park_instruction_relocated_by_relink": true,
+    "recovery_argv_guard_review": "BASE unchanged; candidate no raw flag; independent rollback exact raw flags; one configure per phase with tty input, separate statuses and policy postcheck; no automatic reboot",
+    "seven_source_files_unchanged": [
+      {
+        "bytes": 2777,
+        "file": "kernel/experiments/visible31ac/layout.h",
+        "sha256": "d69dc76545e9e46abfdc6b60b40007086b8a8c637f06e2580880aab28a2d2694"
+      },
+      {
+        "bytes": 2592,
+        "file": "kernel/experiments/visible31ac/entry.S",
+        "sha256": "d9abf92f865bdf080b2ad4a2343ea4c0209e1f0632e3494bfd5eaa101ae03b7c"
+      },
+      {
+        "bytes": 1385,
+        "file": "kernel/experiments/visible31ac/probe.S",
+        "sha256": "95612bfdae6eca9ccc38040db4a8395fbc6e1cfe355f62382265cd042e919fb5"
+      },
+      {
+        "bytes": 11449,
+        "file": "kernel/experiments/visible31ac/bridge.c",
+        "sha256": "503d33177919e38e3b6d87c0681e699113de35b9ab6474c7fe196dd983b97baf"
+      },
+      {
+        "bytes": 531,
+        "file": "kernel/experiments/visible31ac/runtime.S",
+        "sha256": "cdab3451d515f337dc99a5f8a3f536c5a8a4bbee6de300873d52fb316b0b9439"
+      },
+      {
+        "bytes": 8230,
+        "file": "kernel/experiments/observer31ab/observer.c",
+        "sha256": "0f5dbef5e8b9497ea792bba1ac4addf8a3c33c32ada62b9da9082c4985706b43"
+      },
+      {
+        "bytes": 3034,
+        "file": "kernel/experiments/observer31ab/observer.h",
+        "sha256": "58cdd504661afcc06f7bef477315a50bd6e724c477f4eb1b54972eb9a7852868"
+      }
+    ]
+  },
+  "structural_validation": {
+    "checked_split_ranges": [
+      {
+        "arithmetic_profiles": {
+          "false": {
+            "linkedit_minus_prelink_bytes": 16384,
+            "prelink_minus_boot_bytes": 65536,
+            "profile": false,
+            "profile_text_exec_bytes": null,
+            "selected_start_minus_text_bytes": 163840,
+            "selected_start_role": "__PRELINK_INFO",
+            "text_exec_minus_data_bytes": 49152
+          },
+          "true": {
+            "linkedit_minus_prelink_bytes": 16384,
+            "prelink_minus_boot_bytes": 65536,
+            "profile": true,
+            "profile_text_exec_bytes": 16384,
+            "selected_start_minus_text_bytes": 32768,
+            "selected_start_role": "__DATA_SPTM",
+            "text_exec_minus_data_bytes": 49152
+          }
+        },
+        "boot_exec_fileoff": 98304,
+        "checked_adjacent_ranges": [
+          {
+            "file_gap": 0,
+            "file_start_delta": 32768,
+            "from": "__TEXT",
+            "to": "__DATA_SPTM",
+            "virtual_gap": 0,
+            "virtual_start_delta": 32768
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 49152,
+            "from": "__DATA_SPTM",
+            "to": "__TEXT_EXEC",
+            "virtual_gap": 0,
+            "virtual_start_delta": 49152
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__TEXT_EXEC",
+            "to": "__TEXT_BOOT_EXEC",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 65536,
+            "from": "__TEXT_BOOT_EXEC",
+            "to": "__PRELINK_INFO",
+            "virtual_gap": 0,
+            "virtual_start_delta": 65536
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__PRELINK_INFO",
+            "to": "__LINKEDIT",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          }
+        ],
+        "checked_boot_to_prelink_bytes": 65536,
+        "checked_data_to_text_bytes": 49152,
+        "checked_fallback_text_to_normal_bytes": 81920,
+        "checked_prelink_to_linkedit_bytes": 16384,
+        "checked_text_to_boot_bytes": 16384,
+        "data_sptm_fileoff": 32768,
+        "linkedit_fileoff": 180224,
+        "prelink_info_fileoff": 163840,
+        "text_exec_fileoff": 81920
+      },
+      {
+        "arithmetic_profiles": {
+          "false": {
+            "linkedit_minus_prelink_bytes": 16384,
+            "prelink_minus_boot_bytes": 65536,
+            "profile": false,
+            "profile_text_exec_bytes": null,
+            "selected_start_minus_text_bytes": 147456,
+            "selected_start_role": "__PRELINK_INFO",
+            "text_exec_minus_data_bytes": 49152
+          },
+          "true": {
+            "linkedit_minus_prelink_bytes": 16384,
+            "prelink_minus_boot_bytes": 65536,
+            "profile": true,
+            "profile_text_exec_bytes": 16384,
+            "selected_start_minus_text_bytes": 16384,
+            "selected_start_role": "__DATA_SPTM",
+            "text_exec_minus_data_bytes": 49152
+          }
+        },
+        "boot_exec_fileoff": 98304,
+        "checked_adjacent_ranges": [
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__TEXT",
+            "to": "__DATA_SPTM",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 49152,
+            "from": "__DATA_SPTM",
+            "to": "__TEXT_EXEC",
+            "virtual_gap": 0,
+            "virtual_start_delta": 49152
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__TEXT_EXEC",
+            "to": "__TEXT_BOOT_EXEC",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 65536,
+            "from": "__TEXT_BOOT_EXEC",
+            "to": "__PRELINK_INFO",
+            "virtual_gap": 0,
+            "virtual_start_delta": 65536
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__PRELINK_INFO",
+            "to": "__LINKEDIT",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          }
+        ],
+        "checked_boot_to_prelink_bytes": 65536,
+        "checked_data_to_text_bytes": 49152,
+        "checked_fallback_text_to_normal_bytes": 65536,
+        "checked_prelink_to_linkedit_bytes": 16384,
+        "checked_text_to_boot_bytes": 16384,
+        "data_sptm_fileoff": 32768,
+        "linkedit_fileoff": 180224,
+        "prelink_info_fileoff": 163840,
+        "text_exec_fileoff": 81920
+      }
+    ],
+    "entry": "0xfffffe0007018000",
+    "fileset_entries": 1,
+    "image_bytes": 196608,
+    "image_sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa",
+    "inner_base": "0xfffffe0007004000",
+    "installer_invoked": false,
+    "native_acceptance": "NOT_TESTED",
+    "payload_compared": true,
+    "record": "0xfffffe0007008000",
+    "recovered_payload_sha256": "35bcecdff17ca1b927fccdffd057c9f149577df5698f250b7dbe93f5c71fe13b",
+    "status": "STRUCTURAL_PROFILE_PASS",
+    "vector": "0xfffffe0007018800"
+  }
+}

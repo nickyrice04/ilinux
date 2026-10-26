@@ -6,6 +6,29 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current —31AE M1 review complete; human decision next,2026-10-25
+
+M1 independently reviewed main `f084705`: 38 source pins and 77 fresh methods
+PASS, including the exact rejected 31AD control. Archive 256353 bytes / 6b0c0ae6…10fa1
+and standalone candidate 196608 bytes / ccdc9c8c…5748aa verified against Git before
+extraction. Recovered payload35bcecdf…fe13b matches M5 evidence; strict validator
+and complete source-packager roundtrip PASS. Independently decoded exactly three
+changed boot words as the relocated record/stack references. Seven frozen source
+files and five unchanged compile-only objects reused; no host-link retry.
+
+Regenerated HTML/install/rollback equal archived bytes; both bash-n PASS, no
+production block run or page server started. M5 GNU-link / 26-case QEMU / 14-property
+inspector/REA evidence reviewed as summaries, not locally rerun or raw-capture
+reproduced. No offline blocker; native acceptance remains Unknown.25 previous
+closures plus new 31AE verify (5944 checks/691 files); 675 prior ignored evidence
+files/consumed receipts unchanged; client clean/pinned 57a9339.
+
+Native 31AE install/entry/rollback/live checks/Linux/SMP/GPU/performance NOT RUN.
+No restart/device/proxy/VM/security/volume/default action. Fresh concrete human
+decision on exact 31AE full replace/observe/rollback sequence is next; consumed
+31AD approval is not reused. Evidence:
+`native/boot/attempt31ae-m1-offline-2026-10-25.md` and JSON.
+
 ### Current — 31AE M5 offline repair complete; M1 reviews next, 2026-10-25
 
 31AE is published as prerelease `native-j716c-31ae` at source `aa1747b`.

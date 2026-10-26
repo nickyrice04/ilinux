@@ -4548,3 +4548,30 @@ blocker is established by this packaging failure.
 Both exact public asset URLs were downloaded and verified against Git: PASS
 (256353-byte archive, nine files plus checksum inventory; 196608-byte image).
 Publication receipt: `native/boot/attempt31ae-publication-2026-10-25.json`.
+
+## 2026-10-25 · M1 accepts 31AE offline evidence; physical sequence held
+
+M1 independently reviewed main `f084705`: 38 source pins and 77 fresh methods
+PASS, including the exact rejected 31AD control. Archive 256353 bytes / 6b0c0ae6…10fa1
+and standalone candidate 196608 bytes / ccdc9c8c…5748aa verified against Git before
+extraction. Recovered payload35bcecdf…fe13b matches M5 evidence; strict validator
+and complete source-packager roundtrip PASS. Independently decoded exactly three
+changed boot words as the relocated record/stack references. Seven frozen source
+files and five unchanged compile-only objects reused; no host-link retry.
+
+Regenerated HTML/install/rollback equal archived bytes; both bash-n PASS, no
+production block run or page server started. M5 GNU-link / 26-case QEMU / 14-property
+inspector/REA evidence reviewed as summaries, not locally rerun or raw-capture
+reproduced. No offline blocker; native acceptance remains Unknown.25 previous
+closures plus new 31AE verify (5944 checks/691 files); 675 prior ignored evidence
+files/consumed receipts unchanged; client clean/pinned 57a9339.
+
+Native 31AE install/entry/rollback/live checks/Linux/SMP/GPU/performance NOT RUN.
+No restart/device/proxy/VM/security/volume/default action. Fresh concrete human
+decision on exact 31AE full replace/observe/rollback sequence is next; consumed
+31AD approval is not reused. Evidence:
+`native/boot/attempt31ae-m1-offline-2026-10-25.md` and JSON.
+
+**Decision:** Reuse exact unchanged compile evidence, retain the rejected 31AD
+negative control and distinguish the finite-model PASS from complete native
+acceptance. No physical permission is inferred from this request to check main.
