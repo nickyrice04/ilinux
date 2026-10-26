@@ -1,0 +1,126 @@
+{
+  "candidate": {
+    "bytes": 196608,
+    "linked_payload_sha256": "6da621da67de37437300e7205e8c3919dcac997600f7eb6e8fedae29e6b0fc88",
+    "sha256": "406be900521795608073fa9f050f4e5f00b595793c95b0a155e510893cc16309"
+  },
+  "candidate_boot_invocations": 0,
+  "candidate_installation": {
+    "block_exit": 71,
+    "capture_exit": 0,
+    "configure_exit": 71,
+    "error_sanitized": "Fileset Error: Invalid Mach-O boot properties. Arithmetic Error: arithmetic overflow detected subtracting FilesetOffset(rawValue: 49152) from FilesetOffset(rawValue: 32768)",
+    "evidence": "Observed in human-provided screen photo",
+    "invocations": 1,
+    "native_entry_observed": false,
+    "retry_invocations": 0,
+    "slot_unchanged_assumed": false
+  },
+  "candidate_retry_invocations": 0,
+  "clipboard_smoke": "PASS_HUMAN_REPORTED",
+  "credential_prompt_qualification": {
+    "human_report": "Initially pressed Enter after a long pause and tried password; later identified username-first entry and reported success",
+    "prior_tty_buffering_suggestion": "UNCONFIRMED_HYPOTHESIS_NOT_A_FINDING",
+    "unused_prompt_repair_drafts": "Never tested, rendered, served or executed; removed from working source and retained only ignored"
+  },
+  "date_local": "2026-10-25",
+  "fresh_guard_evidence": {
+    "candidate_and_first_rollback_reached_configure_in_reviewed_guarded_blocks": true,
+    "included_before_each_issued_configure": true,
+    "m1_independent_target_query": "NOT RUN",
+    "policy_levels_required": {
+      "lab": "Permissive",
+      "original": "Full"
+    },
+    "private_guard_files_received_by_m1": false
+  },
+  "human_start_after_review": "Requested the reviewed test and reported M5 shut down",
+  "linux_smp_gpu_performance": "NOT RUN",
+  "live_target_version_checks": "NOT RUN",
+  "local_page_server_stopped": true,
+  "m1_proxy_requests": 0,
+  "m1_restart": false,
+  "m1_review_execution_commit": "9a4ec0342cbf358b923bfe9c3d7361564dbbb6d5",
+  "m1_usb_device_opens": 0,
+  "m5_command_operator": "Human on M5 Recovery; no M1 remote policy commands",
+  "monitor_calls": "NOT RUN",
+  "native_diagnostic_boot": "NOT RUN",
+  "new_security_downgrade_or_volume_operation": "NONE_GUIDED_OR_REPORTED",
+  "next_native_attempt_authorized_by_this_report": false,
+  "next_owner": "M5 agent: offline analysis and fix decision per human request",
+  "offline_operand_geometry": {
+    "headers_checked": 2,
+    "identifies_complete_installer_check_or_remedy": false,
+    "matching_segments": {
+      "32768": "__TEXT_EXEC.fileoff",
+      "49152": "__DATA_SPTM.fileoff"
+    },
+    "mathematical_difference": -16384,
+    "minuend": 32768,
+    "scope": "Read-only check of exact original candidate",
+    "subtrahend": 49152
+  },
+  "offline_suites_rerun_in_this_result_handoff": false,
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "consumed_receipts_reset": false,
+    "current_source_pins": 37,
+    "distinct_files": 663,
+    "earlier_frozen_manifests_unchanged": 24,
+    "execution_source_manifest_sha256": "c0ffde5c41369dcf769b1209048ab8e0caa04fac0c067eeedd8ce350d3293e04",
+    "listed_hash_checks": 5906,
+    "old_partial_and_release_reports": "BYTE_UNCHANGED",
+    "prior_evidence_files_verified_unchanged": 661,
+    "publication_base_commit": "c27d437bc5cc2b19640de7ec1db5da55f6cc0044",
+    "publication_source_manifest_sha256": "83cf88e6f8aa028bc425f0924c1ae962b275358f0a9bfefd64d062fa0d5bb6cb",
+    "total_manifests": 25,
+    "upstream_after_session_delta": "c27d437: stale section-1 text refresh plus its source pin only; no candidate or executable change"
+  },
+  "production_or_test_source_changes_in_publication": false,
+  "raw_media_or_identifiers_in_publication": false,
+  "raw_recovery_file_retention_after_reboot": "UNVERIFIED",
+  "raw_recovery_files_transferred_to_m1": false,
+  "readonly_diagnosis": {
+    "block_exit": 0,
+    "evidence": "HUMAN_REPORTED",
+    "flat31ac_inspector_exit": 0,
+    "nested31ad_inspector_exit": 0,
+    "rawboot021_inspector_exit": 71
+  },
+  "released_candidate_commit": "150dc67f30b017369b6099d56ca9751ef4c19ca2",
+  "result": "INSTALL_REJECTED_ROLLBACK_REPORTED_RETURNED",
+  "return": {
+    "fresh_desktop_policy_or_build_query": "NOT RUN",
+    "macintosh_hd_default_startup_disk": "SEPARATELY_CONFIRMED_BY_HUMAN",
+    "macintosh_hd_desktop": "CONFIRMED_BY_HUMAN"
+  },
+  "rollback": {
+    "first_observed_invocation": {
+      "block_exit": 71,
+      "capture_exit": 0,
+      "configure_exit": 71,
+      "configure_invocations_observed": 1,
+      "evidence": "Observed in human-provided screen photo",
+      "raw_boot_object_recognized": true,
+      "sanitized_error": "Boot policy error: not a valid admin user for the volume",
+      "slot_unchanged_assumed": false,
+      "status": "INCOMPLETE_STOPPED_NO_AUTOMATIC_RETRY",
+      "success_marker": false,
+      "username_input_or_opportunity": "UNCONFIRMED",
+      "username_prompt_visible": true
+    },
+    "later_exact_command_or_total_invocation_count": null,
+    "later_full_policy_postcheck_separately_captured": false,
+    "later_numeric_exits": null,
+    "later_success": "HUMAN_REPORTED_AFTER_USERNAME_ENTRY",
+    "m1_independent_installed_slot_verification": "NOT RUN",
+    "new_foreground_repair_used": false,
+    "reviewed_image_bytes": 3932160,
+    "reviewed_image_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "reviewed_lowest_virtual_address": 0,
+    "reviewed_raw_entry_point": 2048
+  },
+  "schema": "ilinux-attempt31ad-recovery-result-v1",
+  "thirty_second_marker_observation": "NOT RUN"
+}

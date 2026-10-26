@@ -1,5 +1,28 @@
 # Blockers
 
+## Current — 31AD actual installer subtraction requires M5 offline analysis
+
+One human-operated 31AD candidate configure failed after confirmation:
+configure=71/capture=0/block=71. Actual error: arithmetic overflow subtracting
+FilesetOffset 49152 from 32768. Read-only inspector exits were flat31ac=0,
+nested31ad=0, rawboot021=71, block=0; copied clipboard smoke PASS. Local original
+candidate offsets match __DATA_SPTM=49152 and __TEXT_EXEC=32768, but the complete
+installer check/remedy is unconfirmed. No candidate retry or diagnostic boot.
+
+The first boot021 rollback failed administrator authentication, also 71/0/71.
+Human then identified username-first entry, reported successful rollback and safe
+Macintosh HD return, and separately confirmed its default Startup Disk. Final
+rollback numeric exits/command count/policy postcheck were not separately
+captured. A tentative prompt-repair draft was never tested/served/run and is not
+published; no renderer/TTY bug is established. M1 page server stopped.
+
+M5 owns further offline analysis and the fix decision, per the human. Native
+entry/marker/live version/Linux/SMP/GPU/performance remain NOT RUN for 31AD.
+No changed flags, security downgrade or new experiment follows. All 24 earlier
+closures plus current 37-pin closure verify (5906 checks/663 distinct files),
+661 prior evidence files and consumed receipts unchanged; client clean/pinned.
+Result: `native/boot/attempt31ad-recovery-2026-10-25-result.md` and JSON.
+
 ## Current — 31AD M1 release review PASS; native authorization/clipboard remain
 
 M1 reviewed release handoff `150dc67`: all 37 current pins PASS; archive
