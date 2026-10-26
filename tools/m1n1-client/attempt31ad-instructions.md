@@ -14,12 +14,12 @@ ordering invariant and wraps it in a nested fileset. The motivating root cause
 and [`native/boot/attempt31ad/manifest.json`](../../native/boot/attempt31ad/manifest.json)
 before the sequence below.
 
-## 1. Freeze and review the offline package (available now)
+## 1. Freeze and review the package
 
 Preserve local changes; `git pull --ff-only` and record the exact reviewed
-commit. This package is at delivery status `PENDING_VM_LINK`: the candidate image
-and archive are **not yet built**, so review the source, tooling and hypothesis
-now, and review the candidate as separate M5 VM evidence when it exists.
+commit. The candidate image and original-only archive are built and published as
+prerelease `native-j716c-31ad`, and the manifest is pinned. Review the source,
+tooling and hypothesis here, then verify the released candidate per section 2.
 
 Using existing M1 tools, from the repository root:
 
