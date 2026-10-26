@@ -1,5 +1,28 @@
 # Blockers
 
+## Current — 31AE installer gate passed; diagnostic entry unconfirmed
+
+31AE installation PASS observed in human photo: configure/capture/block **0/0/0**,
+with INSTALL_SUCCESS_ENTRY_NOT_OBSERVED and original Full/lab Permissive postcheck
+passed. This passes the actual installer format gate; firmware/diagnostic entry
+is not established. One lab boot showed only an Apple logo for human-reported
+several minutes, exceeding the 30-second cap (exact duration unknown). No marker
+or explicit error was reported; power-off and guarded rollback were instructed.
+No retry instructed or reported; failure location/cause remains Unknown.
+
+Human separately reports exact boot021 rollback **0/0/0** plus success marker,
+Macintosh HD desktop return and Macintosh HD default confirmed. Raw rollback
+logs/command count/separately numeric postcheck were not received; final policy
+postcheck is supported by the reported success marker, not a new desktop query.
+Page server stopped/listener closed. 26 manifests/5944 checks/691 files and 675
+prior ignored evidence files/consumed receipts unchanged; client clean/pinned.
+
+Native observation was attempted; diagnostic entry remains UNCONFIRMED.
+Linux/live target version/monitor calls/SMP/GPU/performance NOT RUN. No M1
+restart, USB/proxy, launcher, VM, new security downgrade or volume operation.
+M5 next: offline analysis/proposal only; no automatic retry or new experiment.
+Evidence: `native/boot/attempt31ae-recovery-2026-10-25-result.md` and JSON.
+
 ## Current — 31AE authorized; prepare M1 page before M5 restart
 
 M1 review `e52528f` PASS has no actionable blocker. The human now explicitly

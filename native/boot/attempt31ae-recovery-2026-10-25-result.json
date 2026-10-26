@@ -1,0 +1,110 @@
+{
+  "additional_experiment_authorized": false,
+  "boot021_live_proxy_check_after_restore": "NOT RUN",
+  "boot_observation": {
+    "authorized_observation_limit_seconds": 30,
+    "diagnostic_entry": "NOT OBSERVED; execution unconfirmed",
+    "display": "Apple logo only; no diagnostic checkerboard reported",
+    "duration_limit_exceeded": true,
+    "evidence": "Human report",
+    "exact_duration_seconds": null,
+    "firmware_error_text": "None reported",
+    "lab_boot_attempts_reported": 1,
+    "linux_smp_gpu_performance": "NOT RUN",
+    "live_target_version_checks": "NOT RUN",
+    "phase": "31AE_SINGLE_OBSERVATION_RESULT",
+    "power_off_completed": "Subsequent rollback and original return confirmed by human; shutdown not independently observed",
+    "reported_duration": "Several minutes",
+    "retry_instructions_issued": false,
+    "stop_instruction": "Hold power until off; return to lab-paired Recovery for independent exact boot021 rollback"
+  },
+  "candidate_installation": {
+    "automatic_retry": false,
+    "candidate_sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa",
+    "capture_exit": 0,
+    "configure_exit": 0,
+    "configure_invocations_observed": 1,
+    "evidence": "Observed in human-provided screen photo; image and credentials not copied",
+    "full_permissive_postcheck": "PASS_OBSERVED_SUCCESS_MARKER",
+    "install_block_exit": 0,
+    "install_success_marker": true,
+    "native_entry": "NOT RUN",
+    "phase": "31AE_INSTALL_RESULT",
+    "raw_guard_and_postcheck_files_received": false
+  },
+  "checkerboard_marker": "NOT OBSERVED_OR_REPORTED",
+  "clipboard_smoke": "PASS_HUMAN_REPORTED",
+  "date_local": "2026-10-25",
+  "diagnostic_entry": "UNCONFIRMED",
+  "execution_handoff_commit": "33c10913019c41eab7d923cd394a292fa6fa482f",
+  "firmware_acceptance_or_execution_failure_location": "UNKNOWN",
+  "independent_m1_review_commit": "e52528f77c9e1e1d14edf83fe77cabb591483b98",
+  "live_target_version_checks": "NOT RUN",
+  "m1_actions": {
+    "native_launcher_invocations": 0,
+    "page_server": "STOPPED_LISTENER_CLOSED",
+    "proxy_connections": 0,
+    "restart": false,
+    "settings_change": false,
+    "usb_device_opens": 0
+  },
+  "monitor_calls": "NOT RUN",
+  "native_linux_smp_gpu_performance": "NOT RUN",
+  "next_owner": "M5 agent: offline analysis and separate fix/experiment proposal; no automatic native action",
+  "no_candidate_retry_instructed": true,
+  "offline_test_evidence": "Reuse e52528f 77-method PASS; no suites rerun during physical-result reporting",
+  "policy_evidence": {
+    "fresh_desktop_policy_query": "NOT RUN",
+    "install_fresh_guard": "Required before configure by exact reviewed block; raw file not transferred",
+    "install_full_permissive_postcheck": "PASS_SUCCESS_MARKER_OBSERVED_IN_PHOTO",
+    "new_security_downgrade_or_volume_operation": "NONE_GUIDED_OR_REPORTED",
+    "rollback_full_permissive_postcheck": "PASS_HUMAN_REPORTED_SUCCESS_MARKER",
+    "rollback_raw_logs_received": false
+  },
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "consumed_receipts_reset": false,
+    "distinct_source_files": 691,
+    "listed_hash_checks": 5944,
+    "prior_ignored_evidence_unchanged": 675,
+    "reviewed_rendered_files_unchanged": true,
+    "server_stopped_and_listener_closed": true,
+    "source_manifests_verified": 26,
+    "tests_rerun_this_result_handoff": false
+  },
+  "privacy": {
+    "credentials_or_machine_identifiers_published": false,
+    "raw_media_copied_or_published": false,
+    "raw_recovery_logs_transferred": false,
+    "recovery_temp_file_retention_after_reboot": "UNVERIFIED"
+  },
+  "result": "INSTALL_PASS_APPLE_LOGO_ONLY_ROLLBACK_REPORTED_PASS_RETURNED",
+  "reviewed_candidate": {
+    "bytes": 196608,
+    "linked_payload_sha256": "35bcecdff17ca1b927fccdffd057c9f149577df5698f250b7dbe93f5c71fe13b",
+    "sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa"
+  },
+  "rollback_return": {
+    "evidence": "HUMAN_REPORTED",
+    "exact_rollback_invocation_count_independently_observed": null,
+    "macintosh_hd_default": true,
+    "macintosh_hd_desktop_return": true,
+    "policy_postcheck": "PASS_HUMAN_REPORTED_SUCCESS_MARKER",
+    "policy_postcheck_numeric_exit_separately_supplied": false,
+    "raw_rollback_logs_received": false,
+    "rollback_block_exit": 0,
+    "rollback_capture_exit": 0,
+    "rollback_configure_exit": 0,
+    "rollback_success_marker": true
+  },
+  "rollback_reviewed_pin": {
+    "actual_installed_slot_independently_queried": false,
+    "bytes": 3932160,
+    "lowest_virtual_address": 0,
+    "raw_entry_point": 2048,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+  },
+  "schema": "ilinux-attempt31ae-recovery-result-v1",
+  "temporary_lab_default_completion": "Not separately reported; subsequent reviewed install guard required lab-paired Recovery"
+}
