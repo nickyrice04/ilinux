@@ -99,6 +99,28 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AF authorized; M1 prepares reviewed page before M5 restart
+
+M1 review `5352c07` PASS has no actionable blocker. The human explicitly approves
+one exact lab-only install, one timed 30-second centered-marker observation only
+after install/postcheck success, exact boot021 rollback and Macintosh HD/default
+return. Keep original Full/lab Permissive; no new security or volume change.
+Separate authorization: `native/boot/attempt31af-authorization-2026-10-25.json`.
+Frozen package/review approval-pending fields remain publication-time evidence.
+
+M5 reverified the 34 primary pins, supplemental layout.h, archive/candidate,
+staged helper/boot021 and archived page/phase equality: PASS; both bash-n PASS.
+No native write, restart, entry selection, authentication or security change.
+System Settings did not yield a usable computer-use window; current Startup Disk
+is NOT VERIFIED. No redundant desktop policy query; fresh Recovery guards remain.
+
+M1 reuses/serves only its reviewed page directory and confirms readiness before
+M5 uses the established temporary lab Startup Disk/paired Recovery flow. M1 needs
+no restart, proxy or repeated offline suites. Skip clipboard smoke; power off at
+30 seconds even if logo-only. Current handoff:
+`tools/m1n1-client/attempt31af-authorized-handoff.md`. All physical phases remain
+NOT RUN; no automatic retry or additional experiment. Silence stays inconclusive.
+
 ### Latest M1 — 31AF offline review PASS; native not run, 2026-10-25
 
 M1 reviewed `983cb84`: all 34 primary source pins PASS; 47 fresh focused methods,

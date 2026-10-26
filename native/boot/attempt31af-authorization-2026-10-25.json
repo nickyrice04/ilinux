@@ -1,0 +1,110 @@
+{
+  "schema": "ilinux-attempt31af-authorization-v1",
+  "date_local": "2026-10-25",
+  "basis": "Direct human instruction in M5 chat conditional on M1 review passing; condition satisfied",
+  "human_instruction": "ok M1 pushed the 31AF review. Check it, and if it passed, go ahead with the lab-only install, one 30-second boot test and boot021 rollback. Keep Macintosh HD at Full Security and tell me when to restart.",
+  "review_commit": "5352c0738834faf98fd5a73a928e85459c37e995",
+  "reviewed_handoff_commit": "983cb842d938f7e8a0baaea0e8f591867d1d789d",
+  "reviewed_source_commit": "8d798ff1018e2db0eca2e46c9455efb6ccab4078",
+  "review_result": "OFFLINE_REVIEW_PASS",
+  "actionable_blockers": [],
+  "authorization_given": true,
+  "approval_hold_superseded": true,
+  "scope": [
+    "necessary temporary lab Startup Disk flow and possible preparatory existing boot021 start",
+    "one exact reviewed lab-only Mach-O custom-object installation in lab-paired Recovery",
+    "only on installation and policy-postcheck success: one timed 30-second centered128x64 marker observation followed by power-off",
+    "fresh guarded exact boot021 raw rollback",
+    "Macintosh HD return and restoration as default"
+  ],
+  "original_security_required": "Full",
+  "lab_security_required": "Permissive",
+  "new_security_or_volume_change_authorized": false,
+  "candidate_reverification": {
+    "bytes": 442368,
+    "sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b",
+    "status": "PASS",
+    "modified": false,
+    "executed": false
+  },
+  "archive_reverification": {
+    "status": "PASS",
+    "bytes": 254936,
+    "archive_sha256": "52412ecf4a52cabd3cab23969ba3941572d691bd16efa7e6ff657c3746738eda",
+    "verified_files": 9,
+    "installation_performed": false
+  },
+  "source_pins_reverification": {
+    "count": 34,
+    "status": "PASS",
+    "inventory_sha256": "c097def4b1a0497adf8ea3a31c1a8c6c8781a7d35f4ae039da524a51129decf0"
+  },
+  "supplemental_header_reverification": {
+    "path": "kernel/experiments/immutable31af/layout.h",
+    "sha256": "3da9aba03614899241641fd80cf2c52067491de9c011f4aead66903babb2404b",
+    "status": "PASS",
+    "qualification": "Primary inventory omission separately closed for this exact candidate by M1 full six-file build binding and pinned constants; frozen inventory unchanged",
+    "six_file_build_binding_sha256": "874ac4cdd21ac70ea8a90a094c4b3f4474398b5e02ca4fabbcaed4a058ce1de4"
+  },
+  "existing_staged_files_reverification": [
+    {
+      "name": "rollback",
+      "bytes": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+      "status": "PASS",
+      "modified": false,
+      "executed": false
+    },
+    {
+      "name": "helper",
+      "bytes": 3590,
+      "sha256": "e65636d03cfb7a7000f86810fdc8888e209b99bedaa1b36ca7a125de4bf72188",
+      "status": "PASS",
+      "modified": false,
+      "executed": false
+    }
+  ],
+  "phase_reverification": {
+    "install-paste.txt": {
+      "sha256": "5dc9aa45f5469604155b750597772c414ca87b10157d18acc7d001df3f225b68",
+      "bytes": 6137,
+      "archive_equal": true,
+      "bash_n_exit": 0
+    },
+    "rollback-paste.txt": {
+      "sha256": "7e363bf5cd4db770fb58635de213d7d79bfd06c7d94384a3685345454cfbe195",
+      "bytes": 5872,
+      "archive_equal": true,
+      "bash_n_exit": 0
+    },
+    "recovery.html": {
+      "sha256": "f6c8b2d4bf5f0df8af06d46a64d7c5cfe25a780ce4e5c5486eccc678dc612f23",
+      "bytes": 16562,
+      "archive_equal": true
+    }
+  },
+  "ui_checkpoint": {
+    "status": "NOT_VERIFIED",
+    "reason": "Computer-use returned no usable original System Settings window (noWindowsAvailable, then timeoutReached)",
+    "agent_selected_entry": false,
+    "agent_requested_or_entered_authentication": false,
+    "agent_clicked_restart": false,
+    "completed_temporary_default_change_confirmed": false
+  },
+  "m1_page_server_ready": "NOT_CONFIRMED; M1 prepares reviewed page before M5 restart",
+  "recovery_guard": "NOT_RUN",
+  "candidate_installation": "NOT_RUN",
+  "native_observation": "NOT_RUN",
+  "native_observation_limit_seconds": 30,
+  "rollback_installation": "NOT_RUN",
+  "original_default_restoration": "NOT_RUN",
+  "current_desktop_policy_requery": "NOT_RUN; no redundant query requested",
+  "security_level_change_performed": false,
+  "linux_smp_gpu_performance": "NOT_RUN",
+  "frozen_package_modified": false,
+  "clipboard_smoke_step": false,
+  "m1_restart_required": false,
+  "proxy_or_native_launcher_required": false,
+  "handoff": "tools/m1n1-client/attempt31af-authorized-handoff.md",
+  "firmware_dfu_restore_erase_authorized": false
+}

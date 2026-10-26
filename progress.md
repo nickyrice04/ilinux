@@ -1,5 +1,27 @@
 # Progress Log
 
+## 2026-10-25 · M5 accepts 31AF review and human authorization
+
+M1 `5352c07` is OFFLINE_REVIEW_PASS with no actionable blocker; the omitted
+layout.h is separately verified by its supplemental SHA and matching full build
+binding. Human authorizes the exact lab-only install, one timed 30-second test,
+boot021 rollback and original/default restoration, keeping Macintosh HD Full.
+Recorded separate authorization and complete current M1 handoff; frozen source
+inventory, package flags and prior receipts remain unchanged.
+
+Final M5 checks PASS: 34 source pins plus header, archive/candidate, nine archive
+members, existing staged boot021/helper, page/phase byte equality and both bash-n.
+No production block executed. Computer-use could not obtain a usable original
+Settings window; no entry selection/authentication/Restart, no security change.
+Current default is unverified; no repeated desktop policy request.
+
+M1 prepares/serves only its existing reviewed page and confirms readiness before
+human M5 restart; no M1 restart/proxy/repeated offline suites. No clipboard smoke.
+Fresh Recovery guards before both writes; power off after the single 30s test;
+exact independent rollback, then original desktop/default confirmations. Physical
+steps remain NOT RUN. See `tools/m1n1-client/attempt31af-authorized-handoff.md`
+and `native/boot/attempt31af-authorization-2026-10-25.json`.
+
 ## 2026-10-25 · M1: 31AF offline PASS with supplemental header verification
 
 M1 reviewed `983cb84`: all 34 primary source pins PASS; 47 fresh focused methods,

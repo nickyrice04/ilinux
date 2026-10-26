@@ -1,5 +1,22 @@
 # Blockers
 
+## Current — 31AF authorized; M1 page readiness gates the M5 restart
+
+M1 review `5352c07` PASS has no actionable blocker; exact supplemental layout.h
+pin closes the current inventory note. Human now authorizes the guarded lab-only
+install, one timed 30-second observation, exact boot021 rollback and Macintosh HD/
+default return. M5 final source/artifact/staged-file/page checks PASS. Full remains
+required for Macintosh HD; no new security or volume change is authorized.
+
+M1 must serve only its reviewed page directory and confirm readiness before the
+human restarts M5. Current Startup Disk was not verified: computer-use could not
+obtain a usable Settings window; no entry selection/authentication/Restart or
+native write occurred. Human can use the normal temporary lab Startup Disk flow.
+Fresh Recovery guards remain; skip clipboard smoke and repeated desktop queries.
+All physical phases NOT RUN. Current sequence and separate approval:
+`tools/m1n1-client/attempt31af-authorized-handoff.md` and
+`native/boot/attempt31af-authorization-2026-10-25.json`.
+
 ## Current — no 31AF offline blocker; native acceptance remains untested
 
 M1 reviewed `983cb84`: all 34 primary source pins PASS; 47 fresh focused methods,

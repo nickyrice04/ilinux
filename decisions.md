@@ -4699,3 +4699,26 @@ Evidence: `native/boot/attempt31af-m1-offline-2026-10-25.md` and JSON.
 **Decision:** Preserve frozen inventories and record the omitted header with
 independent full-build binding/constant verification. Keep native reserved-memory
 ownership and panel visibility unproven; do not turn offline PASS into a reboot.
+
+## 2026-10-25 · Accept human authorization for exact 31AF native sequence
+
+**Decision:** M1 `5352c07` OFFLINE_REVIEW_PASS satisfies the human's explicit
+conditional instruction. Authorize one guarded lab-only install of the reviewed
+442368-byte candidate `166bea74…d4951b`, one timed 30-second centered-marker
+observation only after install/postcheck success, exact staged boot021 rollback,
+and Macintosh HD return/default restoration. Preserve original Full/lab Permissive;
+no security reduction, new volume or automatic retry. Record current approval
+separately rather than rewriting frozen approval-pending package/review fields.
+
+M5 final 34-pin and supplemental-header/artifact/staged-file/page checks PASS.
+The omitted header remains closed for this candidate by supplemental pin and full
+build binding. No new build or repeated suite is necessary. No host write or
+restart occurred; current Startup Disk is unverified because computer-use returned
+no usable original Settings window. M1 first serves only its reviewed page and
+confirms readiness; then the human uses the established temporary lab/paired
+Recovery flow. No M1 restart, proxy, clipboard smoke or redundant desktop query.
+Both writes retain fresh guards. All physical phases remain NOT RUN; silence
+would remain inconclusive, not proof of an Apple-only barrier.
+
+Receipt: `native/boot/attempt31af-authorization-2026-10-25.json`.
+Current handoff: `tools/m1n1-client/attempt31af-authorized-handoff.md`.

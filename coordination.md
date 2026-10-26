@@ -6,6 +6,23 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AF approved; M1 serves reviewed page, then human restarts M5
+
+M1 review `5352c07` PASS satisfies the human's conditional authorization for
+one lab-only install, one timed 30-second observation on install/postcheck success,
+exact boot021 rollback and Macintosh HD/default restoration. Preserve original
+Full/lab Permissive and the frozen package; separate receipt:
+`native/boot/attempt31af-authorization-2026-10-25.json`.
+
+M5 final 34-pin/supplemental-header/artifact/staged-helper/rollback/page checks
+PASS. No production block, boot/security change or restart; current Startup Disk
+unverified because computer-use yielded no usable Settings window. M1 reuses its
+reviewed page directory, serves only it privately, and confirms availability
+before M5's temporary lab Startup Disk/paired Recovery flow. No M1 restart/proxy,
+repeated suites or clipboard smoke. All physical phases remain NOT RUN.
+Follow `tools/m1n1-client/attempt31af-authorized-handoff.md`; power off at 30s,
+even logo-only; fresh guarded independent rollback; no automatic retry.
+
 ### Current — M1 31AF review complete; native sequence awaits human start
 
 M1 reviewed `983cb84`: all 34 primary source pins PASS; 47 fresh focused methods,
