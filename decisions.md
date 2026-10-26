@@ -4543,3 +4543,8 @@ Preserve the failed image as an exact negative control and cover every qualified
 arithmetic pair in both model profiles. Keep Recovery installation, firmware
 entry and physical multicore execution as separate future tests. No Apple-only
 blocker is established by this packaging failure.
+
+31AE is published as prerelease `native-j716c-31ae` at source `aa1747b`.
+Both exact public asset URLs were downloaded and verified against Git: PASS
+(256353-byte archive, nine files plus checksum inventory; 196608-byte image).
+Publication receipt: `native/boot/attempt31ae-publication-2026-10-25.json`.

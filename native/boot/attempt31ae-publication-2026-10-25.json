@@ -1,0 +1,41 @@
+{
+  "schema": "ilinux31ae-publication-v1",
+  "date_local": "2026-10-25",
+  "source_commit": "aa1747b0aec571e4251a07983b84653acf5b9193",
+  "release": "https://github.com/nickyrice04/ilinux/releases/tag/native-j716c-31ae",
+  "prerelease": true,
+  "release_creation_note": "Initial creation with abbreviated target was rejected422 before creation; verified fullremotecommit target succeeded. No asset replacement or changed image.",
+  "assets": [
+    {
+      "bytes": 256353,
+      "filename": "ilinux-31ae-entry-test.tar.gz",
+      "sha256": "6b0c0ae6fdce31b69c72861c27297f0cb4d8873c586448fced41ed4e02910fa1",
+      "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ae/ilinux-31ae-entry-test.tar.gz"
+    },
+    {
+      "filename": "ilinux-31ae-ordered.macho",
+      "bytes": 196608,
+      "sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa",
+      "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ae/ilinux-31ae-ordered.macho"
+    }
+  ],
+  "published_urls_downloaded_and_verified": true,
+  "archive_verify": {
+    "status": "PASS",
+    "archive_sha256": "6b0c0ae6fdce31b69c72861c27297f0cb4d8873c586448fced41ed4e02910fa1",
+    "verified_files": 9,
+    "native": "NOT_RUN",
+    "installation_performed": false
+  },
+  "rendered_pages": "Two complete independent blocks plus HTML are in archive and regenerate byte-identically from reviewed source closure. Both bash-n PASS; neither executed.",
+  "source_inventory_sha256": "aa27825f5082b1a5196b154e297002c62eee3677572062383b3b9d08b8a0229c",
+  "source_pins": 38,
+  "offline_tests_methods": 77,
+  "runtime_qemu_cases": 26,
+  "native_installation": "NOT_RUN",
+  "native_entry": "NOT_RUN",
+  "new_host_boot_or_security_changes": false,
+  "m1_review": "PENDING",
+  "restart_ready": false,
+  "next_instructions": "tools/m1n1-client/attempt31ae-instructions.md"
+}

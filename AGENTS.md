@@ -101,6 +101,11 @@ that reads it with `-I`.
 
 ### Latest — 31AE exact arithmetic repair built offline; M1 review next, 2026-10-25
 
+31AE is published as prerelease `native-j716c-31ae` at source `aa1747b`.
+Both exact public asset URLs were downloaded and verified against Git: PASS
+(256353-byte archive, nine files plus checksum inventory; 196608-byte image).
+Publication receipt: `native/boot/attempt31ae-publication-2026-10-25.json`.
+
 M5 incorporated M1 report `1de5d2b`. The released 31AD image reproduces the
 exact Recovery subtraction (32768 minus 49152) in Apple's read-only inspector,
 despite exit 0 / PROPERTY_ERROR. This was an incomplete image layout/validator,
