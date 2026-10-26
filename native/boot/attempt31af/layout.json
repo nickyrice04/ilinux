@@ -1,0 +1,224 @@
+{
+  "SP_instructions": 0,
+  "boot_code_bytes": 2052,
+  "complete_address_validation_proof": false,
+  "constants": {
+    "IF31_BOOT_OFFSET": 376832,
+    "IF31_BOOT_READ": 8,
+    "IF31_CACHE_EXTENT": 26,
+    "IF31_CACHE_LINE": 25,
+    "IF31_COUNT_RANGE": 12,
+    "IF31_COUNT_READ": 11,
+    "IF31_EL": 2,
+    "IF31_FB_ALIAS": 20,
+    "IF31_FB_ATTR": 19,
+    "IF31_FB_PA": 18,
+    "IF31_FB_TRANSLATION": 17,
+    "IF31_FORMAT": 6,
+    "IF31_HCR": 3,
+    "IF31_HELPER_VERSION": 10,
+    "IF31_IMAGE_READ": 7,
+    "IF31_LATE_OFFSET": 360448,
+    "IF31_LITTLE_ENDIAN": 23,
+    "IF31_MARKER_HEIGHT": 64,
+    "IF31_MARKER_PIXELS": 8192,
+    "IF31_MARKER_STORE_BYTES": 32768,
+    "IF31_MARKER_WIDTH": 128,
+    "IF31_MMU": 5,
+    "IF31_MONITOR_READ": 9,
+    "IF31_OK": 0,
+    "IF31_PAYLOAD_BYTES": 393216,
+    "IF31_PLAN": 16,
+    "IF31_REASON": 1,
+    "IF31_RESERVED_BYTES": 344064,
+    "IF31_RESERVED_OFFSET": 16384,
+    "IF31_STAGE_ENTRY": 1,
+    "IF31_STAGE_FAULT": 57005,
+    "IF31_STAGE_INPUTS": 4,
+    "IF31_STAGE_PAINTED": 7,
+    "IF31_STAGE_PLANNED": 5,
+    "IF31_STAGE_PROFILE": 3,
+    "IF31_STAGE_REFUSED": 128,
+    "IF31_STAGE_VALIDATED": 6,
+    "IF31_TABLE_FORMAT": 14,
+    "IF31_TABLE_READ": 13,
+    "IF31_TCRX": 24,
+    "IF31_VECTORS_OFFSET": 378880,
+    "IF31_VIDEO_FORMAT": 15
+  },
+  "guarded_transitions": 0,
+  "indirect_calls": 0,
+  "instruction_classes": {
+    "address": 3,
+    "alu": 267,
+    "branch": 147,
+    "load": 20,
+    "pixel_store": 1,
+    "return": 7,
+    "system": 36
+  },
+  "load_segments": [
+    [
+      16384,
+      344064,
+      4
+    ],
+    [
+      360448,
+      16384,
+      5
+    ],
+    [
+      376832,
+      16384,
+      5
+    ]
+  ],
+  "memory_store_instruction_count": 1,
+  "owned_image_stores": 0,
+  "payload_bytes": 393216,
+  "payload_sha256": "91d2ce73f79784b78c96e08c606d3622aa3246a7561fdbec4d1066ebe9bfaa7c",
+  "record_fields": {
+    "IF31_BOOT_OFFSET": 376832,
+    "IF31_BOOT_READ": 8,
+    "IF31_CACHE_EXTENT": 26,
+    "IF31_CACHE_LINE": 25,
+    "IF31_COUNT_RANGE": 12,
+    "IF31_COUNT_READ": 11,
+    "IF31_EL": 2,
+    "IF31_FB_ALIAS": 20,
+    "IF31_FB_ATTR": 19,
+    "IF31_FB_PA": 18,
+    "IF31_FB_TRANSLATION": 17,
+    "IF31_FORMAT": 6,
+    "IF31_HCR": 3,
+    "IF31_HELPER_VERSION": 10,
+    "IF31_IMAGE_READ": 7,
+    "IF31_LATE_OFFSET": 360448,
+    "IF31_LITTLE_ENDIAN": 23,
+    "IF31_MARKER_HEIGHT": 64,
+    "IF31_MARKER_PIXELS": 8192,
+    "IF31_MARKER_STORE_BYTES": 32768,
+    "IF31_MARKER_WIDTH": 128,
+    "IF31_MMU": 5,
+    "IF31_MONITOR_READ": 9,
+    "IF31_OK": 0,
+    "IF31_PAYLOAD_BYTES": 393216,
+    "IF31_PLAN": 16,
+    "IF31_REASON": 1,
+    "IF31_RESERVED_BYTES": 344064,
+    "IF31_RESERVED_OFFSET": 16384,
+    "IF31_STAGE_ENTRY": 1,
+    "IF31_STAGE_FAULT": 57005,
+    "IF31_STAGE_INPUTS": 4,
+    "IF31_STAGE_PAINTED": 7,
+    "IF31_STAGE_PLANNED": 5,
+    "IF31_STAGE_PROFILE": 3,
+    "IF31_STAGE_REFUSED": 128,
+    "IF31_STAGE_VALIDATED": 6,
+    "IF31_TABLE_FORMAT": 14,
+    "IF31_TABLE_READ": 13,
+    "IF31_TCRX": 24,
+    "IF31_VECTORS_OFFSET": 378880,
+    "IF31_VIDEO_FORMAT": 15
+  },
+  "retained_relocations": 0,
+  "store_destination": "validated framebuffer; x10 row VA + x11 column *4",
+  "store_encoding": "0xb82b7940",
+  "symbols": {
+    "entry.o": {
+      "bytes": 0,
+      "offset": 0
+    },
+    "immutable_image_base": {
+      "bytes": 0,
+      "offset": 0
+    },
+    "immutable_main": {
+      "bytes": 960,
+      "offset": 380928
+    },
+    "immutable_pixel_store": {
+      "bytes": 0,
+      "offset": 381648
+    },
+    "immutable_protect": {
+      "bytes": 108,
+      "offset": 381980
+    },
+    "immutable_read_at": {
+      "bytes": 28,
+      "offset": 382756
+    },
+    "immutable_readable": {
+      "bytes": 92,
+      "offset": 381888
+    },
+    "immutable_refuse": {
+      "bytes": 8,
+      "offset": 382812
+    },
+    "immutable_table_valid": {
+      "bytes": 152,
+      "offset": 382088
+    },
+    "immutable_translate": {
+      "bytes": 148,
+      "offset": 382240
+    },
+    "immutable_validate_fb": {
+      "bytes": 368,
+      "offset": 382388
+    },
+    "immutable_write_at": {
+      "bytes": 28,
+      "offset": 382784
+    },
+    "native_entry": {
+      "bytes": 4,
+      "offset": 376832
+    },
+    "native_fatal": {
+      "bytes": 24,
+      "offset": 382824
+    },
+    "native_fault_park": {
+      "bytes": 0,
+      "offset": 382844
+    },
+    "native_image_base": {
+      "bytes": 0,
+      "offset": 0
+    },
+    "native_image_end": {
+      "bytes": 0,
+      "offset": 393216
+    },
+    "native_late_park": {
+      "bytes": 4,
+      "offset": 360448
+    },
+    "native_park": {
+      "bytes": 4,
+      "offset": 382820
+    },
+    "native_vectors": {
+      "bytes": 0,
+      "offset": 378880
+    },
+    "reserved_sptm_begin": {
+      "bytes": 0,
+      "offset": 16384
+    },
+    "reserved_sptm_end": {
+      "bytes": 0,
+      "offset": 360448
+    },
+    "slot": {
+      "bytes": 0,
+      "offset": 16
+    }
+  },
+  "undefined_symbols": 0,
+  "writable_load_segments": 0
+}

@@ -4631,3 +4631,38 @@ Evidence: `native/boot/attempt31ae-recovery-2026-10-25-result.md` and JSON.
 human-reported Apple-logo observation, rollback exits and original/default
 return. Preserve the exceeded observation cap and unknown execution stage;
 assign further analysis to M5 without retrying or changing the reviewed image.
+
+## 2026-10-25 · Test reserved-memory ownership with immutable 31AF
+
+M5 reviewed `ee2e946`: 31AE installed successfully (0/0/0), but the one
+observation was logo-only; exact rollback and original/default return were human
+reported successful. This does not establish a firmware prohibition. Strongest
+new software lead: the old observer's first record clear/stack use overlapped the
+monitor's reserved BootKC-rs region, before visible output or owned vectors.
+
+31AF is a new register-only assembly observer: no SP, C or explicit image-store
+instructions; one bounded pixel STR, a centered 128x64 black/white marker, and a
+dedicated public-reference reservation. GNU two-base payloads are byte-identical.
+47 focused unittest methods and 41 complete emulator cases PASS: 14 paints,
+26 refusals, and the exact old31AE first-store permission-fault control. New
+cases preserve the complete read-only image/reserved A5 sentinels, inputs and
+tables; 4/16KiB translation and partial/open DAIF are covered. Independent artifact
+review PASS. Apple read-only inspector derives all14 properties. Native
+acceptance/entry, monitor services, CPU secondary startup and Linux remain unrun.
+
+M1 next: independent review of the exact 31AF candidate/archive and 34 source
+pins using `tools/m1n1-client/attempt31af-instructions.md`. Source-verified pages
+match the archive; both complete blocks pass bash-n. The clipboard smoke phase
+is removed per human instruction. Proposed physical sequence after review and
+approval: one guarded install, one timed30s observation, exact boot021 rollback,
+Macintosh HD/default return. No OS/settings/security/volume changes or restart
+performed; no new physical authorization inferred from preparation. All previous
+source-inventory files and frozen evidence remain unchanged. Decision/details:
+`research/native31af-decision.md`, `native/boot/attempt31af/validation.json`.
+
+**Decision:** Continue with this different, tested observer rather than repeat
+31AE or claim an Apple-only dependency from an unobserved entry. Keep Apple
+installer acceptance, entry/display visibility and physical multicore execution
+separate. Preserve the protected-memory control as a synthetic demonstration,
+not a diagnosis of the actual logo-only result. No clipboard smoke test, repeated
+inspector matrix, security reduction or unchanged native retry is required.

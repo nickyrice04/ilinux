@@ -1,0 +1,788 @@
+{
+  "schema": "ilinux-native31af-validation-v1",
+  "date_local": "2026-10-25",
+  "decision": "A meaningful new software test is ready for independent M1 review. No evidence establishes that Apple must update firmware.",
+  "basis31ae": "Actual install PASS, only Apple-logo observation; entry unconfirmed; rollback/original default human reported successful.",
+  "hypothesis": "Previous record/stack overlap reserved monitor data; modeled first store faults when protected. This does not establish the native cause.",
+  "host": {
+    "os": "macOS26.6.2",
+    "build": "25G83",
+    "python": "3.9.6",
+    "compiler": "Apple clang21.0.0",
+    "compile_only": "COMPILE_PASS_NOT_LINKED",
+    "object_sha256": "1d47958380e91422187571449343a330b9eda9b95550989d0c7f032bc9993fc5",
+    "source_bindings_sha256": "874ac4cdd21ac70ea8a90a094c4b3f4474398b5e02ca4fabbcaed4a058ce1de4"
+  },
+  "vm_link": {
+    "status": "PASS",
+    "job": "virtualization/jobs/090-immutable31af/run.sh",
+    "environment": "existing ARM64 Linux VM;2vCPU4GiB; no network or physical USB",
+    "job_exit": 0,
+    "compiler": "cc (GCC) 16.1.1 20260430",
+    "linker": "GNU ld (GNU Binutils) 2.46.0",
+    "slide_bytes_identical": true,
+    "payload_sha256": "91d2ce73f79784b78c96e08c606d3622aa3246a7561fdbec4d1066ebe9bfaa7c",
+    "source_bindings_sha256": "874ac4cdd21ac70ea8a90a094c4b3f4474398b5e02ca4fabbcaed4a058ce1de4",
+    "source_files_unchanged": true
+  },
+  "compiled_instruction_audit": {
+    "layout": "native/boot/attempt31af/layout.json",
+    "boot_instruction_words": 513,
+    "memory_store_instruction_count": 1,
+    "SP_instructions": 0,
+    "explicit_owned_image_stores": 0,
+    "indirect_calls": 0,
+    "guarded_transitions": 0,
+    "writable_ELF_load_segments": 0,
+    "complete_address_validation_proof": false,
+    "AT_caveat": "AT can have architectural AF/dirty-table effects under incoming controls; no explicit mapping/control rewrite. Model tables have access state set and are checked unchanged."
+  },
+  "runtime": {
+    "status": "PASS",
+    "total": 41,
+    "new_image_cases": 40,
+    "paints": 14,
+    "refusals": 26,
+    "old_first_store_control": 1,
+    "qemu": "QEMU emulator version 11.1.2",
+    "source_bindings_sha256": "91dab1b3fe8539c700a6eef53f39f992a65dd21966653ddd7d5d3e49d733e936",
+    "source_files_unchanged": true,
+    "whole_payload_identity_readonly": true,
+    "reserved_sentinel_bytes": 344064,
+    "reserved_sentinel_byte": "0xa5",
+    "incoming_sp": 0,
+    "granules": [
+      4096,
+      16384
+    ],
+    "marker_pixels": 8192,
+    "pixel_store_bytes": 32768,
+    "cases": [
+      {
+        "case": "non-vhe-nc-30",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 30,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "non-vhe-nc-32",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "non-vhe-wb-30",
+        "mode": "non-vhe",
+        "cache": "wb",
+        "depth": 30,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "non-vhe-wb-32",
+        "mode": "non-vhe",
+        "cache": "wb",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "vhe-nc-30",
+        "mode": "vhe",
+        "cache": "nc",
+        "depth": 30,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "vhe-nc-32",
+        "mode": "vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "vhe-wb-30",
+        "mode": "vhe",
+        "cache": "wb",
+        "depth": 30,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "vhe-wb-32",
+        "mode": "vhe",
+        "cache": "wb",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "16k-vhe-nc-30",
+        "mode": "16k-vhe",
+        "cache": "nc",
+        "depth": 30,
+        "translation_granule": 16384,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "16k-vhe-nc-32",
+        "mode": "16k-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 16384,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "16k-vhe-wb-30",
+        "mode": "16k-vhe",
+        "cache": "wb",
+        "depth": 30,
+        "translation_granule": 16384,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "16k-vhe-wb-32",
+        "mode": "16k-vhe",
+        "cache": "wb",
+        "depth": 32,
+        "translation_granule": 16384,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "incoming-daif-open",
+        "mode": "vhe",
+        "cache": "wb",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "incoming-daif-partial",
+        "mode": "vhe",
+        "cache": "wb",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 7,
+        "diagnostic_status": 0,
+        "painted_pixels": 8192,
+        "status": "PASS"
+      },
+      {
+        "case": "reason",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 1,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "reason-wide",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 1,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "mmu-off",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 5,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "mixed-hcr",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 3,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "boot-unmapped",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 8,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "monitor-unmapped",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 9,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "count-unmapped",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 11,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "table-unmapped",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 13,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "count-zero",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 12,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "count-large",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 12,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "helper-version",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 10,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "video-version",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 15,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "video-depth",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 15,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "video-small",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 16,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "video-stride",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 15,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "range-wrap",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 14,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "range-unaligned",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 14,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "range-overlap",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 14,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "range-va-overlap",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 14,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "range-uncovered",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 16,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "fb-ro-last",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 17,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "fb-unmapped-last",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 17,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "fb-wrong-pa",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 18,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "fb-device",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 19,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "image-alias",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 20,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "input-alias",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 128,
+        "diagnostic_status": 20,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "old31ae-ro-data",
+        "mode": "non-vhe",
+        "cache": "nc",
+        "depth": 32,
+        "translation_granule": 4096,
+        "phase": 57005,
+        "diagnostic_status": 22,
+        "painted_pixels": 0,
+        "status": "PASS"
+      }
+    ],
+    "old_control_fault": {
+      "conclusion": "Original first record store faults under synthetic read-only model; native cause unproven",
+      "elr": "0x4041401c",
+      "esr": "0x9600004f",
+      "far": "0x40404000",
+      "spsr": "0x400003c9",
+      "vector_slot": 4
+    },
+    "apple_firmware": false,
+    "native": "NOT_RUN"
+  },
+  "unit_tests": [
+    {
+      "suite": "kernel/experiments/bootimage31af/test_image.py",
+      "methods": 21,
+      "status": "PASS"
+    },
+    {
+      "suite": "kernel/experiments/bootimage31af/test_rejected31ae.py",
+      "methods": 5,
+      "status": "PASS"
+    },
+    {
+      "suite": "tools/recovery31af/test_write_render.py",
+      "methods": 7,
+      "status": "PASS"
+    },
+    {
+      "suite": "tools/recovery31af/test_prepare.py",
+      "methods": 11,
+      "status": "PASS"
+    },
+    {
+      "suite": "native/boot/attempt31af/test_verify.py",
+      "methods": 3,
+      "status": "PASS"
+    }
+  ],
+  "unit_methods": 47,
+  "fixture_self_test": "PASS; no compiler or emulator executed by self-test",
+  "actual_candidate": {
+    "status": "STRUCTURAL_PROFILE_PASS",
+    "image_bytes": 442368,
+    "image_sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b",
+    "inner_base": "0xfffffe0007004000",
+    "entry": "0xfffffe0007060000",
+    "own_record_or_stack": false,
+    "data_sptm_is_own_storage": false,
+    "fileset_entries": 1,
+    "payload_compared": true,
+    "recovered_payload_sha256": "91d2ce73f79784b78c96e08c606d3622aa3246a7561fdbec4d1066ebe9bfaa7c",
+    "checked_split_ranges": [
+      {
+        "data_sptm_fileoff": 32768,
+        "text_exec_fileoff": 376832,
+        "boot_exec_fileoff": 393216,
+        "prelink_info_fileoff": 409600,
+        "linkedit_fileoff": 425984,
+        "checked_data_to_text_bytes": 344064,
+        "checked_text_to_boot_bytes": 16384,
+        "checked_boot_to_prelink_bytes": 16384,
+        "checked_prelink_to_linkedit_bytes": 16384,
+        "checked_fallback_text_to_normal_bytes": 376832,
+        "checked_adjacent_ranges": [
+          {
+            "from": "__TEXT",
+            "to": "__DATA_SPTM",
+            "file_start_delta": 32768,
+            "file_gap": 0,
+            "virtual_start_delta": 32768,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__DATA_SPTM",
+            "to": "__TEXT_EXEC",
+            "file_start_delta": 344064,
+            "file_gap": 0,
+            "virtual_start_delta": 344064,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__TEXT_EXEC",
+            "to": "__TEXT_BOOT_EXEC",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__TEXT_BOOT_EXEC",
+            "to": "__PRELINK_INFO",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__PRELINK_INFO",
+            "to": "__LINKEDIT",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          }
+        ],
+        "arithmetic_profiles": {
+          "false": {
+            "profile": false,
+            "selected_start_role": "__PRELINK_INFO",
+            "profile_text_exec_bytes": null,
+            "selected_start_minus_text_bytes": 409600,
+            "linkedit_minus_prelink_bytes": 16384,
+            "text_exec_minus_data_bytes": 344064,
+            "prelink_minus_boot_bytes": 16384
+          },
+          "true": {
+            "profile": true,
+            "selected_start_role": "__DATA_SPTM",
+            "profile_text_exec_bytes": 16384,
+            "selected_start_minus_text_bytes": 32768,
+            "linkedit_minus_prelink_bytes": 16384,
+            "text_exec_minus_data_bytes": 344064,
+            "prelink_minus_boot_bytes": 16384
+          }
+        }
+      },
+      {
+        "data_sptm_fileoff": 32768,
+        "text_exec_fileoff": 376832,
+        "boot_exec_fileoff": 393216,
+        "prelink_info_fileoff": 409600,
+        "linkedit_fileoff": 425984,
+        "checked_data_to_text_bytes": 344064,
+        "checked_text_to_boot_bytes": 16384,
+        "checked_boot_to_prelink_bytes": 16384,
+        "checked_prelink_to_linkedit_bytes": 16384,
+        "checked_fallback_text_to_normal_bytes": 360448,
+        "checked_adjacent_ranges": [
+          {
+            "from": "__TEXT",
+            "to": "__DATA_SPTM",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__DATA_SPTM",
+            "to": "__TEXT_EXEC",
+            "file_start_delta": 344064,
+            "file_gap": 0,
+            "virtual_start_delta": 344064,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__TEXT_EXEC",
+            "to": "__TEXT_BOOT_EXEC",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__TEXT_BOOT_EXEC",
+            "to": "__PRELINK_INFO",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__PRELINK_INFO",
+            "to": "__LINKEDIT",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          }
+        ],
+        "arithmetic_profiles": {
+          "false": {
+            "profile": false,
+            "selected_start_role": "__PRELINK_INFO",
+            "profile_text_exec_bytes": null,
+            "selected_start_minus_text_bytes": 393216,
+            "linkedit_minus_prelink_bytes": 16384,
+            "text_exec_minus_data_bytes": 344064,
+            "prelink_minus_boot_bytes": 16384
+          },
+          "true": {
+            "profile": true,
+            "selected_start_role": "__DATA_SPTM",
+            "profile_text_exec_bytes": 16384,
+            "selected_start_minus_text_bytes": 16384,
+            "linkedit_minus_prelink_bytes": 16384,
+            "text_exec_minus_data_bytes": 344064,
+            "prelink_minus_boot_bytes": 16384
+          }
+        }
+      }
+    ],
+    "native_acceptance": "NOT_TESTED",
+    "installer_invoked": false
+  },
+  "actual_readonly_Apple_inspector": {
+    "classification": "PROPERTIES_DERIVED",
+    "properties": {
+      "kclo": 18446741874803736576,
+      "kcep": 18446741874804129792,
+      "kcrf": 0,
+      "kcrz": 409600,
+      "kcsf": 32768,
+      "kcsz": 344064,
+      "kcxf": 0,
+      "kcxz": 0,
+      "kcbf": 393216,
+      "kcbz": 16384,
+      "kcwf": 409600,
+      "kcwz": 16384,
+      "kclf": 425984,
+      "kclz": 16384
+    },
+    "exit": 0,
+    "stdout_sha256": "9a469fa61961ff4968c7772e35aa85a2bb83d858de96f27b1043bb3228d07350",
+    "stderr_sha256": "060367c79e74c046faa789655d564236101c67f510579647685ce3529756eb12",
+    "diagnostic": [],
+    "image_sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b",
+    "kmutil_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43"
+  },
+  "inspector_boundary": "All14 keys derived; exit alone insufficient. No configure-boot executed. Native installer/firmware acceptance untested.",
+  "analysis": "native/boot/attempt31af/analysis-validation.json",
+  "archive": {
+    "bytes": 254936,
+    "filename": "ilinux-31af-entry-test.tar.gz",
+    "sha256": "52412ecf4a52cabd3cab23969ba3941572d691bd16efa7e6ff657c3746738eda",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31af/ilinux-31af-entry-test.tar.gz"
+  },
+  "archive_verifier": {
+    "status": "PASS",
+    "verified_files": 9,
+    "executes_or_installs": false
+  },
+  "recovery_pages": {
+    "complete_independent_phases": 2,
+    "clipboard_smoke_phase": false,
+    "new_full_blocks_rendered": true,
+    "executed": false,
+    "copy_quit_browser_terminal_paste": true
+  },
+  "install_authorized": false,
+  "restart_ready": false,
+  "m1_review": "PENDING",
+  "not_run": [
+    "native31AF install",
+    "entry/marker/panel scanout",
+    "monitor calls",
+    "physical secondary startup",
+    "Linux/GPU/performance"
+  ],
+  "host_changes": {
+    "original_macOS": false,
+    "boot_settings": false,
+    "security": false,
+    "volumes_or_firmware": false
+  },
+  "next": "M1 independent review of exact published package; then human approval of one lab-only install/one30s observation/exact boot021 rollback/return.",
+  "independent_artifact_review": {
+    "status": "PASS",
+    "source_bindings_unchanged": 10,
+    "before_after_pairs_compared": 123,
+    "decoded_both_headers": true,
+    "old_fault_capture_matched": true,
+    "tests_rerun_by_reviewer": false,
+    "native_claim": false
+  }
+}

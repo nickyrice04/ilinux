@@ -1,0 +1,89 @@
+{
+  "schema": "ilinux-native31af-delivery-v1",
+  "experiment": "Immutable resident-cold observer: no stack/explicit image stores; dedicated monitor reservation; centered128x64 marker; no monitor call/CPU release/Linux",
+  "archive": {
+    "bytes": 254936,
+    "filename": "ilinux-31af-entry-test.tar.gz",
+    "sha256": "52412ecf4a52cabd3cab23969ba3941572d691bd16efa7e6ff657c3746738eda",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31af/ilinux-31af-entry-test.tar.gz"
+  },
+  "candidate": "ilinux-31af-immutable.macho",
+  "candidate_bytes": 442368,
+  "candidate_sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b",
+  "candidate_url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31af/ilinux-31af-immutable.macho",
+  "files": {
+    "README.txt": {
+      "bytes": 1358,
+      "sha256": "fe1445724bec6ddf26f42f830cc0cd8e2d457b9fc496b0ef9f11f4a0ae711957"
+    },
+    "iLinux-LICENSE": {
+      "bytes": 1067,
+      "sha256": "566069bb67afe27dc4dccb4127aca65f0d737755087a1a0db9dad97a582fb9ea"
+    },
+    "ilinux-31af-immutable.macho": {
+      "bytes": 442368,
+      "sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b"
+    },
+    "install-paste.txt": {
+      "bytes": 6137,
+      "sha256": "5dc9aa45f5469604155b750597772c414ca87b10157d18acc7d001df3f225b68"
+    },
+    "m1n1-LICENSE": {
+      "bytes": 17984,
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+    },
+    "m1n1-boot021.bin": {
+      "bytes": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "m1n1-source.json": {
+      "bytes": 211,
+      "sha256": "9e48b59f042b97cf57268a5e0d6abb206c57fd2b873bb7742c393ad7f6c310ae"
+    },
+    "recovery.html": {
+      "bytes": 16562,
+      "sha256": "f6c8b2d4bf5f0df8af06d46a64d7c5cfe25a780ce4e5c5486eccc678dc612f23"
+    },
+    "rollback-paste.txt": {
+      "bytes": 5872,
+      "sha256": "7e363bf5cd4db770fb58635de213d7d79bfd06c7d94384a3685345454cfbe195"
+    }
+  },
+  "linked_payload_sha256": "91d2ce73f79784b78c96e08c606d3622aa3246a7561fdbec4d1066ebe9bfaa7c",
+  "linked_payload_bytes": 393216,
+  "expected_marker": "centered128x64 black/white border and checkerboard",
+  "reserved_sptm_bytes": 344064,
+  "reserved_size_qualification": "Pinned public XNU macOS reference footprint, not proven T6050 minimum",
+  "observer_record_or_stack": false,
+  "explicit_memory_store_instruction_count": 1,
+  "native_profile": "resident cold x0=0,x1 BootArgs,x2 monitor; EL2/MMUon/little-endian/supported00or11HCR/64-bitAT",
+  "rollback": {
+    "filename": "m1n1-boot021.bin",
+    "bytes": 3932160,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "staged_path": "/Volumes/iLinux Boot Lab - Data/Users/Shared/iLinuxBoot/m1n1.bin",
+    "source": "m1n1 57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "marker": "##m1n1_ver##ilinux-57a9339-boot021"
+  },
+  "rollback_raw_entry": 2048,
+  "rollback_raw_lowest_virtual_address": 0,
+  "install_authorized": false,
+  "authorization_note": "Consumed31AE authorization does not authorize31AF. Independent M1 review and approval of this exact new candidate and complete sequence are required.",
+  "instructions": "tools/m1n1-client/attempt31af-instructions.md",
+  "native_execution": "NOT_RUN",
+  "restart_ready": false,
+  "new_volume_required": false,
+  "no_new_security_downgrade": true,
+  "policies_expected": {
+    "lab": "Permissive",
+    "original": "Full"
+  },
+  "target": {
+    "board": "J716c",
+    "chip": "t6050",
+    "model": "Mac17,6",
+    "role": "M5 target only; M1 helper does not run Recovery write commands"
+  },
+  "decision": "Continue with a meaningful software discriminator; no Apple-only requirement established",
+  "decision_detail": "research/native31af-decision.md"
+}

@@ -1,0 +1,182 @@
+{
+  "schema": "ilinux31af-analysis-validation-v1",
+  "date_local": "2026-10-25",
+  "rea": "6.4.0",
+  "backend": "Ghidra12.1.4",
+  "guest": {
+    "diskless": true,
+    "interfaces": [
+      "lo"
+    ],
+    "physical_usb": false,
+    "setup_exit": 0,
+    "job_exit": 0
+  },
+  "fresh_queries": [
+    {
+      "evidence_id": "ev_1fb974c68dcbd4654c175a6f5f0f752c7344e0fc1ce183eb083730f40bf4db23",
+      "member": "sptm-t6050",
+      "function": "FUN_fffffff0270bc07c",
+      "body_anchors": [
+        {
+          "start": "0xfffffff0270bc07c",
+          "end_inclusive": "0xfffffff0270bc153",
+          "carrier_offset": 753788,
+          "derived_offset": 753788,
+          "bytes": 216,
+          "sha256": "ef485a7922b9b3d0dabc1cbb1d680e3fcafb41f8538d5a6c47dedd009afe78e6"
+        }
+      ],
+      "assembly_instructions": 54,
+      "original_bytes_verified": true,
+      "pcode_operations": 55,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "run": {
+        "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+        "exit": 0,
+        "seconds": 22.035862719,
+        "address": "0xfffffff0270bc07c"
+      },
+      "dossier_sha256": "c64bddecb997077a100876a13d81d59a4a859872dc71a9527457f8773e29f063",
+      "label": "bootkc-range-lookup",
+      "native_value_flow_truncated": false
+    },
+    {
+      "evidence_id": "ev_f7a18deea252ccf53e04242cfcde8e5d7c622b51a7dde7e83008811cdb9a9776",
+      "member": "sptm-t6050",
+      "function": "FUN_fffffff0270bcee8",
+      "body_anchors": [
+        {
+          "start": "0xfffffff0270bcee8",
+          "end_inclusive": "0xfffffff0270be8b3",
+          "carrier_offset": 757480,
+          "derived_offset": 757480,
+          "bytes": 6604,
+          "sha256": "422c41202a7930805e177ec6348b3499c4872a93d71b75a287ba20aecb72b9d3"
+        }
+      ],
+      "assembly_instructions": 1651,
+      "original_bytes_verified": true,
+      "pcode_operations": 3000,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "run": {
+        "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+        "exit": 0,
+        "seconds": 22.541276595000006,
+        "address": "0xfffffff0270bcee8"
+      },
+      "dossier_sha256": "048eed46cc8cacb46aa8b93476687c3a5210efdd346b39478ded1177c317e593",
+      "label": "kernel-region-init",
+      "native_value_flow_truncated": true
+    }
+  ],
+  "independent_bounded_review": {
+    "schema": "ilinux31af-entry-contract-bounded-v1",
+    "date_local": "2026-10-25",
+    "input_sha256": {
+      "SPTM": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "iBoot": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+      "kernel": "2bd94a6fcff6203861e46b39920c16e1b5563d9bb17405b8a42c59c2ef4486e0"
+    },
+    "bounded_ranges": [
+      {
+        "artifact": "SPTM",
+        "behavior_window": "BootKC-rs-bootstrap-ownership",
+        "start": "0xfffffff0270bd084",
+        "end_exclusive": "0xfffffff0270bd114",
+        "file_offset": 757892,
+        "instruction_words": 36,
+        "sha256": "03a4bcda866e9d07086c4555af9fbb3f95787c2fc0a4db72ad2e4d66a09c3c28",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "artifact": "SPTM",
+        "behavior_window": "ro-data-capacity-threshold-and-alignment-error",
+        "start": "0xfffffff0270be6b4",
+        "end_exclusive": "0xfffffff0270be704",
+        "file_offset": 763572,
+        "instruction_words": 20,
+        "sha256": "a6119eb812fcab75ed1bf04e29274ae67397bb77aa574656d0272e8f0e2aeab3",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "artifact": "SPTM",
+        "behavior_window": "PAPT-initializer-owner-call",
+        "start": "0xfffffff0270be368",
+        "end_exclusive": "0xfffffff0270be380",
+        "file_offset": 762728,
+        "instruction_words": 6,
+        "sha256": "29317da23f5b50f414a0391ccc47af93ff14ab453b68b4f933148ee842a7b01e",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "artifact": "iBoot",
+        "behavior_window": "property-callback",
+        "start": "0x100c1ad0b04",
+        "end_exclusive": "0x100c1ad0e70",
+        "file_offset": 183044,
+        "instruction_words": 219,
+        "sha256": "3f9750cca203bc3e5255e187784e67c9d058ab36586f9403c7db494eaa304a82",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "artifact": "iBoot",
+        "behavior_window": "property-tag-comparator",
+        "start": "0x100c1ad7d20",
+        "end_exclusive": "0x100c1ad7d2c",
+        "file_offset": 212256,
+        "instruction_words": 3,
+        "sha256": "f6789d8d43c6c1cbd03925928d1c5cbfd8efad4aa2281587d1978e1245ca84fa",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "artifact": "iBoot",
+        "behavior_window": "BootKC-rs-range-publication",
+        "start": "0x100c1ad5d80",
+        "end_exclusive": "0x100c1ad5dd0",
+        "file_offset": 204160,
+        "instruction_words": 20,
+        "sha256": "0525672508e8366577ed8f58aee3d67a2da8c35bc8161c6075af528573a7e856",
+        "llvm_word_mismatches": 0
+      }
+    ],
+    "instruction_words_total": 304,
+    "fresh_REA_queries_by_this_agent": 0,
+    "private_code_or_pseudocode_in_record": false,
+    "findings": [
+      "31AE clears 512 record bytes before checking CurrentEL or installing fatal vectors.",
+      "Retained SPTM treats BootKC-rs as bootstrap structure storage, zeroes its complete extent, retains fields at base, base+8 and base+16, and uses the following pages from base+16KiB as page-table workspace.",
+      "The checked capacity branch requires a nonzero 16KiB page count and reports a structure requirement of 0x790 bytes; the observed kernel DATA_SPTM size 0x54000 is not a proved universal minimum.",
+      "iBoot property callback maps kcsf to descriptor+0x70, kcsz to +0x78, and kcrz to +0x58. The named BootKC-rs publication uses image base plus RO-prefix size (+0x58) and the SPTM-data size (+0x78); complete enclosing parameter provenance remains to be independently qualified.",
+      "Under the true-profile image-property interpretation, the 31AE record overlaps the first reserved RS page, and its entire stack occupies the following two RS pages identified as page-table workspace.",
+      "The first blind write may therefore fault or corrupt monitor state; no first store or fault has been observed. This is a concrete software defect hypothesis, not evidence of an Apple-only prohibition."
+    ],
+    "limits": [
+      "SPTM retained association to 25G83 is inherited, not freshly matched to executing firmware.",
+      "No physical entry PC, CurrentEL, mappings or active property profile was captured.",
+      "No complete all-path dominance proof or enclosing iBoot parameter binding is claimed.",
+      "No native first-store fault was observed.",
+      "Actual normal-world permissions and BootKC-rs runtime mapping still require qualification."
+    ]
+  },
+  "qualified_claim": "Reserved BootKC-rs is monitor bootstrap data/table workspace; under intended profile the previous observer overlaps it. Actual native property profile/first store unobserved.",
+  "whole_initializer_pseudocode": "NOT_ACCEPTED;3000-operation flow truncation",
+  "proprietary_bytes_or_pseudocode_published": false,
+  "native_test": "NOT_RUN"
+}
