@@ -4666,3 +4666,8 @@ installer acceptance, entry/display visibility and physical multicore execution
 separate. Preserve the protected-memory control as a synthetic demonstration,
 not a diagnosis of the actual logo-only result. No clipboard smoke test, repeated
 inspector matrix, security reduction or unchanged native retry is required.
+
+31AF is published at source `8d798ff` as prerelease `native-j716c-31af`.
+Both actual URLs were downloaded and verified against Git: PASS (254936-byte
+archive, nine files plus checksum inventory; 442368-byte candidate). Receipt:
+`native/boot/attempt31af-publication-2026-10-25.json`.

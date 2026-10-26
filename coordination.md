@@ -8,6 +8,11 @@ older plan disagree, this file wins for ownership and order of work.
 
 ### Current — 31AF offline complete; M1 reviews the new package next, 2026-10-25
 
+31AF is published at source `8d798ff` as prerelease `native-j716c-31af`.
+Both actual URLs were downloaded and verified against Git: PASS (254936-byte
+archive, nine files plus checksum inventory; 442368-byte candidate). Receipt:
+`native/boot/attempt31af-publication-2026-10-25.json`.
+
 M5 reviewed `ee2e946`: 31AE installed successfully (0/0/0), but the one
 observation was logo-only; exact rollback and original/default return were human
 reported successful. This does not establish a firmware prohibition. Strongest
