@@ -99,6 +99,30 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest M1 — 31AF offline review PASS; native not run, 2026-10-25
+
+M1 reviewed `983cb84`: all 34 primary source pins PASS; 47 fresh focused methods,
+fixture-generator self-test and one AArch64 compile-only object PASS. Archive
+254936 bytes/52412ecf…738eda and candidate 442368 bytes/166bea74…d4951b verified
+against Git before extraction. Actual recovered payload 91d2ce73…bfaa7c matches
+M5 evidence; strict validator and full source-packager roundtrip PASS. Delivered
+instruction-class walk covers 2052 boot bytes and confirms one pixel-store opcode.
+
+Regenerated HTML/install/rollback equal archive; both bash-n PASS; clipboard smoke
+absent. No production block or server started. Nonblocking note: primary inventory
+omits layout.h; exact header separately verified against matching six-file M5
+build-binding digest and pinned constants; supplemental SHA recorded in review.
+M5 GNU-link/41-case QEMU/Apple-inspector/REA summaries reviewed, not locally rerun or
+raw-capture reproduced. Reservation ownership is a hypothesis, not native proof.
+
+27 closures/5978 listed checks/722 files and 732 prior ignored evidence files/
+consumed receipts verify unchanged; client clean/pinned 57a9339. No source change,
+restart, device/proxy/VM or settings action. Native 31AF install/entry/rollback/live
+checks/Linux/SMP/GPU/performance NOT RUN. Ready for a separate human-started exact
+install/one timed 30-second centered-marker observation/exact boot021 rollback/
+Macintosh HD return/default sequence; no clipboard smoke or automatic retry.
+Evidence: `native/boot/attempt31af-m1-offline-2026-10-25.md` and JSON.
+
 ### Latest — 31AF immutable observer tested; meaningful native discriminator, 2026-10-25
 
 31AF is published at source `8d798ff` as prerelease `native-j716c-31af`.

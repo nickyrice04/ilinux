@@ -4671,3 +4671,31 @@ inspector matrix, security reduction or unchanged native retry is required.
 Both actual URLs were downloaded and verified against Git: PASS (254936-byte
 archive, nine files plus checksum inventory; 442368-byte candidate). Receipt:
 `native/boot/attempt31af-publication-2026-10-25.json`.
+
+## 2026-10-25 · M1 qualifies exact 31AF candidate offline
+
+M1 reviewed `983cb84`: all 34 primary source pins PASS; 47 fresh focused methods,
+fixture-generator self-test and one AArch64 compile-only object PASS. Archive
+254936 bytes/52412ecf…738eda and candidate 442368 bytes/166bea74…d4951b verified
+against Git before extraction. Actual recovered payload 91d2ce73…bfaa7c matches
+M5 evidence; strict validator and full source-packager roundtrip PASS. Delivered
+instruction-class walk covers 2052 boot bytes and confirms one pixel-store opcode.
+
+Regenerated HTML/install/rollback equal archive; both bash-n PASS; clipboard smoke
+absent. No production block or server started. Nonblocking note: primary inventory
+omits layout.h; exact header separately verified against matching six-file M5
+build-binding digest and pinned constants; supplemental SHA recorded in review.
+M5 GNU-link/41-case QEMU/Apple-inspector/REA summaries reviewed, not locally rerun or
+raw-capture reproduced. Reservation ownership is a hypothesis, not native proof.
+
+27 closures/5978 listed checks/722 files and 732 prior ignored evidence files/
+consumed receipts verify unchanged; client clean/pinned 57a9339. No source change,
+restart, device/proxy/VM or settings action. Native 31AF install/entry/rollback/live
+checks/Linux/SMP/GPU/performance NOT RUN. Ready for a separate human-started exact
+install/one timed 30-second centered-marker observation/exact boot021 rollback/
+Macintosh HD return/default sequence; no clipboard smoke or automatic retry.
+Evidence: `native/boot/attempt31af-m1-offline-2026-10-25.md` and JSON.
+
+**Decision:** Preserve frozen inventories and record the omitted header with
+independent full-build binding/constant verification. Keep native reserved-memory
+ownership and panel visibility unproven; do not turn offline PASS into a reboot.

@@ -1,0 +1,523 @@
+{
+  "actionable_native_blockers": [],
+  "archive": {
+    "bytes": 254936,
+    "filename": "ilinux-31af-entry-test.tar.gz",
+    "sha256": "52412ecf4a52cabd3cab23969ba3941572d691bd16efa7e6ff657c3746738eda",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31af/ilinux-31af-entry-test.tar.gz"
+  },
+  "candidate": {
+    "bytes": 442368,
+    "sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b"
+  },
+  "candidate_checks": {
+    "archive_verify": {
+      "archive_sha256": "52412ecf4a52cabd3cab23969ba3941572d691bd16efa7e6ff657c3746738eda",
+      "installation_performed": false,
+      "native": "NOT_RUN",
+      "status": "PASS",
+      "verified_files": 9
+    },
+    "both_bash_syntax_checks": 0,
+    "candidate_equals_archived": true,
+    "clipboard_smoke_absent": true,
+    "correct_boot021_marker": true,
+    "production_phases_executed": false,
+    "recovered_payload_bytes": 393216,
+    "recovered_payload_sha256": "91d2ce73f79784b78c96e08c606d3622aa3246a7561fdbec4d1066ebe9bfaa7c",
+    "regenerated_pages_byte_equal_archive": true,
+    "rollback_equals_retained_boot021": true,
+    "roundtrip_byte_equal": true,
+    "server_started": false
+  },
+  "date_local": "2026-10-25",
+  "delivered_payload_audit": {
+    "all_nonzero_boot_bytes_covered": true,
+    "audited_boot_bytes": 2052,
+    "functions": [
+      {
+        "bytes": 960,
+        "offset": 380928,
+        "symbol": "immutable_main"
+      },
+      {
+        "bytes": 108,
+        "offset": 381980,
+        "symbol": "immutable_protect"
+      },
+      {
+        "bytes": 28,
+        "offset": 382756,
+        "symbol": "immutable_read_at"
+      },
+      {
+        "bytes": 92,
+        "offset": 381888,
+        "symbol": "immutable_readable"
+      },
+      {
+        "bytes": 8,
+        "offset": 382812,
+        "symbol": "immutable_refuse"
+      },
+      {
+        "bytes": 152,
+        "offset": 382088,
+        "symbol": "immutable_table_valid"
+      },
+      {
+        "bytes": 148,
+        "offset": 382240,
+        "symbol": "immutable_translate"
+      },
+      {
+        "bytes": 368,
+        "offset": 382388,
+        "symbol": "immutable_validate_fb"
+      },
+      {
+        "bytes": 28,
+        "offset": 382784,
+        "symbol": "immutable_write_at"
+      },
+      {
+        "bytes": 4,
+        "offset": 376832,
+        "symbol": "native_entry"
+      },
+      {
+        "bytes": 24,
+        "offset": 382824,
+        "symbol": "native_fatal"
+      },
+      {
+        "bytes": 4,
+        "offset": 382820,
+        "symbol": "native_park"
+      }
+    ],
+    "header_constants_equal_pinned_layout": true,
+    "header_inventory_note": {
+      "listed_in_primary_34_pin_inventory": false,
+      "mitigation": "Current exact header independently verified by matching complete six-file build-binding digest and all pinned layout constants; record supplemental hash without changing frozen inventory",
+      "path": "kernel/experiments/immutable31af/layout.h",
+      "severity": "Nonblocking inventory completeness follow-up; exact reviewed candidate unaffected",
+      "sha256": "3da9aba03614899241641fd80cf2c52067491de9c011f4aead66903babb2404b"
+    },
+    "host_compile": "COMPILE_PASS_NOT_LINKED",
+    "instruction_classes": {
+      "address": 3,
+      "alu": 267,
+      "branch": 147,
+      "load": 20,
+      "pixel_store": 1,
+      "return": 7,
+      "system": 36
+    },
+    "m5_inspector_rea": "Published property/provenance summaries reviewed; no local Apple/proprietary execution",
+    "m5_runtime": "Published41-case summary and harness reviewed, no local QEMU or raw-capture reproduction",
+    "matches_m5_gnu_build_bindings": true,
+    "one_pixel_store_instruction": true,
+    "reserved_zero_bytes": 344064,
+    "scope": "Instruction-class coverage of downloaded recovered payload using Git-pinned layout symbols; not local linked-ELF geometry audit",
+    "six_file_source_bindings_sha256": "874ac4cdd21ac70ea8a90a094c4b3f4474398b5e02ca4fabbcaed4a058ce1de4",
+    "status": "PASS"
+  },
+  "downloads": [
+    {
+      "asset": "archive",
+      "bytes": 254936,
+      "download_exit": 0,
+      "sha256": "52412ecf4a52cabd3cab23969ba3941572d691bd16efa7e6ff657c3746738eda",
+      "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31af/ilinux-31af-entry-test.tar.gz",
+      "verified_before_archive_inspection": true
+    },
+    {
+      "asset": "candidate",
+      "bytes": 442368,
+      "download_exit": 0,
+      "sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b",
+      "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31af/ilinux-31af-immutable.macho",
+      "verified_before_archive_inspection": true
+    }
+  ],
+  "fixture_generator_self_test": {
+    "compiler_executed": false,
+    "emulator_executed": false,
+    "granules_tested_by_generators": [
+      4096,
+      16384
+    ],
+    "marker_pixels": 8192,
+    "marker_store_bytes": 32768,
+    "new_image_cases": 40,
+    "new_image_paint_cases": 14,
+    "payload_ro_pages_16k": 24,
+    "payload_ro_pages_4k": 96,
+    "reserved_sptm_ro_pages_16k": 21,
+    "reserved_sptm_ro_pages_4k": 84,
+    "reserved_sptm_sentinel_byte": "0xa5",
+    "reserved_sptm_sentinel_bytes": 344064,
+    "status": "PASS"
+  },
+  "fresh_checks": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/bootimage31af/test_image.py"
+      ],
+      "exit": 0,
+      "label": "image",
+      "methods": 21,
+      "seconds": 0.186
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/bootimage31af/test_rejected31ae.py",
+        "build/native-intake/attempt31ae-m1-offline/ilinux-31ae-ordered.macho"
+      ],
+      "exit": 0,
+      "label": "rejected31ae",
+      "methods": 5,
+      "seconds": 0.053
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "tools/recovery31af/test_write_render.py"
+      ],
+      "exit": 0,
+      "label": "write-render",
+      "methods": 7,
+      "seconds": 10.064
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "tools/recovery31af/test_prepare.py"
+      ],
+      "exit": 0,
+      "label": "prepare",
+      "methods": 11,
+      "seconds": 0.142
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "native/boot/attempt31af/test_verify.py"
+      ],
+      "exit": 0,
+      "label": "delivery",
+      "methods": 3,
+      "seconds": 0.054
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/immutable31af-test/run.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "label": "fixture-self-test",
+      "methods": null,
+      "seconds": 0.041
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/immutable31af/run.py",
+        "--output",
+        "build/native-intake/attempt31af-m1-offline/host-compile",
+        "--cc",
+        "clang",
+        "--target",
+        "aarch64-none-elf",
+        "--compile-only"
+      ],
+      "exit": 0,
+      "label": "host-compile",
+      "methods": null,
+      "seconds": 0.178
+    }
+  ],
+  "fresh_test_methods": 47,
+  "host_compile": {
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)\nTarget: arm64-apple-darwin25.0.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+    "executed": false,
+    "linked": false,
+    "m5_object_byte_equality_claimed": false,
+    "object_sha256": "acc5318f0bd8579c528d73b617f8da166ab5b3bb6ac0736cc3531af1566a7e44",
+    "objects": 1,
+    "source_bindings_sha256": "874ac4cdd21ac70ea8a90a094c4b3f4474398b5e02ca4fabbcaed4a058ce1de4",
+    "status": "COMPILE_PASS_NOT_LINKED"
+  },
+  "install_authorized_by_this_review": false,
+  "live_target_version_monitor_calls_linux_smp_gpu_performance": "NOT RUN",
+  "m5_evidence_review_only": [
+    "GNU two-base link equality, exact recovered payload digest matches",
+    "41 complete QEMU cases:14 paints,26 refusals,one exact-old31AE first-store fault control; published summary and harness reviewed, raw captures not reproduced",
+    "Actual Apple read-only inspector 14-property derivation; not invoked locally",
+    "REA/bounded provenance summary; no Apple binary bytes or decompiler output read by this review"
+  ],
+  "native31af_entry_marker": "NOT RUN",
+  "native31af_installation": "NOT RUN",
+  "native31af_rollback": "NOT RUN",
+  "next": "Ready for a separately human-started exact31AF lab install; only on install/postcheck success one timed30-second centered-marker observation, exactboot021 rollback and original MacintoshHD/default restoration. No clipboard smoke, repeated inspector matrix or automatic retry.",
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "consumed_receipts_reset": false,
+    "distinct_files": 722,
+    "header_supplemental_sha256": "3da9aba03614899241641fd80cf2c52067491de9c011f4aead66903babb2404b",
+    "listed_hash_checks": 5978,
+    "local_object_sha256": "acc5318f0bd8579c528d73b617f8da166ab5b3bb6ac0736cc3531af1566a7e44",
+    "m5_host_object_byte_digest_equal": false,
+    "manifests": {
+      "attempt31aa": "7260ea2e2966809622ed32437e35324eac25bacc9e6d2049e67834236a1e3252",
+      "attempt31aa-research": "fc4e0ec2c1e003d546cbe8e6741e6b711a4163a23de1f095844909b3a99f7a68",
+      "attempt31ab": "f697bdd660f7030f7afd05c99a5078e00c2795192c22d8a9da7ad61635d456bd",
+      "attempt31ac": "d1e017880ab416d2818e049f2a3391dfdc89097510b1453ee37ad8f8d7775476",
+      "attempt31ad": "83cf88e6f8aa028bc425f0924c1ae962b275358f0a9bfefd64d062fa0d5bb6cb",
+      "attempt31ae": "aa27825f5082b1a5196b154e297002c62eee3677572062383b3b9d08b8a0229c",
+      "attempt31af": "c097def4b1a0497adf8ea3a31c1a8c6c8781a7d35f4ae039da524a51129decf0",
+      "attempt31h": "00fefcb2c61fc2fa42de6afd1ce26b28e13d9897e065c4694518c3ed9defc155",
+      "attempt31i": "5c8279f96f85b424df0eaee2792a2be830a7d4604fa3e976fa3e2c3047b4a2c6",
+      "attempt31j": "360c1939430bbcf3a0b946a00fc1fe5d20b96b0b711998c36fde07cecf6fe765",
+      "attempt31j-host": "d9b0783e4295719dcba2ca843ce2a9f3942ac43f35acc81fa8eb4a07b0a5882e",
+      "attempt31k": "cfb3a24b9f4447b6267938063ed09ee809218a90a8e7e2e235eca62d69c1668c",
+      "attempt31l": "c7cc43434da7fb386e2486691a0a639053751396760624a6827d8588b5a9d26f",
+      "attempt31m": "b89a052048cb6af45cf5065a96983df0c6c3012c5d2ec705212310679ac3da97",
+      "attempt31n": "00dea9b06831a0e3d57fff4d2f92103ea469c887779ae5bce661bf0e0523e70a",
+      "attempt31o": "e95055bc87a7b395fdf9a2ce89937cc0007b2ed0e8e2acf729789de0efe80f39",
+      "attempt31p": "5d022acf0f8002ca2d73c2ddb98ab2dadc4c753847d2e4073c7e32a6ba0bf84c",
+      "attempt31q": "7e2a22826e8311532b16b81603b2fbe79bc4556d7893c3142fad92cbc943f0c6",
+      "attempt31r": "c1e31bdf90a248c06b31990fc85ffb3ec18b7b326f40dad4024b18cb38a5b2d4",
+      "attempt31s": "8bc15934985daeb816d00aaa4f5b5f2ad52bbe4f827494031c51eb6698e17158",
+      "attempt31t": "7a7e8f063dbbf0407912d2abbb5c3cf822c0f3db3654c7781f5dff05823066d7",
+      "attempt31u": "3cd55cf11ea37d2af3712508da53a2ad9051d8011fa99024741dd8e5e78adf25",
+      "attempt31v": "7b2cd432821583a351effd58eb53eb11eafc621c91a31fdab4579669c91e53cd",
+      "attempt31w": "e1690dd97e55c88dbbb80abc853269ec315be8108a63eeda19d0184ba2cda89c",
+      "attempt31x": "84e612d0591ed9c9a345e77a5b1a6f9e3d9d8f42180ccc24c508e825ea480ea9",
+      "attempt31y": "52f50dc70dc4605cf8cc0fcf320c26bb3d7997aa2566ab247542000f9844a3a9",
+      "attempt31z": "2332878cf180e95df264a7b04fe1b24ce458074267dab461046f0ddaf0b8e9df"
+    },
+    "new_source_pins": 34,
+    "previous_manifests_frozen": 26,
+    "prior_evidence_files_unchanged": 732,
+    "published_layout_and_six_build_files_bind_header": true,
+    "total_manifests": 27
+  },
+  "production_or_test_source_modified": false,
+  "production_recovery_phases_executed": false,
+  "rendered_files": {
+    "install-paste.txt": {
+      "bytes": 6137,
+      "sha256": "5dc9aa45f5469604155b750597772c414ca87b10157d18acc7d001df3f225b68"
+    },
+    "profile.json": {
+      "bytes": 278,
+      "sha256": "403632a73b82e6b949e85e4d8f6cd999e2feefe537a310e5c7d268cdd99c6891"
+    },
+    "recovery.html": {
+      "bytes": 16562,
+      "sha256": "f6c8b2d4bf5f0df8af06d46a64d7c5cfe25a780ce4e5c5486eccc678dc612f23"
+    },
+    "rollback-paste.txt": {
+      "bytes": 5872,
+      "sha256": "7e363bf5cd4db770fb58635de213d7d79bfd06c7d94384a3685345454cfbe195"
+    }
+  },
+  "restart_either_mac": false,
+  "result": "OFFLINE_REVIEW_PASS_WITH_NONBLOCKING_INVENTORY_NOTE",
+  "review_commit": "983cb842d938f7e8a0baaea0e8f591867d1d789d",
+  "review_notes": [
+    {
+      "detail": "Primary inventory omits immutable31af/layout.h. Current header additionally verified via complete six-file source-binding hash equal to M5 published GNU-link binding and identical pinned layout constants. Supplemental header SHA recorded here; frozen source inventory not modified. Future standalone closure verification should include this header.",
+      "file": "native/boot/attempt31af/source-sha256.txt",
+      "severity": "Nonblocking completeness follow-up"
+    },
+    {
+      "detail": "Ownership mismatch is a testable hypothesis, not a diagnosed native protection fault. Reservation size is a public comparator, not a proven T6050 minimum; silent native outcome remains inconclusive.",
+      "severity": "Evidence boundary"
+    }
+  ],
+  "schema": "ilinux-attempt31af-m1-offline-review-v1",
+  "server_started": false,
+  "source_commit": "8d798ff",
+  "source_inventory_sha256": "c097def4b1a0497adf8ea3a31c1a8c6c8781a7d35f4ae039da524a51129decf0",
+  "source_pins": 34,
+  "structural_validation": {
+    "checked_split_ranges": [
+      {
+        "arithmetic_profiles": {
+          "false": {
+            "linkedit_minus_prelink_bytes": 16384,
+            "prelink_minus_boot_bytes": 16384,
+            "profile": false,
+            "profile_text_exec_bytes": null,
+            "selected_start_minus_text_bytes": 409600,
+            "selected_start_role": "__PRELINK_INFO",
+            "text_exec_minus_data_bytes": 344064
+          },
+          "true": {
+            "linkedit_minus_prelink_bytes": 16384,
+            "prelink_minus_boot_bytes": 16384,
+            "profile": true,
+            "profile_text_exec_bytes": 16384,
+            "selected_start_minus_text_bytes": 32768,
+            "selected_start_role": "__DATA_SPTM",
+            "text_exec_minus_data_bytes": 344064
+          }
+        },
+        "boot_exec_fileoff": 393216,
+        "checked_adjacent_ranges": [
+          {
+            "file_gap": 0,
+            "file_start_delta": 32768,
+            "from": "__TEXT",
+            "to": "__DATA_SPTM",
+            "virtual_gap": 0,
+            "virtual_start_delta": 32768
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 344064,
+            "from": "__DATA_SPTM",
+            "to": "__TEXT_EXEC",
+            "virtual_gap": 0,
+            "virtual_start_delta": 344064
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__TEXT_EXEC",
+            "to": "__TEXT_BOOT_EXEC",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__TEXT_BOOT_EXEC",
+            "to": "__PRELINK_INFO",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__PRELINK_INFO",
+            "to": "__LINKEDIT",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          }
+        ],
+        "checked_boot_to_prelink_bytes": 16384,
+        "checked_data_to_text_bytes": 344064,
+        "checked_fallback_text_to_normal_bytes": 376832,
+        "checked_prelink_to_linkedit_bytes": 16384,
+        "checked_text_to_boot_bytes": 16384,
+        "data_sptm_fileoff": 32768,
+        "linkedit_fileoff": 425984,
+        "prelink_info_fileoff": 409600,
+        "text_exec_fileoff": 376832
+      },
+      {
+        "arithmetic_profiles": {
+          "false": {
+            "linkedit_minus_prelink_bytes": 16384,
+            "prelink_minus_boot_bytes": 16384,
+            "profile": false,
+            "profile_text_exec_bytes": null,
+            "selected_start_minus_text_bytes": 393216,
+            "selected_start_role": "__PRELINK_INFO",
+            "text_exec_minus_data_bytes": 344064
+          },
+          "true": {
+            "linkedit_minus_prelink_bytes": 16384,
+            "prelink_minus_boot_bytes": 16384,
+            "profile": true,
+            "profile_text_exec_bytes": 16384,
+            "selected_start_minus_text_bytes": 16384,
+            "selected_start_role": "__DATA_SPTM",
+            "text_exec_minus_data_bytes": 344064
+          }
+        },
+        "boot_exec_fileoff": 393216,
+        "checked_adjacent_ranges": [
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__TEXT",
+            "to": "__DATA_SPTM",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 344064,
+            "from": "__DATA_SPTM",
+            "to": "__TEXT_EXEC",
+            "virtual_gap": 0,
+            "virtual_start_delta": 344064
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__TEXT_EXEC",
+            "to": "__TEXT_BOOT_EXEC",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__TEXT_BOOT_EXEC",
+            "to": "__PRELINK_INFO",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          },
+          {
+            "file_gap": 0,
+            "file_start_delta": 16384,
+            "from": "__PRELINK_INFO",
+            "to": "__LINKEDIT",
+            "virtual_gap": 0,
+            "virtual_start_delta": 16384
+          }
+        ],
+        "checked_boot_to_prelink_bytes": 16384,
+        "checked_data_to_text_bytes": 344064,
+        "checked_fallback_text_to_normal_bytes": 360448,
+        "checked_prelink_to_linkedit_bytes": 16384,
+        "checked_text_to_boot_bytes": 16384,
+        "data_sptm_fileoff": 32768,
+        "linkedit_fileoff": 425984,
+        "prelink_info_fileoff": 409600,
+        "text_exec_fileoff": 376832
+      }
+    ],
+    "data_sptm_is_own_storage": false,
+    "entry": "0xfffffe0007060000",
+    "fileset_entries": 1,
+    "image_bytes": 442368,
+    "image_sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b",
+    "inner_base": "0xfffffe0007004000",
+    "installer_invoked": false,
+    "native_acceptance": "NOT_TESTED",
+    "own_record_or_stack": false,
+    "payload_compared": true,
+    "recovered_payload_sha256": "91d2ce73f79784b78c96e08c606d3622aa3246a7561fdbec4d1066ebe9bfaa7c",
+    "status": "STRUCTURAL_PROFILE_PASS"
+  },
+  "usb_proxy_connections": 0,
+  "vm_starts": 0
+}
