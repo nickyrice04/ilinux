@@ -99,6 +99,28 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AE authorized; M1 page preparation and M5 restart handoff, 2026-10-25
+
+M1 review `e52528f` PASS has no actionable blocker. The human now explicitly
+authorizes the exact 31AE lab-only installation, necessary temporary Startup Disk
+flow, one 30-second observation only on install/postcheck success, exact boot021
+rollback, and Macintosh HD/default restoration. Original Full/lab Permissive
+levels must remain. The earlier approval-pending records stay frozen and are
+superseded by `native/boot/attempt31ae-authorization-2026-10-25.json`.
+
+M5 reverified all 38 pins, the archive/candidate, and the existing staged boot021
+and Recovery helper: PASS, unchanged. Startup Disk visibly shows iLinux Boot Lab
+selected with Restart available. Agent opened the page only; no different entry
+selected, authentication requested, Restart clicked, native write or security
+change. Completed temporary-default flow is unconfirmed. No redundant desktop
+policy query; fresh paired-Recovery guards remain required before each write.
+
+M1 prepares/serves only its already reviewed page directory and confirms readiness
+before the human restarts M5. M1 needs no restart, repeated offline suites, USB or
+proxy. Full current sequence: `tools/m1n1-client/attempt31ae-authorized-handoff.md`.
+Candidate install, entry observation, rollback and original return/default steps
+remain NOT RUN. No automatic retry, changed flags, new volume or security change.
+
 ### Latest M1 —31AE independent offline review PASS; native held,2026-10-25
 
 M1 independently reviewed main `f084705`: 38 source pins and 77 fresh methods
