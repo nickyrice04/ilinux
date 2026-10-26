@@ -1,0 +1,195 @@
+{
+  "schema": "ilinux31ae-analysis-validation-v1",
+  "date_local": "2026-10-25",
+  "rea_version": "6.4.0",
+  "ghidra_version": "12.1.4",
+  "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+  "new_queries": [
+    {
+      "evidence_id": "ev_8e18329f557e73a6cf9e0d87d9aac31c62a069408156bddcebce1b718ffe7541",
+      "member": "kmutil-arm64e",
+      "function": "FUN_100025cc0",
+      "body_anchors": [
+        {
+          "start": "0x100025cc0",
+          "end_inclusive": "0x100025cdb",
+          "carrier_offset": 154816,
+          "derived_offset": 154816,
+          "bytes": 28,
+          "sha256": "0b28e139f7f89f85f6adffa63058b5cb92b8e761d8d4aee01bbe51a4f80ef55e"
+        }
+      ],
+      "assembly_instructions": 7,
+      "original_bytes_verified": true,
+      "pcode_operations": 14,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "label": "segment-end-distance",
+      "run": {
+        "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+        "exit": 0,
+        "seconds": 90.889234043,
+        "address": "0x100025cc0"
+      },
+      "dossier_sha256": "34ded3970f2bc9e7f2e70cbf0663cfea2c2d291d9c24749f902baa1c6d999225"
+    },
+    {
+      "evidence_id": "ev_2825fc71859ea8e7fb0730642f0d46e2789ef7d6adecf19f484ead16d20dea32",
+      "member": "kmutil-arm64e",
+      "function": "FUN_100058e6c",
+      "body_anchors": [
+        {
+          "start": "0x100058e6c",
+          "end_inclusive": "0x100058ea7",
+          "carrier_offset": 364140,
+          "derived_offset": 364140,
+          "bytes": 60,
+          "sha256": "10ba0c129e9f5b546b89838321c44204a73c61f327f73cd6296b7e8ae0acfaca"
+        }
+      ],
+      "assembly_instructions": 15,
+      "original_bytes_verified": true,
+      "pcode_operations": 10,
+      "pcode_outside_body": 0,
+      "outside_addresses": [],
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "limits": [
+        "No semantic or runtime equivalence claim",
+        "Unresolved indirect calls and collection fixups remain unknown",
+        "Whole-function pseudocode must not guide implementation after a rejected gate"
+      ],
+      "label": "sptm-segment-name",
+      "run": {
+        "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+        "exit": 0,
+        "seconds": 90.209359626,
+        "address": "0x100058e6c"
+      },
+      "dossier_sha256": "58daedf163fb70fa1c92bedcfdf37e4cbba8032a7686e0b263e33fa5317c24b3"
+    }
+  ],
+  "independent_bounded_audit": {
+    "schema": "ilinux31ae-independent-arithmetic-audit-v1",
+    "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+    "host_fat_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+    "host_fat_slice_identical": true,
+    "range_semantics": "start-inclusive-end-exclusive",
+    "bounded_blocks": [
+      {
+        "label": "full-analyzer",
+        "start": "0x100024450",
+        "end_exclusive": "0x100024e64",
+        "instruction_words": 645,
+        "sha256": "e6051fed5a889683571ae81d2342f9c7d4ed2a789903990ee4eb634bd6cea172",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "full-subtraction-wrapper",
+        "start": "0x10002413c",
+        "end_exclusive": "0x100024344",
+        "instruction_words": 130,
+        "sha256": "7f1184b2eef242996610d7d4ab995cc96c70bb759ea9ba982aef51b634303d67",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "checked-subtraction",
+        "start": "0x1000eeca8",
+        "end_exclusive": "0x1000eeda4",
+        "instruction_words": 63,
+        "sha256": "1c724e7a319242b810e621fce8fc8c22a0caf9025b42e7db4ffcbd67b7646791",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "tuple-constructor",
+        "start": "0x100023fbc",
+        "end_exclusive": "0x100023fcc",
+        "instruction_words": 4,
+        "sha256": "31c4fdffbb0d67b30ee8d8c6ebb590d87f40534cb43a45089a9b655dbb0407a4",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "tuple-fields",
+        "start": "0x1000fa3a0",
+        "end_exclusive": "0x1000fa3d8",
+        "instruction_words": 14,
+        "sha256": "ac723530a37624320f8e112bae6f1de8d92161a54ab6ac10f66148c89950134c",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "tuple-matcher",
+        "start": "0x1000259bc",
+        "end_exclusive": "0x100025a68",
+        "instruction_words": 43,
+        "sha256": "924415df816bec82d89db290cda87e0a26d76b05d5f6da7e85e3e3704e16b27d",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "tuple-copy-text-exec",
+        "start": "0x100025c5c",
+        "end_exclusive": "0x100025c78",
+        "instruction_words": 7,
+        "sha256": "62c6fa1df7339328c0dcb60aa371d277d64713121331598d188408b60132bda1",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "distance-reverse-arguments",
+        "start": "0x100025cc0",
+        "end_exclusive": "0x100025cdc",
+        "instruction_words": 7,
+        "sha256": "0b28e139f7f89f85f6adffa63058b5cb92b8e761d8d4aee01bbe51a4f80ef55e",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "all-segment-name-initializers-accessors",
+        "start": "0x100058cd8",
+        "end_exclusive": "0x100059010",
+        "instruction_words": 206,
+        "sha256": "e1aa5ea48480ea47f08880e4be9619079799562ce53f970f763ec168aece9c15",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "INFO-suffix",
+        "start": "0x10005bfb4",
+        "end_exclusive": "0x10005bfc4",
+        "instruction_words": 4,
+        "sha256": "368e95001f72558bda028cf4ee3025f1ed9751b943d57cd9930a4d79df4ed530",
+        "llvm_word_mismatches": 0
+      },
+      {
+        "label": "TEXT-prefix",
+        "start": "0x10005c1a4",
+        "end_exclusive": "0x10005c1b4",
+        "instruction_words": 4,
+        "sha256": "6ba357d817979f901040d9b7d8f3378e4a3e5f89c8aaa593a0dc42346c6b1909",
+        "llvm_word_mismatches": 0
+      }
+    ],
+    "instruction_words": 1127,
+    "mismatches": 0,
+    "apple_bytes_or_pseudocode_in_report": false,
+    "actual_recovery_binary_sha256": "UNOBSERVED",
+    "verification_scope": "Host binary provenance plus bounded instruction-byte equality; not Recovery installer or firmware execution"
+  },
+  "limits": [
+    "No Apple code, assembly or pseudocode is published.",
+    "Large prior analyzer pseudocode has provider-removed blocks and truncated value flow; whole-function pseudocode inference rejected.",
+    "New limited queries plus independently checked bounded assembly support the behavior findings, not complete installer equivalence.",
+    "Recovery executable equality and native firmware acceptance remain unverified."
+  ],
+  "environment": {
+    "interfaces": [
+      "lo"
+    ],
+    "physical_usb": false,
+    "diskless": true,
+    "host_boot_changes": false
+  }
+}

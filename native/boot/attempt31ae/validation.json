@@ -1,0 +1,516 @@
+{
+  "schema": "ilinux-native31ae-validation-v1",
+  "date_local": "2026-10-25",
+  "summary": "Exact 31AD Recovery arithmetic error reproduced by read-only desktop inspector; new DATA-first original image derives all 14 properties. Corrected validator, two-base GNU link and 26 QEMU cases pass. New native installer/firmware acceptance NOT RUN.",
+  "host_environment": {
+    "os": "macOS26.6.2",
+    "build": "25G83",
+    "python": "3.9.6",
+    "compiler": "Apple clang21.0.0"
+  },
+  "host_compile_only": {
+    "status": "COMPILE_PASS_NOT_LINKED",
+    "object_count": 5,
+    "source_bindings_sha256": "44f1bc2fd894f4b3a48b63f8b48e903568623b643877969ecc66475366c865d1"
+  },
+  "vm_link": {
+    "status": "PASS",
+    "job": "virtualization/jobs/089-ordered31ae/run.sh",
+    "runner": "existing ARM64 Linux VM,2vCPU4GiB,no network",
+    "source_bindings_sha256": "44f1bc2fd894f4b3a48b63f8b48e903568623b643877969ecc66475366c865d1",
+    "source_files_unchanged": true,
+    "slide_bytes_identical": true,
+    "payload_bytes": 147456,
+    "payload_sha256": "35bcecdff17ca1b927fccdffd057c9f149577df5698f250b7dbe93f5c71fe13b",
+    "compiler": "cc (GCC) 16.1.1 20260430",
+    "linker": "GNU ld (GNU Binutils) 2.46.0",
+    "job_exit": 0,
+    "interfaces": [
+      "lo"
+    ],
+    "apple_firmware_emulated": false
+  },
+  "payload_change_check": {
+    "old_sha256": "6da621da67de37437300e7205e8c3919dcac997600f7eb6e8fedae29e6b0fc88",
+    "new_sha256": "35bcecdff17ca1b927fccdffd057c9f149577df5698f250b7dbe93f5c71fe13b",
+    "changed_boot_word_offsets": [
+      "0x14010",
+      "0x14068",
+      "0x15004"
+    ],
+    "boot_entry_and_vectors_unchanged": true
+  },
+  "qemu_execution": {
+    "status": "PASS",
+    "total": 26,
+    "paints": 8,
+    "refusals": 16,
+    "fault_after_paint": 2,
+    "qemu": "QEMU emulator version 11.1.2",
+    "source_bindings_sha256": "6d679879955af2a85d9e40afb74d70c535343294363270fb0a73eeb233898c9f",
+    "source_files_unchanged": true,
+    "cases": [
+      {
+        "case": "4k-valid",
+        "mode": "4k",
+        "expected_refusal": 0,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-vhe-valid",
+        "mode": "4k-vhe",
+        "expected_refusal": 0,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "16k-vhe-valid",
+        "mode": "16k-vhe",
+        "expected_refusal": 0,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "16k-vhe-wb",
+        "mode": "16k-vhe",
+        "expected_refusal": 0,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-reason",
+        "mode": "4k",
+        "expected_refusal": 1,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-reason-wide",
+        "mode": "4k",
+        "expected_refusal": 1,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-boot-unmapped",
+        "mode": "4k",
+        "expected_refusal": 8,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-monitor-unmapped",
+        "mode": "4k",
+        "expected_refusal": 9,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-count-unmapped",
+        "mode": "4k",
+        "expected_refusal": 11,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-table-unmapped",
+        "mode": "4k",
+        "expected_refusal": 13,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-count-zero",
+        "mode": "4k",
+        "expected_refusal": 12,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-count-large",
+        "mode": "4k",
+        "expected_refusal": 12,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-version",
+        "mode": "4k",
+        "expected_refusal": 10,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-video-version",
+        "mode": "4k",
+        "expected_refusal": 15,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-range-wrap",
+        "mode": "4k",
+        "expected_refusal": 14,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-ro-last",
+        "mode": "4k",
+        "expected_refusal": 17,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-unmapped-last",
+        "mode": "4k",
+        "expected_refusal": 17,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-wb",
+        "mode": "4k",
+        "expected_refusal": 0,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-vhe-wb",
+        "mode": "4k-vhe",
+        "expected_refusal": 0,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-vhe-depth30",
+        "mode": "4k-vhe",
+        "expected_refusal": 0,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-vhe-wb30",
+        "mode": "4k-vhe",
+        "expected_refusal": 0,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-device",
+        "mode": "4k",
+        "expected_refusal": 19,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-wrong-pa",
+        "mode": "4k",
+        "expected_refusal": 18,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-image-alias",
+        "mode": "4k",
+        "expected_refusal": 20,
+        "painted_pixels": 0,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-fault-after-paint",
+        "mode": "4k",
+        "expected_refusal": 22,
+        "painted_pixels": 512,
+        "status": "PASS"
+      },
+      {
+        "case": "4k-vhe-fault-after-paint",
+        "mode": "4k-vhe",
+        "expected_refusal": 22,
+        "painted_pixels": 512,
+        "status": "PASS"
+      }
+    ],
+    "native": "NOT_RUN",
+    "apple_firmware": false
+  },
+  "ordered_candidate": {
+    "status": "STRUCTURAL_PROFILE_PASS",
+    "image_bytes": 196608,
+    "image_sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa",
+    "inner_base": "0xfffffe0007004000",
+    "entry": "0xfffffe0007018000",
+    "vector": "0xfffffe0007018800",
+    "record": "0xfffffe0007008000",
+    "fileset_entries": 1,
+    "payload_compared": true,
+    "recovered_payload_sha256": "35bcecdff17ca1b927fccdffd057c9f149577df5698f250b7dbe93f5c71fe13b",
+    "checked_split_ranges": [
+      {
+        "data_sptm_fileoff": 32768,
+        "text_exec_fileoff": 81920,
+        "boot_exec_fileoff": 98304,
+        "prelink_info_fileoff": 163840,
+        "linkedit_fileoff": 180224,
+        "checked_data_to_text_bytes": 49152,
+        "checked_text_to_boot_bytes": 16384,
+        "checked_boot_to_prelink_bytes": 65536,
+        "checked_prelink_to_linkedit_bytes": 16384,
+        "checked_fallback_text_to_normal_bytes": 81920,
+        "checked_adjacent_ranges": [
+          {
+            "from": "__TEXT",
+            "to": "__DATA_SPTM",
+            "file_start_delta": 32768,
+            "file_gap": 0,
+            "virtual_start_delta": 32768,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__DATA_SPTM",
+            "to": "__TEXT_EXEC",
+            "file_start_delta": 49152,
+            "file_gap": 0,
+            "virtual_start_delta": 49152,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__TEXT_EXEC",
+            "to": "__TEXT_BOOT_EXEC",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__TEXT_BOOT_EXEC",
+            "to": "__PRELINK_INFO",
+            "file_start_delta": 65536,
+            "file_gap": 0,
+            "virtual_start_delta": 65536,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__PRELINK_INFO",
+            "to": "__LINKEDIT",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          }
+        ],
+        "arithmetic_profiles": {
+          "false": {
+            "profile": false,
+            "selected_start_role": "__PRELINK_INFO",
+            "profile_text_exec_bytes": null,
+            "selected_start_minus_text_bytes": 163840,
+            "linkedit_minus_prelink_bytes": 16384,
+            "text_exec_minus_data_bytes": 49152,
+            "prelink_minus_boot_bytes": 65536
+          },
+          "true": {
+            "profile": true,
+            "selected_start_role": "__DATA_SPTM",
+            "profile_text_exec_bytes": 16384,
+            "selected_start_minus_text_bytes": 32768,
+            "linkedit_minus_prelink_bytes": 16384,
+            "text_exec_minus_data_bytes": 49152,
+            "prelink_minus_boot_bytes": 65536
+          }
+        }
+      },
+      {
+        "data_sptm_fileoff": 32768,
+        "text_exec_fileoff": 81920,
+        "boot_exec_fileoff": 98304,
+        "prelink_info_fileoff": 163840,
+        "linkedit_fileoff": 180224,
+        "checked_data_to_text_bytes": 49152,
+        "checked_text_to_boot_bytes": 16384,
+        "checked_boot_to_prelink_bytes": 65536,
+        "checked_prelink_to_linkedit_bytes": 16384,
+        "checked_fallback_text_to_normal_bytes": 65536,
+        "checked_adjacent_ranges": [
+          {
+            "from": "__TEXT",
+            "to": "__DATA_SPTM",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__DATA_SPTM",
+            "to": "__TEXT_EXEC",
+            "file_start_delta": 49152,
+            "file_gap": 0,
+            "virtual_start_delta": 49152,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__TEXT_EXEC",
+            "to": "__TEXT_BOOT_EXEC",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__TEXT_BOOT_EXEC",
+            "to": "__PRELINK_INFO",
+            "file_start_delta": 65536,
+            "file_gap": 0,
+            "virtual_start_delta": 65536,
+            "virtual_gap": 0
+          },
+          {
+            "from": "__PRELINK_INFO",
+            "to": "__LINKEDIT",
+            "file_start_delta": 16384,
+            "file_gap": 0,
+            "virtual_start_delta": 16384,
+            "virtual_gap": 0
+          }
+        ],
+        "arithmetic_profiles": {
+          "false": {
+            "profile": false,
+            "selected_start_role": "__PRELINK_INFO",
+            "profile_text_exec_bytes": null,
+            "selected_start_minus_text_bytes": 147456,
+            "linkedit_minus_prelink_bytes": 16384,
+            "text_exec_minus_data_bytes": 49152,
+            "prelink_minus_boot_bytes": 65536
+          },
+          "true": {
+            "profile": true,
+            "selected_start_role": "__DATA_SPTM",
+            "profile_text_exec_bytes": 16384,
+            "selected_start_minus_text_bytes": 16384,
+            "linkedit_minus_prelink_bytes": 16384,
+            "text_exec_minus_data_bytes": 49152,
+            "prelink_minus_boot_bytes": 65536
+          }
+        }
+      }
+    ],
+    "native_acceptance": "NOT_TESTED",
+    "installer_invoked": false
+  },
+  "actual_readonly_inspector": {
+    "kmutil_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+    "rows": [
+      {
+        "classification": "PROPERTY_ERROR",
+        "properties": null,
+        "exit": 0,
+        "stdout_sha256": "8a016034984245dc021bb64b36ca4da5d93c0e9dff68b6de02d46e2966114672",
+        "stderr_sha256": "060367c79e74c046faa789655d564236101c67f510579647685ce3529756eb12",
+        "diagnostic": [
+          "Mach-O boot properties could not be derived: Arithmetic Error: arithmetic overflow detected subtracting FilesetOffset(rawValue: 49152) from FilesetOffset(rawValue: 32768)"
+        ],
+        "label": "old31ad",
+        "image_sha256": "406be900521795608073fa9f050f4e5f00b595793c95b0a155e510893cc16309"
+      },
+      {
+        "classification": "PROPERTIES_DERIVED",
+        "properties": {
+          "kclo": 18446741874803736576,
+          "kcep": 18446741874803834880,
+          "kcrf": 0,
+          "kcrz": 163840,
+          "kcsf": 32768,
+          "kcsz": 49152,
+          "kcxf": 0,
+          "kcxz": 0,
+          "kcbf": 98304,
+          "kcbz": 65536,
+          "kcwf": 163840,
+          "kcwz": 16384,
+          "kclf": 180224,
+          "kclz": 16384
+        },
+        "exit": 0,
+        "stdout_sha256": "4e075d245f2662fea775b1d22111d631a919868f14d0113b199f1d69533361e1",
+        "stderr_sha256": "060367c79e74c046faa789655d564236101c67f510579647685ce3529756eb12",
+        "diagnostic": [],
+        "label": "new31ae",
+        "image_sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa"
+      }
+    ]
+  },
+  "inspector_interpretation": "Old31AD exit0 PROPERTY_ERROR is exact arithmetic reproduction. New31AE exit0 PROPERTIES_DERIVED includes all14 distinct fields. This is not configure-boot or native acceptance.",
+  "analysis": "native/boot/attempt31ae/analysis-validation.json",
+  "archive": {
+    "bytes": 256353,
+    "filename": "ilinux-31ae-entry-test.tar.gz",
+    "sha256": "6b0c0ae6fdce31b69c72861c27297f0cb4d8873c586448fced41ed4e02910fa1",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ae/ilinux-31ae-entry-test.tar.gz"
+  },
+  "archive_verify": {
+    "status": "PASS",
+    "verified_files": 9,
+    "executable_members": 0
+  },
+  "one_paste": {
+    "complete_blocks_rendered": 2,
+    "native_execution": "NOT_RUN",
+    "fresh_guards_each_phase": true,
+    "no_raw_candidate_flag": true,
+    "rollback_independent": true,
+    "username_note": "Read Apple prompts; enter requested volume administrator username before password. No established pipeline bug.",
+    "packaged_install_sha256": "0bc65c87184e9071a4d031b4817bbd671f99fda1d8b96171964fef062d6d5c8a",
+    "packaged_rollback_sha256": "7b09569a39417c45f2dbb08787efaa0145744b059ccbfec4064efb8ee56f755e",
+    "source_verified_preparation": "PASS;38pins; generated blocks and HTML byte-equal to archive; bash-n bothPASS; no shellblock executed"
+  },
+  "offline_tests": [
+    {
+      "suite": "kernel/experiments/bootimage31ae/test_ordered.py",
+      "methods": 51,
+      "status": "PASS"
+    },
+    {
+      "suite": "kernel/experiments/bootimage31ae/test_rejected31ad.py",
+      "methods": 5,
+      "status": "PASS"
+    },
+    {
+      "suite": "tools/recovery31ae/test_write_render.py",
+      "methods": 7,
+      "status": "PASS"
+    },
+    {
+      "suite": "tools/recovery31ae/test_prepare.py",
+      "methods": 11,
+      "status": "PASS"
+    },
+    {
+      "suite": "native/boot/attempt31ae/test_verify.py",
+      "methods": 3,
+      "status": "PASS"
+    }
+  ],
+  "install_authorized": false,
+  "restart_ready": false,
+  "next": "M1 independent offline review of new package, then fresh explicit human approval before lab replacement/one observation/exact rollback.",
+  "not_run": [
+    "native31AE configure-boot",
+    "firmware entry/marker",
+    "live boot021 version",
+    "31AE rollback execution",
+    "monitor calls",
+    "physical secondary start",
+    "Linux/GPU/performance"
+  ],
+  "host_protection": "No installed object, startup default, boot/security setting, partition, volume, firmware or original macOS changes. No USB/device open or outreach. Existing isolated VMs only.",
+  "offline_tests_total_methods": 77,
+  "offline_tests_note": "Five committed new-path suites; exact31AD regression requires retained hash-pinned original image. Counts refer to distinct unittest methods, not reruns or QEMU cases.",
+  "validator_review": {
+    "five_arithmetic_checks": "MATCH_INDEPENDENT_TRACE",
+    "metadata_section_start": "bound to0x28000; shifted XML with arbitrary prefix refused",
+    "actual_candidate_affected_by_metadata_hardening": false
+  }
+}

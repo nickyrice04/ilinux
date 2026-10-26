@@ -1,5 +1,31 @@
 # Progress Log
 
+## 2026-10-25 · M5: exact 31AD error reproduced; 31AE data-first repair
+
+M5 incorporated M1 report `1de5d2b`. The released 31AD image reproduces the
+exact Recovery subtraction (32768 minus 49152) in Apple's read-only inspector,
+despite exit 0 / PROPERTY_ERROR. This was an incomplete image layout/validator,
+not evidence that firmware prevents CPU startup. 31AE relinks the unchanged
+seven original source files with owned DATA before normal RX before boot RX.
+The corrected 196608-byte image `ccdc9c8c…5748aa` derives all 14 properties.
+
+REA plus independent 1127-word/zero-mismatch checks qualify all five arithmetic
+paths. Original validator now checks data order, both profiles, complete file/VA
+extents, metadata start and payload binding. 77 methods PASS across five suites;
+five host objects compile; GNU two-base payloads byte-equal; 26 full QEMU cases
+PASS. Exactly three boot words change as independently predicted record/stack
+references. New original-only archive, exact boot021 and independent one-paste
+Recovery blocks are pinned. Source-verified page preparation and bash-n PASS.
+
+M1 owns independent offline review of the new 31AE package. No restart/proxy or
+host action follows from this handoff. Then a fresh concrete human decision is
+required for lab replacement/one observation/exact rollback; consumed 31AD
+approval is not reused. Original macOS/security/volumes/default untouched;
+Linux/SMP/GPU/performance and native 31AE installation/entry NOT RUN. Prior
+31AD sources/receipts remain frozen. Findings and current instructions:
+`research/native31ae-data-order.md`,
+`tools/m1n1-client/attempt31ae-instructions.md`.
+
 ## 2026-10-25 · M1: 31AD configure arithmetic error; rollback and return reported
 
 One human-operated 31AD candidate configure failed after confirmation:

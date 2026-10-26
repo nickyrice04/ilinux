@@ -1,0 +1,99 @@
+{
+  "schema": "ilinux-native31ae-delivery-v1",
+  "experiment": "DATA-first original resident-entry diagnostic; repair of actual 31AD arithmetic error; no physical secondary release or Linux boot",
+  "archive": {
+    "bytes": 256353,
+    "filename": "ilinux-31ae-entry-test.tar.gz",
+    "sha256": "6b0c0ae6fdce31b69c72861c27297f0cb4d8873c586448fced41ed4e02910fa1",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ae/ilinux-31ae-entry-test.tar.gz"
+  },
+  "candidate": "ilinux-31ae-ordered.macho",
+  "candidate_bytes": 196608,
+  "candidate_sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa",
+  "candidate_url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ae/ilinux-31ae-ordered.macho",
+  "files": {
+    "README.txt": {
+      "bytes": 967,
+      "sha256": "3f22e62d4afad9d27ba7481b38c1279113db75076c6a3833e1cf5f999a910812"
+    },
+    "iLinux-LICENSE": {
+      "bytes": 1067,
+      "sha256": "566069bb67afe27dc4dccb4127aca65f0d737755087a1a0db9dad97a582fb9ea"
+    },
+    "ilinux-31ae-ordered.macho": {
+      "bytes": 196608,
+      "sha256": "ccdc9c8c8ef78fda2d9e2a56550919d0c20030037486215d194e8762a85748aa"
+    },
+    "install-paste.txt": {
+      "bytes": 6135,
+      "sha256": "0bc65c87184e9071a4d031b4817bbd671f99fda1d8b96171964fef062d6d5c8a"
+    },
+    "m1n1-LICENSE": {
+      "bytes": 17984,
+      "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+    },
+    "m1n1-boot021.bin": {
+      "bytes": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "m1n1-source.json": {
+      "bytes": 211,
+      "sha256": "9e48b59f042b97cf57268a5e0d6abb206c57fd2b873bb7742c393ad7f6c310ae"
+    },
+    "recovery.html": {
+      "bytes": 16609,
+      "sha256": "0fe332b30c6a8f93dd97e86830a603cbbad93f09467fdf1569854556599a9815"
+    },
+    "rollback-paste.txt": {
+      "bytes": 5872,
+      "sha256": "7b09569a39417c45f2dbb08787efaa0145744b059ccbfec4064efb8ee56f755e"
+    }
+  },
+  "ordering_invariant": "TEXT <= DATA_SPTM <= TEXT_EXEC <= TEXT_BOOT_EXEC <= PRELINK_INFO <= LINKEDIT; complete non-overlapping extents in both headers",
+  "ordering_satisfied": {
+    "data_sptm_fileoff": 32768,
+    "text_exec_fileoff": 81920,
+    "boot_exec_fileoff": 98304,
+    "prelink_info_fileoff": 163840,
+    "linkedit_fileoff": 180224,
+    "validator": "kernel/experiments/bootimage31ae/validate_ordered.py",
+    "validator_status": "STRUCTURAL_PROFILE_PASS"
+  },
+  "linked_payload_sha256": "35bcecdff17ca1b927fccdffd057c9f149577df5698f250b7dbe93f5c71fe13b",
+  "qemu_cases": {
+    "total": 26,
+    "paints": 8,
+    "refusals": 16,
+    "fault_after_paint": 2,
+    "status": "PASS",
+    "native": "NOT_RUN"
+  },
+  "specific_error": "Exact 31AD subtraction reproduced offline; new candidate derives all 14 properties. Native installer and firmware acceptance untested.",
+  "root_cause": "research/native31ae-data-order.md",
+  "rollback": {
+    "filename": "m1n1-boot021.bin",
+    "bytes": 3932160,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "staged_path": "/Volumes/iLinux Boot Lab - Data/Users/Shared/iLinuxBoot/m1n1.bin",
+    "source": "m1n1 57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "marker": "##m1n1_ver##ilinux-57a9339-boot021"
+  },
+  "rollback_raw_entry": 2048,
+  "rollback_raw_lowest_virtual_address": 0,
+  "install_authorized": false,
+  "authorization_note": "Consumed 31AD test does not authorize 31AE. M1 review and fresh human approval required.",
+  "instructions": "tools/m1n1-client/attempt31ae-instructions.md",
+  "native_execution": "NOT_RUN",
+  "new_volume_required": false,
+  "no_new_security_downgrade": true,
+  "policies_expected": {
+    "lab": "Permissive",
+    "original": "Full"
+  },
+  "target": {
+    "board": "J716c",
+    "chip": "t6050",
+    "model": "Mac17,6",
+    "role": "M5 target only; M1 helper does not run Recovery write commands"
+  }
+}
