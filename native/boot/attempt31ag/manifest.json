@@ -1,0 +1,32 @@
+{
+  "schema": "ilinux-attempt31ag-offline-manifest-v1",
+  "date_local": "2026-10-26",
+  "scope": "Offline firmware handoff qualification and original diagnostics",
+  "source_pins": "native/boot/attempt31ag/source-sha256.txt",
+  "new_candidate": null,
+  "new_archive": null,
+  "new_native_test_prepared": false,
+  "restart_ready": false,
+  "install_authorized": false,
+  "reference_candidate": {
+    "attempt": "31AF",
+    "bytes": 442368,
+    "sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b",
+    "authorization_consumed": true
+  },
+  "distinct_unit_methods": 65,
+  "runtime_cases": 3,
+  "runtime_environment": "Standard ARM QEMU inside existing isolated Linux VM; not Apple firmware execution",
+  "rea_queries_completed": 8,
+  "independently_checked_instruction_words": 751,
+  "bounded_ranges": 22,
+  "llvm_mismatches": 0,
+  "live_selected_object_query": "NOT_RUN_BY_AGENT; human local result requested but not yet reported",
+  "original_policy_query_requested": false,
+  "host_boot_security_volume_changes": false,
+  "restoration_status": "31AF exact boot021 rollback and Macintosh HD default remain unconfirmed",
+  "instructions": "tools/m1n1-client/attempt31ag-instructions.md",
+  "native_entry_cause": "UNCONFIRMED",
+  "independent_native_entry_channel_qualified": false,
+  "apple_only_dependency_proven": false
+}

@@ -1,5 +1,41 @@
 # Progress Log
 
+## 2026-10-26 · 31AG: REA context provenance and original offline diagnostics
+
+Eight fresh REA queries completed. Independent audit checks all query/run gates
+and 751 words across 22 ranges with zero mismatches. Large/removed-block/fatal
+pseudocode remains refused. Configure supplies a Boot collection kind distinct
+from its PageProtectionType-derived profile; an intermediate private argument
+interpretation was corrected before publication. Required BootKC map records,
+registration limits and generic selected-object path are bounded facts. Actual
+Recovery profile, native entry state and failure channel remain unqualified.
+
+Original tools now have 65 distinct unit methods PASS: classifier13, conditional
+range auditor18, selected-object reader34. Standard QEMU11.1.2 in isolated Linux
+7.1.6/GCC16.1.1/binutils2.46: three complete unchanged-instruction cases PASS:
+EL2 resident8192-pixel control, actual EL1 status2, raw-argument status1. Independently
+compared 12 unchanged physical-byte pairs. No native image generated or run.
+Two extra readonly host collection-context controls both failed71 with identical
+error hashes; no properties or actual Recovery inference. Narrow diagnostic-file
+availability check found no matching recent reports; no raw reports copied.
+
+Asahi/M4 source comparison confirms current Asahi SMP/features files equal our
+installed revision and the published M4 workflow uses raw m1n1. Existing kernel
+and storage patches already reuse that foundation. New original selected-CBO
+reader follows public installer metadata selection, never scans other objects,
+changes settings or outputs private identifiers. Independent safety review PASS;
+local administrator JSON requested, live check pending. This can identify a
+configured payload, not default/past execution/SPTM state or complete rollback.
+
+All REA/runtime VMs stopped, old lab job restored and both locks released. Initial
+REA wrapper/aggregate-timeout issues retained separately; final two batches/job0.
+No host boot/security/volume change or new test readiness. 31AF restoration/default
+remain unconfirmed. M1 next:
+`tools/m1n1-client/attempt31ag-instructions.md`. Evidence/code:
+`research/native31ag-handoff.md`, `research/native31ag-asahi-m4.md`,
+`native/boot/attempt31ag/`, `kernel/experiments/entry31ag/`,
+`tools/boot-object31ag/`, `reverse-engineering/findings/cpu-startup31ag/`.
+
 ## 2026-10-26 · Direct 31AF result; qualify a silent diagnostic blind spot
 
 Human reports successful install and Apple-logo-only lab boot directly to M5;

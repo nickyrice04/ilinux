@@ -4748,3 +4748,32 @@ support. No claim that Apple alone is required and no near-term parity promise.
 Current rationale: `research/post31af-assessment.md`; validation:
 `research/post31af-qualification.json`; restoration follow-up:
 `tools/m1n1-client/attempt31af-result-followup.md`.
+
+## 2026-10-26 · 31AG reuses Asahi; qualify context before another restart
+
+**Decision:** Continue in the existing Asahi-derived kernel/bootloader repository.
+M4's published raw workflow supports our existing baseline; it is not a positive
+control for the alternate resident ABI. Current upstream SMP/feature files equal
+our installed source, so a blind upgrade or base-M4 register substitution is not
+a newly qualified M5 startup fix. Firmware/model/version distinctions remain.
+
+Fresh REA and independent 751-word verification distinguish collection kind from
+context-derived protection profile, required monitor ranges and generic object
+path selection. Do not infer a historical false Recovery profile from a standalone
+inspector, rename metadata into owned RAM, override a private selector or invoke
+an unqualified fatal routine. No safe independent native channel was found.
+
+Original diagnostics (65 unit methods, three complete emulator controls) record
+supported paint versus silent EL/ABI refusal and conditional range relationships.
+They supply no new native image or acceptance. Add an independently reviewed
+read-only selected-object reader based on public Asahi source to obtain a
+configured-payload snapshot without an experimental reboot. Its one lab policy
+display stays in memory, requires local administrator authentication and prints
+only a match label. No security/default/host file write. A match is not historical
+entry or complete restoration. Local result requested; otherwise remain pending.
+
+M1 reviews only the new offline closure and reconciles existing31AF restoration;
+no M1 restart/proxy, new candidate or automatic retry. Preparation changes no
+macOS settings, volumes or security. Current handoff:
+`tools/m1n1-client/attempt31ag-instructions.md`; facts/limits:
+`research/native31ag-handoff.md`, `native/boot/attempt31ag/README.md`.

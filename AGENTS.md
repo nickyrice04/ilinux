@@ -99,6 +99,31 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AG offline handoff qualified; read-only identity check, no new boot
+
+2026-10-26: eight fresh REA queries, 22 bounded ranges/751 independently decoded
+words/zero mismatches. Normal configure's Boot collection kind and context-derived
+SPTM protection profile are separate inputs; no historical Recovery profile is
+inferred from the standalone inspector. Required monitor ranges and the generic
+selected-object path are qualified within recorded bounds. No independent native
+early-output/failure channel or new monitor call is qualified.
+
+Original code: 65 distinct host-safe unit methods PASS and three complete QEMU
+entry-profile controls PASS. The EL2 resident control paints; actual EL1 and raw
+argument controls silently refuse. A conditional range auditor adds geometry
+checks without promoting its example to a native diagnosis. Two real-SystemKC
+context probes failed identically, including the reference; no properties or
+image-specific conclusion. All VMs stopped and both locks released.
+
+We already extend Asahi Linux/m1n1. Fresh M4 comparison finds the current SMP and
+feature files identical to the installed source; M4 raw boot is a different
+control from resident entry. New public-source-only selected-lab-object reader
+has 34 tests and independent safety review PASS. Live mode requires local root;
+the human was asked for its nonidentifying JSON. No live policy/object query or
+host boot/security/volume change occurred in preparation. 31AF restoration/default
+remain unconfirmed. Current offline handoff:
+`tools/m1n1-client/attempt31ag-instructions.md`; no new native package/restart.
+
 ### Latest — 31AF human logo-only result; restoration unconfirmed, no new test
 
 2026-10-26: the human directly reports 31AF installed successfully and a lab boot

@@ -1,0 +1,172 @@
+{
+  "schema": "ilinux-attempt31ag-offline-validation-v1",
+  "date_local": "2026-10-26",
+  "status": "PASS",
+  "scope": "Original offline entry-profile controls and evidence classification; no new native image",
+  "frozen_payload_sha256": "91d2ce73f79784b78c96e08c606d3622aa3246a7561fdbec4d1066ebe9bfaa7c",
+  "frozen_payload_bytes": 393216,
+  "loaded_memory_model": "Original instruction bytes; reservation populated with existing synthetic A5 sentinel",
+  "classifier_methods": 13,
+  "host_classifier_methods_pass": true,
+  "guest_classifier_methods_pass": true,
+  "runtime_cases": 3,
+  "cases": [
+    {
+      "name": "el2-resident-cold",
+      "status": "PASS",
+      "observed_entry_el": 2,
+      "argument_profile": "resident-cold",
+      "phase": 7,
+      "diagnostic_status": 0,
+      "painted_pixels": 8192,
+      "observed_pstate": "0x600003c9",
+      "sp": "0x0",
+      "payload_unchanged": true
+    },
+    {
+      "name": "el1-resident-cold",
+      "status": "PASS",
+      "observed_entry_el": 1,
+      "argument_profile": "resident-cold",
+      "phase": 128,
+      "diagnostic_status": 2,
+      "painted_pixels": 0,
+      "observed_pstate": "0x800003c5",
+      "sp": "0x0",
+      "payload_unchanged": true
+    },
+    {
+      "name": "el2-raw-bootargs",
+      "status": "PASS",
+      "observed_entry_el": 2,
+      "argument_profile": "raw-x0-BootArgs",
+      "phase": 128,
+      "diagnostic_status": 1,
+      "painted_pixels": 0,
+      "observed_pstate": "0x600003c9",
+      "sp": "0x0",
+      "payload_unchanged": true
+    }
+  ],
+  "independent_before_after_pairs_equal": 12,
+  "silent_refusal_framebuffers_unchanged": 2,
+  "environment": {
+    "interfaces": [
+      "lo"
+    ],
+    "physical_usb": false,
+    "kernel": "7.1.6-vzrun2",
+    "python": "3.14.8",
+    "tools": {
+      "cc": "cc (GCC) 16.1.1 20260430",
+      "ld": "GNU ld (GNU Binutils) 2.46.0",
+      "objcopy": "GNU objcopy (GNU Binutils) 2.46.0",
+      "/usr/bin/qemu-system-aarch64": "QEMU emulator version 11.1.2"
+    }
+  },
+  "vm_cpus": 2,
+  "vm_memory_gib": 4,
+  "vm_job_exit": 0,
+  "vm_normal_shutdown": true,
+  "source_bindings": [
+    {
+      "file": "kernel/experiments/entry31ag/run.py",
+      "sha256": "c7adbacc962a69252ba3d054bb7ac84eebea41ac0a453d713d6f8547c40364dd"
+    },
+    {
+      "file": "kernel/experiments/entry31ag/bootstrap-el1.S",
+      "sha256": "6eff5f0a507c1595ea99c457ae3ff6222a8eb4c35fff4db72b92d698e3e361a6"
+    },
+    {
+      "file": "kernel/experiments/entry31ag/classify.py",
+      "sha256": "d1e2d2773f387e33514c3c935b79bd247258fd66722374d2be7ad05eea4841f8"
+    },
+    {
+      "file": "kernel/experiments/entry31ag/test_classify.py",
+      "sha256": "3f509c670ecee17936145d49ffcae3da2608e3a33884077dbf00e5bcdc51bf52"
+    },
+    {
+      "file": "kernel/experiments/entry31ag/README.md",
+      "sha256": "edd64977b08c2c3c66248274ea1953c3d20ea348f14dd2c3b94e5ca9fadadd0b"
+    },
+    {
+      "file": "kernel/experiments/immutable31af-test/run.py",
+      "sha256": "6dacaebb09888da9b52d4e4ac1ca9b0823622022ca1c8f454d22e1e450c6f534"
+    },
+    {
+      "file": "kernel/experiments/immutable31af-test/bootstrap.S",
+      "sha256": "c40e44452e531e1de7ecd2646b8766856a82cb0fde79bf3f1f816805e2acbfb8"
+    },
+    {
+      "file": "kernel/experiments/translation31ab/run.py",
+      "sha256": "26ddc30f52620e84e139a67f2a0a5dfafd7798cae19b77c65645f904e723a756"
+    },
+    {
+      "file": "native/boot/attempt31af/layout.json",
+      "sha256": "988e21ea24cf0b3a7ab0332877512dc7cbced8262f3e0d996cc3c9717b84cbe7"
+    }
+  ],
+  "source_bindings_sha256": "cead04331579dd47991f6b20c84d87afea00b898f4e119630dba17918b46eacf",
+  "runtime_summary_sha256": "4da0996c9ec462a6f82a75a70a5e85e9bd1a3e5ee5beaa8a63bd85a64b3fb8ea",
+  "job_source_sha256": "3b7d05b14526742d9c2ea4ef60b2fafed6e30b18b7bb3cc6737b20d6d67ca9f6",
+  "native_failure_cause_proven": false,
+  "native_entry_profile_observed": false,
+  "apple_update_requirement_proven": false,
+  "new_native_boot_ready": false,
+  "install_authorized": false,
+  "new_native_payload_generated": false,
+  "apple_firmware_loaded_in_profile_tests": false,
+  "host_boot_security_volume_changes": false,
+  "limits": [
+    "QEMU debugger supplies synthetic register visibility; no native register retrieval channel qualified",
+    "EL1/raw-profile controls do not assert native firmware uses either profile",
+    "Reference native31AF rollback/default remain unconfirmed; only existing restoration remains authorized",
+    "Static/REA and original runtime evidence are separate"
+  ],
+  "emulator_evidence_classification": {
+    "apple_update_required_proven": false,
+    "environment": "standard-arm-emulator",
+    "furthest_supported_stage": "EMULATOR_ONLY",
+    "native_entry": "UNCONFIRMED",
+    "new_native_boot_ready": false,
+    "next_requirement": "qualified native readback or equivalent positive control",
+    "pre_entry_failure_proven": false,
+    "provenance_authenticated": false,
+    "schema": "ilinux-entry-evidence31ag-v1",
+    "states": [
+      {
+        "case": "el2-resident-cold",
+        "observed_in_emulator": "emulated-paint-complete"
+      },
+      {
+        "case": "el1-resident-cold",
+        "observed_in_emulator": "entry-level-refusal"
+      },
+      {
+        "case": "el2-raw-bootargs",
+        "observed_in_emulator": "entry-reason-refusal"
+      }
+    ]
+  },
+  "distinct_unit_methods": {
+    "entry_evidence_classifier": 13,
+    "conditional_range_auditor": 18,
+    "selected_object_reader": 34,
+    "total": 65
+  },
+  "selected_object_reader_live": "NOT_RUN_BY_AGENT; human local result requested but not yet reported",
+  "selected_object_reader_source_sha256": "0728fae7dd30fd2ef14dacdf9e25028614f239c254c8fc40c3f8866fde32dc47",
+  "selected_object_reference_pins_verified_without_live_query": true,
+  "independent_selected_object_reader_safety_review": "PASS; read-only command allowlist, lab identity, no private outputs, bounded no-symlink read",
+  "independent_handoff_analysis_review": "PASS; 8 query/run gates, 751 bounded words, distinct kind/profile slots and enum equality checked",
+  "selected_object_reader_metadata_preflight": {
+    "read_only": true,
+    "model_guard_pass": true,
+    "target_metadata_guards": "PASS",
+    "preboot_metadata_guards": "PASS",
+    "no_symlink_directory_guards": "PASS",
+    "policy_queries": 0,
+    "selected_object_reads": 0,
+    "identifiers_printed_or_stored": false
+  }
+}

@@ -1,5 +1,21 @@
 # Blockers
 
+## Current — 31AG remains offline; actual object/context and entry observation open
+
+Eight REA queries and independent 751-word checks clarify context-derived
+protection profile, required ranges and generic selected-object path. They do
+not identify actual Recovery mode or native failure. Three complete emulator
+controls demonstrate supported paint and silent EL/ABI refusals; 65 unit methods
+PASS. No independent native observation or complete resident host is qualified.
+
+The new read-only selected-object reader is independently reviewed; the human
+was asked for its local-root JSON. Private policy/path data stays in memory;
+no live query was run during preparation. It can identify the configured lab
+payload, not default selection or previous execution. Exact31AF rollback and
+Macintosh HD default restoration remain unconfirmed. Current M1 instructions:
+`tools/m1n1-client/attempt31ag-instructions.md`. No new install/experimental
+restart, forced selector, security downgrade or firmware update is prepared.
+
 ## Current — 31AF logo-only; restore confirmation and native observation block tests
 
 2026-10-26: direct human installation-success/logo-only report received. Native

@@ -6,6 +6,26 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AG offline review; M5 selected-object evidence pending
+
+M5 completed eight REA queries with independent 751-word/22-range checks, zero
+mismatches; parameter kinds/profile clarified without inferring actual Recovery
+mode. Original diagnostics: 65 distinct methods plus three complete emulator
+cases PASS. All VMs stopped, prior REA job restored, both locks released. No safe
+independent native channel or new image/test is qualified; preserve frozen31AF.
+
+New reader follows Asahi's public selected-object contract with root/Mac17,6/
+distinct-lab-System/same-container-Preboot guards and no writes/mounts. The human
+was asked to run it locally; output only read_only/match, identifiers remain in
+memory. Live policy/object evidence is pending, not a routine protection check.
+31AF rollback/default remain unconfirmed; M1 reconciles existing restoration.
+
+M1 pulls and follows `tools/m1n1-client/attempt31ag-instructions.md`: verify new
+source pins, run 65 host-safe methods, review separate REA/QEMU records, retain
+conditional/native boundaries. No M1 restart, proxy, candidate install, new
+native attempt or old full-suite replay. Read `research/native31ag-asahi-m4.md`
+for actual Asahi foundation and M4/raw versus resident-contract differences.
+
 ### Current — 31AF consumed; M1 restoration-only, M5 offline entry qualification
 
 2026-10-26 direct human report: installed successfully, then Apple-logo-only lab

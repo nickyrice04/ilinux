@@ -1,0 +1,524 @@
+{
+  "schema": "ilinux-cpu31ag-handoff-analysis-v1",
+  "date_local": "2026-10-26",
+  "scope": "Offline generic local tool/firmware handoff analysis; no native host or CPU-startup test",
+  "analysis_provider": "REA6.4.0/Ghidra12.1.4",
+  "llvm": "Apple LLVM version 21.0.0",
+  "inputs": {
+    "current_generic_kmutil_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+    "retained_kmutil_thin_matches_current_generic_tool": true,
+    "iboot_carrier_matches_retained_decoded_bytes": true,
+    "recovery_executable_identity": "UNQUALIFIED",
+    "executing_native_firmware_identity": "UNQUALIFIED"
+  },
+  "queries": [
+    {
+      "name": "configure-subcommand",
+      "result_sha256": "25f086fd09d22b31a8fd6307e6b882965236ea99506855a61bbc027d77065807",
+      "run_sha256": "4f42de638af1dfd8b83331a0b7d060b1ee15b2a1ba0a96aeb7c0457b68c85c6f",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "requested_address": "0x100143a50",
+      "exit": 0,
+      "seconds": 92.012234211,
+      "operation": "function",
+      "actual_entry": "0x100143a50",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x100143a50",
+            "end": "0x100144193"
+          },
+          {
+            "start": "0x100144198",
+            "end": "0x100144c6b"
+          }
+        ],
+        "total_bytes": 4632,
+        "span_bytes": 4636,
+        "non_contiguous": true,
+        "contains_entry": true
+      },
+      "instruction_count": 1158,
+      "pcode_operations": 3000,
+      "pcode_truncated": true,
+      "pcode_outside_body": 0,
+      "removed_block_warnings": 6,
+      "bad_instruction_warnings": 0,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "name": "property-method-references",
+      "result_sha256": "6491620eb4bcd873d4a4f4c31b2c608a6664080a17d378bf5c258cb8c1e9e1ad",
+      "run_sha256": "07bb81251db2f3ff905032d244319157e2a4770542b28ca883ed8932025374d0",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "requested_address": "0x1000f849c",
+      "exit": 0,
+      "seconds": 90.38789596000001,
+      "operation": "xrefs",
+      "references": [
+        "0x1001d5cd0",
+        "0x10021fc88"
+      ],
+      "reference_inventory_complete_claim": false,
+      "qualification": "Provider address-reference inventory; LINKEDIT observation is not proof of runtime witness binding"
+    },
+    {
+      "name": "normal-handoff-b",
+      "result_sha256": "8b47b8212b617391af5843776294b28d572cecfc83105f0a451ced6fe3e67395",
+      "run_sha256": "e26598f4cb4082611453c4b62e4d6020c88eac85682e7b660468db45038dd4ff",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "requested_address": "0x100c1ae53b8",
+      "exit": 0,
+      "seconds": 67.463477699,
+      "operation": "function",
+      "actual_entry": "0x100c1ae53b8",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x100c1ae53b8",
+            "end": "0x100c1ae5eaf"
+          }
+        ],
+        "total_bytes": 2808,
+        "span_bytes": 2808,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "instruction_count": 702,
+      "pcode_operations": 3000,
+      "pcode_truncated": true,
+      "pcode_outside_body": 0,
+      "removed_block_warnings": 0,
+      "bad_instruction_warnings": 0,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "name": "image-preparation-b",
+      "result_sha256": "0689a0b4024c65b8aea480f2b24187b845f30cfcd064278c4b6acca78c6e66db",
+      "run_sha256": "997c34c14ffa93dbb95f3374eb3b7082da9d0137826b238e8fd8f623f99b02fa",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "requested_address": "0x100c1ad1058",
+      "exit": 0,
+      "seconds": 66.70412411500001,
+      "operation": "function",
+      "actual_entry": "0x100c1ad1058",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x100c1ad1058",
+            "end": "0x100c1ad12df"
+          }
+        ],
+        "total_bytes": 648,
+        "span_bytes": 648,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "instruction_count": 162,
+      "pcode_operations": 115,
+      "pcode_truncated": false,
+      "pcode_outside_body": 0,
+      "removed_block_warnings": 1,
+      "bad_instruction_warnings": 0,
+      "whole_function_pseudocode_accepted": false,
+      "qualified_role": "preceding file-wrapper routine, not accepted-image selector"
+    },
+    {
+      "name": "initializer-failure-report",
+      "result_sha256": "7df8c4388c5ff8bd2950ca3e42d1c203f9d186bd76d319e90d033b2607f74eba",
+      "run_sha256": "e918cfdc098e3ba56f53c41bd1ae66b8ce95de029f044d2356b136457002f6a7",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "requested_address": "0xfffffff0270dffac",
+      "exit": 0,
+      "seconds": 21.675947509999986,
+      "operation": "function",
+      "actual_entry": "0xfffffff0270dffac",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0xfffffff0270dffac",
+            "end": "0xfffffff0270e00eb"
+          }
+        ],
+        "total_bytes": 320,
+        "span_bytes": 320,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "instruction_count": 80,
+      "pcode_operations": 111,
+      "pcode_truncated": false,
+      "pcode_outside_body": 0,
+      "removed_block_warnings": 0,
+      "bad_instruction_warnings": 0,
+      "whole_function_pseudocode_accepted": true,
+      "qualified_role": "bootstrap PAPT range registration, not a failure logger"
+    },
+    {
+      "name": "platform-mode-helper",
+      "result_sha256": "fc7023edb2e309570dbd426092dbcd835c18eb79f73f7e3fcd46de082a70139f",
+      "run_sha256": "8c2919c04ad16de26eeaae8b29ba90195171f880bd69bc7023bd05c31cda4cd3",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "requested_address": "0x100144cbc",
+      "exit": 0,
+      "seconds": 91.29710866900001,
+      "operation": "function",
+      "actual_entry": "0x100144cbc",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x100144cbc",
+            "end": "0x100144f17"
+          }
+        ],
+        "total_bytes": 604,
+        "span_bytes": 604,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "instruction_count": 151,
+      "pcode_operations": 93,
+      "pcode_truncated": false,
+      "pcode_outside_body": 0,
+      "removed_block_warnings": 4,
+      "bad_instruction_warnings": 0,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "name": "accepted-image-selector",
+      "result_sha256": "e86725f5103f732988c355a0e4888b886703b95f6e55dc370086a9c08ec07b94",
+      "run_sha256": "584069c490e549e2fe1c63007022e0268ac5d24e5b4f7e660013384c67a0a633",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "requested_address": "0x100c1ad15a4",
+      "exit": 0,
+      "seconds": 67.75807799000002,
+      "operation": "function",
+      "actual_entry": "0x100c1ad12e0",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x100c1ad12e0",
+            "end": "0x100c1ad2523"
+          }
+        ],
+        "total_bytes": 4676,
+        "span_bytes": 4676,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "instruction_count": 1169,
+      "pcode_operations": 2181,
+      "pcode_truncated": false,
+      "pcode_outside_body": 0,
+      "removed_block_warnings": 120,
+      "bad_instruction_warnings": 0,
+      "whole_function_pseudocode_accepted": false
+    },
+    {
+      "name": "monitor-fatal-handler",
+      "result_sha256": "cd15102f766d67d5a8c4152a809d0feee5320342042675a0cda4e3a7218a87dd",
+      "run_sha256": "21bbda343599e62e550f5f1ef550bd96de25e7ee0a093e2effb8661e11c974fb",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "requested_address": "0xfffffff0270feccc",
+      "exit": 0,
+      "seconds": 22.12923976099998,
+      "operation": "function",
+      "actual_entry": "0xfffffff0270feccc",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0xfffffff0270feccc",
+            "end": "0xfffffff0270feceb"
+          }
+        ],
+        "total_bytes": 32,
+        "span_bytes": 32,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "instruction_count": 8,
+      "pcode_operations": 48,
+      "pcode_truncated": false,
+      "pcode_outside_body": 44,
+      "removed_block_warnings": 0,
+      "bad_instruction_warnings": 0,
+      "whole_function_pseudocode_accepted": false
+    }
+  ],
+  "query_success_count": 8,
+  "incomplete_query": {
+    "name": "normal-handoff",
+    "stage": "first VM aggregate job timeout before output",
+    "result_bytes": 0,
+    "result_accepted": false,
+    "later_bounded_query": "normal-handoff-b"
+  },
+  "not_started_query_in_first_job": "image-preparation",
+  "vm_batches": {
+    "first": {
+      "setup_exit": 0,
+      "job_exit": 143,
+      "normal_vm_completion": true
+    },
+    "second": {
+      "setup_exit": 0,
+      "job_exit": 0,
+      "normal_vm_completion": true
+    },
+    "third": {
+      "setup_exit": 0,
+      "job_exit": 0,
+      "normal_vm_completion": true
+    }
+  },
+  "first_wrapper_preflight": {
+    "reason": "Incorrect executable-file precondition on diskless shell job; stopped before VM/locks/queries",
+    "corrected": true
+  },
+  "first_batch_limit_failure": "Lab init has a240-second aggregate bound; first two queries succeeded, third did not complete. Later batches use sum(query bounds)<=225seconds.",
+  "bounded_checks": [
+    {
+      "label": "configure-mode-call",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x1001445e8",
+      "end_exclusive": "0x100144670",
+      "instruction_words": 34,
+      "range_sha256": "9d6588986bd82cf1cbe404aecf60b9ad2495c78c0e1a2338e7679de2bbca8fe4",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "page-protection-helper",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100144cbc",
+      "end_exclusive": "0x100144f18",
+      "instruction_words": 151,
+      "range_sha256": "ce12c047259828ac1c567e3f0189abbaf92e495d6e45966c97fa280b25aec311",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "page-protection-enum-names",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100058858",
+      "end_exclusive": "0x100058898",
+      "instruction_words": 16,
+      "range_sha256": "6485ab207df0fc7fa98828d40d1b82f23351b6779406037e0dfda6fb8a06b7a5",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "property-method-thunk",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x1000f849c",
+      "end_exclusive": "0x1000f84b8",
+      "instruction_words": 7,
+      "range_sha256": "33b6938f261be7a7aa04741efec6d1225ba4fee76cb791b106b6326a96ce15d4",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "property-method-forwarder",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x1000f79b8",
+      "end_exclusive": "0x1000f79f8",
+      "instruction_words": 16,
+      "range_sha256": "4494161de769b54b89355816b5cebb92d2e40780db73dbb39b8ddd4a10d3d188",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "collection-versus-raw-serializer",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100024e64",
+      "end_exclusive": "0x100025034",
+      "instruction_words": 116,
+      "range_sha256": "a790e72f39ee087bf511cc38c29bf60e6eec7bebdf862829004b4a98006e857f",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "analyzer-parameter-slots",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100024474",
+      "end_exclusive": "0x100024498",
+      "instruction_words": 9,
+      "range_sha256": "7fb8b09ec9db5aad173f7af32b82c8927fef1a4bdc5cd84860775ca412e0338c",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "analyzer-protection-profile-branch",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100024a0c",
+      "end_exclusive": "0x100024a94",
+      "instruction_words": 34,
+      "range_sha256": "26cb05e0266ff3680a6ecd492d0cdd13fc4947a120e4f38142e6b0e6e7e9afc2",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "analyzer-collection-kind-dispatch",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100024c0c",
+      "end_exclusive": "0x100024c30",
+      "instruction_words": 9,
+      "range_sha256": "12190492aeefc5f9aa5b8a6c9a58907b7d1c47f9b9eea894e2b35bb29772b521",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "configure-context-pair",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x1001444a8",
+      "end_exclusive": "0x1001444f0",
+      "instruction_words": 18,
+      "range_sha256": "8ad7949a1e24fca891eb27456374a75498b861fa93f77f2d46e5e279a68e094a",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "ordinary-cbo-selector",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "start": "0x100c1ad15a4",
+      "end_exclusive": "0x100c1ad15f0",
+      "instruction_words": 19,
+      "range_sha256": "cedb04545d52c2b3fd75db91fd66c71e8e096af3545e68184a0b1fb4ff00ca5e",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "reserved-region-publisher",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "start": "0x100c1ad5d80",
+      "end_exclusive": "0x100c1ad5dd0",
+      "instruction_words": 20,
+      "range_sha256": "0525672508e8366577ed8f58aee3d67a2da8c35bc8161c6075af528573a7e856",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "handoff-range-consumer-call",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "start": "0x100c1ae5b90",
+      "end_exclusive": "0x100c1ae5ba8",
+      "instruction_words": 6,
+      "range_sha256": "551262c62e20969c2b3c9591a9e2d529bd7bb84bc6d1d7cad0a6d1fec561e4f2",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "handoff-entry-consumer",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "start": "0x100c1ae5c60",
+      "end_exclusive": "0x100c1ae5c90",
+      "instruction_words": 12,
+      "range_sha256": "64508481b5b23c9f4ebdb66ebf7867cff4671810e5d2510e3770877600587c52",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "required-memory-map-lookup",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270bc07c",
+      "end_exclusive": "0xfffffff0270bc154",
+      "instruction_words": 54,
+      "range_sha256": "ef485a7922b9b3d0dabc1cbb1d680e3fcafb41f8538d5a6c47dedd009afe78e6",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "bootkc-required-range-registration",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270bd5fc",
+      "end_exclusive": "0xfffffff0270bd754",
+      "instruction_words": 86,
+      "range_sha256": "542c2b5ffd38fd8b3478510d8adf5f877e58b2e568d3f18ba271c6e1f0d3a8a1",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "papt-range-register",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270dffac",
+      "end_exclusive": "0xfffffff0270e00ec",
+      "instruction_words": 80,
+      "range_sha256": "894bb9cb763402c6e636388e5f9ef1fbd351ebc3d6125b7d1399aa190a9e1a8f",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "fatal-entry-bounded",
+      "input_sha256": "da2ad8d4ecbf3e29fbaaa07e8c7d291ed20d296044494e00303c7a780d190666",
+      "start": "0xfffffff0270feccc",
+      "end_exclusive": "0xfffffff0270fecec",
+      "instruction_words": 8,
+      "range_sha256": "245915bd276376412c827987064c770cc6432c3510e772a3e5af35be960623b5",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "preboot-active-identity-call",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100155180",
+      "end_exclusive": "0x100155198",
+      "instruction_words": 6,
+      "range_sha256": "f638ecf613508b72496fdd3f8f034e6a253d8bcda59e0492f74ab1be8909b07e",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "preboot-relative-path-format",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x1001552e8",
+      "end_exclusive": "0x100155318",
+      "instruction_words": 12,
+      "range_sha256": "d6d1496c4e4876adb7b4adfb6d90693891a3b255b91aacff085c830401f8447f",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "custom-object-type-prefix",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100155df4",
+      "end_exclusive": "0x100155e70",
+      "instruction_words": 31,
+      "range_sha256": "1f540a6694c8c80013704aa8514eccb34464849e7c9656c19f1af3128057ec2b",
+      "llvm_word_mismatches": 0
+    },
+    {
+      "label": "custom-object-path-caller",
+      "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+      "start": "0x100155d64",
+      "end_exclusive": "0x100155d80",
+      "instruction_words": 7,
+      "range_sha256": "8eafc1bf5aae71fa67c93ef9dd6e95590a4b34ee944f603d5806244279eb2223",
+      "llvm_word_mismatches": 0
+    }
+  ],
+  "instruction_words": 751,
+  "llvm_word_mismatches": 0,
+  "qualified_behavior": [
+    "Normal configure path supplies a protection-profile Boolean derived from PageProtectionType enum==2; recognized enum2 is SPTM.",
+    "Collection kind and protection profile are distinct inputs: normal configure sets collection kind1 (Boot); PageProtectionType-derived flag becomes analyzer protection profile and extended serializer selection.",
+    "Known property wrapper selects collection/raw serializer using incoming mode bit rather than inferred analyzer image type.",
+    "Accepted-image iBoot routine selects additional preparation from descriptor+0x38, with a separate expected/current-state equality gate.",
+    "SPTM required memory-map lookup calls precede registration of BootKC-ro/rx/bx/rw/le.",
+    "Bootstrap PAPT range registration rejects zero mapped pages unless its explicit optional flag is set, and validates stage/type/count/flag combinations.",
+    "Bounded reserved-region publisher uses imagebase+ROprefixsize with reservedsize; current inspector false profile is not evidence of actual Recovery profile.",
+    "Custom-object path formatter uses a volume-group/boot/active-identity relative root and a type-selected kernelcache.custom. prefix; no personalized path value or installed object read in this analysis."
+  ],
+  "remaining_unknowns": [
+    "Actual runtime protection witness and flag in historical Recovery configure.",
+    "Actual installed image properties and executing firmware path.",
+    "Native resident entry EL, argument mappings, reservation readability and scanout.",
+    "A safe independent native observation or retrievable loader/failure channel.",
+    "A complete original resident host and physical secondary startup."
+  ],
+  "host_boot_security_volume_changes": false,
+  "physical_usb_or_device_access": false,
+  "guest_network_interfaces": [
+    "lo"
+  ],
+  "lab_job_restored_byte_identical": true,
+  "locks_released_both_workspaces": true,
+  "native_boot_ready": false,
+  "monitor_call_qualified": false,
+  "apple_only_dependency_proven": false,
+  "proprietary_outputs_published": false,
+  "analysis_correction": "An intermediate private interpretation confused the fixed collection-kind argument with the RO/RX protection profile. Independent parameter-slot and enum-dispatch checks corrected it before publication; no native proposal used the mistaken interpretation."
+}

@@ -1,0 +1,35 @@
+{
+  "conditional_producer_reserved": {
+    "base": 18446741874804146176,
+    "bytes": 344064,
+    "end": 18446741874804490240,
+    "end_offset": 753664,
+    "offset": 409600
+  },
+  "contract": "BootKC-rs base=explicit_affine_load_base+kcrz; bytes=kcsz",
+  "contract_alignment_bytes": 16384,
+  "declared_reserved": {
+    "bytes": 344064,
+    "end_offset": 376832,
+    "offset": 32768
+  },
+  "image_acceptance_proven": false,
+  "issues": [
+    "reserved_start_differs_from_declared_segment",
+    "reserved_range_exceeds_materialized_image"
+  ],
+  "kcsf_semantics_applied": false,
+  "native_binding_verified": false,
+  "native_failure_cause_proven": false,
+  "new_native_boot_ready": false,
+  "other_regions_audited": false,
+  "premise": "Caller-supplied affine materialized image extent and declared reserved segment; actual firmware mode/binding not verified",
+  "properties_canonical_sha256": "61d79330d454163946ff89eee488da472d6d93184a79f5440aeeb2e86bbd1d97",
+  "schema": "ilinux-entry31ag-reserved-range-audit-v1",
+  "status": "CONDITIONAL_INCONSISTENCY",
+  "supplied_image": {
+    "bytes": 442368,
+    "end": 18446741874804178944,
+    "load_base": 18446741874803736576
+  }
+}
