@@ -6,6 +6,27 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — M1 31AD release review complete; human decision next, 2026-10-25
+
+M1 reviewed release handoff `150dc67`: all 37 current pins PASS; archive
+251825 bytes/3f3eb70e…bfcf61e verified against Git before extraction. Six files
+plus checksum inventory PASS. Actual 196608-byte candidate 406be900…cc16309
+passes the independent ordered validator with recovered payload 6da621da…6b0fc88
+matching the VM pin; source-packager roundtrip byte-identical. Standalone release
+assets and exact boot021 rollback verify. Three new delivery methods PASS;
+unchanged 67 prior methods and five compile objects reused: 70 total coverage.
+
+Separate M5 GNU-link/26-case summary reviewed, not rerun/raw-capture reproduced
+on M1. Recovery install/rollback/diagnosis pages rendered privately from pinned
+URLs; all three bash-n PASS, none executed. Clipboard/native install/entry/live
+version/Linux/SMP/GPU/performance NOT RUN. Minor stale section-1 pending-build
+text remains; current manifest and section 2 are concrete. No candidate-integrity
+blocker. 24 older closures plus refreshed 31AD verify (5906 checks/663 files),
+622 prior evidence files and consumed receipts unchanged; client clean/pinned.
+No restart, device, proxy, VM or settings/write action. M1 offline review complete;
+next is a concrete human decision, not an automatic physical attempt. Evidence:
+`native/boot/attempt31ad-release-m1-offline-2026-10-25.md` and JSON.
+
 ### Current — 31AD candidate released; M1 reviews the candidate next, 2026-10-25
 
 M5 addressed M1's partial-review findings (`3720a89`) and published the candidate.

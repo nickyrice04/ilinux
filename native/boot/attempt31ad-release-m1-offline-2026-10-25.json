@@ -1,0 +1,209 @@
+{
+  "actionable_candidate_integrity_blockers": [],
+  "archive": {
+    "bytes": 251825,
+    "filename": "ilinux-31ad-entry-test.tar.gz",
+    "regular_members_including_inventory": 7,
+    "sha256": "3f3eb70ea933d6e2aa3becb2aa08f721f5a8bbc48666bd496f0b18a7ebfcf61e",
+    "url": "https://github.com/nickyrice04/ilinux/releases/download/native-j716c-31ad/ilinux-31ad-entry-test.tar.gz",
+    "verified_against_git_before_extraction": true,
+    "verified_manifest_files": 6
+  },
+  "candidate": {
+    "bytes": 196608,
+    "checked_split_ranges": [
+      {
+        "boot_exec_fileoff": 98304,
+        "checked_text_to_boot_bytes": 65536,
+        "text_exec_fileoff": 32768
+      },
+      {
+        "boot_exec_fileoff": 98304,
+        "checked_text_to_boot_bytes": 65536,
+        "text_exec_fileoff": 32768
+      }
+    ],
+    "independent_validator": "STRUCTURAL_PROFILE_PASS",
+    "payload_comparison": true,
+    "sha256": "406be900521795608073fa9f050f4e5f00b595793c95b0a155e510893cc16309",
+    "source_packager_roundtrip": "BYTE_IDENTICAL"
+  },
+  "date_local": "2026-10-25",
+  "device_opens": 0,
+  "downloaded_files_executed": false,
+  "http_server_started": false,
+  "installed_object_security_volume_default_changes": false,
+  "linux_smp_gpu_performance": "NOT RUN",
+  "live_target_version_checks": "NOT RUN",
+  "m5_vm_summary_reviewed": {
+    "fatal_vector_cases_reported": 2,
+    "m1_qemu_or_link_rerun": false,
+    "native_evidence": false,
+    "paints_reported": 8,
+    "payload_sha256_matches_delivered_candidate": true,
+    "qemu_cases_reported": 26,
+    "raw_individual_vm_captures_received": false,
+    "refusals_reported": 16,
+    "two_base_equality_reported": "PASS"
+  },
+  "mac_restarts": 0,
+  "manifest": {
+    "pins": 37,
+    "sha256": "c0ffde5c41369dcf769b1209048ab8e0caa04fac0c067eeedd8ce350d3293e04",
+    "status": "PASS"
+  },
+  "monitor_calls": 0,
+  "native_boot_marker_observation": "NOT RUN",
+  "native_clipboard_retention": "NOT RUN",
+  "native_entry_observed": false,
+  "native_installation": "NOT RUN",
+  "native_rollback_execution": "NOT RUN",
+  "new_execution": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "native/boot/attempt31ad/verify.py",
+        "--archive",
+        "build/native-intake/attempt31ad-release-offline/ilinux-31ad-entry-test.tar.gz"
+      ],
+      "exit": 0,
+      "label": "archive-verify",
+      "seconds": 0.05,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a898e3f06f7276e5b8cffc0618044d8d167d9f5f41bb2bdbcb3a2dab76936983"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "native/boot/attempt31ad/test_verify.py"
+      ],
+      "exit": 0,
+      "label": "delivery-tests",
+      "seconds": 0.062,
+      "stderr_sha256": "7d59a8fbca92ef540f42b6883247c3844892d23f501b6cf2621d0e535813fb81",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "kernel/experiments/bootimage31ad/validate_ordered.py",
+        "build/native-intake/attempt31ad-release-offline/extracted/ilinux-31ad/ilinux-31ad-ordered.macho",
+        "--payload",
+        "build/native-intake/attempt31ad-release-offline/recovered-payload.bin"
+      ],
+      "exit": 0,
+      "label": "ordered-validate",
+      "seconds": 0.051,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3427653cf728d0e0688d121b5ffc89c8e05b14b3db23224ed706dc59210ba80c"
+    }
+  ],
+  "new_native_authorization": "NOT GIVEN BY THIS REVIEW",
+  "new_tool_installs": 0,
+  "nonblocking_findings": [
+    {
+      "file": "tools/m1n1-client/attempt31ad-instructions.md",
+      "section": "1",
+      "summary": "Intro still says PENDING_VM_LINK and candidate/archive unbuilt; current pinned manifest and section 2 supersede that text."
+    }
+  ],
+  "original_exit71_cause": "Unknown; ordering remains Hypothesis",
+  "preservation": {
+    "client_clean": true,
+    "client_pin": "57a9339ffd1876e78297b17d34dece8cff8fa1ba",
+    "current_refreshed_manifest_pins": 37,
+    "distinct_current_files": 663,
+    "earlier_frozen_manifests_unchanged": 24,
+    "listed_checks": 5906,
+    "previous_partial_review_pair": "BYTE_UNCHANGED",
+    "prior_evidence_files_verified_unchanged": 622,
+    "total_manifests_checked": 25
+  },
+  "proxy_requests": 0,
+  "ready_for_concrete_human_review": true,
+  "recovered_payload": {
+    "bytes": 147456,
+    "matches_git_vm_pin": true,
+    "sha256": "6da621da67de37437300e7205e8c3919dcac997600f7eb6e8fedae29e6b0fc88"
+  },
+  "recovery_render": {
+    "blocks": [
+      {
+        "bash_n_exit": 0,
+        "bytes": 6135,
+        "executed": false,
+        "phase": "install",
+        "sha256": "9676cfb413650048369a9be3e0134f2700d0ae864169108f2ff48c83ff15e308"
+      },
+      {
+        "bash_n_exit": 0,
+        "bytes": 5872,
+        "executed": false,
+        "phase": "rollback",
+        "sha256": "349e31fc2bc8b1716aedf1aeabd6254a4b8f23e94aecc0acd79a7ba03e019ac2"
+      },
+      {
+        "bash_n_exit": 0,
+        "bytes": 3491,
+        "executed": false,
+        "phase": "diagnose",
+        "sha256": "4c3f8998a0382827e81d76643c2f12d1f0d1dac55ae400a23c5ba423f1e721f3"
+      }
+    ],
+    "direct_release_assets_verified": [
+      "ilinux-31ad-ordered.macho",
+      "ilinux-31ac.macho",
+      "m1n1-boot021.bin"
+    ],
+    "native_authorization": "NOT GIVEN IN THIS REVIEW",
+    "native_clipboard": "NOT RUN",
+    "new_delivery_methods": 3,
+    "prior_compile_objects_reused": 5,
+    "production_profiles_rendered_from_pins": true,
+    "real_recovery_blocks_executed": false,
+    "reused_methods": 67,
+    "total_methods_with_reuse": 70,
+    "unchanged_prior_suites_reused": 4
+  },
+  "result": "OFFLINE_PASS_NATIVE_HOLD",
+  "reviewed_commit": "150dc67f30b017369b6099d56ca9751ef4c19ca2",
+  "rollback": {
+    "bytes": 3932160,
+    "live_version_check": "NOT RUN",
+    "marker_matches": true,
+    "retained_package_byte_identical": true,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+  },
+  "schema": "ilinux-attempt31ad-release-m1-offline-v1",
+  "source_delta": {
+    "new_source_files": [
+      "native/boot/attempt31ad/verify.py",
+      "native/boot/attempt31ad/test_verify.py"
+    ],
+    "prior_implementation_tests_and_compiler_bindings_unchanged": true,
+    "unchanged_prior_pinned_files": 31,
+    "upstream_refreshed_metadata_files": [
+      "native/boot/attempt31ad/README.md",
+      "native/boot/attempt31ad/manifest.json",
+      "native/boot/attempt31ad/validation.json",
+      "tools/m1n1-client/attempt31ad-instructions.md"
+    ]
+  },
+  "source_repairs": 0,
+  "tests": {
+    "additional_refusal_subcases": 6,
+    "compile_objects_reused": 5,
+    "full_suite_rerun": false,
+    "new_delivery_methods_pass": 3,
+    "reused_methods_pass": 67,
+    "skips_in_new_suite": 0,
+    "source_binding_count": 11,
+    "source_bindings_sha256": "ac5b7fcca628ff7fcec720dfcfefb537d0766ace161531cd47fed40c1ea8fcca",
+    "source_repairs": 0,
+    "total_method_coverage_with_reuse": 70
+  },
+  "vm_starts": 0
+}

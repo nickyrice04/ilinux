@@ -4451,3 +4451,31 @@ remaining: M1 review of the released candidate, then a fresh explicit human
 authorization of the exact candidate (the 31AC approval does not carry over).
 Native install/boot stay NOT RUN; macOS, boot policy, SIP, volumes and security
 untouched; no restart. The ordering explanation for exit 71 remains a Hypothesis.
+
+## 2026-10-25 · M1: accept pinned31AD release review, preserve native boundary
+
+M1 reviewed release handoff `150dc67`: all 37 current pins PASS; archive
+251825 bytes/3f3eb70e…bfcf61e verified against Git before extraction. Six files
+plus checksum inventory PASS. Actual 196608-byte candidate 406be900…cc16309
+passes the independent ordered validator with recovered payload 6da621da…6b0fc88
+matching the VM pin; source-packager roundtrip byte-identical. Standalone release
+assets and exact boot021 rollback verify. Three new delivery methods PASS;
+unchanged 67 prior methods and five compile objects reused: 70 total coverage.
+
+Separate M5 GNU-link/26-case summary reviewed, not rerun/raw-capture reproduced
+on M1. Recovery install/rollback/diagnosis pages rendered privately from pinned
+URLs; all three bash-n PASS, none executed. Clipboard/native install/entry/live
+version/Linux/SMP/GPU/performance NOT RUN. Minor stale section-1 pending-build
+text remains; current manifest and section 2 are concrete. No candidate-integrity
+blocker. 24 older closures plus refreshed 31AD verify (5906 checks/663 files),
+622 prior evidence files and consumed receipts unchanged; client clean/pinned.
+No restart, device, proxy, VM or settings/write action. M1 offline review complete;
+next is a concrete human decision, not an automatic physical attempt. Evidence:
+`native/boot/attempt31ad-release-m1-offline-2026-10-25.md` and JSON.
+
+**Decision:** Reuse exact unchanged suites/compile evidence rather than repeat
+them. Accept the new delivery/payload/roundtrip checks as offline package review,
+keeping M5 VM summaries and native evidence distinct. Preserve the earlier
+partial-review failures and frozen reports. The actual exit-71 cause stays
+Unknown; structural PASS does not prove installer/firmware acceptance. No physical
+write, restart or changed experiment follows from the request to review main.
