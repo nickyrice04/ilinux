@@ -1,0 +1,85 @@
+{
+  "date_eastern": "2026-11-12",
+  "status": "OFFLINE_FORMAT_CHECK_ONLY",
+  "wrapper_vm": {
+    "schema": "ilinux-nov12-format-check-v1",
+    "scope": "SYNTHETIC_FORMAT_ONLY",
+    "source_commit": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+    "source_git_blob": "0a3b111958e3319e743f1676ffbd6d7019f9930b",
+    "source_sha256": "3e8fff2c09179fc34f89e6ef453e29f0b3bd7b488be296e9afce2257b67642d0",
+    "kernel": "7.1.6-vzrun2",
+    "python": "3.14.8",
+    "network_interfaces": [
+      "lo"
+    ],
+    "physical_hardware_access": false,
+    "cases": [
+      {
+        "raw_bytes": 196608,
+        "wrapped_bytes": 311296,
+        "raw_roundtrip": true,
+        "deterministic": true,
+        "entry_offset": "0x10800",
+        "contains_boot_exec_segment": false,
+        "sha256": "63702670e36d85c514aa75077efc0f785ce0f9f18cc094a03478352713e96918"
+      },
+      {
+        "raw_bytes": 262145,
+        "wrapped_bytes": 393216,
+        "raw_roundtrip": true,
+        "deterministic": true,
+        "entry_offset": "0x10800",
+        "contains_boot_exec_segment": false,
+        "sha256": "d528b7a2251a86c44f89e893af1e4e60e149e4fc885289e8b859f04a5a9eaa38"
+      },
+      {
+        "raw_bytes": 2097152,
+        "wrapped_bytes": 2211840,
+        "raw_roundtrip": true,
+        "deterministic": true,
+        "entry_offset": "0x10800",
+        "contains_boot_exec_segment": false,
+        "sha256": "12b59f534a4bb8bf8c2934ca9df1181ff6f551f9e08e0bd2f6c7f22a447b1acc"
+      }
+    ],
+    "expected_input_refusals": [
+      "missing-load-header",
+      "already-wrapped"
+    ],
+    "padded_128m_window_tested": false,
+    "native_boot_tested": false,
+    "apple_firmware_executed": false,
+    "restart_ready": false
+  },
+  "apple_inspector": {
+    "scope": "SYNTHETIC_FORMAT_ONLY",
+    "read_only": true,
+    "tool": "kmutil inspect -z -B --show-mach-boot-properties",
+    "exit": 0,
+    "properties": {
+      "kcbz": 0,
+      "kcrz": 262144,
+      "kcsz": 0,
+      "kcsf": 0,
+      "kcep": 18446741874803820544
+    },
+    "stderr_bytes": 46,
+    "stderr_sha256": "060367c79e74c046faa789655d564236101c67f510579647685ce3529756eb12",
+    "native_accepted": false,
+    "native_executed": false,
+    "enrolled": false,
+    "restart_ready": false
+  },
+  "harness_sha256": {
+    "run.sh": "4bca733aa7c0d370ca107d0bf0295d7b1905444255a574752bb0a752d88f129c",
+    "check_wrapper.py": "113b8101f3fa93173761ef997a20e047682de65ac6766ce4a9aec2b46d35a81e"
+  },
+  "host_and_lab_version": {
+    "version": "26.6.2",
+    "build": "25G83"
+  },
+  "native_candidate_built": false,
+  "macos_security_changed": false,
+  "firmware_changed": false,
+  "restart_ready": false
+}

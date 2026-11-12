@@ -1,5 +1,66 @@
 # Progress Log
 
+## 2026-11-12 · 31AH full Aura/kernel build and generic runtime control
+
+Implemented the reported Aura bd9f3e8273dc/Linux dc8f6f77934b source pair. Both
+Aura baseline and an original gated J716c USB2 delta compile; own padding tests
+24 methods plus six C policy assertions PASS. Final 153,190,400-byte Mach-O files
+pass independent raw-payload/layout checks and trusted read-only Apple inspector
+(14 properties each, kcbz=0). No native entry claim. Rust/Cargo/build-std notices
+are captured; path-dependent Rust strings prevent a byte-reproducibility claim.
+
+Full GCC16.1.1 kernel Image/modules/DT compilation completed (243s initial link,
+8s final incremental source-bound pass). Reconstructed 16 KiB/CTXR/SMP profile
+disables write-capable SEP, retains storage as unloaded modules and strips
+per-unit DROM from delivered DT. Own tests: 26 methods PASS. Initial RFKILL module
+cap, missing objcopy/cache and mid-build helper-change refusal were corrected;
+final unchanged-source closure passes. Original static collector normal/stall
+controls PASS. New Image/private root boot diskless/noNIC in VZ: four concurrent
+pinned workers, RAM checksum, timers and 60.498 s liveness PASS, then bounded
+external stop (not a requested guest shutdown). VM receipt parser: 18 methods PASS.
+
+M1 read-only tar intake: 46 methods and camera/timeline: 24 methods PASS; total138
+plus six C assertions. Strict USTAR refuses PAX/GNU hidden metadata and bounded
+gzip/trailer corruptions. Local-user review tar: 64 members / 34,099,303 bytes verified;
+no extraction/device access. Diagnostic glibc binary/root withheld from public
+delivery pending source/relink closure; no public binary Release. No Apple
+bytes/pseudocode or media published. Existing REA contract findings reused; no
+new Apple query needed for public-source reproduction.
+
+Next: M1 independently reviews the exact handoff at
+tools/m1n1-client/attempt31ah-instructions.md. No restart yet. Linux T6050 USB
+host-only mode, exact reporter CDC/config, current 25G83 versus 26B131 pairing and
+restoration design remain native gates. Camera recording/native 18-core startup/
+GPU/N1/NVMe/performance are NOT RUN. All VMs stopped/locks released; host boot,
+security, firmware, volumes and default unchanged. Old 31AF restoration unknown.
+
+## 2026-11-12 · Resume with a concrete direct-entry implementation
+
+Read current Gravity discussions and public primary source. User confirmed the
+November 9 no-SPTM Mach-O proposal; it still allows native Linux alongside macOS.
+Apple's 27.3 beta release notes independently resolve the old raw single-core bug
+(182898702/FB23916610), released November 3 as 26C5035r. New November 11 J716c
+report: Aura bd9f3e8273dc, Linux dc8f6f77934b, 27.2.1/26B131, padded Mach-O,
+128 MiB CTXR window, CPUs0–17, N1/DHCP/SSH and NVMe partition read. Treat it as
+an operator report with missing CDC diff/configuration/artifact hashes. New
+GPU/panel PR1276 merged November12; combinations remain to qualify locally.
+
+Public wrapper and padding implementation exist. Direct Aura entry and the
+window-aware kernel differ from our old resident SPTM observer. Recorded a
+coherent reuse plan for the existing two-stage Omarchy root and M1 transport.
+Local version-only reads show original and lab still26.6.2/25G83. No policy query,
+host modification, installation, firmware update or experimental reboot.
+
+First bounded experiment: hash-pinned public wrapper executed only in existing
+Linux7.1.6-vzrun2/Python3.14.8 VM, no NIC or physical interfaces. Three synthetic
+non-executable fixtures passed independent layout/entry/raw roundtrip checks;
+two invalid inputs refused. Trusted read-only macOS kmutil inspect returned0,
+kcbz=0 for the small fixture. No128MiB padding, real Aura/kernel, Apple firmware
+execution or native acceptance tested. VM shut down normally; locks released.
+Original harness/job093 and sanitized receipt recorded. New integration design:
+`research/m5-boot-route-2026-11-12.md`. Old closures remain frozen, restoration
+still unconfirmed, no new physical package or restart ready.
+
 ## 2026-10-26 · 31AG: REA context provenance and original offline diagnostics
 
 Eight fresh REA queries completed. Independent audit checks all query/run gates

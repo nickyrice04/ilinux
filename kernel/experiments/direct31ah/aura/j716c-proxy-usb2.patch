@@ -1,0 +1,40 @@
+From: iLinux downstream
+Subject: [EXPERIMENTAL] Prepare deferred J716c USB2 only at fallback proxy entry
+
+Original downstream software decision from public Aura source. This is not the
+unpublished operator's patch and has no native runtime qualification. Existing
+usb_cdc_schedule/poll perform setup once with zero flags; their guards remain.
+No reset, forced speed, carrier retry or altered firmware validation is added.
+Build only the optional variant with -DILINUX_J716C_PROXY_USB2 and the separately
+provided ilinux_proxy_policy.h. Keep the exact upstream baseline for comparison.
+
+diff --git a/src/main.c b/src/main.c
+--- a/src/main.c
++++ b/src/main.c
+@@ -36,6 +36,9 @@
+ #include "usb.h"
+ #include "usb_cdc.h"
+ #include "utils.h"
++#ifdef ILINUX_J716C_PROXY_USB2
++#include "ilinux_proxy_policy.h"
++#endif
+ #include "wdt.h"
+ #include "xnuboot.h"
+ 
+@@ -280,6 +283,16 @@
+ 
+     if (payload_action == STAGE1_PAYLOAD_HALT)
+         panic("Stage 1: no safe proxy carrier after CDC failure\n");
++
++#ifdef ILINUX_J716C_PROXY_USB2
++    if (ilinux_j716c_proxy_usb2(chip_id, board_id, usb_cdc_deferred_usb2(),
++                              stage1_window_done)) {
++        /* Schedule only: the existing poll owns the single hardware transition. */
++        printf("iLinux J716c: preparing explicit USB2 for fallback proxy\n");
++        if (usb_cdc_schedule(1000, 0, 0))
++            panic("iLinux J716c: deferred USB2 preparation refused\n");
++    }
++#endif
+ 
+ #ifndef BRINGUP
+     /* A proxy window brought USB up already; a second bring-up would register its ports twice. */

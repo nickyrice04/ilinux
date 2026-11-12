@@ -1,0 +1,288 @@
+{
+  "schema": "ilinux-direct31ah-offline-bundle-v1",
+  "target": {
+    "model": "Mac17,6",
+    "board": "j716c",
+    "chip_id": "0x6050"
+  },
+  "native_authorized": false,
+  "restart_ready": false,
+  "firmware_change_authorized": false,
+  "delivery": "LOCAL_USER_HANDOFF_NOT_PUBLIC_BINARY_RELEASE",
+  "reporter_configuration_reproduced": false,
+  "sources": {
+    "aura": {
+      "commit": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+      "url": "https://github.com/aurora-silicon/aura/archive/bd9f3e8273dc79ae9095c19c2c4f32218446ad4e.tar.gz",
+      "archive_sha256": "6f685971f924781c4f0390ba3a3244ee82b71c1ab90266610d5ad5c6d77c7882"
+    },
+    "linux": {
+      "commit": "dc8f6f77934b471a13c91e7780e2d91ebc904b3d",
+      "url": "https://github.com/aurora-silicon/linux/archive/dc8f6f77934b471a13c91e7780e2d91ebc904b3d.tar.gz",
+      "archive_sha256": "0a8ae9d9529a4ff1754bcc4294d68cffbd449d82cc1a4a1ecf3aaec1a63a46dd"
+    }
+  },
+  "package": {
+    "filename": "ilinux-direct31ah-offline.tar.gz",
+    "bytes": 34099303,
+    "sha256": "0abee654af377a8c299b57cc4709da1f3a9f7ae340a024e79fac286f81bf3298",
+    "files": {
+      "ilinux-direct31ah/README.txt": {
+        "bytes": 595,
+        "sha256": "5e51c47fd4631c901632de9e6f864564a48146f54363a679fbcaf71b397f146c"
+      },
+      "ilinux-direct31ah/aura/baseline/aura-boot-128m.macho": {
+        "bytes": 153190400,
+        "sha256": "f73b8feea8f05a67408fb1a7e86b679ce33e9f2ff9ae97746549a126bf07cace"
+      },
+      "ilinux-direct31ah/aura/baseline/build_cfg.h": {
+        "bytes": 28,
+        "sha256": "1f5a6a5d3586dc1130a93dd3d072afe4c71cc9d311214a469aebfa796a79a0c9"
+      },
+      "ilinux-direct31ah/aura/baseline/build_tag.h": {
+        "bytes": 63,
+        "sha256": "5e8caaca6492b5916f541be8d2f585a368700eaad240a2d006321fb00a659b61"
+      },
+      "ilinux-direct31ah/aura/baseline/padding.json": {
+        "bytes": 620,
+        "sha256": "d6b6f7420a32176013f89b7b6d8018babab5db523cba17f5e17469ab1975c8f9"
+      },
+      "ilinux-direct31ah/aura/build-result.json": {
+        "bytes": 2877,
+        "sha256": "d5cc1fd574fbd1246b97586c82a0c02d824f876e7d0f5e9ef27ed263a832b717"
+      },
+      "ilinux-direct31ah/aura/cargo-notices-result.json": {
+        "bytes": 43,
+        "sha256": "242f22978e923e417951db2fe16de606c2d38eccebb70eaf3354e2e799e57523"
+      },
+      "ilinux-direct31ah/aura/j716c-proxy/aura-boot-128m.macho": {
+        "bytes": 153190400,
+        "sha256": "b45375b3bedeca66354b858d909c5b05dca7acd6bb76002eea824b8f528ac53f"
+      },
+      "ilinux-direct31ah/aura/j716c-proxy/build_cfg.h": {
+        "bytes": 28,
+        "sha256": "1f5a6a5d3586dc1130a93dd3d072afe4c71cc9d311214a469aebfa796a79a0c9"
+      },
+      "ilinux-direct31ah/aura/j716c-proxy/build_tag.h": {
+        "bytes": 66,
+        "sha256": "5cb62d11c3d6145eef86961a2a4ada9ab84b5acf8fd721da81f55bbf4061c538"
+      },
+      "ilinux-direct31ah/aura/j716c-proxy/padding.json": {
+        "bytes": 620,
+        "sha256": "80119a0d60b1c3177664d87f80826ef213334f83e813ff3ada7d6698cb2530c5"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.AURORA-LOGO": {
+        "bytes": 463,
+        "sha256": "778e31da9c6aa8c0c96cbeabe73460ba09b68e3a4c33e03fd5a82fba64c323cb"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.BSD-2.libfdt": {
+        "bytes": 1315,
+        "sha256": "b410d206e6a11b2eb4aa7766a01b6cdf705b2a3c8ea26a00530587859ad873cd"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.BSD-3.arm": {
+        "bytes": 1488,
+        "sha256": "ba420ebd24cc61d4b97d7173acd216e742524ed304ee2b2df6cf8546fbfca48e"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.BSD-3.dwc3": {
+        "bytes": 1776,
+        "sha256": "aaef31cc73e25d5b48fa903957fae7243db7628f270b0511bf4232be871c5434"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.CC0": {
+        "bytes": 7048,
+        "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.GPL-2": {
+        "bytes": 18094,
+        "sha256": "86dc744860e6dfacfeba2f33fea908db03fe67c7e37a878285b7aae8e4596735"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.MIT.fatfs": {
+        "bytes": 1056,
+        "sha256": "9125b4be91e0486ca97316a7547ec0f7e15093b3eacbf4d85e4de1718e9bbfbf"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.Marius-Gehrmann": {
+        "bytes": 1072,
+        "sha256": "4b1f1becfecb7d39185f5dd417139c722fb2cdfae3c150ff05587596e9c41a41"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.OFL-1.1": {
+        "bytes": 4485,
+        "sha256": "2e14ee65e55dbcc7d66347cd7c76a10a1a18ac49dd7989a2b3838b479676f746"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.minlzma": {
+        "bytes": 1069,
+        "sha256": "c8d8f2121d2bd6ffbe66f9ee9ade1076dc2951f685f6d0c65992121c21fbf12e"
+      },
+      "ilinux-direct31ah/aura/licenses/3rdparty_licenses/LICENSE.tinf": {
+        "bytes": 903,
+        "sha256": "f39b507b81b9ba1edce7fe742bbd68fda4b852063ce7299274ae97991d48814b"
+      },
+      "ilinux-direct31ah/aura/licenses/Aura-LICENSE": {
+        "bytes": 1001,
+        "sha256": "acb8a11264fd9c639b8659b0d971fa9d708698d57bf6e499eabaf957c393dff5"
+      },
+      "ilinux-direct31ah/aura/licenses/Aura-licensing.md": {
+        "bytes": 801,
+        "sha256": "db02c8fdb5c8abfd046f3a1346a74da8c030180227e263a8983fefbfe9d58058"
+      },
+      "ilinux-direct31ah/aura/licenses/LICENSES/GPL-2.0-only.txt": {
+        "bytes": 18094,
+        "sha256": "86dc744860e6dfacfeba2f33fea908db03fe67c7e37a878285b7aae8e4596735"
+      },
+      "ilinux-direct31ah/aura/licenses/LICENSES/MIT.txt": {
+        "bytes": 1076,
+        "sha256": "11ca423a564b52d3b7f260398baa20d016c25ae180fbdd0067c27b7d1ed7b420"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/block-buffer-0.10.4/LICENSE-APACHE": {
+        "bytes": 10849,
+        "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/block-buffer-0.10.4/LICENSE-MIT": {
+        "bytes": 1082,
+        "sha256": "d5c22aa3118d240e877ad41c5d9fa232f9c77d757d4aac0c2f943afc0a95e0ef"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/cfg-if-1.0.5/LICENSE-APACHE": {
+        "bytes": 10847,
+        "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/cfg-if-1.0.5/LICENSE-MIT": {
+        "bytes": 1057,
+        "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/cpufeatures-0.2.17/LICENSE-APACHE": {
+        "bytes": 10849,
+        "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/cpufeatures-0.2.17/LICENSE-MIT": {
+        "bytes": 1082,
+        "sha256": "ae9baa7beea910273c2f384c2a6b721fb7bd02bda3436074a1072e4ee689f985"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/crypto-common-0.1.7/LICENSE-APACHE": {
+        "bytes": 10849,
+        "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/crypto-common-0.1.7/LICENSE-MIT": {
+        "bytes": 1065,
+        "sha256": "3521672491a3479422d5fe1aca6645dd2984090f85da6e5205abfb18fb7a6897"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/digest-0.10.7/LICENSE-APACHE": {
+        "bytes": 10849,
+        "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/digest-0.10.7/LICENSE-MIT": {
+        "bytes": 1057,
+        "sha256": "9e0dfd2dd4173a530e238cb6adb37aa78c34c6bc7444e0e10c1ab5d8881f63ba"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/generic-array-0.14.7/LICENSE": {
+        "bytes": 1107,
+        "sha256": "c09aae9d3c77b531f56351a9947bc7446511d6b025b3255312d3e3442a9a7583"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/index.json": {
+        "bytes": 6833,
+        "sha256": "8061e9f86fb03af1d4e8f41036896f28d9bd0708d27e3e8c81d1a120513e33a9"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/sha1_smol-1.0.1/LICENSE": {
+        "bytes": 2719,
+        "sha256": "282a21b0710441c364025461a447362daf18f5798a7b72ae2f801a2aa536da51"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/sha2-0.10.9/LICENSE-APACHE": {
+        "bytes": 10849,
+        "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/sha2-0.10.9/LICENSE-MIT": {
+        "bytes": 1138,
+        "sha256": "b4eb00df6e2a4d22518fcaa6a2b4646f249b3a3c9814509b22bd2091f1392ff1"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/typenum-1.20.1/LICENSE": {
+        "bytes": 17,
+        "sha256": "db11fec9946737df39ca3898d9cd8c10ec6f6c3a884a6802b0ad0b81b4e8f23a"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/typenum-1.20.1/LICENSE-APACHE": {
+        "bytes": 10835,
+        "sha256": "516b24e051bf5630880ebbd55c40a25ce9552ebaf8970a53e8976eb70e522406"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/typenum-1.20.1/LICENSE-MIT": {
+        "bytes": 1083,
+        "sha256": "a825bd853ab71619a4923d7b4311221427848070ff44d990da39b0b274c1683f"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/version_check-0.9.5/LICENSE-APACHE": {
+        "bytes": 10847,
+        "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+      },
+      "ilinux-direct31ah/aura/licenses/cargo/version_check-0.9.5/LICENSE-MIT": {
+        "bytes": 1085,
+        "sha256": "b7e650f3fce5c53249d1cdc608b54df156a97edd636cf9d23498d0cfe7aec63e"
+      },
+      "ilinux-direct31ah/aura/licenses/collect_buildstd_licenses.py": {
+        "bytes": 3596,
+        "sha256": "bcd9201e57557b0bd66e026bea4d54407e38bf68565612cdcec1d4beb2ef2226"
+      },
+      "ilinux-direct31ah/aura/licenses/collect_cargo_licenses.py": {
+        "bytes": 4711,
+        "sha256": "615fc2e247bcd66ab8d42b6e116e5b349554291a87aee70b05b7ad3153da441d"
+      },
+      "ilinux-direct31ah/aura/licenses/j716c-proxy-usb2.patch": {
+        "bytes": 1571,
+        "sha256": "e9edf592a3223c480ed465a5fb993047b7b84a78c6092a0adbb0ae2ed1b212e7"
+      },
+      "ilinux-direct31ah/aura/licenses/pad_boot.py": {
+        "bytes": 12453,
+        "sha256": "0f3b95bc1075c35916963c30c37c4eee6642c2cae95f264ac4744154c84b6acf"
+      },
+      "ilinux-direct31ah/aura/licenses/proxy_policy.h": {
+        "bytes": 456,
+        "sha256": "9cc638ffd5f6d51e267df497279500c0ca6e57d367eca8b8be7614034191a7c9"
+      },
+      "ilinux-direct31ah/aura/licenses/rust-build-std/compiler-builtins/LICENSE.txt": {
+        "bytes": 15078,
+        "sha256": "ab6eec6caf0fa5775e411c7a8bc6a45c4ef2956b0980b157ab74fc5cd62a928b"
+      },
+      "ilinux-direct31ah/aura/licenses/rust-build-std/compiler-builtins/libm/LICENSE.txt": {
+        "bytes": 14088,
+        "sha256": "3823dda7cf046602f4b4e77ec8e227863dc4736037cc85bb33d9f19febe16bb7"
+      },
+      "ilinux-direct31ah/aura/licenses/rust-build-std/index.json": {
+        "bytes": 1183,
+        "sha256": "e010cf25ab70c53c3d2663192d4a3de88c9896379bcfa2df114352bc2525fde1"
+      },
+      "ilinux-direct31ah/aura/licenses/rust-build-std/rust-src/COPYRIGHT": {
+        "bytes": 1571,
+        "sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af"
+      },
+      "ilinux-direct31ah/aura/licenses/rust-build-std/rust-src/LICENSE-MIT": {
+        "bytes": 1068,
+        "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1"
+      },
+      "ilinux-direct31ah/aura/licenses/rust-build-std/rust/COPYRIGHT-library.html.rustc": {
+        "bytes": 4021,
+        "sha256": "e865f7bd5018634399d00f92f049ccfa84a4c1d60c2483d1a81eb63a5038d659"
+      },
+      "ilinux-direct31ah/aura/rust-buildstd-notices-result.json": {
+        "bytes": 100,
+        "sha256": "a06d17ebec98925c9d832c4cd764e248952943c2a48b4a6655f384d04678e97f"
+      },
+      "ilinux-direct31ah/linux/Image": {
+        "bytes": 43694592,
+        "sha256": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f"
+      },
+      "ilinux-direct31ah/linux/build-evidence.json": {
+        "bytes": 2024,
+        "sha256": "d4b23aca0dce81725520c97cc06b1f18a1c8024011f797fd2af53c8eed4efcb0"
+      },
+      "ilinux-direct31ah/linux/input-source-files.json": {
+        "bytes": 1484,
+        "sha256": "58d8989596dfa87c71dac3eb161148d5ae209d563c5ed4c85060bd6ba1c1ae03"
+      },
+      "ilinux-direct31ah/linux/kernel.config": {
+        "bytes": 284541,
+        "sha256": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8"
+      },
+      "ilinux-direct31ah/linux/modules-OFFLINE-REVIEW.tar.gz": {
+        "bytes": 17714326,
+        "sha256": "06958fa80e1e4204cc2e712f4c12daf076db7eb94e9495bd3e70bdb3d2859d30"
+      },
+      "ilinux-direct31ah/linux/t6050-j716c-diagnostic.dtb": {
+        "bytes": 112959,
+        "sha256": "2c93df25dcbbc6939360ca84b76e21246ca30b6b7e2d0189afb0b1978332cb51"
+      }
+    }
+  }
+}

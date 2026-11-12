@@ -6,6 +6,47 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AH compiled handoff; M1 owns independent offline review
+
+M5 completed exact public source-pair builds with a reconstructed 16 KiB config,
+separate baseline/original USB2 Aura variants, 128 MiB padding, full kernel/modules and
+sanitized 18-core J716c DT. 138 unit methods+six C assertions PASS; actual new
+Image/private diagnostic root passes four-vCPU generic VM / 60.498 s. Final Apple
+read-only parser returns0 / 14 properties/kcbz=0 on both real padded objects.
+
+M1 follows tools/m1n1-client/attempt31ah-instructions.md: preserve local work,
+verify Git source inventory and the local-user 64-file, 34 MB tar, fresh host-safe
+tests, independent review. Optional webcam capability review only; do not open
+a camera/recorder or request permissions yet. No restart/proxy/Recovery page,
+installer, firmware/security/volume/default change or new policy loop. Native
+NOT RUN. Exact reported CDC/config missing; Linux T6050 USB is host-only; local
+firmware pairing is unqualified. Old 31AF rollback/default remain UNCONFIRMED.
+
+Root coordinated three bounded agents: Aura/padding/licenses, kernel/DT/collector
+and M1 intake/camera. Independent reviews and final source hashes govern this
+handoff. All VMs stopped and both workspaces' locks released. No public binary
+Release; diagnostic glibc/root withheld pending corresponding-source/relink
+closure. Do not edit historic attempt inventories or reuse consumed approvals.
+
+### Current — November 12: qualify the direct entry route before a new boot
+
+M5 resumed research after the pause. Gravity's no-SPTM Mach-O proposal is a
+native boot path compatible with keeping macOS, rather than a hosted Linux VM.
+Apple also now publishes the separate raw-path SMP fix in 27.3 beta. New J716c
+public evidence names a 27.2.1 direct-entry stack, 18 cores and SSH; it still lacks
+a complete artifact/configuration/CDC-patch closure. Our current host and lab
+version plists both read 26.6.2/25G83; no new matching local physical result.
+
+M5 owns this offline design and original format harness. Three synthetic layouts,
+two refusals and trusted read-only parser kcbz=0 pass; no real padded object,
+Linux build, native acceptance or sleep is established. VM stopped, both locks
+released. Current files: `research/m5-boot-route-2026-11-12.md`,
+`research/m5-route-2026-11-12-format-check.json`, job093. All older packages,
+consumed approvals and unresolved 31AF restoration/default state are preserved.
+No M1 restart/proxy, installation, firmware download/update or native test yet.
+The next implementation must bind the loader, executable pool, J716c DT, kernel
+and modules coherently and review the changed lab CTRR/rollback requirements.
+
 ### Current — 31AG offline review; M5 selected-object evidence pending
 
 M5 completed eight REA queries with independent 751-word/22-range checks, zero

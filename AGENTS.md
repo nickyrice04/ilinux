@@ -99,6 +99,45 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AH Aura/kernel compiled; M1 offline review only, November 12
+
+The exact reported public Aura bd9f3e8273dc/Linux dc8f6f77934b source pair is
+compiled in isolated Linux. Baseline and separately labelled original USB2 delta
+are padded for a 128 MiB pool; final Apple read-only parser accepts both (14
+properties, kcbz=0). Full 16 KiB kernel/modules and sanitized 18-core J716c DT pass
+static policy checks. Configuration is reconstructed, not the operator's exact
+config. 138 unit methods plus six C policy assertions PASS. Actual new Image/
+private RAM root passes four-vCPU generic VM workers/checksum/60.498s liveness;
+physical M5, Aura entry, native CTXR, USB/N1/GPU/NVMe/parity remain NOT RUN.
+
+New M1 handoff: tools/m1n1-client/attempt31ah-instructions.md. The 64-file, 34 MB
+review tar stays in ignored build/direct31ah-package/ for local-user transfer;
+no public binary Release. Static glibc diagnostic/root remain private pending
+source/relink closure. Camera protocol/timeline ready, recording NOT RUN. Linux
+T6050 USB host-only gap, firmware pairing 25G83 versus reported 26B131, and old
+31AF restoration/default remain unresolved. All VMs stopped/locks released; no
+host firmware, settings, security, volume, install or restart action. No native
+boot is ready or authorized. Preserve all older frozen packages/approvals.
+
+### Latest — November 12 restart research: direct Mach-O route, offline only
+
+Apple's 27.3 beta notes now resolve the raw-object M5 Pro/Max single-core bug
+(182898702 / FB23916610). Gravity's November 9 discussion proposes the alternate
+SPTM-less Mach-O path for future power-management work. A November 11 public
+J716c report names Aura bd9f3e8273dc and Linux dc8f6f77934b on 27.2.1/26B131:
+18 CPUs online, NVMe partition reading and N1/SSH; simpledrm panel. It uses direct
+entry plus a padded 128 MiB executable window, not our resident 31AF ABI.
+
+Both locally readable macOS version plists remain 26.6.2/25G83. No policy or boot
+setting was changed. A new original VM harness checks the public wrapper with
+three non-executable fixtures and two expected input refusals: PASS. Read-only
+kmutil inspect derives kcbz=0, exit0, on one synthetic fixture. These are format
+checks only; padding, real kernel/loader, hardware and sleep remain untested.
+VM stopped and locks released. Source/reproduction gaps and 31AF restoration
+remain open; no candidate, firmware update or restart is ready/authorized.
+Design: `research/m5-boot-route-2026-11-12.md`; original job093 and sanitized
+`research/m5-route-2026-11-12-format-check.json`. Retain old frozen closures.
+
 ### Latest — 31AG offline handoff qualified; read-only identity check, no new boot
 
 2026-10-26: eight fresh REA queries, 22 bounded ranges/751 independently decoded

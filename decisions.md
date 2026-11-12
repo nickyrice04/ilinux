@@ -4777,3 +4777,52 @@ no M1 restart/proxy, new candidate or automatic retry. Preparation changes no
 macOS settings, volumes or security. Current handoff:
 `tools/m1n1-client/attempt31ag-instructions.md`; facts/limits:
 `research/native31ag-handoff.md`, `native/boot/attempt31ag/README.md`.
+
+## 2026-11-12 · Resume offline work around public direct entry
+
+**Decision:** qualify the public no-SPTM Mach-O/CTXR execution-window route,
+keeping the newly corrected 27.3 raw route as a comparison. Neither is another
+31AF resident observer or a macOS-hosted Linux VM. Keep Omarchy, the existing M1
+transport and verified two-stage root-transfer design; replace loader/kernel/DT/
+modules coherently. Do not point the old one-core launcher at a new Aura binary.
+
+**Evidence:** Apple now publishes the raw SMP fix. A November11 operator reports
+18-core J716c RAM Linux on27.2.1 with public source pins. Its exact CDC patch,
+padded artifact/configuration and performance evidence remain missing. Public
+wrapper and installer padding code make offline engineering feasible. Parent
+confirmed both version plists still26.6.2. Three synthetic format cases and two
+expected input refusals PASS in an isolated VM; read-only kmutil inspect derives
+kcbz=0. Those results do not prove native acceptance or executable confinement.
+
+**Consequences:** no host/security/volume/firmware write or new restart is
+authorized by this research. Keep Macintosh HD and the unresolved prior restore
+state. Review lab CTRR restoration and global firmware implications explicitly
+before a physical request. Qualify per-core work, memory, control/SSH and then
+the matching GPU stack; power/suspend and macOS-class performance stay separate
+measurements. Design and receipt: `research/m5-boot-route-2026-11-12.md`,
+`research/m5-route-2026-11-12-format-check.json`, job093.
+
+## 2026-11-12 · 31AH source-pair build; offline artifact review before native proposal
+
+**Decision:** reuse the exact public Aura/Linux source pair from the J716c
+operator report and maintain an unchanged Aura baseline beside a separately
+labelled original USB2 experiment. Use a reconstructed conservative 16 KiB
+kernel configuration, retaining the eighteen distinct CPU nodes. Disable SEP
+and keep storage modules outside the diagnostic RAM root. Remove the publisher's
+per-unit DROM from the exported DT. Do not transplant the old one-core launcher.
+
+**Evidence:** both loader variants and the full kernel compile. Final real
+padded objects pass Apple's read-only parser with all fourteen properties and
+kcbz zero. 138 unit methods and six C policy assertions pass. Actual new Image
+and local diagnostic root pass a four-vCPU generic VM control with sixty seconds
+of liveness. This tests software controls, not native M5 startup or performance.
+
+**Consequences:** push source, hashes, sanitized results and M1 offline review
+instructions. Keep the compiled 64-file review tar as a local-user handoff; no
+public binary Release. The tested static glibc diagnostic/root stay private
+pending libc source/relink closure. M1 can review the webcam/timeline procedure
+without camera access or a restart. No new Apple REA query is necessary to
+compile public sources; earlier qualified handoff findings retain their scope.
+Firmware pairing, Linux host-only USB, exact lab restoration/CTRR requirements
+and old restoration uncertainty must be addressed before a separately approved
+native sequence. No host, firmware, security, volume or default change occurred.

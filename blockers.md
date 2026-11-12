@@ -1,5 +1,44 @@
 # Blockers
 
+## Current — 31AH compiled; native pairing/control/restoration gates remain
+
+The exact public Aura/kernel source pair now compiles. Both padded objects pass
+Apple's read-only format inspection; full 16 KiB Image/modules and sanitized
+18-core DT pass static checks. A four-vCPU generic kernel/RAM-root control passes
+sixty seconds of liveness. This resolves build/layout gaps, not physical SMP.
+
+Remaining: operator's exact config and USB delta unavailable; pinned T6050 Linux
+USB is host-only, so gadget control is not reproduced. Local original/lab version
+reads are 26.6.2/25G83 versus reported 27.2.1/26B131; compatibility is unqualified,
+not proven impossible. Direct-entry installation needs a separately reviewed
+lab CTRR/restoration design; old 31AF rollback/default remain UNCONFIRMED. No
+firmware, install or restart authorization is inferred from offline preparation.
+
+M1 can review the 64-file local-user bundle and camera protocol now. Diagnostic
+glibc binary/root remain private pending source/relink closure; no public binary
+Release. Source-based CTXR geometry is necessary but native execution protection,
+physical cores, GPU/N1/NVMe and parity remain NOT RUN. No Apple-only dependency
+is established. See native/boot/attempt31ah/README.md and its evidence.
+
+## Current — November 12: source closure and matching boot environment
+
+The old blanket firmware-wait assumption is superseded: Apple now documents a
+27.3 beta raw SMP correction, and a separate public direct-Mach-O route has a
+named J716c 18-core report on27.2.1. Our actual host/lab remain26.6.2/25G83.
+Neither new route is physically qualified here. Source/config/padded-object and
+local CDC patch bindings remain incomplete; current raw launcher intentionally
+limits CPUs and is not an Aura adapter. The new kernel must enforce the128MiB
+executable pool, with matching DT/modules and validated memory reservations.
+
+Three synthetic wrapper fixtures/two refusal cases and kcbz=0 parser inspection
+PASS only at the format layer. Native protection, entry, SMP, GPU and power are
+not proven. Sleep-to-RAM is a motivation, not a measured feature. A future lab
+update may also update global firmware; it requires a concrete reviewed plan and
+separate authorization. Mach-O enrollment changes lab Kernel CTRR per upstream
+documentation, so existing raw rollback must be requalified. Exact31AF rollback
+and Macintosh HD default restoration remain unconfirmed. No new boot prepared.
+Design and next gates: `research/m5-boot-route-2026-11-12.md`.
+
 ## Current — 31AG remains offline; actual object/context and entry observation open
 
 Eight REA queries and independent 751-word checks clarify context-derived

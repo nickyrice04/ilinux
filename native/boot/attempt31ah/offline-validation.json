@@ -1,0 +1,361 @@
+{
+  "schema": "ilinux-direct31ah-offline-validation-v1",
+  "date_local": "2026-11-12",
+  "status": "PASS_OFFLINE_ONLY",
+  "scope": "Exact upstream source pair; reconstructed kernel diagnostic configuration; local-user artifact handoff",
+  "unit_methods": {
+    "aura_padding": 24,
+    "strict_package_reader": 46,
+    "kernel_dt_initramfs_policy": 26,
+    "vm_receipt_parser": 18,
+    "m1_camera_timeline": 24,
+    "total": 138
+  },
+  "c_policy_assertions": 6,
+  "kernel": {
+    "scope": "OFFLINE_FULL_KERNEL_BUILD",
+    "status": "PASS",
+    "source_commit": "dc8f6f77934b471a13c91e7780e2d91ebc904b3d",
+    "reporter_config_reproduced": false,
+    "profile": "reconstructed-ram-diagnostic",
+    "arm64_image_size": 44498944,
+    "arm64_image_text_offset": 0,
+    "page_bytes": 16384,
+    "pool_bytes": 134217728,
+    "static_image_fits_pool": true,
+    "runtime_pool_capacity_qualified": false,
+    "checks": {
+      "config-check.json": "PASS",
+      "dt-check.json": "PASS",
+      "diag-dt-check.json": "PASS"
+    },
+    "files": {
+      "Image": {
+        "bytes": 43694592,
+        "sha256": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f"
+      },
+      "kernel.config": {
+        "bytes": 284541,
+        "sha256": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8"
+      },
+      "t6050-j716c-upstream.dtb": {
+        "bytes": 113029,
+        "sha256": "c6487c69fe3c112abf5f080ef7b3961d2a796f3831ecbc9ea81b92c4e49037e3"
+      },
+      "t6050-j716c-diagnostic.dtb": {
+        "bytes": 112959,
+        "sha256": "2c93df25dcbbc6939360ca84b76e21246ca30b6b7e2d0189afb0b1978332cb51"
+      },
+      "diag-init": {
+        "bytes": 869504,
+        "sha256": "c84152b6413e5dd60fdedd9f317035f61b57686c241ca10fd2bb1219a15c2c66"
+      },
+      "initramfs-direct31ah.cpio.gz": {
+        "bytes": 369683,
+        "sha256": "06254e6367b1a22f69db7b6edd0b03a8849d1ad9b7ebfb9698b72e88af688a56"
+      },
+      "modules-OFFLINE-REVIEW.tar.gz": {
+        "bytes": 17714326,
+        "sha256": "06958fa80e1e4204cc2e712f4c12daf076db7eb94e9495bd3e70bdb3d2859d30"
+      },
+      "input-source-files.json": {
+        "bytes": 1484,
+        "sha256": "58d8989596dfa87c71dac3eb161148d5ae209d563c5ed4c85060bd6ba1c1ae03"
+      },
+      "collector-selftest.json": {
+        "bytes": 555,
+        "sha256": "13c524638cb7999965d38071e67285b465dd3fa48eb4a2a3c12f70b867f5dc5e"
+      },
+      "collector-timeout-selftest.json": {
+        "bytes": 478,
+        "sha256": "c316be461ebfb0de79dd29745b778b99eeb6c09c878ed8c1d367a096f7e39cfa"
+      }
+    },
+    "physical_m5_tested": false,
+    "boot_ready": false
+  },
+  "kernel_toolchain": [
+    "Linux 7.1.6-vzrun2 aarch64",
+    "gcc (GCC) 16.1.1 20260430",
+    "GNU ld (GNU Binutils) 2.46.0",
+    "GNU Make 4.4.1",
+    "Python 3.14.8"
+  ],
+  "collector_selftests": {
+    "normal": [
+      {
+        "phase": "cpu_worker",
+        "cpu": 0,
+        "actual_cpu": 0,
+        "iterations": 272647168,
+        "elapsed_ns": 250001208,
+        "requested_sleep_ns": 1000000,
+        "observed_sleep_ns": 1066709,
+        "result": "PASS"
+      },
+      {
+        "phase": "cpu_worker",
+        "cpu": 1,
+        "actual_cpu": 1,
+        "iterations": 273615872,
+        "elapsed_ns": 250000667,
+        "requested_sleep_ns": 1000000,
+        "observed_sleep_ns": 1247833,
+        "result": "PASS"
+      },
+      {
+        "phase": "cpu_workers",
+        "workers": 2,
+        "expected_native_workers": 0,
+        "common_interval_ns": 249997500,
+        "result": "PASS",
+        "performance_parity_measured": false
+      },
+      {
+        "scope": "GENERIC_LINUX_CONTROL",
+        "selftest": "PASS",
+        "physical_m5_claim": false
+      }
+    ],
+    "intentional_timeout": [
+      {
+        "phase": "cpu_worker_join",
+        "worker_index": 0,
+        "join_error": 110,
+        "result": "TIMEOUT",
+        "unjoined_record_read": false
+      },
+      {
+        "phase": "cpu_worker_join",
+        "worker_index": 1,
+        "join_error": 110,
+        "result": "TIMEOUT",
+        "unjoined_record_read": false
+      },
+      {
+        "phase": "cpu_workers",
+        "workers": 2,
+        "expected_native_workers": 0,
+        "common_interval_ns": 0,
+        "result": "FAIL",
+        "performance_parity_measured": false
+      },
+      {
+        "scope": "GENERIC_LINUX_TIMEOUT_CONTROL",
+        "expected_timeout_observed": true,
+        "selftest": "PASS",
+        "physical_m5_claim": false
+      }
+    ]
+  },
+  "aura": {
+    "schema": "ilinux-direct31ah-aura-build-v1",
+    "kernel": "7.1.6-vzrun2",
+    "source_commit": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+    "toolchain": {
+      "clang": "clang version 23.1.1",
+      "ld.lld": "LLD 23.1.1 (compatible with GNU linkers)",
+      "objcopy": "GNU objcopy (GNU Binutils) 2.46.0",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Arch Linux rust 1:1.99.0-1)",
+      "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Arch Linux rust 1:1.99.0-1)",
+      "python3": "Python 3.14.8"
+    },
+    "make_variables": {
+      "USE_CLANG": "1",
+      "ARCH": "aarch64-linux-gnu",
+      "BUILDSTD": "1",
+      "OBJCOPY": "objcopy",
+      "CARGO_FLAGS": "-Z build-std=alloc,core --locked --offline"
+    },
+    "source_date_epoch": 1794340013,
+    "variants": {
+      "baseline": {
+        "aura.elf": {
+          "bytes": 3551192,
+          "sha256": "18de99c9e0f184239412f6b0fe6adbe7b23c2e71637118ff45432281b16fe36c"
+        },
+        "aura-boot-128m.macho": {
+          "bytes": 153190400,
+          "sha256": "f73b8feea8f05a67408fb1a7e86b679ce33e9f2ff9ae97746549a126bf07cace"
+        },
+        "build_cfg.h": {
+          "bytes": 28,
+          "sha256": "1f5a6a5d3586dc1130a93dd3d072afe4c71cc9d311214a469aebfa796a79a0c9"
+        },
+        "build_tag.h": {
+          "bytes": 63,
+          "sha256": "5e8caaca6492b5916f541be8d2f585a368700eaad240a2d006321fb00a659b61"
+        },
+        "aura-raw.elf": {
+          "bytes": 6303568,
+          "sha256": "f02b95ab022e24265df4e1b5935e1f46fc91040b6c28733ee36f8da9d8878090"
+        },
+        "aura-boot.macho": {
+          "bytes": 4112384,
+          "sha256": "44f5565ff7bcc8429bc705eb3e02ce1e1336bf5ffb71d51a6703710be199beb5"
+        },
+        "aura.bin": {
+          "bytes": 3997696,
+          "sha256": "2d272aa2b5551d27458826e88b3bdaf86684e2b4fff3aad4876de7021a1caaf3"
+        }
+      },
+      "j716c-proxy": {
+        "aura.elf": {
+          "bytes": 3551768,
+          "sha256": "63eab439286ba1e2ac6835bd0900f5ff3e8525a09f55a724520e9657d2d46ef6"
+        },
+        "aura-boot-128m.macho": {
+          "bytes": 153190400,
+          "sha256": "b45375b3bedeca66354b858d909c5b05dca7acd6bb76002eea824b8f528ac53f"
+        },
+        "build_cfg.h": {
+          "bytes": 28,
+          "sha256": "1f5a6a5d3586dc1130a93dd3d072afe4c71cc9d311214a469aebfa796a79a0c9"
+        },
+        "build_tag.h": {
+          "bytes": 66,
+          "sha256": "5cb62d11c3d6145eef86961a2a4ada9ab84b5acf8fd721da81f55bbf4061c538"
+        },
+        "aura-raw.elf": {
+          "bytes": 6304152,
+          "sha256": "a9f1579aa578aaa0d707a9327a1a6e151152c142f83000743338b473bdb8557b"
+        },
+        "aura-boot.macho": {
+          "bytes": 4112384,
+          "sha256": "fdeab9742e30ab1adafeeabee85c2c67547ad628f6940dfe609fb871006652b8"
+        },
+        "aura.bin": {
+          "bytes": 3997696,
+          "sha256": "e1418ec766400ba0fa66a5b40980fe3de9a5e3dbd9548c2779e889cf0d130b91"
+        }
+      }
+    },
+    "native_tested": false,
+    "enrolled": false,
+    "restart_ready": false
+  },
+  "aura_apple_read_only_inspector": {
+    "baseline": {
+      "exit": 0,
+      "sha256": "f73b8feea8f05a67408fb1a7e86b679ce33e9f2ff9ae97746549a126bf07cace",
+      "derived_properties": {
+        "kclo": 18446741874803752960,
+        "kcep": 18446741874803820544,
+        "kcrf": 0,
+        "kcrz": 153141248,
+        "kcsf": 0,
+        "kcsz": 0,
+        "kcxf": 0,
+        "kcxz": 0,
+        "kcbf": 0,
+        "kcbz": 0,
+        "kcwf": 153141248,
+        "kcwz": 32768,
+        "kclf": 153174016,
+        "kclz": 16384
+      },
+      "read_only": true,
+      "native_acceptance_proven": false
+    },
+    "j716c-proxy": {
+      "exit": 0,
+      "sha256": "b45375b3bedeca66354b858d909c5b05dca7acd6bb76002eea824b8f528ac53f",
+      "derived_properties": {
+        "kclo": 18446741874803752960,
+        "kcep": 18446741874803820544,
+        "kcrf": 0,
+        "kcrz": 153141248,
+        "kcsf": 0,
+        "kcsz": 0,
+        "kcxf": 0,
+        "kcxz": 0,
+        "kcbf": 0,
+        "kcbz": 0,
+        "kcwf": 153141248,
+        "kcwz": 32768,
+        "kclf": 153174016,
+        "kclz": 16384
+      },
+      "read_only": true,
+      "native_acceptance_proven": false
+    }
+  },
+  "generic_vm": {
+    "scope": "GENERIC_ARM64_VZ_CONTROL",
+    "status": "PASS",
+    "expected_vcpus": 4,
+    "passing_cpu_ids": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "worker_count": 4,
+    "elapsed_monotonic_ns": 60498751570,
+    "complete_heartbeats": true,
+    "last_camera_second": 60,
+    "memory_checksum_passed": true,
+    "physical_m5_tested": false,
+    "firmware_or_bootloader_tested": false,
+    "native_driver_qualification": false,
+    "performance_parity_measured": false,
+    "raw_console_exported": false,
+    "errors": []
+  },
+  "generic_vm_stop": {
+    "bounded_vm_stop": true,
+    "limit_seconds": 78,
+    "guest_requested_poweroff": false
+  },
+  "package_review": {
+    "schema": "ilinux-direct31ah-offline-review-v1",
+    "status": "OFFLINE_INTEGRITY_PASS",
+    "files_verified": 64,
+    "expanded_bytes": 368421402,
+    "tar_stream_bytes": 368476160,
+    "package_sha256": "0abee654af377a8c299b57cc4709da1f3a9f7ae340a024e79fac286f81bf3298",
+    "read_only": true,
+    "extracted": false,
+    "native_ready": false,
+    "native_authorized": false,
+    "firmware_changed": false
+  },
+  "build_observations": {
+    "initial_kernel_compile_seconds": 243,
+    "final_incremental_kernel_seconds": 8,
+    "first_kernel_configuration_refusal": "RFKILL=m capped built-in Centauri dependency; fragment corrected to RFKILL=y before successful full build",
+    "initial_aura_build_refusal": "Missing llvm-objcopy and incomplete offline Cargo cache; GNU objcopy override and isolated public-source dependency fetch corrected before full builds",
+    "source_binding_refusal": "A helper changed during first successful kernel compile; recipe refused closure, then final unchanged-source incremental pass completed",
+    "sandbox_only_failures": [
+      "Unescalated VM configuration reported unavailable; approved VM run passed",
+      "Unescalated kmutil could not create DASession; approved read-only inspections passed"
+    ],
+    "aura_warnings": "Rust unused/unsafe/future-compatibility warnings and virtiofs clock-skew warnings retained in private logs; fresh full builds completed",
+    "byte_reproducibility": "Not claimed. Aura outputs differ across different build directories; final artifact pins govern."
+  },
+  "no_new_apple_rea_query": true,
+  "rea_basis": "Previously qualified 31AG behavior and public direct-entry ABI; no proprietary pseudocode or binary published",
+  "current_firmware_qualification": "Local original/lab version reads 26.6.2/25G83; external report 27.2.1/26B131. Compatibility not qualified.",
+  "usb_control_qualification": "Pinned T6050 Linux DWC3 host-only. Optional Aura USB2 delta is original and native untested; reporter exact delta unavailable.",
+  "native": {
+    "aura_entry": "NOT_RUN",
+    "physical_eighteen_cores": "NOT_RUN",
+    "ctxr_enforcement": "NOT_RUN",
+    "n1_gpu_nvme": "NOT_RUN",
+    "performance_parity": "NOT_MEASURED",
+    "camera_recording": "NOT_RUN",
+    "old31af_rollback_and_default": "UNCONFIRMED"
+  },
+  "host_security_firmware_volume_default_changes": false,
+  "native_authorized": false,
+  "restart_ready": false,
+  "public_binary_release": false,
+  "independent_audit": {
+    "aura_layout_artifacts_licenses": "PASS",
+    "kernel_source_config_and_sanitized_dt": "PASS",
+    "package_reader_and_m1_commands": "PASS",
+    "reviewer_count": 3,
+    "fresh_m1_host_test_methods": 114,
+    "native_actions": false
+  }
+}
