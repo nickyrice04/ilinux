@@ -1,0 +1,123 @@
+{
+  "schema": "ilinux-direct31ai-local-diagnostic-v1",
+  "target": {
+    "model": "Mac17,6",
+    "board": "j716c",
+    "chip_id": "0x6050"
+  },
+  "delivery": "SAME_USER_LOCAL_HANDOFF_ONLY",
+  "native_authorized": false,
+  "restart_ready": false,
+  "firmware_change_authorized": false,
+  "public_binary_release": false,
+  "bindings": {
+    "schema": "ilinux-direct31ai-runtime-binding-v1",
+    "target": {
+      "model": "Mac17,6",
+      "board": "j716c",
+      "chip_id": "0x6050"
+    },
+    "baseline_aura_sha256": "f73b8feea8f05a67408fb1a7e86b679ce33e9f2ff9ae97746549a126bf07cace",
+    "prior_31ah_manifest_sha256": "bce19f957cbab84e09b3c575afce85d8ae619d3e4e64789cbefedce28d82f131",
+    "tested_payload_sha256": {
+      "linux/Image": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f",
+      "linux/kernel.config": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8",
+      "linux/t6050-j716c-diagnostic.dtb": "2c93df25dcbbc6939360ca84b76e21246ca30b6b7e2d0189afb0b1978332cb51",
+      "diagnostic/diag-init": "c84152b6413e5dd60fdedd9f317035f61b57686c241ca10fd2bb1219a15c2c66",
+      "diagnostic/initramfs.cpio.gz": "06254e6367b1a22f69db7b6edd0b03a8849d1ad9b7ebfb9698b72e88af688a56",
+      "source/diag_init.c": "53b75d25c01b03a1c92832df91c51b875f03616847cbc674cce1c539cc729761",
+      "evidence/source-bindings.json": "58d8989596dfa87c71dac3eb161148d5ae209d563c5ed4c85060bd6ba1c1ae03",
+      "evidence/vm.json": "bab097ae06e4984ba49e00ac59b093b732dfc31c2cdc316f304359738345fba2",
+      "references/31ah-manifest.json": "bce19f957cbab84e09b3c575afce85d8ae619d3e4e64789cbefedce28d82f131"
+    },
+    "reconstructed_kernel_configuration": true,
+    "physical_eighteen_core_tested": false,
+    "native_authorized": false,
+    "restart_ready": false,
+    "public_binary_release": false,
+    "glibc_public_source_closure": "INCOMPLETE"
+  },
+  "package": {
+    "filename": "ilinux-direct31ai-diagnostic.tar.gz",
+    "bytes": 16031305,
+    "sha256": "4c04cbd098fcec92f55c91fe8bb33dc7baae2e86c7586a0ca88fac7879543019",
+    "files": {
+      "ilinux-direct31ai/README.txt": {
+        "bytes": 678,
+        "sha256": "9b34b51cc7352d6ebe911ebaf51049f902f8066786f6ae6a357f19ca715988b6"
+      },
+      "ilinux-direct31ai/bindings.json": {
+        "bytes": 1482,
+        "sha256": "119d2b6bc6fb816231244bab6008119bdcb57e8394d24bddccb6acfbc6e0af51"
+      },
+      "ilinux-direct31ai/diagnostic/diag-init": {
+        "bytes": 869504,
+        "sha256": "c84152b6413e5dd60fdedd9f317035f61b57686c241ca10fd2bb1219a15c2c66"
+      },
+      "ilinux-direct31ai/diagnostic/initramfs.cpio.gz": {
+        "bytes": 369683,
+        "sha256": "06254e6367b1a22f69db7b6edd0b03a8849d1ad9b7ebfb9698b72e88af688a56"
+      },
+      "ilinux-direct31ai/evidence/relink.json": {
+        "bytes": 2149,
+        "sha256": "439cf59082d58c60a6bf09fdeae7ca28ac90632e2d06fc5e5ec144caa122e8f5"
+      },
+      "ilinux-direct31ai/evidence/source-bindings.json": {
+        "bytes": 1484,
+        "sha256": "58d8989596dfa87c71dac3eb161148d5ae209d563c5ed4c85060bd6ba1c1ae03"
+      },
+      "ilinux-direct31ai/evidence/vm.json": {
+        "bytes": 495,
+        "sha256": "bab097ae06e4984ba49e00ac59b093b732dfc31c2cdc316f304359738345fba2"
+      },
+      "ilinux-direct31ai/licenses/common/GPL-2.0-only.txt": {
+        "bytes": 17337,
+        "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3"
+      },
+      "ilinux-direct31ai/licenses/common/GPL-3.0-or-later.txt": {
+        "bytes": 34674,
+        "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
+      },
+      "ilinux-direct31ai/licenses/common/LGPL-2.1-or-later.txt": {
+        "bytes": 26001,
+        "sha256": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2"
+      },
+      "ilinux-direct31ai/licenses/gcc/RUNTIME.LIBRARY.EXCEPTION": {
+        "bytes": 3324,
+        "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+      },
+      "ilinux-direct31ai/linux/Image": {
+        "bytes": 43694592,
+        "sha256": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f"
+      },
+      "ilinux-direct31ai/linux/kernel.config": {
+        "bytes": 284541,
+        "sha256": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8"
+      },
+      "ilinux-direct31ai/linux/t6050-j716c-diagnostic.dtb": {
+        "bytes": 112959,
+        "sha256": "2c93df25dcbbc6939360ca84b76e21246ca30b6b7e2d0189afb0b1978332cb51"
+      },
+      "ilinux-direct31ai/notices/local-use.txt": {
+        "bytes": 827,
+        "sha256": "5714fa590facc1936b785942bdb0396209fe7fd72aa4af599c0427460b02ca69"
+      },
+      "ilinux-direct31ai/policy/storage.json": {
+        "bytes": 455,
+        "sha256": "603fb8d702a2f7b87e653a790e1fc8d321b692f43c13443d32cf669d93b35b23"
+      },
+      "ilinux-direct31ai/references/31ah-manifest.json": {
+        "bytes": 13131,
+        "sha256": "bce19f957cbab84e09b3c575afce85d8ae619d3e4e64789cbefedce28d82f131"
+      },
+      "ilinux-direct31ai/relink/diag-init.o": {
+        "bytes": 33672,
+        "sha256": "bb9264914a6ba75d01686ce9527968b310847ff186388c9944f7e87b1880568b"
+      },
+      "ilinux-direct31ai/source/diag_init.c": {
+        "bytes": 18913,
+        "sha256": "53b75d25c01b03a1c92832df91c51b875f03616847cbc674cce1c539cc729761"
+      }
+    }
+  }
+}

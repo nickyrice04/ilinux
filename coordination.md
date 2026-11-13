@@ -6,6 +6,30 @@ older plan disagree, this file wins for ownership and order of work.
 
 ## Roles
 
+### Current — 31AI M5 build complete; M1 independent offline intake next
+
+M5 selects baseline Aura plus autonomous inline diagnostic, not the optional
+USB2 delta. Original transport/extender, exact diagnostic/relink bundle,
+candidate reader, restoration assertion model and selected-object metadata
+reader are under new 31AI paths. Eight public C parser controls/actual Apple
+format inspection pass; hardware and final cleanup remain untested. Two REA
+queries give bounded consistency evidence only. No firmware update is implied.
+
+M1 owns independent review of the exact new Git snapshot and both local-user
+compressed files. Use tools/m1n1-client/attempt31ai-instructions.md; preserve
+the original five dirty status notes through an isolated clean review checkout.
+Do not reset/clean/stash automatically, rerun old full suites, start proxy/camera,
+restart or prepare Recovery writes. Report native/live/restore checks NOT RUN.
+
+M5 owns current lab-object reconciliation and the eventual complete CTRR/object/
+default restoration procedure. Human reports Macintosh HD return. The current
+445,430-byte lab IMG4 has an EXACT_31AF payload plus opaque IM4P context field;
+boot021 is not currently selected. Wrapper authenticity, old rollback/default
+and effective policy remain unconfirmed.
+Separate authorization follows a concrete reviewed physical plan, not this
+offline PASS. Both workspaces' VM locks released; no settings/security/firmware
+changes. Frozen 31AH and older closures remain untouched.
+
 ### Latest M1 — 31AH offline review PASS; no restart ready, November 13
 
 M1 reviewed ba3687c: 41 source pins, 114 fresh host-safe methods and actual

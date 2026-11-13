@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/aurora-silicon/aura",
+  "commit": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+  "scope": "SELECTED_TRANSPORT_TRANSLATION_UNITS_AND_LOCAL_HEADERS",
+  "git_blobs": {
+    "src/payload.c": "a71c77a902e2c620fb44720b6a65b208d058c4aa",
+    "aura-raw.ld": "e02baa986ab68831b76846f03d8c325e04d99b78",
+    "src/ctxr_exec.c": "fa76bf4db3e1b23d5da02258f30a9f7748c0d085",
+    "src/kboot.c": "4934f0eb0339992abc4049cc117ca4a1c98bde34",
+    "proxyclient/tools/linux.py": "784fb7c1ec2002e0a661b422767a35d55e918984",
+    "src/main.c": "85adae8f4179474b6c4d2ec18b9eab67a54f6651",
+    "src/payload_profile.h": "567e9eefc1c79826407056a83de9c8bbfb077e1c",
+    "src/tinf/tinfgzip.c": "f933604bcd076cc7a98a78f83d0eab2438ce082d",
+    "src/tinf/tinflate.c": "b99a1a0633435aa8acc01aecb2b00c13c859783c",
+    "src/tinf/crc32.c": "b83232c9949f38b1e2a8b215da221dc7608d0b32",
+    "src/tinf/tinf.h": "e715b822d1da0bd412c5805dd17642776d0e3beb",
+    "src/libfdt/fdt.c": "ebd163afc1149bc8b5f5ebd6f6c0f034d4e0a08a",
+    "src/libfdt/fdt_ro.c": "e7f8b62304e8b3a31a4ec37d0ea9c94c6085c768",
+    "src/libfdt/fdt_rw.c": "dd5c93ead176628b588e94f821a4970720c289bf",
+    "src/libfdt/fdt_sw.c": "c0d9cd0a2b8daed11c51bf6b53f9a05f7987ffe1",
+    "src/libfdt/fdt_wip.c": "44aed08e876720689e306d6d657e3ef6465a98e1",
+    "src/libfdt/fdt_empty_tree.c": "15f0cd793e249eff59763b7fcc54c202c60b4a05",
+    "src/libfdt/fdt_strerror.c": "218b32379a1eed18a3aa28d419f25afba1cfea52",
+    "src/libfdt/libfdt.h": "693b4514ac4f4cef8d389e4eff68b8032e100bae",
+    "src/libfdt/libfdt_env.h": "6d028a4fbd2facf734d92eca7d9316b3fec7057c",
+    "src/libfdt/fdt.h": "f2e68807f277c5009641c54f5198bebb7cb1c28f",
+    "src/libfdt/libfdt_internal.h": "1a393d0d8fa164df925d05e4cdbbe6c557f3d468",
+    "src/kboot.h": "eab6308adb147ec3bd64f870023f1209a4b7d565",
+    "src/heapblock.c": "96d09d0f6cd04851d5e7a5e73695d9125e52407c",
+    "src/stage1_proxy.c": "117b7d72906a72aa9fda416214d3c6c66146bf49",
+    "src/stage1_proxy.h": "a014bef9bd4ee7e8e953ef9e1ae364d037a9cd42"
+  }
+}

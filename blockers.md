@@ -1,5 +1,29 @@
 # Blockers
 
+## Current — 31AI closes diagnostic delivery; native state and restore gates remain
+
+Autonomous inline baseline Aura contains the exact tested kernel/DT/RAM root,
+so an initial screen-observed CPU diagnostic need not depend on unqualified
+USB proxy/gadget support. Build, layout, real public parser controls, exact
+collector relink, two-file integrity and Apple format inspection PASS offline.
+These checks do not establish physical entry, executable permissions or SMP.
+
+The human is running Macintosh HD. The fixed reader identifies the selected
+lab IMG4 payload as EXACT_31AF by full byte comparison; boot021 is not currently
+selected. Its final IM4P context field remains opaque and wrapper match UNKNOWN.
+Exact raw boot021 restoration, lab CTRR state and
+default remain unreconciled. Direct Mach-O enrollment changes lab CTRR per
+public source; restoring raw bytes alone is insufficient. A complete guarded
+lab restoration procedure and separately authorized physical sequence remain
+required. Current firmware pairing is recognized but not runtime-qualified;
+no evidence here proves a firmware update mandatory or another Apple fix needed.
+
+M1 independently reviews 31AI next, without restart/device/camera access. Full
+static libc public source/notice closure remains incomplete; compiled files
+stay local to the same user, no public Release. Native 18-core work, performance,
+efficiency, GPU/N1/NVMe and camera controls remain NOT RUN. No host changes.
+Evidence and exact next gates: native/boot/attempt31ai/README.md.
+
 ### Latest M1 — 31AH offline review PASS; no restart ready, November 13
 
 M1 reviewed ba3687c: 41 source pins, 114 fresh host-safe methods and actual

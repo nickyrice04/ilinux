@@ -1,0 +1,36 @@
+{
+  "schema": "ilinux-direct31ai-inline-candidate-v1",
+  "target": {
+    "model": "Mac17,6",
+    "board": "j716c",
+    "chip_id": "0x6050"
+  },
+  "delivery": "SAME_USER_LOCAL_HANDOFF_ONLY",
+  "native_authorized": false,
+  "restart_ready": false,
+  "firmware_change_authorized": false,
+  "public_binary_release": false,
+  "glibc_public_source_closure": "INCOMPLETE",
+  "upstream_aura_commit": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+  "baseline_aura_raw_sha256": "2d272aa2b5551d27458826e88b3bdaf86684e2b4fff3aad4876de7021a1caaf3",
+  "diagnostic_manifest_sha256": "c16b42246fc82fa1a6db1d6530bce4a034d303cb9413d7aa9cad9c1feb7bcd30",
+  "source_sha256": {
+    "kernel/experiments/direct31ah/aura/pad_boot.py": "0f3b95bc1075c35916963c30c37c4eee6642c2cae95f264ac4744154c84b6acf",
+    "kernel/experiments/direct31ah/linux/check_config.py": "2ef1cfcf2e65726e9ac559329544c8ec6c700fb4a77c7d6ac86804eec507ceb6",
+    "kernel/experiments/direct31ah/linux/check_dtb.py": "24b4068bf4be5a5680e4ddab710a2e1fa68ec49794bb12e0b615abec7fcae5c9",
+    "kernel/experiments/direct31ah/linux/fdt_read.py": "97e897fdf12de19afa26a2303b0bcc7377cc28d1078577930f275eca1b590935",
+    "kernel/experiments/direct31ai/diagnostic/package.py": "953f8091e8571067dcac1dd8c1fcba384d9937537209c017c44dec0371e3f47b",
+    "kernel/experiments/direct31ai/diagnostic/policy.py": "376b0f903144817548566869b2be242e354098be1678dd103c729024c5d654c2",
+    "kernel/experiments/direct31ai/transport/extend_exec.py": "8cb2b0acc68655ed7293fa8e4662a6650177c4d14ce5642c275c7fcbb29f5da8",
+    "kernel/experiments/direct31ai/transport/inline.py": "774b3ea5561a6b907974932a939282514b756997e1b8645a4b91407a4601c9f0"
+  },
+  "candidate": {
+    "filename": "aura-inline-128m.macho.gz",
+    "compressed_bytes": 15984123,
+    "compressed_sha256": "5fef4ae42dff069e442c22963a548c86ee41347b76d6ec3cab52003860ad1bc1",
+    "expanded_bytes": 153190400,
+    "expanded_sha256": "0d43feada6d758fcfea2ce78b4fd9f21ae4b7a7450ab06ba9e8c6c06b834dc4d",
+    "raw_inline_bytes": 19639230,
+    "raw_inline_sha256": "5f351f1f4841f0d5fcee2d16a5eed71ed6be46c95b16ba92e0295440a725f8cc"
+  }
+}

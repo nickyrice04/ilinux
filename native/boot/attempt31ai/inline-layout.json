@@ -1,0 +1,31 @@
+{
+  "schema": "ilinux-direct31ai-inline-window-v1",
+  "scope": "OFFLINE_LAYOUT_ONLY",
+  "baseline_aura_sha256": "2d272aa2b5551d27458826e88b3bdaf86684e2b4fff3aad4876de7021a1caaf3",
+  "aura_runtime_bytes": 3997696,
+  "temporary_inline_bytes": 15641534,
+  "raw_inline_bytes": 19639230,
+  "raw_inline_sha256": "5f351f1f4841f0d5fcee2d16a5eed71ed6be46c95b16ba92e0295440a725f8cc",
+  "payload": {
+    "dtb_offset": 0,
+    "kernel_gzip_offset": 112959,
+    "initrd_envelope_gzip_offset": 15272781,
+    "config_offset": 15641384,
+    "payload_bytes": 15641534,
+    "payload_sha256": "27a9dc66228e4c2a7cc53ccd85707e13678dbe682ea568a8d1cd20d1e7e88071"
+  },
+  "original_bytes": 19759104,
+  "original_sha256": "a131022f2cd4912cea144f044581ec736118a229e4dc4d4d9b45fad7ee7cd6ac",
+  "output_bytes": 153190400,
+  "padding_bytes": 133431296,
+  "window_bytes": 134217728,
+  "aura_slot_bytes": 16777216,
+  "expected_kcbz": 0,
+  "expected_kcrz": 153141248,
+  "wrapper_identity_verified": true,
+  "native_tested": false,
+  "enrolled": false,
+  "restart_ready": false,
+  "output_sha256": "0d43feada6d758fcfea2ce78b4fd9f21ae4b7a7450ab06ba9e8c6c06b834dc4d",
+  "actual_output_revalidated": true
+}

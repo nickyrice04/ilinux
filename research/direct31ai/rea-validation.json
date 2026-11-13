@@ -1,0 +1,75 @@
+{
+  "schema": "ilinux-direct31ai-rea-audit-v1",
+  "status": "CONSISTENCY_PASS",
+  "provider": "REA 6.4.0 / Ghidra 12.1.4",
+  "independent_decoder": "Apple LLVM version 21.0.0",
+  "raw_sha256": "b4822fc8902c3693ee590c544011603423a75291edd60afd31210d068a4ca120",
+  "analysis_elf_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+  "retained_generic_loader_version": "mBoot-18000.161.10",
+  "analysis_base_is_not_live_address": true,
+  "queries": [
+    {
+      "query_label_is_hypothesis": true,
+      "query": "entry-profile-preparation",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "evidence_sha256": "740dbabb23af9e0b8f91eec798893147e98e63a6bb293e209e837728f1cb9c1b",
+      "run_receipt_sha256": "a42b03f01b2a3c6d8f70a6d068b990cf101720b6b291a26a578681516b4d0359",
+      "exit": 0,
+      "seconds": 66.992585615,
+      "body_anchors": [
+        {
+          "start": "0x100c1ae51d8",
+          "end_exclusive": "0x100c1ae5278",
+          "bytes": 160,
+          "source_offset": 266712,
+          "range_sha256": "febada7d48184d139f0b65b2dc29cb5b55abaa3d60bc66f362769fcbe46cf08a"
+        }
+      ],
+      "instruction_words": 40,
+      "llvm_word_mismatches": 0,
+      "pcode_operations": 70,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "removed_block_warnings": 0,
+      "bad_instruction_warnings": 0,
+      "direct_architectural_state_instruction_count": 0,
+      "whole_function_semantic_qualification": false,
+      "pseudocode_used_as_linux_source": false
+    },
+    {
+      "query_label_is_hypothesis": true,
+      "query": "ordinary-kernel-entry-dispatch",
+      "input_sha256": "f89169923c17be829c6b31c3c04c5695d06d42a42cea7390f61214202400dcee",
+      "evidence_sha256": "00b8a8b651af60798f58d25cb4c75cb8d4960702dc70e66fe6464a3b7e849b04",
+      "run_receipt_sha256": "aaceb03eca55b62c8a5a80ba7c4abd51edd04240dc57bb67fc02f04d5e1517c7",
+      "exit": 0,
+      "seconds": 66.24005215599999,
+      "body_anchors": [
+        {
+          "start": "0x100c1ae5334",
+          "end_exclusive": "0x100c1ae53b8",
+          "bytes": 132,
+          "source_offset": 267060,
+          "range_sha256": "39ccd5d31324d8e1927737f1ce5e5e3a75285f151c85ed903354aa11c560e2e4"
+        }
+      ],
+      "instruction_words": 33,
+      "llvm_word_mismatches": 0,
+      "pcode_operations": 14,
+      "pcode_outside_body": 0,
+      "pcode_truncated": false,
+      "removed_block_warnings": 0,
+      "bad_instruction_warnings": 0,
+      "direct_architectural_state_instruction_count": 0,
+      "whole_function_semantic_qualification": false,
+      "pseudocode_used_as_linux_source": false
+    }
+  ],
+  "instruction_words": 73,
+  "pcode_outside_body": 0,
+  "native_entry_el_qualified": false,
+  "selected_lab_firmware_qualified": false,
+  "firmware_update_required_proven": false,
+  "native_ready": false,
+  "apple_code_or_bytes_published": false
+}

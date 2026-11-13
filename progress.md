@@ -1,5 +1,48 @@
 # Progress Log
 
+## 2026-11-13 · 31AI autonomous diagnostic and selected-object framing
+
+Integrated M1's 31AH PASS/hold recommendations. Built one self-contained normal
+Mach-O containing unchanged baseline Aura plus the exact prior-tested 16 KiB
+kernel, sanitized eighteen-node J716c DT and minimal diagnostic root. It avoids
+assuming a working M1 proxy upload or Linux gadget. Original builder/extender
+separate the 3,997,696-byte runtime from temporary input; DT remains before the
+pool and compressed kernel/initrd are heap-staged before pool reuse. Final
+153,190,400-byte object passes all fourteen trusted read-only Apple properties,
+including kcbz=0. Runtime guards/native protected ranges are not qualified.
+
+Fresh suites, eight executed public C parser controls and exact two-file intake
+PASS; consolidated counts and scopes are in
+native/boot/attempt31ai/offline-validation.json. Real parser/profile/tinf/libfdt
+are exercised, hardware hooks mocked and final main cleanup excluded. Fresh
+collector object relinks byte-identically to the tested executable; normal and
+intentional-stall controls PASS. Local-user 19-file diagnostic archive supplies
+the formerly missing exact root, Image and relink material. Transfer one folder
+with two compressed files totaling about 32 MB; no public binary Release and no
+claim of full public glibc source/notice closure.
+
+Two fresh REA 6.4/Ghidra 12.1.4 queries pass 73-word independent LLVM/mapping
+checks, zero mismatches. They do not establish entry EL, actual lab firmware
+path or secondary execution. Original/lab version plists remain 26.6.2/25G83;
+global Boot ROM 20457.1.29 and OS loader 18000.161.10 are separate observations.
+Public source recognizes the current loader, not proof of runtime compatibility.
+
+Human confirms current Macintosh HD desktop. First lab-object check UNKNOWN;
+bounded follow-up located an optional IM4P context field the reader omitted.
+Fixed reader then reports EXACT_31AF by full comparison to the hash-verified
+reference, not file size. Boot021 is not currently selected. The 445,430-byte
+IMG4 contains a 442,368-byte payload and opaque context-[0] 300-byte field;
+wrapper authenticity/effective policy remain unverified. No decompression,
+decryption or private contents returned. Boot021 rollback/default unconfirmed.
+
+First build job corrected missing distro-specific license directories; it had
+synced and idled before an external stop 143, not a clean shutdown. Corrected VM
+relink/parser run ended with guest poweroff 0; limited storage-error scan 0 is
+not full filesystem verification. REA VM stopped, prior job restored identically,
+both locks released. Native entry/SMP/performance/camera/install/restore NOT RUN.
+No host firmware/security/volume/default change. M1 offline instructions:
+tools/m1n1-client/attempt31ai-instructions.md; preserve its unfinished notes.
+
 ### Latest M1 — 31AH offline review PASS; no restart ready, November 13
 
 M1 reviewed ba3687c: 41 source pins, 114 fresh host-safe methods and actual

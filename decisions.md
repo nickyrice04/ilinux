@@ -4845,3 +4845,29 @@ restoration/default still require human reconciliation. No new authorization,
 physical action, camera activation or firmware update follows. Preserve original
 dirty status notes via isolated review; frozen sources/consumed receipts untouched.
 Report: native/boot/attempt31ah-m1-offline-2026-11-13.md and JSON.
+
+## 2026-11-13 · 31AI self-contained baseline before native authorization
+
+**Decision:** choose unchanged baseline Aura with exact inline kernel/DT/root
+for independent M1 offline review. Avoid an unqualified proxy/USB gadget
+prerequisite for the first physical CPU diagnostic. Keep a later bounded,
+human-observed RAM test conditional on current-state reconciliation, complete
+lab CTRR/object/default restoration and a separate concrete authorization.
+
+**Evidence:** final real Mach-O passes trusted read-only Apple inspection;
+eight compiled public parser/policy controls pass with hardware hooks mocked.
+Original strict builders/readers/refusal suites and actual two-file review
+pass; fresh collector object relinks byte-identically and passes normal/stall
+controls. REA's two new queries have 73 independently consistent words, but no
+entry-EL or transitive behavior qualification. Version recognition is not
+runtime pairing proof and a version difference alone does not require an update.
+
+**Consequences:** publish original source, hashes, sanitized evidence and M1
+instructions. Transfer two compressed files locally, no public binary Release
+while full libc source/notice closure is incomplete. Human Macintosh HD return
+does not prove lab rollback/default. Fixed reader identifies EXACT_31AF in the
+current lab payload, with opaque optional IM4P metadata; boot021 is not currently
+selected. Keep exact payload comparison separate from wrapper authenticity,
+policy and completed restoration. No new
+security-mode loop, firmware/settings/install/camera/restart action. Preserve
+old frozen files and consumed authorizations; keep M1's unfinished work intact.

@@ -1,0 +1,24 @@
+{
+  "schema": "ilinux-direct31ai-apple-readonly-inspection-v1",
+  "exit": 0,
+  "candidate_sha256": "0d43feada6d758fcfea2ce78b4fd9f21ae4b7a7450ab06ba9e8c6c06b834dc4d",
+  "derived_properties": {
+    "kclo": 18446741874803752960,
+    "kcep": 18446741874803820544,
+    "kcrf": 0,
+    "kcrz": 153141248,
+    "kcsf": 0,
+    "kcsz": 0,
+    "kcxf": 0,
+    "kcxz": 0,
+    "kcbf": 0,
+    "kcbz": 0,
+    "kcwf": 153141248,
+    "kcwz": 32768,
+    "kclf": 153174016,
+    "kclz": 16384
+  },
+  "kcev_present": false,
+  "read_only": true,
+  "native_acceptance_proven": false
+}

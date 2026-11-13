@@ -1,0 +1,120 @@
+{
+  "schema": "ilinux-direct31ai-offline-validation-v1",
+  "date_local": "2026-11-13",
+  "status": "PASS_OFFLINE_ONLY",
+  "scope": "Self-contained unchanged-baseline Aura with exact prior-tested diagnostic kernel/DT/root; original tooling and local-user handoff",
+  "unit_methods": {
+    "inline_transport": 37,
+    "macho_extender": 22,
+    "strict_diagnostic_package": 40,
+    "restoration_state_model": 40,
+    "candidate_intake": 33,
+    "core_total": 172,
+    "selected_object_metadata": 49,
+    "total": 221
+  },
+  "selected_object_suite": {
+    "methods": 49,
+    "status": "PASS",
+    "supported_final_opaque_context_a0": true,
+    "opaque_metadata_semantics_qualified": false,
+    "native_flags_unchanged": true
+  },
+  "frozen_reader_regression_methods": 34,
+  "public_parser_controls": {
+    "case_count": 8,
+    "status": "PASS",
+    "record": "native/boot/attempt31ai/public-parser-controls.json",
+    "physical_hardware_mocked": true,
+    "final_main_cleanup_executed": false
+  },
+  "collector_relink": {
+    "status": "PASS",
+    "byte_equal_to_prior_tested_executable": true,
+    "normal_selftest": "PASS",
+    "intentional_timeout_selftest": "PASS",
+    "record": "native/boot/attempt31ai/relink.json"
+  },
+  "prior_kernel_runtime": {
+    "record": "native/boot/attempt31ah/offline-validation.json",
+    "reused_exact_kernel_dt_root": true,
+    "scope": "GENERIC_FOUR_VCPU_VM_ONLY",
+    "fresh_native_test": false
+  },
+  "candidate_intake": {
+    "status": "OFFLINE_CANDIDATE_INTEGRITY_PASS",
+    "record": "native/boot/attempt31ai/candidate-review.json",
+    "candidate_bytes": 153190400,
+    "transport_bytes": 15984123,
+    "diagnostic_archive_bytes": 16031305,
+    "diagnostic_archive_members": 19,
+    "same_user_copy_hashes_verified": true
+  },
+  "apple_readonly_inspection": {
+    "exit": 0,
+    "derived_properties": 14,
+    "kcbz": 0,
+    "record": "native/boot/attempt31ai/apple-inspection.json",
+    "native_acceptance_proven": false
+  },
+  "rea": {
+    "fresh_queries": 2,
+    "instruction_words": 73,
+    "independent_word_mismatches": 0,
+    "status": "CONSISTENCY_PASS",
+    "record": "research/direct31ai/rea-validation.json",
+    "entry_el_qualified": false,
+    "whole_function_semantics_qualified": false,
+    "apple_bytes_or_pseudocode_published": false
+  },
+  "vm_lifecycle": {
+    "rea": "STOPPED_NORMAL_EXIT",
+    "first_build": "JOB_FAILED_MISSING_PACKAGE_LICENSE_DIRECTORIES_THEN_SYNCED_IDLE_EXTERNAL_STOP",
+    "first_build_exit": 143,
+    "correction": "LABELLED_COMMON_SPDX_TEXTS_AND_ACTUAL_GCC_EXCEPTION_WITH_INCOMPLETE_PUBLIC_CLOSURE",
+    "final_build": "STOPPED_GRACEFUL_GUEST_POWEROFF",
+    "final_build_exit": 0,
+    "guest_storage_log_scan": {
+      "pattern_hits": 0,
+      "full_filesystem_verification": false
+    },
+    "all_vms_stopped": true,
+    "both_workspace_locks_released": true,
+    "prior_rea_job_restored_byte_identical": true
+  },
+  "current_object": {
+    "record": "native/boot/attempt31ai/selected-object-observation.json",
+    "match": "UNKNOWN_OPAQUE_WRAPPER",
+    "optional_im4p_context_field_identified": true,
+    "rollback_verified": false,
+    "default_selection_verified": false,
+    "contained_payload_relation": "EXACT_31AF",
+    "boot021_currently_selected": false
+  },
+  "prior_frozen_31ah_inventory": {
+    "entries": 41,
+    "status": "PASS_UNCHANGED"
+  },
+  "native_tested": false,
+  "native_authorized": false,
+  "restart_ready": false,
+  "firmware_change_authorized": false,
+  "host_settings_changed": false,
+  "public_binary_release": false,
+  "public_glibc_source_closure": "INCOMPLETE",
+  "not_run": [
+    "physical entry/EL/CTXR",
+    "18 physical CPU workers",
+    "CPU/memory performance or efficiency",
+    "GPU/N1/NVMe/Linux gadget",
+    "camera/recording",
+    "Recovery/install/policy/default changes",
+    "exact prior rollback verification"
+  ],
+  "independent_reviews": {
+    "transport_and_documentation_scope": "PASS",
+    "opaque_selected_object_reader_49_methods": "PASS",
+    "diagnostic_and_candidate_intake": "PASS",
+    "review_does_not_authorize_native": true
+  }
+}

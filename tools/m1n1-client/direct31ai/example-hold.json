@@ -1,0 +1,22 @@
+{
+  "schema": "ilinux-direct31ai-restoration-model-v1",
+  "origin": "SYNTHETIC",
+  "plan": {
+    "target": {"model": "Mac17,6", "board": "j716c", "chip_id": "0x6050"},
+    "candidate_sha256": "unknown",
+    "rollback_sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "rollback_bytes": 3932160,
+    "native_deadline_ms": 90000,
+    "capture_mode": "screen_only",
+    "legacy31af_reconciled": "unknown",
+    "global_firmware_identity_reviewed": "unknown",
+    "paired_iboot_identity_reviewed": "unknown",
+    "firmware_pair_qualified": "unknown",
+    "candidate_and_ram_root_bound": "unknown",
+    "rollback_policy_recipe_reviewed": "unknown",
+    "paired_recovery_and_original_return_reviewed": "unknown",
+    "ram_only_diagnostic_reviewed": "unknown",
+    "external_stop_reviewed": "unknown"
+  },
+  "events": []
+}

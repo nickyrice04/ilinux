@@ -99,6 +99,32 @@ that reads it with `-I`.
 
 ## Current status (update on every milestone)
 
+### Latest — 31AI self-contained diagnostic; M1 offline review, November 13
+
+31AH M1 review PASS is incorporated. New 31AI selects unchanged baseline Aura
+with inline exact Image/DT/RAM root, avoiding the unqualified USB upload path.
+Runtime remains 3,997,696 bytes; 19,639,230-byte raw input is checked separately
+from the 128 MiB pool. Final Mach-O passes read-only Apple inspection; eight
+real public parser controls pass with hardware hooks mocked. Original tools,
+refusal suites, exact collector relink and local two-file intake pass. Native
+entry/EL/CTXR/18 cores/performance are NOT RUN; no restart is ready.
+
+Two fresh REA queries/73 independently checked words have zero mismatches but
+do not qualify entry semantics or actual paired lab firmware. Current OS loader
+18000.161.10 differs from global Boot ROM 20457.1.29; public source recognizes
+the former. No required firmware update or Apple-only blocker is established.
+Human confirms Macintosh HD return. Fixed metadata reader identifies the lab
+payload as EXACT_31AF; boot021 is not currently selected. Opaque IM4P properties
+keep wrapper match UNKNOWN, not corrupt outer framing. Raw rollback/default and
+effective policy remain unconfirmed. No repeated security-mode check.
+
+M1 follows tools/m1n1-client/attempt31ai-instructions.md in an isolated clean
+review checkout, preserving its five unfinished status edits. Two compressed
+files are transferred locally in build/ilinux-31ai-review/; no public binary
+Release. Full glibc source/notice closure remains incomplete. All VMs stopped,
+locks released. No host install, firmware, settings, volume, policy, default,
+camera or boot action. Preserve frozen older artifacts and consumed approvals.
+
 ### Latest M1 — 31AH offline review PASS; no restart ready, November 13
 
 M1 reviewed ba3687c: 41 source pins, 114 fresh host-safe methods and actual

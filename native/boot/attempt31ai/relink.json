@@ -1,0 +1,56 @@
+{
+  "schema": "ilinux-direct31ai-relink-v1",
+  "status": "PASS",
+  "scope": "GENERIC_LINUX_RELINK_ONLY",
+  "collector_source_sha256": "53b75d25c01b03a1c92832df91c51b875f03616847cbc674cce1c539cc729761",
+  "object_sha256": "bb9264914a6ba75d01686ce9527968b310847ff186388c9944f7e87b1880568b",
+  "tested_executable_sha256": "c84152b6413e5dd60fdedd9f317035f61b57686c241ca10fd2bb1219a15c2c66",
+  "relinked_executable_sha256": "c84152b6413e5dd60fdedd9f317035f61b57686c241ca10fd2bb1219a15c2c66",
+  "byte_equal_to_tested_executable": true,
+  "normal_selftest": "PASS",
+  "intentional_timeout_selftest": "PASS",
+  "runtime_packages": {
+    "glibc": "glibc 2.43+r22+g8362e8ce10b2-2",
+    "gcc-libs": "gcc-libs 16.1.1+r12+g301eb08fa2c5-1"
+  },
+  "license_files": {
+    "common/LGPL-2.1-or-later.txt": {
+      "bytes": 26001,
+      "sha256": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2"
+    },
+    "common/GPL-3.0-or-later.txt": {
+      "bytes": 34674,
+      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
+    },
+    "common/GPL-2.0-only.txt": {
+      "bytes": 17337,
+      "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3"
+    },
+    "gcc/RUNTIME.LIBRARY.EXCEPTION": {
+      "bytes": 3324,
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+    }
+  },
+  "notice_provenance": {
+    "common/LGPL-2.1-or-later.txt": {
+      "kind": "COMMON_SPDX_LICENSE_TEXT",
+      "source": "/usr/share/licenses/spdx/LGPL-2.1-or-later.txt"
+    },
+    "common/GPL-3.0-or-later.txt": {
+      "kind": "COMMON_SPDX_LICENSE_TEXT",
+      "source": "/usr/share/licenses/spdx/GPL-3.0-or-later.txt"
+    },
+    "common/GPL-2.0-only.txt": {
+      "kind": "COMMON_SPDX_LICENSE_TEXT",
+      "source": "/usr/share/licenses/spdx/GPL-2.0-only.txt"
+    },
+    "gcc/RUNTIME.LIBRARY.EXCEPTION": {
+      "kind": "INSTALLED_GCC_PACKAGE_EXCEPTION",
+      "source": "/usr/share/licenses/gcc/RUNTIME.LIBRARY.EXCEPTION"
+    }
+  },
+  "runtime_specific_copyright_notices_complete": false,
+  "public_libc_source_closure": "INCOMPLETE",
+  "public_binary_release": false,
+  "native_tested": false
+}

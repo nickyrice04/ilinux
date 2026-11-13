@@ -1,0 +1,40 @@
+{
+  "schema": "ilinux-direct31ai-firmware-identity-v1",
+  "date_local": "2026-11-13",
+  "read_only": true,
+  "observed_original_os": {
+    "version": "26.6.2",
+    "build": "25G83"
+  },
+  "observed_lab_os": {
+    "version": "26.6.2",
+    "build": "25G83"
+  },
+  "current_host_system_profiler": {
+    "model": "Mac17,6",
+    "chip": "Apple M5 Max",
+    "global_boot_rom_version": "20457.1.29",
+    "running_os_loader_version": "18000.161.10"
+  },
+  "retained_generic_analysis_loader": {
+    "version": "mBoot-18000.161.10",
+    "version_matches_running_os_loader": true,
+    "live_selected_lab_image_identity_established": false
+  },
+  "pinned_aura_source": {
+    "commit": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+    "source_recognizes_current_os_loader": true,
+    "j716c_propertyless_dt_rank": 1,
+    "rank_checked_with_real_public_parser": true
+  },
+  "external_j716c_report": {
+    "macos_version": "27.2.1",
+    "build": "26B131",
+    "mboot": "20457.41.3",
+    "physical_result_reproduced_here": false
+  },
+  "selected_lab_firmware_pair_qualified": false,
+  "firmware_update_required_proven": false,
+  "native_ready": false,
+  "host_firmware_security_volume_or_default_changes": false
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "ilinux-direct31ai-selected-object-observation-v1",
+  "date_local": "2026-11-13",
+  "source": "Human-pasted output of the frozen M5-only root diagnostic",
+  "observed_output": {
+    "match": "UNKNOWN",
+    "read_only": true
+  },
+  "human_current_boot": "Macintosh HD",
+  "human_current_boot_confirmed": true,
+  "selected_object_identity": "EXACT_31AF_CONTAINED_PAYLOAD",
+  "exact_boot021_rollback": "UNCONFIRMED",
+  "default_startup_disk_independently_checked": false,
+  "no_corruption_or_security_inference": true,
+  "writes_performed": false,
+  "native_ready": false,
+  "framing_followups": [
+    {
+      "source": "Human-pasted metadata-only reader output",
+      "file_bytes": 445430,
+      "match": "UNKNOWN",
+      "framing": "MALFORMED_OR_UNSUPPORTED_DER",
+      "decompressed": false,
+      "decrypted": false
+    },
+    {
+      "source": "Human-pasted bounded shallow diagnostic output",
+      "file_bytes": 445430,
+      "match": "UNKNOWN",
+      "failure_stage": "COMPRESSION_METADATA",
+      "root_magic_is_img4": true,
+      "im4p_magic_matches": true,
+      "framed_extent_bytes": 445430,
+      "outer_trailer": "NONE",
+      "im4p_payload_bytes": 442368,
+      "im4p_final_context_tag": 0,
+      "im4p_final_context_bytes": 300,
+      "outer_context_tag": 0,
+      "outer_context_bytes": 2680,
+      "direct_header_canonicality_and_bounds": true,
+      "manifest_or_payload_descended": false,
+      "exact_known_payload_comparison": "PENDING",
+      "payload_identity_inferred_from_size": false
+    }
+  ],
+  "parser_limitation_identified": "Unsupported final opaque IM4P context field; not evidence of malformed outer framing",
+  "final_human_observation": {
+    "read_only": true,
+    "match": "UNKNOWN",
+    "framing": "IMG4",
+    "file_bytes": 445430,
+    "object_bytes": 445430,
+    "outer_trailer": "NONE",
+    "payload_bytes": 442368,
+    "payload_type": "OTHER",
+    "compression": "NONE_RECOGNIZED_BINARY",
+    "payload_relation": "EXACT_31AF",
+    "context_fields": [
+      "MANIFEST_A0"
+    ],
+    "im4p_extra": "OPAQUE_CONTEXT_A0",
+    "opaque_extra_semantics_verified": false,
+    "declared_uncompressed_bytes": null,
+    "der_diagnostic": null,
+    "decompressed": false,
+    "decrypted": false,
+    "configured_file_only": true,
+    "default_selection_verified": false,
+    "restoration_verified": false,
+    "bootability_verified": false
+  },
+  "whole_wrapper_identity": "UNQUALIFIED_OPAQUE_METADATA",
+  "boot021_currently_selected": false,
+  "payload_identity_from_byte_comparison": true,
+  "no_further_metadata_query_needed_for_payload_identity": true
+}
