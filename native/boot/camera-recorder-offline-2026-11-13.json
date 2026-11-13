@@ -1,0 +1,60 @@
+{
+  "schema": "ilinux-camera-offline-build-v1",
+  "date": "2026-11-13",
+  "status": "COMPILE_AND_OFFLINE_TEST_PASS_HARDWARE_NOT_RUN",
+  "sources": {
+    "tools/m1n1-client/camera/CapturePolicy.swift": "c7ea80bf6211d80852c5e7bc551482d077f6d0c1da1d764e4ba99ace784fa74a",
+    "tools/m1n1-client/camera/README.md": "69e9b9d13cd56bbbb55746cccb701d8758f1e290d490f3670e44174802da5ee3",
+    "tools/m1n1-client/camera/build_recorder.py": "3b26cc1ac98620a33444028fe4512cb7cd720bd5a4e946fabbe178f484a3060f",
+    "tools/m1n1-client/camera/framing-target.html": "a3f144d868eb30b9d51b5d488ce6177853233bf69deb5a920a4dcfdc3620d10d",
+    "tools/m1n1-client/camera/main.swift": "51c16a24955711c0d003c35117d0849294ecf92fa9790ec770e5d8d2700e34d0",
+    "tools/m1n1-client/camera/test_launcher.py": "60cdfbd81058fbe55a56c1b40318d3dbcad7339fada59c22efee6749a0c63bf0",
+    "tools/m1n1-client/camera/test_policy.swift": "c359cc89df9d3a2225492903543285953da4626f54f2c0daddcfa80fd95c391c"
+  },
+  "build": {
+    "swift": "Apple Swift 6.2, Swift 5 language mode",
+    "dependencies": "existing AppKit/AVFoundation and Command Line Tools",
+    "compile": "PASS",
+    "adhoc_signature_verification": "PASS",
+    "app_launched": false
+  },
+  "policy_checks": [
+    "missing/stale frame approval refused",
+    "duration outside 1..300 seconds refused",
+    "duplicate recording refused",
+    "early stop and late callback refused",
+    "failure reset consumes frame approval",
+    "closing preview blocks reuse"
+  ],
+  "output_boundary_tests": {
+    "methods": 3,
+    "status": "PASS",
+    "cases": [
+      "symlink escape",
+      "path traversal",
+      "prior media preservation"
+    ]
+  },
+  "bounds": {
+    "camera_max_seconds": 300,
+    "camera_max_file_bytes": 268435456,
+    "quality_test_seconds": 10,
+    "native_deadline_changed": false,
+    "hard_realtime_guarantee": false
+  },
+  "audio": {
+    "input_requested": false,
+    "microphone_usage_key": false,
+    "saved_track_check_implemented": true,
+    "actual_saved_media": "NOT RUN"
+  },
+  "camera_opened": false,
+  "preview_framing": "NOT RUN",
+  "recording": "NOT RUN",
+  "native_checks": "NOT RUN",
+  "mac_restart": false,
+  "host_install": false,
+  "settings_changed": false,
+  "frozen31ah41_31ai46_pins": "PASS",
+  "original_dirty_notes_and_consumed_receipts_preserved": true
+}

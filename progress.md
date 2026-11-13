@@ -1,5 +1,26 @@
 # Progress Log
 
+### Latest M1 — camera-only recorder built offline, November 13
+
+Human requested a script with a fresh angle/framing check before each capture.
+Original tools/m1n1-client/camera/ now builds a local AppKit/AVFoundation app:
+manual selected-camera preview, fresh framing checkbox per clip, video-only input,
+post-save audio-track inspection, bounded 10/60/180/300-second camera clips and
+256 MiB file cap, new private output directories and fixed-label clock events.
+The longer camera clock does not change the independent native stop deadline.
+No boot/USB/proxy/network/Recovery commands; no automatic retry or re-arming.
+
+Final Swift6.2 build/local signature verification, pure state checks and three
+output-boundary tests PASS. Initial unavailable codec API was replaced with
+macOS session-preset encoding before the final successful build. Existing
+31AH41/31AI46 pins and original dirty notes verify unchanged; consumed receipts
+intact. App not launched; camera/permissions/framing/audio hardware/recording
+NOT RUN. No restart, host install or settings change. Native31AI remains HOLD.
+Next is a separately human-started ten-second silent quality check in macOS,
+using the preview and optional harmless framing target, before future boot use.
+Source/use: tools/m1n1-client/camera/README.md; receipt:
+native/boot/camera-recorder-offline-2026-11-13.json.
+
 ### Latest M1 — 31AI offline review PASS; native hold, November 13
 
 Reviewed 8f53ebf in the clean isolated checkout. Frozen 31AH41/new31AI46 pins,

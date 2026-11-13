@@ -4891,3 +4891,19 @@ postcondition adapter. A separate ten-second silent external-camera readability
 test was proposed to the human; camera not opened in this review. Preserve
 original dirty notes, frozen inventories and consumed receipts; native NOT RUN.
 Evidence: native/boot/attempt31ai-m1-offline-2026-11-13.md and JSON.
+
+## 2026-11-13 · Separate camera capture from native boot control
+
+**Decision:** implement the human-requested local preview/recorder as original
+AppKit/AVFoundation source, with a fresh frame check for each clip and no boot
+integration. Camera bounds may cover preparation plus observation but never
+extend the independent physical M5 stop deadline. No microphone input or network
+upload; inspect actual saved audio/video tracks before reporting a recorded clip.
+
+**Evidence:** final local compile/signature, pure policy and three output-path
+checks PASS; camera and actual recording NOT RUN. Native31AI/restoration gates
+remain unchanged. Preserve media under ignored build, frozen inventories and
+consumed receipts. Next is one human-started ten-second macOS-only readability
+check; camera movement still needs human review, not an inferred automatic pass.
+Source: tools/m1n1-client/camera/; receipt:
+native/boot/camera-recorder-offline-2026-11-13.json.
