@@ -1,5 +1,22 @@
 # Coordination: agents working in this workspace
 
+### Latest M1 — camera calibration pending, November 13
+
+Inspected the human-made local clip: 1920x1080, nominal 30 fps, 9.066 seconds,
+one video track and zero audio tracks. The receipt records a capture-error flag
+without its cause; ten full seconds are not claimed. Framing is too wide to
+qualify small boot text. Media and derived frames remain private and ignored.
+
+Added preview-only 1/1.5/2/3x zoom and pan. Final build PASS; actual 2x preview
+disables framing approval, returning to 1x leaves approval unchecked. Camera
+closed afterward; no new clip started by the agent. Zoom adds no captured detail.
+Synthetic target includes corner labels and small text. Fixed-page server local
+byte comparison and unknown-path 404 PASS; M5 reachability failed, cause Unknown.
+Server stopped; target selected in Finder for human AirDrop/local-browser use.
+Final positioning and text readability remain PENDING. Native31AI HOLD; no restart,
+USB/proxy, Recovery, security or volume action. Frozen 31AH/31AI pins unchanged.
+
+
 Created 2026-10-13. Read this together with `AGENTS.md`, `progress.md`,
 `blockers.md` and `decisions.md` before starting work. If this file and an
 older plan disagree, this file wins for ownership and order of work.

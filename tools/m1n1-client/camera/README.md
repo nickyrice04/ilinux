@@ -34,6 +34,10 @@ open -n "build/camera-recorder/iLinux Camera.app"
    glare. The preview preserves the whole frame with letterboxing, not cropping.
    Use harmless small text while both Macs remain in macOS. Optional calibration
    page: `framing-target.html`, opened on the M5 by the human.
+   Preview inspection has 1.5×/2×/3× enlargement and drag-to-pan; it enlarges
+   captured pixels and cannot recover missing detail. The recording stays full
+   frame. Any zoom change clears approval; return to 1× and recheck all corners
+   before recording. Physical camera distance/focus still determine text detail.
 3. Tick **Frame checked NOW** only after checking the smallest center/bottom text
    and excluding private information. The app cannot detect camera movement or
    automatically certify sharpness/angle; recheck if it moves after approval.
@@ -52,6 +56,21 @@ actual duration and audio/video track counts go in the receipt. `audio_tracks=0`
 and one video track are required for LOCAL_VIDEO_RECORDED. That label means
 saved media passed these checks, not that text quality passed human inspection.
 Actual dropped frames and synchronization uncertainty remain unmeasured.
+
+The target page includes 6/8/12/16/24 CSS-pixel synthetic challenges and corner
+markers. Browser zoom/display scaling affect physical glyph size; passing a
+page sample is not proof that every native console font will be readable.
+For a short local-network target session, serve only that fixed page:
+
+```sh
+python3 -I tools/m1n1-client/camera/serve_target.py --bind <M1-LAN-address>
+```
+
+It prints an ephemeral URL, serves no directories/media/other files, logs no
+requests and expires in fifteen minutes (maximum thirty with `--seconds 1800`).
+Open that URL on M5 at 100% browser zoom/full screen; no native boot is needed.
+Stop the server with Control-C after calibration. The LAN address is local-use
+information and must not enter public test reports.
 
 Each clip gets a new private `build/camera-capture/session-*/` directory with
 `camera.mov`, `events.jsonl` and `receipt.json`. Media is never overwritten,

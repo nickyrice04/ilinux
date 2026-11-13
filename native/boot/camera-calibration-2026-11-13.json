@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-13",
+  "scope": "camera calibration only",
+  "observed_clip": {
+    "width": 1920,
+    "height": 1080,
+    "nominal_fps": 30,
+    "duration_seconds": 9.066,
+    "audio_tracks": 0,
+    "video_tracks": 1,
+    "capture_error_present": true,
+    "error_cause": "Unknown"
+  },
+  "build": "PASS",
+  "preview_zoom_gate": "PASS actual UI",
+  "readability": "PENDING",
+  "m5_http_reachability": "FAILED cause Unknown",
+  "server": "STOPPED",
+  "native": "NOT RUN; 31AI HOLD",
+  "frozen_source_pins": "31AH 41 and 31AI 46 PASS",
+  "media": "private ignored; not published"
+}

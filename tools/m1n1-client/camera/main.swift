@@ -5,14 +5,28 @@ import Darwin
 
 final class Preview: NSView {
     let video = AVCaptureVideoPreviewLayer()
+    var zoom: CGFloat = 1 { didSet { pan = .zero; needsLayout = true } }
+    var pan = CGPoint.zero
+    var dragPoint = CGPoint.zero
     override init(frame: NSRect) {
         super.init(frame: frame)
-        wantsLayer = true; layer?.backgroundColor = NSColor.black.cgColor
+        wantsLayer = true; layer?.backgroundColor = NSColor.black.cgColor; layer?.masksToBounds = true
         video.videoGravity = .resizeAspect // Keep all four camera-frame edges.
         layer?.addSublayer(video)
     }
     required init?(coder: NSCoder) { fatalError("init(coder:) unavailable") }
-    override func layout() { super.layout(); video.frame = bounds }
+    override func layout() {
+        super.layout()
+        video.bounds = bounds; video.position = CGPoint(x: bounds.midX + pan.x, y: bounds.midY + pan.y)
+        video.setAffineTransform(CGAffineTransform(scaleX: zoom, y: zoom))
+    }
+    override func mouseDown(with event: NSEvent) { dragPoint = event.locationInWindow }
+    override func mouseDragged(with event: NSEvent) {
+        guard zoom > 1 else { return }
+        let point = event.locationInWindow
+        pan.x += point.x - dragPoint.x; pan.y += point.y - dragPoint.y
+        dragPoint = point; needsLayout = true
+    }
 }
 
 final class CameraApp: NSObject, NSApplicationDelegate, AVCaptureFileOutputRecordingDelegate {
@@ -20,6 +34,7 @@ final class CameraApp: NSObject, NSApplicationDelegate, AVCaptureFileOutputRecor
     let preview = Preview(frame: .zero)
     let cameras = NSPopUpButton()
     let duration = NSPopUpButton()
+    let inspectionZoom = NSPopUpButton()
     let startPreview = NSButton(title: "Start preview", target: nil, action: nil)
     let approval = NSButton(checkboxWithTitle: "Frame checked NOW: all corners and bottom text visible, sharp, no private information", target: nil, action: nil)
     let record = NSButton(title: "Record", target: nil, action: nil)
@@ -40,6 +55,9 @@ final class CameraApp: NSObject, NSApplicationDelegate, AVCaptureFileOutputRecor
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         umask(0o077)
+        let menu = NSMenu(); let item = NSMenuItem(); let appMenu = NSMenu()
+        appMenu.addItem(withTitle: "Quit iLinux Camera", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        item.submenu = appMenu; menu.addItem(item); NSApp.mainMenu = menu
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 1060, height: 790),
                           styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
         window.title = "iLinux camera — local video only"
@@ -47,7 +65,10 @@ final class CameraApp: NSObject, NSApplicationDelegate, AVCaptureFileOutputRecor
         heading.font = .systemFont(ofSize: 15, weight: .semibold)
         let controls = NSStackView(views: [cameras, startPreview, duration, record, stop])
         controls.orientation = .horizontal; controls.spacing = 12
-        let stack = NSStackView(views: [heading, preview, controls, approval, status])
+        let inspectLabel = NSTextField(labelWithString: "Inspect text (preview only; drag to pan):")
+        let inspectControls = NSStackView(views: [inspectLabel, inspectionZoom])
+        inspectControls.orientation = .horizontal; inspectControls.spacing = 12
+        let stack = NSStackView(views: [heading, preview, controls, inspectControls, approval, status])
         stack.orientation = .vertical; stack.alignment = .leading; stack.spacing = 12
         stack.translatesAutoresizingMaskIntoConstraints = false
         window.contentView!.addSubview(stack)
@@ -61,6 +82,8 @@ final class CameraApp: NSObject, NSApplicationDelegate, AVCaptureFileOutputRecor
             status.widthAnchor.constraint(equalTo: stack.widthAnchor)
         ])
         duration.addItems(withTitles: ["10 seconds — quality check", "60 seconds", "180 seconds — boot capture", "300 seconds — camera maximum"])
+        inspectionZoom.addItems(withTitles: ["1× full frame — required to approve", "1.5× inspect", "2× inspect", "3× inspect"])
+        inspectionZoom.target = self; inspectionZoom.action = #selector(zoomChanged)
         startPreview.target = self; startPreview.action = #selector(beginPreview)
         approval.target = self; approval.action = #selector(approve)
         record.target = self; record.action = #selector(beginRecording)
@@ -79,16 +102,25 @@ final class CameraApp: NSObject, NSApplicationDelegate, AVCaptureFileOutputRecor
         let idle = policy.state == .idle
         cameras.isEnabled = idle; startPreview.isEnabled = idle && !devices.isEmpty
         duration.isEnabled = idle || policy.state == .preview
-        approval.isEnabled = policy.state == .preview
+        inspectionZoom.isEnabled = policy.state == .preview
+        approval.isEnabled = policy.state == .preview && preview.zoom == 1
         if !approval.isEnabled { approval.state = .off }
         record.isEnabled = policy.state == .preview && policy.frameApproved
         stop.isEnabled = !idle && policy.state != .preparing && policy.state != .finishing
     }
     @objc func cameraChanged() { approval.state = .off; policy.approveFrame(false); updateControls() }
-    @objc func approve() { policy.approveFrame(approval.state == .on); updateControls() }
+    @objc func approve() { policy.approveFrame(approval.state == .on && preview.zoom == 1); updateControls() }
+    @objc func zoomChanged() {
+        preview.zoom = [CGFloat(1), 1.5, 2, 3][inspectionZoom.indexOfSelectedItem]
+        approval.state = .off; policy.approveFrame(false); updateControls()
+        status.stringValue = preview.zoom == 1
+            ? "Full frame restored. Recheck all four corners and bottom text, then approve."
+            : "INSPECTION ONLY — enlarges existing pixels; does not add detail or crop the recording. Drag to inspect text; return to 1× before framing approval."
+    }
 
     @objc func beginPreview() {
         guard cameras.indexOfSelectedItem >= 0, policy.prepare() else { return }
+        inspectionZoom.selectItem(at: 0); preview.zoom = 1
         updateControls(); status.stringValue = "Opening selected camera preview; no recording."
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized: configurePreview()
@@ -171,7 +203,7 @@ final class CameraApp: NSObject, NSApplicationDelegate, AVCaptureFileOutputRecor
     }
     @objc func beginRecording() {
         let seconds = [10, 60, 180, 300][duration.indexOfSelectedItem]
-        guard session.isRunning, session.inputs.count == 1,
+        guard preview.zoom == 1, session.isRunning, session.inputs.count == 1,
               session.inputs.allSatisfy({ ($0 as? AVCaptureDeviceInput)?.device.hasMediaType(.video) == true }),
               movie.connections.allSatisfy({ !$0.isEnabled || !$0.inputPorts.contains(where: { $0.mediaType == .audio }) }),
               policy.start(seconds: seconds) else { return }
