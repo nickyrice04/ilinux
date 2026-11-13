@@ -5024,3 +5024,15 @@ zero alone as a postcondition. Reuse old integrity and camera evidence. M5 owns
 completion of the real Recovery readback and actual-31AF transaction/restoration,
 then readable repinned diagnostics. No restart ready or physical action follows.
 Evidence: native/boot/attempt31aj-m1-component-review-2026-11-13.md and JSON.
+
+## 2026-11-13 — Hold 31AJ complete-kit closure on receiving-machine reproduction
+
+M1 reviewed d7a93a9. All four delivered artifacts, actual intake/materialization,
+247 focused methods and 9263 display sanitizer assertions PASS. Both inert blocks
+and HTML match M5's published hashes; shell syntax PASS. The source inventory's
+line56 requires an ignored untracked producer executable absent on M1, so actual
+page preparation refuses. Do not bypass the gate, edit frozen evidence or copy
+an extra executable to force success. M5 publishes a portable inventory and new
+preparation receipt; reuse unchanged checks and reverify exact closure/pages.
+Original notes, old pins and delivery preserved. All physical operations NOT RUN;
+native HOLD. Evidence: native/boot/attempt31aj-kit-m1-review-2026-11-13.md and JSON.

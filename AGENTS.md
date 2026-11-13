@@ -1,5 +1,18 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M1 — 31AJ kit review: one closure blocker, November 13
+
+Reviewed `d7a93a9`. Delivery folder present; all four size/hash pins and actual
+15-member intake/materialization PASS. 247 focused methods and 9263 display
+ASan/UBSan assertions PASS; inert blocks/HTML match M5, both bash-n PASS.
+Kit inventory has 56 matches and one missing ignored producer-only test executable
+at source-sha256.txt:56. Actual page preparation REFUSED exit2; no production page
+or server. M5 must publish portable closure and refresh preparation evidence.
+Old 41/46/7 closures and original notes/delivery unchanged. No staging, camera,
+restart, Recovery/install/native/live/restoration/default action; native HOLD.
+Review: `native/boot/attempt31aj-kit-m1-review-2026-11-13.md` and JSON.
+
+
 ### Latest M5 — complete 31AJ kit ready for M1 offline review, November 13
 
 M1 component PASS at 56f06ab incorporated. New native reader handles the actual
