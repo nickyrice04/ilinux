@@ -4923,3 +4923,10 @@ byte comparison and unknown-path 404 PASS; M5 reachability failed, cause Unknown
 Server stopped; target selected in Finder for human AirDrop/local-browser use.
 Final positioning and text readability remain PENDING. Native31AI HOLD; no restart,
 USB/proxy, Recovery, security or volume action. Frozen 31AH/31AI pins unchanged.
+
+### Follow-up camera preview
+
+Follow-up live preview: the synthetic target is visible on M5, but text remains
+visibly blurred and the display occupies about half the frame height. Readability
+is NOT QUALIFIED. Requested closer, centered positioning and full-screen target.
+Preview remains open for adjustment; framing unchecked and recording OFF.

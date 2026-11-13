@@ -18,5 +18,13 @@
   "server": "STOPPED",
   "native": "NOT RUN; 31AI HOLD",
   "frozen_source_pins": "31AH 41 and 31AI 46 PASS",
-  "media": "private ignored; not published"
+  "media": "private ignored; not published",
+  "follow_up_preview": {
+    "target_visible": true,
+    "text": "blurred; NOT QUALIFIED",
+    "display_height_fraction": "approximately one half",
+    "recording": "OFF",
+    "framing_approval": false,
+    "next": "human move closer and center camera; full-screen target; recheck"
+  }
 }

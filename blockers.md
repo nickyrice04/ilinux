@@ -2,6 +2,11 @@
 
 ### Latest M1 — camera calibration pending, November 13
 
+Follow-up live preview: the synthetic target is visible on M5, but text remains
+visibly blurred and the display occupies about half the frame height. Readability
+is NOT QUALIFIED. Requested closer, centered positioning and full-screen target.
+Preview remains open for adjustment; framing unchecked and recording OFF.
+
 Inspected the human-made local clip: 1920x1080, nominal 30 fps, 9.066 seconds,
 one video track and zero audio tracks. The receipt records a capture-error flag
 without its cause; ten full seconds are not claimed. Framing is too wide to
