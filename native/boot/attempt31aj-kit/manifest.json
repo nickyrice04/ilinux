@@ -1,0 +1,120 @@
+{
+  "candidate": {
+    "bytes": 15985266,
+    "expanded_bytes": 153190400,
+    "expanded_sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+    "filename": "aura-31aj-inline.macho.gz",
+    "raw_bytes": 19640271,
+    "raw_sha256": "974d8c62392a78c4222f28e0120201085205cb13bedf558837c097ea40c8ef7c",
+    "sha256": "d7f47c6193adffe63b48bda569838dcc2687919acae2211809228fc6c9269e78"
+  },
+  "delivery": "SAME_USER_LOCAL_HANDOFF_ONLY",
+  "libc_source_closure": "INCOMPLETE",
+  "native_authorized": false,
+  "public_binary_release": false,
+  "readback": {
+    "bytes": 89312,
+    "filename": "readback31aj",
+    "sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5"
+  },
+  "restart_ready": false,
+  "runtime": {
+    "bytes": 16031216,
+    "filename": "runtime-31aj.tar.gz",
+    "members": {
+      "diagnostic/init": {
+        "bytes": 869672,
+        "sha256": "87f17fb823db2691435cabd4414682f9b9750b124522980e6a2171e21b7205d9"
+      },
+      "diagnostic/initramfs.cpio.gz": {
+        "bytes": 370825,
+        "sha256": "4e70a6fa634cb3199cee515b38fde0a8be321ce492213f5f532685702d2d4e2f"
+      },
+      "evidence/build.json": {
+        "bytes": 3540,
+        "sha256": "07f9802f9bc6ff455290b2e690be97cea5cb0e8edd23c197b4063be127b72dda"
+      },
+      "evidence/vm.json": {
+        "bytes": 1037,
+        "sha256": "0fc908004a331f65c504b6a55ea2b87e30a5bd7ed1f39af6270d5d2203c959f7"
+      },
+      "licenses/common/GPL-2.0-only.txt": {
+        "bytes": 17337,
+        "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3"
+      },
+      "licenses/common/GPL-3.0-or-later.txt": {
+        "bytes": 34674,
+        "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
+      },
+      "licenses/common/LGPL-2.1-or-later.txt": {
+        "bytes": 26001,
+        "sha256": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2"
+      },
+      "licenses/gcc/RUNTIME.LIBRARY.EXCEPTION": {
+        "bytes": 3324,
+        "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+      },
+      "linux/Image": {
+        "bytes": 43694592,
+        "sha256": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f"
+      },
+      "linux/diagnostic.dtb": {
+        "bytes": 112959,
+        "sha256": "2c93df25dcbbc6939360ca84b76e21246ca30b6b7e2d0189afb0b1978332cb51"
+      },
+      "linux/kernel.config": {
+        "bytes": 284541,
+        "sha256": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8"
+      },
+      "notices/local-use.txt": {
+        "bytes": 461,
+        "sha256": "935868a06867a5cbbe092a97da521d87324db822a512c8f95a57419464932fc9"
+      },
+      "relink/diag-init.o": {
+        "bytes": 37800,
+        "sha256": "7df9c53294e6f6db7eb5ff713f1f48685c328d91d9961fe42aba6763b0bab02b"
+      },
+      "source/diag_init.c": {
+        "bytes": 20775,
+        "sha256": "ad67b328d53193f826d7bda6c257c573c2540fd3a8e184f308db37ae40292d5f"
+      },
+      "source/readable.h": {
+        "bytes": 4043,
+        "sha256": "3a78cc8ddb610ae9820d12b2dd58d258182545a435888d1cbc02611c2f9abfc6"
+      }
+    },
+    "sha256": "ea3be518e1961c91f902d1a311df59c2af2805980152a46307fa9f8df674299b"
+  },
+  "schema": "ilinux31aj-kit-v1",
+  "sources": {
+    "kernel/experiments/direct31ah/aura/pad_boot.py": "0f3b95bc1075c35916963c30c37c4eee6642c2cae95f264ac4744154c84b6acf",
+    "kernel/experiments/direct31ah/linux/check_config.py": "2ef1cfcf2e65726e9ac559329544c8ec6c700fb4a77c7d6ac86804eec507ceb6",
+    "kernel/experiments/direct31ah/linux/check_dtb.py": "24b4068bf4be5a5680e4ddab710a2e1fa68ec49794bb12e0b615abec7fcae5c9",
+    "kernel/experiments/direct31ah/linux/fdt_read.py": "97e897fdf12de19afa26a2303b0bcc7377cc28d1078577930f275eca1b590935",
+    "kernel/experiments/direct31ai/transport/extend_exec.py": "8cb2b0acc68655ed7293fa8e4662a6650177c4d14ce5642c275c7fcbb29f5da8",
+    "kernel/experiments/direct31ai/transport/inline.py": "774b3ea5561a6b907974932a939282514b756997e1b8645a4b91407a4601c9f0",
+    "kernel/experiments/direct31aj/diag_init.c": "ad67b328d53193f826d7bda6c257c573c2540fd3a8e184f308db37ae40292d5f",
+    "kernel/experiments/direct31aj/readable.h": "3a78cc8ddb610ae9820d12b2dd58d258182545a435888d1cbc02611c2f9abfc6",
+    "native/boot/attempt31aj-kit/recovery-profile.json": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+    "tools/boot-object31ag/read_selected.py": "0728fae7dd30fd2ef14dacdf9e25028614f239c254c8fc40c3f8866fde32dc47",
+    "tools/boot-object31aj-native/build.py": "3af27f377f85de29086bf5453570a3805e4163222f10c7e878d07e777cbff97f",
+    "tools/boot-object31aj-native/candidate-definition.json": "080d126b8f39af6de64b3e853053936409c7ce99c6d0c854bcadd742ec749f83",
+    "tools/boot-object31aj-native/core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+    "tools/boot-object31aj-native/json.c": "a06a21280546f02c3ec330b346b95c9a55872e3712198f18bdee7e8e9bdb240f",
+    "tools/boot-object31aj-native/main.c": "8133b1d73e484ad0d22b2e2447275e612cb889ec0390d4f87510e7d89d427de2",
+    "tools/boot-object31aj-native/reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+    "tools/boot-object31aj-native/state.c": "31e97a75f1fe5dbd1dfe3585a15822c56ee86156d2a3cc52c39e304f1dd4d08a",
+    "tools/m1n1-client/direct31aj-kit/materialize.py": "6637ce697d11b3aeb36a3e8d0ffba400a0ff2fc6273fd511123da97210bb80d3",
+    "tools/m1n1-client/direct31aj-kit/package.py": "ee1ac2b52ba45ff4dcf2dce7c5915b937cdf303ee630094746b87f338df2e8a1",
+    "tools/recovery31aj/model.py": "05a36e1432d062349f1a19487563908e22ea22a3d6b95e3e92ab17ea68a5aa7c",
+    "tools/recovery31aj/prepare.py": "24a4aa62f569813e29a4db5d9c1eccc83536092fa207f53e3639058331bdb48a",
+    "tools/recovery31aj/profile.py": "3fa5fb251bee45bbf8fa352589c5fa0aba1acc64e073e318cbee175f90f68827",
+    "tools/recovery31aj/render.py": "cf291cbd705d5e5449da8cb9d9337a7321d1e2016d3d19ef9ed418170378be5a",
+    "tools/recovery31aj/stage_lab.py": "e32428e6522643671c6a6e5b6edc791650ed91f02cdb782bc628327b26f93dad"
+  },
+  "target": {
+    "board": "j716c",
+    "chip_id": "0x6050",
+    "model": "Mac17,6"
+  }
+}

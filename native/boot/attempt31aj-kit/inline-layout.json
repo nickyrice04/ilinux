@@ -1,0 +1,30 @@
+{
+  "aura_runtime_bytes": 3997696,
+  "aura_slot_bytes": 16777216,
+  "baseline_aura_sha256": "2d272aa2b5551d27458826e88b3bdaf86684e2b4fff3aad4876de7021a1caaf3",
+  "enrolled": false,
+  "expected_kcbz": 0,
+  "expected_kcrz": 153141248,
+  "native_tested": false,
+  "original_bytes": 19759104,
+  "original_sha256": "4ce18a13794a078cd940aec34ccbe7dbde3b7d0aa68117f9e6d9033153a6d133",
+  "output_bytes": 153190400,
+  "output_sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+  "padding_bytes": 133431296,
+  "payload": {
+    "config_offset": 15642425,
+    "dtb_offset": 0,
+    "initrd_envelope_gzip_offset": 15272781,
+    "kernel_gzip_offset": 112959,
+    "payload_bytes": 15642575,
+    "payload_sha256": "ac418815de952ffed2f7e577b05360e161bc791ba68e78b7853758da082e46df"
+  },
+  "raw_inline_bytes": 19640271,
+  "raw_inline_sha256": "974d8c62392a78c4222f28e0120201085205cb13bedf558837c097ea40c8ef7c",
+  "restart_ready": false,
+  "schema": "ilinux-direct31ai-inline-window-v1",
+  "scope": "OFFLINE_LAYOUT_ONLY",
+  "temporary_inline_bytes": 15642575,
+  "window_bytes": 134217728,
+  "wrapper_identity_verified": true
+}

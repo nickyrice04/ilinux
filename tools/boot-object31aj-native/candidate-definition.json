@@ -1,0 +1,7 @@
+{
+  "schema": "ilinux31aj-compiled-candidate-v1",
+  "target": {"model": "Mac17,6", "board": "j716c", "chip_id": "0x6050"},
+  "bytes": 153190400,
+  "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+  "publication_authorizes_writes": false
+}

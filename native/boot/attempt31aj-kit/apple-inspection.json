@@ -1,0 +1,22 @@
+{
+  "schema": "ilinux31aj-apple-readonly-v1",
+  "exit": 0,
+  "candidate_sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+  "properties": {
+    "kclo": 18446741874803752960,
+    "kcep": 18446741874803820544,
+    "kcrf": 0,
+    "kcrz": 153141248,
+    "kcsf": 0,
+    "kcsz": 0,
+    "kcxf": 0,
+    "kcxz": 0,
+    "kcbf": 0,
+    "kcbz": 0,
+    "kcwf": 153141248,
+    "kcwz": 32768,
+    "kclf": 153174016,
+    "kclz": 16384
+  },
+  "native_acceptance_proven": false
+}

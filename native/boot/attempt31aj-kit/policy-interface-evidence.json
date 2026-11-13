@@ -1,0 +1,33 @@
+{
+  "apple_code_or_bytes_published": false,
+  "arm64e_slice_sha256": "80c9ae8b7536d0ee923a034198d201fe8773d71eea7b9f4bcb3244a2a2a630c2",
+  "boolean_display_forms": [
+    "ABSENT",
+    "INTEGER_ONE"
+  ],
+  "confirmed_reference": "0x10000520c",
+  "current_policy_read": false,
+  "date": "2026-11-13",
+  "field_format_source": "STATIC_GENERIC_DISPLAY_CONSTANTS_NOT_A_LIVE_POLICY",
+  "generic_utility_sha256": "dcd2d73fbeb18d6ce3092605c151790d4a01ac9caeeb99fa23a4098e9559f545",
+  "independent_checked_words": 4,
+  "input_bytes": 147168,
+  "local_policy_values_exported": false,
+  "metadata_display_formats": {
+    "ronh": "SINGLE_96_HEX",
+    "rpnh": "EXACTLY_TWO_ORDERED_ROWS_EACH_96_HEX",
+    "spih": "SINGLE_96_HEX",
+    "stng": "SINGLE_UNSIGNED_DECIMAL_UINT64"
+  },
+  "metadata_presence_source": "USER_SUPPLIED_VALUE_FREE_PROBE",
+  "operation": "REA_XREFS",
+  "paired_recovery_runtime_verified": false,
+  "query_target": "0x100011303",
+  "references": [
+    "https://support.apple.com/en-gb/guide/security/secc745a0845/web"
+  ],
+  "schema": "ilinux31aj-policy-display-evidence-v1",
+  "sip0_display": "UNPREFIXED_HEX_INTEGER",
+  "whole_function_semantics_qualified": false,
+  "word_mismatches": 0
+}

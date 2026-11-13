@@ -1,0 +1,100 @@
+{
+  "files": {
+    "diag-init": {
+      "bytes": 869672,
+      "sha256": "87f17fb823db2691435cabd4414682f9b9750b124522980e6a2171e21b7205d9"
+    },
+    "diag-init.o": {
+      "bytes": 37800,
+      "sha256": "7df9c53294e6f6db7eb5ff713f1f48685c328d91d9961fe42aba6763b0bab02b"
+    },
+    "display-test.txt": {
+      "bytes": 6759,
+      "sha256": "91b09ce255ca8b39b0d1c2ac2a7c8d7935bef790040fc76df89455249256d8c8"
+    },
+    "initramfs-direct31aj.cpio.gz": {
+      "bytes": 370825,
+      "sha256": "4e70a6fa634cb3199cee515b38fde0a8be321ce492213f5f532685702d2d4e2f"
+    },
+    "panel-tests.json": {
+      "bytes": 124,
+      "sha256": "aff7e534c243ddea65df9b6ed24d848881bb7b3d690f1b206d0a30091ea038dc"
+    },
+    "source-binding.json": {
+      "bytes": 329,
+      "sha256": "184eddd91d795a1ca9bb0d11303b7be336d68af71a40fc587ed0c7c9730130fd"
+    }
+  },
+  "font_framebuffer_backlight_access": false,
+  "intentional_timeout_selftest": "PASS",
+  "kernel_rebuilt": false,
+  "license_files": {
+    "common/GPL-2.0-only.txt": {
+      "bytes": 17337,
+      "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3"
+    },
+    "common/GPL-3.0-or-later.txt": {
+      "bytes": 34674,
+      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
+    },
+    "common/LGPL-2.1-or-later.txt": {
+      "bytes": 26001,
+      "sha256": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2"
+    },
+    "gcc/RUNTIME.LIBRARY.EXCEPTION": {
+      "bytes": 3324,
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+    }
+  },
+  "native_readability_qualified": false,
+  "native_tested": false,
+  "new_sleeps": 0,
+  "normal_selftest": "PASS",
+  "notice_provenance": {
+    "common/GPL-2.0-only.txt": {
+      "kind": "COMMON_SPDX_LICENSE_TEXT",
+      "source": "/usr/share/licenses/spdx/GPL-2.0-only.txt"
+    },
+    "common/GPL-3.0-or-later.txt": {
+      "kind": "COMMON_SPDX_LICENSE_TEXT",
+      "source": "/usr/share/licenses/spdx/GPL-3.0-or-later.txt"
+    },
+    "common/LGPL-2.1-or-later.txt": {
+      "kind": "COMMON_SPDX_LICENSE_TEXT",
+      "source": "/usr/share/licenses/spdx/LGPL-2.1-or-later.txt"
+    },
+    "gcc/RUNTIME.LIBRARY.EXCEPTION": {
+      "kind": "INSTALLED_GCC_PACKAGE_EXCEPTION",
+      "source": "/usr/share/licenses/gcc/RUNTIME.LIBRARY.EXCEPTION"
+    }
+  },
+  "panel_columns": 78,
+  "panel_period_existing_loop_ticks": 5,
+  "panel_rows": 35,
+  "public_binary_release": false,
+  "public_libc_source_closure": "INCOMPLETE",
+  "record_scope": "SANITIZED_ORIGINAL_BUILD_FACTS",
+  "relink_equal_to_direct_build": true,
+  "restart_ready": false,
+  "runtime_packages": {
+    "gcc-libs": "gcc-libs 16.1.1+r12+g301eb08fa2c5-1",
+    "glibc": "glibc 2.43+r22+g8362e8ce10b2-2"
+  },
+  "runtime_specific_copyright_notices_complete": false,
+  "schema": "ilinux31aj-readable-build-v1",
+  "scope": "ISOLATED_GENERIC_LINUX_BUILD_AND_SELFTEST",
+  "source_binding": {
+    "files": {
+      "diag_init.c": "ad67b328d53193f826d7bda6c257c573c2540fd3a8e184f308db37ae40292d5f",
+      "readable.h": "3a78cc8ddb610ae9820d12b2dd58d258182545a435888d1cbc02611c2f9abfc6",
+      "test_readable.c": "4d61d0dd145fcf59e4ec2e08d5133d80cc0dbdbcf00277b58465abb676f6d849"
+    },
+    "schema": "ilinux31aj-readable-source-v1"
+  },
+  "status": "PASS",
+  "unchanged_kernel_inputs": {
+    "Image": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f",
+    "kernel.config": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8",
+    "t6050-j716c-diagnostic.dtb": "2c93df25dcbbc6939360ca84b76e21246ca30b6b7e2d0189afb0b1978332cb51"
+  }
+}

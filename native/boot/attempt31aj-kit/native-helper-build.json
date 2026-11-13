@@ -1,0 +1,44 @@
+{
+  "abi": "arm64",
+  "binary_bytes": 89312,
+  "binary_sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5",
+  "candidate_configured": true,
+  "candidate_definition": {
+    "bytes": 153190400,
+    "publication_authorizes_writes": false,
+    "schema": "ilinux31aj-compiled-candidate-v1",
+    "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+    "target": {
+      "board": "j716c",
+      "chip_id": "0x6050",
+      "model": "Mac17,6"
+    }
+  },
+  "host_changes": false,
+  "live_run": false,
+  "minimum_macos": "13.0",
+  "native_ready": false,
+  "original_sources": {
+    "tools/boot-object31aj-native/build.py": "3af27f377f85de29086bf5453570a3805e4163222f10c7e878d07e777cbff97f",
+    "tools/boot-object31aj-native/core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+    "tools/boot-object31aj-native/json.c": "a06a21280546f02c3ec330b346b95c9a55872e3712198f18bdee7e8e9bdb240f",
+    "tools/boot-object31aj-native/main.c": "8133b1d73e484ad0d22b2e2447275e612cb889ec0390d4f87510e7d89d427de2",
+    "tools/boot-object31aj-native/reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+    "tools/boot-object31aj-native/state.c": "31e97a75f1fe5dbd1dfe3585a15822c56ee86156d2a3cc52c39e304f1dd4d08a"
+  },
+  "record_scope": "SANITIZED_ORIGINAL_BUILD_FACTS",
+  "recovery_run": false,
+  "schema": "ilinux31aj-native-build-v1",
+  "system_sdk_only": true,
+  "toolchain": {
+    "compiler": "Apple clang 21.0.0 (clang-2100.4.1.1)",
+    "language": "C11",
+    "optimization": "O2",
+    "sdk": "27.2",
+    "warnings": [
+      "Wall",
+      "Wextra",
+      "Werror"
+    ]
+  }
+}

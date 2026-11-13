@@ -1,0 +1,30 @@
+{
+  "files": {
+    "candidate": {
+      "bytes": 153190400,
+      "name": "candidate.macho",
+      "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+    },
+    "helper": {
+      "bytes": 89312,
+      "name": "ilinux31aj-reader",
+      "sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5"
+    },
+    "rollback": {
+      "bytes": 3932160,
+      "name": "m1n1-boot021.bin",
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    }
+  },
+  "final_payload": "BOOT021",
+  "initial_payload": "31AF",
+  "native_deadline_ms": 90000,
+  "publication_authorizes_writes": false,
+  "raw_policy_strategy": "ctrr_only",
+  "schema": "ilinux31aj-recovery-profile-v1",
+  "target": {
+    "board": "j716c",
+    "chip_id": "0x6050",
+    "model": "Mac17,6"
+  }
+}

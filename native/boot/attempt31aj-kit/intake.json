@@ -1,0 +1,18 @@
+{
+  "device_opened": false,
+  "embedded_root_verified": true,
+  "executed": false,
+  "extracted": false,
+  "files_verified": 4,
+  "generic_vm_seconds": 60.543060153,
+  "native_authorized": false,
+  "native_ready": false,
+  "public_binary_release": false,
+  "read_only": true,
+  "rollback_artifact_verified": true,
+  "runtime_members": 15,
+  "schema": "ilinux31aj-kit-review-v1",
+  "segments": 6,
+  "status": "OFFLINE_KIT_INTEGRITY_PASS",
+  "unchanged_kernel_verified": true
+}

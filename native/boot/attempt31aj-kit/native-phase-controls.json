@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-13",
+  "fixture_flow": {
+    "artifact_identity": {
+      "candidate": "EXACT_CANDIDATE",
+      "initial": "EXACT_31AF",
+      "rollback": "EXACT_BOOT021"
+    },
+    "boot_settings_changed": false,
+    "cf_fixture_snapshots": 8,
+    "checks": [
+      "initial-admission:synthetic-pass",
+      "initial:synthetic-pass",
+      "candidate:synthetic-pass",
+      "raw-policy:synthetic-pass",
+      "before-restore:synthetic-pass",
+      "restored:expected-refusal",
+      "restored:synthetic-pass",
+      "candidate:expected-refusal",
+      "initial:expected-refusal",
+      "candidate:expected-refusal",
+      "before-restore:synthetic-pass",
+      "restored:expected-refusal",
+      "before-restore:synthetic-pass",
+      "restored:expected-refusal",
+      "candidate:expected-refusal"
+    ],
+    "live_recovery_invoked": false,
+    "native_ready": false,
+    "own_actual_payloads_verified": true,
+    "policy_source": "SYNTHETIC_CF_FIXTURES",
+    "schema": "ilinux31aj-real-c-fixture-flow-v1",
+    "synthetic_metadata_only": true,
+    "system_rng_invoked": false
+  },
+  "fixture_flow_source_sha256": "53b11982300f27545514450cea89975fedd3a8bdb02faa64a25cc24c65f0aac1",
+  "independent_c_unit_suite": {
+    "apple_keys_accessed": false,
+    "asan_ubsan": true,
+    "command": "python3 -I tools/boot-object31aj-native/test_native.py --sanitize -v",
+    "elapsed_seconds": 3.063,
+    "live_queries_run": false,
+    "methods": 64,
+    "original_random_fixture_controls": true,
+    "result": "PASS"
+  },
+  "independent_source_review": {
+    "result": "NO_MATERIAL_ISSUE_FOUND",
+    "reviewed_boundaries": [
+      "nofollow bounded stable file reads",
+      "compiled candidate and helper self-profile binding",
+      "opaque strict DER and bounded complete LZFSE stream",
+      "internal APFS distinct roles and lab Data binding",
+      "Original Full and enabled CTRR",
+      "new original random key private stdout and fsync",
+      "private key ownership mode length link-count race checks",
+      "profile-role-vector-domain HMAC-SHA256 commitments",
+      "keyless admission distinct from key-bound initial baseline",
+      "strict synthetic scope and phase postconditions"
+    ],
+    "sources_sha256": {
+      "tools/boot-object31aj-native/build.py": "3af27f377f85de29086bf5453570a3805e4163222f10c7e878d07e777cbff97f",
+      "tools/boot-object31aj-native/core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+      "tools/boot-object31aj-native/json.c": "a06a21280546f02c3ec330b346b95c9a55872e3712198f18bdee7e8e9bdb240f",
+      "tools/boot-object31aj-native/main.c": "8133b1d73e484ad0d22b2e2447275e612cb889ec0390d4f87510e7d89d427de2",
+      "tools/boot-object31aj-native/reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+      "tools/boot-object31aj-native/state.c": "31e97a75f1fe5dbd1dfe3585a15822c56ee86156d2a3cc52c39e304f1dd4d08a"
+    }
+  },
+  "limitations": [
+    "All policy and volume metadata are synthetic CF fixtures; actual own artifact identity is separate.",
+    "Protected comparison scope is eight semantic fields, separate CTRR and approved rpnh vector/ronh/spih/stng commitments; no every-field or byte-for-byte LocalPolicy claim.",
+    "No production Recovery capability/snapshot/private-group invocation, live policy query, lab Data staging, boot mutation or native boot.",
+    "Real paired-Recovery admission and firmware entry remain untested."
+  ],
+  "native_ready": false,
+  "production_helper": {
+    "bytes": 89312,
+    "sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5"
+  },
+  "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+  "schema": "ilinux31aj-independent-native-phase-controls-v1",
+  "scope": "OFFLINE_ONLY",
+  "writes_authorized": false
+}

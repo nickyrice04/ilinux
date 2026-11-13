@@ -1,0 +1,258 @@
+{
+  "Image_sha256": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f",
+  "case_count": 8,
+  "cases": [
+    {
+      "case": "propertyless-dt-26_6_2",
+      "record": {
+        "boot_calls": 1,
+        "chosen_calls": 1,
+        "events": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "hardware_hooks_mocked": true,
+        "heap_bytes_reserved": 46508187,
+        "initrd_in_heap": true,
+        "kernel_in_heap": true,
+        "native_tested": false,
+        "no_carrier_payload_action": 0,
+        "payload_result": 0,
+        "prepare_calls": 1,
+        "profile_26_6_2": true,
+        "scope": "PINNED_PUBLIC_PAYLOAD_MOCK_ONLY",
+        "selected_fdt_rank": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "propertyless-dt-other-profile",
+      "record": {
+        "boot_calls": 1,
+        "chosen_calls": 1,
+        "events": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "hardware_hooks_mocked": true,
+        "heap_bytes_reserved": 46508187,
+        "initrd_in_heap": true,
+        "kernel_in_heap": true,
+        "native_tested": false,
+        "no_carrier_payload_action": 0,
+        "payload_result": 0,
+        "prepare_calls": 1,
+        "profile_26_6_2": false,
+        "scope": "PINNED_PUBLIC_PAYLOAD_MOCK_ONLY",
+        "selected_fdt_rank": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "prepare-refusal",
+      "record": {
+        "boot_calls": 0,
+        "chosen_calls": 1,
+        "events": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "hardware_hooks_mocked": true,
+        "heap_bytes_reserved": 46508187,
+        "initrd_in_heap": true,
+        "kernel_in_heap": true,
+        "native_tested": false,
+        "no_carrier_payload_action": 3,
+        "payload_result": -1,
+        "prepare_calls": 1,
+        "profile_26_6_2": true,
+        "scope": "PINNED_PUBLIC_PAYLOAD_MOCK_ONLY",
+        "selected_fdt_rank": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "boot-refusal",
+      "record": {
+        "boot_calls": 1,
+        "chosen_calls": 1,
+        "events": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "hardware_hooks_mocked": true,
+        "heap_bytes_reserved": 46508187,
+        "initrd_in_heap": true,
+        "kernel_in_heap": true,
+        "native_tested": false,
+        "no_carrier_payload_action": 3,
+        "payload_result": -1,
+        "prepare_calls": 1,
+        "profile_26_6_2": true,
+        "scope": "PINNED_PUBLIC_PAYLOAD_MOCK_ONLY",
+        "selected_fdt_rank": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "mitigation-timeout",
+      "record": {
+        "boot_calls": 0,
+        "chosen_calls": 0,
+        "events": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "hardware_hooks_mocked": true,
+        "heap_bytes_reserved": 46508187,
+        "initrd_in_heap": true,
+        "kernel_in_heap": true,
+        "native_tested": false,
+        "no_carrier_payload_action": 3,
+        "payload_result": -1,
+        "prepare_calls": 0,
+        "profile_26_6_2": true,
+        "scope": "PINNED_PUBLIC_PAYLOAD_MOCK_ONLY",
+        "selected_fdt_rank": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "kernel-gzip-crc-refusal",
+      "record": {
+        "boot_calls": 0,
+        "chosen_calls": 0,
+        "events": [
+          1,
+          3
+        ],
+        "hardware_hooks_mocked": true,
+        "heap_bytes_reserved": 0,
+        "initrd_in_heap": false,
+        "kernel_in_heap": false,
+        "native_tested": false,
+        "no_carrier_payload_action": 3,
+        "payload_result": -1,
+        "prepare_calls": 0,
+        "profile_26_6_2": true,
+        "scope": "PINNED_PUBLIC_PAYLOAD_MOCK_ONLY",
+        "selected_fdt_rank": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "wrong-board-dt-refusal",
+      "record": {
+        "boot_calls": 0,
+        "chosen_calls": 0,
+        "events": [
+          1,
+          2,
+          3
+        ],
+        "hardware_hooks_mocked": true,
+        "heap_bytes_reserved": 46508187,
+        "initrd_in_heap": true,
+        "kernel_in_heap": true,
+        "native_tested": false,
+        "no_carrier_payload_action": 3,
+        "payload_result": -1,
+        "prepare_calls": 0,
+        "profile_26_6_2": true,
+        "scope": "PINNED_PUBLIC_PAYLOAD_MOCK_ONLY",
+        "selected_fdt_rank": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "case": "retained-inline-initrd-refusal",
+      "record": {
+        "boot_calls": 0,
+        "chosen_calls": 1,
+        "events": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "hardware_hooks_mocked": true,
+        "heap_bytes_reserved": 44498944,
+        "initrd_in_heap": false,
+        "kernel_in_heap": true,
+        "native_tested": false,
+        "no_carrier_payload_action": 3,
+        "payload_result": -1,
+        "prepare_calls": 1,
+        "profile_26_6_2": true,
+        "scope": "PINNED_PUBLIC_PAYLOAD_MOCK_ONLY",
+        "selected_fdt_rank": 1
+      },
+      "status": "PASS"
+    }
+  ],
+  "dtb_sha256": "2c93df25dcbbc6939360ca84b76e21246ca30b6b7e2d0189afb0b1978332cb51",
+  "initramfs_sha256": "4e70a6fa634cb3199cee515b38fde0a8be321ce492213f5f532685702d2d4e2f",
+  "mocked_components": [
+    "firmware/ADT identity",
+    "heap backend",
+    "CPU setup",
+    "NVMe",
+    "runtime DT fixups",
+    "physical window/copy",
+    "kernel entry"
+  ],
+  "native_tested": false,
+  "payload_sha256": "ac418815de952ffed2f7e577b05360e161bc791ba68e78b7853758da082e46df",
+  "real_components": [
+    "payload scan/loaders/run sequence",
+    "tinf gzip/CRC",
+    "libfdt/profile ranking",
+    "native-payload selection without proxy carrier"
+  ],
+  "restart_ready": false,
+  "schema": "ilinux-direct31ai-public-parser-mock-v1",
+  "source_commit": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+  "source_pins_sha256": "dad70af6717cb2e981c8bacfff47847f3c65bd994a3c15f1f26ae2565e31fb4e",
+  "status": "PASS"
+}

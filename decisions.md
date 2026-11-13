@@ -1,5 +1,36 @@
 # Decisions Log
 
+### Latest M5 — complete 31AJ kit ready for M1 offline review, November 13
+
+M1 component PASS at 56f06ab incorporated. New native reader handles the actual
+value-free metadata shape: two ordered rpnh rows, ronh/spih/stng, with private
+per-transaction original-random-key commitments; unsupported fields still refuse.
+Both user's bputil reads succeeded; the earlier duplicate-row diagnostic was a
+parser limitation, not a security-mode failure. No further desktop policy query
+is needed now. REA/static display formats and original codec/phase controls are
+recorded without Apple bytes, raw policy or identifiers.
+
+New readable diagnostic/root and exact inline Aura candidate built. Exact Image
+and new root pass diskless four-vCPU RAM/timer/60.543s generic liveness; this is
+not native SMP/performance evidence. Candidate format/public-parser controls
+pass; native helper64 normal + 64 sanitizer/independent review and actual owned-byte
+CF phase flow pass. Complete separate install/restoration blocks use actual 31AF
+as initial and exact raw boot021 / disabled CTRR as intended final; no policy-reset
+-n, automatic restart or Startup Disk command. Supported-field preservation is
+not all LocalPolicy-byte preservation. Workspace four-file integration passes. Independent materializer15/stager25
+methods and fixed-page server review pass. Separate readonly text boxes support
+one-copy Recovery phases; source-pinned page preparation and socket-free page
+verification complete the handoff. No production LAN service is started.
+
+New handoff: tools/m1n1-client/attempt31aj-kit-instructions.md; details and sanitized
+receipts: native/boot/attempt31aj-kit/. Local same-user four-file delivery only,
+no public binary Release (glibc closure incomplete). Frozen 31AH41 / 31AI46 / 31AJ7
+preserved. M1 reviews changed software in clean isolated checkout; preserve its
+unfinished notes. No camera retest, restart, USB/proxy, live Recovery, staging,
+install, firmware, volume, policy or default change. Native HOLD: M1 complete-kit
+review and separate human authorization precede any physical step. Macintosh HD
+must remain Full Security; actual Recovery admission/entry/SMP remain NOT RUN.
+
 Format: date, decision, context, alternatives, consequences. Newest last.
 
 ## D-001 · 2026-10-11 · Workspace location

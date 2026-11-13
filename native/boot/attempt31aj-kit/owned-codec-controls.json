@@ -1,0 +1,108 @@
+{
+  "asan_ubsan_methods": 64,
+  "cases": {
+    "candidate_img4_lzfse": {
+      "exit": 0,
+      "result": {
+        "codec": "LZFSE",
+        "framing": "IMG4",
+        "native_ready": false,
+        "payload_exact": true,
+        "payload_identity": "CANDIDATE",
+        "raw_bytes": 153190400,
+        "read_only": true,
+        "restoration_verified": false,
+        "selection_verified": false,
+        "status": "OFFLINE_IDENTITY",
+        "wrapper_authentication_verified": false,
+        "writes_authorized": false
+      }
+    },
+    "candidate_lzfse": {
+      "exit": 0,
+      "result": {
+        "codec": "LZFSE",
+        "framing": "RAW",
+        "native_ready": false,
+        "payload_exact": true,
+        "payload_identity": "CANDIDATE",
+        "raw_bytes": 153190400,
+        "read_only": true,
+        "restoration_verified": false,
+        "selection_verified": false,
+        "status": "OFFLINE_IDENTITY",
+        "wrapper_authentication_verified": false,
+        "writes_authorized": false
+      }
+    },
+    "candidate_lzfse_with_trailer": {
+      "exit": 2,
+      "result": {
+        "native_ready": false,
+        "read_only": true,
+        "reason": "preflightRefused",
+        "status": "REFUSED",
+        "writes_authorized": false
+      }
+    },
+    "candidate_raw": {
+      "exit": 0,
+      "result": {
+        "codec": "NONE",
+        "framing": "RAW",
+        "native_ready": false,
+        "payload_exact": true,
+        "payload_identity": "CANDIDATE",
+        "raw_bytes": 153190400,
+        "read_only": true,
+        "restoration_verified": false,
+        "selection_verified": false,
+        "status": "OFFLINE_IDENTITY",
+        "wrapper_authentication_verified": false,
+        "writes_authorized": false
+      }
+    },
+    "known_31af_with_other_fourcc": {
+      "exit": 0,
+      "result": {
+        "codec": "NONE",
+        "framing": "IMG4",
+        "native_ready": false,
+        "payload_exact": true,
+        "payload_identity": "31AF",
+        "raw_bytes": 442368,
+        "read_only": true,
+        "restoration_verified": false,
+        "selection_verified": false,
+        "status": "OFFLINE_IDENTITY",
+        "wrapper_authentication_verified": false,
+        "writes_authorized": false
+      }
+    },
+    "known_boot021_raw": {
+      "exit": 0,
+      "result": {
+        "codec": "NONE",
+        "framing": "RAW",
+        "native_ready": false,
+        "payload_exact": true,
+        "payload_identity": "BOOT021",
+        "raw_bytes": 3932160,
+        "read_only": true,
+        "restoration_verified": false,
+        "selection_verified": false,
+        "status": "OFFLINE_IDENTITY",
+        "wrapper_authentication_verified": false,
+        "writes_authorized": false
+      }
+    }
+  },
+  "helper_bytes": 89312,
+  "helper_sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5",
+  "host_changes": false,
+  "live_run": false,
+  "native_ready": false,
+  "normal_methods": 64,
+  "recovery_run": false,
+  "scope": "ORIGINAL_ARTIFACT_FIXTURES_ONLY"
+}

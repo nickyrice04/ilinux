@@ -1,0 +1,37 @@
+{
+  "complete_heartbeats": true,
+  "elapsed_monotonic_ns": 60543060153,
+  "errors": [],
+  "expected_vcpus": 4,
+  "firmware_or_bootloader_tested": false,
+  "last_camera_second": 60,
+  "memory_checksum_passed": true,
+  "native_driver_qualification": false,
+  "passing_cpu_ids": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "performance_parity_measured": false,
+  "physical_m5_tested": false,
+  "raw_console_exported": false,
+  "scope": "GENERIC_ARM64_VZ_CONTROL",
+  "status": "PASS",
+  "tested_inputs": {
+    "diagnostic/init": {
+      "bytes": 869672,
+      "sha256": "87f17fb823db2691435cabd4414682f9b9750b124522980e6a2171e21b7205d9"
+    },
+    "diagnostic/initramfs.cpio.gz": {
+      "bytes": 370825,
+      "sha256": "4e70a6fa634cb3199cee515b38fde0a8be321ce492213f5f532685702d2d4e2f"
+    },
+    "linux/Image": {
+      "bytes": 43694592,
+      "sha256": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f"
+    }
+  },
+  "tested_inputs_provenance": "COORDINATOR_VM_LAUNCH_BINDING_NOT_RUNTIME_HASH_ATTESTATION",
+  "worker_count": 4
+}

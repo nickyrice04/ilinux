@@ -1,0 +1,75 @@
+{
+  "actual_owned_artifact_controls": {
+    "cf_fixture_snapshots": 8,
+    "codec_cases": 6,
+    "phase_checks": 15,
+    "policy_and_volume_metadata": "SYNTHETIC"
+  },
+  "boot_object_installed": false,
+  "camera_opened": false,
+  "date": "2026-11-13",
+  "default_changed": false,
+  "firmware_changed": false,
+  "generic_vm": {
+    "elapsed_monotonic_ns": 60543060153,
+    "external_stop_after_completion": true,
+    "physical_m5": false,
+    "vcpus": 4
+  },
+  "lab_data_staged": false,
+  "live_policy_presence": "USER_SUPPLIED_VALUE_FREE_PROBE_ONLY",
+  "native_ready": false,
+  "native_run": false,
+  "production_helper_live_run": false,
+  "production_page_server_started": false,
+  "public_binary_release": false,
+  "recovery_run": false,
+  "schema": "ilinux31aj-offline-verification-v1",
+  "scope": "ORIGINAL_WORKSPACE_CODE_SYNTHETIC_FIXTURES_AND_GENERIC_VM",
+  "source_inventories_unchanged": {
+    "31AH": 41,
+    "31AI": 46,
+    "31AJ_component": 7
+  },
+  "status": "PASS_OFFLINE_PREPARATION",
+  "suites": {
+    "collector_boundary": {
+      "methods": 4
+    },
+    "display_renderer": {
+      "assertions": 9263,
+      "distinct_test_methods": null
+    },
+    "fixed_page_server": {
+      "independent_source_review": "PASS_WITH_FINAL_DELTA_REVIEW",
+      "methods": 24
+    },
+    "lab_data_stager": {
+      "independent_methods": 25,
+      "methods": 25
+    },
+    "native_reader": {
+      "asan_ubsan_methods": 64,
+      "independent_asan_ubsan_methods": 64,
+      "normal_methods": 64
+    },
+    "package_intake": {
+      "methods": 25
+    },
+    "recovery_transaction": {
+      "current_suite_distinct_methods": 64,
+      "focused_html_methods": 3,
+      "full_methods_before_html_only_delta": 62,
+      "new_distinct_html_methods": 2,
+      "shell_renderer_unchanged_by_html_delta": true
+    },
+    "value_free_metadata_probe": {
+      "methods": 26
+    },
+    "workspace_materializer": {
+      "independent_source_review": "PASS",
+      "methods": 15
+    }
+  },
+  "writes_authorized": false
+}
