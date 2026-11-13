@@ -4871,3 +4871,23 @@ selected. Keep exact payload comparison separate from wrapper authenticity,
 policy and completed restoration. No new
 security-mode loop, firmware/settings/install/camera/restart action. Preserve
 old frozen files and consumed authorizations; keep M1's unfinished work intact.
+
+## 2026-11-13 · M1 31AI consistency passes; procedure and physical proof stay separate
+
+**Decision:** OFFLINE_REVIEW_PASS_NATIVE_HOLD on 8f53ebf. Continue the autonomous
+unchanged-baseline Aura diagnostic; no USB upload or Linux gadget prerequisite
+for its screen-observed payload. Do not restart or infer authorization.
+
+**Evidence:** 41 frozen/46 new pins, 221 fresh methods and exact two-file intake
+PASS; actual public Aura26 selected blobs match. All embedded artifacts and
+strict root/layout relationships verify. M5 parser/relink/VM/REA results reviewed,
+not rerun. Its observed current contained lab payload is EXACT_31AF, not boot021;
+wrapper/policy/default/restoration remain distinct and unconfirmed.
+
+**Consequences:** M5 completes concrete lab install/restoration/readback and
+actual pairing/stop plan before independent review and separate approval. The
+current eight-MiB old-reference metadata reader is not the future candidate
+postcondition adapter. A separate ten-second silent external-camera readability
+test was proposed to the human; camera not opened in this review. Preserve
+original dirty notes, frozen inventories and consumed receipts; native NOT RUN.
+Evidence: native/boot/attempt31ai-m1-offline-2026-11-13.md and JSON.

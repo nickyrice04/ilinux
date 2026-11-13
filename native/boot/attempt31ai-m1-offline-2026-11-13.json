@@ -1,0 +1,126 @@
+{
+  "schema": "ilinux-direct31ai-m1-independent-review-v1",
+  "date": "2026-11-13",
+  "reviewed_commit": "8f53ebf281a7a62943b0a937a05b449e3e51f9b8",
+  "status": "OFFLINE_REVIEW_PASS_NATIVE_HOLD",
+  "inventories": [
+    {
+      "inventory": "31ah",
+      "entries": 41,
+      "sha256": "67b9d70018498cb4bacbbe05081e6a233b838af89d8c722983f804f2c14dc3a5",
+      "status": "PASS"
+    },
+    {
+      "inventory": "31ai",
+      "entries": 46,
+      "sha256": "39dbbd5795b02f61621797f86cd246a932e974c745096dd31a02687bb6b60d31",
+      "status": "PASS"
+    }
+  ],
+  "tests": [
+    {
+      "suite": "inline",
+      "methods": 37,
+      "exit": 0,
+      "seconds": 0.257
+    },
+    {
+      "suite": "extender",
+      "methods": 22,
+      "exit": 0,
+      "seconds": 0.862
+    },
+    {
+      "suite": "diagnostic",
+      "methods": 40,
+      "exit": 0,
+      "seconds": 0.306
+    },
+    {
+      "suite": "state-model",
+      "methods": 40,
+      "exit": 0,
+      "seconds": 0.484
+    },
+    {
+      "suite": "candidate-reader",
+      "methods": 33,
+      "exit": 0,
+      "seconds": 0.483
+    },
+    {
+      "suite": "selected-object",
+      "methods": 49,
+      "exit": 0,
+      "seconds": 0.282
+    }
+  ],
+  "fresh_method_total": 221,
+  "actual_candidate": {
+    "schema": "ilinux-direct31ai-candidate-review-v1",
+    "status": "OFFLINE_CANDIDATE_INTEGRITY_PASS",
+    "read_only": true,
+    "extracted": false,
+    "executed": false,
+    "device_opened": false,
+    "camera_opened": false,
+    "native_authorized": false,
+    "native_ready": false,
+    "public_binary_release": false,
+    "glibc_public_source_closure": "INCOMPLETE",
+    "kmutil_inspection_performed": false,
+    "native_execution_proven": false,
+    "candidate_gzip_sha256": "5fef4ae42dff069e442c22963a548c86ee41347b76d6ec3cab52003860ad1bc1",
+    "candidate_sha256": "0d43feada6d758fcfea2ce78b4fd9f21ae4b7a7450ab06ba9e8c6c06b834dc4d",
+    "raw_inline_sha256": "5f351f1f4841f0d5fcee2d16a5eed71ed6be46c95b16ba92e0295440a725f8cc",
+    "diagnostic_manifest_sha256": "c16b42246fc82fa1a6db1d6530bce4a034d303cb9413d7aa9cad9c1feb7bcd30",
+    "diagnostic_package_sha256": "4c04cbd098fcec92f55c91fe8bb33dc7baae2e86c7586a0ca88fac7879543019",
+    "segment_count": 6,
+    "expected_kcbz": 0,
+    "expected_kcrz": 153141248,
+    "entry_offset": 67584,
+    "baseline_prefix_verified": true,
+    "canonical_metadata_verified": true,
+    "zero_execute_padding_verified": true,
+    "exact_diagnostic_payload_verified": true,
+    "payload_bytes": 15641534,
+    "payload_sha256": "27a9dc66228e4c2a7cc53ccd85707e13678dbe682ea568a8d1cd20d1e7e88071"
+  },
+  "public_source_files_checked": 26,
+  "public_aura_commit": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+  "current_selected_payload": {
+    "value": "EXACT_31AF",
+    "provenance": "M5 human-run read-only record, reviewed not rerun",
+    "boot021_selected": false,
+    "wrapper_match": "UNKNOWN",
+    "effective_policy": "UNCONFIRMED",
+    "default": "UNCONFIRMED",
+    "restoration": "UNCONFIRMED"
+  },
+  "reviewed_not_rerun": [
+    "eight public C parser controls with hardware mocks",
+    "Apple read-only inspector",
+    "collector relink and normal/stall controls",
+    "31AH generic four-vCPU VM",
+    "REA73-word audit"
+  ],
+  "camera": {
+    "human_offered_external_webcam": true,
+    "separate_ten_second_silent_test_proposed": true,
+    "ready_confirmation_received": false,
+    "opened": false,
+    "recorded": false
+  },
+  "next_gates": [
+    "lab install/restoration procedure and adequate candidate postcondition adapter",
+    "actual paired firmware qualification or bounded assumptions",
+    "independent physical stop/return and exact observation plan",
+    "separate concrete human authorization"
+  ],
+  "native_ready": false,
+  "native_checks": "NOT RUN",
+  "original_worktree_preserved": true,
+  "prior_consumed_receipts_edited": false,
+  "restarted": false,
+  "host_settings_changed": false
+}

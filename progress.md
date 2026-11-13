@@ -1,5 +1,27 @@
 # Progress Log
 
+### Latest M1 — 31AI offline review PASS; native hold, November 13
+
+Reviewed 8f53ebf in the clean isolated checkout. Frozen 31AH41/new31AI46 pins,
+221 fresh methods and actual two-file semantic intake PASS; nineteen diagnostic
+members and exact embedded Image/DT/root/baseline/metadata/zero padding verify.
+Actual public Aura26 selected Git blobs match; source read as data, not executed.
+M5 C-mock8/Apple parser/relink/generic VM/REA73 records reviewed, not rerun here.
+No offline integrity blocker. Inline baseline closes USB-upload/root delivery
+prerequisites, not native entry/CTXR/SMP or a remote Linux control channel.
+
+M5 read-only evidence identifies the selected lab payload as EXACT_31AF;
+boot021 is not selected. Wrapper authenticity/policy/default/restoration remain
+unconfirmed. M5 next supplies complete lab CTRR/object/unrelated-policy/default
+restoration and adequate candidate readback; current eight-MiB reader targets
+old references only. Firmware pairing and bounded observation/return remain
+review gates before separate physical authorization. No restart ready.
+
+Human offered external camera; separate ten-second silent readability test
+proposed, readiness pending. Camera/native/live/Recovery/restoration/new policy
+checks NOT RUN. Original dirty notes/untracked review and consumed receipts
+preserved. Report: native/boot/attempt31ai-m1-offline-2026-11-13.md and JSON.
+
 ## 2026-11-13 · 31AI autonomous diagnostic and selected-object framing
 
 Integrated M1's 31AH PASS/hold recommendations. Built one self-contained normal
