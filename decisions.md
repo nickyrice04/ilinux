@@ -4826,3 +4826,22 @@ compile public sources; earlier qualified handoff findings retain their scope.
 Firmware pairing, Linux host-only USB, exact lab restoration/CTRR requirements
 and old restoration uncertainty must be addressed before a separately approved
 native sequence. No host, firmware, security, volume or default change occurred.
+
+## 2026-11-13 · M1 verifies 31AH; qualify the direct route before reboot
+
+**Decision:** OFFLINE_REVIEW_PASS_NATIVE_HOLD on ba3687c. Continue the coherent
+Aura/CTXR source pair; do not transplant the raw launcher or restart yet.
+
+**Evidence:** 41 pins/114 fresh methods and the actual 64-member archive PASS;
+actual padded layouts/preserved slots/zero padding, static kernel/config/18-CPU
+DT and eleven recipe bindings PASS. M5 generic-VM/build/parser records reviewed,
+not independently rerun. External J716c source pins match but firmware and the
+unpublished CDC/config differ. Readiness is not implied by static integrity.
+
+**Consequences:** M5 owns local pairing, exact loader/control/root and full lab
+CTRR/object restoration proposal. First future test should be a bounded RAM
+CPU/checksum/liveness diagnostic before desktop/performance work. Old 31AF
+restoration/default still require human reconciliation. No new authorization,
+physical action, camera activation or firmware update follows. Preserve original
+dirty status notes via isolated review; frozen sources/consumed receipts untouched.
+Report: native/boot/attempt31ah-m1-offline-2026-11-13.md and JSON.

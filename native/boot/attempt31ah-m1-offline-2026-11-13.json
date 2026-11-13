@@ -1,0 +1,289 @@
+{
+  "schema": "ilinux-direct31ah-m1-review-v1",
+  "date": "2026-11-13",
+  "status": "OFFLINE_REVIEW_PASS_NATIVE_HOLD",
+  "reviewed_commit": "ba3687c0504e68971756ecb342e6095410e5c98f",
+  "source_inventory": {
+    "source_pins": 41,
+    "source_inventory_sha256": "67b9d70018498cb4bacbbe05081e6a233b838af89d8c722983f804f2c14dc3a5",
+    "review_commit": "ba3687c0504e68971756ecb342e6095410e5c98f",
+    "status": "PASS"
+  },
+  "package": {
+    "schema": "ilinux-direct31ah-offline-review-v1",
+    "status": "OFFLINE_INTEGRITY_PASS",
+    "files_verified": 64,
+    "expanded_bytes": 368421402,
+    "tar_stream_bytes": 368476160,
+    "package_sha256": "0abee654af377a8c299b57cc4709da1f3a9f7ae340a024e79fac286f81bf3298",
+    "read_only": true,
+    "extracted": false,
+    "native_ready": false,
+    "native_authorized": false,
+    "firmware_changed": false
+  },
+  "fresh_tests": [
+    {
+      "suite": "tar-reader-tests",
+      "methods": 46,
+      "exit": 0
+    },
+    {
+      "suite": "timeline-tests",
+      "methods": 24,
+      "exit": 0
+    },
+    {
+      "suite": "kernel-offline-tests",
+      "methods": 26,
+      "exit": 0
+    },
+    {
+      "suite": "vm-receipt-tests",
+      "methods": 18,
+      "exit": 0
+    }
+  ],
+  "fresh_methods": 114,
+  "artifact_inspection": {
+    "config": {
+      "status": "PASS",
+      "symbols": 8833,
+      "nr_cpus": 64,
+      "page_bytes": 16384,
+      "ctxr_execmem": "y",
+      "sep": "n",
+      "nvme_apple": "m",
+      "apple_sart": "m",
+      "reporter_exact_config": false
+    },
+    "dt": {
+      "scope": "OFFLINE_STATIC_DTB",
+      "status": "PASS",
+      "board": "apple,j716c",
+      "chip": "apple,t6050",
+      "cpu_count": 18,
+      "mpidrs": [
+        "0x40000",
+        "0x40001",
+        "0x40002",
+        "0x40003",
+        "0x40004",
+        "0x40005",
+        "0x40100",
+        "0x40101",
+        "0x40102",
+        "0x40103",
+        "0x40104",
+        "0x40105",
+        "0x10200",
+        "0x10201",
+        "0x10202",
+        "0x10203",
+        "0x10204",
+        "0x10205"
+      ],
+      "cluster_core_types": [
+        "M",
+        "M",
+        "P"
+      ],
+      "cores_per_cluster": [
+        6,
+        6,
+        6
+      ],
+      "dt_capacity_values": [
+        794,
+        794,
+        794,
+        794,
+        794,
+        794,
+        794,
+        794,
+        794,
+        794,
+        794,
+        794,
+        1024,
+        1024,
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "capacity_is_not_a_measurement": true,
+      "enable_method": "spin-table",
+      "drom_properties": 0,
+      "publisher_drom_properties": 0,
+      "runtime_fields_pending": [
+        "cpu-release-addr",
+        "memory",
+        "framebuffer",
+        "aurora,ctxr-exec-window"
+      ],
+      "native_qualified": false
+    },
+    "dt_disabled_nodes": [
+      {
+        "path": "/soc@200000000/cio@389ac0000",
+        "compatible": [
+          "apple,t6050-usb4-acio"
+        ],
+        "status": "disabled"
+      },
+      {
+        "path": "/soc@200000000/cio@389ac0000/nhi@f00000",
+        "compatible": [
+          "apple,t6050-usb4-nhi"
+        ],
+        "status": "disabled"
+      },
+      {
+        "path": "/soc@200000000/acio@381ac0000",
+        "compatible": [
+          "apple,t6050-usb4-acio"
+        ],
+        "status": "disabled"
+      },
+      {
+        "path": "/soc@200000000/acio@381ac0000/nhi@f00000",
+        "compatible": [
+          "apple,t6050-usb4-nhi"
+        ],
+        "status": "disabled"
+      },
+      {
+        "path": "/soc@200000000/sep@502600000",
+        "compatible": [
+          "apple,t6050-sep",
+          "apple,sep"
+        ],
+        "status": "disabled"
+      },
+      {
+        "path": "/soc/isp@580000000",
+        "compatible": [
+          "apple,t6050-isp",
+          "apple,isp"
+        ],
+        "status": "disabled"
+      },
+      {
+        "path": "/soc/iommu@5828c0000",
+        "compatible": [
+          "apple,t6050-isp-dart",
+          "apple,t8110-dart"
+        ],
+        "status": "disabled"
+      },
+      {
+        "path": "/soc/iommu@5828e0000",
+        "compatible": [
+          "apple,t6050-isp-dart",
+          "apple,t8110-dart"
+        ],
+        "status": "disabled"
+      },
+      {
+        "path": "/soc/iommu@582900000",
+        "compatible": [
+          "apple,t6050-isp-dart",
+          "apple,t8110-dart"
+        ],
+        "status": "disabled"
+      }
+    ],
+    "source_bindings": {
+      "status": "PASS",
+      "files": 11
+    },
+    "aura_alternatives": {
+      "baseline": {
+        "bytes": 153190400,
+        "sha256": "f73b8feea8f05a67408fb1a7e86b679ce33e9f2ff9ae97746549a126bf07cace",
+        "entry_offset": 67584,
+        "code_file_offset": 65536,
+        "code_size": 153075712,
+        "segments": [
+          "__TEXT",
+          "__PRELINK_TEXT",
+          "__TEXT_EXEC",
+          "__PRELINK_INFO",
+          "__DATA",
+          "__LINKEDIT"
+        ],
+        "layout_status": "PASS",
+        "preserved_raw_slot_sha256_matches_metadata": true,
+        "padding_all_zero": true,
+        "raw_unpadded_input_independently_available": false
+      },
+      "j716c-proxy": {
+        "bytes": 153190400,
+        "sha256": "b45375b3bedeca66354b858d909c5b05dca7acd6bb76002eea824b8f528ac53f",
+        "entry_offset": 67584,
+        "code_file_offset": 65536,
+        "code_size": 153075712,
+        "segments": [
+          "__TEXT",
+          "__PRELINK_TEXT",
+          "__TEXT_EXEC",
+          "__PRELINK_INFO",
+          "__DATA",
+          "__LINKEDIT"
+        ],
+        "layout_status": "PASS",
+        "preserved_raw_slot_sha256_matches_metadata": true,
+        "padding_all_zero": true,
+        "raw_unpadded_input_independently_available": false
+      }
+    },
+    "kernel_image": {
+      "bytes": 43694592,
+      "sha256": "c01483f230aa64013b395291f8a5b8e38ed6c467b61e8a141c621938fda3a56f",
+      "declared_memory_bytes": 44498944,
+      "text_offset": 0,
+      "page_bytes": 16384,
+      "fits_static_128MiB_pool": true,
+      "runtime_allocation_qualified": false
+    }
+  },
+  "camera": {
+    "built_in_camera_listed": true,
+    "existing_recorder_present": true,
+    "opened": false,
+    "recording": "NOT RUN",
+    "framing": "Unknown",
+    "audio_off_capability": "NOT RUN"
+  },
+  "prior31af": {
+    "macos_return": "human reported",
+    "exact_boot021_rollback": "UNCONFIRMED",
+    "original_default": "UNCONFIRMED",
+    "confirmation_requested": true
+  },
+  "m5_only_evidence_reviewed_not_rerun": [
+    "padding24",
+    "six C policy assertions",
+    "full Aura/kernel builds",
+    "Apple 14-property inspector",
+    "four-vCPU generic VM 60.498751570-second liveness"
+  ],
+  "native_ready": false,
+  "native_authorized": false,
+  "native_checks": "NOT RUN",
+  "restarted": false,
+  "usb_opened": false,
+  "settings_changed": false,
+  "original_worktree_preserved": true,
+  "historical_consumed_receipts_edited": false,
+  "remaining_gates": [
+    "prior restoration confirmation",
+    "local firmware pairing",
+    "chosen Aura variant and bounded control",
+    "exact diagnostic RAM root delivery/binding",
+    "complete lab CTRR/object restoration plan",
+    "separate concrete authorization"
+  ]
+}

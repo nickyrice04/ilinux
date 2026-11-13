@@ -1,5 +1,26 @@
 # Blockers
 
+### Latest M1 — 31AH offline review PASS; no restart ready, November 13
+
+M1 reviewed ba3687c: 41 source pins, 114 fresh host-safe methods and actual
+64-member local-user tar PASS (34,099,303 bytes; SHA256 0abee654…bf3298).
+No extraction/execution. Actual two padded Aura layouts/raw-slot digests/zero
+padding, Image header/static pool fit, resolved 16 KiB config, sanitized 18-node
+DT and eleven kernel recipe bindings PASS. Static CPUs are not online evidence.
+M5 build/padding24/C6/Apple parser/generic four-vCPU VM evidence reviewed only.
+Baseline and original experimental USB2 alternative remain distinct; neither
+qualifies the unpublished external CDC patch or native USB/SMP/performance.
+
+Continue direct Aura offline. M5 next qualifies local 25G83 versus reported
+26B131 pairing, selects exact loader/control/RAM root, and supplies complete
+lab CTRR/object restoration before a separately authorized bounded RAM boot.
+Old 31AF rollback/default remain UNCONFIRMED; human confirmation requested.
+Camera/recorder listed only, no activation. Native/live/Linux/camera/restore/new
+policy checks NOT RUN; no restart or settings/security/volume/firmware action.
+Original pull refused on five unfinished status notes; isolated fetched source
+review preserves them, the unrelated untracked review and all consumed receipts.
+Report: `native/boot/attempt31ah-m1-offline-2026-11-13.md` and JSON.
+
 ## Current — 31AH compiled; native pairing/control/restoration gates remain
 
 The exact public Aura/kernel source pair now compiles. Both padded objects pass
