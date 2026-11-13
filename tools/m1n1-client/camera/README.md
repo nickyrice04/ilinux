@@ -5,6 +5,11 @@ existing Swift toolchain, AppKit and AVFoundation; no dependencies or host insta
 It records an external camera pointed at the M5, not the M1 desktop.
 No native boot, USB/proxy, network, Recovery, policy or settings command exists here.
 
+Current M5 planning handoff: [recording sequence, text design and brightness
+uncertainty](m5-recording-handoff.md). The measured quality clip supports partial
+text qualification; tiny console characters and boot-time brightness control
+remain unqualified. No additional test is requested by that handoff.
+
 ## Build, then use when the human requests a camera session
 
 From this checkout root:
@@ -118,7 +123,8 @@ Policy tests cover missing/stale approval, invalid durations, duplicate starts,
 early stop/late callbacks and failure reset. Path tests cover symlink escape,
 traversal and preserving old media. Compilation/tests do not establish actual
 camera quality, permissions, audio track behavior, disconnect/finalization or
-native readiness. Hardware and ten-second recording remain NOT RUN until observed.
+native readiness. The November 13 camera quality test is recorded separately in
+the linked handoff and receipt; it does not establish native readiness.
 
 Apple primary API references:
 [preview gravity](https://developer.apple.com/documentation/avfoundation/avcapturevideopreviewlayer/videogravity),

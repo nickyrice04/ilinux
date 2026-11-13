@@ -4945,3 +4945,18 @@ current physical position as a baseline, reduce reflections and recheck after
 any move. A brighter boot display remains untested. Clip/frames stay private.
 31AH41/31AI46 source pins PASS unchanged. No restart, native boot, USB/proxy,
 Recovery, security or volume action; native31AI remains HOLD.
+
+## 2026-11-13 — Carry camera limits into the next M5 diagnostic proposal
+
+**Decision:** use the existing external-camera workflow with fresh framing and
+actual recording confirmation before any separately approved boot. Favor readable
+moderate-size key milestones in new original diagnostic code, without changing
+frozen experiments or their timing/stop rules. Fine text and rapid scrolling
+remain unqualified; camera silence stays inconclusive.
+
+**Human report:** display appeared fairly dim at a described second-highest
+brightness setting, unmeasured. Native brightness persistence/control and exposure
+are Unknown. Keep this risk in the next plan; no retest requested now. M5 resumes
+its next offline analysis/proposal, not an automatically authorized physical boot.
+Handoff: tools/m1n1-client/camera/m5-recording-handoff.md. No new capture, restart,
+brightness code, hardware/settings write or native/live operation in this update.

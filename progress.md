@@ -1,5 +1,22 @@
 # Progress Log
 
+### Latest M1 — M5 recording handoff ready, November 13
+
+Human requests no retest now. Recording plan is documented in
+`tools/m1n1-client/camera/m5-recording-handoff.md`: fresh framing after each move,
+actual RECORDING confirmation before the human boot cue, independent native stop
+clock, private media and saved-frame review. Prefer moderate readable, persistent
+key diagnostics over tiny dense text where new original code permits; unchanged
+firmware text and fine-character recovery remain limitations.
+
+Human describes the recorded screen as fairly dim and reports the second-highest
+brightness setting; neither luminance nor slider position was measured. Native
+brightness persistence/control and brighter-screen exposure remain Unknown.
+M5 can continue offline analysis/proposal with these limits. No camera reopened,
+retest, restart, native/live, USB/proxy or settings/security action in this update;
+native31AI remains HOLD and prior measured receipts remain unchanged.
+
+
 ### Latest M1 — camera quality clip captured, November 13
 
 One agent-operated, human-requested ten-second quality test saved 9.867 seconds
