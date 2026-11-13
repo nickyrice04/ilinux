@@ -1,0 +1,51 @@
+{
+  "schema": "ilinux31aj-offline-foundation-v1",
+  "date": "2026-11-13",
+  "status": "PASS_COMPONENT_ONLY",
+  "m1_reviewed_source": "8f53ebf281a7a62943b0a937a05b449e3e51f9b8",
+  "m1_update_head": "ad8ba00d331b8cf4f390a5e306fb60e09a92f23e",
+  "new_unit_methods": 36,
+  "unit_scope": "SYNTHETIC_ORIGINAL_DATA_AND_TEST_CODEC_ONLY",
+  "actual_original_raw_fixtures": [
+    {
+      "fixture": "31AI",
+      "bytes": 153190400,
+      "status": "EXACT_KNOWN_PAYLOAD",
+      "authority_flags_false": true
+    },
+    {
+      "fixture": "31AF",
+      "bytes": 442368,
+      "status": "EXACT_KNOWN_PAYLOAD",
+      "authority_flags_false": true
+    },
+    {
+      "fixture": "BOOT021",
+      "bytes": 3932160,
+      "status": "EXACT_KNOWN_PAYLOAD",
+      "authority_flags_false": true
+    }
+  ],
+  "actual_candidate_gzip": {
+    "bytes": 15984123,
+    "status": "UNKNOWN",
+    "reason": "INJECTED_CODEC_REQUIRED",
+    "decompressed": false
+  },
+  "prior_inventories": {
+    "31AH_entries": 41,
+    "31AI_entries": 46,
+    "status": "PASS_UNCHANGED"
+  },
+  "live_selected_object_reader_implemented": false,
+  "real_compression_codec_implemented": false,
+  "recovery_transaction_implemented": false,
+  "readable_native_variant_implemented": false,
+  "native_tested": false,
+  "restart_ready": false,
+  "host_settings_changed": false,
+  "camera_retested": false,
+  "vm_started": false,
+  "public_binary_release": false,
+  "independent_component_review": "PASS_36_METHODS"
+}

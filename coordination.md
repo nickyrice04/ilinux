@@ -1,5 +1,16 @@
 # Coordination: agents working in this workspace
 
+### Current M5 — 31AJ procedure/readback/presentation preparation
+
+M5 fast-forwarded through ad8ba00, reviewed M1's independent 31AI PASS and camera
+handoff. M5 owns the new procedure, large-object readback and proposed readable
+console status. Current payload identity EXACT_31AF is closed; final boot021
+will complete the intended restoration, not return to the actual 31AF baseline.
+M1 need not restart, repeat old suites, recalibrate or open hardware now. Next
+independent review concerns changed software/procedures only. Preserve old pins,
+M1's unfinished notes and unrelated work. Plan: native/boot/attempt31aj-plan.md.
+No physical authorization or settings action follows; native remains HOLD.
+
 ### Latest M1 — M5 recording handoff ready, November 13
 
 Human requests no retest now. Recording plan is documented in

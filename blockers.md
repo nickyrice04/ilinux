@@ -1,5 +1,21 @@
 # Blockers
 
+## Current M5 — artifact review complete; finish 31AJ transaction and observability
+
+M1 verified 31AI's two files/221 methods; further unchanged artifact reviews and
+camera recalibration are not the next gate. Remaining software: candidate-sized
+compressed selected-object verification compatible with Recovery; guarded
+install/complete CTRR-object-unrelated-policy-default restoration; a new model
+starting at actual 31AF; readable camera-facing key results in a new pinned
+variant. The new offline identity primitive is not a live postcondition adapter.
+Apple documents -n as policy recreation, so preservation must not be assumed.
+
+Native entry/permissions/SMP are questions for one bounded reviewed diagnostic,
+not impossible pre-test proof requirements. Current evidence establishes no
+mandatory firmware update or Apple-only blocker. Plan scopes remaining pairing
+assumptions and independent stop/return. No restart or hardware action is ready.
+See native/boot/attempt31aj-plan.md; frozen evidence remains unchanged.
+
 ### Latest M1 — M5 recording handoff ready, November 13
 
 Human requests no retest now. Recording plan is documented in

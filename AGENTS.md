@@ -1,5 +1,15 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — M1 review incorporated; 31AJ offline preparation, November 13
+
+M1's 31AI integrity PASS and measured camera limits are incorporated. Next is
+candidate-sized selected-object readback, a new 31AF-to-candidate-to-boot021
+transaction with complete lab policy/default restoration, and readable status.
+Plan: native/boot/attempt31aj-plan.md. New tools/boot-object31aj/ is an offline
+identity primitive only; no live adapter/codec or executable Recovery kit yet.
+Preserve frozen 31AH/31AI. No camera retest, M1 restart, firmware update, native
+boot or host/security/volume/default change. No repeated current-payload query.
+
 ### Latest M1 — M5 recording handoff ready, November 13
 
 Human requests no retest now. Recording plan is documented in

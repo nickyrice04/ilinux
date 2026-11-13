@@ -4960,3 +4960,26 @@ are Unknown. Keep this risk in the next plan; no retest requested now. M5 resume
 its next offline analysis/proposal, not an automatically authorized physical boot.
 Handoff: tools/m1n1-client/camera/m5-recording-handoff.md. No new capture, restart,
 brightness code, hardware/settings write or native/live operation in this update.
+
+## 2026-11-13 · Avoid an extra raw boot; finish a finite 31AJ transaction
+
+**Decision:** continue offline toward one informative native RAM diagnostic.
+Start the new transaction from the measured contained 31AF payload; final raw
+boot021 is completion of the intended restoration. Do not invent a prior raw021
+baseline to reuse the frozen assertion model or add a separate raw boot merely
+to satisfy it. Preserve all older sources, pins and consumed approvals.
+
+**Evidence:** M1's 221 methods/two-file PASS closes artifact integrity; its silent
+quality clip supports partial text only. The existing collector has useful CPU,
+timer and RAM logic but tiny font/dense summaries need a new readable variant.
+The old eight-MiB adapter cannot verify the large candidate. Apple's bputil
+manual documents -n as recreating LocalPolicy, so the public -nc example cannot
+be claimed to preserve unrelated lab fields.
+
+**Consequences:** prepare new readback/procedure/profile and focused refusal
+tests, with explicit final policy/object/default postconditions and one-paste
+phases. Native runtime assumptions are measured questions once that concrete
+recovery path is ready; no blind firmware update. Follow physical SMP/RAM with
+DVFS/performance, networking/storage, matching GPU/Omarchy and efficiency/device
+validation. No new camera session, host setting or restart. Plan:
+native/boot/attempt31aj-plan.md. New payload primitive remains offline only.

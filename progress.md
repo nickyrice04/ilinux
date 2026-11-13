@@ -1,5 +1,30 @@
 # Progress Log
 
+## 2026-11-13 · M5 reviews M1 and selects the shortest informative next sequence
+
+Pulled six M1 commits through ad8ba00. M1 independently verified both delivered
+files and 221 methods; no integrity blocker. Camera quality clip supplies
+partial readability, not qualification of tiny native console text. Honor the
+human's no-retest request. Existing 41/46 source inventories remain unchanged.
+
+New 31AJ plan uses the actual selected 31AF starting state, one diagnostic
+window and final intended raw boot021 restoration; no separate raw boot is
+required. The frozen state model does not validate this new transition. Apple
+manual review confirms policy recreation via -n cannot be described as
+preserving unrelated lab fields. New workflow/readback/negative tests and a
+Recovery-compatible adapter remain necessary before proposing writes.
+
+Completed a separate bounded offline known-payload primitive for the larger
+candidate: 36 synthetic methods PASS; actual original raw 31AI/31AF/boot021
+fixtures all identify exactly with authority flags false. Actual gzip remains
+UNKNOWN without an injected codec. No live read/codec/install is supplied.
+Receipt: native/boot/attempt31aj-offline.json. Planned
+readable console summaries reuse existing CPU/RAM/timer calculations. Full
+performance path remains physical SMP/RAM, DVFS/latency/bandwidth, network/NVMe,
+GPU/Omarchy, then power/suspend/peripherals. No parity claim from VM or boot.
+Plan: native/boot/attempt31aj-plan.md. No camera, restart, firmware, security,
+volume, original macOS or default action; no new native result.
+
 ### Latest M1 — M5 recording handoff ready, November 13
 
 Human requests no retest now. Recording plan is documented in
