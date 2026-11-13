@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-13",
+  "scope": "camera-only synthetic target quality test",
+  "clip": {
+    "status": "LOCAL_VIDEO_RECORDED",
+    "requested_seconds": 10,
+    "duration_seconds": 9.867,
+    "width": 1920,
+    "height": 1080,
+    "nominal_fps": 14.999436378479004,
+    "audio_tracks": 0,
+    "video_tracks": 1,
+    "movie_bytes": 23089064,
+    "capture_error_present": false,
+    "interrupted": false
+  },
+  "inspected_frame_seconds": [
+    1,
+    5,
+    8
+  ],
+  "framing": "four target corners and bottom margin visible; stable in sampled frames",
+  "readability": {
+    "24_and_16_css_px": "readable",
+    "12_css_px": "largely readable; exact-character qualification limited",
+    "8_and_6_css_px": "NOT QUALIFIED"
+  },
+  "limits": [
+    "left-side reflections remain",
+    "rapid scrolling and brighter boot screen NOT TESTED",
+    "CSS samples do not establish native console font readability",
+    "dropped frames unmeasured"
+  ],
+  "camera_after_clip": "closed",
+  "media": "private ignored; no publication",
+  "source_pins": "31AH 41 and 31AI 46 PASS unchanged",
+  "native_boot": "NOT RUN; 31AI HOLD",
+  "restart": "NOT RUN"
+}

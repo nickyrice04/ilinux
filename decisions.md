@@ -4930,3 +4930,18 @@ Follow-up live preview: the synthetic target is visible on M5, but text remains
 visibly blurred and the display occupies about half the frame height. Readability
 is NOT QUALIFIED. Requested closer, centered positioning and full-screen target.
 Preview remains open for adjustment; framing unchecked and recording OFF.
+
+## 2026-11-13 — Preserve measured camera qualification limits
+
+One agent-operated, human-requested ten-second quality test saved 9.867 seconds
+at 1920x1080, nominal 15 fps, one video track and zero audio tracks. Receipt
+reports no capture error or interruption. Frames at 1/5/8 seconds inspected:
+all four target corners and bottom margin visible, framing stable in those frames;
+24/16 px samples readable, 12 px largely readable, 6/8 px exact characters not
+qualified. Reflections remain on the left. This is partial text qualification,
+not proof that every native console message or rapid scroll will be recoverable.
+Preview closed automatically; no recording/camera session remains open. Keep
+current physical position as a baseline, reduce reflections and recheck after
+any move. A brighter boot display remains untested. Clip/frames stay private.
+31AH41/31AI46 source pins PASS unchanged. No restart, native boot, USB/proxy,
+Recovery, security or volume action; native31AI remains HOLD.
