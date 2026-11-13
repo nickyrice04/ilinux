@@ -4983,3 +4983,13 @@ recovery path is ready; no blind firmware update. Follow physical SMP/RAM with
 DVFS/performance, networking/storage, matching GPU/Omarchy and efficiency/device
 validation. No new camera session, host setting or restart. Plan:
 native/boot/attempt31aj-plan.md. New payload primitive remains offline only.
+
+## 2026-11-13 — Accept 31AJ component PASS within its offline scope
+
+M1 independently reviewed 2dd9948: seven pins and 36 new synthetic methods PASS;
+no actionable component issue. Keep UNKNOWN/identity separate from selection,
+authenticity, restoration and authorization; future callers must not treat exit
+zero alone as a postcondition. Reuse old integrity and camera evidence. M5 owns
+completion of the real Recovery readback and actual-31AF transaction/restoration,
+then readable repinned diagnostics. No restart ready or physical action follows.
+Evidence: native/boot/attempt31aj-m1-component-review-2026-11-13.md and JSON.

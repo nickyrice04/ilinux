@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-13",
+  "reviewed_commit": "2dd9948af978998bb7acbbbf35ad4e2e2e0c8dd9",
+  "status": "PASS_COMPONENT_ONLY_NATIVE_HOLD",
+  "actionable_component_findings": [],
+  "source_pins": {
+    "31AJ": 7,
+    "frozen_31AH": 41,
+    "frozen_31AI": 46,
+    "result": "PASS_UNCHANGED"
+  },
+  "focused_tests": {
+    "command": "caffeinate -i python3 -I tools/boot-object31aj/test_payload.py",
+    "methods": 36,
+    "result": "PASS",
+    "scope": "original synthetic data and injected test codecs"
+  },
+  "literal_bindings": "match frozen candidate manifest and pinned reference reader",
+  "actual_fixture_runs": "M5 evidence reviewed; NOT RERUN by M1",
+  "unchanged_old_suites": "REUSED; NOT RERUN",
+  "missing_for_complete_kit": [
+    "real bounded codec",
+    "Recovery-compatible selected-object adapter",
+    "new transaction model from actual 31AF",
+    "guarded install and independent complete policy/object/default restoration",
+    "readable repinned native variant and focused tests"
+  ],
+  "native": "NOT RUN",
+  "live_target": "NOT RUN",
+  "restart": "NOT RUN; NOT READY",
+  "camera_retest": "NOT RUN",
+  "settings_changes": false,
+  "old_pins_and_receipts": "preserved"
+}

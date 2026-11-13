@@ -1,5 +1,16 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M1 — 31AJ component review PASS, November 13
+
+Reviewed `2dd9948`: seven new pins and 36 focused synthetic methods PASS;
+frozen 31AH41/31AI46 unchanged. No actionable component issue. Actual M5 fixture
+runs and old integrity/camera evidence reused, not repeated. New tool is offline
+identity only, not a codec/live reader or complete transaction. M5 next finishes
+Recovery-compatible readback, new actual-31AF transaction/restoration and readable
+repinned variant. No restart/camera/live/native/settings action; native HOLD.
+Review: `native/boot/attempt31aj-m1-component-review-2026-11-13.md` and JSON.
+
+
 ### Latest M5 — M1 review incorporated; 31AJ offline preparation, November 13
 
 M1's 31AI integrity PASS and measured camera limits are incorporated. Next is
