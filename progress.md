@@ -1,5 +1,34 @@
 # Progress Log
 
+### Latest M5 — 31AK authorized and ready for Recovery restart, November 14
+
+Reviewed M1's 475c865: no actionable findings; all 72 tracked source pins, 30 fresh
+focused methods and corrected page preparation/check pass. Fresh M5 artifact/page
+identity and independent read-only pre-restart audit match. No unchanged suite,
+rebuild, transfer or staging was repeated. The user explicitly authorized the
+lab-only install, one native test and exact boot021 rollback, keeping Original
+Full. This supersedes pending-authorization notes only; frozen evidence stays.
+
+The user confirms the correct new 31AK page is being served and requests trust in
+its URL. M5 accepts that confirmation without another network query. Actual live
+HTTP identity is user-confirmed, not a new M5 measurement; private URL is not
+published. Original System Settings now shows iLinux Boot Lab selected. Apple's
+read-only bless --getBoot exits 0 and independently resolves to the lab, while
+Macintosh HD remains the current running system. No Restart button was clicked,
+authentication prompt observed or security-policy query/change made by M5.
+
+M1 follows tools/m1n1-client/attempt31ak-authorized-instructions.md. Human cue:
+save work, shut M5 down, hold power to Options, Continue into paired lab Recovery,
+use the new install box once via browser copy / quit / Terminal paste. Keep camera
+off/covered for credentials. Fresh helper admission and exact candidate readback
+must precede actual RECORDING confirmation and the one independent 90-second RAM
+window. Then new independent restore box: exact raw boot021/disabled lab CTRR,
+followed by Macintosh HD desktop/default confirmation. Native panel still says
+31AJ because binaries are unchanged. No policy reset, firmware/new volume,
+state deletion/re-arm, automatic retry, M1 restart, proxy or camera-quality retest.
+Recovery/install/native/rollback/default return remain NOT RUN at this handoff.
+Authorization and current status: native/boot/attempt31ak-*-2026-11-14.json.
+
 ### M1 — 31AK focused offline review PASS, November 14
 
 Reviewed b0ffccc: all 72 tracked pins exact; all 62 old bindings unchanged. Fresh

@@ -1,0 +1,40 @@
+{
+  "M1_review": "PASS_NO_FINDINGS",
+  "M1_review_commit": "475c865",
+  "Recovery_admission": "NOT_RUN",
+  "automatic_restart": false,
+  "boot021_rollback": "NOT_RUN",
+  "current_original": true,
+  "date": "2026-11-14",
+  "default_readback": {
+    "exit": 0,
+    "identifiers_returned": false,
+    "method": "APPLE_BLESS_GETBOOT_READ_ONLY",
+    "policy_queried": false,
+    "selection": "LAB",
+    "settings_changed_by_query": false
+  },
+  "independent_pre_restart_audit": "PASS_NO_MATERIAL_BLOCKER",
+  "install": "NOT_RUN",
+  "live_page": {
+    "independent_HTTP_query": false,
+    "private_URL_saved": false,
+    "source": "USER_CONFIRMED_CORRECT_31AK_SERVER_URL"
+  },
+  "max_native_window_seconds": 90,
+  "native": "NOT_RUN",
+  "native_boot_requires": "SUCCESSFUL_RECOVERY_ADMISSION_AND_EXACT_CANDIDATE_POSTCONDITION",
+  "native_ready": false,
+  "original_default_return": "NOT_RUN",
+  "readiness": "READY_FOR_HUMAN_RECOVERY_RESTART_ONLY",
+  "schema": "ilinux31ak-pre-restart-handoff-v1",
+  "security_mode_or_firmware_change_by_M5": false,
+  "source_pins": 72,
+  "startup_disk_ui": {
+    "after": "LAB",
+    "authentication_prompt_observed": false,
+    "before": "ORIGINAL",
+    "restart_clicked": false
+  },
+  "workspace_artifacts_and_corrected_pages": "EXACT_M1_REVIEW_PINS"
+}
