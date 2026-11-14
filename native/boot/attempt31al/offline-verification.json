@@ -1,0 +1,81 @@
+{
+  "Linux": "NOT RUN",
+  "SMP": "NOT RUN",
+  "bash_n": "PASS",
+  "boot021_restoration": "OUTSTANDING",
+  "date": "2026-11-14",
+  "export_input_git_tree": "8b5425206e06386f181291a41177109d5218af0f",
+  "focused_methods": {
+    "native": 29,
+    "package": 14,
+    "renderer": 19,
+    "same_native_methods_under_asan_ubsan": 29,
+    "stage": 24,
+    "unique_total": 86
+  },
+  "git_only_source_export": true,
+  "host_settings_changed": false,
+  "ignored_producer_absent": true,
+  "independent_review": "PASS; diagnostics and frozen predicates; package/stage boundaries; actual source closure and page",
+  "live_recovery": "NOT RUN",
+  "native_ready": false,
+  "new_lab_staging": "NOT RUN",
+  "only_new_two_file_kit_copied": true,
+  "page_preparation": {
+    "boot_settings_changed": false,
+    "live_recovery_diagnosis": "NOT RUN",
+    "native_ready": false,
+    "output": {
+      "diagnose-paste.txt": {
+        "bytes": 5342,
+        "sha256": "6c4ba0d76e85774e9968a80f04dd70a5e734d9fd2357c7fd490552fe9b7e7000"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "1e33fd7824f5f89aab8b7e06209b7736c4ff7c5067d87d6744019c36a4fb06bb"
+      },
+      "recovery.html": {
+        "bytes": 7755,
+        "sha256": "824708ed2e0da1991f1a5fbf7870597aca7dc1aaf554622c5a33b17a6e36b835"
+      }
+    },
+    "read_only_diagnostic_only": true,
+    "schema": "ilinux31al-diagnostic-preparation-v1",
+    "source_inventory_sha256": "f62824f3dd91fdce6179f064d6c1582bbecace6a3b4efd884eae89969a91292c",
+    "status": "OFFLINE_PREPARATION_PASS",
+    "verified_source_count": 92,
+    "writes_authorized": false
+  },
+  "performance": "NOT RUN",
+  "production_control": {
+    "fixture_exit": 2,
+    "fixture_scope": "SYNTHETIC_CONTROL",
+    "help_exit": 0,
+    "host_query": false,
+    "live_recovery": false,
+    "native_ready": false,
+    "private_marker_returned": false,
+    "refusal_reason": "PLIST_DICTIONARY",
+    "refusal_stage": "LAB_INFO",
+    "status": "PRODUCTION_DIAGNOSTIC_CONTROL_PASS",
+    "validator_exit": 0,
+    "validator_preserves_refusal": true
+  },
+  "retained_31ak_pins": 72,
+  "schema": "ilinux31al-offline-verification-v1",
+  "server_started": false,
+  "socket_free_page_check": {
+    "native_ready": false,
+    "page_bytes": 7755,
+    "page_sha256": "824708ed2e0da1991f1a5fbf7870597aca7dc1aaf554622c5a33b17a6e36b835",
+    "profile_sha256": "1e33fd7824f5f89aab8b7e06209b7736c4ff7c5067d87d6744019c36a4fb06bb",
+    "schema": "ilinux31aj-fixed-page-v1",
+    "server_started": false,
+    "source_inventory_sha256": "f62824f3dd91fdce6179f064d6c1582bbecace6a3b4efd884eae89969a91292c",
+    "status": "EXACT_PAGE_VERIFIED",
+    "verified_source_count": 92,
+    "write_authorized": false
+  },
+  "source_pins": 92,
+  "status": "PASS"
+}

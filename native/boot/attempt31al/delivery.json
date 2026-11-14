@@ -1,0 +1,16 @@
+{
+  "candidate_or_rollback_transferred": false,
+  "files": {
+    "ilinux31aj-reader": {
+      "bytes": 106416,
+      "sha256": "5c30802f6cf6821588e4f8fd22e8cb179b00ae84cbf8316448c043bbcf543a00"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "1e33fd7824f5f89aab8b7e06209b7736c4ff7c5067d87d6744019c36a4fb06bb"
+    }
+  },
+  "native_ready": false,
+  "public_binary_release": false,
+  "schema": "ilinux31al-local-diagnostic-delivery-v1"
+}

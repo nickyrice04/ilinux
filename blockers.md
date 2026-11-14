@@ -1,5 +1,36 @@
 # Blockers
 
+### Latest M5 — 31AK refusal isolated; 31AL read-only diagnostic ready offline, November 14
+
+Reviewed M1's 31e9484/910de9d: capability PASS, then initial snapshot refusal
+before enrollment. Exact failed branch/exit was not retained; no Linux, CPU,
+performance or firmware conclusion follows. Macintosh HD desktop/default return
+is human-confirmed for this visit. Boot021 restoration remains OUTSTANDING;
+prior contained EXACT_31AF is not a fresh query. Original Full is the invariant.
+
+31AL adds a separate diagnostic-only helper and one-box Recovery page. It
+identifies shell binding/output/exit failures and finite collector/parser/
+pairing/security/consistency refusals, displays only validated redacted JSON
+before cleanup, and preserves every original guard. Generated state code strips
+back to exact frozen source; original core/json/header stay byte-identical.
+No guard broadening, enrollment, restore, private snapshot or key-generation CLI.
+
+86 focused methods PASS (29 native, 19 renderer, 14 package, 24 staging), plus
+the same 29 native methods under ASan/UBSan. Independent review PASS; it caught
+and corrected first-failure attribution and an unchecked controller re-import.
+Actual 92 source pins retain all 72 old bindings. Clean Git-only export plus
+only the new two-file local kit prepares identical pages and passes socket-free
+check/bash-n. Production self-bound synthetic refusal/display control PASS.
+Helper 106416 bytes; profile 823 bytes. Binaries stay local in ignored build/;
+no public Release, candidate rebuild or old kit/receipt/state change.
+
+Blocking native admission: unknown initial collection refusal, not demonstrated
+Apple firmware restriction. The safe record must identify the actual operand
+before a fix is selected. Real pairing/security/identity refusal stays a stop;
+no reinterpretation as a representation issue without evidence. New diagnostic
+needs M1 review, local tiny-kit delivery and later explicit staging/Recovery
+authorization. Boot021 restoration remains outstanding; no blind restore.
+
 ### M1 — 31AK capability PASS; initial snapshot refused, November 14
 
 Photo confirms one corrected block: RECOVERY_CAPABILITY_PASS, then STOP initial

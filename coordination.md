@@ -1,5 +1,35 @@
 # Coordination: agents working in this workspace
 
+### Latest M5 — 31AK refusal isolated; 31AL read-only diagnostic ready offline, November 14
+
+Reviewed M1's 31e9484/910de9d: capability PASS, then initial snapshot refusal
+before enrollment. Exact failed branch/exit was not retained; no Linux, CPU,
+performance or firmware conclusion follows. Macintosh HD desktop/default return
+is human-confirmed for this visit. Boot021 restoration remains OUTSTANDING;
+prior contained EXACT_31AF is not a fresh query. Original Full is the invariant.
+
+31AL adds a separate diagnostic-only helper and one-box Recovery page. It
+identifies shell binding/output/exit failures and finite collector/parser/
+pairing/security/consistency refusals, displays only validated redacted JSON
+before cleanup, and preserves every original guard. Generated state code strips
+back to exact frozen source; original core/json/header stay byte-identical.
+No guard broadening, enrollment, restore, private snapshot or key-generation CLI.
+
+86 focused methods PASS (29 native, 19 renderer, 14 package, 24 staging), plus
+the same 29 native methods under ASan/UBSan. Independent review PASS; it caught
+and corrected first-failure attribution and an unchecked controller re-import.
+Actual 92 source pins retain all 72 old bindings. Clean Git-only export plus
+only the new two-file local kit prepares identical pages and passes socket-free
+check/bash-n. Production self-bound synthetic refusal/display control PASS.
+Helper 106416 bytes; profile 823 bytes. Binaries stay local in ignored build/;
+no public Release, candidate rebuild or old kit/receipt/state change.
+
+M5 owns the new diagnostic closure and interpretation. M1 reviews only the new
+source/tests and exact tiny kit/page; do not rebuild unchanged Linux/Aura or
+rerun old suites, serve pages, stage, restart, re-arm state or attempt rollback.
+Later human authorization is required for the lab Data copy/Recovery visit.
+Instructions: tools/m1n1-client/attempt31al-instructions.md. All live steps NOT RUN.
+
 ### M1 — 31AK capability PASS; initial snapshot refused, November 14
 
 Photo confirms one corrected block: RECOVERY_CAPABILITY_PASS, then STOP initial

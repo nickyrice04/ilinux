@@ -1,0 +1,43 @@
+{
+  "abi": "arm64",
+  "binary_bytes": 106416,
+  "binary_sha256": "5c30802f6cf6821588e4f8fd22e8cb179b00ae84cbf8316448c043bbcf543a00",
+  "candidate_definition": {
+    "bytes": 153190400,
+    "publication_authorizes_writes": false,
+    "schema": "ilinux31aj-compiled-candidate-v1",
+    "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+    "target": {
+      "board": "j716c",
+      "chip_id": "0x6050",
+      "model": "Mac17,6"
+    }
+  },
+  "compiler_version": "Apple clang version 21.0.0 (clang-2100.4.1.1)",
+  "guard_preservation": {
+    "core_json_reader_byte_identical": true,
+    "frozen_sources": {
+      "core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+      "json.c": "a06a21280546f02c3ec330b346b95c9a55872e3712198f18bdee7e8e9bdb240f",
+      "reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+      "state.c": "31e97a75f1fe5dbd1dfe3585a15822c56ee86156d2a3cc52c39e304f1dd4d08a"
+    },
+    "state_marks_strip_exact": true
+  },
+  "host_changes": false,
+  "live_run": false,
+  "minimum_macos": "13.0",
+  "native_ready": false,
+  "recovery_run": false,
+  "sanitized": false,
+  "schema": "ilinux31al-native-build-v1",
+  "sdk_version": "27.2",
+  "source_inputs": {
+    "build.py": "2fff89c9c9d234f5da9164ea25aa1858917522bd223e437eb9926deca55de7cf",
+    "diagnostic.c": "f40efbf9bb1366e00faff3acd32cd876619992599a4cff70beff877b783efae3",
+    "diagnostic.h": "bd79bb8be0502e3125856100d674d6a1ba5c4948fdfe7da13ee0a0cdaaac9ad5",
+    "generate.py": "f6d4b336b0f95f3793cf849618e6fe1b9542da3421b53787436304e7bfb1adca",
+    "main.c": "afbd305629ded9ddf8ac74bb4ac22ea877acfd1ead19f0260cfd7c064f79c752"
+  },
+  "system_sdk_only": true
+}
