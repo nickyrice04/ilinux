@@ -1,5 +1,19 @@
 # Progress Log
 
+### Latest M5 — temporary lab Startup Disk confirmed, November 14
+
+Authorized 31AJ handoff published at481be75. After selecting the lab in System
+Settings, Apple's documented read-only bless --getBoot exits0 and resolves to
+the lab volume. Temporary default selection is now confirmed; this supersedes
+the earlier UNCONFIRMED selector lookup only. No identifiers, policy query,
+security setting, install or restart occurred in this readback.
+
+M1 exact-page live URL/reachability remains pending before the human shutdown /
+hold-power / Options cue. User's full lab install / one90s RAM observation /
+boot021-disabledCTRR restoration / MacintoshHD default return authorization is
+already recorded; do not ask again. No actual Recovery/install/native/rollback
+result is claimed. Record: native/boot/attempt31aj-startup-selection-2026-11-14.json.
+
 ### Latest M5 — 31AJ physical transaction authorized, November 14
 
 User explicitly authorized the lab-only 31AJ install, one boot test and exact

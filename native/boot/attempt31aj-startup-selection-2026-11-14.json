@@ -1,0 +1,14 @@
+{
+  "UI_selection": "LAB",
+  "date": "2026-11-14",
+  "exit": 0,
+  "identifiers_returned": false,
+  "logical_boot_volume": "LAB",
+  "operation": "APPLE_BLESS_GETBOOT_READ_ONLY",
+  "persistent_default_confirmed": true,
+  "policy_queried": false,
+  "restart_issued": false,
+  "schema": "ilinux31aj-startup-selection-readback-v1",
+  "settings_changed_by_query": false,
+  "supersedes": "Earlier UNCONFIRMED selector-query evidence only; transaction phases remain unrun."
+}
