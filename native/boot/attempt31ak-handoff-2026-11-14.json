@@ -17,6 +17,9 @@
   "independent_pre_restart_audit": "PASS_NO_MATERIAL_BLOCKER",
   "install": "NOT_RUN",
   "live_page": {
+    "M1_reported_HTTP_status": 200,
+    "M1_reported_exact_html_sha256": "2423277989ae30d75345e7de32d6eac602a86cdfa2ee36ac87bc6eef0e7f0af5",
+    "M1_serving_receipt": "native/boot/attempt31ak-page-serving-m1-2026-11-14.json",
     "independent_HTTP_query": false,
     "private_URL_saved": false,
     "source": "USER_CONFIRMED_CORRECT_31AK_SERVER_URL"
