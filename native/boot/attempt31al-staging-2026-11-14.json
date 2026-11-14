@@ -1,0 +1,51 @@
+{
+  "M1_page_server": "AWAITING_LIVE_CONFIRMATION; review page exact",
+  "SMP": "NOT RUN",
+  "boot021_restoration": "OUTSTANDING",
+  "current_system": "Macintosh HD; staging guard and visible System Settings context",
+  "date": "2026-11-14",
+  "default_selector_observation": "LAB; read-only bless exit0 and in-memory internal volume/group/container comparison; no identifiers returned",
+  "earlier_selector_observations": "Sandboxed lookups UNCONFIRMED; superseded by successful read-only observation",
+  "fresh_local_kit_page_identity": "PASS",
+  "install": "NOT RUN",
+  "live_Recovery": "NOT RUN",
+  "native_Linux": "NOT RUN",
+  "native_ready": false,
+  "noninteractive_staging_attempt": "SUDO_PASSWORD_REQUIRED_BEFORE_EXECUTION; no changes",
+  "old_suite_or_build_rerun": false,
+  "paired_recovery_entry": "Temporary lab default confirmed; use shutdown then held-power Options/Continue once exact new page live",
+  "performance": "NOT RUN",
+  "reported_boot_object_installed": false,
+  "reported_boot_settings_changed": false,
+  "reported_default_changed": false,
+  "reported_policy_read": false,
+  "reported_scope": "MACOS_LAB_DATA_STAGE",
+  "reported_volume_created": false,
+  "required_original_security": "Full",
+  "restart_ready": false,
+  "restore": "NOT RUN",
+  "retained_31ak_count": 72,
+  "review_commit": "5bb5639",
+  "review_status": "OFFLINE_PASS_LIVE_DIAGNOSTIC_HELD",
+  "schema": "ilinux31al-m5-staging-handoff-v1",
+  "security_settings_changed_by_M5": false,
+  "settings_change_scope": "TEMPORARY_LAB_STARTUP_DISK_ONLY",
+  "source_commit": "483dab6",
+  "source_count": 92,
+  "staged": true,
+  "staged_files": {
+    "ilinux31aj-reader": {
+      "bytes": 106416,
+      "sha256": "5c30802f6cf6821588e4f8fd22e8cb179b00ae84cbf8316448c043bbcf543a00"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "1e33fd7824f5f89aab8b7e06209b7736c4ff7c5067d87d6744019c36a4fb06bb"
+    }
+  },
+  "staging_evidence": "USER_SUPPLIED_SUCCESS_JSON_MATCHES_REVIEWED_DELIVERY; not independently re-executed",
+  "temporary_startup_disk_authorization": "EXPLICIT_USER_YES; select lab temporarily and restore Original default after diagnostic; stop before restart; no old lab boot",
+  "temporary_startup_disk_change": "AUTHORIZED_AND_SELECTED_IN_SYSTEM_SETTINGS_WITHOUT_RESTART",
+  "ui_restart_clicked": false,
+  "user_authorization": "Stage reviewed diagnostic kit and prepare read-only Recovery check; keep Original Full Security"
+}

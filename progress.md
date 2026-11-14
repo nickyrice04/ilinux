@@ -1,5 +1,36 @@
 # Progress Log
 
+### Latest M5 — 31AL review accepted; diagnostic kit staged, November 14
+
+Reviewed M1's 5bb5639 PASS: no actionable findings, all 92 source pins/72 retained
+bindings, exact tiny kit/page and 86 methods. Fresh M5 source/kit/page identity
+matches; no suite, build or prior artifact operation repeated. User authorized
+staging and preparation of the read-only Recovery check, keeping Original Full.
+
+Noninteractive sudo stopped before execution for password. User then supplied
+the successful guarded staging JSON: only helper106416/5c30802f…543a00 and
+profile823/1e33fd78…fb06bb copied to new lab Data diagnostic directory. No boot
+object/default/security/policy/volume change reported. User receipt accepted;
+not independently rerun. Old kit/state/objects/pages/source remain frozen.
+
+Prepared tools/m1n1-client/attempt31al-staged-instructions.md. M1 may serve only
+the exact new one-box7755-byte page using its reviewed bounded controller;
+live page readiness remains unconfirmed. No M1 restart/proxy/camera test.
+
+Primary Apple/Asahi guidance confirms paired Recovery follows the default OS.
+User explicitly approved temporary lab Startup Disk selection and Original
+default restoration. M5 selected lab in System Settings without clicking Restart;
+independent read-only bless exit0/internal-volume identity confirms LAB default.
+Earlier sandboxed lookups were unconfirmed, superseded by the successful read.
+Only default selection changed; no security-policy query/change. Exact live M1
+page confirmation still gates the shutdown cue. Never boot the old lab object.
+
+31AL live Recovery/install/restore/Linux/SMP/performance NOT RUN. Boot021
+restoration remains OUTSTANDING. No routine policy command requested. The new
+read-only diagnostic is to capture the failed stage/reason once, then return to
+Macintosh HD/default; neither pass nor refusal authorizes any native boot.
+Receipt: native/boot/attempt31al-staging-2026-11-14.json.
+
 ### M1 — 31AL diagnostic offline review PASS, November 14
 
 Reviewed 483dab6: all 92 tracked pins exact; all 72 old bindings unchanged.
