@@ -10,7 +10,8 @@ root/model/CDIS/build match. No canonical-path retry, guard edit or native boot.
 State/key/mutation not reached; blind restore is inappropriate without baseline.
 62 source pins/four reviewed page outputs remain exact; no old-suite rerun.
 M5 owns offline correction; preserve frozen files/receipts and no automatic retry.
-Native/Linux/SMP/performance NOT RUN; original desktop/default return pending.
+Human confirms Macintosh HD desktop return and separately confirms its default.
+Native/Linux/SMP/performance NOT RUN. Bounded page server finished, exit0.
 Result: `native/boot/attempt31aj-capability-refusal-2026-11-14.md` and JSON.
 
 ### Latest M5 — 31AJ ready for human Recovery restart, November 14

@@ -52,11 +52,14 @@
   "SMP": "NOT RUN",
   "performance": "NOT RUN",
   "restore": "NOT RUN",
-  "original_desktop_return": "PENDING",
-  "original_default_return": "PENDING",
+  "original_desktop_return": "HUMAN CONFIRMED",
+  "original_default_return": "HUMAN CONFIRMED",
   "guard_bypass": false,
   "retry": false,
   "camera": "OFF",
   "public_media_uploaded": false,
-  "next_owner": "M5 offline correction and independent review; no automatic physical retry"
+  "next_owner": "M5 offline correction and independent review; no automatic physical retry",
+  "return_evidence": "Human reported Returned after Macintosh HD return guidance; no independent target query.",
+  "page_server": "FINISHED exit0; not restarted",
+  "default_return_evidence": "Separate human confirmation of Macintosh HD in System Settings General Startup Disk."
 }

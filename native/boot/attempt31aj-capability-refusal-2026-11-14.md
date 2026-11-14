@@ -3,7 +3,8 @@
 **Result: RECOVERY_PREFLIGHT_REFUSED_BEFORE_ENROLLMENT.**
 The supplied Recovery photo confirms a deployment-path incompatibility sufficient
 to explain the refusal. This session stops; no install/restore retry or native
-boot follows. Original desktop/default return is still pending human confirmation.
+boot follows. Human now confirms return to the usual Macintosh HD desktop;
+Macintosh HD default Startup Disk selection is separately human confirmed.
 
 ## Observed evidence
 
@@ -73,7 +74,8 @@ deleted, reset or re-armed. Current status:
 | Native observation / 90-second window | NOT RUN; zero windows used |
 | Linux / SMP / performance | NOT RUN |
 | Restoration block | NOT RUN |
-| Macintosh HD desktop/default return | PENDING human confirmation |
+| Macintosh HD desktop return | HUMAN CONFIRMED after abort |
+| Macintosh HD default Startup Disk | HUMAN CONFIRMED separately |
 
 ## M5 handoff
 
@@ -96,3 +98,13 @@ No suite rebuild/rerun or production-helper execution on M1 was needed. Existing
 this actual Recovery deployment outcome. Code, binaries, pages, earlier dirty
 notes and consumed receipts remain untouched. Camera remains off; no M1 restart,
 USB/proxy, volume operation, new security change or extra native experiment.
+
+## Post-abort return
+
+After the shutdown/startup-picker return guidance, the human reports
+“Returned” and requests publication for M5. Record the usual Macintosh HD
+desktop return as human confirmed. In a separate answer, the human confirms
+Macintosh HD is the default in System Settings → General → Startup Disk.
+No additional policy query, restore invocation or native attempt was performed.
+The bounded page-server process has finished with exit 0; it was not restarted.
+The symlink finding and M5 offline correction handoff remain unchanged.
