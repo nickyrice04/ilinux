@@ -1,0 +1,50 @@
+{
+  "candidate": {
+    "bytes": 153190400,
+    "name": "candidate.macho",
+    "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+  },
+  "date": "2026-11-14",
+  "helper": {
+    "bytes": 89312,
+    "name": "ilinux31aj-reader",
+    "sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5"
+  },
+  "initial_scope_state": {
+    "Recovery_admission": "NOT_RUN",
+    "default_return": "NOT_RUN",
+    "install": "NOT_RUN",
+    "native_test": "NOT_RUN",
+    "production_page_server": "WAITING_FOR_M1_START",
+    "rollback": "NOT_RUN",
+    "temporary_lab_selection": "NOT_RUN"
+  },
+  "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+  "readiness": "OFFLINE_CHECKS_PASS_AWAITING_LIVE_HANDOFF",
+  "required_invariants": {
+    "no_automatic_retry": true,
+    "no_firmware_update": true,
+    "no_new_volumes": true,
+    "no_original_macos_modification": true,
+    "no_policy_reset": true,
+    "no_restage_or_rearm": true,
+    "original_full_security": true
+  },
+  "review_commit": "a417183",
+  "review_result": "PORTABLE_CORRECTION_PASS_OFFLINE_PAGE_READY",
+  "rollback": {
+    "bytes": 3932160,
+    "name": "m1n1-boot021.bin",
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+  },
+  "schema": "ilinux31aj-native-authorization-v1",
+  "scope": {
+    "lab_only_31aj_macho_install": true,
+    "macintosh_hd_default_return": true,
+    "max_native_window_seconds": 90,
+    "native_windows": 1,
+    "raw_boot021_and_disabled_ctrr_restoration": true,
+    "temporary_lab_startup_disk": true
+  },
+  "source": "EXPLICIT_USER_MESSAGE_THIS_TURN"
+}

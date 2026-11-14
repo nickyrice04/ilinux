@@ -1,0 +1,35 @@
+{
+  "M1_live_page": "AWAITING_PRIVATE_URL",
+  "M1_review": "PASS_OFFLINE_PAGE_READY",
+  "M1_review_commit": "a417183",
+  "Macintosh_HD_default_return": "NOT_RUN",
+  "Recovery_admission": "NOT_RUN",
+  "automatic_restart": false,
+  "boot021_restoration": "NOT_RUN",
+  "date": "2026-11-14",
+  "independent_pre_restart_audit": "PASS_NO_MATERIAL_BLOCKER",
+  "install": "NOT_RUN",
+  "native_test": "NOT_RUN",
+  "native_timer_max_seconds": 90,
+  "no_firmware_change": true,
+  "no_new_volume": true,
+  "no_security_setting_change_by_M5": true,
+  "prepared_artifacts_and_page_outputs": "EXACT_M1_PINS",
+  "recording": "PREPARATION_REUSED_NOT_STARTED_BY_M5",
+  "schema": "ilinux31aj-pre-restart-handoff-v1",
+  "selector_read_only_check": {
+    "exit": 1,
+    "identifiers_returned": false,
+    "policy_queried": false,
+    "selection": "UNCONFIRMED",
+    "settings_changed": false
+  },
+  "source_pins_verified": 62,
+  "startup_disk_ui": {
+    "after": "iLinux Boot Lab",
+    "authentication_prompt_observed": false,
+    "before": "Macintosh HD",
+    "persistent_default_independently_verified": false,
+    "restart_button_clicked": false
+  }
+}

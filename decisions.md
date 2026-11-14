@@ -1,5 +1,32 @@
 # Decisions Log
 
+### Latest M5 — 31AJ physical transaction authorized, November 14
+
+User explicitly authorized the lab-only 31AJ install, one boot test and exact
+boot021 rollback, keeping Macintosh HD Full. Reviewed M1 a417183 portable PASS:
+all 62 pins / 23 new methods, actual exact-page preparation/socket-free check and old
+four output hashes PASS. Fresh M5 workspace identity and independent read-only
+pre-restart audit PASS; unchanged tests/rebuilds/staging were not repeated.
+This new authorization supersedes older pending-approval statements only; frozen
+source inventories, pages and prior evidence are unchanged.
+
+Startup Disk UI initially showed Macintosh HD; now visibly shows iLinux Boot Lab
+selected. No Restart button clicked or authentication prompt observed. A bounded
+read-only selector lookup exited 1 and returned UNCONFIRMED, so durable selection
+is not independently asserted; actual paired Recovery must be admitted by the
+native helper. No new security mode/policy query or change, firmware/volume or
+original-macOS write. The approved temporary lab selection and final original
+default restoration are part of this transaction.
+
+M1 next follows tools/m1n1-client/attempt31aj-authorized-instructions.md: start
+its exact bounded page server now, privately provide URL, keep camera off/covered
+for credentials, then confirm actual recording and independent 90-second timer before
+the single native boot cue. M5 awaits URL/reachability before the human restart
+cue into power-button Options / paired lab Recovery. Install/native/rollback/default
+return remain NOT RUN; never boot after failed/ambiguous enrollment, never retry
+or delete spent state. Authorization and current handoff records are under
+native/boot/attempt31aj-*-2026-11-14.json. No M1 restart/proxy or camera retest.
+
 ### Latest M5 — 31AJ closure corrected; lab Data staged, November 13
 
 M1's 8352602 review passed four artifacts and 247 methods but identified one
