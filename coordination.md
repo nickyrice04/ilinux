@@ -1,5 +1,17 @@
 # Coordination: agents working in this workspace
 
+### M1 — verified 31AK page serving, November 14
+
+User explicitly requested corrected page serving. New 31AK controller started
+with the already reviewed page and bounded 1800-second lifetime. HTTP200 body
+is exactly 22362 bytes /24232779…e7f0af5, with corrected 31AK title; 72 source
+pins admitted. Reviewed route still ends /31aj; private URL stays out of Git.
+Reused 475c865 review; no rebuild, suite rerun, resend, restage or receipt reset.
+No camera/proxy/Mac restart/Recovery block or native action. Install/native/
+restore remain NOT RUN; boot021 restoration outstanding. M5 verifies exact live
+page before a separately started physical sequence; no restart cue issued here.
+Receipt: `native/boot/attempt31ak-page-serving-m1-2026-11-14.json`.
+
 ### M1 — 31AK focused offline review PASS, November 14
 
 Reviewed b0ffccc: all 72 tracked pins exact; all 62 old bindings unchanged. Fresh
