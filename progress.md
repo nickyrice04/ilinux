@@ -1,5 +1,43 @@
 # Progress Log
 
+### Latest M5 — 31AJ result reconciled; 31AK correction ready offline, November 14
+
+Reviewed M1's 34250fa report: Recovery capability refused before enrollment,
+policy mutation, baseline/key or Linux. The observed /private system alias hit
+our strict profile reader. Separate Recovery codec control passed. No native
+window was used, so this supplies no CPU/firmware failure or performance result.
+Fresh user-supplied read-only object JSON identifies EXACT_31AF, not boot021.
+Boot021 rollback is NOT DONE. Independent read-only M5 queries confirm both
+current and default Macintosh HD. No new boot/security/firmware setting changed;
+Original Full Security remains the required invariant, not a new mode query.
+
+New 31AK is a procedure-only correction: canonicalize/bind the new owned temporary
+work directory, retain strict native no-follow reads, use held-CWD relative writes
+and fixed-file cleanup, and distinguish preflight from post-command failures.
+Unchanged actual C helper reproduces alias refusal and passes canonical profile /
+exact boot021 file verification without any host/Recovery query. New 16 path plus
+14 package methods and independent 30-test review PASS. Clean Git-only export with 72
+tracked source inputs and only the existing four artifacts passes intake, workspace
+materialization, corrected page preparation, socket-free check and both bash-n.
+All 62 previous source pins and all candidate/helper/profile/boot021 bytes remain
+unchanged. No rebuild, resend, restage, state deletion or old-suite rerun.
+
+M1 next reviews tools/m1n1-client/attempt31ak-instructions.md and the 30 changed
+methods/pages only; reuse its 247-method/unchanged-artifact review. No restart,
+server, camera retest, proxy or new physical attempt now. The 31AJ visit ended;
+new corrected physical execution follows focused M1 review and user go-ahead.
+Its intended final raw boot021 restoration remains outstanding, with actual 31AF
+as the initial baseline; do not fabricate an already-restored state.
+
+Native plan: existing 18-worker/three-cluster RAM diagnostic first; then measured
+CPU-class frequency/scaling/wakeups and RAM speed, N1/SSH and read-only NVMe,
+matched G17C/Mesa/display plus existing Omarchy, then energy/thermal/suspend and
+remaining devices. Current sources distinguish the new SPTM guest-reset affinity
+fix from our direct Linux path. No blind rebase or Apple-only blocker conclusion.
+Evidence: native/boot/attempt31ak/, post-refusal/return JSON, and
+research/m5-native-next-2026-11-14.md. REA follows an actual unexplained native
+milestone; own source plus real-reader controls directly explain this fault.
+
 ### M1 — 31AJ Recovery system-alias blocker confirmed, November 14
 
 Photo confirms helper capability REFUSED before enrollment; Recovery /private is

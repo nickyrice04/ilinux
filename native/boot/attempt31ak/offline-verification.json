@@ -1,0 +1,45 @@
+{
+  "Recovery_layout": "PRIVATE_SYMLINK_FIXTURE_NOT_REAL_RECOVERY",
+  "actual_unchanged_helper_file_controls": 2,
+  "artifact_resend_required": false,
+  "binary_rebuild": false,
+  "boot021_currently_restored": false,
+  "candidate_unchanged": true,
+  "current_lab_payload": "USER_REPORTED_EXACT_31AF",
+  "date": "2026-11-14",
+  "distinct_new_methods": 30,
+  "native_helper_unchanged": true,
+  "native_ready": false,
+  "new_Recovery_attempt": false,
+  "new_native_test": false,
+  "new_security_or_firmware_change": false,
+  "new_sources": {
+    "tools/recovery31ak/package.py": "249010da9471fd8067845de20d973d286afae9908afd5746e334ad5b403588a4",
+    "tools/recovery31ak/render.py": "f835d99f7ae1a4cda9a9bed62eab5005c2b6ac598f73d651e67f1b21c7abc3e4",
+    "tools/recovery31ak/test_package.py": "b634946351ef36977abf6ef05a76e450edb8f8e2d95c5e93239ce7d807af0a62",
+    "tools/recovery31ak/test_paths.py": "4c3a365f8f0fdc243a31515d22cf0a5b6c6337ecd1a2da031e30dd53ffec28c9"
+  },
+  "new_staging": false,
+  "original_current_and_default": "READ_ONLY_CONFIRMED",
+  "original_sources_unchanged": true,
+  "ownership_policy_and_write_tools": "SYNTHETIC_IN_FLOW_TESTS",
+  "profile_unchanged": true,
+  "public_binary_release": false,
+  "schema": "ilinux31ak-focused-offline-v1",
+  "status": "PASS",
+  "suites": {
+    "package": {
+      "independent_seconds": 0.251,
+      "methods": 14,
+      "source_review": "NO_MATERIAL_ISSUE"
+    },
+    "paths": {
+      "corrected_install_restore_alias_flows": "PASS",
+      "final_seconds": 49.9,
+      "independent_seconds": 49.668,
+      "methods": 16,
+      "old_alias_failure_reproduced": true
+    }
+  },
+  "writes_authorized": false
+}

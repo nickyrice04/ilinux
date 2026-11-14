@@ -1,0 +1,27 @@
+{
+  "live_recovery_admission": "UNKNOWN",
+  "native_ready": false,
+  "output": {
+    "install-paste.txt": {
+      "bytes": 7883,
+      "sha256": "9c054a830d4d217ec694592201fd77a0412d8bf932d882d38979ae8232df107c"
+    },
+    "profile.json": {
+      "bytes": 822,
+      "sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab"
+    },
+    "recovery.html": {
+      "bytes": 22362,
+      "sha256": "2423277989ae30d75345e7de32d6eac602a86cdfa2ee36ac87bc6eef0e7f0af5"
+    },
+    "restore-paste.txt": {
+      "bytes": 8593,
+      "sha256": "b890a63d309985f45e80533e0803dad38e51b8b16c9215db15f756d54f067a6c"
+    }
+  },
+  "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+  "schema": "ilinux31aj-recovery-preparation-v1",
+  "source_inventory_sha256": "f795b4329bfc8b75c0ec9dfa54ef5f1703ed67d3847bf2e061dc1c5067763115",
+  "verified_source_count": 72,
+  "write_authorized": false
+}

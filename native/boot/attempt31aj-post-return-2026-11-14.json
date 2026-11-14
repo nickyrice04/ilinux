@@ -1,0 +1,9 @@
+{
+  "current_original": true,
+  "default": "ORIGINAL",
+  "default_query_exit": 0,
+  "identifiers_returned": false,
+  "policy_queried": false,
+  "read_only": true,
+  "settings_changed": false
+}

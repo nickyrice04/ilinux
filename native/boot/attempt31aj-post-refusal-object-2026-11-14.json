@@ -1,0 +1,21 @@
+{
+  "boot021_restored": false,
+  "bootability_verified": false,
+  "configured_file_only": true,
+  "date": "2026-11-14",
+  "default_selection_verified_by_object_reader": false,
+  "evidence_source": "USER_PASTED_READ_ONLY_READER_JSON",
+  "file_bytes": 445430,
+  "framing": "IMG4",
+  "independent_selected_object_read": false,
+  "opaque_im4p_context": true,
+  "original_default_return": "M1_RECORDED_HUMAN_CONFIRMATION",
+  "original_desktop_return": "M1_RECORDED_HUMAN_CONFIRMATION",
+  "payload_bytes": 442368,
+  "payload_relation": "EXACT_31AF",
+  "policy_change_by_this_check": false,
+  "read_only": true,
+  "restoration_verified": false,
+  "schema": "ilinux31aj-post-refusal-object-confirmation-v1",
+  "wrapper_match": "UNKNOWN"
+}

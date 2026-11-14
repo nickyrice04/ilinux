@@ -1,0 +1,36 @@
+{
+  "Recovery_or_policy_queries": false,
+  "boot021_installed": false,
+  "cases": {
+    "canonical_owned_directory": {
+      "exit": 0,
+      "result": {
+        "read_only": true,
+        "status": "EXACT_PROFILE_FILE",
+        "verified": true,
+        "writes_authorized": false
+      }
+    },
+    "lexical_system_alias": {
+      "exit": 2,
+      "result": {
+        "native_ready": false,
+        "read_only": true,
+        "reason": "preflightRefused",
+        "status": "REFUSED",
+        "writes_authorized": false
+      }
+    }
+  },
+  "date": "2026-11-14",
+  "helper_bytes": 89312,
+  "helper_sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5",
+  "host_queries": false,
+  "native_helper_guard_unchanged": true,
+  "native_ready": false,
+  "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+  "schema": "ilinux31ak-actual-helper-path-control-v1",
+  "scope": "ACTUAL_UNCHANGED_OWN_HELPER_AND_BOOT021_WORKSPACE_FIXTURE",
+  "symlink_layout": "FIXTURE_private_TO_System/Volumes/Data/private",
+  "system_private_modified": false
+}
