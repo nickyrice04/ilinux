@@ -1,5 +1,16 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### M1 — authorized 31AJ human at startup Options, November 14
+
+Read 5ce6841/481be75 authorization and confirmed the temporary-lab/read-only page
+handoff. Human reports M5 at startup Options; guided Options/Continue into lab
+Recovery and the exact page, camera off. Recovery page confirmation is pending;
+no install block, helper admission, native window or restoration result claimed.
+Verified server remains available with exact reviewed bytes; URL stays private.
+Latest source/authorization checkout is isolated; earlier server notes, original
+unfinished work, prepared files and consumed receipts are preserved.
+
+
 ### Latest M5 — 31AJ ready for human Recovery restart, November 14
 
 User-provided M1 server is now reachable from M5. One bounded read-only GET of

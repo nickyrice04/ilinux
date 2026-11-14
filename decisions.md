@@ -5144,3 +5144,11 @@ kit. Start bounded serving only for the human-ready separately authorized
 Recovery visit. Page readiness does not authorize enrollment, Startup Disk or
 native/restoration operations. No restart/live action. Evidence:
 native/boot/attempt31aj-portable-m1-review-2026-11-14.md and JSON.
+
+## 2026-11-14 — Continue the already authorized transaction into paired Recovery
+
+M1 reads 5ce6841 and explicit authorization481be75; no repeated approval or
+extra desktop query. Human is at startup Options; guide paired Recovery and
+verified page first, with camera off. No install/native/restore result inferred.
+Fresh isolated reporting checkout preserves the earlier serving workspace's
+unfinished notes and active server. Current62 source pins remain exact.
