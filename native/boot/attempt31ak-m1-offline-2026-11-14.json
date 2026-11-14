@@ -1,0 +1,120 @@
+{
+  "schema": "ilinux31ak-m1-offline-review-v1",
+  "date": "2026-11-14",
+  "reviewed_commit": "b0ffccc8143c32e4069e12a5a22363526460ff81",
+  "status": "OFFLINE_PASS_NATIVE_HOLD",
+  "actionable_findings": [],
+  "source_inventory": {
+    "count": 72,
+    "tracked": true,
+    "hashes": "PASS_BEFORE_AND_AFTER",
+    "retained_old_bindings": 62,
+    "sha256": "f795b4329bfc8b75c0ec9dfa54ef5f1703ed67d3847bf2e061dc1c5067763115"
+  },
+  "fresh_tests": {
+    "methods": 30,
+    "suites": {
+      "package": {
+        "methods": 14,
+        "seconds": 0.435,
+        "exit": 0,
+        "result": "PASS"
+      },
+      "paths": {
+        "methods": 16,
+        "seconds": 68.704,
+        "exit": 0,
+        "result": "PASS"
+      }
+    },
+    "python": "3.9.6",
+    "isolation": "python3 -I; caffeinate -i",
+    "scope": "WORKSPACE_SYNTHETIC_ROOT_POLICY_WRITE_TOOLS_WITH_REAL_SHELL_AND_FILESYSTEM"
+  },
+  "reused": {
+    "reader_artifact_transaction_methods": 247,
+    "prior_portable_review": "REUSED; not rerun"
+  },
+  "artifacts": {
+    "candidate_helper_profile_boot021": "UNCHANGED_EXACT_PINS",
+    "prepared_kit": "Workspace-only copy of existing verified files into clean checkout; no rebuild/download/resend/restage"
+  },
+  "page_preparation": {
+    "boot_settings_changed": false,
+    "native_ready": false,
+    "preparation": {
+      "live_recovery_admission": "UNKNOWN",
+      "native_ready": false,
+      "output": {
+        "install-paste.txt": {
+          "bytes": 7883,
+          "sha256": "9c054a830d4d217ec694592201fd77a0412d8bf932d882d38979ae8232df107c"
+        },
+        "profile.json": {
+          "bytes": 822,
+          "sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab"
+        },
+        "recovery.html": {
+          "bytes": 22362,
+          "sha256": "2423277989ae30d75345e7de32d6eac602a86cdfa2ee36ac87bc6eef0e7f0af5"
+        },
+        "restore-paste.txt": {
+          "bytes": 8593,
+          "sha256": "b890a63d309985f45e80533e0803dad38e51b8b16c9215db15f756d54f067a6c"
+        }
+      },
+      "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+      "schema": "ilinux31aj-recovery-preparation-v1",
+      "source_inventory_sha256": "f795b4329bfc8b75c0ec9dfa54ef5f1703ed67d3847bf2e061dc1c5067763115",
+      "verified_source_count": 72,
+      "write_authorized": false
+    },
+    "schema": "ilinux31ak-workflow-preparation-v1",
+    "status": "OFFLINE_PREPARATION_PASS",
+    "unchanged_31aj_candidate_helper_profile": true,
+    "writes_authorized": false
+  },
+  "page_check": {
+    "native_ready": false,
+    "page_bytes": 22362,
+    "page_sha256": "2423277989ae30d75345e7de32d6eac602a86cdfa2ee36ac87bc6eef0e7f0af5",
+    "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+    "schema": "ilinux31aj-fixed-page-v1",
+    "server_started": false,
+    "source_inventory_sha256": "f795b4329bfc8b75c0ec9dfa54ef5f1703ed67d3847bf2e061dc1c5067763115",
+    "status": "EXACT_PAGE_VERIFIED",
+    "verified_source_count": 72,
+    "write_authorized": false
+  },
+  "bash_n": {
+    "install": 0,
+    "restore": 0
+  },
+  "actual_production_blocks": "NOT EXECUTED",
+  "M5_actual_helper_controls": "REVIEWED_PRODUCER_RECEIPT_ONLY; NOT RERUN",
+  "M5_clean_export": "REVIEWED_PRODUCER_RECEIPT_ONLY; NOT RERUN",
+  "public_hardware_source_refresh": "NOT RERUN",
+  "preservation": {
+    "existing_files": 36,
+    "hashes": "UNCHANGED",
+    "source_or_frozen_artifact_edit": false,
+    "state_receipt_reset_or_rearm": false
+  },
+  "current_lab_payload": "M5_USER_REPORTED_CONFIGURED_EXACT_31AF; NOT A_NEW_M1_QUERY",
+  "boot021_restoration": "OUTSTANDING",
+  "original_current_and_default": "M5_READ_ONLY_RECEIPT_REVIEWED; prior human confirmations retained",
+  "required_original_security": "Full",
+  "Recovery31AK": "NOT RUN",
+  "install31AK": "NOT RUN",
+  "native31AK": "NOT RUN",
+  "rollback31AK": "NOT RUN",
+  "Linux31AK": "NOT RUN",
+  "SMP": "NOT RUN",
+  "performance": "NOT RUN",
+  "production_server": "NOT RUN",
+  "camera": "NOT RUN",
+  "proxy": "NOT RUN",
+  "restart_either_Mac": false,
+  "security_volume_default_change": false,
+  "next_step": "Later explicit user start of corrected reviewed physical sequence; no automatic retry"
+}

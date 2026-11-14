@@ -1,5 +1,22 @@
 # Progress Log
 
+### M1 — 31AK focused offline review PASS, November 14
+
+Reviewed b0ffccc: all 72 tracked pins exact; all 62 old bindings unchanged. Fresh
+14 package + 16 Recovery-path fixture methods PASS. Actual corrected page prep /
+socket-free check PASS; all four outputs match M5, both bash-n PASS. Canonical
+owned workdir/CWD binding, relative temp writes/fixed cleanup and failure advice
+reviewed; native no-follow, target/key/baseline guards and write arguments retained.
+Existing verified kit copied only within clean workspace; no rebuild/resend/restage.
+Reused 247-method/artifact review; M5 actual-helper/export receipts not rerun here.
+36 existing kit/page/receipt/session files unchanged, including intake receipts.
+No actionable finding. Current lab EXACT_31AF is M5's supplied object evidence;
+boot021 restoration remains outstanding. Current/default original confirmed in
+M5's read-only receipt, not queried again here. 31AK Recovery/install/native/rollback/
+Linux/SMP/performance NOT RUN; no server/camera/proxy/restart/settings action.
+Ready for later user-started corrected sequence; no automatic physical retry.
+Evidence: `native/boot/attempt31ak-m1-offline-2026-11-14.md` and JSON.
+
 ### Latest M5 — 31AJ result reconciled; 31AK correction ready offline, November 14
 
 Reviewed M1's 34250fa report: Recovery capability refused before enrollment,
