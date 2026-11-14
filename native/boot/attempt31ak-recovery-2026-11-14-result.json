@@ -36,8 +36,8 @@
   "restore": "NOT RUN",
   "boot021_restoration": "OUTSTANDING",
   "last_lab_object_evidence": "PRIOR_M5_CONFIGURED_CONTAINED_EXACT_31AF; NOT REQUERIED",
-  "original_desktop_return": "PENDING FOR THIS VISIT",
-  "original_default_return": "PENDING FOR THIS VISIT",
+  "original_desktop_return": "HUMAN CONFIRMED FOR THIS VISIT",
+  "original_default_return": "HUMAN CONFIRMED FOR THIS VISIT",
   "required_original_security": "Full",
   "source_preservation": {
     "pins": 72,
@@ -51,5 +51,6 @@
   "M1_restart": false,
   "proxy": "NOT RUN",
   "media_uploaded": false,
-  "next_owner": "M5 offline snapshot/admission failure investigation; no automatic physical retry"
+  "next_owner": "M5 offline snapshot/admission failure investigation; no automatic physical retry",
+  "return_evidence": "Human answered Desktop and default confirmed after the 31AK refusal/return guidance; no independent new target query."
 }

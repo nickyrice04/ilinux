@@ -4,7 +4,8 @@
 The single corrected install-block invocation stopped before baseline creation or
 boot-object/policy mutation. No native observation occurred. M5 owns further
 offline diagnosis; do not repeat a phase, modify flags or bypass a refused guard.
-Original desktop/default return for this visit is pending human confirmation.
+Human separately confirms both the Macintosh HD desktop return and its default
+Startup Disk selection for this visit.
 
 ## Photo-confirmed result
 
@@ -79,7 +80,7 @@ metadata collection, state change or in-session retry was requested.
 | Candidate readback | NOT REACHED |
 | Native / Linux / SMP / performance | NOT RUN; zero native windows used |
 | Independent restoration | NOT RUN; no new baseline available |
-| Macintosh HD desktop/default return for this visit | PENDING human confirmation |
+| Macintosh HD desktop/default return for this visit | BOTH HUMAN CONFIRMED |
 
 Boot021 restoration remains outstanding. The last supplied M5 object observation
 was configured contained EXACT_31AF; it was not re-queried in this session.
@@ -101,3 +102,13 @@ invocation without an automatic retry. Return through the startup picker to
 Macintosh HD and confirm desktop/default separately. Do not run restoration
 blindly for this pre-baseline failure. M5's next step is offline investigation
 and an evidence-based proposal, not another boot or security change.
+
+## Return confirmed
+
+After the abort/return guidance, the human confirms “Desktop and default
+confirmed” for this 31AK visit. Record the usual Macintosh HD desktop and
+Macintosh HD default Startup Disk as human confirmed. No additional target query,
+restore operation, boot-object change or native attempt followed the refusal.
+Boot021 restoration remains outstanding; returning to macOS does not establish
+that the lab object was changed. M5 owns offline investigation of the initial
+snapshot failure. No automatic retry or new physical cue is issued.

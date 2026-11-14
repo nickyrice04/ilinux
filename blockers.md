@@ -9,7 +9,7 @@ failure branch Unknown; temporary redirected refusal output was not captured.
 State/key/baseline/marker/kmutil not reached; no install or policy mutation.
 No retry, blind restore or native boot. Native/Linux/SMP/performance NOT RUN;
 zero native windows used. Boot021 restoration outstanding; prior EXACT_31AF is
-not a new query. Current visit's original desktop/default return pending.
+not a new query. Human confirms this visit's original desktop and default return.
 72 source pins/four rendered outputs unchanged. Server stopped, exit0; camera off.
 M5 owns offline stage-specific diagnosis; frozen files/consumed receipts intact.
 Result: `native/boot/attempt31ak-recovery-2026-11-14-result.md` and JSON.
