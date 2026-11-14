@@ -5068,3 +5068,15 @@ an extra executable to force success. M5 publishes a portable inventory and new
 preparation receipt; reuse unchanged checks and reverify exact closure/pages.
 Original notes, old pins and delivery preserved. All physical operations NOT RUN;
 native HOLD. Evidence: native/boot/attempt31aj-kit-m1-review-2026-11-13.md and JSON.
+
+## 2026-11-14 — Close the portable-source blocker and reuse unchanged review
+
+M1 verified 4cddd22: all62 tracked pins, all56 retained bindings,23 adapter
+methods and actual exact-page preparation/socket-free verification PASS. All
+four reviewed output hashes are identical and both shell syntax checks pass.
+Reuse the 247-method/artifact review; no binary rebuild/resend or camera retest.
+Staging is user-reported successful, not independently rerun; preserve the lab
+kit. Start bounded serving only for the human-ready separately authorized
+Recovery visit. Page readiness does not authorize enrollment, Startup Disk or
+native/restoration operations. No restart/live action. Evidence:
+native/boot/attempt31aj-portable-m1-review-2026-11-14.md and JSON.

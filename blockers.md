@@ -1,5 +1,18 @@
 # Blockers
 
+### Latest M1 — portable 31AJ page ready offline, November 14
+
+Reviewed `4cddd22`: new 62 tracked pins and 23 adapter methods PASS. Prior blocker
+resolved without the producer executable; all 56 retained bindings/old closures
+unchanged. Reused 247-method/artifact review; no old-suite rerun or rebuild.
+Actual page preparation and socket-free check PASS; all four prior output hashes
+exact, both bash-n PASS. No production server or local URL started yet.
+M5 staging is user-reported JSON, not independently rerun; do not repeat it.
+Page ready for later authorized Recovery handoff; staging permission alone is
+not enrollment/native/restoration authorization. No camera/restart/live operation.
+Review: `native/boot/attempt31aj-portable-m1-review-2026-11-14.md` and JSON.
+
+
 ### Latest M5 — 31AJ closure corrected; lab Data staged, November 13
 
 M1's 8352602 review passed four artifacts and 247 methods but identified one
