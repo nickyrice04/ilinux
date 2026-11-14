@@ -1,0 +1,15 @@
+{
+  "credentials_sent": false,
+  "date": "2026-11-14",
+  "exact_reviewed_html": true,
+  "html_bytes": 17306,
+  "html_executed": false,
+  "html_sha256": "4ba56bf59e81de9e682e202e13fedea6c39de4644c3a976437736cb8eb01601b",
+  "http_status": 200,
+  "redirects_followed": false,
+  "schema": "ilinux31aj-page-reachability-v1",
+  "scope": "ONE_M5_READ_ONLY_HTTP_GET_TO_USER_PROVIDED_M1_SERVER",
+  "settings_changed": false,
+  "status": "EXACT_PAGE_REACHABLE",
+  "url_recorded": false
+}

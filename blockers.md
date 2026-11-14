@@ -1,5 +1,28 @@
 # Blockers
 
+### Latest M5 — 31AJ ready for human Recovery restart, November 14
+
+User-provided M1 server is now reachable from M5. One bounded read-only GET of
+/31aj returnedHTTP200 and the exact reviewed17,306-byte HTML /4ba56bf5…01601b.
+No redirects, credentials, page execution or network/security setting changes.
+Private LAN address is excluded from Git. Temporary lab default was confirmed
+by Apple's read-only logical boot-device query. Full native transaction is
+already authorized; no repeated approval or desktop policy check is needed.
+
+Final cue: save work, shut M5 down, hold power to Options, Continue into the
+lab's paired Recovery and authenticate locally. Use the verified install box
+once via browser copy / quit / UtilitiesTerminal paste. Camera remains off or
+covered during credentials. Exact helper admission and candidate readback must
+pass before M1's actual RECORDING confirmation and the single independently
+capped90s RAM boot. Then independent restore box, exact rawboot021/disabledCTRR,
+and MacintoshHD desktop/default return. Preserve Full Security on the original;
+no firmware/new volume/policy reset/retry. No M1 restart or USB/proxy session.
+
+M1 follows tools/m1n1-client/attempt31aj-authorized-instructions.md. Recovery
+admission/install/native/rollback/default return remain NOT RUN at handoff.
+No automatic shutdown or restart was issued. Evidence:
+native/boot/attempt31aj-page-reachability-2026-11-14.json.
+
 ### Latest M5 — temporary lab Startup Disk confirmed, November 14
 
 Authorized 31AJ handoff published at481be75. After selecting the lab in System
