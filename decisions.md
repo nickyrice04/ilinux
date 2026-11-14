@@ -1,5 +1,19 @@
 # Decisions Log
 
+### M1 — 31AK capability PASS; initial snapshot refused, November 14
+
+Photo confirms one corrected block: RECOVERY_CAPABILITY_PASS, then STOP initial
+guarded admission snapshot / PRE_ENROLLMENT_STOP. Profile/work-path/codec gate
+passed; target pairing/security/object admission remains unestablished. Exact
+failure branch Unknown; temporary redirected refusal output was not captured.
+State/key/baseline/marker/kmutil not reached; no install or policy mutation.
+No retry, blind restore or native boot. Native/Linux/SMP/performance NOT RUN;
+zero native windows used. Boot021 restoration outstanding; prior EXACT_31AF is
+not a new query. Current visit's original desktop/default return pending.
+72 source pins/four rendered outputs unchanged. Server stopped, exit0; camera off.
+M5 owns offline stage-specific diagnosis; frozen files/consumed receipts intact.
+Result: `native/boot/attempt31ak-recovery-2026-11-14-result.md` and JSON.
+
 ### Latest M5 — 31AK authorized and ready for Recovery restart, November 14
 
 Reviewed M1's 475c865: no actionable findings; all 72 tracked source pins, 30 fresh
