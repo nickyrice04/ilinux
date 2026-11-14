@@ -1,5 +1,21 @@
 # Decisions Log
 
+### M1 — 31AL read-only refusal captured; original return confirmed, November 14
+
+One human Terminal photo: HELPER_EXIT (helper exit2), REFUSED at AUX_IDENTITIES /
+GUARD / PREBOOT_MOUNT_PATH, DISK_INFO exit0/stdout4770, then DIAGNOSTIC_CAPTURED
+(helper exit2). Display validation passed; its numeric exit was not printed.
+Snapshot/admission false; writes/native/identifiers/policy values false. Exact
+source predicate is !safe_path(Preboot MountPoint); actual path and failed lexical
+rule Unknown. Later policy/pairing/security/object checks not reached; no fresh
+policy result claimed. No retry, blind restore, parser workaround or native boot.
+Human confirms Macintosh HD desktop and default. Owned page server stopped
+exit0; listener closed, camera off. All 92 pins and 54 prior evidence files
+unchanged; no repeated suite/build/transfer or consumed-state reset. Install/
+restore/native/Linux/SMP/performance NOT RUN; boot021 restoration OUTSTANDING.
+M5 owns offline interpretation/proposal. Evidence:
+native/boot/attempt31al-recovery-2026-11-14-result.md and JSON.
+
 ### M1 — 31AL exact read-only page live, November 14
 
 Pulled a16b0b5 into the clean review checkout; primary checkout's five local
