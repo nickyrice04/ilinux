@@ -1,5 +1,21 @@
 # Blockers
 
+### M1 — 31AL exact read-only page live, November 14
+
+Pulled a16b0b5 into the clean review checkout; primary checkout's five local
+status edits preserved after its fast-forward pull refused overwrite. Accepted
+M5's staged-kit receipt and authorized temporary lab-default handoff; neither
+operation repeated. Reused the reviewed page and controller: all 92 source pins
+PASS; live HTTP200 body equals exact 7755-byte HTML/824708ed…6b835, title
+31AL read-only diagnosis. Bounded 1800-second server; private URL/session only
+under ignored build. No suite/build/transfer repeated, camera/proxy/M1 restart
+or settings action. Previous receipts and closed sessions remain intact.
+Live Recovery diagnostic/install/restore/Linux/SMP/performance NOT RUN; boot021
+restoration OUTSTANDING. Human enters Options/Continue, runs the one read-only
+box, captures only validated finite JSON, then returns to Macintosh HD/default.
+No lab boot or install/restore retry is authorized by this diagnostic.
+Evidence: native/boot/attempt31al-m1-page-ready-2026-11-14.json.
+
 ### Latest M5 — 31AL review accepted; diagnostic kit staged, November 14
 
 Reviewed M1's 5bb5639 PASS: no actionable findings, all 92 source pins/72 retained

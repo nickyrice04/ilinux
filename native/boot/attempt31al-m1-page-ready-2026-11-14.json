@@ -1,0 +1,33 @@
+{
+  "Linux": "NOT RUN",
+  "SMP": "NOT RUN",
+  "USB_proxy": "NOT RUN",
+  "boot021_restoration": "OUTSTANDING",
+  "camera": "OFF",
+  "date": "2026-11-14",
+  "handoff_commit": "a16b0b5",
+  "install": "NOT RUN",
+  "kit_rebuilt_or_retransferred": false,
+  "live_Recovery_diagnostic": "NOT RUN",
+  "next": "One read-only Recovery diagnostic, capture only validated finite record, then Macintosh HD desktop/default return; no lab boot",
+  "page": {
+    "bytes": 7755,
+    "http_body_equals_reviewed_file": true,
+    "http_status": 200,
+    "sha256": "824708ed2e0da1991f1a5fbf7870597aca7dc1aaf554622c5a33b17a6e36b835",
+    "title": "31AL read-only diagnosis"
+  },
+  "performance": "NOT RUN",
+  "prepared_files_reused": true,
+  "restart_by_M1": false,
+  "restore": "NOT RUN",
+  "review_commit": "5bb5639",
+  "schema": "ilinux31al-m1-page-readiness-v1",
+  "server_lifetime_seconds": 1800,
+  "source_inventory_sha256": "f62824f3dd91fdce6179f064d6c1582bbecace6a3b4efd884eae89969a91292c",
+  "source_pins": 92,
+  "staging": "M5 user-supplied success receipt accepted; not repeated on M1",
+  "state_or_consumed_receipt_reset": false,
+  "status": "EXACT_PAGE_LIVE",
+  "suites_repeated": false
+}
