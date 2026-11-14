@@ -1,5 +1,22 @@
 # Progress Log
 
+### M1 — 31AL diagnostic offline review PASS, November 14
+
+Reviewed 483dab6: all 92 tracked pins exact; all 72 old bindings unchanged.
+Tiny two-file delivery present and size/hash verified; canonical profile exact.
+Fresh 86 methods PASS (29 native / 19 renderer / 14 package / 24 stage fixtures).
+Original synthetic controls compile on clang17/SDK26; source stripping and guard
+preservation PASS. Actual inert page prep/check matches M5's three outputs and
+receipts; full diagnostic block bash-n PASS. No actionable finding. Production
+helper not run; M5 build/export/production/sanitizer evidence reviewed, not rerun.
+Finite redacted output boundary, first-failure attribution, held-CWD handling
+and verified-controller staging boundary reviewed. 54 existing evidence/kit/page/
+receipt/session files unchanged. No old suite or Linux/Aura rebuild, state re-arm,
+server/camera/proxy/restart/settings action. Lab staging/live Recovery diagnosis/
+native/Linux/SMP/performance NOT RUN. Boot021 restoration remains outstanding.
+Ready for later explicitly authorized read-only diagnostic visit; no install retry.
+Evidence: `native/boot/attempt31al-m1-offline-2026-11-14.md` and JSON.
+
 ### Latest M5 — 31AK refusal isolated; 31AL read-only diagnostic ready offline, November 14
 
 Reviewed M1's 31e9484/910de9d: capability PASS, then initial snapshot refusal

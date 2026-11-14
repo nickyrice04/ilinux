@@ -1,0 +1,127 @@
+{
+  "schema": "ilinux31al-m1-offline-review-v1",
+  "date": "2026-11-14",
+  "reviewed_commit": "483dab6b05535dde24ecd499e202d09798f3e263",
+  "status": "OFFLINE_PASS_LIVE_DIAGNOSTIC_HELD",
+  "actionable_findings": [],
+  "source_inventory": {
+    "count": 92,
+    "retained_old_bindings": 72,
+    "tracked": true,
+    "hashes": "PASS_BEFORE_AND_AFTER",
+    "sha256": "f62824f3dd91fdce6179f064d6c1582bbecace6a3b4efd884eae89969a91292c"
+  },
+  "delivered_kit": {
+    "ilinux31aj-reader": {
+      "bytes": 106416,
+      "sha256": "5c30802f6cf6821588e4f8fd22e8cb179b00ae84cbf8316448c043bbcf543a00"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "1e33fd7824f5f89aab8b7e06209b7736c4ff7c5067d87d6744019c36a4fb06bb"
+    }
+  },
+  "delivered_kit_verification": "EXACT_SIZE_SHA256; profile equals Git bytes",
+  "production_helper_execution_on_M1": "NOT RUN",
+  "local_workspace_copy": "Only the verified two-file kit copied into clean checkout; no replacement build",
+  "fresh_tests": {
+    "unique_methods": 86,
+    "suites": {
+      "native": {
+        "methods": 29,
+        "seconds": 2.668,
+        "exit": 0,
+        "result": "PASS"
+      },
+      "renderer": {
+        "methods": 19,
+        "seconds": 29.768,
+        "exit": 0,
+        "result": "PASS"
+      },
+      "package": {
+        "methods": 14,
+        "seconds": 1.842,
+        "exit": 0,
+        "result": "PASS"
+      },
+      "stage": {
+        "methods": 24,
+        "seconds": 2.334,
+        "exit": 0,
+        "result": "PASS"
+      }
+    },
+    "toolchain": {
+      "python": "3.9.6",
+      "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+      "sdk": "26.0"
+    },
+    "isolation": "python3 -I; caffeinate -i; workspace-only command-local TMPDIR",
+    "live_backend": "NOT RUN",
+    "guard_proof": "Three frozen inputs byte-identical; generated state marks strip to exact frozen source"
+  },
+  "page_preparation": {
+    "boot_settings_changed": false,
+    "live_recovery_diagnosis": "NOT RUN",
+    "native_ready": false,
+    "output": {
+      "diagnose-paste.txt": {
+        "bytes": 5342,
+        "sha256": "6c4ba0d76e85774e9968a80f04dd70a5e734d9fd2357c7fd490552fe9b7e7000"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "1e33fd7824f5f89aab8b7e06209b7736c4ff7c5067d87d6744019c36a4fb06bb"
+      },
+      "recovery.html": {
+        "bytes": 7755,
+        "sha256": "824708ed2e0da1991f1a5fbf7870597aca7dc1aaf554622c5a33b17a6e36b835"
+      }
+    },
+    "read_only_diagnostic_only": true,
+    "schema": "ilinux31al-diagnostic-preparation-v1",
+    "source_inventory_sha256": "f62824f3dd91fdce6179f064d6c1582bbecace6a3b4efd884eae89969a91292c",
+    "status": "OFFLINE_PREPARATION_PASS",
+    "verified_source_count": 92,
+    "writes_authorized": false
+  },
+  "page_check": {
+    "native_ready": false,
+    "page_bytes": 7755,
+    "page_sha256": "824708ed2e0da1991f1a5fbf7870597aca7dc1aaf554622c5a33b17a6e36b835",
+    "profile_sha256": "1e33fd7824f5f89aab8b7e06209b7736c4ff7c5067d87d6744019c36a4fb06bb",
+    "schema": "ilinux31aj-fixed-page-v1",
+    "server_started": false,
+    "source_inventory_sha256": "f62824f3dd91fdce6179f064d6c1582bbecace6a3b4efd884eae89969a91292c",
+    "status": "EXACT_PAGE_VERIFIED",
+    "verified_source_count": 92,
+    "write_authorized": false
+  },
+  "bash_n": "PASS",
+  "production_diagnostic_block": "NOT EXECUTED",
+  "M5_producer_evidence": "Build/clean export/production control/29 sanitizer methods reviewed; not rerun on M1",
+  "old_suites": "REUSED; NOT RERUN",
+  "preservation": {
+    "existing_files": 54,
+    "hashes": "UNCHANGED",
+    "source_pins_after": "92 PASS; 72 old retained"
+  },
+  "diagnostic_privacy": "Finite strict native/shell records only; raw/private output rejected and never echoed",
+  "guard_broadening": false,
+  "staging31AL": "NOT RUN",
+  "live_Recovery31AL": "NOT RUN",
+  "native_Linux": "NOT RUN",
+  "SMP": "NOT RUN",
+  "performance": "NOT RUN",
+  "boot021_restoration": "OUTSTANDING",
+  "lab_payload_evidence": "PRIOR_M5_CONFIGURED_CONTAINED_EXACT_31AF; NOT A_NEW_QUERY",
+  "original_return_default": "PRIOR_31AK_HUMAN_CONFIRMED; not changed or re-queried",
+  "server": "NOT RUN",
+  "camera": "NOT RUN",
+  "proxy": "NOT RUN",
+  "restart_either_Mac": false,
+  "security_volume_default_change": false,
+  "state_reset_or_rearm": false,
+  "next_step": "Later explicit authorization for lab Data two-file staging and one read-only Recovery diagnostic; M5 interprets before another install proposal"
+}
