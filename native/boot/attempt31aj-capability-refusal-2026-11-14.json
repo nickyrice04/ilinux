@@ -1,0 +1,62 @@
+{
+  "schema": "ilinux31aj-recovery-refusal-result-v1",
+  "date": "2026-11-14",
+  "reviewed_commit": "85df8f8efcfcb59db36acf7686ffa30d0e26b7ce",
+  "authorization_commit": "481be75",
+  "status": "RECOVERY_PREFLIGHT_REFUSED_BEFORE_ENROLLMENT",
+  "evidence_scope": "HUMAN_SUPPLIED_RECOVERY_PHOTO_AND_FROZEN_SOURCE_REVIEW",
+  "observed": {
+    "root_uid": 0,
+    "model": "Mac17,6",
+    "recovery_version": "26.6.2",
+    "recovery_build": "25G83",
+    "cdis": "DIRECTORY",
+    "private_component": "SYMLINK_TO_System/Volumes/Data/private",
+    "private_tmp": "DIRECTORY",
+    "helper_status": "REFUSED",
+    "reason": "preflightRefused",
+    "stop_phase": "helper capability"
+  },
+  "separate_recovery_synthetic_control": {
+    "status": "SYNTHETIC_CODEC_PASS",
+    "controls": 4,
+    "real_lzfse_api": true,
+    "host_queried": false,
+    "writes_authorized": false,
+    "native_ready": false,
+    "exit": 0
+  },
+  "finding": {
+    "confidence": "CONFIRMED_DEPLOYMENT_PATH_INCOMPATIBILITY",
+    "mechanism": "Lexical /private/tmp profile pathname hits secure_open O_NOFOLLOW at symlinked private component before recovery_admission.",
+    "branch_trace": "NOT COLLECTED",
+    "canonical_path_retry": "NOT RUN",
+    "later_guards": "UNKNOWN"
+  },
+  "preservation": {
+    "source_count": 62,
+    "source_inventory_sha256": "92b7612fe86ad7fc58dca09ac94b09160d00e1733365e139f077f1e37b5ec92f",
+    "sources": "PASS; tracked and hash-exact",
+    "four_served_phase_outputs": "PASS; exact original reviewed size/hash",
+    "new_suite_runs": "NONE",
+    "production_helper_on_M1": "NOT RUN"
+  },
+  "candidate_install": "NOT REACHED",
+  "transaction_state_creation": "NOT REACHED",
+  "boot_policy_mutation": "NOT REACHED",
+  "fresh_policy_readback": "NOT RUN",
+  "paired_admission": "NOT ESTABLISHED",
+  "native_windows_used": 0,
+  "native_boot": "NOT RUN",
+  "Linux": "NOT RUN",
+  "SMP": "NOT RUN",
+  "performance": "NOT RUN",
+  "restore": "NOT RUN",
+  "original_desktop_return": "PENDING",
+  "original_default_return": "PENDING",
+  "guard_bypass": false,
+  "retry": false,
+  "camera": "OFF",
+  "public_media_uploaded": false,
+  "next_owner": "M5 offline correction and independent review; no automatic physical retry"
+}

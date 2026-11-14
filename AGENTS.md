@@ -1,5 +1,18 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### M1 — 31AJ Recovery system-alias blocker confirmed, November 14
+
+Photo confirms helper capability REFUSED before enrollment; Recovery /private is
+a symlink to System/Volumes/Data/private. Frozen renderer passes a lexical
+/private/tmp profile path; helper secure_open rejects the private component with
+O_NOFOLLOW before Recovery admission. Separate synthetic codec PASS (4, exit0);
+root/model/CDIS/build match. No canonical-path retry, guard edit or native boot.
+State/key/mutation not reached; blind restore is inappropriate without baseline.
+62 source pins/four reviewed page outputs remain exact; no old-suite rerun.
+M5 owns offline correction; preserve frozen files/receipts and no automatic retry.
+Native/Linux/SMP/performance NOT RUN; original desktop/default return pending.
+Result: `native/boot/attempt31aj-capability-refusal-2026-11-14.md` and JSON.
+
 ### M1 — authorized 31AJ human at startup Options, November 14
 
 Read 5ce6841/481be75 authorization and confirmed the temporary-lab/read-only page
