@@ -1,0 +1,127 @@
+{
+  "all_portable_sources_tracked": true,
+  "boot_settings_changed": false,
+  "camera_opened": false,
+  "commands": {
+    "actual_intake": {
+      "exit": 0,
+      "result": {
+        "device_opened": false,
+        "embedded_root_verified": true,
+        "executed": false,
+        "extracted": false,
+        "files_verified": 4,
+        "generic_vm_seconds": 60.543060153,
+        "native_authorized": false,
+        "native_ready": false,
+        "public_binary_release": false,
+        "read_only": true,
+        "rollback_artifact_verified": true,
+        "runtime_members": 15,
+        "schema": "ilinux31aj-kit-review-v1",
+        "segments": 6,
+        "status": "OFFLINE_KIT_INTEGRITY_PASS",
+        "unchanged_kernel_verified": true
+      }
+    },
+    "actual_materialization": {
+      "exit": 0,
+      "result": {
+        "archive_members_extracted": false,
+        "boot_settings_changed": false,
+        "destination_scope": "NEW_WORKSPACE_BUILD_DIRECTORY",
+        "executed": false,
+        "files": {
+          "candidate.macho": {
+            "bytes": 153190400,
+            "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+          },
+          "ilinux31aj-reader": {
+            "bytes": 89312,
+            "sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5"
+          },
+          "m1n1-boot021.bin": {
+            "bytes": 3932160,
+            "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+          },
+          "profile.json": {
+            "bytes": 822,
+            "sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab"
+          }
+        },
+        "lab_data_changed": false,
+        "native_ready": false,
+        "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+        "schema": "ilinux31aj-workspace-materialization-v1",
+        "source_review": "OFFLINE_KIT_INTEGRITY_PASS",
+        "status": "VERIFIED_WORKSPACE_FILES_CREATED",
+        "writes_authorized": false
+      }
+    },
+    "actual_page_check": {
+      "exit": 0,
+      "result": {
+        "native_ready": false,
+        "page_bytes": 17306,
+        "page_sha256": "4ba56bf59e81de9e682e202e13fedea6c39de4644c3a976437736cb8eb01601b",
+        "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+        "schema": "ilinux31aj-fixed-page-v1",
+        "server_started": false,
+        "source_inventory_sha256": "92b7612fe86ad7fc58dca09ac94b09160d00e1733365e139f077f1e37b5ec92f",
+        "status": "EXACT_PAGE_VERIFIED",
+        "verified_source_count": 62,
+        "write_authorized": false
+      }
+    },
+    "actual_page_preparation": {
+      "exit": 0,
+      "result": {
+        "live_recovery_admission": "UNKNOWN",
+        "native_ready": false,
+        "output": {
+          "install-paste.txt": {
+            "bytes": 5935,
+            "sha256": "9effe64b2e06a928d6a46b95f4589b17ae63baab7b064040317cf6dc205d6f4b"
+          },
+          "profile.json": {
+            "bytes": 822,
+            "sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab"
+          },
+          "recovery.html": {
+            "bytes": 17306,
+            "sha256": "4ba56bf59e81de9e682e202e13fedea6c39de4644c3a976437736cb8eb01601b"
+          },
+          "restore-paste.txt": {
+            "bytes": 6691,
+            "sha256": "4736cd9d5fa8679ceda4b881c767e01fe83ae9ecc076b72dce87d3d9dd29245a"
+          }
+        },
+        "profile_sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab",
+        "schema": "ilinux31aj-recovery-preparation-v1",
+        "source_inventory_sha256": "92b7612fe86ad7fc58dca09ac94b09160d00e1733365e139f077f1e37b5ec92f",
+        "verified_source_count": 62,
+        "write_authorized": false
+      }
+    }
+  },
+  "date": "2026-11-13",
+  "delivered_artifact_files": 4,
+  "ignored_producer_executable_present": false,
+  "independent_adapter_methods": 23,
+  "independent_source_review": "NO_MATERIAL_ISSUE",
+  "lab_data_staged": false,
+  "native_ready": false,
+  "native_run": false,
+  "new_adapter_methods": 23,
+  "old_artifacts_unchanged": true,
+  "old_profile_install_restore_html_hashes_unchanged": true,
+  "portable_source_entries": 62,
+  "production_server_started": false,
+  "recovery_run": false,
+  "schema": "ilinux31aj-portable-clean-export-v1",
+  "source_inventory_sha256": "92b7612fe86ad7fc58dca09ac94b09160d00e1733365e139f077f1e37b5ec92f",
+  "source_provenance": "GIT_INDEX_CHECKOUT_ONLY",
+  "source_tree": "778f869fba10769a6fb3102bf00b1b28db6aaea1",
+  "status": "PASS",
+  "unchanged_m1_methods_reused": 247
+}

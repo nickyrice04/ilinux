@@ -1,0 +1,39 @@
+{
+  "Recovery_install": "NOT_RUN",
+  "additional_policy_query_requested": false,
+  "date": "2026-11-13",
+  "evidence_source": "USER_PASTED_STAGER_JSON",
+  "independent_live_rerun": false,
+  "matches_canonical_profile": true,
+  "native_test": "NOT_RUN",
+  "result": {
+    "boot_object_installed": false,
+    "boot_settings_changed": false,
+    "default_changed": false,
+    "files": {
+      "candidate.macho": {
+        "bytes": 153190400,
+        "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+      },
+      "ilinux31aj-reader": {
+        "bytes": 89312,
+        "sha256": "3c86c03873f89ec8d55c880812f6861bddedee61cb4f996a3110fffc2119cba5"
+      },
+      "m1n1-boot021.bin": {
+        "bytes": 3932160,
+        "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+      },
+      "profile.json": {
+        "bytes": 822,
+        "sha256": "e42e85b94961b86f7c882bb937dd35456dd790d307740233a9065498468dd6ab"
+      }
+    },
+    "native_ready": false,
+    "policy_read": false,
+    "schema": "ilinux31aj-lab-data-staging-v1",
+    "scope": "MACOS_LAB_DATA_STAGE",
+    "staged": true,
+    "volume_created": false
+  },
+  "schema": "ilinux31aj-reported-lab-stage-v1"
+}

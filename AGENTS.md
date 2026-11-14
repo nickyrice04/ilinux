@@ -1,5 +1,37 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — 31AJ closure corrected; lab Data staged, November 13
+
+M1's 8352602 review passed four artifacts and 247 methods but identified one
+ignored producer executable in the source inventory. Original 57-entry inventory,
+all members and old receipts are preserved. New portable62 retains the other56
+pins unchanged, records the producer hash as build evidence only and uses a new
+adapter changing only the frozen stager/server inventory selector. Adapter23
+methods plus independent23/source review PASS. Clean Git-index export with only
+four delivered artifacts and no producer executable passes intake/materialization,
+actual page preparation and socket-free check; profile/install/restore/HTML hashes
+are identical to the M1-reviewed versions. The unchanged M1247 review is reused.
+No rebuild, resend or repeated old test suite is needed.
+
+User authorized staging after the review finding was resolved. Noninteractive
+sudo stopped before execution; user then authenticated locally and supplied the
+stager's MACOS_LAB_DATA_STAGE/staged:true JSON. All four hashes match the canonical
+profile; stager reports no policy read, boot-object installation, default, boot
+setting or volume change. Record is user-reported, not an independent live rerun.
+Do not rerun the no-overwrite stage or delete its new kit/state to re-arm it.
+
+Next: M1 reads tools/m1n1-client/attempt31aj-staged-instructions.md and prepares
+its exact page URL and existing recording/timer handoff. No M1 restart/proxy or
+camera-quality retest. Current authorization covers lab Data staging/preparation;
+31AJ enrollment, temporary Startup Disk, one native window and final boot021/
+default restoration remain separate concrete physical actions. No M5 restart
+until M1 page readiness and that transaction's authorization. Macintosh HD must
+remain Full Security. No firmware/new volume/policy-reset operation is proposed;
+Recovery admission, enrollment, native entry/SMP/restoration remain NOT RUN.
+Evidence: native/boot/attempt31aj-portable/. Original closures/receipts and
+unrelated work are preserved; consumer inventories must require Git-delivered
+files only, not ignored producer outputs.
+
 ### Latest M1 — 31AJ kit review: one closure blocker, November 13
 
 Reviewed `d7a93a9`. Delivery folder present; all four size/hash pins and actual

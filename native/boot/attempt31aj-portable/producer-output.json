@@ -1,0 +1,15 @@
+{
+  "native_ready": false,
+  "old_inventory_sha256": "ae825d028e613bdb67ef67a4ca4a29480b3387035db3cdce5f2a42c1914be969",
+  "original_57_inventory_preserved": true,
+  "original_binary_and_recovery_commands_changed": false,
+  "producer_output": {
+    "delivered_to_consumer": false,
+    "name": "test-readable-host",
+    "required_by_portable_inventory": false,
+    "sha256": "f829b0db80fceef5eccabb3498414831e75db6a6dd9618c52b67c71263b64d2a"
+  },
+  "reason": "Ignored producer-only test executable was mistakenly included by recursive inventory generation.",
+  "schema": "ilinux31aj-producer-only-output-v1",
+  "scope": "PRODUCER_BUILD_EVIDENCE_NOT_CONSUMER_SOURCE"
+}
