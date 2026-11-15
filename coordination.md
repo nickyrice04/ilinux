@@ -1,5 +1,20 @@
 # Coordination: agents working in this workspace
 
+### M1 — 31AM RO mount/cleanup PASS; lab-policy refusal, November 14
+
+One human photo: initial UNMOUNTED_EMPTY, mount attempted/owned/read-only verified
+true, mount/unmount exits0/0, cleanupUNMOUNTED and uncertaintyfalse. Nested
+LAB_POLICY / FORMAT / UNSUPPORTED_METADATA, POLICY_READ exit0/stdout2822;
+snapshot/admission false. Shell HELPER_EXIT and DIAGNOSTIC_CAPTURED both report
+helper exit2; safe display passed. Unsupported branch/tag/value remains Unknown;
+no later Original-policy/pairing/security/object result or firmware claim.
+Human confirms Macintosh HD desktop and default. Owned server stopped exit0,
+listener closed; camera off. All111 source pins and75 prior evidence files
+unchanged; no retry/suite/build/source/state reset. Live Recovery/mount/cleanup
+RUN as above; install/restore/native/Linux/SMP/performance NOT RUN. Boot021
+restoration OUTSTANDING. M5 owns offline parser analysis/proposal, no blind fix.
+Evidence: native/boot/attempt31am-recovery-2026-11-14-result.md and JSON.
+
 ### Latest M5 — 31AM ready for human Recovery shutdown cue, November 14
 
 Reviewed M1's40d2046 exact live-page report: HTTP200 body8343/e76b0b1c…22a9f,
