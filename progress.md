@@ -1,5 +1,20 @@
 # Progress Log
 
+### M1 — 31AS writer0 but postcondition REFUSED; independent restore pending, November 15
+
+Human photo shows live31AR controller result: install/POSTCONDITION/POLICY_OR_OBJECT,
+syntheticfalse, mutation_attemptedtrue, writer0, state_preservedtrue,
+cleanup_verifiedtrue, candidate/rollback_verifiedfalse; restart/default/native/
+identifier/policy-return flagsfalse. No final shell success; pasted success lines
+are source only. Candidate phase not verified; exact failing predicate Unknown.
+No lab boot or install retry. Exact live31AS restore box HTTP reverified; human
+instructed one whole-box independent guarded restore, recording off, stop on any
+refusal. Current restore/Originalreturn/default confirmation PENDING; boot021
+OUTSTANDING. Preserve all private/spent state.201 prior files unchanged; no code/
+test change, reset or native window. Linux/SMP/performance NOT RUN. Server stays
+live for restore; M5 offline cause analysis follows transaction closure.
+Evidence: native/boot/attempt31as-install-2026-11-15-checkpoint.json.
+
 ### M1 — new31AS page live and HTTP exact; M5 cue pending, November 15
 
 Pulled6d618ac; accepted850f96c review/stage/default handoff without repeat.
