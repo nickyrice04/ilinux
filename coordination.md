@@ -1,5 +1,25 @@
 # Coordination: agents working in this workspace
 
+### M1 — 31AP real Recovery admission/cleanup PASS; Original return confirmed, November 15
+
+One human Recovery photograph shows DIAGNOSTIC_COMPLETE/COMPLETE/NONE;
+nested INITIAL_ADMISSION_PASS, POLICY_READ0/2738 bytes, collected/admission true.
+Owned read-only mount verified, initialUNMOUNTED_EMPTY, uncertaintyfalse,
+mount/unmount0/0 and cleanupUNMOUNTED. Both shell records helper0; safe display
+PASS, separate numeric validator/block exits not printed. Source-based successful
+path requires paired1TR, Original Full/CTRR enabled, lab Permissive, stable typed
+policies/profile and exact selected31AF; these fields were not separately exposed.
+No lab CTRR value or authenticated entry inferred. Human Macintosh HD desktop and
+default confirmed; no return problem. Owned server SIGINT/exit0/listener closed.
+140 frozen pins/3 adapter pins/96 prior files/3 prepared page files unchanged;
+no suite/build rerun, source change, state/consumed reset, proxy or M1 restart.
+Production binary delivery onM1 remains unverified; target repeated exact checks
+are supported by reviewed execution flow. Mount/scratch used, no policy/boot write.
+Boot021 restoration OUTSTANDING; install/restore/native entry/Linux/SMP/performance
+NOT RUN, native_ready/writes_authorized false. Single check complete; M5 reviews
+and proposes next step, no automatic retry/install/restore/boot.
+Evidence: native/boot/attempt31ap-recovery-2026-11-15-result.md and JSON.
+
 ### M1 — exact31AP source-profile page live; no transfer needed, November 15
 
 Pulledfe32254; accepted M5 owner-staged exact kit/default handoff without repeat.
