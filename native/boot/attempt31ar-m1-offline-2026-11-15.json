@@ -1,0 +1,142 @@
+{
+  "31AR_RO_RW_mount": "NOT RUN",
+  "31AR_Recovery": "NOT RUN",
+  "31AR_native_entry": "NOT RUN",
+  "M1_build": {
+    "binary_bytes": 125168,
+    "binary_sha256": "2a663788b2873c53e705cd78fda2e2a04e75e8e927909139f7f61fe00ca01312",
+    "compiler_version": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "qualified_state_sha256": "bee973746052f6562a9d2d4817bb5014abb6994a7629944e75b7265f9e76d036",
+    "sdk_version": "26.0"
+  },
+  "M1_restart": "NOT RUN",
+  "M5_evidence_reviewed_not_reproduced": [
+    "Same25 ASan/UBSan methods",
+    "Earlier31AQ18-method component evidence and older qualified suites",
+    "Production binary and actual four-file workspace copy",
+    "Shared-source/REA/firmware research and desktop metadata observations"
+  ],
+  "M5_restart": "NOT RUN",
+  "Macintosh_HD_desktop_default": "Human-confirmed31AP return retained; no fresh selection or query",
+  "Original_Full": "Required invariant; no new target query or change this review;31AP guard PASS is prior evidence",
+  "PTY_scope": "Five actual own-child PTY/source controls, including terminal input/foreground/termios restoration, timeout/interruption/early exit; no Apple authentication or system writer",
+  "SMP": "NOT RUN",
+  "USB_proxy": "NOT RUN",
+  "actionable_source_findings": [],
+  "boot021_restoration": "OUTSTANDING",
+  "camera": "NOT RUN",
+  "candidate": {
+    "bytes": 153190400,
+    "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+    "status": "UNCHANGED; reused genuine retained own image"
+  },
+  "controller_review": [
+    "New transaction only; existing state, key, profile, markers and directories are never adopted, repaired, overwritten or reset",
+    "Owned read-only admission, fresh private key/profile/baseline and stable target identity commitment precede verified owned RW acquisition",
+    "Private exclusive files, fsync/F_FULLFSYNC and directory fsync checked before durable spent markers and fixed lab writer",
+    "Fresh phase preconditions and post-marker artifact/target/work/state/mount binding rechecked; fixed candidate, conditional lab CTRR and boot021 commands only",
+    "Fresh guarded readback persisted after nonzero/interrupted/timed-out writer where available; success also requires exact phase predicates and known owned cleanup",
+    "Cross-visit binding uses domain/profile/key-bound stable target identities; restore loads original enrollment and does not need candidate file in scratch",
+    "Foreign mounts refuse; no forced unmount, Original writer, raw-device write, automatic restart/default selection or automatic retry"
+  ],
+  "date": "2026-11-15",
+  "fixture_execution": "Actual original controller, collector, typed parser, identity/phase validators, workspace persistence and cleanup; synthetic policy/APFS/mount/writer backends; genuine own artifacts as data",
+  "initial_invalid_test_run": {
+    "failed": 9,
+    "pass": 16,
+    "reason": "selected-file fixture references outside compiled WORKSPACE_ROOT; fresh exact reference copies correct setup; no source/test change"
+  },
+  "initial_run_evidence_retained": true,
+  "install": "NOT RUN",
+  "missing_M1_coverage": "One real four-file workspace copy integration method SKIPPED because exact production kit absent; no substitute kit manufactured",
+  "native_ready": false,
+  "new_route_Linux": "NOT RUN",
+  "next_steps": [
+    "M5 reviews this independent result; exact new production helper/profile delivery and new lab kit staging remain separate",
+    "Confirm independently accessible exact install/restore pages and boot021 before installation; source-only page equality is not binary delivery or live accessibility",
+    "Obtain separate explicit physical scope covering shared Preboot RW, one candidate install, one external90-second diagnostic window, conditional lab CTRR preparation, boot021 restore and temporary lab/default return",
+    "Require actual INSTALL_COMPLETE/readback/known cleanup/writer0/final shell0 before native cue; refusal is not success even when safely displayed",
+    "Observe Aura/Linux entry, distinct concurrent workers/checksums/timers/60-second liveness separately; restore exact boot021 then confirm Macintosh HD desktop/default separately"
+  ],
+  "performance": "NOT RUN",
+  "physical_limit": "Offline fixtures do not qualify live APFS RW, actual Apple writer/authentication, firmware handoff, Linux/SMP or performance; current candidate is a finite RAM diagnostic, not Omarchy desktop",
+  "preservation": {
+    "frozen_sources": 162,
+    "old_state_or_consumed_receipt_reset": false,
+    "previous_evidence_files": 133,
+    "status": "UNCHANGED"
+  },
+  "production_helper": {
+    "M1_rebuild_is_not_substitute": true,
+    "bytes": 125168,
+    "delivery_on_M1": "NOT VERIFIED; absent from checked expected kit/transfer locations",
+    "sha256": "1008f610f03b979043787bfa67aa850aed4c5e6bc73416579e80f0aafe0a842a"
+  },
+  "public_profile": {
+    "bytes": 823,
+    "sha256": "27e265da1fac084db457f084dcd8f52b63e5daa1629575a13de64d68f24b4ecc"
+  },
+  "publication_authorizes_physical_execution": false,
+  "ready_for_restart": false,
+  "reference31af": "442368-byte genuine retained original payload in entirely synthetic445430-byte IMG4 surroundings; no Apple manifest or identity mock",
+  "restore": "NOT RUN",
+  "reviewed_commit": "c6a660c",
+  "rollback": {
+    "bytes": 3932160,
+    "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664",
+    "status": "UNCHANGED; reused genuine retained boot021"
+  },
+  "schema": "ilinux31ar-m1-offline-review-v1",
+  "server": "NOT STARTED",
+  "settings_or_security_change": false,
+  "small_new_transfer_bytes": 125991,
+  "source_and_qualified_state_bindings_match_producer": true,
+  "source_inventory": {
+    "count": 162,
+    "retained_old_inputs": 143,
+    "retained_old_inventory_identities": "BOTH EXACT",
+    "sha256": "9ff372bba278c053a639b5b158fbc907fe17def5f7ef87142fa2daf3147d80fc",
+    "status": "PASS"
+  },
+  "source_or_test_repair": false,
+  "source_profile_page": {
+    "actual_exact_page_checks": 3,
+    "binary_delivery_verified": false,
+    "install_restore_bash_n": "PASS through fresh renderer controls",
+    "mode": "SOURCE_PROFILE_ONLY",
+    "output_files_matching_producer": 6,
+    "server_started": false,
+    "status": "PASS"
+  },
+  "staging": "NOT RUN",
+  "test_results": {
+    "native": {
+      "methods": 25,
+      "passed": 25,
+      "seconds": 14.104,
+      "skipped": 0
+    },
+    "package": {
+      "methods": 15,
+      "passed": 14,
+      "seconds": 1.147,
+      "skipped": 1
+    },
+    "pty": {
+      "methods": 5,
+      "passed": 5,
+      "seconds": 1.58,
+      "skipped": 0
+    },
+    "renderer": {
+      "methods": 8,
+      "passed": 8,
+      "seconds": 0.013,
+      "skipped": 0
+    }
+  },
+  "valid_passed": 52,
+  "valid_skipped": 1,
+  "valid_unique_methods": 53,
+  "verdict": "SOURCE_CONTROLLER_AND_PAGE_PASS_DELIVERY_PENDING_PHYSICAL_HOLD"
+}

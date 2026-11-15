@@ -1,5 +1,25 @@
 # Blockers
 
+### M1 — 31AR offline controller/page PASS; delivery and physical HOLD, November 15
+
+Reviewedc6a660c:162 pins PASS,143 retained inputs/both old inventories exact;
+133 prior files/consumed receipts unchanged. Fresh clang17/SDK26 build's qualified
+state/proof/source bindings match producer. Integrated controller25 PASS, own-child
+PTY/source5 PASS, renderer8 PASS, package14 PASS/1 explicit skip: production kit
+absent, actual four-file copy NOT RUN onM1.53 unique methods:52pass/1skip.
+Initial16pass/9fail controller run used retained references outside compiled
+workspace; fresh byte-exact copies inside it yield25/25. First evidence preserved;
+no source/assertion/identity changes. M5 sanitizer/old suites/copy/research attributed.
+Actual source-profile prep matches all6 M5 outputs; three exact pages check-only
+PASS, independent complete restore box, no socket. Exact new helper/profile delivery
+unverified; M1 build is no substitute. No source finding; no physical cue yet.
+M5 next: review, exact tiny delivery/new lab staging, independent restore/page
+accessibility, separate concrete sharedPrebootRW/install/one90sboot/conditional
+labCTRR/boot021/default-return authorization. Original Full required, boot021
+OUTSTANDING. No stage/server/Recovery/mount/write/restart/proxy/camera/settings;
+31AR install/restore/native entry/new-route Linux/SMP/performance NOT RUN.
+Evidence: native/boot/attempt31ar-m1-offline-2026-11-15.md and JSON.
+
 ### Current — 31AR implementation complete; physical qualification pending, November 15
 
 The missing transaction controller is implemented and tested offline. It now
