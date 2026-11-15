@@ -5,8 +5,9 @@
 Reviewed a136914: native/source34 PASS, no code finding; actual M1 kit absent.
 User requested staging/preparation. Sudo-n stopped before execution; owner then
 authenticated locally and provided exact staged diagnostic helper124640/d31279b4…4684
-and profile823/c64b596f…c747. No restage; no boot-object/policy/security/volume write
-by that copy. M5 selected LAB temporarily in ORIGINAL System Settings without
+and profile823/c64b596f…c747. No restage; that copy installed no boot object and
+changed no policy/security setting, volume layout or partition. M5 selected LAB
+temporarily in ORIGINAL System Settings without
 Restart. Fresh read-only bless selected-device/real-group comparison confirms
 LAB default/ORIGINAL current. Existing explicit selection-and-return approval
 persists; no redundant permission or routine security-mode query.
