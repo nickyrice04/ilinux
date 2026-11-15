@@ -1,5 +1,21 @@
 # Coordination: agents working in this workspace
 
+### M5 — after31AP, full transaction component review without physical action, November 15
+
+459161d physicaladmission/ROcleanup PASS accepted; Original desktop/default human
+confirmed. All new work offline. Native agent delivered31AQ fullCLI component,
+18normal/18ASanPASS; auditor independently18normal/source review PASS. Probe
+agent supplied primary-source lifecycle design. Root completed actual public
+component-profile/owncandidate verification, evidence and current roadmap.
+143 retained pins unchanged; no old keys/state/receipts or unrelated edits.
+
+M1 follows tools/m1n1-client/attempt31aq-component-instructions.md ONLY for
+source/component review, no transfer/build rerun unless needed for that review.
+Do not stage this89504-byte helper, reuse old pages, serve, restart, proxy or
+run Recovery/install/restore. The controller/RWlifecycle/durablestate are not
+implemented. Root owns that next integration and shared status. No fresh
+routine mode check needed; boot021 OUTSTANDING, Original Full unchanged.
+
 ### M1 — 31AP real Recovery admission/cleanup PASS; Original return confirmed, November 15
 
 One human Recovery photograph shows DIAGNOSTIC_COMPLETE/COMPLETE/NONE;

@@ -1,5 +1,25 @@
 # Decisions Log
 
+### M5 — advance from admission to a controlled complete native test, November 15
+
+Accept459161d realRecovery pass without replay. Nextphysicalobjective is matched
+Aura/LinuxRAMentry and concurrent core evidence, with exact post-write readback
+and independentboot021rollback; offline success is not a nativecue. Retain the
+existing candidate rather than rebuilding kernel/Omarchy for a solved parser.
+
+Implement/review full typedphasehelper first;18normal/18sanitized/independent
+controls now pass. Keep its publication COMPONENT_ONLY. Finish session ownership,
+explicit verifiedRW access, durable state/markers, private cross-visit identity
+binding and cleanup before integrating a write-capable kit. Do not presume
+Appletoolsautomount or reuse AP's keylesspass as a transactionbaseline.
+
+Quality targets remain measuredper-core/all-core/frequency/memory/energy and
+nativeGPU/network/storage/reliability, followed by a usable Linuxagent workflow.
+Label oldLPMmacOSreference and historicalmatrix; no parityclaim from Recovery
+orVM fixtures. No host/security/default/boot changes this turn; boot021 remains
+outstanding. Existing user approvals do not turn this unfinished component into
+an executable physical procedure.
+
 ### M1 — 31AP real Recovery admission/cleanup PASS; Original return confirmed, November 15
 
 One human Recovery photograph shows DIAGNOSTIC_COMPLETE/COMPLETE/NONE;

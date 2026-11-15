@@ -1,5 +1,21 @@
 # Blockers
 
+### M5 — admission gate cleared; managed write transaction is the next software work, November 15
+
+31AP actual initial-admission/ROcleanup PASS and Originalreturn confirmed.
+No further parser-only or routine mode check is needed. New full key-bound
+helper component passes18normal/18sanitized/independent controls, but it is not
+a complete boot package. AP ends with Preboot unmounted; oldfullcollector
+requires a mounted view, and readonlymount cannot be assumed writable tokmutil.
+
+Implement explicit ownedRO→verifiedRW session, durable private baseline/attempt
+state, stable cross-visit target commitments, readback and cleanup gates before
+a lab install/oneboot/rollback proposal. Automaticmount/upgrade is unqualified;
+do not use oldshell or diagnostic-onlyAPbinary. No evidence this software work
+requires an Apple firmware release. ActualAura/Linuxentry/all18cores/performance
+remain untested by this route. Original Full unchanged, boot021 OUTSTANDING.
+M1componentreview only; no staging or restart ready.
+
 ### M1 — 31AP real Recovery admission/cleanup PASS; Original return confirmed, November 15
 
 One human Recovery photograph shows DIAGNOSTIC_COMPLETE/COMPLETE/NONE;

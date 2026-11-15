@@ -1,0 +1,5 @@
+b1000af0bf42b280daa1f36950f1dd9f0108312d86852434ca685bd600c44049  tools/boot-object31aq-native/build.py
+d8c7a1bf6aad25d0c9bb05649ce6e044c9e47501725db6fb0e762e7a91667b85  tools/boot-object31aq-native/test_native.py
+dae18087729565f1e0be211f6db14ab4b8115b2b0000d2b79081734f1fc0e2f7  tools/boot-object31aq-native/README.md
+a93aaddf0b45845e718b55cb45b20d5160fa947b4c9c2738193c0edd4a440159  research/attempt31aq-preboot-lifecycle-2026-11-15.md
+c69f4e442595c1b243f936f0629789900b8cc46920321fe239bf177e5eecae81  tools/m1n1-client/attempt31aq-component-instructions.md

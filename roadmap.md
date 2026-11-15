@@ -5,7 +5,58 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction —31H and heterogeneous CPU enablement, 2026-10-21
+## Current direction — after successful 31AP Recovery admission, 2026-11-15
+
+[31AP's physical result](native/boot/attempt31ap-recovery-2026-11-15-result.md)
+confirms complete guarded Recovery collection, initial admission and owned
+read-only Preboot cleanup. Macintosh HD desktop and default return are
+human-confirmed. This clears the reader/admission blocker. It establishes no
+new Linux entry, CPU count, GPU support or performance measurement. Boot021
+restoration is still outstanding; another read-only parser-only visit is not
+the next engineering objective.
+
+1. **Finish a complete one-shot native RAM-boot transaction offline.** Reuse the
+   matched Aura/kernel/DT/root candidate already built, and the typed full
+   transaction helper now implemented under `tools/boot-object31aq-native/`.
+   Its 18 normal/sanitized/independently reviewed fixture methods pass with
+   real original31AF, candidate and boot021 identities, fresh private keys and
+   v3 metadata comparisons. It is a component, not a staged or executable boot
+   procedure. Implement the missing owned RO-to-RW Preboot session, durable
+   private baseline/attempt markers, exact post-write readback and cleanup
+   before assembling the install and independent rollback pages. The
+   [lifecycle design](research/attempt31aq-preboot-lifecycle-2026-11-15.md)
+   records the precise boundary. No current host change is authorized by it.
+2. **One separately authorized hardware test after that integration passes.**
+   Install the lab-only candidate, verify it, observe one independently timed
+   RAM-only Linux window and verify boot021 restoration/Original default return.
+   Capture distinct Aura entry, Linux entry, online-core census, concurrent
+   checksums and timer/liveness results. The target is all 18 cores across the
+   existing 12 Performance/6 Super ADT topology; do not count a firmware logo,
+   VM result or online mask alone as concurrent hardware execution.
+3. **Establish CPU and memory quality on this machine.** Measure per-core-type
+   and all-core throughput, frequency/idle behavior, scheduler wakeup tails,
+   memory bandwidth/latency, thermals and energy per fixed task. Preserve the
+   historical macOS AC Low Power Mode baseline as such; collect a comparable
+   normal-power reference before claiming everyday performance parity.
+4. **Build a usable native workstation path.** Validate networking/control
+   access and read-only internal storage, then separately authorized Linux
+   persistence and writes. Continue G17C/display acceleration work early enough
+   to address measured menu/input/frame latency. Retest renderer threading and
+   several simultaneous apps under native load. CPU count does not establish
+   a smooth high-resolution desktop or macOS-equivalent battery life.
+5. **Close capability and reliability gaps with evidence.** Network reconnect,
+   storage flush/durability, idle/suspend/resume, audio/camera/peripherals and
+   acceleration need their own native tests. Existing encrypted macOS-data
+   access remains separate from NVMe throughput; keep the reference protected.
+   Move the main development agent into Linux once connectivity, persistence,
+   interactive latency and recovery are reliable enough for daily work.
+
+No restart or installation is ready from the component tests. M1 can review
+the new helper/plan offline without another machine restart, old-suite rerun
+or large image transfer. The next native window should answer loader/kernel/
+multicore questions after the complete transaction controller is tested.
+
+## Historical direction —31H and heterogeneous CPU enablement, 2026-10-21
 
 Native Omarchy still has one online CPU and software rendering.31G established
 CPU1 power response without entry.31H combines precise reset-format, power,

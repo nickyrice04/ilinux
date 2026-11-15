@@ -1,5 +1,24 @@
 # Progress Log
 
+### M5 — successful31AP review and full keyed helper implemented, November 15
+
+RealRecovery collection/admission and owned read-only mount cleanup passed in
+459161d; Originaldesktop/default return confirmed. This clears the reader gate,
+not the new loader/kernel/SMP or performance questions. No repeatphysicalcheck.
+
+Built31AQ full read-only phase helper from unchanged originalCLI/core/header/
+JSON and qualified31AOstate/v3HMAC.18 new normal+same18ASan/UBSan PASS and
+independent18normal/sourceaudit PASS, actual original31AF/candidate/boot021
+identity sequence with fresh keys and private baseline. No mocked identities
+or live policy data. Helper89504/271f2401…1769c, clang21/SDK27.2; new public
+component profile verified with unchanged own candidate.143 retained pins exact.
+
+Wrote concrete RO→RW/session/cleanup/durable-state design and component-only
+M1 review handoff. Full controller/install/restore kit is NOT implemented or
+ready. Updatedroadmap and markedoldmatrixhistorical; oldmacOSAC-LPM reference
+remains distinct from normal-power parity target. No new benchmark or host
+setting/stage/security/boot action. Boot021 restoration OUTSTANDING.
+
 ### M1 — 31AP real Recovery admission/cleanup PASS; Original return confirmed, November 15
 
 One human Recovery photograph shows DIAGNOSTIC_COMPLETE/COMPLETE/NONE;

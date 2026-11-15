@@ -1,5 +1,15 @@
 # Performance Parity Scorecard
 
+**Status update, November 15, 2026:** 31AP now passes real Recovery collection,
+initial admission and read-only mount cleanup. It ran in Recovery, not Linux,
+and adds no performance results to this scorecard. The prior single-core
+native Omarchy evidence below remains the demonstrated Linux configuration;
+the new all-core Aura route has not yet established native entry on this Mac.
+The [current roadmap](../roadmap.md) puts complete guarded RAM boot, all-core
+execution, frequency/scheduling and matched memory/energy measurements next.
+The old AC Low Power Mode reference must not silently become the target for
+everyday normal-power macOS parity. No new parity percentage is assigned.
+
 Reference: macOS 26.6.2 on MacBook Pro Mac17,6 (M5 Max), run
 `benchmarks/results/macos-2026-10-11-ac-lpm/`. The run was on AC power, and
 macOS reported "Low Power Mode: Yes" for AC (see `env-*.txt`).

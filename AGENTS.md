@@ -1,5 +1,29 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — 31AP real pass reviewed; next full transaction backend tested, November 15
+
+Reviewed459161d: real collection/initial-admission/ownedROcleanup PASS, source-
+based paired1TR/OriginalFull+CTRR/typedstablepolicy/selected31AF consequences;
+human Originaldesktop/default return confirmed. No installation, key enrollment,
+Linux entry or multicore/performance proof. Boot021 remains OUTSTANDING. No
+repeated31AP or desktop policy check, host setting or stage operation this turn.
+
+New tools/boot-object31aq-native builds original fullCLI with qualified31AO
+state/v3HMAC, preserving core/json/header/main and143 old inputs.18 focused
+normal+same18 ASan/UBSan +independent normal/source review PASS, real own31AF→
+candidate→raw-policy→boot021 validators/fresh keys/baseline, noidentitymocks.
+Helper89504/271f2401…1769c; canonical component-profile own-file verification PASS.
+This is COMPONENT ONLY, not a staged/full installer or restart-ready package.
+
+Remaining implementation: ownedROadmission/keybaseline→verifiedRWcapability→
+fixedlabApplewriter→readback→verifiedcleanup, durable private state/markers and
+cross-visit target commitments. PublicAsahi does not prove kmutil automount or
+ROupgrade; do not replay old shell against AP's now-unmounted Preboot. Plan in
+research/attempt31aq-preboot-lifecycle-2026-11-15.md. M1component-only handoff:
+tools/m1n1-client/attempt31aq-component-instructions.md. No serve/stage/restart.
+Roadmap/scorecard/historical matrix updated; old AC-LPM reference stays labeled,
+no new parity metric. Current host/default/security unchanged by this work.
+
 ### M1 — 31AP real Recovery admission/cleanup PASS; Original return confirmed, November 15
 
 One human Recovery photograph shows DIAGNOSTIC_COMPLETE/COMPLETE/NONE;

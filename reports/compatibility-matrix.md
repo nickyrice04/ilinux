@@ -1,5 +1,20 @@
 # Hardware Compatibility Matrix: M5 Max (t6050) vs Linux
 
+## Current evidence boundary, November 15, 2026
+
+The table below is the historical October 11 foundation inventory, not a
+current assertion that Linux cannot boot. [Attempt 27](../native/boot/stage-b-2026-10-20-attempt27-result.md)
+subsequently demonstrated native Omarchy with one CPU, software graphics,
+RAM-root delivery, USB/SSH and keyboard input. The current reader fix also
+[passes real Recovery admission and cleanup](../native/boot/attempt31ap-recovery-2026-11-15-result.md).
+That Recovery result does not establish entry or multicore operation for the
+new Aura/Linux route. Native all-core frequency/efficiency, G17C acceleration,
+internal SSD, built-in networking and the remaining peripherals still require
+route-specific hardware evidence. Use the [current roadmap](../roadmap.md)
+and [parity scorecard](performance-parity.md) for today's priorities and limits.
+
+## Historical foundation snapshot
+
 Snapshot 2026-10-11. Evidence sources:
 
 * `ADT`: sanitized device tree (`hardware/adt/`)
@@ -18,8 +33,10 @@ Status vocabulary:
 * **Missing**: no code.
 * **Blocked**: depends on an unavailable interface.
 
-**No subsystem is "Supported" on t6050.** m1n1 has initial T6050 support
-(single core). There is no device tree or kernel bring-up in any tree.
+**Historical October 11 assessment:** this initial survey had no validated
+t6050 subsystem marked "Supported" and only initial single-core m1n1 support.
+Later project boot/device-tree/kernel results supersede that original blanket
+assessment; individual historical rows are retained with their original scope.
 
 ## Summary
 
