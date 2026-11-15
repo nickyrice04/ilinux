@@ -1,5 +1,20 @@
 # Blockers
 
+### M5 — 31AP staged/default ready; waiting only for live source-profile page, November 15
+
+Source/code review passed, exact target kit owner-staged, temporary LAB default
+and current ORIGINAL verified. M1's missing local helper is no longer a page
+dependency: independently reviewed source-only adapter generates exact public-
+profile-bound HTML, original server validates it, target rechecks staged bytes.
+No binary delivery is claimed or required for this route. No more transfer,
+rebuild, old-suite rerun or routine mode query is needed.
+
+M1 must prepare/check/start exact new31AP page and provide its complete private
+URL before M5's shutdown cue. Actual pairedRecovery/security/object admission
+and mount/cleanup remain untested31AP; do not boot old lab tile or auto-install.
+Original Full unchanged; boot021 restoration OUTSTANDING. Authorized handoff:
+tools/m1n1-client/attempt31ap-authorized-instructions.md.
+
 ### M1 — 31AP source/34 methods PASS; exact kit pending, November 15
 
 Reviewed5ef6a73: all140 tracked pins/125 AM+AO bindings exact; actual inert

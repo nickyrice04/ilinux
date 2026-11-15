@@ -1,5 +1,24 @@
 # Decisions Log
 
+### M5 — serve from pinned public profile after verified target staging, November 15
+
+Accept M1a136914 source/34-method review. Current user authorized stage/prep;
+owner's exact success JSON confirms guarded target copy. Retain existing
+temporary lab-default/Original-return approval and verified selection. No repeat
+permission or routine policy-mode command; no security/boot-object modification.
+
+Remove the redundant M1binarytransfer prerequisite: original server admits only
+source/profile/exactHTML, while Recovery independently checks actual target
+files before copy/execution. New source-only page adapter preserves all140
+inputs and both validation boundaries;9 methods and independent audit pass.
+State SOURCE_PROFILE_PAGE_ONLY and no M1binarydelivery verification explicitly.
+Frozen old review is historical, not rewritten as delivery success.
+
+M1 may prepare/check/serve exact new page now. M5 gives no shutdown cue until
+live readiness established. One human read-only conditional check then Original
+return; no installation, restoration or Linux boot inferred. Original Full
+unchanged; boot021 remains outstanding.
+
 ### M1 — 31AP source/34 methods PASS; exact kit pending, November 15
 
 Reviewed5ef6a73: all140 tracked pins/125 AM+AO bindings exact; actual inert

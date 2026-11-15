@@ -1,5 +1,25 @@
 # Progress Log
 
+### M5 — 31AP staging done; source-only page removes transfer dependency, November 15
+
+Reviewed M1a136914 PASS/no code findings. Noninteractive sudo required auth
+before execution. Owner ran the authorized copy and supplied exact success:
+helper124640/d31279b4…4684, profile823/c64b596f…c747, only new lab Data kit.
+Accepted without restage. Temporary LAB Startup Disk selected in Original UI;
+fresh read-only bless device/group comparison confirms LAB default/current
+Original. No restart, policy/security or boot-object change.
+
+Implemented source-profile-only page adapter after verifying old server never
+reads a helper kit.9 focused methods and independent audit PASS. Actual no-kit
+source preparation + unchanged original validator PASS, exact8357/5615/823
+outputs. Target Recovery still verifies the staged helper/profile twice.140
+frozen bindings unchanged; no claim of M1binarydelivery. Published new authorized
+M1 handoff to prepare/check/serve this page without transfer/rebuild/old tests.
+
+Remaining before shutdown: exact new live M1 page. No Recovery/mount/nativeLinux/
+SMP/performance or boot021 restoration by this preparation. Original Full remains
+unchanged; return/default restoration is part of the approved single-check flow.
+
 ### M1 — 31AP source/34 methods PASS; exact kit pending, November 15
 
 Reviewed5ef6a73: all140 tracked pins/125 AM+AO bindings exact; actual inert

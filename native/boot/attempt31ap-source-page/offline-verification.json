@@ -1,0 +1,48 @@
+{
+  "actual_source_only_preparation": {
+    "binary_delivery_verified_on_M1": false,
+    "boot_settings_changed": false,
+    "host_queried": false,
+    "kit_consumed": false,
+    "native_ready": false,
+    "output": {
+      "diagnose-paste.txt": {
+        "bytes": 5615,
+        "sha256": "d9a47b93fc65ac78aa7a2b0e662bb6f2ce568584c74cf07575735f6247631bd7"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "c64b596fd0d2e7003098eda79fa3a7f9841e13de79d2ce430d2b49f15d2bc747"
+      },
+      "recovery.html": {
+        "bytes": 8357,
+        "sha256": "fff051694d5cecd389e9fcc26204189277c0c83ba66f619429acc631558ff466"
+      }
+    },
+    "publication_authorizes_execution": false,
+    "schema": "ilinux31ap-source-profile-page-v1",
+    "scope": "SOURCE_PROFILE_PAGE_ONLY",
+    "server_started": false,
+    "source_inventory_sha256": "1e10cb95acab08adc127a84425c459745681d6c126a441523ec58e630618edf4",
+    "staged": false,
+    "status": "OFFLINE_PREPARATION_PASS",
+    "verified_source_count": 140
+  },
+  "bash_syntax": "PASS",
+  "binary_delivery_verified_on_M1": false,
+  "date": "2026-11-15",
+  "host_changes_by_adapter": false,
+  "independent_tests_and_audit": "PASS",
+  "kit_or_helper_accessed": false,
+  "native_ready": false,
+  "new_methods": 9,
+  "original_140_source_pins": "UNCHANGED",
+  "original_package_check_only": "PASS_EXACT_PAGE_VERIFIED",
+  "output_equals_reviewed_page_profile_and_paste": true,
+  "producer_tests": "PASS",
+  "purpose": "M1 serves exact reviewed page without a redundant helper transfer after exact M5 staging is owner-confirmed",
+  "schema": "ilinux31ap-source-page-offline-verification-v1",
+  "scope": "SOURCE_PROFILE_PAGE_ONLY",
+  "server_started_on_M1": "NOT ESTABLISHED",
+  "target_execution_gate": "Unchanged Recovery block verifies actual M5 staged helper/profile before copy and again before execution"
+}

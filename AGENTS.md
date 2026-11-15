@@ -1,5 +1,30 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — 31AP staged; temporary lab default; source-only M1 page, November 15
+
+Reviewed a136914: native/source34 PASS, no code finding; actual M1 kit absent.
+User requested staging/preparation. Sudo-n stopped before execution; owner then
+authenticated locally and provided exact staged diagnostic helper124640/d31279b4…4684
+and profile823/c64b596f…c747. No restage; no boot-object/policy/security/volume write
+by that copy. M5 selected LAB temporarily in ORIGINAL System Settings without
+Restart. Fresh read-only bless selected-device/real-group comparison confirms
+LAB default/ORIGINAL current. Existing explicit selection-and-return approval
+persists; no redundant permission or routine security-mode query.
+
+M1 need not receive the helper to serve HTML: its unchanged validator uses only
+140 pinned sources, canonical public profile and exact page. Recovery rechecks
+the already staged target bytes. New source-only adapter outside frozen140
+passes9 methods and independent audit; actual no-kit prepare/original check-only
+produce identical8357 page/5615 paste/823 profile. It truthfully reports no M1
+binary-delivery verification. Old delivery-pending receipt stays unchanged.
+
+M1 now follows tools/m1n1-client/attempt31ap-authorized-instructions.md to make/
+verify/serve exact new page, then return live private URL. That page is the final
+prerequisite before shutdown cue. No M1 restart/proxy/camera/helper transfer or
+old suites/builds. No M5 restart/Recovery/mount/install/restore/security action.
+Original Full unchanged; boot021 OUTSTANDING. Evidence: native/boot/attempt31ap-
+handoff-2026-11-15.json and native/boot/attempt31ap-source-page/.
+
 ### M1 — 31AP source/34 methods PASS; exact kit pending, November 15
 
 Reviewed5ef6a73: all140 tracked pins/125 AM+AO bindings exact; actual inert
