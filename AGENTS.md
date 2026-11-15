@@ -1,5 +1,25 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — 31AM deployment blocker isolated; desktop observation pending, November 14
+
+Reviewed M1 2a28915: conditional RO Preboot mount/verification/cleanup passed;
+the unchanged reader then refused LAB_POLICY/FORMAT/UNSUPPORTED_METADATA.
+Its two explicit source branches are non-absent protected auxiliary metadata
+or an unsupported four-character tag; the actual field remains unknown.
+No CPU/firmware conclusion follows. Original desktop/default is human-confirmed;
+Full remains invariant and boot021 restoration OUTSTANDING.
+
+New tools/policy31an provides bounded, target-guarded text/JSON schema observation
+for both groups from the current M5 desktop. Only fixed catalog names, syntax
+classes and aggregate shape/counts return; no values, identifiers or unknown
+names. Dependencies are hash-checked, the 111-source closure is retained, and
+fresh final identity observation is required. No parser acceptance changes.
+20 focused synthetic tests and independent audit PASS; old suites not rerun.
+Noninteractive sudo stopped before execution; owner authentication/output is
+pending. No mount/kit/staging/settings/native operation by this work.
+M1 reviews tools/m1n1-client/attempt31an-instructions.md offline only. No restart.
+See research/attempt31an-policy-schema-2026-11-14.md and native/boot/attempt31an/.
+
 ### M1 — 31AM RO mount/cleanup PASS; lab-policy refusal, November 14
 
 One human photo: initial UNMOUNTED_EMPTY, mount attempted/owned/read-only verified

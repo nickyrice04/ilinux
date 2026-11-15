@@ -1,5 +1,23 @@
 # Coordination: agents working in this workspace
 
+### M5 — 31AN owner split and no-reboot handoff, November 14
+
+M5 accepted 2a28915 and owns the policy-schema observation and evidence-based
+reader repair. Probe producer and independent auditor completed 20 focused
+synthetic controls/audit PASS; their three new files are frozen in
+native/boot/attempt31an/source-sha256.txt. All old 111 inputs remain untouched.
+Owner-run M5 desktop observation awaits local administrator authentication;
+the noninteractive attempt stopped before script execution. No policy raw data
+or private identifiers are retained or requested.
+
+M1 follows tools/m1n1-client/attempt31an-instructions.md for offline review only.
+Do not start a page, camera, proxy, Recovery check or restart, rerun old suites,
+restage artifacts or reset old state. No live probe on M1. M5 will qualify the
+actual field before changing typed acceptance; 31AM's physically successful
+Preboot engine remains the foundation. No new native window is ready.
+Original Full is unchanged; desktop/default return human-confirmed, boot021
+restoration OUTSTANDING. Analysis: research/attempt31an-policy-schema-2026-11-14.md.
+
 ### M1 — 31AM RO mount/cleanup PASS; lab-policy refusal, November 14
 
 One human photo: initial UNMOUNTED_EMPTY, mount attempted/owned/read-only verified

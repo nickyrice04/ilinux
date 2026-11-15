@@ -1,5 +1,24 @@
 # Decisions Log
 
+### M5 — observe the actual schema before extending acceptance, November 14
+
+After M1 2a28915, retain the successful 31AM read-only Preboot engine. Repair
+the original policy reader separately; do not change Aura/Linux CPU code for
+this pre-install parser refusal or use another blind Recovery visit.
+
+Use an audited desktop-only finite observer to identify known field categories
+and JSON types without returning values or identifiers. Its 20 focused controls
+and independent review pass; authenticated live observation is still pending.
+No separate security-mode check, parser broadening or settings change is included.
+
+If observed and type-qualified, support only the evidenced field in new
+generated source. Preserve canonical presence/value in private Policy, the
+before/after comparison and a newly separated keyed metadata commitment; prove
+the extension reverses to the frozen source. Unknown/duplicate/malformed data
+still refuses. No acceptance change until that evidence exists. Current work
+creates no native window and does not complete the outstanding boot021 restore.
+Rationale and conditional plan: research/attempt31an-policy-schema-2026-11-14.md.
+
 ### M1 — 31AM RO mount/cleanup PASS; lab-policy refusal, November 14
 
 One human photo: initial UNMOUNTED_EMPTY, mount attempted/owned/read-only verified

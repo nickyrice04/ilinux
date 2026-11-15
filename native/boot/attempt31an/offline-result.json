@@ -1,0 +1,45 @@
+{
+  "schema": "ilinux31an-desktop-schema-preparation-v1",
+  "date": "2026-11-14",
+  "reviewed_M1_commit": "2a28915",
+  "physical_31am": {
+    "conditional_read_only_mount_and_cleanup": "PASS_REPORTED_BY_REVIEWED_HELPER",
+    "diagnostic": "REFUSED_LAB_POLICY_FORMAT_UNSUPPORTED_METADATA",
+    "policy_read_exit": 0,
+    "policy_stdout_bytes": 2822,
+    "actual_rejected_tag": "UNKNOWN",
+    "snapshot_collected": false,
+    "initial_admission_valid": false
+  },
+  "source_analysis": {
+    "explicit_unsupported_branches": 2,
+    "branches": ["NON_ABSENT_PROTECTED_AUXILIARY_FIELD", "UNSUPPORTED_FOUR_CHARACTER_TAG"],
+    "published_extra_candidates_not_observed": ["lobo", "love"],
+    "parser_acceptance_changed": false,
+    "new_proprietary_binary_analysis": "NOT RUN; rejecting predicates are original project source"
+  },
+  "offline_tests": {
+    "focused_methods": 20,
+    "producer": "PASS",
+    "independent_audit": "PASS",
+    "scope": "SYNTHETIC_MOCKED_AND_OWN_CHILD_PROCESSES",
+    "old_native_or_capture_suites_repeated": false
+  },
+  "desktop_live_observation": "PENDING_OWNER_AUTHENTICATION",
+  "noninteractive_sudo": "STOPPED_FOR_PASSWORD_BEFORE_PROBE_EXECUTION",
+  "policy_values_returned": false,
+  "identifiers_returned": false,
+  "native_ready": false,
+  "settings_changed": false,
+  "boot_object_installed": false,
+  "new_kit_staged": false,
+  "new_Recovery_check": "NOT RUN",
+  "native_entry": "NOT RUN",
+  "Linux": "NOT RUN",
+  "SMP": "NOT RUN",
+  "performance": "NOT RUN",
+  "Original_Full": "REQUIRED_INVARIANT; no new security-mode query",
+  "Original_desktop_and_default": "HUMAN_CONFIRMED_IN_M1_31AM_RESULT",
+  "boot021_restoration": "OUTSTANDING",
+  "next": "Obtain finite desktop schema observation; qualify actual field before a narrow original parser extension. No reboot."
+}

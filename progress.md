@@ -1,5 +1,25 @@
 # Progress Log
 
+### M5 — 31AM mount fix verified; redacted desktop probe implemented, November 14
+
+Reviewed 2a28915: one owned RO Preboot mount and cleanup passed, followed by
+LAB_POLICY/FORMAT/UNSUPPORTED_METADATA. The exact rejected field is not exposed
+by that result. Our source isolates two possible branches; the 2,822-byte
+display length cannot distinguish them. No snapshot/admission or native result.
+
+Implemented tools/policy31an with frozen dependency/target checks, bounded
+both-role text/JSON displays, finite category/type output, exception redaction,
+interruption handling and fresh final identity comparison. It does not alter
+native acceptance or settings. 20 focused synthetic methods PASS in producer
+and independent audit runs. Old suites/builds/artifacts were reused unchanged.
+Live desktop execution awaits owner authentication after sudo stopped before
+the script. No extra Recovery visit, kit stage, boot or setting operation.
+
+Wrote the field-dependent repair design and M1 offline-only instructions.
+Original Full remains required; human confirms desktop/default return.
+Boot021 restoration OUTSTANDING; Linux/SMP/performance NOT RUN by this work.
+Evidence: research/attempt31an-policy-schema-2026-11-14.md and native/boot/attempt31an/.
+
 ### M1 — 31AM RO mount/cleanup PASS; lab-policy refusal, November 14
 
 One human photo: initial UNMOUNTED_EMPTY, mount attempted/owned/read-only verified

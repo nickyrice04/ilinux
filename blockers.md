@@ -1,5 +1,23 @@
 # Blockers
 
+### M5 — current blocker is unsupported policy schema, November 14
+
+31AM removes the observed unmounted-Preboot prerequisite in that visit: owned
+RO verification and cleanup passed. Current refusal is inside our lab-policy
+reader, before snapshot/admission. Unknown whether a non-absent protected field
+or an unsupported tag caused it. Do not classify this as an Apple CPU barrier.
+
+The new audited tools/policy31an desktop observer is ready; local administrator
+authentication and its finite owner-supplied JSON are outstanding. Sudo stopped
+before execution, so no live observation is claimed. Published lobo/love tags
+are only candidates. No typed acceptance change is justified yet. If desktop
+schema differs from Recovery, further bounded qualification remains necessary.
+
+Boot021 restoration remains OUTSTANDING. Native installation/entry/all-core
+startup/performance remain untested by 31AM/31AN. Preserve Original Full and
+the human-confirmed desktop/default return. No next restart is prepared.
+See research/attempt31an-policy-schema-2026-11-14.md.
+
 ### M1 — 31AM RO mount/cleanup PASS; lab-policy refusal, November 14
 
 One human photo: initial UNMOUNTED_EMPTY, mount attempted/owned/read-only verified
