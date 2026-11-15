@@ -1,5 +1,33 @@
 # Blockers
 
+### M5 — accepted live31AR page; human Recovery cue ready, November 15
+
+Accepted M1 4a57360: actual HTTP200 body15264/0dd56773…aa623ed4 equals the
+reviewed page, both complete install/restore boxes and162 pins/inventory exact.
+Independent readiness review PASS. Exact owner-staged kit and temporary LAB
+/default/current ORIGINAL evidence retained without repeated operations. The
+full private URL is already returned to the human; no duplicate URL request.
+
+The existing explicit one lab-install/one maximum90sRAM/conditional labCTRR/
+exactboot021/default-return authorization condition is now met. No repeated
+approval, mode query, suite/build, transfer, restage, M1 restart or proxy.
+Updated tools/m1n1-client/attempt31ar-authorized-instructions.md records acceptance
+and supersedes older pending language for this exact transaction only.
+
+Human saves work, shuts M5 down, holds power from off and chooses Options/
+Continue into paired lab Recovery, not the old lab tile. One complete install
+paste; require INSTALL_COMPLETE/candidate/readback/cleanup/writer0 plus shell0
+before native boot. One external90s maximum window, then paired Recovery's
+independent restore; require RESTORE_COMPLETE/boot021/cleanup plus shell0 and
+separate Macintosh HD default/desktop return. Camera off for all authentication.
+Keep the reviewed page/restore box available; refresh only an expired read-only
+server if needed, never reset spent state or repeat a writer.
+
+No restart clicked/issued or host setting/security change this turn. Original
+Full remains invariant. Physical Recovery/RW/install/restore/native/Linux/SMP/
+performance remain NOT RUN and boot021 OUTSTANDING at this handoff. Evidence:
+native/boot/attempt31ar-restart-ready-2026-11-15.json.
+
 ### M1 — exact31AR page live and HTTP verified; M5 readiness review next, November 15
 
 Pulledeb2bcf7 and accepted exact M5 owner staging/default handoff without repeat.

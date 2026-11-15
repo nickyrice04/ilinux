@@ -1,27 +1,26 @@
 # M1: one 31AR lab transaction and boot021 restoration
 
-November 15, 2026. The user explicitly authorized the lab-only installation,
-one maximum 90-second native test and exact boot021 rollback, keeping Macintosh
-HD at Full Security, **conditional on M5 accepting the new page-readiness
-report**. M5 must confirm that condition and give the human restart cue before
-this handoff is executed. This document does not assert that the report has
-already been accepted or that any native operation has run.
+November 15, 2026. M5 accepted M1's new live-page report **4a57360**: HTTP 200,
+the exact reviewed 15,264-byte body/hash, both complete install/restore boxes
+and all 162 source pins match. Independent readiness review also passes.
+The user-authorized condition is met for the lab-only installation, one maximum
+90-second native test and exact boot021 rollback, keeping Macintosh HD Full.
+M5 now gives the human shutdown/Options cue. No restart was clicked or issued
+by the agent; installation and all native phases remain NOT RUN until observed.
 
-Once that condition is satisfied, this authorization supersedes the older
-pending-authorization wording only for this exact 31AR transaction. Do not
-request the same approval again. All frozen source, profile, candidate, helper,
-paste, page and historical evidence bytes remain unchanged.
+This authorization supersedes the older pending-authorization wording only for
+this exact 31AR transaction. Do not request the same approval again. All frozen
+source, profile, candidate, helper, paste, page and historical evidence bytes
+remain unchanged. Acceptance is recorded in
+native/boot/attempt31ar-restart-ready-2026-11-15.json.
 
 ## Keep the reviewed page available
 
-The commit supplied by the human, `39c09f9`, is the earlier offline review;
-it reports the server as not started. It is not the page-readiness report.
-First follow `attempt31ar-staged-instructions.md` to check and serve the already
-reviewed source-only page, then publish a new finite readiness report and return
-the complete live URL privately. M5 must accept that evidence before its cue.
-Do not repeat the offline review, transfer, staging, build or test suites.
-
-Once ready, reuse the exact 31AR combined page and its bounded server.
+The earlier offline-only `39c09f9` report and conditional hold are historical.
+Reuse the live page established and HTTP-verified in `4a57360`; its full private
+URL was returned to the human. Do not repeat the offline review, transfer,
+staging, build or test suites. Keep the exact combined page and bounded server
+available through installation and independent restoration.
 The page title is **31AR guarded native transaction**, with both complete
 install and independent restore text boxes. Its body is 15,264 bytes,
 SHA-256 `0dd56773d0551b1e226a5cec3c2d88acb07c7b6e9e51a036c47f9049aa623ed4`.
