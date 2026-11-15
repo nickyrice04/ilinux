@@ -1,5 +1,24 @@
 # Decisions Log
 
+### M1 — 31AS install refused; boot021 restore and Original return confirmed, November 15
+
+Actual install writer0 ended POSTCONDITION/POLICY_OR_OBJECT REFUSED; candidate
+verification false, cleanup true, state preserved, no final install shell success.
+Exact failing predicate Unknown. No lab boot or install retry. Human explicitly
+confirmed independent RESTORE_COMPLETE, rollback_verified=true,
+cleanup_verified=true and final shell helper0; raw restore capture and numeric
+writer exit not supplied. Boot021 restoration PASS / HUMAN CONFIRMED. Separate
+Macintosh HD desktop and default confirmations received; no return problem.
+Original Full remains required; no redundant desktop policy query.
+
+Owned page server stopped: exit0, process absent/listener closed. 167 source pins
+and 201 prior files/consumed receipts unchanged. No source/test edit, suite/build
+repeat, state reset, transfer, proxy or M1 restart. Native windows0; Linux/live
+version/SMP/GPU/performance NOT RUN. M5 owns offline postcondition analysis only;
+no automatic retry or new experiment. Prior six-local-pass/thirteen-NOT-RUN
+coverage distinction retained. Evidence:
+native/boot/attempt31as-recovery-2026-11-15-result.md and JSON.
+
 ### M1 — 31AS writer0 but postcondition REFUSED; independent restore pending, November 15
 
 Human photo shows live31AR controller result: install/POSTCONDITION/POLICY_OR_OBJECT,
