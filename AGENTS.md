@@ -1,5 +1,45 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — conditional read-only31AM Preboot fix ready offline, November 14
+
+User authorized preparation/tests/M1 handoff only. New original companion
+preserves the frozen collector/admission predicates and all92 old source
+bindings. It corroborates empty path with bounded kernel mount-table absence,
+rechecks volume identity, and conditionally uses fixed read-only/nobrowse/
+nofollow mount_apfs at a new child of held scratch CWD. Existing valid mounts
+are untouched. Fresh overlay FD verifies source/path/MNT_RDONLY; only the owned
+verified mount receives a nonforced unmount. Partial command failures are
+reobserved; uncertain cleanup overrides pass and is reported without raw data.
+No install/restore/security-write/repair/native-boot mode exists.
+
+A read-only current-macOS metadata-shape observation found Mounted/read-only
+plist fields absent, so absence is never treated as unmounted. Kernel evidence
+is required instead. No identifiers/policy returned; Recovery shape remains
+unverified. New JSON distinguishes mount-state changes from Preboot filesystem
+write requests and private scratch writes; the strict display validator emits
+only finite known fields. Original pairing/security/object checks run unchanged
+in the later collector, not claimed by preparation alone.
+
+50 new focused methods PASS (28 native,12 renderer,10 package), plus the same28
+native methods under ASan/UBSan. Independent review PASS, including targeted
+rechecks after final exit-contract correction; old86/29 suites not rerun.
+Actual111 source pins, canonical two-file kit/page, bash-n and clean Git-only
+export PASS; production self-bound synthetic refusal/validator control PASS.
+SDK clang21/27.2, arm64/min13; helper124464 bytes/dea9e20a…3f28f, profile823.
+Only original source/sanitized evidence go to Git; new local kit remains under
+ignored build/ilinux-31am-diagnostic. Candidate, old kits/pages/receipts/state,
+boot objects and security settings unchanged. No live mount, staging or server.
+
+M1 follows tools/m1n1-client/attempt31am-instructions.md for focused offline
+review and tiny-kit/page verification. No restart yet. Later combined explicit
+authorization covers new lab Data copy, temporary lab default/Original return
+and one conditional read-only Recovery check; no Linux or rollback is implied.
+If cleanup is uncertain, report and use the approved one-time Original return
+rather than forcing unmount or relying on Recovery Startup Disk through RO
+Preboot. Original Full remains required; prior desktop/default human-confirmed;
+boot021 restoration OUTSTANDING. Native/Linux/SMP/performance NOT RUN.
+Evidence: native/boot/attempt31am/ and the new handoff.
+
 ### Latest M5 — 31AL Preboot guard understood; reuse matched CPU stack, November 14
 
 Reviewed M1's6fb1023. Exact refusal is AUX_IDENTITIES/GUARD/PREBOOT_MOUNT_PATH:

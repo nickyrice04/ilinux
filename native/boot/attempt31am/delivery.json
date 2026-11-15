@@ -1,0 +1,17 @@
+{
+  "candidate_or_rollback_transferred": false,
+  "files": {
+    "ilinux31aj-reader": {
+      "bytes": 124464,
+      "sha256": "dea9e20ab3c81d2054790af0922d304f4abe1ae621bee43992373b1666a3f28f"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "0ee80fb6bc186f964795eb0cc35e1bd47bc642602a4ce8153cf460830b119f6a"
+    }
+  },
+  "mount_execution": "NOT RUN",
+  "native_ready": false,
+  "public_binary_release": false,
+  "schema": "ilinux31am-local-diagnostic-delivery-v1"
+}

@@ -1,0 +1,90 @@
+{
+  "Linux": "NOT RUN",
+  "SMP": "NOT RUN",
+  "bash_n": "PASS",
+  "boot021_restoration": "OUTSTANDING",
+  "date": "2026-11-14",
+  "export_input_git_tree": "e103da4908b0a402d4a2f452b8f01b1557c7121d",
+  "focused_methods": {
+    "native": 28,
+    "package": 10,
+    "renderer": 12,
+    "same_native_methods_under_asan_ubsan": 28,
+    "unique_total": 50
+  },
+  "git_only_source_export": true,
+  "host_observation": "One read-only current-macOS known-field metadata-shape query; no identifiers/policy returned; Recovery shape unverified",
+  "host_settings_changed": false,
+  "ignored_producer_absent": true,
+  "independent_review": {
+    "actual_source_kit_page": "PASS",
+    "native": "28 normal+28 sanitizer before final narrow exit correction; two affected controls rerun normal+sanitizer afterward",
+    "package": "10 PASS",
+    "renderer": "12 PASS",
+    "status": "PASS"
+  },
+  "live_Recovery": "NOT RUN",
+  "mount_execution": "NOT RUN",
+  "native_ready": false,
+  "new_lab_staging": "NOT RUN",
+  "only_new_two_file_kit_copied": true,
+  "page_preparation": {
+    "boot_settings_changed": false,
+    "conditional_read_only_mount": true,
+    "mount_execution": "NOT RUN",
+    "native_ready": false,
+    "output": {
+      "diagnose-paste.txt": {
+        "bytes": 5615,
+        "sha256": "22146e7dc64d08556a2681eedcef2fb341190e87d93d2acbc68230d04ae9c207"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "0ee80fb6bc186f964795eb0cc35e1bd47bc642602a4ce8153cf460830b119f6a"
+      },
+      "recovery.html": {
+        "bytes": 8343,
+        "sha256": "e76b0b1c2d55c6b7d91d429b9b24bb3ad43c49d267bb1bef9c4f0b81fa522a9f"
+      }
+    },
+    "publication_authorizes_execution": false,
+    "schema": "ilinux31am-preboot-preparation-v1",
+    "source_inventory_sha256": "0d080629d2cb8ae35d347431cc754ab8bd45807f8a83f17b26b03e8c78b65231",
+    "status": "OFFLINE_PREPARATION_PASS",
+    "verified_source_count": 111
+  },
+  "performance": "NOT RUN",
+  "production_self_bound_control": {
+    "fixture_exit": 2,
+    "fixture_scope": "SYNTHETIC_CONTROL",
+    "help_exit": 0,
+    "host_query": false,
+    "live_Recovery": false,
+    "mount_attempted": false,
+    "native_ready": false,
+    "private_marker_returned": false,
+    "refusal_reason": "METADATA",
+    "refusal_stage": "IDENTITIES",
+    "status": "PRODUCTION_SELF_BOUND_CONTROL_PASS",
+    "validator_exit": 0,
+    "validator_preserves_refusal": true
+  },
+  "publication_authorizes_execution": false,
+  "retained_31al_pins": 92,
+  "schema": "ilinux31am-offline-verification-v1",
+  "server_started": false,
+  "socket_free_page_check": {
+    "native_ready": false,
+    "page_bytes": 8343,
+    "page_sha256": "e76b0b1c2d55c6b7d91d429b9b24bb3ad43c49d267bb1bef9c4f0b81fa522a9f",
+    "profile_sha256": "0ee80fb6bc186f964795eb0cc35e1bd47bc642602a4ce8153cf460830b119f6a",
+    "schema": "ilinux31aj-fixed-page-v1",
+    "server_started": false,
+    "source_inventory_sha256": "0d080629d2cb8ae35d347431cc754ab8bd45807f8a83f17b26b03e8c78b65231",
+    "status": "EXACT_PAGE_VERIFIED",
+    "verified_source_count": 111,
+    "write_authorized": false
+  },
+  "source_pins": 111,
+  "status": "PASS"
+}

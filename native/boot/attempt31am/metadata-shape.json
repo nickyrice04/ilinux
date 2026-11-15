@@ -1,0 +1,21 @@
+{
+  "schema": "ilinux31am-macos-metadata-shape-v1",
+  "date": "2026-11-14",
+  "scope": "MACOS_READ_ONLY_METADATA_SHAPE",
+  "target_selection": "Frozen target guard; unique Preboot role in lab and Original shared APFS container; identities compared only in memory",
+  "known_boolean_fields": {
+    "Mounted": "ABSENT",
+    "ReadOnlyMedia": "ABSENT",
+    "ReadOnlyVolume": "ABSENT",
+    "VolumeReadOnly": "ABSENT",
+    "ReadOnly": "ABSENT",
+    "Writable": "TRUE"
+  },
+  "mountpoint_class": "ABSOLUTE",
+  "identifiers_returned": false,
+  "policy_read": false,
+  "settings_changed": false,
+  "Recovery_shape_verified": false,
+  "mount_attempted": false,
+  "decision": "Do not infer unmounted from an absent plist key; corroborate empty path with successful kernel mount-table observation and repeated identity before conditional preparation"
+}
