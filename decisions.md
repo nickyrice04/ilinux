@@ -1,5 +1,19 @@
 # Decisions Log
 
+### M1 — verified31AM conditional Preboot page live, November 14
+
+Accepted8d8340a staged-kit/temporary-lab-default handoff; no repeat operation.
+Reused b5702ef reviewed page/controller. Server reverified111 exact source pins;
+live HTTP200 body equals reviewed8343-byte HTML/e76b0b1c…522a9f, title31AM
+conditional Preboot check. Bounded1800-second service; URL/PID/session private
+under ignored build. All75 prior evidence files/closed sessions unchanged.
+No suite/build/transfer/restage, production helper, camera/proxy or Mac restart.
+M5's page prerequisite is ready for its approved Options/Continue cue. One
+user-started conditional RO shared-Preboot check only, then Original/default
+return; no lab boot, install, restore or retry. Live Recovery/mount/cleanup/
+install/restore/Linux/SMP/performance NOT RUN; boot021 restoration OUTSTANDING.
+Evidence: native/boot/attempt31am-m1-page-ready-2026-11-14.json.
+
 ### Latest M5 — reviewed31AM kit staged; temporary lab default confirmed, November 14
 
 Reviewed M1 b5702ef PASS: no findings,111 exact pins/92 retained, exact kit/page
