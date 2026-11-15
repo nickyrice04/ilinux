@@ -1,5 +1,25 @@
 # Progress Log
 
+### M1 — exact31AR page live and HTTP verified; M5 readiness review next, November 15
+
+Pulledeb2bcf7 and accepted exact M5 owner staging/default handoff without repeat.
+Reused39c09f9 and all6 retained source-profile outputs; combined15264-byte page
+0dd56773…aa623ed4, title and both complete install/restore boxes exact. Original
+check-only verifies162 pins/inventory9ff372bb…47d80fc. Bounded1800s server at
+/31ar is actually live; direct no-proxy HTTP200 body byte-equals reviewed page.
+Private URL/PID/session stay ignored and full URL is returned to the human.
+180 previous files/consumed receipts unchanged. No repeated review/tests/build,
+transfer/stage, M1 restart, proxy, camera, target query or settings change.
+M1 production binary delivery remains unverified; unchanged target staged-byte
+checks remain. New readiness evidence is ready for M5 acceptance and its cue;
+the user's exact one-install/one90sRAM/conditional labCTRR/boot021/default-return
+authorization is retained, not re-requested. M1 does not self-assert M5 acceptance.
+Keep M5 running until that cue; Recovery/RW/install/restore/native entry/Linux/
+SMP/performance NOT RUN, boot021 OUTSTANDING, Original Full required. Keep the
+independent restore box accessible through second Recovery; refresh only an
+expired read-only server if needed, never reset/repeat a transaction.
+Evidence: native/boot/attempt31ar-m1-page-ready-2026-11-15.json.
+
 ### M5 — 31AR physical scope authorized; live-page evidence still missing, November 15
 
 The user explicitly authorizes one lab-only install, one maximum90-second RAM
