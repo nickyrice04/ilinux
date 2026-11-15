@@ -1,5 +1,20 @@
 # Decisions Log
 
+### M5 — hand off the fully tested31AP diagnostic before physical action, November 15
+
+Use the same real-desktop-qualified reader with exact31AM mount/cleanup/CLI/
+outer validation and unchanged core/admission. Require genuine complete31AF
+positive fixtures, not just refusal or forged-validator controls; these now
+pass normal/sanitized/independent checks. Preserve the frozen scratch-prefix
+contract in the page rather than relaxing the engine to fit a renamed path.
+
+Publish only original source/public profile and sanitized evidence. Matched
+140-source closure and two-file private kit produce the exact page from clean
+Git inputs; no large image rebuild is needed. M1 reviews offline first; M5
+then assesses its findings before any concrete stage/paired-Recovery cue.
+No additional authorization or boot/security action is inferred from a build
+or page check. Original Full unchanged; boot021 restoration OUTSTANDING.
+
 ### M5 — use formatter-qualified typed preservation and real desktop C validation, November 15
 
 31AN owner observation justifies investigating the whole format rather than

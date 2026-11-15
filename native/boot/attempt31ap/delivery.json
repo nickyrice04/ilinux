@@ -1,0 +1,19 @@
+{
+  "boot_object_installed": false,
+  "boot_settings_changed": false,
+  "contents": "ORIGINAL_READ_ONLY_HELPER_AND_PUBLIC_PROFILE_ONLY",
+  "files": {
+    "ilinux31aj-reader": {
+      "bytes": 124640,
+      "sha256": "d31279b4737cef3a5524dd0bd0a34a66ce2cf4a998416e551d177d4478d54684"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "c64b596fd0d2e7003098eda79fa3a7f9841e13de79d2ce430d2b49f15d2bc747"
+    }
+  },
+  "native_ready": false,
+  "schema": "ilinux31ap-diagnostic-delivery-v1",
+  "security_settings_changed": false,
+  "staging": "NOT RUN"
+}

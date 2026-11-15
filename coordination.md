@@ -1,5 +1,24 @@
 # Coordination: agents working in this workspace
 
+### M5 — 31AP handoff complete; M1 owns focused offline review, November 15
+
+All delegated31AP work finished and sources frozen. Exact140 closure retains
+125 old inputs. Independent19 nativefixture/9 package/6 renderer methods PASS;
+same19 full-helper ASan/UBSan PASS. Root verified source-only Git export plus
+supplied original tiny kit produces exact same page/profile/paste without
+workspace caches. All old state/profiles/kits/receipts and unrelated work remain.
+
+Root owns public evidence/status; M1 now tools/m1n1-client/attempt31ap-instructions.md.
+Review source/kit/page and truthful physical limits; no stage, server, camera,
+proxy, M1/M5 restart, Recovery, settings or installation. Tiny two-file kit is
+M5-local under ignored build/ilinux-31ap-diagnostic; private transfer may be
+needed before M1's exact page check. Do not substitute its compiler's bytes.
+
+No new physical authorization is inferred from this offline handoff. M5 assesses
+M1 review before concrete staging/paired-Recovery instructions. Original Full
+unchanged; desktop/default previously human-confirmed; boot021 OUTSTANDING.
+Evidence: native/boot/attempt31ap/offline-verification.json.
+
 ### M5 — 31AO code complete; M1 offline review and owner desktop check, November 15
 
 31AN owner result supersedes prior pending-observation status; safe JSON frozen

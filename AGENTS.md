@@ -1,5 +1,31 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — 31AP complete read-only kit ready for M1 offline review, November 15
+
+31AO actual desktop PASS is published in fb13a09. New31AP links the same
+typed repair into byte-exact31AM Preboot/CLI/result and31AL diagnostic support;
+core/admission unchanged. All140 source pins pass,125 retained exact. Genuine
+original31AF payload in entirely synthetic observed-shaped445430-byte IMG4
+passes real collection/initial-admission/conditional-cleanup; no identity mock.
+19 focused normal+same19 ASan/UBSan PASS; package9/renderer6 PASS. Independent
+19+9+6 audit PASS. Prior suites not rerun. A renamed scratch-prefix bug was
+caught/fixed offline; exact old WORK_BLOCK plus renderer-derived positive
+fixture now pass. No engine change or old state reuse.
+
+Matched original helper124640/d31279b4…4684 + profile823/c64b596f…c747 are in
+ignored build/ilinux-31ap-diagnostic. Actual inert140-pin prepare/check,8357-byte
+one-box page,5615-byte paste,bash-n and clean Git-only source-closure export
+PASS. New140 inventory binds production proof/profile/delivery/findings/handoff;
+offline-verification receipt stays outside that closure to avoid circular hashes.
+No compiled binary/Apple bytes/private capture in Git. M1 may need tiny private
+kit transfer; no large image rebuild or transfer required.
+
+M1 follows tools/m1n1-client/attempt31ap-instructions.md offline only. No restart,
+stage/server/Recovery/mount/default/security/install/restore action occurred.
+Original Full unchanged, prior desktop/default human-confirmed; boot021 restore
+OUTSTANDING. Actual Recovery admission/Linux/SMP/performance NOT RUN. Do not
+infer physical readiness or an Apple-only CPU barrier from these controls.
+
 ### Latest M5 — 31AO repair passes both real desktop policies, November 15
 
 Owner31AN output obtained both roles/fresh binding: four unknown tag rows each,

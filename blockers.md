@@ -1,5 +1,20 @@
 # Blockers
 
+### M5 — 31AP has no known offline blocker; physical admission still untested, November 15
+
+Both actual desktop policies pass the fixed parser, and complete synthetic
+Recovery admission+cleanup now pass with genuine own31AF identity.34 focused
+new methods plus same19 sanitizer methods and independent audit PASS. Exact
+140-source clean-export page integration passes. Known scratch-prefix mismatch
+was fixed without changing the successful engine. No extra desktop probe needed.
+
+Next dependency is M1 focused offline review and, if absent there, private tiny
+helper/profile transfer. Actual paired1TR, current guarded security, real derived
+selected-file readability and stable physical rereads remain untested. One later
+conditional read-only diagnostic addresses those; no automatic install/restore
+or CPU/firmware conclusion follows from offline success. Boot021 restoration
+OUTSTANDING; Original Full unchanged. No staging or restart ready in this handoff.
+
 ### M5 — desktop parser blocker resolved; qualify Recovery integration, November 15
 
 REA qualifies the formatter mismatch; original six-field/conjunction repair

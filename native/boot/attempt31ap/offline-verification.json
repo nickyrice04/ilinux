@@ -1,0 +1,113 @@
+{
+  "Linux": "NOT RUN",
+  "Original_Full": "UNCHANGED_REQUIRED_INVARIANT",
+  "Original_desktop_default": "HUMAN_CONFIRMED_IN_31AM_RESULT",
+  "SMP": "NOT RUN",
+  "Startup_Disk_change": "NOT RUN",
+  "bash_syntax": "PASS",
+  "binary_transfer_to_M1": "NOT ESTABLISHED; original private two-file kit may need the existing sharing method",
+  "boot021_restoration": "OUTSTANDING",
+  "complete_positive_fixture": {
+    "cleanup_failure_overrides_admission": "PASS",
+    "collect_admission_and_cleanup": "PASS",
+    "exact_original31AF_payload": "VERIFIED_NOT_MOCKED",
+    "existing_mount_untouched": "PASS",
+    "outer_bytes": 445430,
+    "outer_framing": "ENTIRELY_SYNTHETIC_IMG4_MATCHING_OBSERVED_DIMENSIONS",
+    "renderer_derived_scratch": "PASS",
+    "scope": "SYNTHETIC_CONTROL"
+  },
+  "date": "2026-11-15",
+  "desktop_actual_evidence": "native/boot/attempt31ao/desktop-result-2026-11-15.json",
+  "fixed_before_physical_use": "Scratch prefix retains exact old WORK_BLOCK required by frozen engine; cross-contract and full positive tests pass",
+  "git_only_export": {
+    "check_only_exit": 0,
+    "git_index_source_files": 141,
+    "live_query": false,
+    "native_ready": false,
+    "output_hashes_match": true,
+    "prepare_exit": 0,
+    "retained_source_pins": 125,
+    "schema": "ilinux31ap-git-only-export-v1",
+    "server_started": false,
+    "source_inventory_sha256": "1e10cb95acab08adc127a84425c459745681d6c126a441523ec58e630618edf4",
+    "staged": false,
+    "verified_source_pins": 140
+  },
+  "identifiers_returned": false,
+  "install": "NOT RUN",
+  "kit_contents": [
+    "ilinux31aj-reader",
+    "profile.json"
+  ],
+  "live_mount": "NOT RUN",
+  "native_ready": false,
+  "new_Recovery": "NOT RUN",
+  "next": "M1 focused offline review; M5 assesses it before any staging or paired-Recovery cue",
+  "offline_review": "PASS; production matched kit/page/profile/source proof and public claims reviewed",
+  "page_check_only": "PASS_EXACT_PAGE_VERIFIED",
+  "page_files": {
+    "diagnose-paste.txt": {
+      "bytes": 5615,
+      "sha256": "d9a47b93fc65ac78aa7a2b0e662bb6f2ce568584c74cf07575735f6247631bd7"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "c64b596fd0d2e7003098eda79fa3a7f9841e13de79d2ce430d2b49f15d2bc747"
+    },
+    "recovery.html": {
+      "bytes": 8357,
+      "sha256": "fff051694d5cecd389e9fcc26204189277c0c83ba66f619429acc631558ff466"
+    }
+  },
+  "performance": "NOT RUN",
+  "policy_values_returned": false,
+  "preparation": {
+    "boot_settings_changed": false,
+    "conditional_read_only_mount": true,
+    "mount_execution": "NOT RUN",
+    "native_ready": false,
+    "output": {
+      "diagnose-paste.txt": {
+        "bytes": 5615,
+        "sha256": "d9a47b93fc65ac78aa7a2b0e662bb6f2ce568584c74cf07575735f6247631bd7"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "c64b596fd0d2e7003098eda79fa3a7f9841e13de79d2ce430d2b49f15d2bc747"
+      },
+      "recovery.html": {
+        "bytes": 8357,
+        "sha256": "fff051694d5cecd389e9fcc26204189277c0c83ba66f619429acc631558ff466"
+      }
+    },
+    "publication_authorizes_execution": false,
+    "retained_source_count": 125,
+    "schema": "ilinux31ap-preboot-preparation-v1",
+    "source_inventory_sha256": "1e10cb95acab08adc127a84425c459745681d6c126a441523ec58e630618edf4",
+    "status": "OFFLINE_PREPARATION_PASS",
+    "verified_source_count": 140
+  },
+  "restore": "NOT RUN",
+  "retained_source_pins": 125,
+  "schema": "ilinux31ap-offline-verification-v1",
+  "scope": "OFFLINE_READ_ONLY_RECOVERY_PACKAGE",
+  "security_change": "NOT RUN",
+  "server_started": false,
+  "single_HTML_box_equals_whole_paste": true,
+  "source_inventory_sha256": "1e10cb95acab08adc127a84425c459745681d6c126a441523ec58e630618edf4",
+  "staging": "NOT RUN",
+  "tests": {
+    "distinct_new_methods": 34,
+    "independent_native_normal": "PASS",
+    "independent_package_and_renderer": "PASS",
+    "native_methods": 19,
+    "native_normal": "PASS",
+    "package_and_renderer": "PASS",
+    "package_methods": 9,
+    "prior_suites_repeated": false,
+    "renderer_methods": 6,
+    "same_native_methods_ASan_UBSan": "PASS"
+  },
+  "verified_source_pins": 140
+}

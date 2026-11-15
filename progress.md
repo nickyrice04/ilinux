@@ -1,5 +1,25 @@
 # Progress Log
 
+### M5 — 31AP full Recovery integration passes offline, November 15
+
+After the actual desktop parser PASS, built the same repair into the complete
+read-only companion. Original31AF bytes within synthetic observed-size IMG4
+pass real object recognition, collection, final admission and modeled RO
+mount/cleanup. Existing valid mounts stay untouched; cleanup failure overrides
+admission. No identity/core mock or Apple manifest copied. Exact renderer
+scratch-name integration prevents a known prefix mismatch caught in review.
+
+19 new full-helper methods normal+same19 ASan/UBSan PASS; package9/renderer6
+PASS. Independent34-method audit and production kit/page/profile/source review
+PASS. Helper124640/d31279b4…4684, profile823/c64b596f…c747;140 pins/125 retained
+exact. Actual inert prepare/check, one8357-byte box page/5615-byte paste/bash-n
+and clean Git-only closure export PASS. Existing suites/builds not repeated.
+
+Kit/page ready locally, original source+sanitized evidence+higher-level M1
+offline handoff prepared. No host staging/server/Recovery/boot/security/default
+action. Full Security invariant and boot021 OUTSTANDING retained. Actual native
+Linux/all-core startup/performance remain NOT RUN. M1 review is next; no restart.
+
 ### M5 — 31AO formatter-derived parser repair implemented and tested, November 15
 
 Owner desktop31AN observation succeeded: both role bindings stable, four
