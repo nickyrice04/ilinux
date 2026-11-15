@@ -1,0 +1,113 @@
+{
+  "31AR_controller_this_review": "NOT RUN",
+  "31AS_Recovery": "NOT RUN",
+  "Linux": "NOT RUN",
+  "M1_restart": "NOT RUN",
+  "M1_tests": {
+    "both_bash_n": "PASS through executed package controls",
+    "executed_package_methods": 6,
+    "package_passed": 6,
+    "package_seconds": 0.509,
+    "selected_methods": 19,
+    "shell_methods_not_run": 13,
+    "skip_reason": "Exact production kit absent at expectedM1location; Shell setUpClass skipped; no replacement or M1 rebuild substituted",
+    "test_exit": 0,
+    "unittest_class_setup_skip_records": 1
+  },
+  "M5_restart": "NOT RUN",
+  "Macintosh_HD_desktop_default": "Prior31ARreturn human-confirmed; not re-queried",
+  "Original_Full": "Unchanged required invariant; no new target query or security/default operation",
+  "RO_RW_mount": "NOT RUN",
+  "SMP": "NOT RUN",
+  "USB_proxy": "NOT RUN",
+  "actionable_source_findings": [],
+  "boot021_restoration": "OUTSTANDING",
+  "camera": "NOT RUN",
+  "date": "2026-11-15",
+  "helper_build": "NOT RUN",
+  "install": "NOT RUN",
+  "native_entry": "NOT RUN",
+  "native_ready": false,
+  "next": "M5 assesses source/page PASS and explicit M1 bootstrap coverage limit, then requests exact31AS bounded serving and supplies later physical cue; no replay of old31ARpage and no automatic native retry",
+  "old_controller_evidence": "M1 real-controller synthetic25 and own-child PTY5 retained from39c09f9; not rerun; M5 sanitizer/old suites attributed",
+  "page_preparation": {
+    "actual_exact_check_only_pages": 3,
+    "actual_new_output_files": 6,
+    "all_output_bytes_and_hashes_match_producer": true,
+    "binary_delivery_verified_on_M1": false,
+    "frozen_renderer_reversal_verified": true,
+    "output": {
+      "install-paste.txt": {
+        "bytes": 6600,
+        "sha256": "eefadf83393949e04d5cbb564c61eeb5896bcc349d973a818d58fdd9eef04ddc"
+      },
+      "install.html": {
+        "bytes": 9807,
+        "sha256": "f357d6bf28bc0e4aad8e213142e1218e24b1fee7b49e39e679f5f0149c09fd01"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "27e265da1fac084db457f084dcd8f52b63e5daa1629575a13de64d68f24b4ecc"
+      },
+      "recovery.html": {
+        "bytes": 18124,
+        "sha256": "a3f22c83e2fab094fd389e3d8e09098a2f8f39d0f9a491684b659b824db68f78"
+      },
+      "restore-paste.txt": {
+        "bytes": 6186,
+        "sha256": "a7f74f3c0fc228604d794e41099f4a81cb4f52967399285fb84f60881638823d"
+      },
+      "restore.html": {
+        "bytes": 9340,
+        "sha256": "2fe9c3e97f9f1776d4213c2cf0b67beea9fb2e87a600776e6d79e70dc9b37b5f"
+      }
+    },
+    "page_title": "31AS Recovery profile verification",
+    "route": "/31as",
+    "server_started": false,
+    "status": "SOURCE_PROFILE_PAGE_ONLY"
+  },
+  "performance": "NOT RUN",
+  "physical_execution_authorized_by_review": false,
+  "preservation": {
+    "closed31ARsession": "UNCHANGED",
+    "frozen_source_inputs": 167,
+    "old_state_or_consumed_receipt_reset": false,
+    "previous_evidence_files": 183,
+    "status": "UNCHANGED"
+  },
+  "producer_evidence_not_reproduced_on_M1": {
+    "M5_independent_all_methods": 19,
+    "M5_producer_all_methods": 19,
+    "full_shell_bootstrap_methods": 13,
+    "scope": "Executed rendered bootstrap with genuine pinned artifacts as data and mapped original utility/synthetic controller fixtures; no actual native transaction",
+    "skipped_on_M5": 0
+  },
+  "ready_for_restart": false,
+  "research_review": "M5 dependency analysis and exact-board firmware/software research read as attributed source analysis; external pins/privateREA/hardware/version observations not independently reproduced in this review; no firmware update needed to address this shell dependency",
+  "research_scope_limit": "No new external-source, firmware, OS, VM, toolchain, kernel or graphics build/download/action; no board/performance claim made from another owner report",
+  "restore": "NOT RUN",
+  "reviewed_commit": "59f0a48",
+  "reviewed_previous_result": "01c64b5; unavailable absolute cmp before controller; Original desktop/default human-confirmed; boot021 still outstanding",
+  "schema": "ilinux31as-m1-offline-review-v1",
+  "server": "NOT STARTED",
+  "settings_or_security_change": false,
+  "source_inventory": {
+    "count": 167,
+    "retained_31AR_inputs": 162,
+    "retained_31AR_inventory_sha256": "9ff372bba278c053a639b5b158fbc907fe17def5f7ef87142fa2daf3147d80fc",
+    "sha256": "3bd089cc7b2a009d5bc503b7f973baac4d8c179192a31188bf4997bf24216350",
+    "status": "PASS"
+  },
+  "source_review": [
+    "Four exact substitutions in each operation reverse to frozen31AR; no old renderer/controller/profile/artifact/kit/state edits",
+    "Fifteen fixed executable paths preflight via shell builtins before scratch/controller; missing-tool record contains only known fixed public path",
+    "Both profile comparator sites replaced by pinned ownership/mode, exact byte length and SHA256 checks; original profile/self bindings retained",
+    "SHA256/shasum/OpenSSL preference retained; selected producer failure refuses rather than accepting a valid-looking digest; builtin output parsing requires64 lowercase hex characters",
+    "No cmp or awk dependency; unchanged helper125168/profile823/candidate/boot021 and independent candidate-free restore; native31AR labels/scratch/kit/state remain intentional",
+    "New wrapper has no stage or native-controller mode; source-only prepare/check/default are inert; serving is separate and not started"
+  ],
+  "staging": "NOT RUN",
+  "transfer": "NOT RUN",
+  "verdict": "SOURCE_AND_EXACT_PAGE_PASS_M1_SHELL_COVERAGE_LIMITED"
+}

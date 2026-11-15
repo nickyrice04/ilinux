@@ -1,5 +1,25 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### M1 — 31AS source/page PASS; full bootstrap skipped locally, November 15
+
+Reviewed59f0a48:167 source pins PASS,162 old inputs/inventory exact;183 prior
+files including closed31AR session/consumed receipts unchanged. Four per-operation
+substitutions reverse to old renderer; cmp/awk removed, exact profile mode/length/
+SHA retained, producer status checked,15 fixed executable paths preflighted.
+No source finding. Six package/page methods PASS;13-method shell class NOT RUN
+because exact production kit absent (one class-level skip, not19 local passes).
+M5 producer/independent19-pass shell evidence attributed; no substituted artifacts
+or native/PTY/sanitizer/old-suite rerun. Actual new source-profile prep matches all6
+producer outputs; three check-only pages PASS. Combined18124/a3f22c83…db68f78,
+title31AS Recovery profile verification, route/31as. Server NOT STARTED.
+M5 next assesses coverage limit and requests exact page serving/later cue; no
+old31AR replay or automatic native retry. Controller/helper/profile/kit/state and
+candidate/boot021 unchanged. No build/transfer/stage/query/mount/settings/restart/
+proxy/camera. Original Full required; boot021 OUTSTANDING; Recovery/install/
+restore/native/Linux/SMP/performance NOT RUN. Firmware research read as attributed
+analysis, not independently reproduced or an update action.
+Evidence: native/boot/attempt31as-m1-offline-2026-11-15.md and JSON.
+
 ### M5 — 31AR dependency fixed offline; exact Max boot baseline identified, November 15
 
 Reviewed01c64b5: actual /usr/bin/cmp refusal occurs before controller/enrollment/
