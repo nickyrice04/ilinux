@@ -1,5 +1,35 @@
 # Decisions Log
 
+### M5 — 31AR reviewed, exact kit staged, temporary lab default, November 15
+
+Reviewed M1 39c09f9: source/controller/pages PASS, 52 methods passed and one
+explicit production-copy skip; no actionable finding. Reused producer and
+independent copy/sanitizer evidence without reruns. All 162 frozen inputs and
+the exact local production kit/page remain verified. No source repair needed.
+
+Noninteractive sudo stopped before execution. Owner then authenticated locally
+and supplied exact four-file staging success: helper125168/1008f610…842a,
+profile823/27e265da…4ecc, unchanged candidate and boot021. Accepted without
+restaging. The copy ran no controller, policy read or mount and changed no boot
+object, security setting, volume layout or default.
+
+Under retained selection/return approval, M5 selected LAB temporarily in Original
+System Settings without Restart. Fresh read-only selector/group comparison
+confirms current ORIGINAL/default LAB/distinct groups. Only the default changed;
+Original Full remains invariant and no routine security-mode check was repeated.
+
+M1 follows tools/m1n1-client/attempt31ar-staged-instructions.md: reuse/check the
+already exact source-only page, bounded serve and return the full private URL.
+No helper transfer, suite/build rerun, M1 restart, proxy or camera calibration.
+Target Recovery still verifies exact staged bytes. M1 binary delivery stays
+unverified and is not required for serving. Keep M5 running until live-page and
+later physical scope/cue are complete. Do not boot the old lab tile.
+
+The concrete install/one90sRAM/conditional labCTRR/boot021/default-return plan is
+prepared; no new Apple writer is run or authorized by staging alone. Recovery,
+RW mount, install/restore/Linux/SMP/performance remain NOT RUN, boot021 remains
+OUTSTANDING. Evidence: native/boot/attempt31ar-staged-handoff-2026-11-15.json.
+
 ### M1 — 31AR offline controller/page PASS; delivery and physical HOLD, November 15
 
 Reviewedc6a660c:162 pins PASS,143 retained inputs/both old inventories exact;

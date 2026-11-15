@@ -1,0 +1,80 @@
+{
+  "Linux": "NOT RUN",
+  "M1_handoff": "tools/m1n1-client/attempt31ar-staged-instructions.md",
+  "M1_methods_passed": 52,
+  "M1_methods_skipped": 1,
+  "M1_production_binary_delivery_verified": false,
+  "M1_production_binary_transfer_required_for_page": false,
+  "M1_skip": "Exact-production workspace-copy method; producer and independent M5 copy evidence retained",
+  "Original_Full": "UNCHANGED_REQUIRED_INVARIANT; prior 31AP guard retained, no repeated routine mode query",
+  "SMP": "NOT RUN",
+  "boot021_restoration": "OUTSTANDING",
+  "boot_object_installed": false,
+  "current_authorization": "Staging and boot-test preparation; no live controller or Apple writer performed",
+  "current_system": "ORIGINAL",
+  "date": "2026-11-15",
+  "default_authorization": "Retained explicit temporary lab selection and Original default return approval for paired Recovery",
+  "default_changed": true,
+  "default_observation": "Fresh read-only bless selected-device and real APFS group comparison; distinct groups",
+  "firmware_or_partition_change": false,
+  "identifiers_returned": false,
+  "install": "NOT RUN",
+  "live_Preboot_RO_RW": "NOT RUN",
+  "live_page": "PENDING_M1_REUSE_CHECK_AND_BOUNDED_SERVE",
+  "new_Recovery": "NOT RUN",
+  "old_sources_state_and_consumed_markers": "UNCHANGED",
+  "page_bytes": 15264,
+  "page_route": "/31ar",
+  "page_sha256": "0dd56773d0551b1e226a5cec3c2d88acb07c7b6e9e51a036c47f9049aa623ed4",
+  "performance": "NOT RUN",
+  "physical_scope_execution_authorization": "PENDING; staging/preparation does not execute or authorize new Apple writers",
+  "planned_physical_scope": "One lab-only candidate install with owned verified shared-Preboot RW access; one externally timed maximum90s RAM diagnostic; conditional lab CTRR preparation; exact boot021 rollback; Original desktop/default return",
+  "policy_read": false,
+  "policy_values_returned": false,
+  "ready_for_restart": false,
+  "reason": "M1 serves the exact reviewed source-profile page; Recovery verifies the exact files already staged on M5",
+  "restart_clicked_or_issued": false,
+  "restore": "NOT RUN",
+  "review_commit": "39c09f9",
+  "review_verdict": "SOURCE_CONTROLLER_AND_PAGE_PASS; no actionable findings",
+  "schema": "ilinux31ar-staged-handoff-v1",
+  "security_settings_changed": false,
+  "selector_exit": 0,
+  "selector_qualified": true,
+  "shutdown_cue": "HOLD for exact live M1 page and later physical scope/cue; keep M5 running; enter Options rather than boot old lab tile",
+  "source_inventory_count": 162,
+  "source_inventory_sha256": "9ff372bba278c053a639b5b158fbc907fe17def5f7ef87142fa2daf3147d80fc",
+  "staging_evidence": "Exact owner-provided success JSON after local administrator authentication; accepted without repeating copy",
+  "staging_result": {
+    "boot_object_installed": false,
+    "boot_settings_changed": false,
+    "controller_run": false,
+    "default_changed": false,
+    "files": {
+      "candidate.macho": {
+        "bytes": 153190400,
+        "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+      },
+      "ilinux31aj-reader": {
+        "bytes": 125168,
+        "sha256": "1008f610f03b979043787bfa67aa850aed4c5e6bc73416579e80f0aafe0a842a"
+      },
+      "m1n1-boot021.bin": {
+        "bytes": 3932160,
+        "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "27e265da1fac084db457f084dcd8f52b63e5daa1629575a13de64d68f24b4ecc"
+      }
+    },
+    "native_ready": false,
+    "policy_read": false,
+    "preboot_mount_run": false,
+    "schema": "ilinux31ar-lab-data-staging-v1",
+    "scope": "MACOS_LAB_DATA_STAGE",
+    "staged": true,
+    "volume_created": false
+  },
+  "temporary_default": "LAB"
+}
