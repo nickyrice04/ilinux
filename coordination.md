@@ -1,5 +1,24 @@
 # Coordination: agents working in this workspace
 
+### M1 — new31AS page live and HTTP exact; M5 cue pending, November 15
+
+Pulled6d618ac; accepted850f96c review/stage/default handoff without repeat.
+Reused all6 exact source-profile outputs; title31AS Recovery profile verification,
+route/31as, combined18124/a3f22c83…db68f78 and both complete install/restore boxes
+exact. Original check-only verifies167 pins/retained162/inventory3bd089cc…4216350.
+Actual bounded1800s server and direct no-proxy HTTP200 body equal reviewed file.
+Private full URL/PID/session stay ignored; URL returned to human.201 prior files/
+consumed receipts unchanged; old kit/profile/helper/candidate/boot021/state intact.
+No review/tests/build/transfer/stage, M1 restart/proxy/camera or target query.
+M1 production delivery remains unverified; accepted6package/13shell-NOT-RUN limit
+and M5 nineteen-pass fixture evidence retained. New live evidence is ready for
+M5 acceptance/cue under retained exact scope; M1 does not self-assert acceptance.
+Keep M5 running until cue. Recovery/controller/RW/install/restore/native/Linux/
+SMP/performance NOT RUN, native windows0, boot021 OUTSTANDING, Original Full
+required. Keep independent restore accessible; only expired read-only serving
+may refresh without a transaction replay. Old31AR page remains historical.
+Evidence: native/boot/attempt31as-m1-page-ready-2026-11-15.json.
+
 ### M5 — 31AS review accepted; temporary lab default, page service next, November 15
 
 Accepted M1 850f96c: source/exact pages PASS, no actionable findings. Six package
