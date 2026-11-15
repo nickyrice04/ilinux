@@ -1,5 +1,21 @@
 # Decisions Log
 
+### M1 — 31AM focused offline review PASS; physical check held, November 14
+
+Reviewed cb610d8:111 tracked pins PASS, all92 retained bindings exact. New helper
+124464/dea9e20a…3f28f and canonical profile823/0ee80fb6…19f6a verified before only
+the two-file workspace copy. Fresh50 methods PASS (28 native/12 renderer/10
+package) on clang17/SDK26; prior86 and M5 lexical/sanitizer evidence reused,
+not rerun. Conditional absence/identity/owned-readonly mount, partial failures,
+overlay FD/cleanup and finite-output boundaries reviewed; no actionable finding.
+Actual inert prep/check receipts and three hashes equal M5; single box and bash-n
+PASS. All75 prior evidence files/closed sessions and111 sources unchanged. No
+production helper/live query/server/camera/proxy/restart/settings action. New
+staging/Recovery/mount/cleanup/install/restore/Linux/SMP/performance NOT RUN;
+boot021 restoration OUTSTANDING. Next is M5 review and separate combined physical
+authorization for the shared-Preboot check, not a Linux attempt. Evidence:
+native/boot/attempt31am-m1-offline-2026-11-14.md and JSON.
+
 ### Latest M5 — conditional read-only31AM Preboot fix ready offline, November 14
 
 User authorized preparation/tests/M1 handoff only. New original companion

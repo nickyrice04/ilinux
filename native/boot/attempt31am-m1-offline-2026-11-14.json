@@ -1,0 +1,132 @@
+{
+  "Linux": "NOT RUN",
+  "Original_Full": "Required invariant; no fresh policy query",
+  "SMP": "NOT RUN",
+  "USB_proxy": "NOT RUN",
+  "actionable_findings": [],
+  "boot021_restoration": "OUTSTANDING",
+  "camera": "OFF",
+  "coverage_limits": [
+    "Kernel mount enumeration and Apple mount/unmount command execution are not tested against a live Recovery system",
+    "Native fixture flow covers refusal/cleanup paths and modeled overlay descriptors; complete-success output is exercised through the strict result validator, not a physical mount",
+    "Producer sanitizer/build/export/production receipts are separate evidence, not locally reproduced production-binary behavior",
+    "Actual prior Preboot MountPoint remains unknown; empty/unmounted remains a hypothesis"
+  ],
+  "date": "2026-11-14",
+  "delivery": {
+    "ilinux31aj-reader": {
+      "bytes": 124464,
+      "sha256": "dea9e20ab3c81d2054790af0922d304f4abe1ae621bee43992373b1666a3f28f"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "0ee80fb6bc186f964795eb0cc35e1bd47bc642602a4ce8153cf460830b119f6a"
+    }
+  },
+  "either_Mac_restart": "NOT RUN",
+  "fresh_tests": {
+    "native": {
+      "exit": 0,
+      "methods": 28,
+      "seconds": 3.593,
+      "status": "PASS"
+    },
+    "package": {
+      "exit": 0,
+      "methods": 10,
+      "seconds": 3.794,
+      "status": "PASS"
+    },
+    "renderer": {
+      "exit": 0,
+      "methods": 12,
+      "seconds": 22.067,
+      "status": "PASS"
+    }
+  },
+  "fresh_unique_methods": 50,
+  "host_metadata_or_mount_query_on_M1": false,
+  "install": "NOT RUN",
+  "last_original_return": "31AL desktop/default human-confirmed; no new target query",
+  "live_Recovery": "NOT RUN",
+  "live_mount_and_cleanup": "NOT RUN",
+  "local_primary_manuals": "Read installed mount_apfs(8), mount(8) and diskutil(8) only; mount options/frontend distinction supported, Recovery tool behavior not established",
+  "new_lab_staging": "NOT RUN",
+  "next": "M5 reviews this report, then obtains one combined explicit authorization for new tiny-kit staging, temporary lab default/Original return and one conditional read-only shared-Preboot Recovery diagnosis; no install, rollback or Linux boot",
+  "old_state_or_consumed_receipt_reset": false,
+  "only_verified_two_file_workspace_copy": true,
+  "page_preparation": {
+    "boot_settings_changed": false,
+    "conditional_read_only_mount": true,
+    "mount_execution": "NOT RUN",
+    "native_ready": false,
+    "output": {
+      "diagnose-paste.txt": {
+        "bytes": 5615,
+        "sha256": "22146e7dc64d08556a2681eedcef2fb341190e87d93d2acbc68230d04ae9c207"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "0ee80fb6bc186f964795eb0cc35e1bd47bc642602a4ce8153cf460830b119f6a"
+      },
+      "recovery.html": {
+        "bytes": 8343,
+        "sha256": "e76b0b1c2d55c6b7d91d429b9b24bb3ad43c49d267bb1bef9c4f0b81fa522a9f"
+      }
+    },
+    "publication_authorizes_execution": false,
+    "schema": "ilinux31am-preboot-preparation-v1",
+    "source_inventory_sha256": "0d080629d2cb8ae35d347431cc754ab8bd45807f8a83f17b26b03e8c78b65231",
+    "status": "OFFLINE_PREPARATION_PASS",
+    "verified_source_count": 111
+  },
+  "page_verification": {
+    "all_three_output_hashes_match": true,
+    "bash_n": "PASS",
+    "preparation_receipt_matches_M5": true,
+    "server_started": false,
+    "single_box_matches_complete_block": true,
+    "socket_free_receipt_matches_M5": true
+  },
+  "performance": "NOT RUN",
+  "prior_evidence_files_verified_unchanged": 75,
+  "production_helper_executed_on_M1": false,
+  "profile_canonical_and_exact": true,
+  "restore": "NOT RUN",
+  "reused_evidence": {
+    "new_native_sanitizers": "M5 28-method sanitizer evidence reviewed; not rerun on M1",
+    "preboot_lexical_controls": "M5 six normal and same six sanitizer controls reviewed as producer evidence; not rerun on M1",
+    "prior_86_method_review": "5bb5639; not rerun",
+    "producer_binary_controls": "M5 self-bound synthetic refusal/validator evidence reviewed; delivered production helper not executed on M1",
+    "source_comparison": "M5 attributed public CPU/Asahi comparison reviewed; no new external-source retrieval or native reproduction on M1"
+  },
+  "reviewed_boundaries": [
+    "Frozen collector, parser, pairing, identity and admission predicates remain exact; observation marks strip back to original state source",
+    "Missing Mounted metadata is not absence; bounded kernel-table evidence plus empty path and repeated identities precede one conditional mount",
+    "Fixed mount_apfs read-only/nobrowse/nofollow command only; existing valid mounts remain untouched",
+    "Fresh overlay descriptor checks APFS source, exact owned path and MNT_RDONLY; retained underlying child descriptor is used only for post-unmount binding",
+    "Only verified owned read-only mount can receive one nonforced unmount; partial failures receive fresh observation; uncertain cleanup overrides pass",
+    "Exact finite outer and nested display schemas; no raw output, identifiers, policy values or arbitrary labels displayed",
+    "Held scratch CWD and fixed-file cleanup retained; shell cannot unmount or recursively delete a leftover native child",
+    "Future two-file stage mode reuses reviewed target guards and new destination name without altering old state"
+  ],
+  "reviewed_commit": "cb610d8",
+  "schema": "ilinux31am-m1-independent-offline-review-v1",
+  "security_or_volume_change": "NONE",
+  "server": "NOT STARTED",
+  "source_inventory": {
+    "all_hashes_match": true,
+    "all_tracked_in_Git": true,
+    "count": 111,
+    "retained_31al_bindings": 92,
+    "sha256": "0d080629d2cb8ae35d347431cc754ab8bd45807f8a83f17b26b03e8c78b65231"
+  },
+  "source_or_test_changes": false,
+  "status": "OFFLINE_PASS_PHYSICAL_CHECK_HELD",
+  "temporary_default_change": "NOT RUN",
+  "toolchain": {
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "python": "3.9.6",
+    "sdk": "26.0"
+  }
+}
