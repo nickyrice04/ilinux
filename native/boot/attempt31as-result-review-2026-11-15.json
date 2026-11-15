@@ -1,0 +1,61 @@
+{
+  "Linux_SMP_performance": "NOT RUN",
+  "M1_next": "tools/m1n1-client/attempt31as-instructions.md; offline review/source-only page preparation first",
+  "OS_or_firmware_update": false,
+  "Original_desktop_default": "HUMAN_CONFIRMED byM1report",
+  "Original_security_changed": false,
+  "actual31AR_result": "PRE_CONTROLLER_SHELL_DEPENDENCY_REFUSAL_ORIGINAL_RETURN_CONFIRMED",
+  "actualpreparation": "PASS; six outputs and three checks; clean167-source export exactly reproduces them",
+  "boot021_restoration": "OUTSTANDING; NOT RUN by31AR",
+  "boot021_restoration_confirmed": false,
+  "combinedpage": {
+    "bytes": 18124,
+    "route": "/31as",
+    "sha256": "a3f22c83e2fab094fd389e3d8e09098a2f8f39d0f9a491684b659b824db68f78"
+  },
+  "date": "2026-11-15",
+  "failure": "Requested /usr/bin/cmp unavailable in Recovery; both sites precede controller dispatch",
+  "firmware_or_CPU_failure_established": false,
+  "firmware_recommendation": "Do not blindly update Macintosh HD or arbitrarylatestbeta to fixcmp. Reproduce matchedJ716c sources offline, then separately plan exact lab/stub/systemfirmware alignment with backup and sharedfirmware compatibility considered. UpdatingOriginal alone does not establish selectedlab OSfirmware.",
+  "fresh_policy_query": false,
+  "helper_profile_candidate_boot021_kit_state": "UNCHANGED; no new native build, transfer or restage",
+  "install": "NOT RUN",
+  "new_Recovery": "NOT RUN",
+  "new_host_settings_changed": false,
+  "newmacOSobservation": {
+    "current_build": "25G83",
+    "current_version": "26.6.2",
+    "identifiers_returned": false,
+    "lab_build": "25G83",
+    "lab_version": "26.6.2",
+    "read_only": true
+  },
+  "newsource_research": [
+    "research/attempt31as-recovery-dependencies-2026-11-15.md",
+    "research/attempt31as-boot-and-firmware-2026-11-15.md"
+  ],
+  "newsourcecount": 167,
+  "newsourceinventory_sha256": "3bd089cc7b2a009d5bc503b7f973baac4d8c179192a31188bf4997bf24216350",
+  "old162sourceinputs": "EXACT_UNCHANGED",
+  "public_exact_board_reference": {
+    "board": "J716c",
+    "graphics_Aura_Stage2": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+    "kernel": "a59e709c737777495c84541c6afb6c862bb79227",
+    "model": "Mac17,6",
+    "qualification": "Attributed other-owner all18/N1/acceleratedHyprland and bounded mixed CPU/GPU correctness; not our validation or macOS parity; incomplete Stage1/root/firmware/guardian inputs",
+    "reference_firmware": "27.2.1/26B131/mBoot20457.41.3",
+    "status_source_commit": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec"
+  },
+  "ready_for_restart": false,
+  "repair": "31AS source-only adapter; remove cmp/awk, checked SHA producers, fixed-tool availability preflight, both full boxes",
+  "research_sha256": {
+    "research/attempt31as-boot-and-firmware-2026-11-15.md": "f6ff72de232db5faf59697996fffd44bf8fd1abc9f952663f63773efaa634dea",
+    "research/attempt31as-recovery-dependencies-2026-11-15.md": "92da5aa63ddcd1d5e276395769b9212f906fce84237fd6de884c85bfd5e87615"
+  },
+  "restore": "NOT RUN",
+  "reviewed_M1_commit": "01c64b5",
+  "schema": "ilinux31as-result-review-and-next-steps-v1",
+  "server_started": false,
+  "staging_repeated": false,
+  "tests": "19 producer and19 independent PASS,0skips;13 executed shell and6package methods; synthetic controller/utility fixtures, no native writer"
+}

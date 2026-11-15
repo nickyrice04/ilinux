@@ -1,5 +1,36 @@
 # Coordination: agents working in this workspace
 
+### M5 — 31AR dependency fixed offline; exact Max boot baseline identified, November 15
+
+Reviewed01c64b5: actual /usr/bin/cmp refusal occurs before controller/enrollment/
+managedmount/Applewriter. No native window was used. Boot021 restoration is
+NOT CONFIRMED and remains OUTSTANDING. Human Macintosh HD desktop and default
+return are confirmed; no fresh policy check or security change was performed.
+
+New source-only31AS removes cmp/awk, verifies exact profile mode/length/SHA,
+checks producer exits/output and preflights15fixedtoolpaths before controller.
+Four transformations reverse to frozen31AR.19 methods PASS/0skips, independently
+19PASS;13 execute fullbootstrap with genuine artifactpins and synthetic utility/
+controller fixtures,6 cover package. Actual prep/threechecks and clean167source
+export PASS. All162 old inputs, helper125168/profile823/candidate/boot021/kit/state
+unchanged. No rebuild/restage/transfer/livecontroller/server/Recovery action.
+M1 reviews tools/m1n1-client/attempt31as-instructions.md offline; no restart yet.
+
+Fresh read-only version fields show current and lab26.6.2/25G83. Primary-source
+research identifies a closer Mac17,6/J716c27.2.1/26B131 reference with reported
+all18, N1 and accelerated Hyprland at bounded frequencies, not parity. Its exact
+kernel/graphicsStage2 pair and missingStage1/root/firmware/guardian inputs are
+recorded. J714sPro installer is not admitted for thisMax; latestkernelhead is
+not necessarily hardware-tested. No blind Originalupdate: matchedlab/stub/system
+firmware requires a separate backup/compatibility/update plan; shared effects
+cannot be promised isolated. No OS/firmware download/update or foreign execution.
+
+Roadmap updated around31AS and exactboard source reproduction. Research:
+research/attempt31as-boot-and-firmware-2026-11-15.md and dependency review.
+Evidence: native/boot/attempt31as-page/offline-verification.json and
+native/boot/attempt31as-result-review-2026-11-15.json. Native/RW/install/restore/
+SMP/performance remain NOT RUN. Original Full remains the unchanged invariant.
+
 ### M1 — 31AR stopped before controller: unavailable cmp; Original return confirmed, November 15
 
 One human Recovery install paste emits /usr/bin/cmp: No such file or directory,

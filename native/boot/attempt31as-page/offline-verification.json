@@ -1,0 +1,88 @@
+{
+  "Recovery": "NOT RUN for31AS",
+  "actual_preparation": "PASS; complete six outputs; three original adapter check-only calls",
+  "actual_server_run": false,
+  "actual_stage_run": false,
+  "binary_delivery_verified_on_M1": false,
+  "boot021_restoration": "OUTSTANDING",
+  "candidate_free_restore_bootstrap": "PASS; candidate physically removed from fixture kit",
+  "changes": [
+    "fixed_utility_preflight",
+    "checked_hash_producer_builtin_parse",
+    "two_profile_size_and_SHA256_checks"
+  ],
+  "clean_source_export": {
+    "binary_or_external_source_dependency": false,
+    "exact_output_files": 6,
+    "page_checks": 3,
+    "sources": 167
+  },
+  "controller_run": false,
+  "date": "2026-11-15",
+  "frozen_renderer_reversal_verified": true,
+  "helper_build_or_transfer": false,
+  "helper_rebuild": false,
+  "host_settings_changed": false,
+  "install": "NOT RUN",
+  "live_controller_run": false,
+  "live_mount_or_policy_query": false,
+  "missing_fixed_tools": "Each of fifteen mandatory tool paths refuses before controller, with finite fixed-path diagnostic",
+  "native_Linux_SMP_performance": "NOT RUN",
+  "native_controller_profile_kit_state_changed": false,
+  "native_ready": false,
+  "negative_hash_cases": "All three branches refuse correct digest plus nonzero exit, malformed digest, embedded extra output and trailing extra line",
+  "old_162_sources": "EXACT_UNCHANGED",
+  "output": {
+    "install-paste.txt": {
+      "bytes": 6600,
+      "sha256": "eefadf83393949e04d5cbb564c61eeb5896bcc349d973a818d58fdd9eef04ddc"
+    },
+    "install.html": {
+      "bytes": 9807,
+      "sha256": "f357d6bf28bc0e4aad8e213142e1218e24b1fee7b49e39e679f5f0149c09fd01"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "27e265da1fac084db457f084dcd8f52b63e5daa1629575a13de64d68f24b4ecc"
+    },
+    "recovery.html": {
+      "bytes": 18124,
+      "sha256": "a3f22c83e2fab094fd389e3d8e09098a2f8f39d0f9a491684b659b824db68f78"
+    },
+    "restore-paste.txt": {
+      "bytes": 6186,
+      "sha256": "a7f74f3c0fc228604d794e41099f4a81cb4f52967399285fb84f60881638823d"
+    },
+    "restore.html": {
+      "bytes": 9340,
+      "sha256": "2fe9c3e97f9f1776d4213c2cf0b67beea9fb2e87a600776e6d79e70dc9b37b5f"
+    }
+  },
+  "physical_execution_authorized_by_this_receipt": false,
+  "profile_and_artifact_negative_cases": "Changed/extra-byte/symlink profile, copied profile corruption and copied helper corruption refuse before synthetic controller",
+  "ready_for_restart": false,
+  "restore": "NOT RUN",
+  "retained_31AR_inventory_sha256": "9ff372bba278c053a639b5b158fbc907fe17def5f7ef87142fa2daf3147d80fc",
+  "retained_31AR_source_count": 162,
+  "reviewed_native_result": "01c64b5; pre-controller cmp dependency refusal, no Apple writer or native window",
+  "schema": "ilinux31as-source-page-preparation-v1",
+  "server_started": false,
+  "shell_harness_scope": "Real rendered bootstrap with mapped original workspace utilities and genuine pinned production artifacts; both native calls intercepted by explicit synthetic fixture; no real controller/Apple writer",
+  "source_inventory_sha256": "3bd089cc7b2a009d5bc503b7f973baac4d8c179192a31188bf4997bf24216350",
+  "stage_run": false,
+  "status": "SOURCE_PROFILE_PAGE_ONLY",
+  "tests": {
+    "executed_shell_methods": 13,
+    "independent_passed": 19,
+    "independent_seconds": 76.29,
+    "independent_skipped": 0,
+    "independent_source_privacy_review": "PASS; no remaining finding",
+    "package_methods": 6,
+    "passed": 19,
+    "producer_seconds": 75.684,
+    "selected_methods": 19,
+    "skipped": 0
+  },
+  "three_hash_branches": "PASS; SHA256, shasum and OpenSSL fixture outputs",
+  "verified_source_count": 167
+}

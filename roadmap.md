@@ -5,7 +5,53 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — after successful 31AP Recovery admission, 2026-11-15
+## Current direction — after the 31AR shell refusal, 2026-11-15
+
+[31AR's actual result](native/boot/attempt31ar-recovery-2026-11-15-result.md)
+stopped at the unavailable `/usr/bin/cmp` before the controller. No installation,
+managed mount, native entry or rollback ran. Macintosh HD desktop and default
+return are human-confirmed; boot021 restoration remains outstanding. This is
+not evidence of a firmware rejection or failed CPU startup.
+
+1. **Review the corrected 31AS page offline.** It removes `cmp` and `awk`,
+   checks hash-command failures and preflights fixed utility paths. Both full
+   operation blocks retain the exact 31AR helper/profile/kit/state and independent
+   boot021 restoration. Use executed restricted-utility shell tests, exact
+   source-only page preparation and M1 review; no native rebuild or restage.
+   The [dependency review](research/attempt31as-recovery-dependencies-2026-11-15.md)
+   distinguishes physical observations from fixture coverage. No restart follows
+   from an offline pass alone.
+2. **Use the exact J716c implementation as the next accelerated baseline.**
+   Reproduce the published kernel `a59e709c7377` and paired graphics Aura Stage 2
+   `9da61857f9d9`, configuration and runtime-DT gates in the isolated build
+   environment. The [boot/firmware review](research/attempt31as-boot-and-firmware-2026-11-15.md)
+   records reports of all 18 CPUs, N1 and accelerated Hyprland on this board
+   lineage, plus missing Stage 1/root/firmware/guardian inputs. This is stronger
+   than using the J714s Pro installer or an unbooted latest kernel. The reports
+   use bounded frequencies and do not establish macOS parity.
+3. **Choose a deliberate OS/firmware plan before changing the host.** Both local
+   installations remain 26.6.2/25G83; the exact-board reference used 27.2.1/26B131.
+   Updating Macintosh HD alone does not establish the lab's selected firmware.
+   A lab OS update also cannot be promised to isolate shared firmware effects.
+   Inventory requirements, backup and restoration first, retain Original Full,
+   and obtain specific authorization for any actual OS/firmware operation. No
+   update is required to repair the missing comparator.
+4. **Use a reviewed native window for evidence that changes the next decision.**
+   After page review and a concrete boot cue, require exact install readback and
+   cleanup, then observe loader/Linux entry, distinct concurrent work across the
+   12 Performance/6 Super topology, checksums, timers and liveness. Retain the
+   independent boot021/default-return path. A CPU list, VM run or desktop photo
+   is insufficient. Keep new loader/kernel/firmware choices separately pinned.
+5. **Qualify a responsive accelerated workstation before parity claims.**
+   Bring GPU/display and CLPC memory/fabric policy into the measured CPU/memory
+   work; extra CPU cores alone do not eliminate software-rendered UI delays.
+   Validate N1/control access, read-only NVMe, input-to-frame latency, several
+   apps, clock/thermal telemetry and energy per task. Compare against the same
+   Mac with matched power settings; preserve the old AC Low Power Mode baseline
+   under that label. Qualify persistent Omarchy, update guards, storage writes,
+   suspend and peripherals separately, then move the development agent into it.
+
+## Historical direction — after successful 31AP Recovery admission, 2026-11-15
 
 [31AP's physical result](native/boot/attempt31ap-recovery-2026-11-15-result.md)
 confirms complete guarded Recovery collection, initial admission and owned
