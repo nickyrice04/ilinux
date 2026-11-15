@@ -1,0 +1,57 @@
+{
+  "Linux": "NOT RUN",
+  "M1_page": "REVIEWED_EXACT; LIVE_SERVER_NOT_YET_CONFIRMED",
+  "SMP": "NOT RUN",
+  "actionable_findings": [],
+  "boot021_restoration": "OUTSTANDING",
+  "boot_object_installed": false,
+  "current_system": "ORIGINAL; fresh read-only volume/group comparison",
+  "current_user_request": "If review passed, stage new kit and prepare conditional read-only Preboot check; preserve Original Full and tell user when to restart",
+  "date": "2026-11-14",
+  "expected_files": {
+    "ilinux31aj-reader": {
+      "bytes": 124464,
+      "sha256": "dea9e20ab3c81d2054790af0922d304f4abe1ae621bee43992373b1666a3f28f"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "0ee80fb6bc186f964795eb0cc35e1bd47bc642602a4ce8153cf460830b119f6a"
+    }
+  },
+  "firmware_or_volume_changed": false,
+  "fresh_source_kit_page_identity": "PASS",
+  "install": "NOT RUN",
+  "live_Recovery": "NOT RUN",
+  "mount_cleanup": "NOT RUN",
+  "mount_execution": "NOT RUN",
+  "native_ready": false,
+  "noninteractive_stage": "SUDO_PASSWORD_REQUIRED_BEFORE_EXECUTION; no changes",
+  "old_suites_or_builds_repeated": false,
+  "performance": "NOT RUN",
+  "physical_scope": "One user-started conditional read-only shared-Preboot preparation and unchanged diagnostic after readiness; no install/restore/security change or Linux boot",
+  "reported_staging_flags": {
+    "boot_object_installed": false,
+    "boot_settings_changed": false,
+    "conditional_mount_run": false,
+    "default_changed": false,
+    "native_ready": false,
+    "policy_read": false,
+    "volume_created": false
+  },
+  "required_original_security": "Full",
+  "restart_ready": false,
+  "restore": "NOT RUN",
+  "retained_31al_bindings": 92,
+  "review_commit": "b5702ef",
+  "review_status": "OFFLINE_PASS_PHYSICAL_CHECK_HELD",
+  "schema": "ilinux31am-staging-recovery-handoff-v1",
+  "security_policy_queried_or_changed": false,
+  "source_commit": "cb610d8",
+  "source_count": 111,
+  "staged": true,
+  "staging_evidence": "User authenticated in local Terminal; reported exact two-file MACOS_LAB_DATA_STAGE success, not independently rerun",
+  "staging_status": "PASS_USER_SUPPLIED_SUCCESS_JSON_MATCHES_DELIVERY",
+  "temporary_default": "LAB; visible System Settings selection and read-only bless exit0/group comparison",
+  "temporary_default_authorization": "Existing explicit user approval for temporary lab selection and Original default restoration retained for the requested Recovery workflow",
+  "ui_restart_clicked": false
+}

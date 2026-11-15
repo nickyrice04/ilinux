@@ -1,5 +1,37 @@
 # Progress Log
 
+### Latest M5 — reviewed31AM kit staged; temporary lab default confirmed, November 14
+
+Reviewed M1 b5702ef PASS: no findings,111 exact pins/92 retained, exact kit/page
+and50 methods. Fresh local source/kit/page identity matches. No suite/build,
+production helper or unchanged artifact operation repeated. User requested
+staging and conditional read-only Recovery check preparation, keeping Original
+Full. The existing explicit temporary lab/default-return approval is retained;
+no redundant permission or routine policy command was requested.
+
+Noninteractive sudo stopped for password before execution. User authenticated
+locally and supplied exact two-file staging success: helper124464/dea9e20a…3f28f,
+profile823/0ee80fb6…19f6a. conditional_mount_run/policy_read/boot_object_installed/
+boot_settings_changed/default_changed/volume_created allfalse for that copy.
+User receipt accepted without restage; no old kit/state/source/receipt changed.
+
+M5 selected lab in Original System Settings without clicking Restart. Independent
+read-only bless exit0/internal group comparison confirms LAB default and ORIGINAL
+current. Only temporary default changed; security policies, boot objects,
+firmware/partitions unchanged. Prepared new authorized M1 handoff; exact new
+8343-byte31AM page/live URL is the remaining prerequisite before shutdown cue.
+M1 reuses reviewed files/controller, no rebuild/transfer/stage/M1 restart/proxy.
+
+One user-started conditional RO shared-Preboot preparation/unchanged diagnostic
+only; no install, rollback, security-mode or Linux boot. Capture safe finite JSON,
+stop on refusal/uncertainty, no force/remount/retry. Approved Original return
+includes one-time Macintosh HD if cleanup uncertain, then default restoration
+in Original OS. No Recovery/mount/cleanup executed yet, no server/camera/restart
+started here. Linux/SMP/performance NOT RUN; boot021 restoration OUTSTANDING.
+Historical held receipts stay frozen; current handoff supersedes approval-pending
+language for the requested workflow only. Evidence: native/boot/attempt31am-
+handoff-2026-11-14.json and tools/m1n1-client/attempt31am-authorized-instructions.md.
+
 ### M1 — 31AM focused offline review PASS; physical check held, November 14
 
 Reviewed cb610d8:111 tracked pins PASS, all92 retained bindings exact. New helper
