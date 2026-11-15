@@ -1,0 +1,119 @@
+{
+  "M1_restart": "NOT RUN",
+  "M5_restart": "NOT RUN",
+  "Recovery_writer": "NOT RUN",
+  "USB_proxy": "NOT RUN",
+  "actionable_findings": [],
+  "attributed_M5_evidence": {
+    "REA": "Reviewed finite785-word/two-call-boundary summary only; no REA/LLVM/VM/raw-capture reproduction or whole-function decompiler semantics admitted",
+    "object_full_integration": "M5 normal17/17 and producer sanitized17/17, including genuine candidate and codec carriers; local real-data integration omitted explicitly",
+    "observer_full_suite": "M5 producer and independent32/32, zero skips; native-C differential not locally reproduced",
+    "saved_v1_v2_observations": "Not repeated on M1. Owner-output summary records UNKNOWN rather than NONE, explicitly disabled lab CTRR, other candidate contracts passing, and passing saved restored capture. Stored evidence is not snapshot cryptographic authentication or fresh target verification."
+  },
+  "camera": "NOT RUN",
+  "closed_31AS_session_and_consumed_receipts_preserved": true,
+  "date": "2026-11-15",
+  "firmware_update": "NOT RUN",
+  "focused_results": {
+    "graphics": {
+      "passed_methods": 16,
+      "process_seconds": 0.781,
+      "returncode": 0,
+      "selected_methods": 16,
+      "skipped_methods": 0,
+      "suite_seconds": 0.567
+    },
+    "object-normal": {
+      "passed_methods": 16,
+      "process_seconds": 3.121,
+      "returncode": 0,
+      "selected_methods": 17,
+      "skipped_methods": 1,
+      "suite_seconds": 2.842
+    },
+    "object-sanitized": {
+      "passed_methods": 16,
+      "process_seconds": 6.145,
+      "returncode": 0,
+      "selected_methods": 17,
+      "skipped_methods": 1,
+      "suite_seconds": 5.856
+    },
+    "observer": {
+      "passed_methods": 31,
+      "process_seconds": 0.572,
+      "returncode": 0,
+      "selected_methods": 31,
+      "skipped_methods": 0,
+      "suite_seconds": 0.134
+    }
+  },
+  "graphics_admission": {
+    "added": 1292,
+    "changed_existing": 67,
+    "changed_symbols": 1376,
+    "native_ready": false,
+    "observed_online_CPUs": null,
+    "old_diagnostic_checker_unchanged": true,
+    "performance_parity_measured": false,
+    "removed": 17,
+    "restart_ready": false,
+    "status": "PASS_EXACT_REFERENCE_CONFIG"
+  },
+  "graphics_inputs": {
+    "baseline_bytes": 284541,
+    "baseline_provenance": "One regular config member read from retained exact31AH archive only after archive hash verification; no foreign code executed",
+    "baseline_sha256": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8",
+    "reference_URL": "https://raw.githubusercontent.com/cameroncooper/linux/5e11068a1c6d8fccb155bc6e0159cc16107e53ec/Documentation/arch/arm64/apple-j716c-bringup/kernel.config",
+    "reference_bytes": 330809,
+    "reference_git_blob": "ec886dc9c8f00a437a8dbfd3f0182fb563496f94",
+    "reference_sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8"
+  },
+  "historical_controller_page_PTY_suites": "NOT RERUN",
+  "kernel_or_modules_build": "NOT RUN",
+  "local_toolchain": {
+    "Python": "3.9.6",
+    "clang": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "host_installs": false
+  },
+  "native_GPU": "NOT RUN",
+  "native_Linux": "NOT RUN",
+  "native_SMP": "NOT RUN",
+  "native_ready": false,
+  "new_controller_integration": "NOT RUN",
+  "new_selected_object_diagnosis": "NOT RUN",
+  "next": "M5 integrates finite object-read stages into a new separately reviewed transaction without weakening acceptance/rollback guards, independently qualifies lab CTRR behavior and resolves matched board/Stage1/Stage2/kernel/firmware/runtime inputs before any hardware cue. Never reset/replay spent31AR state.",
+  "object_actual_candidate_codec_integration": "One method SKIPPED in each mode: required genuine candidate/retained codec fixture set absent at expected paths. No alternate or synthetic production inputs substituted.",
+  "object_synthetic_controls": "Passed methods compare authoritative fields against separately compiled unchanged original-core oracle; three direct memory-bound controls also pass. Synthetic candidate definitions remain labeled synthetic.",
+  "observer_native_differential": "NOT RUN: six exact generated production-v2 source inputs absent at required location; no generation or substitution to claim coverage",
+  "old_state_reset": false,
+  "performance": "NOT RUN",
+  "primary_source_crosscheck": {
+    "Kernel_CTRR": "Pinned Aura guide expects enabled after Mach-O enrollment; public owner note informally says off. This unresolved field/version/capture distinction does not justify relaxing the existing guard.",
+    "matched_Max_configuration": "Actual small immutable public config independently fetched as data and verified by byte count, SHA256 and Git blob",
+    "public_enrollment_note": "Pinned final updates retract the initial compression blame and attribute later boot progress to corrected enrollment plus a Stage2 fix; other-owner J714s report, not our J716c reproduction"
+  },
+  "prior_31AS_boot021_return": "Human-confirmed restore/desktop/default retained; M5 saved restored contract is consistent. No fresh M1 query.",
+  "prior_evidence_files_verified_unchanged": 212,
+  "restaging_or_transfer": "NOT RUN",
+  "restart_ready": false,
+  "reviewed_main": "2a78a39",
+  "schema": "ilinux31at-m1-offline-review-v1",
+  "security_changes": "NOT RUN",
+  "server": "NOT STARTED",
+  "source_or_test_changes": false,
+  "source_review": {
+    "graphics": "Separate exact full-config data admission; subset invariants alone cannot admit mutations. Capacity/online CPU/worker count and config/runtime GPU evidence kept separate.",
+    "object_adapter": "Unchanged pinned identify_object remains sole recognition/exactness authority. Finite stage diagnostics cannot admit a rejected object; no second decode, live CLI or controller integration. Target read/open diagnostics remain future work.",
+    "observer": "Read-only fixed captured-evidence set; held descriptors, no-follow/ACL/mode/bounds/stability checks and shared nonblocking lock; finite output; enum information outside acceptance conjunction; no fresh target authentication or policy/object verification claim"
+  },
+  "source_verification": {
+    "all_pins_match": true,
+    "new_manifest_entries": 24,
+    "new_manifest_sha256": "c42e42b45c330a5d7d62a424bd5baa9b09dae554769bb78a0f9dc5c17167a340",
+    "old_recognizer_and_header_unchanged": true,
+    "retained_31AS_entries": 167,
+    "retained_inventory_sha256": "3bd089cc7b2a009d5bc503b7f973baac4d8c179192a31188bf4997bf24216350"
+  },
+  "status": "OFFLINE_PASS_WITH_EXPLICIT_INPUT_LIMITS_NATIVE_HOLD"
+}

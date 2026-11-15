@@ -1,5 +1,25 @@
 # Progress Log
 
+### M1 — 31AT offline review PASS with missing-input limits; native hold, November 15
+
+Pulled/reviewed 2a78a39: all 24 new source pins and 167 retained 31AS pins match;
+212 prior evidence/archive/closed-session files and consumed receipts unchanged.
+Observer 31 available methods PASS, including real Darwin ACL; one native oracle
+method NOT RUN because six exact generated production sources are missing.
+Object diagnostics 16 PASS/1 integration skip normally and 16 PASS/1 skip with
+ASan/UBSan; genuine candidate/codec set not substituted. M5 full 32/17 evidence
+attributed. No actionable source finding; original recognizer remains authority.
+
+Actual public Max config byte/SHA/Git-blob and retained exact 31AH archive/config
+verified; 16 real-data methods PASS and 1376-symbol delta reproduced. Data admission
+is not runtime GPU/CPU evidence. Saved UNKNOWN/disabled-CTRR/restored classification
+and 785-word/two-call REA summary reviewed as attributed evidence, not fresh target
+query or decompiler reproduction. M5 owns a new separately reviewed diagnostic
+transaction and CTRR qualification; never reset/replay spent31AR state. No server,
+staging, proxy, restart, policy/security/firmware or production-helper change.
+Native Linux/SMP/GPU/performance and new controller integration NOT RUN.
+Evidence: native/boot/attempt31at-m1-offline-2026-11-15.md and JSON.
+
 ### M5 — 31AT saved failure classified; original object diagnostics and Max profile, November 15
 
 Owner-authenticated v1/v2 preserved-state reads establish candidate UNKNOWN
