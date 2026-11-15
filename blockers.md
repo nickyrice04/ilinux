@@ -1,5 +1,33 @@
 # Blockers
 
+### M5 — 31AS review accepted; temporary lab default, page service next, November 15
+
+Accepted M1 850f96c: source/exact pages PASS, no actionable findings. Six package
+methods ran;13 shell methods did not run because production kit absent. Retained
+M5 producer and independent19/19 evidence covers the fixture bootstrap; no false
+local19pass claim, transfer, restage or test/build repeat.167 frozen sources and
+exact18124-byte31AS page match. Same helper/profile/candidate/boot021/kit/state.
+
+The current request retains the concrete lab-only install/one maximum90sRAM/
+conditional labCTRR/exactboot021/default-return scope, keeping Original Full.
+M5 selected LAB temporarily in Original System Settings without Restart; fresh
+read-only selector/group comparison confirms current ORIGINAL/default LAB and
+distinct groups, selector0. Only default changed; no policy query, boot-object,
+security, OS/firmware or volume change. Existing stage receipt accepted unchanged.
+
+M1 follows tools/m1n1-client/attempt31as-authorized-instructions.md. Reuse/check
+its already exact source-only outputs, serve only new /31as with bounded lifetime,
+verify actual HTTP equality, return completeprivateURL and publish readiness.
+No helper transfer, suites/builds/restage, M1 restart, proxy or camera calibration.
+Keep M5 running until newlivepage accepted and M5 cue. Do not replay old31ARpage
+or boot oldlabtile. Native31AR schema/scratch/kit/state labels remain intentional.
+
+No new controller/Recovery/mount/install/restore/native/Linux/SMP/performance
+operation ran. Boot021 restoration remains OUTSTANDING. The prepared independent
+restore still requires exactreadback/cleanup/shellsuccess, then separate Macintosh
+HDdefault/desktop return. Evidence:
+native/boot/attempt31as-prepared-handoff-2026-11-15.json.
+
 ### M1 — 31AS source/page PASS; full bootstrap skipped locally, November 15
 
 Reviewed59f0a48:167 source pins PASS,162 old inputs/inventory exact;183 prior
