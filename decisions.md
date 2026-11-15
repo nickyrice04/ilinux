@@ -1,5 +1,36 @@
 # Decisions Log
 
+### Latest M5 — 31AL Preboot guard understood; reuse matched CPU stack, November 14
+
+Reviewed M1's6fb1023. Exact refusal is AUX_IDENTITIES/GUARD/PREBOOT_MOUNT_PATH:
+our lexical Preboot MountPoint check, before policy/pairing/security/object or
+native entry. Actual path is Unknown. Human confirms Original desktop/default
+return; no repeated policy command. Boot021 restoration stays OUTSTANDING.
+
+Confirmed the existing candidate already builds the exact publicly reported
+18-core J716c Aura bd9f3e8273dc/Linux dc8f6f77934b pair and retains baseline CPU
+startup. Firmware/config/transport reproduction differences remain unqualified;
+31AL supplies no new CPU/Apple-firmware failure. Do not replace CPU code for
+this deployment refusal. Current primary source comparison is in
+research/attempt31am-preboot-next-2026-11-14.md.
+
+New tools/preboot31am adds six focused original C-fixture controls: empty path
+reproduces the exact refusal, missing/non-string input differs, valid lexical
+paths progress to a deliberately failing policy.6 normal+same6 ASan/UBSan PASS,
+independently repeated; old29/86 suites not rerun. Existing92 source bindings and
+all frozen helpers/profiles/pages/receipts/state/candidate remain unchanged.
+
+Asahi installer e93743d52178 mounts role-selected Preboot then refreshes info;
+our collector assumes it mounted. Unmounted/empty remains a hypothesis, not
+physical evidence. Next design: finite state/path classification, then only
+if positively unmounted and explicitly authorized, identity-bound read-only
+preparation and fresh observation before the unchanged diagnostic. Shared
+container Preboot, readonly/fscheck behavior and cleanup need qualification.
+No new mount controller, Recovery package, physical authorization or restart
+is ready. M1 reviews this offline only; no restage/retry/installer/proxy/settings.
+Original Full stays required; live Recovery/install/restore/Linux/SMP/performance
+NOT RUN by this work. No macOS, boot/security/firmware/volume action occurred.
+
 ### M1 — 31AL read-only refusal captured; original return confirmed, November 14
 
 One human Terminal photo: HELPER_EXIT (helper exit2), REFUSED at AUX_IDENTITIES /
