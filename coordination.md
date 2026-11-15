@@ -1,5 +1,27 @@
 # Coordination: agents working in this workspace
 
+### M5 — 31AR physical scope authorized; live-page evidence still missing, November 15
+
+The user explicitly authorizes one lab-only install, one maximum90-second RAM
+boot and exact boot021 rollback, keeping Macintosh HD Full, conditional on M5
+accepting the new M1 page-readiness report. Record this approval; do not request
+it again once that condition is met. No Apple writer or native boot ran here.
+
+Fresh main fetch and all-head lookup show 772166a, with no new readiness report.
+The human supplied 39c09f9: that is the already accepted offline review, which
+reports server NOT STARTED at its observation. Current live status is unknown;
+it is not evidence of page availability. Do not invent a PASS or restart cue.
+
+M1 now follows tools/m1n1-client/attempt31ar-authorized-instructions.md, first
+reusing/checking/serving the exact source-only page per the staged handoff,
+then publishing a new finite readiness report and returning the complete private
+URL. No repeated review, tests, build, transfer, staging, M1 restart or proxy.
+The existing staged kit/default selection remain accepted; no policy query,
+setting, mount or security change occurred this turn. All162 frozen sources
+and exact15264-byte page remain verified. Boot021 remains OUTSTANDING;
+Recovery/install/restore/Linux/SMP/performance NOT RUN. Keep M5 running.
+Evidence: native/boot/attempt31ar-conditional-authorization-2026-11-15.json.
+
 ### M5 — 31AR reviewed, exact kit staged, temporary lab default, November 15
 
 Reviewed M1 39c09f9: source/controller/pages PASS, 52 methods passed and one
