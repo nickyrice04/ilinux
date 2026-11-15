@@ -1,5 +1,30 @@
 # Progress Log
 
+### Latest M5 — 31AM ready for human Recovery shutdown cue, November 14
+
+Reviewed M1's40d2046 exact live-page report: HTTP200 body8343/e76b0b1c…22a9f,
+new31AM title,111 pins, bounded1800s service. M5 verifies that published report;
+no duplicate GET or private-URL question is required. Staging success is already
+user-confirmed and byte-exact; temporary lab default/current Original already
+confirmed by fresh M5 read-only selector/group observation. All readiness gates
+complete without rerunning tests, builds, staging or routine security checks.
+
+Human now saves work, shuts M5 down, holds power from off to Options/Continue,
+and uses M1's exact new private page for one whole-box copy, browser quit and
+Utilities Terminal paste. Choose Recovery rather than booting the old lab object.
+Capture emitted finite result; one conditional RO shared-Preboot preparation/
+unchanged diagnostic only. No install/rollback/security-mode/Linux boot.
+Stop on refusal or cleanup uncertainty; no retry/force/improvised commands.
+Approved Original/default return remains required, including one-time Macintosh
+HD after shutdown if cleanup uncertainty makes Recovery Startup Disk unsuitable.
+
+M1 retains tools/m1n1-client/attempt31am-authorized-instructions.md. No M1 restart,
+proxy or camera test; credentials remain local, recording off. Actual Recovery,
+mount/cleanup/Linux/SMP/performance NOT RUN at handoff; zero native windows used.
+Boot021 restoration OUTSTANDING. No shutdown/restart clicked or issued by M5.
+Original Full Security remains unchanged. Evidence:
+native/boot/attempt31am-restart-ready-2026-11-14.json.
+
 ### M1 — verified31AM conditional Preboot page live, November 14
 
 Accepted8d8340a staged-kit/temporary-lab-default handoff; no repeat operation.
