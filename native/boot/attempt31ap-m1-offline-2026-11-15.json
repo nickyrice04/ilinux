@@ -1,0 +1,132 @@
+{
+  "Linux": "NOT RUN",
+  "Original_Full": "Required invariant; no fresh policy query",
+  "SMP": "NOT RUN",
+  "USB_proxy": "NOT RUN",
+  "actionable_code_findings": [],
+  "actual_source_profile_build_admission": {
+    "actual_delivery_page_check": "NOT RUN",
+    "actual_root_source_profile_build_admission": "PASS",
+    "canonical_Git_profile": "PASS",
+    "exact_delivered_kit": "PENDING_PRIVATE_TRANSFER",
+    "local_and_producer_source_proofs_equal": true,
+    "socket_created": false,
+    "verified_source_count": 140
+  },
+  "attributed_evidence_not_rerun": [
+    "M5 31AN/31AO owner desktop finite results; not a fresh M1 target query",
+    "M5 formatter REA/Ghidra/LLVM summaries; no raw analysis or Apple executable inspected on M1",
+    "M5 83-method AO and prior engine suites reused, not rerun",
+    "M5 same 19 AP sanitizer controls and clean-export production kit/page evidence reviewed, not locally rerun"
+  ],
+  "blockers": [
+    "Exact M5-built two-file 31AP delivery is absent from expected M1 locations; delivery verification and actual production page preparation/check await private transfer"
+  ],
+  "boot021_restoration": "OUTSTANDING",
+  "camera": "OFF",
+  "compiler_output_is_not_delivery": true,
+  "date": "2026-11-15",
+  "delivery_verified": "NOT RUN; pending private transfer",
+  "either_Mac_restart": "NOT RUN",
+  "expected_delivery": {
+    "ilinux31aj-reader": {
+      "bytes": 124640,
+      "sha256": "d31279b4737cef3a5524dd0bd0a34a66ce2cf4a998416e551d177d4478d54684"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "c64b596fd0d2e7003098eda79fa3a7f9841e13de79d2ce430d2b49f15d2bc747"
+    }
+  },
+  "expected_page_files_producer_evidence": {
+    "diagnose-paste.txt": {
+      "bytes": 5615,
+      "sha256": "d9a47b93fc65ac78aa7a2b0e662bb6f2ce568584c74cf07575735f6247631bd7"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "c64b596fd0d2e7003098eda79fa3a7f9841e13de79d2ce430d2b49f15d2bc747"
+    },
+    "recovery.html": {
+      "bytes": 8357,
+      "sha256": "fff051694d5cecd389e9fcc26204189277c0c83ba66f619429acc631558ff466"
+    }
+  },
+  "fresh_tests": {
+    "native": {
+      "exit": 0,
+      "methods": 19,
+      "seconds": 1.052,
+      "status": "PASS"
+    },
+    "package": {
+      "exit": 0,
+      "methods": 9,
+      "seconds": 10.247,
+      "status": "PASS"
+    },
+    "renderer": {
+      "exit": 0,
+      "methods": 6,
+      "seconds": 0.01,
+      "status": "PASS"
+    }
+  },
+  "install": "NOT RUN",
+  "large_candidate_or_RAM_root_rebuild_transfer": false,
+  "last_Original_return": "Human confirmed desktop/default in 31AM result",
+  "local_source_proofs_equal_producer": true,
+  "new_live_Recovery": "NOT RUN",
+  "new_mount_cleanup": "NOT RUN",
+  "next": "Private transfer of exact 31AP helper/profile kit; verify then prepare/check exact inert page without repeating passed suites. M5 assesses completed review before separate physical authorization/handoff.",
+  "old_consumed_state_reset": false,
+  "original_reference": {
+    "bytes": 442368,
+    "sha256": "166bea74bf515473057dfd29dc89127d04768945a451e497cc80a9fc53d4951b"
+  },
+  "original_reference_unchanged": true,
+  "performance": "NOT RUN",
+  "positive_fixture": {
+    "actual_result_validator_roundtrip": "PASS",
+    "cleanup_failure_overrides_real_admission": "PASS",
+    "existing_mount_untouched": "PASS_SYNTHETIC_CONTROL",
+    "owned_mount_admission_and_cleanup": "PASS_SYNTHETIC_CONTROL",
+    "pairing_security_selected_path_refusals": "PASS",
+    "policy_reread_mutations_both_roles": "PASS",
+    "real_core_and_31AF_identity": "PASS; no identity mock",
+    "renderer_derived_scratch": "PASS",
+    "synthetic_IMG4_bytes": 445430
+  },
+  "preservation_review": "Exact reversal restores frozen instrumented state and stripping restores original; core/header/JSON/Preboot engine/CLI/outer result/diagnostic support exact; scratch WORK_BLOCK retains ilinux31am prefix",
+  "prior_evidence_files_verified_unchanged": 96,
+  "production_helper_execution_on_M1": false,
+  "production_page_preparation_and_check": "NOT RUN; pending verified delivery",
+  "python_version": "3.9.6",
+  "restore": "NOT RUN",
+  "reviewed_commit": "5ef6a73",
+  "schema": "ilinux31ap-m1-independent-offline-review-v1",
+  "security_volume_default_changes": "NONE",
+  "server": "NOT STARTED",
+  "source_inventory": {
+    "all_tracked_and_hash_exact": true,
+    "count": 140,
+    "retained_AM": 111,
+    "retained_AO": 14,
+    "sha256": "1e10cb95acab08adc127a84425c459745681d6c126a441523ec58e630618edf4"
+  },
+  "source_test_or_receipt_changes": false,
+  "staging": "NOT RUN",
+  "status": "SOURCE_AND_SYNTHETIC_PASS_DELIVERY_PENDING",
+  "test_compile": {
+    "abi": "arm64",
+    "binary_bytes": 124640,
+    "binary_sha256": "dc7d4bb99122364286c612e58eb02bed6af721848c749bb4949bbb3a6d6b00ac",
+    "compiler_version": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "minimum_macos": "13.0",
+    "sanitized": false,
+    "sdk_version": "26.0"
+  },
+  "typed_extension_review": "Six finite typed fields with canonical presence/value stored privately; exact true smb0&&smb1 decomposed under unchanged duplicate/mode checks; no CRPO alias or general group expansion; tagged v3 HMAC and whole-Policy reread bind extras",
+  "unique_fresh_methods": 34,
+  "wrapper_fixture_tests": "9 package + 6 renderer PASS with synthetic delivery; not the delivered production-page check"
+}

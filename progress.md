@@ -1,5 +1,23 @@
 # Progress Log
 
+### M1 — 31AP source/34 methods PASS; exact kit pending, November 15
+
+Reviewed5ef6a73: all140 tracked pins/125 AM+AO bindings exact; actual inert
+source/profile/build admission PASS. New original test build clang17/SDK26:
+19 full-helper +9 package +6 renderer methods PASS. Genuine retained31AF
+442368/166bea74…d4951b in entirely synthetic445430-byte framing passes real
+recognition/collection/admission/cleanup; no identity mock. Engine/CLI/outer
+validator/core exact; typed extension reverses; original scratch WORK_BLOCK
+retained. No actionable code finding. M5 desktop/REA/old suites/sanitizers are
+attributed evidence, not rerun. All96 prior files/reference and140 pins unchanged.
+Exact producer helper124640/d31279b4…4684 + profile823/c64b596f…c747 absent from
+expected M1 locations. Delivery and actual production page prep/check PENDING;
+M1's test binary is not a replacement. Transfer tiny kit only, then finish inert
+verification without repeating passed suites. No stage/server/camera/proxy/
+restart/settings/live Recovery/mount/install/restore/Linux/SMP/performance;
+boot021 OUTSTANDING. Evidence: native/boot/attempt31ap-m1-offline-2026-11-15.md
+and JSON. Physical handoff remains M5-owned after completed review.
+
 ### M5 — 31AP full Recovery integration passes offline, November 15
 
 After the actual desktop parser PASS, built the same repair into the complete
