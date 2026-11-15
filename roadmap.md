@@ -5,7 +5,59 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — after the 31AR shell refusal, 2026-11-15
+## Current direction — saved 31AS failure classified, 2026-11-15
+
+The [owner-authenticated saved-state result](native/boot/attempt31at-postcondition-2026-11-15.json)
+identifies two failed candidate requirements: the selected payload was
+`UNKNOWN`, not absent, and lab Kernel CTRR was explicitly disabled, not
+unreported. Baseline, parser, role binding, Original Full/CTRR, both roles'
+semantic and private-metadata preservation passed. The saved restored snapshot
+passes exact boot021/disabled-CTRR requirements. Independent restoration and
+Macintosh HD desktop/default return were also human-confirmed. No candidate
+boot or native Linux window occurred.
+
+1. **Resolve installation/readback before another restart.** The new
+   `tools/postcondition31at/` observer has classified the preserved evidence
+   without another Recovery visit. Keep the spent transaction unchanged. Add
+   finite selected-object read/framing/codec/decoded-match diagnostics while
+   retaining the original recognizer as acceptance authority. Qualify the
+   writer's CTRR behavior independently; neither exit zero nor a public note's
+   informal “CTRR off” wording permits weakening the candidate guard. The
+   [source comparison](research/attempt31at-public-enrollment-recipes-2026-11-15.md)
+   finds no demonstrated argv error and retracts the earlier compression theory.
+2. **Reuse the exact-board accelerated stack as a unit.** The separate
+   [J716c graphics profile](kernel/experiments/j716c-graphics-profile/README.md)
+   validates the genuine full reference config and its 1,376-symbol difference
+   from our minimal diagnostic. Reproduce kernel `a59e709c7377`, graphics Aura
+   Stage2 `9da61857f9d9`, compatible installed Stage1, toolchain, modules/Mesa,
+   firmware and runtime DT together. Keep the existing diagnostic validator.
+   This tool is not a built kernel or a deployment. The base-M5 config flag and
+   Pro installer are not substitutes for the tested Max configuration.
+3. **Settle missing firmware and runtime inputs explicitly.** The published
+   J716c report uses 27.2.1/26B131, bounded CPU clocks, verified telemetry and a
+   separately deployed guardian. Our retained local version observations are
+   26.6.2/25G83. Do not promise isolated shared-firmware effects or silently
+   update Macintosh HD. A specific authorized update plan, if needed, follows
+   a backup/compatibility/restoration review and preserves Original Full.
+4. **Use one reviewed native window to answer several hardware questions.**
+   Only after exact candidate/policy readback and cleanup pass, collect Aura
+   entry, Linux entry, all 18 physical cores with concurrent work by core type,
+   IPIs/coherency/timers, GPU binding and sustained frame checks, network/control
+   access and telemetry. Retain independent boot021 restoration and Original
+   default return. Do not spend a boot just to rediscover a format error.
+5. **Measure usability and efficiency before moving development into Linux.**
+   Compare CPU/memory throughput, input-to-frame latency, several concurrent
+   apps, GPU/fabric behavior, storage and networking against matched macOS power
+   settings. Measure energy per task and thermal behavior as well as speed.
+   Then qualify persistent Omarchy, storage writes/durability, idle/suspend and
+   peripherals separately. External 18-core/GPU success is evidence of a software
+   route, not proof of parity on this machine or a need to wait for Apple.
+
+No restart, transaction replay, security change or firmware update is prepared
+by this offline work. M1's next role is source/evidence review of
+`tools/m1n1-client/attempt31at-instructions.md`.
+
+## Historical direction — after the 31AR shell refusal, 2026-11-15
 
 [31AR's actual result](native/boot/attempt31ar-recovery-2026-11-15-result.md)
 stopped at the unavailable `/usr/bin/cmp` before the controller. No installation,

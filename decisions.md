@@ -1,5 +1,31 @@
 # Decisions Log
 
+### M5 — 31AT saved failure classified; original object diagnostics and Max profile, November 15
+
+Owner-authenticated v1/v2 preserved-state reads establish candidate UNKNOWN
+(not NONE) and lab Kernel CTRR disabled (not unknown). Baseline/common/parser/
+profile/key/role checks and both semantic/private commitments pass. Saved restored
+capture passes exact boot021/disabled-CTRR; human restore plus Original desktop/
+default confirmations retained. No fresh policy/object query or new boot.
+
+New observer:32 focused tests PASS/zero skips, independent C/ACL audit PASS.
+New pure object adapter reuses unchanged pinned MIT recognizer as sole acceptance
+rule;17 methods PASS normally and under ASan/UBSan, including real own candidate/
+codec fixtures. New separate J716c full-config admission:16 real-data tests PASS,
+1376-symbol delta; old diagnostic validator unchanged. REA/Ghidra plus LLVM
+checked785 words/two call boundaries; whole-function semantics not admitted.
+No proprietary code published or firmware conclusion inferred.
+
+All167 frozen31AS inputs unchanged; old kits/state/keys/baseline/spent receipts
+untouched. Original Full remains required and no settings/security/firmware change
+ran. M1 reviews tools/m1n1-client/attempt31at-instructions.md offline only; no
+server, restage, proxy or restart. A new reviewed controller must capture precise
+object-failure stages and qualify CTRR behavior before another candidate test;
+never reset/replay31AR state. Exact-board public18-core/GPU work is the next
+source baseline, not parity proof. Native Linux/SMP/GPU/performance NOT RUN.
+Evidence: native/boot/attempt31at-postcondition-2026-11-15.json and
+native/boot/attempt31at-offline-validation.json.
+
 ### M1 — 31AS install refused; boot021 restore and Original return confirmed, November 15
 
 Actual install writer0 ended POSTCONDITION/POLICY_OR_OBJECT REFUSED; candidate

@@ -1,0 +1,54 @@
+{
+  "schema": "ilinux31at-saved-postcondition-review-v1",
+  "date": "2026-11-15",
+  "evidence_source": "OWNER_PASTED_AUTHENTICATED_OBSERVER_OUTPUT",
+  "actual_observer_schemas": [
+    "ilinux31at-preserved-postcondition-v1",
+    "ilinux31at-preserved-postcondition-v2"
+  ],
+  "scope": "PRESERVED_TRANSACTION_CAPTURES_ONLY",
+  "baseline_initial_contract": true,
+  "candidate_phase_contract": false,
+  "candidate_classification": {
+    "lab_ctrr_disabled_recorded": true,
+    "lab_ctrr_unknown_recorded": false,
+    "selected_payload_none_recorded": false,
+    "selected_payload_unknown_recorded": true
+  },
+  "candidate_failed_contract_predicates": [
+    "lab_ctrr_matches_phase",
+    "selected_payload_exact",
+    "selected_payload_matches_phase"
+  ],
+  "all_other_candidate_contract_predicates": true,
+  "candidate_writer_zero_recorded": true,
+  "role_semantics_preserved": {
+    "ORIGINAL": true,
+    "LAB": true
+  },
+  "role_private_commitments_equal": {
+    "ORIGINAL": true,
+    "LAB": true
+  },
+  "restored_capture_present": true,
+  "restored_phase_contract": true,
+  "boot021_restoration": "HUMAN_CONFIRMED_AND_SAVED_RESTORED_CONTRACT_PASS",
+  "current_boot_object_freshly_verified": false,
+  "current_policy_freshly_verified": false,
+  "fresh_target_commitment_revalidated": false,
+  "firmware_acceptance_verified": false,
+  "current_desktop_and_default_return": "HUMAN_CONFIRMED_BY_M1_RESULT",
+  "native_Linux": "NOT_RUN",
+  "native_SMP": "NOT_RUN",
+  "native_GPU": "NOT_RUN",
+  "performance_parity": "NOT_MEASURED",
+  "read_only": true,
+  "settings_changed": false,
+  "state_reset": false,
+  "private_values_returned": false,
+  "identifiers_returned": false,
+  "restart_ready": false,
+  "current_original_security_changed": false,
+  "first_audited_probe_sha256": "8e3a32913ca94a55dae3e7fa82da097bd572acaba6f9f02dc4f1f0442cb37ff9",
+  "second_audited_probe_sha256": "7c6a4bdb48e4319be777e0988e07cc2ecaf1f572f19c40b44552bbc1cb1c5828"
+}

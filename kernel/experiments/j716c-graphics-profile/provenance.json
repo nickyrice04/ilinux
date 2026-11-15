@@ -1,0 +1,85 @@
+{
+  "schema": "ilinux-j716c-graphics-profile-provenance-v1",
+  "original_tool": {
+    "author": "iLinux contributors",
+    "license": "MIT",
+    "third_party_code_embedded": false,
+    "purpose": "Offline admission and deterministic delta for the published J716c full kernel configuration"
+  },
+  "reference": {
+    "repository": "https://github.com/cameroncooper/linux",
+    "publication_commit": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+    "config_path": "Documentation/arch/arm64/apple-j716c-bringup/kernel.config",
+    "config_blob": "ec886dc9c8f00a437a8dbfd3f0182fb563496f94",
+    "config_sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8",
+    "config_bytes": 330809,
+    "pins_path": "Documentation/arch/arm64/apple-j716c-bringup/pins.json",
+    "pins_blob": "91f28b4c037c3e81110f025e4488b291b29c27f1",
+    "qualified_kernel_commit": "a59e709c737777495c84541c6afb6c862bb79227",
+    "qualified_kernel_source_tree": "5960d8ab03fef0f87e91e84fe1a8d969173da8de",
+    "kernel_base": "dc8f6f77934b471a13c91e7780e2d91ebc904b3d",
+    "graphics_Stage2_repository": "https://github.com/cameroncooper/aura",
+    "graphics_Stage2_commit": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+    "graphics_Stage2_is_not_installed_Stage1": true,
+    "sources_obtained_via": "GitHub connector at immutable commits; data only",
+    "full_config_storage": "Ignored workspace build directory; not vendored by this tool",
+    "source_licensing": {
+      "Linux_COPYING": "GPL-2.0 WITH Linux-syscall-note; file-specific SPDX identifiers apply",
+      "publication_README_and_Asahi_Kconfig": "GPL-2.0",
+      "arm64_Kconfig_and_apple_cpufreq": "GPL-2.0-only",
+      "third_party_source_or_config_executed": false
+    },
+    "attribution": {
+      "publication_and_integration": "Cameron Cooper",
+      "M5_InitData_layout_backports": "Rolando Trevino; Aurora Linux PR 1173",
+      "GPU_panel_DT_backports": "Erik Bourget; Aurora Linux PR 1276",
+      "DCP_firmware_method_table": "Jeff Queisser; commit 290b7de9f12953a6d18555c1bed0899ef9bdb8cb",
+      "platform_and_GPU_foundations": "Asahi Linux and Aurora contributors; original authors remain in upstream history"
+    }
+  },
+  "source_checks": [
+    {
+      "path": "drivers/gpu/drm/asahi/Kconfig",
+      "commit": "a59e709c737777495c84541c6afb6c862bb79227",
+      "blob": "d383802ee8825f77e2cfaec02ef5339b9c678349",
+      "finding": "DRM_ASAHI depends on Rust and 16KB pages; the named DRM_ASAHI_M5 option targets the base T8142 G17G firmware profile, not a generic all-M5 gate"
+    },
+    {
+      "path": "arch/arm64/Kconfig",
+      "commit": "a59e709c737777495c84541c6afb6c862bb79227",
+      "blob": "81f92a6fb50f7bc6d72ffc22f9360679e30835e3",
+      "finding": "NR_CPUS is the maximum configured CPU count, range 2..4096, default 512; it is not the detected online core count"
+    },
+    {
+      "path": "drivers/cpufreq/apple-soc-cpufreq.c",
+      "commit": "a59e709c737777495c84541c6afb6c862bb79227",
+      "blob": "fb87ae6ae137a060763f0f11533d3bf73b5035e7",
+      "finding": "Reference driver is an Apple CPU cluster performance-state driver; building it does not prove safe clocks or thermals"
+    }
+  ],
+  "comparison_baseline": {
+    "profile": "Existing reconstructed direct31AH RAM diagnostic, not accelerated graphics",
+    "manifest": "native/boot/attempt31ah/manifest.json",
+    "config_sha256": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8",
+    "config_bytes": 284541,
+    "existing_validator_unchanged": true
+  },
+  "matching_build_requirements_not_executed": {
+    "architecture": "arm64",
+    "clang_and_lld": "22.1.8",
+    "rustc": "1.96.1 (31fca3adb 2026-06-26)",
+    "bindgen": "0.73.2",
+    "matching_rust_library_sources_and_libclang_required": true,
+    "targets": ["Image.gz", "modules", "apple/t6050-j716c.dtb"],
+    "publication_rebuild_byte_identity_demonstrated": false
+  },
+  "reference_runtime_not_our_machine_measurement": {
+    "board": "J716c / Mac17,6 / T6050 / G17C",
+    "firmware": "27.2.1 / 26B131 / mBoot-20457.41.3",
+    "reported_online_CPUs": 18,
+    "reported_qualification": "Bounded engineering RAM root with checked telemetry and roughly 2 GHz CPU ceilings; no performance parity or suspend qualification",
+    "installed_Stage1_and_root_and_guardian_and_firmware_not_published_here": true
+  },
+  "native_ready": false,
+  "restart_ready": false
+}

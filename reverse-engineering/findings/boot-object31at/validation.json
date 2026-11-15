@@ -1,0 +1,81 @@
+{
+  "schema": "ilinux31at-kmutil-static-validation-v1",
+  "date": "2026-11-15",
+  "source_kind": "RETAINED_GENERIC_LOCAL_ARM64E_SLICE_NOT_RECOVERY_IDENTITY",
+  "input_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+  "REA": "6.4.0",
+  "Ghidra": "12.1.4",
+  "guest": {
+    "vcpus": 2,
+    "RAM_GiB": 8,
+    "attached_disks": 0,
+    "physical_USB": false,
+    "network_interfaces": [
+      "lo"
+    ]
+  },
+  "queries": [
+    {
+      "function": "FUN_1000f6b60",
+      "body_anchors": [
+        {
+          "start": "0x1000f6b60",
+          "end_inclusive": "0x1000f6ebb",
+          "carrier_offset": 1010528,
+          "derived_offset": 1010528,
+          "bytes": 860,
+          "sha256": "13bd365455fbefdcdf90c9a4a748f83369de2504474cdc823e2fb1e055ee58e8"
+        }
+      ],
+      "assembly_instructions": 215,
+      "LLVM_words_match_original": 215,
+      "pcode_operations": 394,
+      "pcode_outside_body": 0,
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "high_pcode_truncated": false,
+      "dead_operation_count": 394,
+      "direct_calls": [
+        {
+          "callsite": "0x1000f6d04",
+          "target": "0x1001648cc",
+          "independent_BL_target_verified": true
+        }
+      ],
+      "whole_function_semantics_admitted": false
+    },
+    {
+      "function": "FUN_1000f79f8",
+      "body_anchors": [
+        {
+          "start": "0x1000f79f8",
+          "end_inclusive": "0x1000f82df",
+          "carrier_offset": 1014264,
+          "derived_offset": 1014264,
+          "bytes": 2280,
+          "sha256": "21b462a0d552695be607bd0275cdddd4cf1d1e0d67a8c136e15b40ef09c1d12b"
+        }
+      ],
+      "assembly_instructions": 570,
+      "LLVM_words_match_original": 570,
+      "pcode_operations": 3000,
+      "pcode_outside_body": 0,
+      "pseudocode_gate": "manual_review_required",
+      "decompiler_warning_classes": [],
+      "high_pcode_truncated": true,
+      "dead_operation_count": 3000,
+      "direct_calls": [
+        {
+          "callsite": "0x1000f7e5c",
+          "target": "0x100163ddc",
+          "independent_BL_target_verified": true
+        }
+      ],
+      "whole_function_semantics_admitted": false
+    }
+  ],
+  "native_run": false,
+  "firmware_acceptance_verified": false,
+  "whole_function_semantics_admitted": false,
+  "prior_lab_job_restored": true
+}

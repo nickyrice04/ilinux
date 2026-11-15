@@ -1,0 +1,217 @@
+{
+  "CPU_capacity": {
+    "configured_maximum_logical_ID_count": "512",
+    "measurement_worker_count": null,
+    "observed_online_CPU_count": null,
+    "published_board_physical_CPU_count": 18,
+    "requires_runtime_online_topology_before_assigning_workers": true
+  },
+  "GPU_backend": {
+    "DRM_ASAHI": "m",
+    "DRM_ASAHI_M5": "n",
+    "M5_option_is_not_the_Max_G17C_admission_gate": true,
+    "runtime_GPU_bound_or_accelerated": null
+  },
+  "Kconfig_resolved_with_matching_toolchain": false,
+  "boot_object_installed": false,
+  "configuration_errors": [],
+  "critical_config_invariants_pass": true,
+  "diagnostic_delta": {
+    "added": 1292,
+    "baseline_matches_31AH_published_manifest": true,
+    "baseline_sha256": "bba7ce251238c3cb6779d884a3442373443f7eed97e19f638afc08fdb9779fd8",
+    "changed_existing": 67,
+    "changed_symbol_count": 1376,
+    "focused_changes": [
+      {
+        "after": "m",
+        "before": "y",
+        "symbol": "CONFIG_APPLE_CENTAURI_T6050"
+      },
+      {
+        "after": "m",
+        "before": null,
+        "symbol": "CONFIG_APPLE_PMP"
+      },
+      {
+        "after": "m",
+        "before": null,
+        "symbol": "CONFIG_APPLE_PMP_THERMAL"
+      },
+      {
+        "after": "y",
+        "before": "m",
+        "symbol": "CONFIG_APPLE_SART"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_APPLE_T6030_GPU_PMP_LINK"
+      },
+      {
+        "after": "m",
+        "before": "y",
+        "symbol": "CONFIG_ARM_APPLE_SOC_CPUFREQ"
+      },
+      {
+        "after": "\"bindgen 0.73.2\"",
+        "before": null,
+        "symbol": "CONFIG_BINDGEN_VERSION_TEXT"
+      },
+      {
+        "after": "\"clang version 22.1.8\"",
+        "before": "\"gcc (GCC) 16.1.1 20260430\"",
+        "symbol": "CONFIG_CC_VERSION_TEXT"
+      },
+      {
+        "after": "m",
+        "before": "y",
+        "symbol": "CONFIG_CFG80211"
+      },
+      {
+        "after": "m",
+        "before": "n",
+        "symbol": "CONFIG_DRM_APPLE"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_DRM_APPLE_DCP_T8132"
+      },
+      {
+        "after": "m",
+        "before": null,
+        "symbol": "CONFIG_DRM_APPLE_FABRIC_CORE"
+      },
+      {
+        "after": "m",
+        "before": null,
+        "symbol": "CONFIG_DRM_ASAHI"
+      },
+      {
+        "after": "n",
+        "before": null,
+        "symbol": "CONFIG_DRM_ASAHI_DEBUG_ALLOCATOR"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_DRM_ASAHI_G15"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_DRM_ASAHI_G16"
+      },
+      {
+        "after": "n",
+        "before": null,
+        "symbol": "CONFIG_DRM_ASAHI_G18"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_DRM_ASAHI_M3_T8122"
+      },
+      {
+        "after": "n",
+        "before": null,
+        "symbol": "CONFIG_DRM_ASAHI_M5"
+      },
+      {
+        "after": "\"-j716c-bringup-unified\"",
+        "before": "\"-ilinux31ah-offline\"",
+        "symbol": "CONFIG_LOCALVERSION"
+      },
+      {
+        "after": "512",
+        "before": "64",
+        "symbol": "CONFIG_NR_CPUS"
+      },
+      {
+        "after": "y",
+        "before": "m",
+        "symbol": "CONFIG_NVME_APPLE"
+      },
+      {
+        "after": "y",
+        "before": "n",
+        "symbol": "CONFIG_RUST"
+      },
+      {
+        "after": "\"rustc 1.96.1 (31fca3adb 2026-06-26)\"",
+        "before": null,
+        "symbol": "CONFIG_RUSTC_VERSION_TEXT"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_RUST_APPLE_MAILBOX"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_RUST_APPLE_RTKIT"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_RUST_DRM_GEM_SHMEM_HELPER"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_RUST_DRM_GPUVM"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_RUST_DRM_SCHED"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_RUST_FW_LOADER_ABSTRACTIONS"
+      },
+      {
+        "after": "y",
+        "before": null,
+        "symbol": "CONFIG_RUST_OVERFLOW_CHECKS"
+      }
+    ],
+    "removed": 17,
+    "scope": "DATA_COMPARISON_NOT_AN_APPLIED_PATCH_OR_KCONFIG_RESOLUTION"
+  },
+  "exact_reference_bytes_match": true,
+  "input": {
+    "bytes": 330809,
+    "sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8",
+    "symbols": 10123
+  },
+  "kernel_or_modules_built": false,
+  "native_ready": false,
+  "performance_or_efficiency_parity_demonstrated": false,
+  "reference_config_accepted": true,
+  "restart_ready": false,
+  "runtime_gates": {
+    "RTC_runtime_DT_disabled_and_no_unqualified_writeback": "NOT_VERIFIED_BY_CONFIG",
+    "bounded_CPU_clock_profile_with_valid_SMC_temperature_telemetry": "NOT_VERIFIED_BY_CONFIG",
+    "default_off_shallow_WFI_and_no_deep_idle_or_suspend_claim": "NOT_VERIFIED_BY_CONFIG",
+    "external_ATC2_runtime_DT_disabled": "NOT_VERIFIED_BY_CONFIG",
+    "firmware_owned_fan_control": "NOT_VERIFIED_BY_CONFIG",
+    "matching_board_and_loader_filled_DT": "NOT_VERIFIED_BY_CONFIG",
+    "matching_firmware_and_GPU_text_identity": "NOT_VERIFIED_BY_CONFIG",
+    "matching_graphics_Stage2_not_merely_installed_Stage1": "NOT_VERIFIED_BY_CONFIG",
+    "matching_modules_Mesa_firmware_and_RAM_root": "NOT_VERIFIED_BY_CONFIG",
+    "online_CPU_topology_core_types_IPIs_and_cache_coherency": "NOT_VERIFIED_BY_CONFIG",
+    "physical_watchdog_and_separately_deployed_host_guardian": "NOT_VERIFIED_BY_CONFIG"
+  },
+  "schema": "ilinux-j716c-graphics-config-v1",
+  "scope": "OFFLINE_FULL_CONFIG_DATA_ONLY",
+  "sources": {
+    "graphics_Stage2": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+    "kernel": "a59e709c737777495c84541c6afb6c862bb79227",
+    "publication": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec"
+  },
+  "status": "PASS_EXACT_REFERENCE_CONFIG"
+}
