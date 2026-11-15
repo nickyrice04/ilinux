@@ -1,5 +1,24 @@
 # Progress Log
 
+### M1 — 31AR stopped before controller: unavailable cmp; Original return confirmed, November 15
+
+One human Recovery install paste emits /usr/bin/cmp: No such file or directory,
+fixed STOP and prompt; no controller JSON or shell success. Both frozen profile
+cmp calls precede controller dispatch: no enrollment, managed mount or Apple
+writer reached by this paste under reviewed flow. First comparison likely;
+exact invocation not labeled, numeric exit not printed. Pasted success source
+is not execution evidence. Both install/restore boxes share this dependency;
+no alternate comparator/path qualified. Offline syntax/equality/desktop fixtures
+did not establish actual Recovery tool availability. No typing/candidate/firmware
+failure inferred. No edited retry, hot patch, blind restore or scratch/state reset.
+Human Macintosh HD desktop/default confirmed; no return problem or fresh policy
+query. Owned server SIGINT/exit0/listener closed.162 frozen pins/180 prior files/
+6 prepared outputs unchanged; no test/build/stage/transfer/M1 restart/proxy.
+Controller/RO-RW/install/restore/native entry/Linux/SMP/performance NOT RUN;
+native windows0, boot021 OUTSTANDING, Original Full required. M5 next: offline
+repair/review of Recovery dependencies and both complete blocks; no auto-retry.
+Evidence: native/boot/attempt31ar-recovery-2026-11-15-result.md and JSON.
+
 ### M5 — accepted live31AR page; human Recovery cue ready, November 15
 
 Accepted M1 4a57360: actual HTTP200 body15264/0dd56773…aa623ed4 equals the
