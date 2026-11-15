@@ -1,0 +1,60 @@
+{
+  "actual_live_mount_run": false,
+  "actual_native_controller_run": false,
+  "actual_page_checks": 3,
+  "actual_server_run": false,
+  "actual_stage_run": false,
+  "actual_workspace_copy_integration": true,
+  "binary_delivery_verified": true,
+  "boot_settings_changed": false,
+  "clean_source_export": {
+    "binary_delivery_verified": false,
+    "exact_output_matches_production": true,
+    "page_checks_passed": 3,
+    "source_files": 162
+  },
+  "controller_run": false,
+  "native_ready": false,
+  "output": {
+    "install-paste.txt": {
+      "bytes": 5473,
+      "sha256": "3a6bb9387028f47a38e7e49e7a44ce0541e692f1922ee8e5cd0308e4f50936c1"
+    },
+    "install.html": {
+      "bytes": 8371,
+      "sha256": "b02b10281d39d8fe780b24bd455bdd648f219d7600aa5048bcc25087a4106d8b"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "27e265da1fac084db457f084dcd8f52b63e5daa1629575a13de64d68f24b4ecc"
+    },
+    "recovery.html": {
+      "bytes": 15264,
+      "sha256": "0dd56773d0551b1e226a5cec3c2d88acb07c7b6e9e51a036c47f9049aa623ed4"
+    },
+    "restore-paste.txt": {
+      "bytes": 5059,
+      "sha256": "606eacffa2d6b0789fd8fae16ca3967427c4c7aed2a1605620e6363d176b3289"
+    },
+    "restore.html": {
+      "bytes": 7904,
+      "sha256": "06ba6bb74fdce6ed7ed5e47fa2cd77a2a848c8230e05348e8912d842b5bca4e6"
+    }
+  },
+  "package_test_methods": 15,
+  "package_tests_passed": 15,
+  "package_tests_skipped": 0,
+  "private_helper_profile_transfer_bytes": 125991,
+  "profile_sha256": "27e265da1fac084db457f084dcd8f52b63e5daa1629575a13de64d68f24b4ecc",
+  "publication_authorizes_execution": false,
+  "recovery_run": false,
+  "renderer_test_methods": 8,
+  "renderer_tests_passed": 8,
+  "retained_source_count": 143,
+  "schema": "ilinux31ar-preparation-v1",
+  "source_inventory_sha256": "9ff372bba278c053a639b5b158fbc907fe17def5f7ef87142fa2daf3147d80fc",
+  "stage_run": false,
+  "status": "OFFLINE_PREPARATION_PASS",
+  "test_code_unchanged_after_final_docs_only_update": true,
+  "verified_source_count": 162
+}

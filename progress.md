@@ -1,5 +1,32 @@
 # Progress Log
 
+### M5 — full 31AR controller, rollback and package implemented, November 15
+
+Built the native controller around the preserved qualified collector. It
+admits exact initial 31AF, persists a fresh key/baseline/profile and stable target
+commitment, verifies owned RO release and RW acquisition, durably spends each
+writer, collects readback after failures, and requires exact postconditions and
+known cleanup. Independent restoration conditionally prepares lab CTRR and
+restores exact boot021 without the candidate. No Original policy writer exists.
+
+25 full-controller integration methods pass normally and with ASan/UBSan;
+independent normal 25 pass. Five Terminal/source-grammar controls and independent
+repeat pass. The new package/renderer passes 15+8 methods with zero skips,
+including an actual workspace four-file copy and clean-source page reproduction.
+Production helper is 125,168 bytes, SHA-256
+1008f610f03b979043787bfa67aa850aed4c5e6bc73416579e80f0aafe0a842a.
+The helper/profile-only transfer is 125,991 bytes. No large image rebuild.
+
+Read-only host metadata qualified the stable APFS container field and the
+existing root-owned lab var/db anchor; no identifiers or policy values returned.
+The shared M5 source review found usable newer Aura/Linux, CPU interrupt, J716c
+GPU and N1 work, with board/firmware limits documented. No third-party code ran.
+
+Next: M1 reviews the new handoff, then exact delivery/staging and the later
+physical cue. Actual Recovery/RW/install/restore/new-route Linux/SMP/performance
+remain NOT RUN; boot021 restoration remains OUTSTANDING. macOS/default/security
+settings were not changed by this work.
+
 ### M5 — successful31AP review and full keyed helper implemented, November 15
 
 RealRecovery collection/admission and owned read-only mount cleanup passed in

@@ -1,0 +1,32 @@
+{
+  "files": {
+    "candidate.macho": {
+      "bytes": 153190400,
+      "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+    },
+    "ilinux31aj-reader": {
+      "bytes": 125168,
+      "sha256": "1008f610f03b979043787bfa67aa850aed4c5e6bc73416579e80f0aafe0a842a"
+    },
+    "m1n1-boot021.bin": {
+      "bytes": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "profile.json": {
+      "bytes": 823,
+      "sha256": "27e265da1fac084db457f084dcd8f52b63e5daa1629575a13de64d68f24b4ecc"
+    }
+  },
+  "native_ready": false,
+  "new_private_delivery": [
+    "ilinux31aj-reader",
+    "profile.json"
+  ],
+  "new_private_delivery_bytes": 125991,
+  "publication_contains_compiled_binary": false,
+  "retained_artifacts": [
+    "candidate.macho",
+    "m1n1-boot021.bin"
+  ],
+  "schema": "ilinux31ar-delivery-v1"
+}

@@ -1,5 +1,27 @@
 # Coordination: agents working in this workspace
 
+### M5 — 31AR full transaction and M1 review handoff, November 15
+
+Root coordinated separate native-controller, package and independent-review
+work. New files are tools/boot-object31ar-native/, tools/recovery31ar/ and the
+31AR M1 handoff; all earlier source/state/receipts and unrelated work are intact.
+Native owner reports 25 normal + same 25 ASan/UBSan passes and five Terminal/
+source-grammar controls; independent native/Terminal repeats pass. Package owner
+reports 15 package + eight renderer passes, zero skips, real workspace-only copy
+and byte-exact clean-source preparation. See new verification receipts.
+
+M1 now follows tools/m1n1-client/attempt31ar-instructions.md for OFFLINE REVIEW
+ONLY. Reuse retained candidate/boot021 and old test evidence. The optional small
+helper/profile transfer is 125,991 bytes; a source-only page review does not
+claim binary delivery. No M1 restart, USB proxy, server, Recovery or live command
+is requested yet. M5 owns later staging/authorization and the physical cue.
+
+Only a complete controller INSTALL_COMPLETE plus shell success and known
+cleanup admits the later single boot; a safe-display pass alone does not.
+Independent restore needs no candidate and must verify boot021 and cleanup,
+followed by separate Macintosh HD default return. Boot021 is still OUTSTANDING.
+No host settings or boot object changed this turn; no repeated policy probe.
+
 ### M5 — after31AP, full transaction component review without physical action, November 15
 
 459161d physicaladmission/ROcleanup PASS accepted; Original desktop/default human

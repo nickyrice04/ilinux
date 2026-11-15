@@ -1,5 +1,23 @@
 # Blockers
 
+### Current — 31AR implementation complete; physical qualification pending, November 15
+
+The missing transaction controller is implemented and tested offline. It now
+owns Preboot RO-to-RW transitions, durable private state/markers, stable target
+binding, fixed lab writes, readback and independent boot021 rollback. This
+clears a software-preparation blocker, not a firmware, native SMP or performance
+qualification. See native/boot/attempt31ar-verification.json and the M1 handoff.
+
+Remaining before a restart cue: M1 review, exact new helper/profile delivery,
+new lab kit staging, independently accessible install/restore pages and the
+separate physical scope. Actual APFS RW behavior and Apple writes remain
+unobserved for 31AR. Boot021 restoration is OUTSTANDING. Preserve all existing
+state on any refusal; no retry, forced mount or relaxation of Original Full.
+
+Public shared T6050/J716c code provides further software leads; there is no
+new evidence here establishing an Apple-only hard stop. The J714s report uses
+newer firmware and cannot qualify our 26.6.2/25G83 lab or its eighteen cores.
+
 ### M5 — admission gate cleared; managed write transaction is the next software work, November 15
 
 31AP actual initial-admission/ROcleanup PASS and Originalreturn confirmed.

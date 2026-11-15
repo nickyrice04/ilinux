@@ -1,5 +1,28 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — complete 31AR transaction prepared offline, November 15
+
+31AR implements the native transaction controller, durable private state,
+owned RO-to-RW Preboot lifecycle, exact post-write readback and independent
+boot021 rollback. It retains the qualified parser/phase predicates and all
+143 earlier source pins. The original matched candidate and boot021 are unchanged.
+New state is lab Data private/var/db/ilinux31ar-state; the existing root-owned
+parent was qualified read-only. No old state or existing directory is repaired.
+
+25 full-controller methods pass normally and under ASan/UBSan; independent
+25-method normal review passes. Five Terminal/source-grammar controls and their
+independent repeat pass. Package/renderer 15+8 pass, including real workspace-only
+copy and clean-source page preparation. Final receipts and M1 handoff are in
+native/boot/attempt31ar-package/ and tools/m1n1-client/attempt31ar-instructions.md.
+
+M1 reviews offline first. No new staging, server, Recovery, mount, policy,
+Startup Disk, installation or native boot occurred here; Original Full is
+unchanged and boot021 restoration remains OUTSTANDING. Do not restart from an
+offline pass alone. Exact delivery/staging, independent restore accessibility
+and the later physical cue remain separate. New shared M5 source leads are in
+research/attempt31ar-shared-m5-code-2026-11-15.md; its J714s image is not admitted
+for this J716c. Current local 26.6.2/25G83 is not the reported newer firmware.
+
 ### Latest M5 — 31AP real pass reviewed; next full transaction backend tested, November 15
 
 Reviewed459161d: real collection/initial-admission/ownedROcleanup PASS, source-

@@ -15,17 +15,15 @@ new Linux entry, CPU count, GPU support or performance measurement. Boot021
 restoration is still outstanding; another read-only parser-only visit is not
 the next engineering objective.
 
-1. **Finish a complete one-shot native RAM-boot transaction offline.** Reuse the
-   matched Aura/kernel/DT/root candidate already built, and the typed full
-   transaction helper now implemented under `tools/boot-object31aq-native/`.
-   Its 18 normal/sanitized/independently reviewed fixture methods pass with
-   real original31AF, candidate and boot021 identities, fresh private keys and
-   v3 metadata comparisons. It is a component, not a staged or executable boot
-   procedure. Implement the missing owned RO-to-RW Preboot session, durable
-   private baseline/attempt markers, exact post-write readback and cleanup
-   before assembling the install and independent rollback pages. The
-   [lifecycle design](research/attempt31aq-preboot-lifecycle-2026-11-15.md)
-   records the precise boundary. No current host change is authorized by it.
+1. **Complete review and delivery of the new 31AR transaction.** The original
+   controller under `tools/boot-object31ar-native/` now implements the owned
+   RO-to-RW Preboot session, durable private baseline and spent markers,
+   cross-visit target commitment, exact readback and owned cleanup. Separate
+   install and candidate-independent boot021 restore pages are under
+   `tools/recovery31ar/`. M1 follows the [new review handoff](tools/m1n1-client/attempt31ar-instructions.md).
+   Preserve the matched Aura/kernel/DT/root candidate and all old state.
+   Offline tests and source-profile page checks do not establish delivery,
+   staging, actual APFS transitions, Apple command behavior or restart readiness.
 2. **One separately authorized hardware test after that integration passes.**
    Install the lab-only candidate, verify it, observe one independently timed
    RAM-only Linux window and verify boot021 restoration/Original default return.
@@ -51,10 +49,19 @@ the next engineering objective.
    Move the main development agent into Linux once connectivity, persistence,
    interactive latency and recovery are reliable enough for daily work.
 
-No restart or installation is ready from the component tests. M1 can review
-the new helper/plan offline without another machine restart, old-suite rerun
-or large image transfer. The next native window should answer loader/kernel/
-multicore questions after the complete transaction controller is tested.
+No restart or installation is ready from offline tests alone. M1 can review
+31AR without another machine restart, an old-suite rerun or a large image
+transfer. Exact helper/profile delivery, lab staging and the independently
+accessible restore page must be confirmed before the later physical cue.
+
+The [shared M5 source review](research/attempt31ar-shared-m5-code-2026-11-15.md)
+identifies newer Aura/Linux descendants, J716c GPU interrupt support, per-core
+interrupt routing and N1 power-management fixes worth using for the subsequent
+performance build. The linked J714s installer is not admitted for this J716c.
+Its reported newer firmware stack does not establish compatibility with the
+current local 26.6.2/25G83 lab. The existing candidate remains useful for entry,
+concurrent workers and per-core FIQ timer checks; balanced device IRQ routing
+and a usable accelerated Omarchy desktop require separate validation.
 
 ## Historical direction —31H and heterogeneous CPU enablement, 2026-10-21
 

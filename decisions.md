@@ -1,5 +1,29 @@
 # Decisions Log
 
+### D-31AR — finish the controlled transaction before changing the candidate
+
+November 15, 2026. Implement a new native controller and one-paste install and
+independent boot021 restore pages, preserving the exact candidate and all old
+source/state. Keep one-shot markers durable before Apple writers, retain fresh
+readback on nonzero/interruption, and require exact postcondition plus owned
+cleanup. Use a new private lab var/db state directory: desktop metadata showed
+the earlier shared project parent is user-owned, while var/db is root-owned.
+Never repair an existing parent or move old state to satisfy admission.
+
+Retain the current image for the first entry/concurrent-worker/FIQ-timer smoke
+test. The newer shared Aura IRQ-routing change improves device IRQ distribution;
+it is not evidence that this diagnostic cannot run. Queue newer matched Aura/
+Linux and J716c GPU/N1 changes for a separate performance candidate, respecting
+exact board and loaded firmware. Do not run the J714s partitioning installer on
+this lab. Public implementation work is a concrete alternative to assuming an
+Apple-only barrier; it is not a local compatibility claim.
+
+The current authorization covers offline implementation/tests and M1 handoff.
+No host staging, mount, installation, Startup Disk or security action occurred.
+M1 review/delivery/staging and the later physical cue remain separate. The
+original macOS stays Full; boot021 restoration must be verified in the later
+transaction, and Macintosh HD default return is a separate observation.
+
 ### M5 — advance from admission to a controlled complete native test, November 15
 
 Accept459161d realRecovery pass without replay. Nextphysicalobjective is matched
