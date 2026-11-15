@@ -1,5 +1,21 @@
 # Progress Log
 
+### M1 — exact31AP source-profile page live; no transfer needed, November 15
+
+Pulledfe32254; accepted M5 owner-staged exact kit/default handoff without repeat.
+Reviewed3 adapter pins/code and M5 nine-method evidence;140 frozen sources exact.
+Actual SOURCE_PROFILE_PAGE_ONLY prep equals M5 receipt; all three hashes, single
+complete box and bash-n PASS. Original page validator PASS; live HTTP200 body
+8357/fff05169…ff466 equals exact reviewed31AP typed-policy page. Bounded1800s
+server; private URL/PID/session ignored. M1 binary delivery remains false; no
+kit consumed or helper substituted. Target's repeated helper/profile checks are
+unchanged. Prior delivery-pending review stays historical; page gate resolved.
+All96 prior files intact. No suites/builds/stage/camera/proxy/M1 restart. Human
+reports M5 off; page now ready for approved Options/Continue cue. Actual31AP
+Recovery/mount/cleanup/install/restore/Linux/SMP/performance NOT RUN; boot021
+OUTSTANDING. One conditional RO check then Original/default return, no retry.
+Evidence: native/boot/attempt31ap-m1-page-ready-2026-11-15.json.
+
 ### M5 — 31AP staging done; source-only page removes transfer dependency, November 15
 
 Reviewed M1a136914 PASS/no code findings. Noninteractive sudo required auth

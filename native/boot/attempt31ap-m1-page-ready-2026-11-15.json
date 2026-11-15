@@ -1,0 +1,71 @@
+{
+  "Linux": "NOT RUN",
+  "M1_restart": "NOT RUN",
+  "M5_power": "USER_REPORTED_OFF",
+  "SMP": "NOT RUN",
+  "USB_proxy": "NOT RUN",
+  "adapter_inventory_sha256": "62fad9235d127f9b436699976373bf250aae742c0be82def17291eceb523c378",
+  "adapter_pins": 3,
+  "all_three_output_hashes_match": true,
+  "bash_n": "PASS",
+  "binary_delivery_verified_on_M1": false,
+  "boot021_restoration": "OUTSTANDING",
+  "camera": "OFF",
+  "date": "2026-11-15",
+  "handoff_commit": "fe32254",
+  "http_equals_reviewed_file": true,
+  "http_status": 200,
+  "install": "NOT RUN",
+  "kit_consumed": false,
+  "live_Recovery": "NOT RUN",
+  "mode": "SOURCE_PROFILE_PAGE_ONLY",
+  "mount_cleanup": "NOT RUN",
+  "native_windows_used": 0,
+  "next": "M5 may use this page-readiness report for approved Options/Continue cue; one conditional read-only check then Original/default return, no lab boot/install/restore/Linux",
+  "old_suites_or_builds_repeated": false,
+  "page_bytes": 8357,
+  "page_sha256": "fff051694d5cecd389e9fcc26204189277c0c83ba66f619429acc631558ff466",
+  "performance": "NOT RUN",
+  "prior_evidence_files_verified_unchanged": 96,
+  "production_helper_executed_on_M1": false,
+  "restore": "NOT RUN",
+  "review_commit": "a136914",
+  "schema": "ilinux31ap-m1-page-readiness-v1",
+  "server_seconds": 1800,
+  "single_box_equals_complete_paste": true,
+  "source_adapter_review": "Three source pins PASS; code and M5 nine-method independent evidence reviewed; actual source-only prepare equals producer receipt",
+  "source_inventory_sha256": "1e10cb95acab08adc127a84425c459745681d6c126a441523ec58e630618edf4",
+  "source_only_receipt": {
+    "binary_delivery_verified_on_M1": false,
+    "boot_settings_changed": false,
+    "host_queried": false,
+    "kit_consumed": false,
+    "native_ready": false,
+    "output": {
+      "diagnose-paste.txt": {
+        "bytes": 5615,
+        "sha256": "d9a47b93fc65ac78aa7a2b0e662bb6f2ce568584c74cf07575735f6247631bd7"
+      },
+      "profile.json": {
+        "bytes": 823,
+        "sha256": "c64b596fd0d2e7003098eda79fa3a7f9841e13de79d2ce430d2b49f15d2bc747"
+      },
+      "recovery.html": {
+        "bytes": 8357,
+        "sha256": "fff051694d5cecd389e9fcc26204189277c0c83ba66f619429acc631558ff466"
+      }
+    },
+    "publication_authorizes_execution": false,
+    "schema": "ilinux31ap-source-profile-page-v1",
+    "scope": "SOURCE_PROFILE_PAGE_ONLY",
+    "server_started": false,
+    "source_inventory_sha256": "1e10cb95acab08adc127a84425c459745681d6c126a441523ec58e630618edf4",
+    "staged": false,
+    "status": "OFFLINE_PREPARATION_PASS",
+    "verified_source_count": 140
+  },
+  "source_pins": 140,
+  "status": "EXACT_SOURCE_PROFILE_PAGE_LIVE",
+  "target_execution_gate": "Unchanged Recovery block checks actual staged helper/profile before copy and again before execution",
+  "target_staging": "M5 owner-supplied exact success accepted; no repeat or new M1 target query"
+}
