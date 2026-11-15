@@ -1,5 +1,23 @@
 # Blockers
 
+### M5 — desktop parser blocker resolved; qualify Recovery integration, November 15
+
+REA qualifies the formatter mismatch; original six-field/conjunction repair
+passes83 focused controls plus23 sanitizer controls. The complete new observer
+will expose only fixed catalog fields/counts/types and old/new real-C acceptance,
+including finite JSON failure stages. Actual policy output is never saved.
+Owner ran the complete31AO probe: both actual desktop captures pass the proposed
+C parser, old parsers reject, textunknown/malformed0 and freshbindingtrue.
+The actual declared correspondence is confirmed; no further desktop probe needed.
+
+Remaining gates are realRecovery pairing/environment/security/selected-object
+readability and stable rereads; desktop syntax cannot prove them.31AP must first
+pass true full collection/admission+cleanup fixtures using original31AF bytes
+inside entirely synthetic observed-shaped DER. Old31AM negative fixtures alone
+were insufficient positive evidence. JSONENVELOPE refusal is unqualified but
+not a text-collector blocker. No new Apple-only CPU-barrier evidence. Original
+Full unchanged; boot021 OUTSTANDING. No restart yet;31AP is offline work.
+
 ### M5 — current blocker is unsupported policy schema, November 14
 
 31AM removes the observed unmounted-Preboot prerequisite in that visit: owned

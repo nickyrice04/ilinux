@@ -1,5 +1,33 @@
 # Decisions Log
 
+### M5 — use formatter-qualified typed preservation and real desktop C validation, November 15
+
+31AN owner observation justifies investigating the whole format rather than
+adding guessed Boolean flags. Bounded REA/Ghidra+LLVM evidence now qualifies
+CEPO/SDOM hex64, CPRO/CSEC/lobo Boolean, love six uint32 components and the exact
+true smb0 && smb1 row. Support those declared forms only. Unknown/false-expression/
+unqualified absent data still refuses; no CPRO/CRPO normalization, generic group
+extension, arbitrary version text or JSON-prefix extraction.
+
+Store accepted additions in zeroed private Policy and tagged domain-separated
+v3 HMAC; preserve existing intended transitions and all unrelated guards. Prove
+source reversal, without claiming globally identical acceptance. Validate both
+complete desktop captures through the real pure C parser before another Recovery
+window. Keep host collector out of that executable and data off disk; verify
+the private exec-copy via held identities/modes/ACLs.83 tests plus same23 C
+sanitizer controls pass. Owner desktop validation subsequently PASSes both
+proposed parsers with zero unknown/malformed rows; old parsers reject.
+
+That real result qualifies31AP offline integration. Preserve31AM's physically
+successful mount/cleanup engine, CLI and outer validator byte-for-byte. Before
+a physical handoff, require complete positive31AF collection/admission fixtures
+matching the observed opaque-context framing, with original project payload and
+synthetic surrounding metadata. Do not change identity/core logic to fake a pass.
+
+No firmware/boot/volume/security change or native test is justified by offline
+success alone. Original Full unchanged; boot021 restoration remains outstanding.
+Next decisions follow actual31AO output and a separately concrete handoff.
+
 ### M5 — observe the actual schema before extending acceptance, November 14
 
 After M1 2a28915, retain the successful 31AM read-only Preboot engine. Repair

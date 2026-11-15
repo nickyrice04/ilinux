@@ -1,0 +1,115 @@
+{
+  "schema": "ilinux31an-owner-desktop-observation-v1",
+  "date": "2026-11-14",
+  "evidence_source": "Owner-pasted finite JSON from the reviewed read-only desktop probe; not an independent agent query",
+  "probe_commit": "2c0a1ee",
+  "probe_source_inventory": "native/boot/attempt31an/source-sha256.txt",
+  "report": {
+    "admission_verified": false,
+    "failed_stage": null,
+    "identifiers_returned": false,
+    "metadata_obtained": true,
+    "native_ready": false,
+    "parser_acceptance_changed": false,
+    "policy_values_returned": false,
+    "read_only": true,
+    "roles": {
+      "LAB": {
+        "capture": {
+          "bputil_exit": 0,
+          "failure_kind": null,
+          "failure_reason": null,
+          "stderr_complete": true,
+          "stderr_present": false,
+          "stdout_bytes": 2812,
+          "stdout_limit_exceeded": false
+        },
+        "json": {
+          "capture": {
+            "bputil_exit": 0,
+            "failure_kind": null,
+            "failure_reason": null,
+            "stderr_complete": true,
+            "stderr_present": false,
+            "stdout_bytes": 1826,
+            "stdout_limit_exceeded": false
+          },
+          "shape": null
+        },
+        "metadata": {
+          "classification_scope": "METADATA_ONLY_NOT_NATIVE_PARSER_ADMISSION",
+          "first_unsupported_candidate": {"class": "OTHER_TAG", "tag": "OTHER_TAG"},
+          "known_relevant_fields": {
+            "auxi": {"presence_classes": ["ABSENT"], "rows": 1, "syntax_classes": ["ABSENT"]},
+            "auxp": {"presence_classes": ["ABSENT"], "rows": 1, "syntax_classes": ["ABSENT"]},
+            "auxr": {"presence_classes": ["ABSENT"], "rows": 1, "syntax_classes": ["ABSENT"]},
+            "lobo": {"presence_classes": ["PRESENT"], "rows": 1, "syntax_classes": ["BOOLEAN"]},
+            "love": {"presence_classes": ["PRESENT"], "rows": 1, "syntax_classes": ["OPAQUE"]}
+          },
+          "malformed_tag_rows": 1,
+          "other_unknown_tag_rows": 4,
+          "supported_tag_rows": 21,
+          "unknown_tag_names_returned": false,
+          "unseen_relevant_fields": ["hrlp", "losv", "prot"],
+          "unsupported_counts": {"OTHER_TAG": 4, "PROTECTED_AUX_PRESENT": 0, "PUBLISHED_EXTRA_TAG": 2}
+        }
+      },
+      "ORIGINAL": {
+        "capture": {
+          "bputil_exit": 0,
+          "failure_kind": null,
+          "failure_reason": null,
+          "stderr_complete": true,
+          "stderr_present": false,
+          "stdout_bytes": 2724,
+          "stdout_limit_exceeded": false
+        },
+        "json": {
+          "capture": {
+            "bputil_exit": 0,
+            "failure_kind": null,
+            "failure_reason": null,
+            "stderr_complete": true,
+            "stderr_present": false,
+            "stdout_bytes": 1711,
+            "stdout_limit_exceeded": false
+          },
+          "shape": null
+        },
+        "metadata": {
+          "classification_scope": "METADATA_ONLY_NOT_NATIVE_PARSER_ADMISSION",
+          "first_unsupported_candidate": {"class": "OTHER_TAG", "tag": "OTHER_TAG"},
+          "known_relevant_fields": {
+            "auxi": {"presence_classes": ["ABSENT"], "rows": 1, "syntax_classes": ["ABSENT"]},
+            "auxp": {"presence_classes": ["ABSENT"], "rows": 1, "syntax_classes": ["ABSENT"]},
+            "auxr": {"presence_classes": ["ABSENT"], "rows": 1, "syntax_classes": ["ABSENT"]},
+            "lobo": {"presence_classes": ["PRESENT"], "rows": 1, "syntax_classes": ["BOOLEAN"]},
+            "love": {"presence_classes": ["PRESENT"], "rows": 1, "syntax_classes": ["OPAQUE"]}
+          },
+          "malformed_tag_rows": 0,
+          "other_unknown_tag_rows": 4,
+          "supported_tag_rows": 22,
+          "unknown_tag_names_returned": false,
+          "unseen_relevant_fields": ["hrlp", "losv", "prot"],
+          "unsupported_counts": {"OTHER_TAG": 4, "PROTECTED_AUX_PRESENT": 0, "PUBLISHED_EXTRA_TAG": 2}
+        }
+      }
+    },
+    "schema": "ilinux31an-policy-schema-observation-v1",
+    "scope": "MACOS_READ_ONLY_SCHEMA_OBSERVATION",
+    "settings_changed": false,
+    "target_consistency_rechecked": true,
+    "unknown_tag_names_returned": false
+  },
+  "interpretation": {
+    "desktop_schema_has_unsupported_candidates": true,
+    "actual_unknown_tag_names": "UNKNOWN; intentionally not returned",
+    "love_native_type": "UNQUALIFIED; OPAQUE syntax alone does not establish a type",
+    "json_capture_success_is_json_shape_success": false,
+    "lab_malformed_row_cause": "UNKNOWN",
+    "Recovery_schema_equivalence": "NOT ESTABLISHED",
+    "parser_repair_complete": false,
+    "new_native_window_ready": false,
+    "boot021_restoration": "OUTSTANDING"
+  }
+}

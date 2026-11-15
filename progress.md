@@ -1,5 +1,31 @@
 # Progress Log
 
+### M5 — 31AO formatter-derived parser repair implemented and tested, November 15
+
+Owner desktop31AN observation succeeded: both role bindings stable, four
+unknown tag rows each, love opaque/lobo Boolean, LAB malformed1. REA/Ghidra
+and independent LLVM qualify the missing TEXT formats and exact true security
+conjunction. Six typed metadata fields and that expression now have original
+handling; max4/unknown/protected/security/pairing guards retain their rules.
+Private whole-Policy and v3 tagged HMAC comparisons bind the additions.
+
+Built pure old/new syntax checker with clang21/SDK27.2 arm64/min13.0;35200
+bytes/b6fbafe3…6cc44.83 focused methods PASS and same23 compiled-C methods
+ASan/UBSan PASS. Typed bounds, semantic/conjunction refusal, metadata mutations,
+source reversal, finite privacy, exec-copy/ACL/cleanup and fresh-target checks
+covered. Old suites not rerun. REA smoke5 PASS; dispatcher truncation explicitly
+limits JSON conclusions. No proprietary bytes/decompiler output published.
+
+Owner completed the complete desktop check after local authentication: both
+proposed C parsers accept, old parsers reject, zero unknown/malformed text rows,
+all six typed extras and LAB conjunction observed, fresh identity binding true.
+JSONenvelope refusal remains separate and does not block text-based collection.
+Safe result: native/boot/attempt31ao/desktop-result-2026-11-15.json.
+Now integrating31AP read-only Recovery companion offline, requiring complete
+positive original31AF identity/admission+cleanup fixtures with unchanged engine.
+No host action; Original Full unchanged, prior desktop/default human-confirmed,
+boot021 OUTSTANDING. No kit staged or native/Linux/SMP/performance test.
+
 ### M5 — 31AM mount fix verified; redacted desktop probe implemented, November 14
 
 Reviewed 2a28915: one owned RO Preboot mount and cleanup passed, followed by

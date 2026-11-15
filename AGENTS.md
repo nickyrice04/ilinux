@@ -1,5 +1,34 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### Latest M5 — 31AO repair passes both real desktop policies, November 15
+
+Owner31AN output obtained both roles/fresh binding: four unknown tag rows each,
+lobo Boolean/love opaque, aux fields absent; LAB malformed1, JSON shapes null.
+No values/identifiers returned. Frozen result is in native/boot/attempt31an/.
+REA/Ghidra+LLVM qualify the TEXT30 catalog, six missing typed fields and exact
+true smb0 && smb1 expression. No >4 group extension, arbitrary version string,
+CPRO/CRPO alias or JSON-prefix stripping is justified. Full findings are in
+reverse-engineering/findings/policy31ao/README.md; raw Apple analysis stays ignored.
+
+New original generator/metadata code retains all111 inputs, proves reversal,
+and stores extras in private Policy plus taggedv3 HMAC. Pure old/new C desktop
+checker and complete finite observer implemented.83 unique methods PASS
+(25 schema/23 C/28 wrapper/7 ACL), same23 C ASan/UBSan PASS; independent review
+resolved absent-value, exec-binding, duplicate-JSON and cleanup issues. Own
+binary-only workspace scratch uses held identities/modes/no-ACL checks; no raw
+policy data is saved. No host collector is compiled into the syntax executable.
+
+After sudo stopped before execution, the owner ran the check: both proposed
+C parsers accept, both old parsers reject at line50, text unknown/malformed0,
+LAB true conjunction1, all six extras single/typed, fresh target binding true.
+Safe derived record: native/boot/attempt31ao/desktop-result-2026-11-15.json.
+JSON still refuses ENVELOPE/OBJECT_OR_ARRAY_REQUIRED; not used by text collector.
+31AP read-only Recovery integration/positive full-admission fixtures now in
+progress. M1 reviews31AO offline;31AP has a separate forthcoming handoff.
+No restart/Recovery/kit stage/boot/security action; Original Full unchanged,
+desktop/default human-confirmed, boot021 restoration OUTSTANDING. Native/Linux/
+SMP/performance NOT RUN. Evidence: native/boot/attempt31ao/.
+
 ### Latest M5 — 31AM deployment blocker isolated; desktop observation pending, November 14
 
 Reviewed M1 2a28915: conditional RO Preboot mount/verification/cleanup passed;

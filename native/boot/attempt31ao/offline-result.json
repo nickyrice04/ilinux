@@ -1,0 +1,97 @@
+{
+  "Linux": "NOT RUN",
+  "Original_Full": "REQUIRED_INVARIANT; no new mode check or setting change",
+  "Original_desktop_default": "HUMAN_CONFIRMED_IN_31AM_RESULT",
+  "REA_evidence": "reverse-engineering/findings/policy31ao/README.md",
+  "Recovery_admission": "NOT RUN",
+  "SMP": "NOT RUN",
+  "acceptance_extension": "SIX_TYPED_TEXT_FIELDS_AND_EXACT_TRUE_SMB0_AND_SMB1_EXPRESSION",
+  "base_commit": "2c0a1ee",
+  "boot021_restoration": "OUTSTANDING",
+  "boot_object_installed": false,
+  "date": "2026-11-15",
+  "work_started": "2026-11-14",
+  "guard_preservation": {
+    "acceptance_extension": "FINITE_EXTRA_CATALOG_AND_TRUE_SMB_CONJUNCTION",
+    "base_observation_proof": {
+      "core_json_reader_byte_identical": true,
+      "frozen_sources": {
+        "core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+        "json.c": "a06a21280546f02c3ec330b346b95c9a55872e3712198f18bdee7e8e9bdb240f",
+        "reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+        "state.c": "31e97a75f1fe5dbd1dfe3585a15822c56ee86156d2a3cc52c39e304f1dd4d08a"
+      },
+      "state_marks_strip_exact": true
+    },
+    "comparison_extension": "PRIVATE_STRUCT_AND_TAGGED_V3_HMAC",
+    "extension_reverses_to_frozen_observed_source": true,
+    "native_ready": false,
+    "reader_header_unchanged": true,
+    "stripped_reversed_source_equals_original": true
+  },
+  "identifiers_returned": false,
+  "native_entry": "NOT RUN",
+  "native_ready": false,
+  "new_Recovery_collector_built": false,
+  "new_kit_staged": false,
+  "new_owner_desktop_check": "PASS_OWNER_REPORTED; both proposed parsers accept, old parsers reject",
+  "owner_desktop_result": "native/boot/attempt31ao/desktop-result-2026-11-15.json",
+  "next": "Integrate the validated repair into the read-only Recovery companion and test offline before M1 review",
+  "noninteractive_live_attempt": "SUDO_PASSWORD_REQUIRED_BEFORE_SCRIPT_EXECUTION",
+  "other_tag_group_limit": 4,
+  "owner_desktop_observation": "native/boot/attempt31an/desktop-result-2026-11-14.json",
+  "performance": "NOT RUN",
+  "policy_values_returned": false,
+  "private_preservation": "WHOLE_POLICY_REREAD_AND_TAGGED_V3_METADATA_HMAC",
+  "pure_desktop_binary": {
+    "Recovery_collector_built": false,
+    "abi": "arm64",
+    "binary_bytes": 35200,
+    "binary_sha256": "b6fbafe3c863416a1d2f442f00fa33753d50089830e6822e86a04657f826cc44",
+    "compiler": "Apple clang version 21.0.0 (clang-2100.4.1.1)",
+    "contains_host_capture_api": false,
+    "minimum_macos": "13.0",
+    "sdk": "27.2"
+  },
+  "sanitized_binary": {
+    "binary_bytes": 100176,
+    "binary_sha256": "0e99d4327200e3ae596afe3bb3119ed965932adbf87c9f427680f328e5f3fd5a",
+    "sanitized": true
+  },
+  "schema": "ilinux31ao-offline-policy-repair-v1",
+  "settings_changed": false,
+  "tests": {
+    "REA_original_smoke": {
+      "cases": 5,
+      "result": "PASS"
+    },
+    "compiled_native": {
+      "independent_source_review": "PASS",
+      "methods": 23,
+      "normal": "PASS",
+      "same_methods_ASan_UBSan": "PASS"
+    },
+    "descriptor_ACL": {
+      "methods": 7,
+      "result": "PASS",
+      "scope": "OWN_SYNTHETIC_WORKSPACE_FILES_ONLY"
+    },
+    "distinct_methods": 83,
+    "old_suites_repeated": false,
+    "python": "3.9.6",
+    "schema": {
+      "independent_audit": "PASS",
+      "methods": 25,
+      "result": "PASS"
+    },
+    "scope": "SYNTHETIC_MOCKED_ORIGINAL_CODE_AND_WORKSPACE_FILES",
+    "wrapper": {
+      "independent_audit": "PASS",
+      "methods": 28,
+      "result": "PASS"
+    }
+  },
+  "unknown_tags_still_refuse": true,
+  "unqualified_extra_absent_values_refuse": true,
+  "workspace_scratch": "VERIFIED_ORIGINAL_EXECUTABLE_ONLY; no live policy data saved"
+}

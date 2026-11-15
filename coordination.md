@@ -1,5 +1,30 @@
 # Coordination: agents working in this workspace
 
+### M5 — 31AO code complete; M1 offline review and owner desktop check, November 15
+
+31AN owner result supersedes prior pending-observation status; safe JSON frozen
+under native/boot/attempt31an/. REA session qualified the generic formatter in
+the existing no-network VM, restored its job/stopped it and released both quiet
+locks. No downloaded code ran on host. Findings, not Apple bytes/output, are public.
+
+Root owns the six-field/conjunction reader extension,
+pure desktop checker, wrapper and handoff. Schema25, native23 plus same23
+sanitized, wrapper28 and ACL7 PASS; independent audits addressed found issues.
+Old111 sources and31AN three pins unchanged; new14 sources are frozen in
+native/boot/attempt31ao/source-sha256.txt. No old state or unrelated work touched.
+
+M1: tools/m1n1-client/attempt31ao-instructions.md, offline only. Do not start
+pages/camera/proxy, reboot, stage, retry Recovery, install/restore or substitute
+your compiler output for M5's runtime pin. Owner then completed the desktop
+check: both proposed C parsers PASS, old parsers reject, textunknown/malformed0,
+fresh target binding true. Safe derived result is in native/boot/attempt31ao/.
+New ownership: analysis agent tools/boot-object31ap-native only; probe agent
+tools/recovery31ap only; auditor reviews remaining collection/admission scope.
+Root owns shared status/handoff/evidence. All work offline,125 retained inputs.
+31AP requires real complete31AF fixture admission+cleanup PASS, not a forged
+validator-pass control. No new physical window yet. Original Full unchanged;
+boot021 OUTSTANDING.
+
 ### M5 — 31AN owner split and no-reboot handoff, November 14
 
 M5 accepted 2a28915 and owns the policy-schema observation and evidence-based
