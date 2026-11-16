@@ -1,0 +1,149 @@
+{
+  "M1_or_M5_restart": "NOT RUN",
+  "actionable_source_findings": [],
+  "date": "2026-11-15",
+  "environment": {
+    "architecture": "arm64",
+    "build_version": "25A362",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "libcompression_implementation_separately_qualified": false,
+    "minimum_macos": "13.0",
+    "optimization": "-O2",
+    "product_version": "26.0.1",
+    "python": "3.9.6",
+    "sdk": "26.0"
+  },
+  "future_policy_phase_review": {
+    "boot021_payload_and_authorized_lab_behavior_restore_distinct_from_old_policy_bytes": true,
+    "current_31AW_implements_or_authorizes_reconstruction": false,
+    "exact_known_lab_change_allowlist_and_supported_reissuance_required": true,
+    "fault_injected_state_machine_and_independent_review_before_new_owner_decision": true,
+    "new_lab_baseline_after_transition_required": true,
+    "old_AU_restore_not_valid_for_reissued_lab_metadata": true,
+    "pre_reset_Original_private_semantic_Full_baseline_required": true,
+    "rescue_must_exist_before_post_reset_readback_or_baseline_acceptance": true
+  },
+  "host_OS_firmware_security_volume_default_setting_changes": "NOT RUN",
+  "key_runtime_controls": {
+    "Original_identity_private_semantic_target_owner_namespace_durability_cleanup_guards": "PASS",
+    "canonical_minus_one_prewriter_refusal_display": "PASS",
+    "codec_capability_failure_before_install_target_mount_state_writer": "PASS",
+    "exact_compressed_candidate_with_disabled_ctrr_still_refused": "PASS",
+    "failed_codec_missing_candidate_unrecognized_compressed_selection_still_guardedly_restores_raw_boot021": "PASS",
+    "former_valid_1MiB_stream_counterexample_decodes_but_unknown_identity_not_admitted": "PASS",
+    "genuine_compressed_candidate_exact_and_damaged_carrier_refusal": "PASS",
+    "malformed_negative_numeric_tokens_and_negative_unsigned_profiles": "REFUSED_AS_EXPECTED",
+    "prior_AU_AR_spent_state_sentinels": "UNCHANGED"
+  },
+  "live_controller_private_state_selected_object_policy_mount_writer_SEP_call": "NOT RUN",
+  "memory_contract": {
+    "Recovery_peak_or_runtime_qualification": "NOT RUN",
+    "candidate_output_allocation_bytes": 153190401,
+    "library_scratch_additional": true,
+    "maximum_decoded_output_allocation_bytes": 167772161
+  },
+  "method_accounting": "52 unchanged published controller methods per mode; all genuine inputs including optional retained legacy31AF supplied; no skip or path adaptation. Earlier AV review is reused with its explicit 11-plus-equivalent counts, not recounted as full suite.",
+  "native_Linux_live_target_version_SMP_GPU_performance": "NOT RUN",
+  "native_ready": false,
+  "next_offline_change": "Implement and fault-test a separate policy-reconstruction phase with pre-reset Original invariants, explicit lab reissuance allowlist, new lab baseline and rescue that works even before post-reset readback/admission. Keep exact candidate, enabled CTRR and independent boot021 guards. Qualify actual Recovery codec/runtime before proposing another writer; do not repeat AU or infer restart authorization from this review.",
+  "preservation": {
+    "fresh_fixture_cases_and_two_carriers_per_mode_cleaned": true,
+    "old_keys_baselines_consumed_receipts_modified_or_rearmed": false,
+    "prior_files_verified_unchanged": 336
+  },
+  "research_review": {
+    "Aura_guide_installer_and_board_source_claims": "M5 pinned-source summary reviewed, not fetched/reproduced by M1; per-unit DROM not copied",
+    "M1_range_inventory_arithmetic": "PASS; not original byte/LLVM/REA reproduction",
+    "M1_raw_REA_LLVM_kernel_SEP_analysis": "NOT RUN",
+    "M5_receiver_trace": "Attributed static evidence: 1226 words over ten ranges and three REA queries; generic host forwarding to sep-endpoint,pnon",
+    "SEP_policy_semantics": "UNKNOWN",
+    "actual_Recovery_or_SEP_identity": "UNQUALIFIED",
+    "bputil_executable_invoked": false,
+    "local_generic_bputil_manual_sha256": "dacc771e3c49f0ec86feb582ba64e23b0e71c4ee49b1da647ec7f0f77d0a5a1b",
+    "local_manual_matches_M5": true,
+    "manual_read_as_data_only": true,
+    "reconstruction_enables_ctrr_on_actual_target": "HYPOTHESIS_NOT_TESTED",
+    "whole_policy_reconstruction_distinct_from_enable_only": "CONFIRMED_DOCUMENTARY_DISTINCTION"
+  },
+  "reviewed_commit": "cc1a005069663a372629783360e45aa18b5512a2",
+  "runs": [
+    {
+      "binary_bytes": 125824,
+      "binary_sha256": "9075ab8b43a9d31d2f9265e5b744407cb6fed9b6c6c0734577334fa0a004681c",
+      "capability": {
+        "attempted": true,
+        "host_queries": false,
+        "native_ready": false,
+        "negative_refused": true,
+        "passed": true,
+        "positive_exact": true,
+        "read_only": true,
+        "reason": "PASS",
+        "schema": "ilinux31aw-codec-capability-v1"
+      },
+      "compiled_source_hashes_match_M5": true,
+      "elapsed_seconds": 36.014,
+      "exit": 0,
+      "methods": 52,
+      "mode": "normal",
+      "pass": true,
+      "skips": 0,
+      "unittest_seconds": 35.794
+    },
+    {
+      "binary_bytes": 451824,
+      "binary_sha256": "49127bd7768b2e5a5861a62f9a2170a61fc450c3bcb2b922696e6bfceaf586ab",
+      "capability": {
+        "attempted": true,
+        "host_queries": false,
+        "native_ready": false,
+        "negative_refused": true,
+        "passed": true,
+        "positive_exact": true,
+        "read_only": true,
+        "reason": "PASS",
+        "schema": "ilinux31aw-codec-capability-v1"
+      },
+      "compiled_source_hashes_match_M5": true,
+      "elapsed_seconds": 44.092,
+      "exit": 0,
+      "methods": 52,
+      "mode": "sanitized",
+      "pass": true,
+      "skips": 0,
+      "unittest_seconds": 43.88
+    }
+  ],
+  "schema": "ilinux31aw-m1-offline-review-v1",
+  "server_proxy_staging_kit_or_Recovery_page": "NOT RUN",
+  "source_binding": {
+    "all_compiled_source_hashes_equal_M5": true,
+    "compiled_sources_per_build": 11,
+    "frozen_AU_pins_verified": 190,
+    "frozen_sources_or_delivered_tests_changed": false,
+    "generated_state_profile_parser_buffer_changes_reverse_exactly": true,
+    "namespace_normalized_fixed_safety_bodies_equal": 26,
+    "new_pin_count": 14,
+    "new_source_pins": {
+      "native/boot/attempt31aw-plan.md": "9a7b35021873789115b6e0883662e3b3d85d6b54a161b90738c3411e86792b36",
+      "research/attempt31aw-ctrr-2026-11-15.json": "85250e68627065935a0313c39cba08ec5ff5050850cd340d12885ad197d62105",
+      "research/attempt31aw-ctrr-2026-11-15.md": "89c30e9c006d3ae7c92aaaa5138d4a941105238285ce48bbd6d59d08f0de7cf4",
+      "research/attempt31aw-public-contract-2026-11-15.json": "5dcc255332f5efaee978ea08c3b5d192d3820a1d58e996df4301302a3d119c8a",
+      "research/attempt31aw-public-contract-2026-11-15.md": "414d227830adf47b42b300c059a12aa79c825108fc9475ced6b34c853aad26d2",
+      "tools/boot-object31aw-native/README.md": "4b5c8dc36a5696a3f7de7d7c2b4154cda652ba99a23b78542fd0d250754e09a4",
+      "tools/boot-object31aw-native/build.py": "bd7890bd79881f3d4020846a9b2add9d6c0d6d0e17f91626ed32b879cbe38755",
+      "tools/boot-object31aw-native/codec.c": "eee91ff4ec9b7b2ba94cc092ead30d4f247a98b2fae1f261a9f89ffafb9ca326",
+      "tools/boot-object31aw-native/codec.h": "4097f1ea7f51ba988c090a49ac0501f27354650d593d0da6f96bf21f80032f23",
+      "tools/boot-object31aw-native/controller.c": "7d0393da0ef8c76cb2b47f4a96cdaa670ebc0898d71dd7b63f5de688269bbf5a",
+      "tools/boot-object31aw-native/generate.py": "4d4a424ce1b4078c2945104d90ea8067f26b47df400cc6d5813c3566c9a54a9d",
+      "tools/boot-object31aw-native/read_diagnostics.h": "2f1e6840aa96adbceb0a935344f5a59bc72fb378799eb2b637cdd12d1af63cab",
+      "tools/boot-object31aw-native/test_native.py": "1344c5cb1449413a3a1b974016e8e207487346cf3ad714c23670800d8f57fda7",
+      "tools/m1n1-client/attempt31aw-instructions.md": "dbd43f3393c7f61ee9fdba1db4beeb1b2838862d26eb8323632ec0f08a442c21"
+    },
+    "prior_AV_pins_verified": 10,
+    "qualified_retained_sources_per_build": 143,
+    "state_sha256": "9181701efb1a7fc920b2804582d175c3ee9bafd2f758e9cbcf6044630c44d218",
+    "transaction_exact_after_capability_block_reversal": true
+  },
+  "status": "OFFLINE_INTEGRATION_PASS_NATIVE_HOLD"
+}

@@ -1,5 +1,27 @@
 # Coordination: agents working in this workspace
 
+### M1 — 31AW integrated controller review PASS; native hold, November 15
+
+Reviewed cc1a005: 14 new pins, 10 AV pins, 190 AU inputs and 336 prior evidence/
+closed receipts unchanged. Fresh normal 52/52 and ASan/UBSan 52/52 methods PASS,
+zero skips; all genuine inputs already held. Both standalone codec capability
+commands PASS. All 11 compiled-source hashes/state/candidate bindings match M5;
+143 qualified sources and 26 normalized safety bodies/reversals preserved.
+
+Failed codec blocks install before target/mount/state/writer; guarded raw restore
+still works with failed codec, no candidate and unknown compressed selection.
+Exact compressed candidate plus disabled CTRR still refuses. Canonical -1 display
+repair and negative unsigned-profile refusals PASS. No actionable source finding.
+
+Local Apple manual hash matches M5; read as data only. 1226-word/ten-range SEP
+trace and public source summaries attributed, not independently re-extracted.
+Recovery/SEP semantics and memory peak remain unqualified. Policy reconstruction
+needs a new state machine, pre-reset Original invariants, explicit lab changes,
+fresh baseline and rescue before failed post-reset readback/admission; not yet
+implemented/authorized. No restart/server/staging/live policy/security action.
+Native Linux/live version/SMP/GPU/performance NOT RUN. Evidence:
+native/boot/attempt31aw-m1-offline-2026-11-15.md and JSON.
+
 ### M5 — 31AW decoder integrated and tested; CTRR traced to SEP, November 15
 
 Accepted M1 32fc0b8 with exact 11 unchanged methods plus retained-candidate
