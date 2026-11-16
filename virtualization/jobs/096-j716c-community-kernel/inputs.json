@@ -1,0 +1,171 @@
+{
+  "files": [
+    {
+      "bytes": 54433956,
+      "name": "clang22-22.1.8-1-aarch64.pkg.tar.xz",
+      "role": "alarm_package",
+      "sha256": "eab48ef96980f795947f96767f2d313739015f31a12eb2d4f583368e9686d896",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/clang22-22.1.8-1-aarch64.pkg.tar.xz"
+    },
+    {
+      "bytes": 566,
+      "name": "clang22-22.1.8-1-aarch64.pkg.tar.xz.sig",
+      "role": "alarm_signature",
+      "sha256": "db42e59e58288dbd795ea96bf5afea204a74d6b48232b8b8967734108c75c6c5",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/clang22-22.1.8-1-aarch64.pkg.tar.xz.sig"
+    },
+    {
+      "bytes": 2850536,
+      "name": "compiler-rt22-22.1.8-1-aarch64.pkg.tar.xz",
+      "role": "alarm_package",
+      "sha256": "a34c83f335c85e5169e7a740f71953c6bc6bbad3ff47feaac48dbc1dbeb8b2d8",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/compiler-rt22-22.1.8-1-aarch64.pkg.tar.xz"
+    },
+    {
+      "bytes": 566,
+      "name": "compiler-rt22-22.1.8-1-aarch64.pkg.tar.xz.sig",
+      "role": "alarm_signature",
+      "sha256": "54695ad1b451364df2af6d137850c804558f99fccce9f5b90cadd6d93437ce2d",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/compiler-rt22-22.1.8-1-aarch64.pkg.tar.xz.sig"
+    },
+    {
+      "bytes": 1863844,
+      "name": "lld22-22.1.8-1-aarch64.pkg.tar.xz",
+      "role": "alarm_package",
+      "sha256": "dc2adecb7539926ca6211e429f0b2c6909f86d29911a534e475d1512907495c0",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/lld22-22.1.8-1-aarch64.pkg.tar.xz"
+    },
+    {
+      "bytes": 566,
+      "name": "lld22-22.1.8-1-aarch64.pkg.tar.xz.sig",
+      "role": "alarm_signature",
+      "sha256": "5577bd16dcf4457b5a67da69036f25e473bb2be9d99f733840b214a42b2443f0",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/lld22-22.1.8-1-aarch64.pkg.tar.xz.sig"
+    },
+    {
+      "bytes": 15433000,
+      "name": "llvm22-22.1.8-2-aarch64.pkg.tar.xz",
+      "role": "alarm_package",
+      "sha256": "eb44c118475667a2e98aa556195b7708a0b1be1b822b039291c611a4c8615fb4",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/llvm22-22.1.8-2-aarch64.pkg.tar.xz"
+    },
+    {
+      "bytes": 566,
+      "name": "llvm22-22.1.8-2-aarch64.pkg.tar.xz.sig",
+      "role": "alarm_signature",
+      "sha256": "0331929cfc78114a0c94d6fea78150b351de8db9461ad95df26a7bc1b077f2af",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/llvm22-22.1.8-2-aarch64.pkg.tar.xz.sig"
+    },
+    {
+      "bytes": 36827188,
+      "name": "llvm22-libs-22.1.8-2-aarch64.pkg.tar.xz",
+      "role": "alarm_package",
+      "sha256": "51b6415330b144a075e4f525fe8d82a8c8625e2e4368db50487ac76eb38ff1f3",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/llvm22-libs-22.1.8-2-aarch64.pkg.tar.xz"
+    },
+    {
+      "bytes": 566,
+      "name": "llvm22-libs-22.1.8-2-aarch64.pkg.tar.xz.sig",
+      "role": "alarm_signature",
+      "sha256": "d359ea0934a2df9d1c36d4862e5a6309837a8e29b13224027dfa269f0e9394c7",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/llvm22-libs-22.1.8-2-aarch64.pkg.tar.xz.sig"
+    },
+    {
+      "bytes": 1516884,
+      "name": "rust-bindgen-0.73.2-1-aarch64.pkg.tar.xz",
+      "role": "alarm_package",
+      "sha256": "c353e5151a706687e4ac86ff68c108623a6d3489704ce9c99de1eb8c99a5f637",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/rust-bindgen-0.73.2-1-aarch64.pkg.tar.xz"
+    },
+    {
+      "bytes": 566,
+      "name": "rust-bindgen-0.73.2-1-aarch64.pkg.tar.xz.sig",
+      "role": "alarm_signature",
+      "sha256": "952cb5dbb40f7d51ada2588ab161d51ec3d4fad0292d7a7181ce93c30a672907",
+      "url": "https://ca.us.mirror.archlinuxarm.org/aarch64/extra/rust-bindgen-0.73.2-1-aarch64.pkg.tar.xz.sig"
+    },
+    {
+      "bytes": 62155656,
+      "component": "rustc",
+      "name": "rustc-1.96.1-aarch64-unknown-linux-gnu.tar.xz",
+      "role": "rust_component",
+      "sha256": "4bc079af433c730af16aa90c96777985b86d40c4670670380160bd61626a577f",
+      "url": "https://static.rust-lang.org/dist/2026-06-30/rustc-1.96.1-aarch64-unknown-linux-gnu.tar.xz"
+    },
+    {
+      "bytes": 28458004,
+      "component": "rust-std",
+      "name": "rust-std-1.96.1-aarch64-unknown-linux-gnu.tar.xz",
+      "role": "rust_component",
+      "sha256": "24bd362ff484421cae8be8c4d326fde143a086782e59e21fc7f353a5d04cd630",
+      "url": "https://static.rust-lang.org/dist/2026-06-30/rust-std-1.96.1-aarch64-unknown-linux-gnu.tar.xz"
+    },
+    {
+      "bytes": 3868228,
+      "component": "rust-src",
+      "name": "rust-src-1.96.1.tar.xz",
+      "role": "rust_component",
+      "sha256": "b343b6553bc772225f6a2b5be5055017f29794dcf4e08020366b27a0a40fc1c2",
+      "url": "https://static.rust-lang.org/dist/2026-06-30/rust-src-1.96.1.tar.xz"
+    },
+    {
+      "bytes": 278439499,
+      "name": "linux-a59e709c7377.tar.gz",
+      "role": "linux_source",
+      "sha256": "27d65a805424c338efb2f66d2e217ac3d701f6330c27af0881f90c76d4ed0dbb",
+      "url": "https://codeload.github.com/cameroncooper/linux/tar.gz/a59e709c737777495c84541c6afb6c862bb79227"
+    },
+    {
+      "bytes": 330809,
+      "name": "kernel.config",
+      "role": "kernel_config",
+      "sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8",
+      "url": "https://raw.githubusercontent.com/cameroncooper/linux/5e11068a1c6d8fccb155bc6e0159cc16107e53ec/Documentation/arch/arm64/apple-j716c-bringup/kernel.config"
+    },
+    {
+      "bytes": 857570,
+      "name": "channel-rust-1.96.1.toml",
+      "role": "rust_manifest",
+      "sha256": "87eb76c53073e72b766083bed5530820694253b832a762d8385bda5759f03975",
+      "url": "https://static.rust-lang.org/dist/channel-rust-1.96.1.toml"
+    },
+    {
+      "bytes": 91,
+      "name": "channel-rust-1.96.1.toml.sha256",
+      "role": "rust_manifest_checksum",
+      "sha256": "221e9f5b196762dc5e34b757a19f614a829b094185f3a7762836eb5d88c3c515",
+      "url": "https://static.rust-lang.org/dist/channel-rust-1.96.1.toml.sha256"
+    },
+    {
+      "bytes": 801,
+      "name": "channel-rust-1.96.1.toml.asc",
+      "role": "rust_manifest_signature",
+      "sha256": "7be9ce20cf669387a4506a7de3e407f66c818ab7b732fb41f161ec0ec2c39318",
+      "url": "https://static.rust-lang.org/dist/channel-rust-1.96.1.toml.asc"
+    },
+    {
+      "bytes": 5326,
+      "name": "rust-key.gpg.ascii",
+      "role": "rust_public_key",
+      "sha256": "e54b09a439647e006b4831eec9785cbaaf3e07ab371c3a6ee6a68e1bdb9fbc6b",
+      "url": "https://static.rust-lang.org/rust-key.gpg.ascii"
+    }
+  ],
+  "kernel_commit": "a59e709c737777495c84541c6afb6c862bb79227",
+  "kernel_source_tree": "5960d8ab03fef0f87e91e84fe1a8d969173da8de",
+  "native_ready": false,
+  "publisher": {
+    "KBUILD_BUILD_HOST": "bringup",
+    "KBUILD_BUILD_USER": "j716c",
+    "KBUILD_BUILD_VERSION": 1,
+    "LLVM": "22.1.8",
+    "LOCALVERSION": "",
+    "Rust": "1.96.1 (31fca3adb 2026-06-26)",
+    "SOURCE_DATE_EPOCH": 1794338095,
+    "bindgen": "0.73.2",
+    "bindgen_binary_sha256": "77443c0d71ac7ff74e32cd64e1f06d38a55a4bc538058412e59e5e780907fd05",
+    "config_sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8"
+  },
+  "raw_upstream_dtb_private_and_nondeployable": true,
+  "schema": "ilinux096-matched-build-inputs-v1"
+}

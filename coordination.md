@@ -1,5 +1,24 @@
 # Coordination: agents working in this workspace
 
+### M5 — 31AY source builds complete; M1 offline review next, November 16
+
+Main accepts ee4f70c and freezes the new J716c manifest/plan/handoff. Kernel
+lane completed job 096: 548 s full build, 1,749 modules, 30 new controls PASS.
+Graphics lane completed job 097: both Aura variants, translator and full selected
+Mesa PASS; original 175/4 and test-only179/0 remain separate. Source/firmware
+lane qualified firmware layers, Apple public availability, blank/proxy Stage1
+and watchdog interfaces. Root 99 new lightweight checks PASS; independent review
+findings on output completeness/raw-DTB scope and package paths were fixed.
+All VM/quiet locks released; no further VM run or hardware cue is pending.
+
+M1 follows tools/m1n1-client/attempt31ay-instructions.md: source/receipt review,
+lightweight tests, actual held-artifact hashes only if available. No server,
+M1/M5 restart, stage, proxy, live policy or controller. Do not redownload large
+images or replay historical suites/state. Old 31AX/AW/AV/AU files are unchanged.
+Userland packaging, exact Lab firmware transition, partition-free RAM transport,
+physical guardian/manual rescue and a fresh owner-approved kit remain separate.
+Root remains owner of final integration/push; compiled files stay private/ignored.
+
 ### M1 — 31AX offline reset/rescue review PASS; deployment gates remain, November 15
 
 Reviewed a3bbd5e: 22 AX/14 AW/10 AV/190 AU pins and 386 prior evidence/closed

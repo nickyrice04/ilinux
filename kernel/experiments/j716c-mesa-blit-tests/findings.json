@@ -1,0 +1,132 @@
+{
+  "actual_native_gpu_readback_cause_verified": false,
+  "archive_sha256": "08b25bcc74b494066a9f9487c8cbe054371ace7fed582bcc4c7d8ba2b32739e8",
+  "author_reported_gpu_conversion_limitation_preserved": true,
+  "baseline": {
+    "asahi_fail": 4,
+    "asahi_pass": 175,
+    "compile_targets": 2356,
+    "failure_class": "UNCONDITIONAL_BLIT_ADVERTISEMENT_ASSERTION",
+    "full_json_retained_in_v1": false,
+    "skips": 0
+  },
+  "cpu_roundtrip_asserted_formats": 2,
+  "cpu_roundtrip_asserted_pixels": 64,
+  "derivative_test_sha256": "1c974a166a06f1996458a735886cf7c3ef50d33c18d319fac79aadbd4695db40",
+  "derivative_vm_result": "PASS_ATTRIBUTED_GRAPHICS_JOB_V3",
+  "finding": "EXACT_DRIVER_DELIBERATELY_ADVERTISES_DEFAULT_FOR_AGX3_BUT_TEST_REQUIRES_BLIT",
+  "full_glReadPixels_or_gpu_pixel_oracle": false,
+  "graphics_v3": {
+    "attribution": "Graphics job097 producer result and retained Meson logs; no new VM run by this agent",
+    "baseline_counts": {
+      "FAIL": 4,
+      "OK": 175
+    },
+    "baseline_registered": 179,
+    "derivative_counts": {
+      "OK": 179
+    },
+    "derivative_registered": 179,
+    "derivative_source_matches_own_generated_hash": true,
+    "native_gpu_tested": false,
+    "native_performance_measured": false,
+    "original_test_c_restored": "PRODUCER_REPORTED_AND_JOB_ENFORCED",
+    "own_four_copied_core_source_hashes_still_match": true,
+    "receipts": {
+      "blit-derivative-source.json": {
+        "bytes": 485,
+        "sha256": "cbd986cab0c8d1b2c15d6bcdc9136e85c814fb4208ea3578e105195297c18475"
+      },
+      "blit-derivative-testlog.json": {
+        "bytes": 816147,
+        "sha256": "99f6b9ae30a3d42821e90af38d7fee07ed14ce1ce25ac6a72b2fc2197b9050aa"
+      },
+      "blit-transform-tests.log": {
+        "bytes": 104,
+        "sha256": "e38e28587d85ab5e7516728eefe6b95880a1a02618e747f0ad6c36992885091a"
+      },
+      "mesa-testlog.json": {
+        "bytes": 816110,
+        "sha256": "b65380f96175ab2292c01d9e4f33ec64c685e6256536cc8f5f68bf726a056595"
+      },
+      "result.json": {
+        "bytes": 1743,
+        "sha256": "2ff6e00f1c00c3ec4710565e8a3f1c83f81d9553214be6ea49c39e4ce303c3c0"
+      }
+    },
+    "result_record": "build/j716c-community-graphics/build-v3/job/out/mesa/result.json",
+    "retained_testlog_counts_independently_read": {
+      "blit-derivative-testlog.json": {
+        "OK": 179
+      },
+      "mesa-testlog.json": {
+        "FAIL": 4,
+        "OK": 175
+      }
+    },
+    "shipping_archive_bytes": 73897453,
+    "shipping_archive_exported_before_derivative": true,
+    "shipping_archive_sha256": "1ea6478304790a3f6ed1d5fcce142904bdd6f02d8700109dc47630340a7ce6a2",
+    "shipping_driver_changed": false,
+    "source_record": "build/j716c-community-graphics/build-v3/job/out/mesa/blit-derivative-source.json",
+    "transform_control_skips": 0,
+    "transform_controls_pass": 6,
+    "unchanged_driver_matches_exact_source_hash": true
+  },
+  "host_third_party_execution": false,
+  "native_gpu_tested": false,
+  "native_performance_measured": false,
+  "original_transform_tests": 6,
+  "own_sources": {
+    "cpu_roundtrip.inc": "a562058092b73848b5fe04d8fb82b72711e063d39bfe01c498e8a96ab1f3954b",
+    "prepare_test.py": "2ec44b090e769870c443f800b1e68f9dacedaa10a0409dfd518e7573ec93c213",
+    "test-only.patch": "15bcaff0dbdd9cac9712403730196e42714ac39c1d77b270692cf99d609c9e65",
+    "test_prepare.py": "9594849af7500ab4e37197d661169a84d242c71f33349b1476889a38e483812b"
+  },
+  "proposal_scope": "TEST_ONLY_DERIVATIVE",
+  "restart_ready": false,
+  "rgba_bgra_alpha_padding_assertions_present": true,
+  "schema": "ilinux-j716c-mesa-blit-test-findings-v1",
+  "shipping_driver_changed": false,
+  "skip_or_force_capability": false,
+  "source_commit": "10161a78e60e4057257e116d404a92bd9b78bb3c",
+  "source_files_read_as_data": {
+    "src/gallium/auxiliary/util/u_inlines.h": {
+      "bytes": 30585,
+      "sha256": "2646f611e8f2666ab177f8f03d3d9e6f208891e1c72efae76aedb8df81302277"
+    },
+    "src/gallium/auxiliary/util/u_tile.c": {
+      "bytes": 11238,
+      "sha256": "be7eaf04012480d7f7245c1fc4290f0035c076ff1ffbb37129024e906b281442"
+    },
+    "src/gallium/auxiliary/util/u_tile.h": {
+      "bytes": 3018,
+      "sha256": "2b4d2a24b7a626fc1c413e0252784b783716a184faaf14d3546c421f146539fb"
+    },
+    "src/gallium/auxiliary/util/u_transfer.c": {
+      "bytes": 3915,
+      "sha256": "73c25d6680954d9c380daf2f0790dc9580dd7dbb21a19ff9d1c197e93517e10a"
+    },
+    "src/gallium/drivers/asahi/agx_pipe.c": {
+      "bytes": 110601,
+      "sha256": "157d26f5512f887e5ed27fb4f2aa266c2f133c0d0ef5fd77ee8ecdece1444b9b"
+    },
+    "src/gallium/drivers/asahi/tests/test-agx-g17p-blit.c": {
+      "bytes": 71169,
+      "sha256": "ec72462fd0836429d213b0be193f15a28cc798abc353a53cfcdfbdf1f84132ed"
+    },
+    "src/gallium/include/pipe/p_defines.h": {
+      "bytes": 47196,
+      "sha256": "0b31f476072a7a1d97357aaa7873135c68cae92119f3555eb1b69b81adfb3551"
+    },
+    "src/mesa/state_tracker/st_cb_readpixels.c": {
+      "bytes": 20640,
+      "sha256": "d05dfaeda6270d94030617858c1725badd3542287bbb812abe82a08bbadca5f5"
+    },
+    "src/util/format/u_format.h": {
+      "bytes": 44411,
+      "sha256": "531ae7074955f5b96de1cdeb53df8417bfd2b4dcdfc915b7d4a0c4555b53c67f"
+    }
+  },
+  "transform_test_skips": 0
+}

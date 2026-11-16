@@ -1,0 +1,145 @@
+{
+  "schema": "ilinux31ay-firmware-deployment-review-v1",
+  "as_of": "2026-11-16",
+  "reference_snapshot": "2026-11-15",
+  "scope": "PUBLIC_PRIMARY_SOURCE_AND_ATTRIBUTED_GENERIC_RUNNING_VERSION_OBSERVATIONS",
+  "m1_review": {
+    "commit": "ee4f70c",
+    "result": "OFFLINE_PASS",
+    "reviewed_source": "a3bbd5e01eb8dc9df5f8ad3bc4af0d81ee66127e"
+  },
+  "target": {
+    "model": "Mac17,6",
+    "board": "J716c",
+    "soc": "T6050",
+    "gpu": "G17C",
+    "physical_cpus": 18
+  },
+  "generic_local_observation": {
+    "running_os_version": "26.6.2",
+    "running_os_build": "25G83",
+    "source": "sw_vers productVersion and buildVersion only",
+    "lab_version_requeried": false,
+    "firmware_version_queried": true,
+    "firmware_observer": "ROOT_AGENT_REVIEWED_TWO_PROPERTY_HELPER",
+    "reader_invocations": 2,
+    "running_os_firmware_version": "UNKNOWN",
+    "running_os_firmware_shape": {
+      "type": "CFDATA",
+      "bounded_length": "OUT_OF_BOUNDS"
+    },
+    "system_firmware_version": "mBoot-20457.1.29",
+    "system_firmware_shape": {
+      "type": "CFDATA",
+      "bounded_length": 17,
+      "ascii_only": true,
+      "nul_count": 1,
+      "strict_numeric_version": true
+    },
+    "lab_firmware_queried": false,
+    "rejected_raw_bytes_returned": false,
+    "publisher_system_and_os_mboot_separately_inventoried": false
+  },
+  "required_reference": {
+    "os_version": "27.2.1",
+    "os_build": "26B131",
+    "os_mboot": "20457.41.3",
+    "publisher_publication_commit": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+    "published_record_is_native_other_machine": true,
+    "local_native_test": false
+  },
+  "confirmed_source_behaviors": [
+    {
+      "subject": "OS versus system iBoot",
+      "source": "https://github.com/cameroncooper/aura/blob/9da61857f9d9262bd64c023fbc1b18315b12d0af/src/firmware.c#L548",
+      "behavior": "Separate ADT firmware-version and system-firmware-version inputs"
+    },
+    {
+      "subject": "GPU gate",
+      "source": "https://github.com/cameroncooper/aura/blob/9da61857f9d9262bd64c023fbc1b18315b12d0af/src/kboot_gpu_j716c.c#L468",
+      "behavior": "Exact J716c model/board/compatibles, OS mBoot, normalized loaded GPU text, ranges and private power tables checked"
+    },
+    {
+      "subject": "DCP gate",
+      "source": "https://github.com/cameroncooper/aura/blob/9da61857f9d9262bd64c023fbc1b18315b12d0af/src/kboot_display_handoff.c#L3167",
+      "behavior": "OS mBoot and loaded DCP identity checked separately; fixed interface version27.2 is not host OS version claim"
+    },
+    {
+      "subject": "Stage1 build",
+      "source": "https://github.com/cameroncooper/aura/blob/9da61857f9d9262bd64c023fbc1b18315b12d0af/docs/t6050-linux.md",
+      "behavior": "Public generic Stage1/Stage2 configurations; publisher installed Stage1 identity absent"
+    },
+    {
+      "subject": "Window padding",
+      "source": "https://github.com/aurora-silicon/aurora-installer/blob/832788c858f7bc5db8ba67d1232844977ffa8489/macOS/Recovery/Sources/Account/AuraStage1.swift#L372",
+      "behavior": "MIT source separates16MiB Aura slot,2MiB alignment,128MiB window and file-backed padding"
+    }
+  ],
+  "firmware_layers": [
+    {
+      "id": "global_system_sfr",
+      "current_status": "SYSTEM_MBOOT_20457_1_29_OBSERVED",
+      "transition_required": "UNKNOWN_EXACT_MINIMUM"
+    },
+    {
+      "id": "lab_os_iboot_and_preloads",
+      "current_status": "RETAINED_LAB_OS_26_6_2_ACTUAL_BOOT_FIRMWARE_UNKNOWN",
+      "transition_required": "QUALIFY_EXACT_REFERENCE_OR_EXPLICIT_EQUIVALENCE"
+    },
+    {
+      "id": "lab_paired_recovery",
+      "current_status": "NEW_VERSION_UNQUALIFIED",
+      "transition_required": "MUST_MATCH_SELECTED_LAB"
+    },
+    {
+      "id": "extracted_vendor_firmware",
+      "current_status": "NOT_PROVISIONED_FOR_NEW_STACK",
+      "transition_required": "MATCH_SELECTED_OS_AND_HARDWARE_LOCAL_ONLY"
+    }
+  ],
+  "stage1": {
+    "generic_source_available": true,
+    "matched_historical_binary_supplied": false,
+    "padding_supplied_by_exact9da_wrapper": false,
+    "separate_public_padding_source_available": true,
+    "unpublished_historical_binary_is_not_required_for_new_candidate_build": true,
+    "new_candidate_local_qualification_required": true
+  },
+  "runtime_contract": {
+    "page_size_bytes": 16384,
+    "ctxr_exec_window_bytes": 134217728,
+    "aura_slot_bytes": 16777216,
+    "alignment_bytes": 2097152,
+    "normal_data_ram_limited_to_ctxr_window": false,
+    "same_build_kernel_dtb_modules": true,
+    "wfi_default_enabled": false,
+    "rtc_runtime_enabled": false,
+    "external_atc2_runtime_enabled": false,
+    "host_guardian_supplied": false
+  },
+  "unknowns": [
+    "Actual system firmware transition required",
+    "Exact J716c27.2.1 signing/installer availability",
+    "Publisher historical Stage1 configuration",
+    "Guardian deployment protocol and stop thresholds",
+    "New Lab firmware/provisioning behavior",
+    "boot021 physical operation on new firmware",
+    "Native macOS performance and power parity"
+  ],
+  "planning_decisions": [
+    "Prefer exact-board source adoption over driver rewrite",
+    "Do not run J714s installer onJ716c",
+    "Do not equate Original OS update with Lab firmware refresh",
+    "Keep post-update new transaction anchors separate from old state",
+    "Require separate native rescue qualification after firmware transition",
+    "No new boot until exact stack/deployment/guardian/manual rescue ready"
+  ],
+  "settings_changed": false,
+  "policy_queried": false,
+  "selected_object_queried": false,
+  "firmware_payload_downloaded": false,
+  "third_party_code_executed_on_host": false,
+  "update_authorized": false,
+  "native_ready": false,
+  "restart_ready": false
+}

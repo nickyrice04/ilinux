@@ -1,5 +1,33 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### M5 — 31AY community kernel/Aura/Mesa built offline; native hold, November 16
+
+Accepted M1 ee4f70c; all 22 AX source pins unchanged. Exact J716c sources now
+build in the retained no-network ARM64 VM: kernel a59e709c/full 16K config,
+1,749 same-release AArch64 modules, eighteen static CPU nodes; Aura 9da separate
+generic Stage1 and graphics Stage2; Mesa 10161a78/Vulkan/EGL/GLES/GBM/Gallium.
+Seven kernel compiler/manifest signatures verify; compiler versions match.
+Two explicit unused/tool-detection config differences and different bindgen/
+Image bytes are recorded, without publisher byte-identity claims.
+
+Root 99 new lightweight methods PASS. Linux 39 stack/guard/lease, 11 provenance,
+24 padding and 6 transform methods PASS. Untouched Mesa 175 PASS / 4 FAIL;
+separate test-only correction 179/179 PASS, no shipping-driver change. Raw DTB
+is private/nondeployable; compiled outputs stay ignored, not in public Git.
+
+Required OS firmware is 27.2.1/26B131 with matched OS mBoot/GPU/DCP checks.
+Current system mBoot 20457.1.29 observed; selected Lab firmware unqueried.
+Apple advertises J716cAP/26B131, but installer/signing/update/rescue unqualified;
+community automatic updater unfinished. Generic Stage1 is blank/proxy-only,
+not an ESP install; partition-free RAM routes need qualification. Omarchy root,
+physical guardian, ALPM runtime and concrete fresh kit remain deployment gates.
+
+M1: tools/m1n1-client/attempt31ay-instructions.md, offline review only. No restart,
+server, staging, policy/reset/boot/security/firmware/volume action. Original Full
+and prior return confirmations retained without repeat query. Native Linux/SMP/
+GPU/performance NOT RUN. Plan/evidence: native/boot/attempt31ay-plan.md and
+attempt31ay-offline-2026-11-16.json. Do not replay old consumed transactions.
+
 ### M1 — 31AX offline reset/rescue review PASS; deployment gates remain, November 15
 
 Reviewed a3bbd5e: 22 AX/14 AW/10 AV/190 AU pins and 386 prior evidence/closed

@@ -1,0 +1,86 @@
+{
+  "schema": "ilinux31ay-installer-availability-v1",
+  "observed_date": "2026-11-16",
+  "scope": "BOUNDED_PUBLIC_PRIMARY_METADATA_ONLY",
+  "apple_release": {
+    "version": "27.2.1",
+    "build": "26B131",
+    "release_date": "2026-11-09",
+    "source": "https://developer.apple.com/news/releases/?id=11092026d"
+  },
+  "apple_cdn": {
+    "url": "https://updates.cdn-apple.com/2026FallFCS/c202a724-db7e-4d56-917b-110aa0226507/UniversalMac_27.2.1_26B131_Restore.ipsw",
+    "method": "HEAD",
+    "status": 200,
+    "content_length": 25595954706,
+    "accept_ranges": "bytes",
+    "advertised_sha256": "233e85a09887579d47d0b195e7db72be7f204261059c6946f719acf6b300814f",
+    "whole_file_digest_computed": false,
+    "body_bytes_read": 0,
+    "redirect_followed": false
+  },
+  "apple_gdmf": {
+    "url": "https://gdmf.apple.com/v2/pmv",
+    "body_bytes_per_read": 85107,
+    "read_count": 2,
+    "cap_bytes": 5242880,
+    "timeout_seconds": 20,
+    "matching_sections": [
+      "PublicAssetSets.macOS",
+      "AssetSets.macOS"
+    ],
+    "target_version": "27.2.1",
+    "target_build": "26B131",
+    "supported_devices_namespace": "BOARD_IDENTIFIER",
+    "target_board": "J716cAP",
+    "target_board_listed": true,
+    "target_product": "Mac17,6",
+    "product_identifier_lookup_used_for_final_conclusion": false,
+    "same_version_device_specific_builds": [
+      "26B7131",
+      "26B8132"
+    ],
+    "target_listed_in_device_specific_builds": false
+  },
+  "community_installer": {
+    "repository": "https://github.com/aurora-silicon/aurora-installer",
+    "source_commit": "832788c858f7bc5db8ba67d1232844977ffa8489",
+    "general_pinned_build": "26B123",
+    "general_pinned_admitted_models": [],
+    "required_minimum_system_iboot": "mBoot-20457.41.3",
+    "required_minimum_macos": "27.2",
+    "required_minimum_recovery": "26.2.123.0.0,0",
+    "exact_26B131_admitted": false,
+    "j716c_in_device_policy": false,
+    "k114_k116_build": "26B8125",
+    "startup_firmware_slot_planner_exists": true,
+    "startup_firmware_slot_executor_wired": false,
+    "relabel_or_run_foreign_board_recipe_allowed": false
+  },
+  "future_option": {
+    "kind": "QUALIFY_APPLE_FULL_INSTALLER_REFRESH_OF_EXISTING_LAB",
+    "original_file_replacement_proposed": false,
+    "original_full_required": true,
+    "shared_system_firmware_effects_possible": true,
+    "exact_route_qualified": false,
+    "remaining": [
+      "Exact compatible full installer availability and trust",
+      "Exact destination-space and backup checks",
+      "Existing custom Lab boot state and refresh sequence",
+      "Stock updated Lab and Original return",
+      "New post-transition experiment baselines",
+      "New-firmware manual rescue and physical boot021 fallback qualification"
+    ]
+  },
+  "signing_or_personalization_verified": false,
+  "ipsw_build_manifest_verified": false,
+  "full_installer_package_verified": false,
+  "tss_request": false,
+  "device_identifier_request": false,
+  "softwareupdate_run": false,
+  "os_image_body_downloaded": false,
+  "settings_changed": false,
+  "update_authorized": false,
+  "native_ready": false,
+  "restart_ready": false
+}

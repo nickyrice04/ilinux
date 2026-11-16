@@ -1,0 +1,182 @@
+{
+  "schema": "ilinux097-graphics-sources-v1",
+  "source_report_revision": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+  "target": "J716c/T6050/G17C",
+  "sources": [
+    {
+      "name": "aura",
+      "revision": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+      "filename": "aura-9da61857f9d9262bd64c023fbc1b18315b12d0af.tar.gz",
+      "url": "https://codeload.github.com/cameroncooper/aura/tar.gz/9da61857f9d9262bd64c023fbc1b18315b12d0af",
+      "prefix": "aura-9da61857f9d9262bd64c023fbc1b18315b12d0af",
+      "bytes": 2119457,
+      "sha256": "ead74e8b7f12d90ad64a9fab36dbe91c50720c0f24ea8695c50135759c43f1c9",
+      "member_count": 897,
+      "unpacked_bytes": 8385320,
+      "selected": {
+        "Makefile": {
+          "bytes": 11807,
+          "sha256": "9694932bb0fdb24ae1f34fa6681054e9189a714c2a6192ce52effde049f60a68",
+          "git_blob_sha1": "4769460fcf63a3a0c76571bf78df507219af22de"
+        },
+        "rust/Cargo.toml": {
+          "bytes": 785,
+          "sha256": "8045a41331c4a9e71ffb08a44a4f6cadfb5b9f1d622106c5493cc3dee6182efe",
+          "git_blob_sha1": "f6977b7418bbfc2ea4a54f22df7f5085e98842d3"
+        },
+        "rust/Cargo.lock": {
+          "bytes": 3472,
+          "sha256": "561016fc5194d0916f30041ba6effa7c4cb3869cdd5fe7a1770de1b514f41f1c",
+          "git_blob_sha1": "b4abe322fa0d66b16ed47f2d4f491bc3979d7fea"
+        },
+        "src/kboot_gpu_j716c.c": {
+          "bytes": 21735,
+          "sha256": "198ad92be526e99701261d4d0ac12f9e5e78a5fb3b351e3d37363a5ef7ce950e",
+          "git_blob_sha1": "df8089710eff8bf07394b6238d383cc29fcb5b33"
+        },
+        "docs/t6050-linux.md": {
+          "bytes": 1705,
+          "sha256": "5303b336596ce608a36a5f3a6ad6001212c26d59dbc7c11aa4a2be9d04d8bdb9",
+          "git_blob_sha1": "58a3696133f67d90e9e362812c7f7de962d03da7"
+        },
+        "docs/RELEASING.md": {
+          "bytes": 1756,
+          "sha256": "1f7d8380bab6ae4d775ef5dae67e9bd92a4b29652892c2cac9d4c14b50d3a80a",
+          "git_blob_sha1": "b7ef2ffbada89e571db75558340c7ad90938a0e6"
+        },
+        "tools/macho_boot_object.py": {
+          "bytes": 7144,
+          "sha256": "3e8fff2c09179fc34f89e6ef453e29f0b3bd7b488be296e9afce2257b67642d0",
+          "git_blob_sha1": "0a3b111958e3319e743f1676ffbd6d7019f9930b"
+        }
+      },
+      "git_tree": "65cc228925b90e0af8439d8ad4ff5b4f65bbbcec"
+    },
+    {
+      "name": "mesa",
+      "revision": "10161a78e60e4057257e116d404a92bd9b78bb3c",
+      "filename": "mesa-10161a78e60e4057257e116d404a92bd9b78bb3c.tar.gz",
+      "url": "https://codeload.github.com/aurora-silicon/mesa/tar.gz/10161a78e60e4057257e116d404a92bd9b78bb3c",
+      "prefix": "mesa-10161a78e60e4057257e116d404a92bd9b78bb3c",
+      "bytes": 140355840,
+      "sha256": "08b25bcc74b494066a9f9487c8cbe054371ace7fed582bcc4c7d8ba2b32739e8",
+      "member_count": 14762,
+      "unpacked_bytes": 460080222,
+      "selected": {
+        "VERSION": {
+          "bytes": 13,
+          "sha256": "dfa4bc32f65bd0873a06548da087f1575db14d494ce9a7929d73d40a845ddad2",
+          "git_blob_sha1": "9546eb5fb96e159bdedeed31a5db6ffa5712ec03"
+        },
+        "meson.build": {
+          "bytes": 93903,
+          "sha256": "9e9a32915cb815cfe330dc4064303821b67c438f144e0882a0d1d4637391c09b",
+          "git_blob_sha1": "493b6f6f1ebd62a36b27a64957987fcfd41ca83e"
+        },
+        "src/asahi/meson.build": {
+          "bytes": 3223,
+          "sha256": "d6761507db0aede024db429778171b148f0155fe67fd87af61a7b0cf8ac828c4",
+          "git_blob_sha1": "00fa7ec4b1ae4fdcbf33db366e1e8284a29de6dd"
+        },
+        "src/asahi/compiler/meson.build": {
+          "bytes": 23853,
+          "sha256": "534a1ba3421da8ee333d47de1125d062efdd9ce5886b3ccd2c7356c6731c70a1",
+          "git_blob_sha1": "8dbf54fe0008d6e9aaf8baf87b1499d4effad1bb"
+        },
+        "src/gallium/drivers/asahi/meson.build": {
+          "bytes": 11642,
+          "sha256": "87fcb11969bc6463f0e1570a956e4899f0b94ad9390196ef31d208fab0f63344",
+          "git_blob_sha1": "01722a2a76430c85cc4e63d160bbd86b0c436f0b"
+        },
+        "src/asahi/vulkan/meson.build": {
+          "bytes": 31970,
+          "sha256": "6bb7bb17bb788b20e85f3b49179bce80c6a25b28d9d2f1f7e7424424a3ce8d59",
+          "git_blob_sha1": "59e4353f63d6c17aac605da445c35d8526aef663"
+        }
+      },
+      "git_tree": "dc9cfffcb188a4fae9f04fded513b940ccd1499e"
+    },
+    {
+      "name": "translator",
+      "revision": "ae707ecba4b0c64d85f4f7bdcabeb1fa152c0ab2",
+      "filename": "translator-ae707ecba4b0c64d85f4f7bdcabeb1fa152c0ab2.tar.gz",
+      "url": "https://codeload.github.com/KhronosGroup/SPIRV-LLVM-Translator/tar.gz/ae707ecba4b0c64d85f4f7bdcabeb1fa152c0ab2",
+      "prefix": "SPIRV-LLVM-Translator-ae707ecba4b0c64d85f4f7bdcabeb1fa152c0ab2",
+      "bytes": 1908147,
+      "sha256": "05458d44097d472b6b4ddb7c426072fa581dd73bbc13b37eca758e763ff047a4",
+      "member_count": 1330,
+      "unpacked_bytes": 15498206,
+      "selected": {
+        "CMakeLists.txt": {
+          "bytes": 5772,
+          "sha256": "fbc9627e80930020e5c8e65b1d104eb01fc917318c36db39e59daeb6e2e73fc2",
+          "git_blob_sha1": "c000a77e8bfaf2d65f808bcebbc64e3af52c9422"
+        },
+        "lib/SPIRV/CMakeLists.txt": {
+          "bytes": 1853,
+          "sha256": "65b133ee5d5751af74aa0d465be7ed1bb5f5f526d0535021e242419473f29974",
+          "git_blob_sha1": "1c32ce7137408b4a3cf293c7e4ed15ebbe4c3cde"
+        },
+        "LLVMSPIRVLib.pc.in": {
+          "bytes": 340,
+          "sha256": "640b5a1136e7d54a32f5b89f8191408be382f752581397d2a2ee7cf46f416e3a",
+          "git_blob_sha1": "814c592516113d1890d5bb96fa2379a654852ef9"
+        },
+        "spirv-headers-tag.conf": {
+          "bytes": 41,
+          "sha256": "eebef0dffa62557f1992e93f7bf2b65322260c681a0937662d8ed2d30cfe2467",
+          "git_blob_sha1": "c10d046927f3ff69c8aaf2de022d51bafdd200fd"
+        }
+      },
+      "git_tree": "944880f9e9900e4f64384589c40cd8596391a0ca"
+    },
+    {
+      "name": "spirv-headers",
+      "revision": "cb42dec3830d3ac67fa449ecdc0c0f73d5e74498",
+      "git_tree": "1e1f5974d8b3ed73a937d5e43506b1fd3233aff3",
+      "filename": "spirv-headers-cb42dec3830d3ac67fa449ecdc0c0f73d5e74498.tar.gz",
+      "url": "https://codeload.github.com/KhronosGroup/SPIRV-Headers/tar.gz/cb42dec3830d3ac67fa449ecdc0c0f73d5e74498",
+      "prefix": "SPIRV-Headers-cb42dec3830d3ac67fa449ecdc0c0f73d5e74498",
+      "bytes": 595175,
+      "sha256": "117010e525fe36b1ce006e0e58a6e0a3b415aabc9179d912b92737f41f3f994f",
+      "member_count": 145,
+      "unpacked_bytes": 4187512,
+      "selected": {
+        "include/spirv/unified1/spirv.hpp": {
+          "bytes": 318460,
+          "sha256": "a5d60fb37f1d973d9e7f5d64d3a58ebd3d303eb99d334d5443ae8a73fd452805",
+          "git_blob_sha1": "a310ecb4870e33e4298c539086985c1e1e6b572d"
+        },
+        "CMakeLists.txt": {
+          "bytes": 2353,
+          "sha256": "18202317ea71c2e01a7eafb325354cc45adbea9f7f65492128e2b38160550858",
+          "git_blob_sha1": "c7711c7e92ef98feb8231af44140ecb8d6673870"
+        }
+      }
+    }
+  ],
+  "community_packages": [
+    {
+      "name": "mesa-aurora",
+      "version": "1:26.3.0_devel.202611101320.10161a78e60-1",
+      "sha256": "2d024c8d1e3a304ee620f97eb132b00dbcbc6c0fa0e4df58562e9e05167f9825"
+    },
+    {
+      "name": "vulkan-aurora",
+      "version": "1:26.3.0_devel.202611101320.10161a78e60-1",
+      "sha256": "afa878bf490c895532caffcb8aa644fa4632525562b39855799a77efd5e6df8e"
+    },
+    {
+      "name": "vulkan-icd-loader",
+      "version": "1.4.363.0-1",
+      "sha256": "aac2d10b977d9a0e7f7e45a4dd0799aa0256f6df2a32baf8231cd027b342e993"
+    }
+  ],
+  "native_ready": false,
+  "desktop_reference": {
+    "distribution": "Arch Linux ARM",
+    "init": "systemd",
+    "desktop": "Hyprland 0.57.2",
+    "built_by_this_job": false
+  }
+}

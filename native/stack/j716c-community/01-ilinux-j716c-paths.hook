@@ -1,0 +1,26 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Path
+Target = boot/*
+Target = usr/lib/modules/*
+Target = usr/lib/firmware/apple/*
+Target = usr/lib/asahi-boot/*
+Target = usr/lib/dri/*
+Target = usr/share/vulkan/icd.d/*
+Target = usr/share/glvnd/egl_vendor.d/*
+Target = usr/lib/libEGL*
+Target = usr/lib/libGL*
+Target = usr/lib/libgbm*
+Target = usr/lib/libvulkan*
+Target = usr/lib/libgallium*
+Target = usr/bin/Hyprland
+Target = usr/bin/update-m1n1
+
+[Action]
+Description = Preserving the reviewed J716c boot and renderer files
+When = PreTransaction
+Exec = /usr/bin/python3 -I /usr/local/lib/ilinux-j716c/package_guard.py paths
+NeedsTargets
+AbortOnFail

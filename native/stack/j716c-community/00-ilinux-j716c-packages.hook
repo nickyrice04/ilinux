@@ -1,0 +1,27 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = linux*
+Target = m1n1*
+Target = aura*
+Target = uboot*
+Target = u-boot*
+Target = limine*
+Target = mkinitcpio*
+Target = dracut*
+Target = omarchy-aurora-firmware
+Target = omarchy-asahi-firmware
+Target = asahi-firmware*
+Target = asahi-scripts
+Target = mesa*
+Target = vulkan*
+Target = hyprland*
+
+[Action]
+Description = Preserving the reviewed J716c kernel, loader and graphics stack
+When = PreTransaction
+Exec = /usr/bin/python3 -I /usr/local/lib/ilinux-j716c/package_guard.py packages
+NeedsTargets
+AbortOnFail

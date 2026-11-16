@@ -1,0 +1,71 @@
+{
+  "schema": "ilinux31ay-watchdog-source-contract-v1",
+  "as_of": "2026-11-16",
+  "scope": "PUBLIC_SOURCE_AND_OFFLINE_PURE_PROTOCOL_ONLY",
+  "kernel_commit": "a59e709c737777495c84541c6afb6c862bb79227",
+  "aura_commit": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+  "driver": {
+    "path": "drivers/watchdog/apple_wdt.c",
+    "identity": "Apple SoC Watchdog",
+    "channel": "WD1_NORMAL_MACHINE_RESET",
+    "reference_clock_hz": 24000000,
+    "default_seconds": 30,
+    "max_hardware_seconds": 178,
+    "standard_linux_watchdog_uapi": true,
+    "special_smc_pmgr_userspace_protocol_required": false
+  },
+  "published_config": {
+    "apple_watchdog": "BUILT_IN",
+    "handle_boot_enabled": true,
+    "open_timeout_seconds": 0,
+    "nowayout": false,
+    "watchdog_sysfs": false,
+    "reproduction_config_changed": false
+  },
+  "aura_retention": {
+    "option": "j716c.wdt=keep",
+    "exact_board_checks": true,
+    "requires_prearmed_unexpired_wd1": true,
+    "timer_writes": false,
+    "default_disables_watchdog": true,
+    "generic_timed_arm_admits_t6050": false
+  },
+  "core_edges": {
+    "preopen_kernel_renewal_can_be_indefinite": true,
+    "unexpected_close_can_add_one_keepalive": true,
+    "watchdog_reset_selects_original": false
+  },
+  "pure_protocol": {
+    "path": "lease.py",
+    "hardware_timeout_budget_ms": 10000,
+    "lease_ms": 3000,
+    "min_spacing_ms": 500,
+    "last_keepalive_before_arm_ms": 70000,
+    "conditional_reset_before_arm_ms": 90000,
+    "actual_watchdog_writer_implemented": false,
+    "host_transport_implemented": false
+  },
+  "reuse": {
+    "m1_supervisor": "tools/m1n1-client/attempt31n-supervisor.py",
+    "m1_supervisor_resets_target": false,
+    "ram_root_supplies_systemd_and_ssh": true,
+    "publisher_guardian_transport_known": false,
+    "usb_control_qualified": false
+  },
+  "remaining": [
+    "Pre-Linux WD1 arming and retention",
+    "Finite pre-open runtime parameter",
+    "Sole standard-watchdog owner and read-back timeout",
+    "Authenticated one-session host renewal and health conditions",
+    "No automatic reopen or competing renewal service",
+    "Physical host-loss and Linux-owner-loss expiry tests",
+    "Approved default/return/manual rescue sequencing"
+  ],
+  "settings_changed": false,
+  "device_opened": false,
+  "ioctl_run": false,
+  "physical_watchdog_qualified": false,
+  "guardian_deployed": false,
+  "native_ready": false,
+  "restart_ready": false
+}

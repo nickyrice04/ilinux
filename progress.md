@@ -1,5 +1,33 @@
 # Progress Log
 
+### M5 — 31AY matched source stack reproduced, November 16
+
+Accepted M1's 31AX review ee4f70c; 22 AX source hashes remain exact. Jobs 096/097
+now compile the community J716c baseline instead of the old minimal stack.
+Kernel a59e709c built in 548 s: 16K Image, 1,749 AArch64/vermagic-checked modules,
+same-build DT and 18 static cores in M/M/P clusters. All hardware config options
+match; only recorded CC_CAN_LINK and unused PAHOLE_VERSION metadata differ.
+Actual signed LLVM 22.1.8/Rust 1.96.1 inputs pass; bindgen 0.73.2 bytes and rebuilt
+Image differ from the publisher, as explicitly recorded.
+
+Aura 9da Stage1/graphics Stage2 and Mesa 10161a78 compile. All 15 Aura artifacts
+reproduce across three builds. Full selected Mesa build completes 2,356 actions
+and exports the five-library DESTDIR. Original tests retain 175 PASS / 4 FAIL
+from a stale transfer-capability assertion. Independently reviewed test-only
+correction adds CPU BGRA/RGBA checks and passes 179/179; shipping driver and
+baseline archive unchanged. Guest exit 1 retains original failures; VM exit 0
+does not override them. Root 99 lightweight checks PASS; Linux 39 + 11 + 24 + 6 PASS.
+
+New manifest/artifact validator, J716c update-freeze templates, bounded firmware
+reader and pure watchdog lease model are tested, not installed. All 15 held
+artifact hashes verify. Firmware/storage findings identify a supported-source
+route without claiming another Apple fix is necessary, but no native result.
+Next qualify exact Lab firmware/Recovery transition and RAM boot transport,
+assemble the new Omarchy root/packages, and finish guardian/manual rescue.
+M1 reviews tools/m1n1-client/attempt31ay-instructions.md. No restart or host
+change; Original Full/prior return stand. Evidence:
+native/boot/attempt31ay-offline-2026-11-16.json and component receipts.
+
 ### M1 — 31AX offline reset/rescue review PASS; deployment gates remain, November 15
 
 Reviewed a3bbd5e: 22 AX/14 AW/10 AV/190 AU pins and 386 prior evidence/closed

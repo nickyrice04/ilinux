@@ -1,0 +1,540 @@
+{
+  "schema": "ilinux-j716c-community-stack-v1",
+  "as_of": "2026-11-16",
+  "scope": "Offline reproduction and adoption of a published exact-board stack; no installation, host change or native qualification",
+  "target": {
+    "model": "Mac17,6",
+    "board": "J716c",
+    "soc": "T6050",
+    "gpu": "G17C",
+    "physical_cpus": 18
+  },
+  "reference": {
+    "repository": "https://github.com/cameroncooper/linux",
+    "publication_commit": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+    "pins_path": "Documentation/arch/arm64/apple-j716c-bringup/pins.json",
+    "pins_blob_sha": "91f28b4c037c3e81110f025e4488b291b29c27f1",
+    "readme_path": "Documentation/arch/arm64/apple-j716c-bringup/README.rst",
+    "readme_blob_sha": "04645c30a140a8fe05a29cd06295e0d0073ea921",
+    "pins": {
+      "schema_version": 1,
+      "as_of": "2026-11-11",
+      "scope": "Bounded J716c bring-up; RAM Arch engineering root, not a persistent Omarchy installation",
+      "hardware": {
+        "model": "Mac17,6",
+        "board": "J716c",
+        "soc": "T6050",
+        "gpu": "G17C",
+        "firmware_os_version": "27.2.1",
+        "firmware_os_build": "26B131",
+        "mboot": "20457.41.3"
+      },
+      "kernel": {
+        "repository": "https://github.com/cameroncooper/linux",
+        "upstream_base": "dc8f6f77934b471a13c91e7780e2d91ebc904b3d",
+        "qualified_integration_commit": "a59e709c737777495c84541c6afb6c862bb79227",
+        "qualified_source_tree": "5960d8ab03fef0f87e91e84fe1a8d969173da8de",
+        "release": "7.3.0-j716c-bringup-unified",
+        "tested_Image_gz_sha256": "40d474c2207835d7bb9e08f955b57e125061166722837585e34790df9e9f0670",
+        "tested_elf_notes_sha256": "d090f95353794461079846ab5d35565515d143a8998930eca6f6baf377d8397e",
+        "config_file": "kernel.config",
+        "config_sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8",
+        "publication_rebuild_byte_identity_demonstrated": false
+      },
+      "aura_graphics_stage2": {
+        "repository": "https://github.com/cameroncooper/aura",
+        "upstream_base": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+        "qualified_source_commit": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+        "role": "Opt-in GPU and internal DCP Stage2 handoff, not the installed Stage1 or full recovery configuration"
+      },
+      "build": {
+        "architecture": "arm64",
+        "LLVM": "1",
+        "command_line_LOCALVERSION": "",
+        "targets": [
+          "Image.gz",
+          "modules",
+          "apple/t6050-j716c.dtb"
+        ],
+        "clang": "22.1.8",
+        "lld": "22.1.8",
+        "rustc": "1.96.1 (31fca3adb 2026-06-26)",
+        "bindgen": "0.73.2",
+        "bindgen_binary_sha256": "77443c0d71ac7ff74e32cd64e1f06d38a55a4bc538058412e59e5e780907fd05",
+        "SOURCE_DATE_EPOCH": 1794338095,
+        "KBUILD_BUILD_USER": "j716c",
+        "KBUILD_BUILD_HOST": "bringup",
+        "KBUILD_BUILD_VERSION": 1,
+        "KBUILD_BUILD_TIMESTAMP": "derived in UTC from SOURCE_DATE_EPOCH"
+      },
+      "native_ram_userland": {
+        "distribution": "Arch Linux ARM",
+        "init": "systemd",
+        "desktop": "Hyprland 0.57.2",
+        "mesa_source_commit_prefix": "10161a78e60",
+        "packages": [
+          {
+            "name": "mesa-aurora",
+            "version": "1:26.3.0_devel.202611101320.10161a78e60-1",
+            "official_asset_sha256": "2d024c8d1e3a304ee620f97eb132b00dbcbc6c0fa0e4df58562e9e05167f9825"
+          },
+          {
+            "name": "vulkan-aurora",
+            "version": "1:26.3.0_devel.202611101320.10161a78e60-1",
+            "official_asset_sha256": "afa878bf490c895532caffcb8aa644fa4632525562b39855799a77efd5e6df8e"
+          },
+          {
+            "name": "vulkan-icd-loader",
+            "version": "1.4.363.0-1",
+            "official_asset_sha256": "aac2d10b977d9a0e7f7e45a4dd0799aa0256f6df2a32baf8231cd027b342e993"
+          }
+        ],
+        "asset_admission": "Exact official release/package index SHA256; no signature-verification claim or qualification of different repacks"
+      },
+      "latest_native_checkerboard": {
+        "frames": 32,
+        "pixels_compared": 24829472,
+        "mismatches": 0,
+        "new_kernel_messages": 0
+      },
+      "experimental_usb": {
+        "diagnostics_commit": "1b321df7897b5172eb5674aabaa183e9d979175c",
+        "source_forks_before_WFI_commit": true,
+        "qualified": [
+          "checked retirement",
+          "provider and UDC registration",
+          "ACM configuration object binding",
+          "guarded diagnostic captures"
+        ],
+        "unresolved": "Host SET_CONFIGURATION status timeout",
+        "serial_data_channel_qualified": false,
+        "USB_plus_WFI_tree_qualified": false
+      },
+      "runtime_safety_limits": {
+        "cpu_ceiling_profile": "approximately 2 GHz with checked temperature telemetry",
+        "SMC_fan_control": "firmware-owned",
+        "shallow_WFI": "default off; explicit j716c.wfi=probe opt-in; apple_keep_idle_nop overrides",
+        "RTC": "runtime DT disabled; RTC writes not qualified",
+        "external_ATC2_group": "runtime DT disabled",
+        "suspend_and_deeper_idle_qualified": false,
+        "host_guardian": "separate deployment component; not installed by these source commits"
+      },
+      "excluded_inputs": [
+        "Apple firmware payloads",
+        "per-unit ADT and DROM",
+        "private initramfs and root",
+        "private connection settings",
+        "raw runtime captures",
+        "installer and boot-policy setup"
+      ]
+    }
+  },
+  "components": {
+    "kernel": {
+      "repository": "https://github.com/cameroncooper/linux",
+      "source_commit": "a59e709c737777495c84541c6afb6c862bb79227",
+      "source_tree": "5960d8ab03fef0f87e91e84fe1a8d969173da8de",
+      "release": "7.3.0-j716c-bringup-unified",
+      "config_path": "Documentation/arch/arm64/apple-j716c-bringup/kernel.config",
+      "config_publication_commit": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+      "config_blob_sha": "ec886dc9c8f00a437a8dbfd3f0182fb563496f94",
+      "config_sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8",
+      "build_job": "096",
+      "build_status": "BUILD_PASS_OFFLINE",
+      "local_artifacts": [
+        {
+          "role": "Image",
+          "path": "build/j716c-community-kernel/build-v4/job/out/Image",
+          "bytes": 46057984,
+          "sha256": "623256d6cb8eeaf9c718a382a2bce59de7ab0b3ffb7c2d399cffc4a979292eae",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "Image.gz",
+          "path": "build/j716c-community-kernel/build-v4/job/out/Image.gz",
+          "bytes": 16764671,
+          "sha256": "9885e0154605ba37ff35c6415888dc7f7484c8de1a9f13c6fed2684aad0eed7e",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "kernel.config",
+          "path": "build/j716c-community-kernel/build-v4/job/out/kernel.config",
+          "bytes": 330830,
+          "sha256": "c674ec637dcc1bae70cfb5e0d2fb8ab4ec2f4a331776c983e07de68791389acd",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "modules.PRIVATE.tar.gz",
+          "path": "build/j716c-community-kernel/build-v4/job/out/modules.PRIVATE.tar.gz",
+          "bytes": 26069106,
+          "sha256": "2a6c6fb4c0b93f310a32300ddf40fdf7a6ccb14d63e916ff2f7d6124b2c856bf",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "t6050-j716c.PRIVATE.dtb",
+          "path": "build/j716c-community-kernel/build-v4/job/out/t6050-j716c.PRIVATE.dtb",
+          "bytes": 118309,
+          "sha256": "c36c9e3934487b614ebe0f3d4774ec8585e14305354bb602a6bb221168b0fbf9",
+          "scope": "PRIVATE_NOT_DEPLOYABLE"
+        }
+      ],
+      "page_size_bytes": 16384,
+      "same_build_required": [
+        "Image.gz",
+        "modules",
+        "apple/t6050-j716c.dtb"
+      ],
+      "executable_memory_contract": "CONFIG_ARM64_CTXR_EXECMEM and the published CTXR executable window; no old boot042 configuration substitution",
+      "published_hashes_are_historical_not_rebuild_identity": true,
+      "local_result": {
+        "module_count": 1749,
+        "modules_aarch64_and_release_match": true,
+        "static_cpu_count": 18,
+        "static_core_clusters": [
+          "M",
+          "M",
+          "P"
+        ],
+        "static_128MiB_fit": true,
+        "native_hardware_tested": false,
+        "byte_identical_to_publisher": false,
+        "bindgen_binary_identical_to_publisher": false,
+        "config_metadata_exceptions": [
+          "CONFIG_CC_CAN_LINK absent -> y; successful link probe",
+          "CONFIG_PAHOLE_VERSION 131 -> 132; DEBUG_INFO_NONE and no DWARF/BTF"
+        ],
+        "resolved_config_sha256": "c674ec637dcc1bae70cfb5e0d2fb8ab4ec2f4a331776c983e07de68791389acd"
+      }
+    },
+    "aura_graphics_stage2": {
+      "repository": "https://github.com/cameroncooper/aura",
+      "upstream_base": "bd9f3e8273dc79ae9095c19c2c4f32218446ad4e",
+      "qualified_source_commit": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+      "role": "Opt-in GPU and internal DCP Stage2 handoff, not the installed Stage1 or full recovery configuration",
+      "source_commit": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+      "build_job": "097",
+      "build_status": "BUILD_PASS_OFFLINE",
+      "local_artifacts": [
+        {
+          "role": "graphics-stage2.aura.bin",
+          "path": "build/j716c-community-graphics/build-v1/job/out/aura/graphics-stage2/aura.bin",
+          "bytes": 4063232,
+          "sha256": "1d78b7a4679e72c427e5ea0b0b8f460884fe6f732d7afb80d25ce045b914a92b",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "graphics-stage2.aura-boot.macho",
+          "path": "build/j716c-community-graphics/build-v1/job/out/aura/graphics-stage2/aura-boot.macho",
+          "bytes": 4177920,
+          "sha256": "315ce6e78263f0c99685699c7563d0835dce00b78d09be6fdc274e7e240e7ebe",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        }
+      ],
+      "installed_stage1_identity_qualified": false,
+      "local_result": {
+        "source_build_pass": true,
+        "native_tested": false,
+        "enrolled": false
+      }
+    },
+    "installed_stage1": {
+      "repository": "https://github.com/cameroncooper/aura",
+      "source_commit": null,
+      "binary_sha256": null,
+      "configuration_sha256": null,
+      "status": "MISSING_MATCHED_DEPLOYMENT",
+      "generic_build_recipe_available": true,
+      "generic_recipe_is_publisher_installed_identity": false,
+      "requirements": [
+        "Padded Mach-O object with kcbz zero",
+        "128 MiB executable window aligned as required by matched Aura",
+        "Exact configured Stage2 path and private target binding",
+        "Paired-Recovery enrollment and independent boot021 rescue qualified separately"
+      ]
+    },
+    "mesa": {
+      "repository": "https://github.com/aurora-silicon/mesa",
+      "source_commit": "10161a78e60e4057257e116d404a92bd9b78bb3c",
+      "build_job": "097",
+      "build_status": "BUILD_PASS_OFFLINE",
+      "local_artifacts": [
+        {
+          "role": "mesa-destdir.tar.gz",
+          "path": "build/j716c-community-graphics/build-v3/job/out/mesa/mesa-destdir.tar.gz",
+          "bytes": 73897453,
+          "sha256": "1ea6478304790a3f6ed1d5fcce142904bdd6f02d8700109dc47630340a7ce6a2",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "mesa-testlog.json",
+          "path": "build/j716c-community-graphics/build-v3/job/out/mesa/mesa-testlog.json",
+          "bytes": 816110,
+          "sha256": "b65380f96175ab2292c01d9e4f33ec64c685e6256536cc8f5f68bf726a056595",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "blit-derivative-testlog.json",
+          "path": "build/j716c-community-graphics/build-v3/job/out/mesa/blit-derivative-testlog.json",
+          "bytes": 816147,
+          "sha256": "99f6b9ae30a3d42821e90af38d7fee07ed14ce1ce25ac6a72b2fc2197b9050aa",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "mesa-buildoptions.json",
+          "path": "build/j716c-community-graphics/build-v3/job/out/mesa/mesa-buildoptions.json",
+          "bytes": 44831,
+          "sha256": "a2017cb82324a4854f0381ccf16d7dbc34e0f9dab31e8276af86d7b48664d0ad",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "result.json",
+          "path": "build/j716c-community-graphics/build-v3/job/out/mesa/result.json",
+          "bytes": 1743,
+          "sha256": "2ff6e00f1c00c3ec4710565e8a3f1c83f81d9553214be6ea49c39e4ce303c3c0",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        }
+      ],
+      "package_pins": [
+        {
+          "name": "mesa-aurora",
+          "version": "1:26.3.0_devel.202611101320.10161a78e60-1",
+          "official_asset_sha256": "2d024c8d1e3a304ee620f97eb132b00dbcbc6c0fa0e4df58562e9e05167f9825"
+        },
+        {
+          "name": "vulkan-aurora",
+          "version": "1:26.3.0_devel.202611101320.10161a78e60-1",
+          "official_asset_sha256": "afa878bf490c895532caffcb8aa644fa4632525562b39855799a77efd5e6df8e"
+        },
+        {
+          "name": "vulkan-icd-loader",
+          "version": "1.4.363.0-1",
+          "official_asset_sha256": "aac2d10b977d9a0e7f7e45a4dd0799aa0256f6df2a32baf8231cd027b342e993"
+        }
+      ],
+      "local_result": {
+        "source_build": "PASS",
+        "baseline_tests": {
+          "exit": 1,
+          "counts": {
+            "OK": 175,
+            "FAIL": 4
+          },
+          "registered": 179,
+          "failed_names": [
+            "asahi - mesa:asahi-g17p-gallium-blit",
+            "asahi - mesa:asahi-t6041-gallium-blit",
+            "asahi - mesa:asahi-t6041x-gallium-blit",
+            "asahi - mesa:asahi-g17p-gallium-blit-encode"
+          ]
+        },
+        "test_only_derivative": {
+          "exit": 0,
+          "testlog_present": true,
+          "shipping_driver_changed": false,
+          "baseline_result_unchanged": true,
+          "native_gpu_tested": false,
+          "counts": {
+            "OK": 179
+          },
+          "registered": 179,
+          "failed_names": []
+        },
+        "shipping_source_modified": false,
+        "package_installed": false,
+        "historical_official_package_identity_reproduced": false,
+        "native_gpu_tested": false,
+        "destdir_is_ready_omarchy_package": false
+      }
+    },
+    "userland": {
+      "reference": {
+        "distribution": "Arch Linux ARM",
+        "init": "systemd",
+        "desktop": "Hyprland 0.57.2",
+        "mesa_source_commit_prefix": "10161a78e60",
+        "packages": [
+          {
+            "name": "mesa-aurora",
+            "version": "1:26.3.0_devel.202611101320.10161a78e60-1",
+            "official_asset_sha256": "2d024c8d1e3a304ee620f97eb132b00dbcbc6c0fa0e4df58562e9e05167f9825"
+          },
+          {
+            "name": "vulkan-aurora",
+            "version": "1:26.3.0_devel.202611101320.10161a78e60-1",
+            "official_asset_sha256": "afa878bf490c895532caffcb8aa644fa4632525562b39855799a77efd5e6df8e"
+          },
+          {
+            "name": "vulkan-icd-loader",
+            "version": "1.4.363.0-1",
+            "official_asset_sha256": "aac2d10b977d9a0e7f7e45a4dd0799aa0256f6df2a32baf8231cd027b342e993"
+          }
+        ],
+        "asset_admission": "Exact official release/package index SHA256; no signature-verification claim or qualification of different repacks"
+      },
+      "omarchy_integration_status": "NOT_QUALIFIED",
+      "ready_image_board": "J714s",
+      "ready_image_eligible": false,
+      "required_package_guard_board": "J716c",
+      "package_guard": {
+        "status": "PURE_TESTED_NOT_INSTALLED",
+        "implementation": "native/stack/j716c-community/package_guard.py",
+        "templates": [
+          "00-ilinux-j716c-packages.hook",
+          "01-ilinux-j716c-paths.hook"
+        ],
+        "policy": "Freeze matched boot and graphics replacements pending separate review",
+        "real_alpm_runtime_qualified": false,
+        "installed": false
+      }
+    },
+    "host_guardian": {
+      "status": "MISSING_MATCHED_DEPLOYMENT",
+      "required": true,
+      "source_commit": null,
+      "binary_sha256": null,
+      "package_update_guard_is_not_host_guardian": true,
+      "source_contract": "native/stack/j716c-community/watchdog-contract.md",
+      "offline_lease_component": "native/stack/j716c-community/lease.py",
+      "live_writer_implemented": false,
+      "pre_linux_arming_qualified": false,
+      "physical_expiry_tested": false
+    },
+    "generic_stage1_candidate": {
+      "repository": "https://github.com/cameroncooper/aura",
+      "source_commit": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+      "build_job": "097",
+      "build_status": "BUILD_PASS_OFFLINE",
+      "enrolled": false,
+      "publisher_installed_identity": false,
+      "local_artifacts": [
+        {
+          "role": "stage1.aura-boot-128m.macho",
+          "path": "build/j716c-community-graphics/build-v1/job/out/aura/stage1/aura-boot-128m.macho",
+          "bytes": 153190400,
+          "sha256": "c4d3d52decadc850474eb9d4509abf8c1b330117c9a338c2dd197b7856f9d01c",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "stage1.aura-boot.macho",
+          "path": "build/j716c-community-graphics/build-v1/job/out/aura/stage1/aura-boot.macho",
+          "bytes": 1818624,
+          "sha256": "61bf333347c2a59b99810aeb7263ba298d83c5a8c946bc4d7d75461449ea3bef",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        },
+        {
+          "role": "stage1.padding.json",
+          "path": "build/j716c-community-graphics/build-v1/job/out/aura/stage1/padding.json",
+          "bytes": 620,
+          "sha256": "44be047565752d889f4466cf210045a1ad30d83d9c852bc1de523a1423806ec7",
+          "scope": "GENERIC_OFFLINE_ONLY"
+        }
+      ],
+      "padding_methods_passed": 24,
+      "firmware_acceptance_verified": false,
+      "watchdog_arming_qualified": false,
+      "factory_configuration": "BLANK_PROXY_ONLY",
+      "esp_configured": false,
+      "ram_chainload_qualified": false,
+      "direct_composite_qualified": false
+    }
+  },
+  "firmware": {
+    "required": {
+      "os_version": "27.2.1",
+      "os_build": "26B131",
+      "mboot": "20457.41.3"
+    },
+    "recorded": {
+      "os_version": "26.6.2",
+      "os_build": "25G83",
+      "source": "Generic running OS version/build and retained Lab version observation; no new Lab, policy or boot-object read",
+      "current_system_firmware": "mBoot-20457.1.29",
+      "current_running_os_firmware": "UNKNOWN",
+      "firmware_observation_scope": "RUNNING_OS_AND_SYSTEM_FIRMWARE_ONLY_NOT_LAB",
+      "running_os_unknown_reason": "Chosen firmware-version CFData exceeds bounded reader limit; rejected contents not read",
+      "lab_firmware_queried": false
+    },
+    "qualification": {
+      "current_system_firmware": "OBSERVED_20457.1.29_NOT_MATCHED_STACK_QUALIFIED",
+      "lab_os_iboot": "UNQUALIFIED",
+      "lab_paired_recovery": "UNQUALIFIED",
+      "lab_firmware_payloads": "UNQUALIFIED",
+      "required_update_scope": "UNRESOLVED",
+      "original_update_alone_qualifies_lab": false,
+      "matching_version_strings_alone_qualify_deployment": false
+    },
+    "update_authorized": false,
+    "apple_firmware_payloads_in_repository": false,
+    "availability": {
+      "record": "research/attempt31ay-installer-availability-2026-11-16.json",
+      "apple_generic_board": "J716cAP",
+      "exact_build_advertised_for_board": true,
+      "exact_restore_object_head_available": true,
+      "restore_payload_downloaded": false,
+      "whole_restore_sha256_computed": false,
+      "tss_signing_checked": false,
+      "installer_package_trust_verified": false,
+      "community_automatic_update_executor_ready": false,
+      "proposed_route": "Qualify Apple installer refresh of existing Lab; no update authorized"
+    }
+  },
+  "runtime_contract": {
+    "cpu_ceiling_profile": "approximately 2 GHz with checked temperature telemetry",
+    "smc_fan_control": "firmware-owned",
+    "shallow_wfi_default_enabled": false,
+    "shallow_wfi_opt_in": "j716c.wfi=probe",
+    "apple_keep_idle_nop_overrides_wfi": true,
+    "rtc_runtime_dt_enabled": false,
+    "external_atc2_runtime_dt_enabled": false,
+    "suspend_and_deep_idle_qualified": false,
+    "usb_serial_or_ssh_qualified": false,
+    "usb_plus_wfi_tree_qualified": false,
+    "native_reference_is_persistent_omarchy": false,
+    "macos_performance_or_power_parity_qualified": false
+  },
+  "deployment_gates": [
+    {
+      "id": "exact_board_source_stack",
+      "status": "PINNED_SOURCE_ONLY",
+      "required": true
+    },
+    {
+      "id": "matched_offline_build_and_modules",
+      "status": "BUILD_PASS_OFFLINE",
+      "required": true
+    },
+    {
+      "id": "firmware_transition_and_lab_refresh_plan",
+      "status": "BLOCKED",
+      "required": true
+    },
+    {
+      "id": "matched_installed_stage1_identity_and_recipe",
+      "status": "BLOCKED",
+      "required": true
+    },
+    {
+      "id": "host_watchdog_guardian_and_recovery",
+      "status": "BLOCKED",
+      "required": true
+    },
+    {
+      "id": "j716c_userland_and_package_update_guards",
+      "status": "OFFLINE_GUARD_TESTED",
+      "required": true
+    },
+    {
+      "id": "concrete_kit_manual_rescue_and_owner_approval",
+      "status": "BLOCKED",
+      "required": true
+    },
+    {
+      "id": "native_cpu_gpu_network_and_storage_validation",
+      "status": "NOT_RUN",
+      "required": true
+    }
+  ],
+  "native_ready": false,
+  "restart_ready": false,
+  "update_authorized": false
+}

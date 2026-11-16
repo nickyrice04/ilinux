@@ -1,5 +1,29 @@
 # Decisions Log
 
+### 31AY — adopt built community sources, preserve baseline evidence, November 16
+
+Use pinned J716c kernel a59e709c/config/modules/DT, Aura 9da and Mesa 10161a78 as
+the implementation foundation. Their actual VM builds pass. Preserve publisher
+attribution and historical binary identities; record our own artifacts and
+the two qualified tool-metadata differences. Do not call static 18-core topology
+or compiler success native SMP/GPU operation or macOS parity.
+
+Keep Mesa's intentional AGX3 CPU-transfer safety policy. Fix only the stale
+test contract in a separate derivative, with additional pixel/format/padding
+checks and all other assertions retained. Original 175/4 and derivative 179/0
+are distinct; unchanged shipping artifacts and guest failure status remain.
+
+Build our own public-source Stage1 candidate rather than require a private
+publisher binary, while retaining blank/proxy versus ESP configuration scope.
+Prefer qualification of partition-free RAM routes before proposing partitions.
+Apple's advertised 27.2.1/26B131 baseline is a firmware transition to plan, not
+authorization to run an unfinished automatic updater or change Original.
+
+Retain reviewed AX preservation/rescue logic; new artifacts and post-transition
+baseline need a new kit, not old anchors/spent state. Pure update guards/lease
+tests do not replace real ALPM/guardian/rescue qualification. M1 reviews offline;
+no server, staging, restart, policy, firmware, security or volume change follows.
+
 ### M1 — 31AX offline reset/rescue review PASS; deployment gates remain, November 15
 
 Reviewed a3bbd5e: 22 AX/14 AW/10 AV/190 AU pins and 386 prior evidence/closed

@@ -1,0 +1,160 @@
+{
+  "actual_signatures_verified": 7,
+  "alarm_signature_authority": "EXISTING_FULL_OR_ULTIMATE_TRUST_AND_CURRENT_UNIQUE_ACTUAL_SIGNER",
+  "all_modules_aarch64_and_release_match": true,
+  "artifact_validation_passed": true,
+  "bindgen_binary_sha256": "898c2a5364f33b7f8c495de4ad499e8eacdee234f021ff94a5348afdd7700c77",
+  "build_seconds": 548,
+  "case_sensitive_tmpfs_gib": 32,
+  "date": "2026-11-16",
+  "full_config": {
+    "all_option_differences": [
+      {
+        "option": "CONFIG_CC_CAN_LINK",
+        "reference": null,
+        "resolved": "y"
+      },
+      {
+        "option": "CONFIG_PAHOLE_VERSION",
+        "reference": "131",
+        "resolved": "132"
+      }
+    ],
+    "byte_identical": false,
+    "debug_info_disabled_for_pahole_exception": true,
+    "exception_source": "https://github.com/cameroncooper/linux/blob/a59e709c737777495c84541c6afb6c862bb79227/init/Kconfig",
+    "full_reference_options": 10123,
+    "native_ready": false,
+    "qualified_metadata_exceptions": [
+      {
+        "option": "CONFIG_CC_CAN_LINK",
+        "reason": "SUCCESSFUL_USER_LINK_PROBE",
+        "reference": null,
+        "resolved": "y"
+      },
+      {
+        "option": "CONFIG_PAHOLE_VERSION",
+        "reason": "PAHOLE_UNUSED_WITH_DEBUG_INFO_NONE",
+        "reference": "131",
+        "resolved": "132"
+      }
+    ],
+    "reference_sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8",
+    "resolved_options": 10124,
+    "resolved_sha256": "c674ec637dcc1bae70cfb5e0d2fb8ab4ec2f4a331776c983e07de68791389acd",
+    "schema": "ilinux096-full-config-comparison-v1",
+    "semantic_match": true,
+    "substantive_differences": []
+  },
+  "guest_job_exit": 0,
+  "guest_package_installs": 0,
+  "guest_package_sets_unchanged": true,
+  "host_boot_policy_firmware_or_settings_changed": false,
+  "host_installs": 0,
+  "image_page_bytes": 16384,
+  "input_count": 21,
+  "input_total_bytes": 487044788,
+  "kernel_commit": "a59e709c737777495c84541c6afb6c862bb79227",
+  "kernel_release": "7.3.0-j716c-bringup-unified",
+  "kernel_source_tree": "5960d8ab03fef0f87e91e84fe1a8d969173da8de",
+  "make_jobs": 6,
+  "memory_gib": 48,
+  "module_archive_retained_private": true,
+  "module_casefold_collisions_observed": 0,
+  "module_count": 1749,
+  "native_hardware_tested": false,
+  "native_performance_measured": false,
+  "native_ready": false,
+  "network_enabled": false,
+  "new_disks": 0,
+  "original_unit_methods": 30,
+  "postbuild_preflight_hardening": {
+    "compiler_source_or_options_changed": false,
+    "details": "Exact recipe-origin manifest equality now required by host and guest; v4 actual manifest equality independently checked.",
+    "files_changed": [
+      "prepare.py",
+      "build-host.py"
+    ],
+    "new_control_file": "test_manifest.py",
+    "rebuild_required_for_this_preflight_only_change": false
+  },
+  "producer_manifest_equals_public_recipe": true,
+  "producer_v4_recipe_bindings": {
+    "build-host.py": "08f930788aaa0fb9de5244cbf8a094ade961a3a46cb69ee908ca70a20606d78a",
+    "check_artifacts.py": "32344a89fb820be0f92b7b5586ac455c4c731b0f7ab5f8d5d99ee0f5b2872588",
+    "check_config.py": "5174c4f95b4c97445b2df79d15d7b4c10a904c535e738e66b6f42fa83abbe163",
+    "fdt_read.py": "97e897fdf12de19afa26a2303b0bcc7377cc28d1078577930f275eca1b590935",
+    "inputs.json": "1cd23f3f8e7ee8b9320f9ca0d1265734c5fdd0d46bd1db33caade633dd2105a3",
+    "inventory-host.py": "763257187b4821a99dc613e699f6e2679169443c157e89ad964b52fc8d073fb9",
+    "inventory.sh": "4431f19034214d345545cbdfd525a040bf809c24a05043376a0b99d09648584a",
+    "prepare.py": "7778cd992546c81aa103cd801c2de6fbed081a1f60309fa3a46a61d05b9f0536",
+    "run.sh": "16958e752e0738a42470205f7d28e9f5aed1f036fc79f4e64154bf1c27334abc",
+    "source_archive.py": "0e5bfc4cf2ad45d8dd16368aed8ff8f2727425c4f00ef9484f1a483f6487a95d",
+    "static_dt.py": "24b4068bf4be5a5680e4ddab710a2e1fa68ec49794bb12e0b615abec7fcae5c9",
+    "test_config.py": "8eee4f57e20dad17741f8e529d07769b1e54120119c719ff52ff99d72df6d96b",
+    "test_signatures.py": "48dd71eb510296448a1530e7fb1c97738d4bd0638465709d400047c862057518",
+    "test_source_archive.py": "000ff25b26f1d5d141478765065cb5c4a5862347d08f6e0d00297b09ba86a7fe"
+  },
+  "producer_v4_recipe_unchanged": true,
+  "public_artifact_metadata": {
+    "Image": {
+      "bytes": 46057984,
+      "sha256": "623256d6cb8eeaf9c718a382a2bce59de7ab0b3ffb7c2d399cffc4a979292eae"
+    },
+    "Image.gz": {
+      "bytes": 16764671,
+      "sha256": "9885e0154605ba37ff35c6415888dc7f7484c8de1a9f13c6fed2684aad0eed7e"
+    },
+    "kernel.config": {
+      "bytes": 330830,
+      "sha256": "c674ec637dcc1bae70cfb5e0d2fb8ab4ec2f4a331776c983e07de68791389acd"
+    }
+  },
+  "publisher_Image_gz_identical": false,
+  "publisher_bindgen_binary_identical": false,
+  "raw_upstream_dtb_private_and_nondeployable": true,
+  "remaining_gates": [
+    "Matching firmware and boot chain",
+    "Aura Stage1 and Stage2",
+    "Graphics userspace",
+    "Guardian and per-device ADT inputs",
+    "J716c package guard",
+    "Actual Recovery/runtime qualification",
+    "Owner authorization before native changes"
+  ],
+  "rust_manifest_signature_authority": "PINNED_OFFICIAL_RUST_KEY_ONLY",
+  "schema": "ilinux096-producer-validation-v1",
+  "scope": "OFFLINE_ARM64_VM_BUILD_ONLY",
+  "signature_hash_algorithm_ids": [
+    10
+  ],
+  "signature_security_overrides": false,
+  "source_archive_complete_tree_proof": {
+    "archive_bytes": 278439499,
+    "archive_sha256": "27d65a805424c338efb2f66d2e217ac3d701f6330c27af0881f90c76d4ed0dbb",
+    "expanded_bytes": 1676679297,
+    "files": 98476,
+    "git_tree": "5960d8ab03fef0f87e91e84fe1a8d969173da8de",
+    "schema": "ilinux096-source-tree-v1",
+    "source_executed": false,
+    "source_extracted_on_host": false,
+    "symlinks": 125
+  },
+  "static_128MiB_fit": true,
+  "static_core_clusters": [
+    "M",
+    "M",
+    "P"
+  ],
+  "static_cpu_count": 18,
+  "status": "PASS",
+  "toolchain_versions": {
+    "bindgen": "bindgen 0.73.2",
+    "clang": "clang version 22.1.8",
+    "ld.lld": "LLD 22.1.8 (compatible with GNU linkers)",
+    "rustc": "rustc 1.96.1 (31fca3adb 2026-06-26)"
+  },
+  "unit_skips": 0,
+  "vcpus": 8,
+  "vm_exit": 0
+}

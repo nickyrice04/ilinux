@@ -1,0 +1,103 @@
+{
+  "schema": "ilinux31ay-stage1-storage-contract-v1",
+  "as_of": "2026-11-16",
+  "scope": "EXACT_PUBLIC_SOURCE_ONLY_NO_HOST_OR_HARDWARE_ACTION",
+  "source": {
+    "repository": "https://github.com/cameroncooper/aura",
+    "commit": "9da61857f9d9262bd64c023fbc1b18315b12d0af"
+  },
+  "artifact_role": {
+    "configuration": "RELEASE=1 CHAINLOADING=1 ESP_STAGE2=0",
+    "bare_factory_config": "BLANK",
+    "bare_factory_role": "PROXY_ONLY_NOT_READY_OS_LOADER",
+    "padded_macho_does_not_supply_esp_binding": true
+  },
+  "storage_mode": {
+    "filled_config_requires": [
+      "Private local ESP PARTUUID",
+      "Relative Stage2 path",
+      "Valid configuration CRC"
+    ],
+    "standard_stage2_path": "m1n1/boot-ctxr.bin",
+    "read_backend": "INTERNAL_NVME_FAT",
+    "lab_apfs_data_is_esp": false,
+    "new_esp_or_partition_authorized": false,
+    "automatic_apfs_stage2_load_qualified": false
+  },
+  "no_new_partition_options": [
+    {
+      "id": "PROXY_RAM_UPLOAD",
+      "public_source_mechanism": true,
+      "source": "proxyclient/tools/chainload.py",
+      "t6050_run_base_guards": [
+        "Exact J716c/model/board",
+        "EL2",
+        "BootArgs revision 3",
+        "Parked cold secondaries",
+        "Inherited CTXR window",
+        "Heap/firmware placement",
+        "Preserved SEPFW"
+      ],
+      "live_abi_carrier_upload_handoff_qualified": false
+    },
+    {
+      "id": "DIRECT_COMPOSITE_MACHO",
+      "public_source_mechanism": true,
+      "source": "src/payload.c",
+      "parts": [
+        "Matching Aura",
+        "Compatible kernel DT",
+        "Kernel",
+        "Minimal RAM initramfs",
+        "Reviewed chosen records"
+      ],
+      "requires_chainload_or_boot_storage_spec": false,
+      "composition_layout_provenance_qualified": false,
+      "large_omarchy_root_can_be_blindly_appended": false,
+      "dt_initrd_must_avoid_exec_window": true
+    }
+  ],
+  "transport_layers": {
+    "aura_cdc_source_exists": true,
+    "aura_t6050_cdc_live_link_qualified": false,
+    "public_guarded_cdc_workflow_boards": [
+      "J813",
+      "J873g"
+    ],
+    "j716c_workflow_qualified": false,
+    "linux_usb_failure_proves_aura_kis_failure": false,
+    "existing_boot021_client_abi_automatically_matches_new_aura": false
+  },
+  "remaining_gates": [
+    "Matched firmware",
+    "New candidate/source/artifact binding",
+    "Transport and resident ABI for proxy route",
+    "Inline payload layout for composite route",
+    "Safe J716c runtime DT without foreign per-unit data",
+    "Private firmware and RAM root provisioning",
+    "Large Omarchy root transfer channel",
+    "Pre-Linux physical watchdog",
+    "Manual rescue and Original return",
+    "New owner-reviewed transaction"
+  ],
+  "source_files": [
+    "src/stage1_config.c",
+    "src/chainload.c",
+    "src/boot_storage.c",
+    "rust/src/chainload.rs",
+    "src/payload.c",
+    "src/stage1_proxy.c",
+    "src/usb.c",
+    "docs/cdc-boot.md",
+    "proxyclient/tools/chainload.py"
+  ],
+  "settings_changed": false,
+  "volume_queried": false,
+  "boot_object_queried": false,
+  "device_contacted": false,
+  "vm_run": false,
+  "foreign_code_executed": false,
+  "new_partition_proposed_for_current_task": false,
+  "native_ready": false,
+  "restart_ready": false
+}

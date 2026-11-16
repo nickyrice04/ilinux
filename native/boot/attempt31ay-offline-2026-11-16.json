@@ -1,0 +1,273 @@
+{
+  "schema": "ilinux31ay-community-reproduction-v1",
+  "date": "2026-11-16",
+  "scope": "OFFLINE_SOURCE_BUILD_AND_PUBLIC_FIRMWARE_METADATA_ONLY",
+  "status": "SOURCE_BUILDS_PASS_BASELINE_TEST_FAILURES_RETAINED_DERIVATIVE_PASS_NATIVE_HOLD",
+  "accepted_M1_review": {
+    "commit": "ee4f70cbf177d77e3144be123a84065ec96b1d43",
+    "reviewed_implementation": "a3bbd5e01eb8dc9df5f8ad3bc4af0d81ee66127e",
+    "AX_source_pins_unchanged": 22,
+    "historical_controller_suites_reused_not_rerun": true
+  },
+  "target": {
+    "model": "Mac17,6",
+    "board": "J716c",
+    "soc": "T6050",
+    "gpu": "G17C",
+    "physical_cpus": 18
+  },
+  "kernel": {
+    "receipt": "virtualization/jobs/096-j716c-community-kernel/validation.json",
+    "commit": "a59e709c737777495c84541c6afb6c862bb79227",
+    "source_tree": "5960d8ab03fef0f87e91e84fe1a8d969173da8de",
+    "release": "7.3.0-j716c-bringup-unified",
+    "build_seconds": 548,
+    "image_page_bytes": 16384,
+    "module_count": 1749,
+    "modules_aarch64_and_release_match": true,
+    "static_cpu_count": 18,
+    "native_cpu_startup_verified": false,
+    "publisher_binary_identical": false,
+    "publisher_bindgen_binary_identical": false,
+    "config_qualified_metadata_exceptions": [
+      {
+        "option": "CONFIG_CC_CAN_LINK",
+        "reason": "SUCCESSFUL_USER_LINK_PROBE",
+        "reference": null,
+        "resolved": "y"
+      },
+      {
+        "option": "CONFIG_PAHOLE_VERSION",
+        "reason": "PAHOLE_UNUSED_WITH_DEBUG_INFO_NONE",
+        "reference": "131",
+        "resolved": "132"
+      }
+    ],
+    "producer_v4_recipe_bindings_checked": 14,
+    "postbuild_preflight_only_hardening_recorded": true
+  },
+  "graphics": {
+    "receipt": "research/attempt31ay-graphics-2026-11-15.json",
+    "builds": {
+      "generic_stage1": "PASS_NEW_CANDIDATE_NOT_ENROLLED",
+      "aura_graphics_stage2": "PASS",
+      "llvm22_translator": "PASS_WITH_GENERATED_ROUNDTRIP",
+      "mesa_gallium_asahi_vulkan_wayland": "PASS_WITH_FIVE_LIBRARIES_AND_DESTDIR"
+    },
+    "complete_source_trees_match": true,
+    "baseline_Mesa_tests": {
+      "exit": 1,
+      "counts": {
+        "OK": 175,
+        "FAIL": 4
+      },
+      "registered": 179,
+      "failed_names": [
+        "asahi - mesa:asahi-g17p-gallium-blit",
+        "asahi - mesa:asahi-t6041-gallium-blit",
+        "asahi - mesa:asahi-t6041x-gallium-blit",
+        "asahi - mesa:asahi-g17p-gallium-blit-encode"
+      ]
+    },
+    "test_only_derivative": {
+      "exit": 0,
+      "testlog_present": true,
+      "shipping_driver_changed": false,
+      "baseline_result_unchanged": true,
+      "native_gpu_tested": false,
+      "counts": {
+        "OK": 179
+      },
+      "registered": 179,
+      "failed_names": []
+    },
+    "shipping_driver_changed": false,
+    "producer_v3_source_bindings_checked": 33,
+    "Aura_artifact_identities_equal_across_three_builds": 15,
+    "generic_Stage1_factory_mode": "BLANK_PROXY_ONLY_NOT_ENROLLED",
+    "Mesa_DESTDIR_is_installable_native_Omarchy_package": false
+  },
+  "root_lightweight_tests": {
+    "kernel": {
+      "methods": 30,
+      "status": "PASS",
+      "skips": 0
+    },
+    "stack_package_lease": {
+      "methods": 39,
+      "status": "PASS",
+      "skips": 0
+    },
+    "graphics_provenance": {
+      "methods": 11,
+      "status": "PASS",
+      "skips": 0
+    },
+    "firmware_reader_fake_API": {
+      "methods": 19,
+      "status": "PASS",
+      "skips": 0
+    },
+    "total_methods": 99
+  },
+  "Linux_VM_lightweight_tests": {
+    "archive_boundary_methods": 7,
+    "independent_git_tree_methods": 4,
+    "stack_validation_methods": 21,
+    "package_guard_methods": 8,
+    "pure_lease_methods": 10,
+    "padding_methods": 24,
+    "derivative_transform_methods": 6,
+    "all_listed_methods": "PASS",
+    "skips": 0
+  },
+  "artifact_record_verification": {
+    "manifest": "native/stack/j716c-community/manifest.json",
+    "held_regular_files_checked_by_size_and_sha256": 15,
+    "all_match": true,
+    "raw_source_DTB_scope": "PRIVATE_NOT_DEPLOYABLE",
+    "compiled_outputs_committed_or_uploaded": false
+  },
+  "firmware": {
+    "required_reference": {
+      "os_version": "27.2.1",
+      "os_build": "26B131",
+      "mboot": "20457.41.3"
+    },
+    "current_system_observed": "mBoot-20457.1.29",
+    "current_running_OS_firmware": "UNKNOWN",
+    "selected_Lab_firmware": "UNKNOWN_NOT_QUERIED",
+    "current_running_OS_version_build": [
+      "26.6.2",
+      "25G83"
+    ],
+    "Apple_public_metadata_advertises_exact_J716cAP_build": true,
+    "restore_object_HEAD_available": true,
+    "restore_payload_downloaded": false,
+    "installer_package_trust_verified": false,
+    "TSS_signing_checked": false,
+    "community_automatic_update_executor_ready": false,
+    "update_authorized": false,
+    "original_update_alone_qualifies_Lab": false
+  },
+  "source_findings": [
+    "research/attempt31ay-firmware-2026-11-15.md",
+    "research/attempt31ay-installer-availability-2026-11-16.md",
+    "research/attempt31ay-stage1-storage-2026-11-16.md",
+    "native/stack/j716c-community/watchdog-contract.md",
+    "kernel/experiments/j716c-mesa-blit-tests/README.md"
+  ],
+  "independent_findings_fixed": [
+    "Exact signing/primary key expiry, disabled and uniqueness checks",
+    "Component-specific build output completeness and unique paths",
+    "Raw foreign source-DTB private scope",
+    "CPU ceiling and shallow-WFI metadata constraints",
+    "Asahi Stage2 source, Gallium and GLVND update-guard paths"
+  ],
+  "protection": {
+    "host_installs": 0,
+    "new_VM_disks": 0,
+    "VM_network_enabled": false,
+    "boot_security_firmware_volume_or_default_changes": false,
+    "live_policy_or_selected_object_queries": false,
+    "live_watchdog_or_reset_writer": false,
+    "old_anchors_or_consumed_state_reset": false,
+    "new_REA_or_proprietary_decompilation_claimed": false,
+    "public_sources_sufficient_for_this_step": true,
+    "Original_Full_and_return_confirmations_retained": true
+  },
+  "remaining": [
+    "Exact supported Lab firmware/paired-Recovery transition and rescue",
+    "Matched partition-free RAM transport or composed payload ABI/layout",
+    "Native Omarchy root and proper desktop/package integration",
+    "Pre-Linux watchdog and sole-owner live lease/physical expiry qualification",
+    "Genuine ALPM runtime, local runtime DT/firmware and fresh kit bindings",
+    "Owner approval for a concrete update/boot transaction",
+    "Native CPU/GPU/network/storage correctness and macOS performance/efficiency comparison"
+  ],
+  "native": {
+    "Linux": "NOT_RUN",
+    "SMP": "NOT_RUN",
+    "GPU": "NOT_RUN",
+    "performance_parity": "NOT_MEASURED",
+    "ready": false,
+    "restart_ready": false
+  },
+  "next": "M1 offline review via tools/m1n1-client/attempt31ay-instructions.md; no restart or staging",
+  "source_sha256": {
+    "kernel/experiments/j716c-mesa-blit-tests/README.md": "2170eeba92c8e0f2770894b637c4467ec281594919393ca7eb4b51d26beb0535",
+    "kernel/experiments/j716c-mesa-blit-tests/cpu_roundtrip.inc": "a562058092b73848b5fe04d8fb82b72711e063d39bfe01c498e8a96ab1f3954b",
+    "kernel/experiments/j716c-mesa-blit-tests/findings.json": "893edfc9d96c62698809d16dde487257112d321a6971b8520e5776511bc4acb1",
+    "kernel/experiments/j716c-mesa-blit-tests/prepare_test.py": "2ec44b090e769870c443f800b1e68f9dacedaa10a0409dfd518e7573ec93c213",
+    "kernel/experiments/j716c-mesa-blit-tests/test-only.patch": "15bcaff0dbdd9cac9712403730196e42714ac39c1d77b270692cf99d609c9e65",
+    "kernel/experiments/j716c-mesa-blit-tests/test_prepare.py": "9594849af7500ab4e37197d661169a84d242c71f33349b1476889a38e483812b",
+    "native/boot/attempt31ay-plan.md": "298670eda237b6ddbd90bb046e4e8304c75001662d241ae37520145c0d2c5fa6",
+    "native/stack/j716c-community/00-ilinux-j716c-packages.hook": "4a4b4b34eb585216e39c2ce52e5c90710359b5c738f9d78d5c0b850ca6eaa0df",
+    "native/stack/j716c-community/01-ilinux-j716c-paths.hook": "93e8df7bd316ed42baf0c0eaf92c6f468f98a4fbf8fb40274184a7a3dd1d6782",
+    "native/stack/j716c-community/README.md": "319dd86b85a1630d4da66e7fb6957839d839f0c46ff7a34075225142fd966fc4",
+    "native/stack/j716c-community/lease.py": "5a396825e814288b3ff3f32ab20a034d8daabb2d5a8091c123653c76b0bd8091",
+    "native/stack/j716c-community/manifest.json": "56070e3237023f9a8abadc77be8ff4bb02c3fdd7ef7374299f43dbba327fd1e3",
+    "native/stack/j716c-community/package_guard.py": "c2b05d78ddae336637d6f1999d4d7bf9487e7d9f61c97dcaa0bf567cabe61b62",
+    "native/stack/j716c-community/test_lease.py": "7a8f37b084a454ae683d3538a20eb5e101f7741127ea652487a84733531b989f",
+    "native/stack/j716c-community/test_package_guard.py": "4807fd39fa268fb5ccd8879e033b2771b3251b6c3efdb4ec28a7510443de2c6a",
+    "native/stack/j716c-community/test_validate.py": "e1b2308dcce4ba8159617075a01f1157bc32bce0a057ff6d539cc9073b5aa9e8",
+    "native/stack/j716c-community/validate.py": "b8cfa8984cbc953c716f141b00e74ea705aa5939296326511bd3b3a4f0312633",
+    "native/stack/j716c-community/watchdog-contract.json": "839c2291f1beb0c8b90a204ca394d3b275d7878064038a1772b8b91f178b3154",
+    "native/stack/j716c-community/watchdog-contract.md": "03cd07e95272ffd16820e7e7a42c953acc0bf6e6a1617d012bf49cb07be5fb46",
+    "research/attempt31ay-firmware-2026-11-15.json": "d9d2d982cd32986e9d726ed633390371aa035be74f96120722621af7d38ce0be",
+    "research/attempt31ay-firmware-2026-11-15.md": "2607e6798624cb1cc59e65ecb48ee039a37d197e6ee894b3d9c88656f1f1a4b4",
+    "research/attempt31ay-graphics-2026-11-15.json": "6b1fc5999049b08cbe3679f885a280ff291b25d8cdacce31a290b955bae2bcdb",
+    "research/attempt31ay-graphics-2026-11-15.md": "f07f44a0b469b7d87582355c95388bcbc2f7ec5ced86580b73efdd0f1d730901",
+    "research/attempt31ay-installer-availability-2026-11-16.json": "15fed17ada9a430f6788064ed6b043ef80c415f093646b36b7fc2c9c55b92ab8",
+    "research/attempt31ay-installer-availability-2026-11-16.md": "205b43c364fc740e109582d319ead4a7f87bdc577569b79a385c3259f3f6017d",
+    "research/attempt31ay-stage1-storage-2026-11-16.json": "509e1fd5853d4fdc9dcc2080669b2d2c898844c0839481ff9b8666680c1bedd2",
+    "research/attempt31ay-stage1-storage-2026-11-16.md": "854de9a7abb9d33ab11f94dd2f17b6b6b78a8cd64891dc15f87bd31c57873ac2",
+    "tools/firmware31ay/README.md": "845a4dd6f49576a6dbcd34e47f1b803ace42afe1cfaf3d6e1c9b3e1001c89bae",
+    "tools/firmware31ay/read_versions.py": "fea58000e3687e3275ecc29d1a265835318eb51b7eb72be93ed3fa8c30bf0031",
+    "tools/firmware31ay/test_read_versions.py": "914f0b0142b716bc59d62536d21d2892267e0d20ba296184cbba4a873d4d55e0",
+    "tools/m1n1-client/attempt31ay-instructions.md": "52a4109a71e5da6519ad578dc10a88ff9676df1efdd32dfc32c1d45d24348bcc",
+    "virtualization/jobs/096-j716c-community-kernel/README.md": "5c4fbf22d0b2ddd46d71141b0622845105a063226a22b36e6611b0612c014bf7",
+    "virtualization/jobs/096-j716c-community-kernel/build-host.py": "70ce695b673565e0bb826c7d6c27a4e27b3df1cdfaec56f9b96ff9ab7a6818e7",
+    "virtualization/jobs/096-j716c-community-kernel/check_artifacts.py": "32344a89fb820be0f92b7b5586ac455c4c731b0f7ab5f8d5d99ee0f5b2872588",
+    "virtualization/jobs/096-j716c-community-kernel/check_config.py": "5174c4f95b4c97445b2df79d15d7b4c10a904c535e738e66b6f42fa83abbe163",
+    "virtualization/jobs/096-j716c-community-kernel/fdt_read.py": "97e897fdf12de19afa26a2303b0bcc7377cc28d1078577930f275eca1b590935",
+    "virtualization/jobs/096-j716c-community-kernel/inputs.json": "1cd23f3f8e7ee8b9320f9ca0d1265734c5fdd0d46bd1db33caade633dd2105a3",
+    "virtualization/jobs/096-j716c-community-kernel/inventory-host.py": "763257187b4821a99dc613e699f6e2679169443c157e89ad964b52fc8d073fb9",
+    "virtualization/jobs/096-j716c-community-kernel/inventory.sh": "4431f19034214d345545cbdfd525a040bf809c24a05043376a0b99d09648584a",
+    "virtualization/jobs/096-j716c-community-kernel/prepare.py": "592eec0609d51f485e51acaddb014cff2a323ac99cd8284708184e97c3b161d5",
+    "virtualization/jobs/096-j716c-community-kernel/run.sh": "16958e752e0738a42470205f7d28e9f5aed1f036fc79f4e64154bf1c27334abc",
+    "virtualization/jobs/096-j716c-community-kernel/source_archive.py": "0e5bfc4cf2ad45d8dd16368aed8ff8f2727425c4f00ef9484f1a483f6487a95d",
+    "virtualization/jobs/096-j716c-community-kernel/static_dt.py": "24b4068bf4be5a5680e4ddab710a2e1fa68ec49794bb12e0b615abec7fcae5c9",
+    "virtualization/jobs/096-j716c-community-kernel/test_config.py": "8eee4f57e20dad17741f8e529d07769b1e54120119c719ff52ff99d72df6d96b",
+    "virtualization/jobs/096-j716c-community-kernel/test_manifest.py": "535c9923e54963ee1dbd95848867bf83181ee4bc42884d36ef50d1d9d8644dc6",
+    "virtualization/jobs/096-j716c-community-kernel/test_signatures.py": "48dd71eb510296448a1530e7fb1c97738d4bd0638465709d400047c862057518",
+    "virtualization/jobs/096-j716c-community-kernel/test_source_archive.py": "000ff25b26f1d5d141478765065cb5c4a5862347d08f6e0d00297b09ba86a7fe",
+    "virtualization/jobs/096-j716c-community-kernel/validation.json": "11673cc8394dde49cc91ab3f4afa6c1580d02b83f8ce95aa6d7b91cd9ecd6c73",
+    "virtualization/jobs/097-j716c-community-graphics/README.md": "e7a558eff974017b4868d3a292b73f582714ba8ff5ef2b2807ca26bfc609f8c5",
+    "virtualization/jobs/097-j716c-community-graphics/build-aura.sh": "ec5abef53ccb6c1d407c904c14df0072d5ae9eefda4473a645cd17654a10c64b",
+    "virtualization/jobs/097-j716c-community-graphics/build-mesa.sh": "6107fb1e50032659733c93c30bc004ebfb487a06db2fe70452fb9eae88883aaa",
+    "virtualization/jobs/097-j716c-community-graphics/cargo-inputs.json": "82e612d3a889d1df1f23948049d6d8ed5586faf530588d824f4613e0e8f5baeb",
+    "virtualization/jobs/097-j716c-community-graphics/collect_rust_notices.py": "ed66ef8d885672c7f0a7ee11e79193382aedefb0677b84646b0f97252ac409d2",
+    "virtualization/jobs/097-j716c-community-graphics/prepare_support.py": "982ca331b3896b78e4e59a2c11a8e0215e081ed6c776ed64232346f48130e961",
+    "virtualization/jobs/097-j716c-community-graphics/run-host.py": "140c77ea618e13d4b77849624c89fc9e3666aed93ae06178bad5c9a0614460b8",
+    "virtualization/jobs/097-j716c-community-graphics/run.sh": "3d3dbdb1f8b8d4d98a1e6700a3edf54ba1e1bde389ff0f0331151534c1a5f900",
+    "virtualization/jobs/097-j716c-community-graphics/seed_cargo.py": "3841f20eeda4e95b2a202ea994118e5d74b96e4c5a2ef4a6b643ba6a2599ccdc",
+    "virtualization/jobs/097-j716c-community-graphics/source_tree.py": "d4af6a1cacee2179bde643158f23330a0d2b2774d183346056a2c5d0446370c6",
+    "virtualization/jobs/097-j716c-community-graphics/sources.json": "bcc2742052549c71d43d73e1be8e47f8f1e21a34ea0d3d23f27c75942fbd326b",
+    "virtualization/jobs/097-j716c-community-graphics/test_sources.py": "aac3d9438090891190017de2f4ab91cb2484e5bae23d19591381101698a09845",
+    "virtualization/jobs/097-j716c-community-graphics/test_tree.py": "60612db5af08c293c514c3db967345e4ecaa9c03f00f9bc9270c6d16a3638246",
+    "virtualization/jobs/097-j716c-community-graphics/toolchain-reuse.json": "9a5b3b9a02c2bbeacc247cba108599410bafecef1e465d6aaac8801cda59395d",
+    "virtualization/jobs/097-j716c-community-graphics/validate_sources.py": "3dfc07222c7c69fcf4aa46cd8d27891e04c8e02fc5481f3fafe6345ad54933e7"
+  },
+  "source_file_count": 63,
+  "publication_checks": {
+    "scoped_git_diff_whitespace": "PASS",
+    "intentional_artifact_format_exceptions": [
+      "test-only.patch unified-diff blank context lines",
+      "cpu_roundtrip.inc trailing separator for generated C insertion"
+    ],
+    "exceptions_independently_format_checked": true,
+    "privacy_scan": "Only synthetic refusal-test secret markers; no home paths, private keys or private addresses",
+    "compiled_files_excluded": true
+  }
+}

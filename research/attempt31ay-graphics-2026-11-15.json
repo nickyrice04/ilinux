@@ -1,0 +1,364 @@
+{
+  "schema": "ilinux31ay-graphics-reproduction-v1",
+  "date": "2026-11-16",
+  "status": "SOURCE_BUILDS_PASS_BASELINE_TEST_FAILURES_RETAINED_DERIVATIVE_PASS",
+  "target": "J716c/T6050/G17C",
+  "source_report_revision": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+  "sources": [
+    {
+      "name": "aura",
+      "revision": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+      "url": "https://codeload.github.com/cameroncooper/aura/tar.gz/9da61857f9d9262bd64c023fbc1b18315b12d0af",
+      "bytes": 2119457,
+      "sha256": "ead74e8b7f12d90ad64a9fab36dbe91c50720c0f24ea8695c50135759c43f1c9",
+      "member_count": 897,
+      "unpacked_bytes": 8385320,
+      "git_tree": "65cc228925b90e0af8439d8ad4ff5b4f65bbbcec"
+    },
+    {
+      "name": "mesa",
+      "revision": "10161a78e60e4057257e116d404a92bd9b78bb3c",
+      "url": "https://codeload.github.com/aurora-silicon/mesa/tar.gz/10161a78e60e4057257e116d404a92bd9b78bb3c",
+      "bytes": 140355840,
+      "sha256": "08b25bcc74b494066a9f9487c8cbe054371ace7fed582bcc4c7d8ba2b32739e8",
+      "member_count": 14762,
+      "unpacked_bytes": 460080222,
+      "git_tree": "dc9cfffcb188a4fae9f04fded513b940ccd1499e"
+    },
+    {
+      "name": "translator",
+      "revision": "ae707ecba4b0c64d85f4f7bdcabeb1fa152c0ab2",
+      "url": "https://codeload.github.com/KhronosGroup/SPIRV-LLVM-Translator/tar.gz/ae707ecba4b0c64d85f4f7bdcabeb1fa152c0ab2",
+      "bytes": 1908147,
+      "sha256": "05458d44097d472b6b4ddb7c426072fa581dd73bbc13b37eca758e763ff047a4",
+      "member_count": 1330,
+      "unpacked_bytes": 15498206,
+      "git_tree": "944880f9e9900e4f64384589c40cd8596391a0ca"
+    },
+    {
+      "name": "spirv-headers",
+      "revision": "cb42dec3830d3ac67fa449ecdc0c0f73d5e74498",
+      "git_tree": "1e1f5974d8b3ed73a937d5e43506b1fd3233aff3",
+      "url": "https://codeload.github.com/KhronosGroup/SPIRV-Headers/tar.gz/cb42dec3830d3ac67fa449ecdc0c0f73d5e74498",
+      "bytes": 595175,
+      "sha256": "117010e525fe36b1ce006e0e58a6e0a3b415aabc9179d912b92737f41f3f994f",
+      "member_count": 145,
+      "unpacked_bytes": 4187512
+    }
+  ],
+  "full_source_trees_match": true,
+  "mesa_export_eol_normalizations": 33,
+  "source_bytes_modified": false,
+  "host_checks": {
+    "archive_boundary_methods": 7,
+    "independent_git_tree_methods": 4,
+    "result": "PASS"
+  },
+  "cargo_closure": {
+    "registry_crates": 54,
+    "git_revision": "7d505fbfa37a945af5549517f47c1d2e87a8333e",
+    "cargo_version": "1.96.1",
+    "all_crate_sha256_match": true,
+    "credentials_copied": false
+  },
+  "compiler_signature_verification": "PASS_IN_ACTUAL_OFFLINE_LINUX_VM",
+  "builds": {
+    "generic_stage1": "PASS_NEW_CANDIDATE_NOT_ENROLLED",
+    "aura_graphics_stage2": "PASS",
+    "llvm22_translator": "PASS_WITH_GENERATED_ROUNDTRIP",
+    "mesa_gallium_asahi_vulkan_wayland": "PASS_WITH_FIVE_LIBRARIES_AND_DESTDIR"
+  },
+  "native_gpu": "NOT_RUN",
+  "performance_parity": "NOT_MEASURED",
+  "boot_objects_installed": 0,
+  "host_settings_changed": false,
+  "native_ready": false,
+  "restart_ready": false,
+  "crypto": {
+    "alarm_compiler_packages": 6,
+    "rust_release_manifest": 1,
+    "support_packages": 2,
+    "selected_signers_current": true,
+    "system_keyring_changes": false,
+    "weak_digest_or_trust_overrides": false
+  },
+  "toolchain": {
+    "clang": "clang version 22.1.8",
+    "ld.lld": "LLD 22.1.8 (compatible with GNU linkers)",
+    "rustc": "rustc 1.96.1 (31fca3adb 2026-06-26)",
+    "cargo": "cargo 1.96.1 (356927216 2026-06-26)",
+    "objcopy": "GNU objcopy (GNU Binutils) 2.46.0"
+  },
+  "build_environment": {
+    "schema": "ilinux097-build-environment-v1",
+    "os": "Linux",
+    "kernel": "7.1.6-vzrun2",
+    "arch": "aarch64",
+    "virtual_cpus": 8,
+    "memory_total_bytes": 55376478208,
+    "memory_available_bytes": 54708830208,
+    "tmpfs_limit_bytes": 34359738368,
+    "network_interfaces": [
+      "lo"
+    ],
+    "native_gpu_exposed": false
+  },
+  "vm_tests": {
+    "archive_boundary_methods": 7,
+    "independent_git_tree_methods": 4,
+    "stack_validation_methods": 21,
+    "package_guard_methods": 8,
+    "pure_lease_methods": 10,
+    "padding_methods": 24,
+    "derivative_transform_methods": 6,
+    "all_listed_methods": "PASS",
+    "skips": 0
+  },
+  "mesa_baseline": {
+    "exit": 1,
+    "counts": {
+      "OK": 175,
+      "FAIL": 4
+    },
+    "registered": 179,
+    "failed_names": [
+      "asahi - mesa:asahi-g17p-gallium-blit",
+      "asahi - mesa:asahi-t6041-gallium-blit",
+      "asahi - mesa:asahi-t6041x-gallium-blit",
+      "asahi - mesa:asahi-g17p-gallium-blit-encode"
+    ]
+  },
+  "mesa_test_only_derivative": {
+    "exit": 0,
+    "testlog_present": true,
+    "shipping_driver_changed": false,
+    "baseline_result_unchanged": true,
+    "native_gpu_tested": false,
+    "counts": {
+      "OK": 179
+    },
+    "registered": 179,
+    "failed_names": []
+  },
+  "derivative_source": {
+    "baseline_result_unchanged": true,
+    "derivative_test_sha256": "1c974a166a06f1996458a735886cf7c3ef50d33c18d319fac79aadbd4695db40",
+    "native_gpu_tested": false,
+    "original_test_sha256": "ec72462fd0836429d213b0be193f15a28cc798abc353a53cfcdfbdf1f84132ed",
+    "schema": "ilinux-j716c-mesa-blit-test-derivative-v1",
+    "shipping_driver_changed": false,
+    "test_only": true,
+    "third_party_execution": false,
+    "unchanged_driver_sha256": "157d26f5512f887e5ed27fb4f2aa266c2f133c0d0ef5fd77ee8ecdece1444b9b"
+  },
+  "shipping_driver_changed": false,
+  "original_test_restored": true,
+  "held_artifacts": [
+    {
+      "path": "build/j716c-community-graphics/build-v3/job/out/mesa/mesa-destdir.tar.gz",
+      "role": "mesa_destdir",
+      "bytes": 73897453,
+      "sha256": "1ea6478304790a3f6ed1d5fcce142904bdd6f02d8700109dc47630340a7ce6a2"
+    },
+    {
+      "path": "build/j716c-community-graphics/build-v3/job/out/mesa/mesa-testlog.json",
+      "role": "mesa_baseline_testlog",
+      "bytes": 816110,
+      "sha256": "b65380f96175ab2292c01d9e4f33ec64c685e6256536cc8f5f68bf726a056595"
+    },
+    {
+      "path": "build/j716c-community-graphics/build-v3/job/out/mesa/blit-derivative-testlog.json",
+      "role": "mesa_test_only_derivative_testlog",
+      "bytes": 816147,
+      "sha256": "99f6b9ae30a3d42821e90af38d7fee07ed14ce1ce25ac6a72b2fc2197b9050aa"
+    },
+    {
+      "path": "build/j716c-community-graphics/build-v3/job/out/mesa/result.json",
+      "role": "mesa_build_receipt",
+      "bytes": 1743,
+      "sha256": "2ff6e00f1c00c3ec4710565e8a3f1c83f81d9553214be6ea49c39e4ce303c3c0"
+    },
+    {
+      "path": "build/j716c-community-graphics/build-v3/job/out/aura/result.json",
+      "role": "aura_build_receipt",
+      "bytes": 2764,
+      "sha256": "7cdd2d99d4f920321350a6c0ebb101cb05a2edb4da2650496410c61d3fee7fe8"
+    }
+  ],
+  "aura_variants": {
+    "stage1": {
+      "aura.elf": {
+        "bytes": 3645576,
+        "sha256": "71888490624addfb9fb91d99353e6991f7a4c537893c7b7e653e9bbc665a98b8"
+      },
+      "aura-boot-128m.macho": {
+        "bytes": 153190400,
+        "sha256": "c4d3d52decadc850474eb9d4509abf8c1b330117c9a338c2dd197b7856f9d01c"
+      },
+      "aura.macho": {
+        "bytes": 1310720,
+        "sha256": "be101f8fb99fa88ccb85d1888547dde5babdf2434f829d9dbd29fa2288153b6e"
+      },
+      "build_cfg.h": {
+        "bytes": 65,
+        "sha256": "0c5bc1c7856ff2c67e425816ae4af29be7bcd386dd46d590d4ab214773a3001f"
+      },
+      "build_tag.h": {
+        "bytes": 60,
+        "sha256": "0e86364d1c9cce5e11e6e73a03051c17a8f3e700cc8532bba9c83392606372d8"
+      },
+      "aura-raw.elf": {
+        "bytes": 4038664,
+        "sha256": "620be5714b56b867fdd4512a9d61784fab4da8078175b5898be5d0391672c997"
+      },
+      "aura-boot.macho": {
+        "bytes": 1818624,
+        "sha256": "61bf333347c2a59b99810aeb7263ba298d83c5a8c946bc4d7d75461449ea3bef"
+      },
+      "aura.bin": {
+        "bytes": 1703936,
+        "sha256": "562202b025651c9216d50e04e7964bd33a86c1ede4ab77522db4bb7784747e19"
+      }
+    },
+    "graphics-stage2": {
+      "aura.elf": {
+        "bytes": 3672304,
+        "sha256": "76835e61669044829ffb003628275cd98f4dd2c8fffa7ea6194ed14664427e05"
+      },
+      "aura.macho": {
+        "bytes": 1310720,
+        "sha256": "d6320bd17ad28ff52f386e269a75b291410b522e707d3158e3c4d4cd8925d2f0"
+      },
+      "build_cfg.h": {
+        "bytes": 91,
+        "sha256": "c0aaf2d45461bd83768f774b060c790a982c1c7bebec2ac9477b2b49384d2e50"
+      },
+      "build_tag.h": {
+        "bytes": 69,
+        "sha256": "43ff889d7f783e415dfa3df7a2dd9176b3fbdf792114aaf3785e44ea5862b9ae"
+      },
+      "aura-raw.elf": {
+        "bytes": 6424688,
+        "sha256": "f264502269b8c5b8f5778d6f93c3d1922ce13661e3c1fe3c46529e821726d7fa"
+      },
+      "aura-boot.macho": {
+        "bytes": 4177920,
+        "sha256": "315ce6e78263f0c99685699c7563d0835dce00b78d09be6fdc274e7e240e7ebe"
+      },
+      "aura.bin": {
+        "bytes": 4063232,
+        "sha256": "1d78b7a4679e72c427e5ea0b0b8f460884fe6f732d7afb80d25ce045b914a92b"
+      }
+    }
+  },
+  "aura_three_run_reproduction": true,
+  "stage1_padding": {
+    "schema": 1,
+    "scope": "OFFLINE_LAYOUT_ONLY",
+    "window_bytes": 134217728,
+    "aura_slot_bytes": 16777216,
+    "alignment_bytes": 2097152,
+    "original_bytes": 1818624,
+    "output_bytes": 153190400,
+    "padding_bytes": 151371776,
+    "expected_kcbz": 0,
+    "expected_kcrz": 153141248,
+    "raw_slot_sha256": "562202b025651c9216d50e04e7964bd33a86c1ede4ab77522db4bb7784747e19",
+    "original_sha256": "61bf333347c2a59b99810aeb7263ba298d83c5a8c946bc4d7d75461449ea3bef",
+    "native_tested": false,
+    "enrolled": false,
+    "restart_ready": false,
+    "output_sha256": "c4d3d52decadc850474eb9d4509abf8c1b330117c9a338c2dd197b7856f9d01c"
+  },
+  "guest_source_bindings": {
+    "source_tree.py": "d4af6a1cacee2179bde643158f23330a0d2b2774d183346056a2c5d0446370c6",
+    "sources.json": "bcc2742052549c71d43d73e1be8e47f8f1e21a34ea0d3d23f27c75942fbd326b",
+    "seed_cargo.py": "3841f20eeda4e95b2a202ea994118e5d74b96e4c5a2ef4a6b643ba6a2599ccdc",
+    "build-mesa.sh": "6107fb1e50032659733c93c30bc004ebfb487a06db2fe70452fb9eae88883aaa",
+    "test_tree.py": "60612db5af08c293c514c3db967345e4ecaa9c03f00f9bc9270c6d16a3638246",
+    "validate_sources.py": "3dfc07222c7c69fcf4aa46cd8d27891e04c8e02fc5481f3fafe6345ad54933e7",
+    "cargo-inputs.json": "82e612d3a889d1df1f23948049d6d8ed5586faf530588d824f4613e0e8f5baeb",
+    "build-aura.sh": "ec5abef53ccb6c1d407c904c14df0072d5ae9eefda4473a645cd17654a10c64b",
+    "kernel-prepare.py": "592eec0609d51f485e51acaddb014cff2a323ac99cd8284708184e97c3b161d5",
+    "toolchain-reuse.json": "9a5b3b9a02c2bbeacc247cba108599410bafecef1e465d6aaac8801cda59395d",
+    "run.sh": "3d3dbdb1f8b8d4d98a1e6700a3edf54ba1e1bde389ff0f0331151534c1a5f900",
+    "prepare_support.py": "982ca331b3896b78e4e59a2c11a8e0215e081ed6c776ed64232346f48130e961",
+    "inputs.json": "1cd23f3f8e7ee8b9320f9ca0d1265734c5fdd0d46bd1db33caade633dd2105a3",
+    "test_sources.py": "aac3d9438090891190017de2f4ab91cb2484e5bae23d19591381101698a09845",
+    "collect_rust_notices.py": "ed66ef8d885672c7f0a7ee11e79193382aedefb0677b84646b0f97252ac409d2",
+    "run-host.py": "140c77ea618e13d4b77849624c89fc9e3666aed93ae06178bad5c9a0614460b8",
+    "blit-contract/cpu_roundtrip.inc": "a562058092b73848b5fe04d8fb82b72711e063d39bfe01c498e8a96ab1f3954b",
+    "blit-contract/prepare_test.py": "2ec44b090e769870c443f800b1e68f9dacedaa10a0409dfd518e7573ec93c213",
+    "blit-contract/test-only.patch": "15bcaff0dbdd9cac9712403730196e42714ac39c1d77b270692cf99d609c9e65",
+    "blit-contract/test_prepare.py": "9594849af7500ab4e37197d661169a84d242c71f33349b1476889a38e483812b",
+    "stack-guards/test_lease.py": "7a8f37b084a454ae683d3538a20eb5e101f7741127ea652487a84733531b989f",
+    "stack-guards/validate.py": "b8cfa8984cbc953c716f141b00e74ea705aa5939296326511bd3b3a4f0312633",
+    "stack-guards/package_guard.py": "c2b05d78ddae336637d6f1999d4d7bf9487e7d9f61c97dcaa0bf567cabe61b62",
+    "stack-guards/test_package_guard.py": "4807fd39fa268fb5ccd8879e033b2771b3251b6c3efdb4ec28a7510443de2c6a",
+    "stack-guards/manifest.json": "28821ad42590ab4c5b434e56b3d3429a8958b08fffe1affa5ef0b217d8307b73",
+    "stack-guards/test_validate.py": "e1b2308dcce4ba8159617075a01f1157bc32bce0a057ff6d539cc9073b5aa9e8",
+    "stack-guards/lease.py": "5a396825e814288b3ff3f32ab20a034d8daabb2d5a8091c123653c76b0bd8091",
+    "aura-helpers/test_pad_boot.py": "54eaba43e0696be5b625bbac8782410d4adf6b759f016b3732edd497c99f5b28",
+    "aura-helpers/pad_boot.py": "0f3b95bc1075c35916963c30c37c4eee6642c2cae95f264ac4744154c84b6acf",
+    "aura-helpers/collect_cargo_licenses.py": "615fc2e247bcd66ab8d42b6e116e5b349554291a87aee70b05b7ad3153da441d",
+    "support/isolate-toolchain.py": "e811c2ca216df41e36c2ef3605119e5e28123795f1cff80bea3a1178c7eb671b",
+    "support/package-space.py": "d676b6a496360ad910da9459e0054f0d9b05f7b94e2f2fb61c72d2670811c00b",
+    "support/packages.json": "b76e9072086dd3a1e36a804c0d2b6d7e9a79b5b5c32083ad038a325a930101a0"
+  },
+  "runs": {
+    "v1": {
+      "vm_exit": 0,
+      "guest_exit": 1,
+      "source_builds": "PASS",
+      "baseline_test_counts": {
+        "OK": 175,
+        "FAIL": 4
+      },
+      "export_gap": "set-e stopped before Mesa artifact staging"
+    },
+    "v2": {
+      "vm_exit": 0,
+      "guest_exit": 1,
+      "source_builds": "PASS",
+      "baseline_test_counts": {
+        "OK": 175,
+        "FAIL": 4
+      },
+      "export_gap": "obsolete per-driver DRI alias assertion; unified Gallium was installed"
+    },
+    "v3": {
+      "vm_exit": 0,
+      "guest_exit": 1,
+      "source_builds": "PASS",
+      "artifact_retention": "PASS",
+      "baseline_failure_preserved": true,
+      "test_only_derivative_counts": {
+        "OK": 179
+      }
+    }
+  },
+  "runtime_dependencies_observed": [
+    "libdrm.so.2",
+    "libz.so.1",
+    "libm.so.6",
+    "libzstd.so.1",
+    "libwayland-client.so.0",
+    "libdisplay-info.so.3",
+    "libSPIRV-Tools.so",
+    "libudev.so.1",
+    "libexpat.so.1",
+    "libstdc++.so.6",
+    "libgcc_s.so.1",
+    "libc.so.6",
+    "ld-linux-aarch64.so.1"
+  ],
+  "limitations": [
+    "No native Apple GPU/CPU startup/performance test",
+    "New generic Stage1 is not installed or publisher historical identity",
+    "No X11/GLX/GLVND desktop-package integration in this build",
+    "DESTDIR is an experimental debugoptimized research artifact, includes no-op shim, not a reviewed native distro package",
+    "Untouched upstream suite retains four stale accelerated-transfer assertions",
+    "BGRA/RGBA GPU conversion and native framebuffer correctness unqualified",
+    "Firmware/Stage1/guardian/Omarchy-root deployment gates remain separate"
+  ]
+}

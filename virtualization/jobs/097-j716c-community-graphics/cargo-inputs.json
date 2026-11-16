@@ -1,0 +1,349 @@
+{
+  "schema": "ilinux097-cargo-inputs-v1",
+  "rust_version": "1.96.1",
+  "cargo_component": {
+    "xz_url": "https://static.rust-lang.org/dist/2026-06-30/cargo-1.96.1-aarch64-unknown-linux-gnu.tar.xz",
+    "xz_hash": "02a4d7bf424ea28d574fe5b5d29e7ae99b0bc11a5920d8f28fa7408aa6a37992",
+    "filename": "cargo-1.96.1-aarch64-unknown-linux-gnu.tar.xz",
+    "bytes": 10566148
+  },
+  "rust_src_sha256": "b343b6553bc772225f6a2b5be5055017f29794dcf4e08020366b27a0a40fc1c2",
+  "project_lock_sha256": "561016fc5194d0916f30041ba6effa7c4cb3869cdd5fe7a1770de1b514f41f1c",
+  "fatfs_revision": "7d505fbfa37a945af5549517f47c1d2e87a8333e",
+  "registry_crates": {
+    "addr2line-0.25.1.crate": {
+      "name": "addr2line",
+      "version": "0.25.1",
+      "sha256": "1b5d307320b3181d6d7954e663bd7c774a838b8220fe0593c86d9fb09f498b4b",
+      "bytes": 43134
+    },
+    "adler2-2.0.1.crate": {
+      "name": "adler2",
+      "version": "2.0.1",
+      "sha256": "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa",
+      "bytes": 13366
+    },
+    "cc-1.2.0.crate": {
+      "name": "cc",
+      "version": "1.2.0",
+      "sha256": "1aeb932158bd710538c73702db6945cb68a8fb08c519e6e12706b94263b36db8",
+      "bytes": 92640
+    },
+    "cfg-if-1.0.4.crate": {
+      "name": "cfg-if",
+      "version": "1.0.4",
+      "sha256": "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801",
+      "bytes": 9360
+    },
+    "dlmalloc-0.2.11.crate": {
+      "name": "dlmalloc",
+      "version": "0.2.11",
+      "sha256": "06cdfe340b16dd990c54cce79743613fa09fbb16774f33a77c9fd196f8f3fa30",
+      "bytes": 86742
+    },
+    "foldhash-0.2.0.crate": {
+      "name": "foldhash",
+      "version": "0.2.0",
+      "sha256": "77ce24cb58228fbb8aa041425bb1050850ac19177686ea6e0f41a70416f56fdb",
+      "bytes": 23329
+    },
+    "fortanix-sgx-abi-0.6.1.crate": {
+      "name": "fortanix-sgx-abi",
+      "version": "0.6.1",
+      "sha256": "5efc85edd5b83e8394f4371dd0da6859dff63dd387dab8568fece6af4cde6f84",
+      "bytes": 13691
+    },
+    "getopts-0.2.24.crate": {
+      "name": "getopts",
+      "version": "0.2.24",
+      "sha256": "cfe4fbac503b8d1f88e6676011885f34b7174f46e59956bba534ba83abded4df",
+      "bytes": 21467
+    },
+    "gimli-0.32.3.crate": {
+      "name": "gimli",
+      "version": "0.32.3",
+      "sha256": "e629b9b98ef3dd8afe6ca2bd0f89306cec16d43d907889945bc5d6687f2f13c7",
+      "bytes": 289789
+    },
+    "hashbrown-0.16.1.crate": {
+      "name": "hashbrown",
+      "version": "0.16.1",
+      "sha256": "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100",
+      "bytes": 147785
+    },
+    "hermit-abi-0.5.2.crate": {
+      "name": "hermit-abi",
+      "version": "0.5.2",
+      "sha256": "fc0fef456e4baa96da950455cd02c081ca953b141298e41db3fc7e36b1da849c",
+      "bytes": 17435
+    },
+    "libc-0.2.183.crate": {
+      "name": "libc",
+      "version": "0.2.183",
+      "sha256": "b5b646652bf6661599e1da8901b3b9522896f01e736bad5f723fe7a3a27f899d",
+      "bytes": 816918
+    },
+    "memchr-2.7.6.crate": {
+      "name": "memchr",
+      "version": "2.7.6",
+      "sha256": "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273",
+      "bytes": 97616
+    },
+    "miniz_oxide-0.8.9.crate": {
+      "name": "miniz_oxide",
+      "version": "0.8.9",
+      "sha256": "1fa76a2c86f704bdb222d66965fb3d63269ce38518b83cb0575fca855ebb6316",
+      "bytes": 67132
+    },
+    "moto-rt-0.16.0.crate": {
+      "name": "moto-rt",
+      "version": "0.16.0",
+      "sha256": "29aea9f7dfeb258e030a84e0ec38a9c2ec2063d4f45eb2db31445cfc40b3dba1",
+      "bytes": 25412
+    },
+    "object-0.37.3.crate": {
+      "name": "object",
+      "version": "0.37.3",
+      "sha256": "ff76201f031d8863c38aa7f905eca4f53abbfa15f609db4277d44cd8938f33fe",
+      "bytes": 344032
+    },
+    "r-efi-5.3.0.crate": {
+      "name": "r-efi",
+      "version": "5.3.0",
+      "sha256": "69cdb34c158ceb288df11e18b4bd39de994f6657d83847bdffdbd7f346754b0f",
+      "bytes": 64532
+    },
+    "r-efi-alloc-2.1.0.crate": {
+      "name": "r-efi-alloc",
+      "version": "2.1.0",
+      "sha256": "dc2f58ef3ca9bb0f9c44d9aa8537601bcd3df94cc9314a40178cadf7d4466354",
+      "bytes": 14475
+    },
+    "rand-0.9.2.crate": {
+      "name": "rand",
+      "version": "0.9.2",
+      "sha256": "6db2770f06117d490610c7488547d543617b21bfa07796d7a12f6f1bd53850d1",
+      "bytes": 99930
+    },
+    "rand_core-0.9.3.crate": {
+      "name": "rand_core",
+      "version": "0.9.3",
+      "sha256": "99d9a13982dcf210057a8a78572b2217b667c3beacbf3a0d8b454f6f82837d38",
+      "bytes": 24543
+    },
+    "rand_xorshift-0.4.0.crate": {
+      "name": "rand_xorshift",
+      "version": "0.4.0",
+      "sha256": "513962919efc330f829edb2535844d1b912b0fbe2ca165d613e4e8788bb05a5a",
+      "bytes": 10262
+    },
+    "rustc-demangle-0.1.27.crate": {
+      "name": "rustc-demangle",
+      "version": "0.1.27",
+      "sha256": "b50b8869d9fc858ce7266cce0194bd74df58b9d0e3f6df3a9fc8eb470d95c09d",
+      "bytes": 30448
+    },
+    "rustc-literal-escaper-0.0.7.crate": {
+      "name": "rustc-literal-escaper",
+      "version": "0.0.7",
+      "sha256": "8be87abb9e40db7466e0681dc8ecd9dcfd40360cb10b4c8fe24a7c4c3669b198",
+      "bytes": 14206
+    },
+    "shlex-1.3.0.crate": {
+      "name": "shlex",
+      "version": "1.3.0",
+      "sha256": "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64",
+      "bytes": 18713
+    },
+    "unwinding-0.2.8.crate": {
+      "name": "unwinding",
+      "version": "0.2.8",
+      "sha256": "60612c845ef41699f39dc8c5391f252942c0a88b7d15da672eff0d14101bbd6d",
+      "bytes": 27968
+    },
+    "vex-sdk-0.27.1.crate": {
+      "name": "vex-sdk",
+      "version": "0.27.1",
+      "sha256": "79e5fe15afde1305478b35e2cb717fff59f485428534cf49cfdbfa4723379bf6",
+      "bytes": 11762
+    },
+    "wasi-0.11.1+wasi-snapshot-preview1.crate": {
+      "name": "wasi",
+      "version": "0.11.1+wasi-snapshot-preview1",
+      "sha256": "ccf3ec651a847eb01de73ccad15eb7d99f80485de043efb2f370cd654f4ea44b",
+      "bytes": 28477
+    },
+    "wasi-0.14.4+wasi-0.2.4.crate": {
+      "name": "wasi",
+      "version": "0.14.4+wasi-0.2.4",
+      "sha256": "88a5f4a424faf49c3c2c344f166f0662341d470ea185e939657aaff130f0ec4a",
+      "bytes": 145408
+    },
+    "windows-link-0.2.1.crate": {
+      "name": "windows-link",
+      "version": "0.2.1",
+      "sha256": "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5",
+      "bytes": 6133
+    },
+    "windows-sys-0.60.2.crate": {
+      "name": "windows-sys",
+      "version": "0.60.2",
+      "sha256": "f2f500e4d28234f72040990ec9d39e3a6b950f9f22d3dba18416c35882612bcb",
+      "bytes": 2518479
+    },
+    "windows-targets-0.53.5.crate": {
+      "name": "windows-targets",
+      "version": "0.53.5",
+      "sha256": "4945f9f551b88e0d65f3db0bc25c33b8acea4d9e41163edf90dcd0b19f9069f3",
+      "bytes": 7126
+    },
+    "windows_aarch64_gnullvm-0.53.1.crate": {
+      "name": "windows_aarch64_gnullvm",
+      "version": "0.53.1",
+      "sha256": "a9d8416fa8b42f5c947f8482c43e7d89e73a173cead56d044f6a56104a6d1b53",
+      "bytes": 787748
+    },
+    "windows_aarch64_msvc-0.53.1.crate": {
+      "name": "windows_aarch64_msvc",
+      "version": "0.53.1",
+      "sha256": "b9d782e804c2f632e395708e99a94275910eb9100b2114651e04744e9b125006",
+      "bytes": 838009
+    },
+    "windows_i686_gnu-0.53.1.crate": {
+      "name": "windows_i686_gnu",
+      "version": "0.53.1",
+      "sha256": "960e6da069d81e09becb0ca57a65220ddff016ff2d6af6a223cf372a506593a3",
+      "bytes": 939775
+    },
+    "windows_i686_gnullvm-0.53.1.crate": {
+      "name": "windows_i686_gnullvm",
+      "version": "0.53.1",
+      "sha256": "fa7359d10048f68ab8b09fa71c3daccfb0e9b559aed648a8f95469c27057180c",
+      "bytes": 857396
+    },
+    "windows_i686_msvc-0.53.1.crate": {
+      "name": "windows_i686_msvc",
+      "version": "0.53.1",
+      "sha256": "1e7ac75179f18232fe9c285163565a57ef8d3c89254a30685b57d83a38d326c2",
+      "bytes": 907688
+    },
+    "windows_x86_64_gnu-0.53.1.crate": {
+      "name": "windows_x86_64_gnu",
+      "version": "0.53.1",
+      "sha256": "9c3842cdd74a865a8066ab39c8a7a473c0778a3f29370b5fd6b4b9aa7df4a499",
+      "bytes": 903712
+    },
+    "windows_x86_64_gnullvm-0.53.1.crate": {
+      "name": "windows_x86_64_gnullvm",
+      "version": "0.53.1",
+      "sha256": "0ffa179e2d07eee8ad8f57493436566c7cc30ac536a3379fdf008f47f6bb7ae1",
+      "bytes": 787739
+    },
+    "windows_x86_64_msvc-0.53.1.crate": {
+      "name": "windows_x86_64_msvc",
+      "version": "0.53.1",
+      "sha256": "d6bbff5f0aada427a1e5a6da5f1f98158182f26556f345ac9e04d36d0ebed650",
+      "bytes": 837950
+    },
+    "wit-bindgen-0.45.1.crate": {
+      "name": "wit-bindgen",
+      "version": "0.45.1",
+      "sha256": "5c573471f125075647d03df72e026074b7203790d41351cd6edc96f46bcccd36",
+      "bytes": 60395
+    },
+    "bitflags-2.13.0.crate": {
+      "name": "bitflags",
+      "version": "2.13.0",
+      "sha256": "b4388bee8683e3d04af747c73422af53102d2bd24d9eadb6cbc100baef4b43f8",
+      "bytes": 51280
+    },
+    "block-buffer-0.10.4.crate": {
+      "name": "block-buffer",
+      "version": "0.10.4",
+      "sha256": "3078c7629b62d3f0439517fa394996acacc5cbc91c5a20d8c658e77abd503a71",
+      "bytes": 10538
+    },
+    "cfg-if-1.0.5.crate": {
+      "name": "cfg-if",
+      "version": "1.0.5",
+      "sha256": "4e7648175b45a9a48536d676f68d918270699102aa8dab5496df06904c914600",
+      "bytes": 9578
+    },
+    "cpufeatures-0.2.17.crate": {
+      "name": "cpufeatures",
+      "version": "0.2.17",
+      "sha256": "59ed5838eebb26a2bb2e58f6d5b5316989ae9d08bab10e0e6d103e656d1b0280",
+      "bytes": 13466
+    },
+    "crypto-common-0.1.7.crate": {
+      "name": "crypto-common",
+      "version": "0.1.7",
+      "sha256": "78c8292055d1c1df0cce5d180393dc8cce0abec0a7102adb6c7b1eef6016d60a",
+      "bytes": 9619
+    },
+    "digest-0.10.7.crate": {
+      "name": "digest",
+      "version": "0.10.7",
+      "sha256": "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292",
+      "bytes": 19557
+    },
+    "generic-array-0.14.7.crate": {
+      "name": "generic-array",
+      "version": "0.14.7",
+      "sha256": "85649ca51fd72272d7821adaf274ad91c288277713d9c18820d8499a7ff69e9a",
+      "bytes": 15950
+    },
+    "libc-0.2.191.crate": {
+      "name": "libc",
+      "version": "0.2.191",
+      "sha256": "65cd87c9a6d60536580b316ad985726104730a5151c99845f2490428ef91240a",
+      "bytes": 855401
+    },
+    "log-0.4.33.crate": {
+      "name": "log",
+      "version": "0.4.33",
+      "sha256": "0ceec5bc11778974d1bcb055b18002eba7f4b3518b6a0081b3af5f21666da9ad",
+      "bytes": 52997
+    },
+    "sha1_smol-1.0.1.crate": {
+      "name": "sha1_smol",
+      "version": "1.0.1",
+      "sha256": "bbfa15b3dddfee50a0fff136974b3e1bde555604ba463834a7eb7deb6417705d",
+      "bytes": 9809
+    },
+    "sha2-0.10.9.crate": {
+      "name": "sha2",
+      "version": "0.10.9",
+      "sha256": "a7507d819769d01a365ab707794a4084392c824f54a7a6a7862f8c3d0892b283",
+      "bytes": 29271
+    },
+    "typenum-1.20.1.crate": {
+      "name": "typenum",
+      "version": "1.20.1",
+      "sha256": "b6f5e870be6c3b371b77fe0ee0bafb859fa4964b4404c27de1d380043c4dda20",
+      "bytes": 105479
+    },
+    "uuid-1.23.4.crate": {
+      "name": "uuid",
+      "version": "1.23.4",
+      "sha256": "bf80a72845275afea99e7f2b434723d3bc7e38470fcd1c7ed39a599c73319a53",
+      "bytes": 62165
+    },
+    "version_check-0.9.5.crate": {
+      "name": "version_check",
+      "version": "0.9.5",
+      "sha256": "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a",
+      "bytes": 15554
+    }
+  },
+  "fatfs_object_packs": {
+    "pack-1e2024b6496a1400455c3ae6b2280d88ba85cdca.idx": {
+      "bytes": 63960,
+      "sha256": "7d69a14258947c81dc3a11b7488d524467f588f7f0740a2eecb3e44064bd78e6"
+    },
+    "pack-1e2024b6496a1400455c3ae6b2280d88ba85cdca.pack": {
+      "bytes": 654065,
+      "sha256": "5601081788f468d642f8f8e95f803c0d0e268024b27010fe58fa2601d005f914"
+    }
+  }
+}

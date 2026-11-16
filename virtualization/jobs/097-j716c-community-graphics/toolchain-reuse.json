@@ -1,0 +1,17 @@
+{
+  "schema": "ilinux097-toolchain-reuse-v1",
+  "source_job": "virtualization/jobs/075-gpu31p",
+  "files": {
+    "isolate-toolchain.py": "e811c2ca216df41e36c2ef3605119e5e28123795f1cff80bea3a1178c7eb671b",
+    "package-space.py": "d676b6a496360ad910da9459e0054f0d9b05f7b94e2f2fb61c72d2670811c00b",
+    "llvm-config-relocated.py": "955287f36907aa5d363799218f9946ef9ffc9485fcad9f001ccc84893739be7a",
+    "packages.json": "f4ef5efa481d434a27cd2148f619dee366179c6b97be6f071f0c74d7b9ca43cc"
+  },
+  "purpose": "Isolated signed LLVM23/SPIRV23 Mesa build; no package installation",
+  "community_kernel_toolchain_match_claimed": false,
+  "aura_helpers": {
+    "pad_boot.py": "0f3b95bc1075c35916963c30c37c4eee6642c2cae95f264ac4744154c84b6acf",
+    "test_pad_boot.py": "54eaba43e0696be5b625bbac8782410d4adf6b759f016b3732edd497c99f5b28",
+    "collect_cargo_licenses.py": "615fc2e247bcd66ab8d42b6e116e5b349554291a87aee70b05b7ad3153da441d"
+  }
+}

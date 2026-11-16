@@ -1,5 +1,31 @@
 # Blockers
 
+### M5 — 31AY build blockers cleared; deployment still held, November 16
+
+Exact-board community kernel/Aura/Mesa sources compile; 18 static CPUs and all
+1,749 modules validate. These builds do not establish native hardware/parity.
+The four unchanged Mesa test failures are stale BLIT assertions; a separate
+test-only CPU-transfer correction passes 179/179 without driver changes.
+
+Remaining concrete work before a new boot proposal:
+
+- Qualify an Apple installer refresh of existing Lab to 27.2.1/26B131, matching
+  selected OS firmware/GPU/DCP/Recovery, shared firmware effects and rescue.
+  Public Apple availability is confirmed; installer/TSS signing is not. The
+  inspected automatic community update executor is unfinished/excludes this pin.
+- Generic Stage1 is factory-blank proxy mode. Qualify matched Aura RAM upload
+  or direct composite; Lab APFS Data is not a FAT ESP. No partition change implied.
+- Build the usable Omarchy root with matching modules/native packages. Research
+  Mesa DESTDIR excludes X11/GLX/GLVND packaging; do not install it blindly.
+- Integrate/test pre-Linux watchdog arming, finite pre-open feeding, sole Linux
+  owner and authenticated lease; pure lease decisions are not physical recovery.
+- Qualify real ALPM hooks, runtime DT/local firmware gates, fresh AX bindings,
+  manual Original return and boot021 function on the new baseline, then obtain
+  approval for that concrete deployment. Never rebase/replay old consumed state.
+
+No new firmware, boot/security/volume/default action; Original Full retained.
+No restart cue. See native/boot/attempt31ay-plan.md and the 31AY component records.
+
 ### M1 — 31AX offline reset/rescue review PASS; deployment gates remain, November 15
 
 Reviewed a3bbd5e: 22 AX/14 AW/10 AV/190 AU pins and 386 prior evidence/closed
