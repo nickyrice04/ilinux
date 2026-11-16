@@ -1,0 +1,217 @@
+{
+  "schema": "ilinux31aw-offline-integration-v1",
+  "date": "2026-11-15",
+  "scope": "OFFLINE_INTEGRATION_FIXTURES_AND_GENERIC_STATIC_RESEARCH",
+  "accepted_M1_review": {
+    "commit": "32fc0b8",
+    "status": "PASS_WITH_EXPLICIT_INPUT_ACCOUNTING",
+    "per_mode_unchanged_methods_pass": 11,
+    "per_mode_equivalent_genuine_candidate_pass": 1,
+    "per_mode_absent_kit_published_method_not_run": 1,
+    "source_findings": 0
+  },
+  "environment": {
+    "os": "macOS",
+    "product_version": "26.6.2",
+    "build_version": "25G83",
+    "architecture": "arm64",
+    "compiler_sdk_in_runs": true,
+    "optimization": "-O2",
+    "minimum_macos": "13.0"
+  },
+  "implementation": {
+    "new_namespace": "31AW",
+    "buffer_recognition_integrated": true,
+    "original_190_source_pins_unchanged": true,
+    "AV_proposal_unchanged": true,
+    "same_selected_read": true,
+    "second_selected_read": false,
+    "codec_runtime_controls_before_install_side_effects": true,
+    "failed_codec_blocks_install": true,
+    "failed_codec_does_not_block_guarded_raw_restore": true,
+    "pure_codec_capability_CLI": true,
+    "bounded_output_capacity_is_framed_plus_one": true,
+    "maximum_output_allocation_bytes": 167772161,
+    "library_scratch_additional": true,
+    "exact_candidate_and_enabled_CTRR_required": true,
+    "Original_private_semantic_Full_invariants_retained": true,
+    "new_policy_writer": false,
+    "parser_extension": "EXACT_CANONICAL_NEGATIVE_ONE_ONLY",
+    "unsigned_profile_guards_retained": true,
+    "fixed_safety_bodies_namespace_normalized_equal": 26,
+    "transaction_flow_reversible_preflight_addition": true
+  },
+  "root_final_runs": [
+    {
+      "sanitized": false,
+      "methods": 52,
+      "passes": 52,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "seconds": 24.111,
+      "binary_bytes": 125808,
+      "binary_sha256": "cfacd25c34456bcb60068eb0faaea7b97b79764be266efac72c84748949c9359",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.4.1.1)",
+      "sdk": "27.2",
+      "compiled_source_sha256": {
+        "buffer_proposal.c": "09d9b082e21ebbe93b67106d53806e2d84818ff72f9c4adf72ade769b88e398c",
+        "codec.c": "eee91ff4ec9b7b2ba94cc092ead30d4f247a98b2fae1f261a9f89ffafb9ca326",
+        "codec.h": "4097f1ea7f51ba988c090a49ac0501f27354650d593d0da6f96bf21f80032f23",
+        "controller.c": "7d0393da0ef8c76cb2b47f4a96cdaa670ebc0898d71dd7b63f5de688269bbf5a",
+        "core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+        "extra_policy.c": "c721bf59aa262a2b06f69536f5712d5a847dd48793ed33213350bb8270ef669e",
+        "extra_policy.h": "1c3f275e3564489c95d60580734dc445beb86b6bc9e0b049ea88017e71e9fb1f",
+        "json.c": "608160d22b35717925f657fa4e5db3e5f0abd83d46d9ff489b762ff92afe7cdd",
+        "read_diagnostics.h": "2f1e6840aa96adbceb0a935344f5a59bc72fb378799eb2b637cdd12d1af63cab",
+        "reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+        "state.c": "9181701efb1a7fc920b2804582d175c3ee9bafd2f758e9cbcf6044630c44d218"
+      },
+      "qualified_state_sha256": "9181701efb1a7fc920b2804582d175c3ee9bafd2f758e9cbcf6044630c44d218",
+      "candidate_definition": {
+        "bytes": 153190400,
+        "publication_authorizes_writes": false,
+        "schema": "ilinux31aj-compiled-candidate-v1",
+        "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+        "target": {
+          "board": "j716c",
+          "chip_id": "0x6050",
+          "model": "Mac17,6"
+        }
+      }
+    },
+    {
+      "sanitized": true,
+      "methods": 52,
+      "passes": 52,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "seconds": 26.53,
+      "binary_bytes": 452752,
+      "binary_sha256": "cc4d6212ed80964e0ade665adb1c3de39d67940ac4e9e16da0189d5be59d5b0a",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.4.1.1)",
+      "sdk": "27.2",
+      "compiled_source_sha256": {
+        "buffer_proposal.c": "09d9b082e21ebbe93b67106d53806e2d84818ff72f9c4adf72ade769b88e398c",
+        "codec.c": "eee91ff4ec9b7b2ba94cc092ead30d4f247a98b2fae1f261a9f89ffafb9ca326",
+        "codec.h": "4097f1ea7f51ba988c090a49ac0501f27354650d593d0da6f96bf21f80032f23",
+        "controller.c": "7d0393da0ef8c76cb2b47f4a96cdaa670ebc0898d71dd7b63f5de688269bbf5a",
+        "core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+        "extra_policy.c": "c721bf59aa262a2b06f69536f5712d5a847dd48793ed33213350bb8270ef669e",
+        "extra_policy.h": "1c3f275e3564489c95d60580734dc445beb86b6bc9e0b049ea88017e71e9fb1f",
+        "json.c": "608160d22b35717925f657fa4e5db3e5f0abd83d46d9ff489b762ff92afe7cdd",
+        "read_diagnostics.h": "2f1e6840aa96adbceb0a935344f5a59bc72fb378799eb2b637cdd12d1af63cab",
+        "reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+        "state.c": "9181701efb1a7fc920b2804582d175c3ee9bafd2f758e9cbcf6044630c44d218"
+      },
+      "qualified_state_sha256": "9181701efb1a7fc920b2804582d175c3ee9bafd2f758e9cbcf6044630c44d218",
+      "candidate_definition": {
+        "bytes": 153190400,
+        "publication_authorizes_writes": false,
+        "schema": "ilinux31aj-compiled-candidate-v1",
+        "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01",
+        "target": {
+          "board": "j716c",
+          "chip_id": "0x6050",
+          "model": "Mac17,6"
+        }
+      }
+    }
+  ],
+  "optional_reference_control": {
+    "selected_methods": 2,
+    "passes": 1,
+    "skips": 1,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 5.387,
+    "missing_input": "OPTIONAL_LEGACY31AF_ONLY",
+    "enabled_boot021_initial_rejection_passed": true
+  },
+  "independent_review": {
+    "actionable_findings": 0,
+    "source_build_and_190_pins_verified": true,
+    "pure_capability_CLI": "PASS",
+    "decisive_controller_methods_pass": 5,
+    "skips": 0,
+    "seconds": 6.664,
+    "methods": [
+      "test_runtime_positive_negative_controls_precede_install_writer",
+      "test_codec_failure_does_not_prevent_candidate_independent_raw_restore",
+      "test_canonical_negative_one_refusal_and_malformed_numeric_tokens",
+      "test_negative_profile_unsigned_fields_still_refuse",
+      "test_exact_compressed_candidate_still_requires_enabled_ctrr"
+    ],
+    "plan_README_M1_handoff_review": "PASS"
+  },
+  "REA": {
+    "new_queries": 3,
+    "matched_unique_instruction_words": 1226,
+    "matched_ranges": 10,
+    "root_original_derivative_LLVM_verifier_rerun": "PASS",
+    "pseudocode_admitted": false,
+    "qualified_endpoint": "sep-endpoint,pnon",
+    "host_path": "WHOLE_REQUEST_FORWARDING",
+    "matching_SEP_handler_semantics": "UNQUALIFIED",
+    "actual_Recovery_stack_identity": "UNQUALIFIED",
+    "protected_firmware_decrypted": false,
+    "SEP_endpoint_called": false,
+    "VM_stopped": true,
+    "prior_job_restored_exact": true,
+    "quiet_released": true
+  },
+  "supported_policy_lead": {
+    "documentation_observed": true,
+    "generic_bputil_help_only_executed_by_root": true,
+    "whole_Permissive_policy_reconstruction_without_CTRR_disable": "HYPOTHESIS_FOR_SEPARATE_EXPERIMENT",
+    "enable_only_operation": false,
+    "implemented_in_AW": false,
+    "authorized": false,
+    "old_LAB_opaque_metadata_preservation_promised": false,
+    "pre_reset_Original_baseline_required": true,
+    "fresh_LAB_baseline_and_change_contract_required": true,
+    "rescue_before_fresh_baseline_required": true
+  },
+  "preservation": {
+    "frozen_AU_pins_verified": 190,
+    "prior_AV_pins_verified": 10,
+    "old_evidence_edited": false,
+    "old_kits_or_consumed_state_changed": false,
+    "live_policy_or_private_state_or_selected_object_reads": 0,
+    "live_mount_or_writer_or_security_or_boot_actions": 0,
+    "firmware_or_volume_or_Original_changes": 0,
+    "boot021_and_Original_default_desktop": "PRIOR_HUMAN_CONFIRMATIONS_RETAINED_NOT_REQUERIED"
+  },
+  "source_sha256": {
+    "tools/boot-object31aw-native/README.md": "4b5c8dc36a5696a3f7de7d7c2b4154cda652ba99a23b78542fd0d250754e09a4",
+    "tools/boot-object31aw-native/build.py": "bd7890bd79881f3d4020846a9b2add9d6c0d6d0e17f91626ed32b879cbe38755",
+    "tools/boot-object31aw-native/codec.c": "eee91ff4ec9b7b2ba94cc092ead30d4f247a98b2fae1f261a9f89ffafb9ca326",
+    "tools/boot-object31aw-native/codec.h": "4097f1ea7f51ba988c090a49ac0501f27354650d593d0da6f96bf21f80032f23",
+    "tools/boot-object31aw-native/controller.c": "7d0393da0ef8c76cb2b47f4a96cdaa670ebc0898d71dd7b63f5de688269bbf5a",
+    "tools/boot-object31aw-native/generate.py": "4d4a424ce1b4078c2945104d90ea8067f26b47df400cc6d5813c3566c9a54a9d",
+    "tools/boot-object31aw-native/read_diagnostics.h": "2f1e6840aa96adbceb0a935344f5a59bc72fb378799eb2b637cdd12d1af63cab",
+    "tools/boot-object31aw-native/test_native.py": "1344c5cb1449413a3a1b974016e8e207487346cf3ad714c23670800d8f57fda7",
+    "research/attempt31aw-ctrr-2026-11-15.md": "89c30e9c006d3ae7c92aaaa5138d4a941105238285ce48bbd6d59d08f0de7cf4",
+    "research/attempt31aw-ctrr-2026-11-15.json": "85250e68627065935a0313c39cba08ec5ff5050850cd340d12885ad197d62105",
+    "research/attempt31aw-public-contract-2026-11-15.md": "414d227830adf47b42b300c059a12aa79c825108fc9475ced6b34c853aad26d2",
+    "research/attempt31aw-public-contract-2026-11-15.json": "5dcc255332f5efaee978ea08c3b5d192d3820a1d58e996df4301302a3d119c8a",
+    "native/boot/attempt31aw-plan.md": "9a7b35021873789115b6e0883662e3b3d85d6b54a161b90738c3411e86792b36",
+    "tools/m1n1-client/attempt31aw-instructions.md": "dbd43f3393c7f61ee9fdba1db4beeb1b2838862d26eb8323632ec0f08a442c21"
+  },
+  "next": {
+    "M1": "OFFLINE_INTEGRATION_AND_POLICY_DESIGN_REVIEW_ONLY",
+    "reconstruction_phase": "NOT_IMPLEMENTED",
+    "staging_kit_created": false,
+    "Recovery_page_created": false,
+    "native_boot_prepared": false,
+    "restart_ready": false,
+    "requires_Apple_fix_established": false
+  },
+  "native": {
+    "Linux": "NOT_RUN_IN_THIS_WORK",
+    "SMP": "NOT_RUN",
+    "GPU": "NOT_RUN",
+    "performance_parity": "NOT_RUN"
+  }
+}

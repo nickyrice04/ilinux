@@ -1,5 +1,36 @@
 # Blockers
 
+### M5 — 31AW decoder integrated and tested; CTRR traced to SEP, November 15
+
+Accepted M1 32fc0b8 with exact 11 unchanged methods plus retained-candidate
+equivalent accounting per mode. New isolated AW controller integrates the strict
+bounded buffer decoder and finite failure reasons, with pure runtime controls
+before installation. Failed codec cannot prevent guarded raw boot021 rollback.
+Exact candidate/enabled-CTRR, Original Full/private/semantic, target/owner,
+namespace, durability and cleanup guards remain. No policy-reset writer added.
+
+Root final 52 normal and 52 ASan/UBSan methods PASS, zero skips. Independent
+review passes five decisive methods plus pure capability CLI and source/safety
+checks. Optional missing-reference path is one pass/one explicit skip. Pre-writer
+writer_exit=-1 display defect fixed by a reversible canonical-minus-one-only
+parser extension; unsigned profiles and malformed negative forms still refuse.
+26 normalized safety bodies match; all 190 AU and 10 prior AV pins unchanged.
+No staged helper/kit/page, old-state query, reset or replay.
+
+REA/LLVM checked 1,226 words over ten receiver ranges, three queries; root byte
+verifier PASS. Checked host path forwards to sep-endpoint,pnon; matching SEP
+policy semantics and actual Recovery stack remain Unknown. Apple's documented
+Permissive reconstruction without CTRR disabling is a supported future baseline
+hypothesis, not an enable-only writer. It needs pre-reset Original invariants,
+fresh Lab baseline, explicit Lab reissuance/option contract and rescue even if
+new baseline admission fails. That phase is unimplemented and unauthorized.
+
+M1 next: tools/m1n1-client/attempt31aw-instructions.md, offline review only.
+No restart or boot readiness; no firmware, security, volume or Original change.
+Prior boot021/Original default/desktop confirmations retained without repeat
+query. Native Linux/SMP/GPU/performance NOT RUN in this work. Evidence and plan:
+native/boot/attempt31aw-offline-2026-11-15.json and attempt31aw-plan.md.
+
 ### M1 — 31AV offline component review PASS; native hold, November 15
 
 Reviewed 21b4cee: 10 new pins, 190 frozen AU inputs and 303 prior evidence/closed

@@ -1,0 +1,58 @@
+{
+  "schema": "ilinux31aw-public-policy-contract-v1",
+  "date": "2026-11-15",
+  "scope": "PUBLIC_SOURCE_AND_GENERIC_APPLE_MANUAL_ONLY",
+  "apple_manual": {
+    "name": "bputil(1)",
+    "path": "/usr/share/man/man1/bputil.1",
+    "sha256": "dacc771e3c49f0ec86feb582ba64e23b0e71c4ee49b1da647ec7f0f77d0a5a1b",
+    "permissive_recreates_policy": true,
+    "existing_security_options_preserved": false,
+    "ctrr_disable_is_separate_option": true,
+    "root_help_independent_confirmation": true,
+    "researcher_executable_invocations": 0,
+    "enable_only_operation_qualified": false,
+    "custom_object_preservation_qualified": false
+  },
+  "public_sources": {
+    "aura_observed_main": "52af355ca2c3b814f7610003bcefda16f6bfb943",
+    "aura_guide_expects_macho_ctrr_enabled": true,
+    "hand_script_macho_postcondition_readback": false,
+    "hand_script_general_recovery_run_qualified": false,
+    "installer_observed_main": "832788c858f7bc5db8ba67d1232844977ffa8489",
+    "installer_permissive_ctrr_disable_then_macho": true,
+    "service_semantics_qualified": false,
+    "actual_AU_Recovery_identity_qualified": false
+  },
+  "exact_board_lead": {
+    "board": "J716c",
+    "branch": "ewb/j716c-daily",
+    "repository": "aurora-silicon/linux",
+    "observed_commit": "4e1f8e6a13191c42b3ce1bb1519e48440c06d79a",
+    "owner_working_setup_report": "https://github.com/betizzel/omarchy-m5/issues/12#issuecomment-6904255259",
+    "source_ANE_layout_release": "27.0/26A428",
+    "source_iBoot_version": "20457.1.29",
+    "board_specific_preload_identity": true,
+    "ANE_workload_qualified_here": false,
+    "Stage1_or_policy_recipe_qualified": false,
+    "unit_derived_DROM_present": true,
+    "unit_derived_data_copied": false
+  },
+  "strategy": {
+    "whole_policy_reconstruction_lead": true,
+    "existing_controller_writer_substitution_qualified": false,
+    "new_phase_and_field_allowlist_required": true,
+    "original_preservation_required": true,
+    "exact_candidate_and_enabled_ctrr_guard_retained": true,
+    "independent_boot021_restore_required": true,
+    "owner_authorization_required_before_host_action": true
+  },
+  "private_or_live_queries": 0,
+  "policy_or_boot_writes": 0,
+  "settings_changed": false,
+  "firmware_or_OS_updated": false,
+  "third_party_code_executed": false,
+  "new_boot_authorized": false,
+  "native_ready": false,
+  "Apple_only_blocker_established": false
+}

@@ -5,7 +5,48 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — 31AU safely closed; qualify 31AV offline, 2026-11-15
+## Current direction — 31AW integrated; review a supported baseline experiment, 2026-11-15
+
+M1's 31AV review is accepted with its explicit coverage accounting. The new
+[AW controller](tools/boot-object31aw-native/README.md) integrates the corrected
+bounded decoder, runtime controls and finite subreasons. Root's 52 normal and
+52 sanitizer methods pass, zero skips; independent review passes five decisive
+controls and the pure capability command. Original/candidate/preservation and
+candidate-independent boot021 restore guards remain. No new kit is staged.
+
+1. **M1 reviews the integrated helper offline.** Follow the
+   [AW handoff](tools/m1n1-client/attempt31aw-instructions.md); no restart, server,
+   proxy or live transaction. Existing artifacts suffice, fresh carriers are
+   generated from genuine own input, and the legacy reference is optional with
+   explicit per-method missing-input accounting. All 190 AU/10 AV pins remain.
+2. **Develop the documented policy-baseline experiment before proposing it.**
+   [REA receiver findings](research/attempt31aw-ctrr-2026-11-15.md) identify whole
+   request forwarding to SEP's pnon application; its matching handler remains
+   unqualified. [Apple's documented reset mechanism and public-source comparison](research/attempt31aw-public-contract-2026-11-15.md)
+   support testing a new Permissive baseline without the inherited CTRR-disable
+   option. This is whole-policy reconstruction, not an enable-only operation.
+   It needs immutable pre-reset Original invariants, explicit allowed lab
+   changes, a fresh lab baseline and rescue that works before that baseline
+   exists. Old lab signed metadata cannot be promised byte-exact restoration.
+   AW intentionally contains no such writer; no new host operation is approved.
+3. **Only then propose one informative combined Recovery window.** Qualify actual
+   runtime/codec, test the deliberate lab transition, conditionally install and
+   verify exact candidate/enabled CTRR, observe entry only after complete checks,
+   then restore boot021 behavior and Original default/desktop. No repeated
+   unchanged install, old-state reset or weaker acceptance. A separate reviewed
+   controller/rollback contract and owner authorization must precede this.
+4. **Continue toward a matched accelerated Omarchy stack after entry.** Reuse
+   generic exact-J716c kernel/Aura/firmware/runtime work with core-type and thermal
+   controls together. The newly identified daily branch adds board-specific
+   firmware facts, not a complete policy/Stage1 recipe; exclude per-unit DROM.
+   Measure CPU, memory, GPU/input latency, network/storage and energy per task
+   against macOS before any parity claim. No Apple-only blocker is established.
+
+[Plan and evidence](native/boot/attempt31aw-plan.md). Macintosh HD remains intact
+at required Full Security. No new boot, policy, firmware or volume operation ran;
+Linux/SMP/GPU/performance are NOT RUN in this work. No restart is ready now.
+
+## Historical direction — 31AU safely closed; qualify 31AV offline, 2026-11-15
 
 The [closed M1 report](native/boot/attempt31au-recovery-2026-11-15-result.md)
 records installation refusal, human-confirmed exact boot021 restoration and

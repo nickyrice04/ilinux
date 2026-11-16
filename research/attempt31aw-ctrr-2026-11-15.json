@@ -1,0 +1,208 @@
+{
+  "schema": "ilinux31aw-ctrr-receiver-analysis-v1",
+  "date": "2026-11-15",
+  "source": {
+    "kind": "RETAINED_GENERIC_T6050_KERNEL_COLLECTION_NOT_CURRENT_RECOVERY_IDENTITY",
+    "bytes": 115163136,
+    "sha256": "26ddfbe95c7e6ac9a76aedac424576bf00467e7c13da49dd82f8010efdb75093",
+    "Darwin": "25.6.0",
+    "XNU": "12377.161.14~5/RELEASE_ARM64_T6050",
+    "BootPolicy_project": "289.160.2",
+    "member": "com.apple.security.BootPolicy",
+    "derived_bytes": 57872,
+    "derived_sha256": "849bf35dcf5ef735bf44b36a2de49c43c78e4e89b6ab2b3adfa6482db1bd79b2",
+    "text_exec_bytes": 9144,
+    "text_exec_sha256": "4ca548c4f50260f179184c6741f005011f7cdeeaf8b6b47805914158dbf2560a",
+    "original_parser_sha256": "a693ee9bf1503fdc208d416a64e23d434c0753fc023988a04f5918f8a89997fb",
+    "derivative_executed": false,
+    "fixups_applied": false
+  },
+  "provider": {
+    "REA": "6.4.0",
+    "Ghidra": "12.1.4"
+  },
+  "queries": [
+    {
+      "label": "perform-gated",
+      "entry": "0xfffffe0009b95150",
+      "exit": 0,
+      "dossier_sha256": "dcb8f7dff177e3241f236a33efaeea765cbf2a13b09eba09e28d943cdcb9314b",
+      "body_bytes": 980,
+      "expected_body_bytes": 980,
+      "high_pcode_operations": 117,
+      "high_pcode_dead": 117,
+      "high_pcode_outside_body": 0,
+      "high_pcode_truncated": false,
+      "whole_function_pseudocode_admitted": false
+    },
+    {
+      "label": "send-sep",
+      "entry": "0xfffffe0009b95524",
+      "exit": 0,
+      "dossier_sha256": "cbc0003926f035158ca294dd008792b770c74bee6b8d9a333193df0036b996e3",
+      "body_bytes": 824,
+      "expected_body_bytes": 824,
+      "high_pcode_operations": 128,
+      "high_pcode_dead": 128,
+      "high_pcode_outside_body": 0,
+      "high_pcode_truncated": false,
+      "whole_function_pseudocode_admitted": false
+    },
+    {
+      "label": "validate-command",
+      "entry": "0xfffffe0009b949ec",
+      "exit": 0,
+      "dossier_sha256": "d06caa7da08acbed176e881197c5bf7d766109e9ff33f274cecc5d8ced24783e",
+      "body_bytes": 680,
+      "expected_body_bytes": 680,
+      "high_pcode_operations": 87,
+      "high_pcode_dead": 87,
+      "high_pcode_outside_body": 0,
+      "high_pcode_truncated": false,
+      "whole_function_pseudocode_admitted": false
+    }
+  ],
+  "independent_checks": [
+    {
+      "label": "command-access-class",
+      "start": "0xfffffe0009b94250",
+      "end_exclusive": "0xfffffe0009b9429c",
+      "instruction_words": 19,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "b6af3a0cd26f8680e1605714cf3003133392340e56d2c8d09f5475385394ad6f"
+    },
+    {
+      "label": "ext-perform",
+      "start": "0xfffffe0009b94368",
+      "end_exclusive": "0xfffffe0009b945a0",
+      "instruction_words": 142,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "5a3c83a7b6bfbb40ad9d90a4286e934270945672f06b76bb3bafd4c68ca0093c"
+    },
+    {
+      "label": "external-method",
+      "start": "0xfffffe0009b9498c",
+      "end_exclusive": "0xfffffe0009b949ec",
+      "instruction_words": 24,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "ffcb8f737e5cfd8910d1180358af6cf072bb6b1f96eff225efddcc0c7ca71b5f"
+    },
+    {
+      "label": "validate-command",
+      "start": "0xfffffe0009b949ec",
+      "end_exclusive": "0xfffffe0009b94c94",
+      "instruction_words": 170,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "c7eb19df33f41847ce4e503215d0fd9091675aef64e3612209b26fef887d5537"
+    },
+    {
+      "label": "perform-command",
+      "start": "0xfffffe0009b950f4",
+      "end_exclusive": "0xfffffe0009b95150",
+      "instruction_words": 23,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "6632c2059494298114435b41fa97a324e303a87e2c078491a19b1c4f20cc6131"
+    },
+    {
+      "label": "perform-gated",
+      "start": "0xfffffe0009b95150",
+      "end_exclusive": "0xfffffe0009b95524",
+      "instruction_words": 245,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "8875e4f01f1823d9ab0a2fe1fe790b2b56a7df6f4dab225cc4aa7f8a40f754f0"
+    },
+    {
+      "label": "send-sep",
+      "start": "0xfffffe0009b95524",
+      "end_exclusive": "0xfffffe0009b9585c",
+      "instruction_words": 206,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "e8cd4f8b7505d34b0bc8215563d1fcd583f4bf360a62a65ed67cfdb5f5012d29"
+    },
+    {
+      "label": "write-sep-buffer",
+      "start": "0xfffffe0009b95d28",
+      "end_exclusive": "0xfffffe0009b95e74",
+      "instruction_words": 83,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "710f66ce447bc5c4b9359662a2e9b962ef213c87f5620cf57740659b0d401774"
+    },
+    {
+      "label": "send-sep-message",
+      "start": "0xfffffe0009b95e74",
+      "end_exclusive": "0xfffffe0009b95f2c",
+      "instruction_words": 46,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "e4533ef5e2cd0a6d664d71c3d86dd4477756c2790b844d6217b5214454bb2115"
+    },
+    {
+      "label": "get-sep-endpoint",
+      "start": "0xfffffe0009b95f2c",
+      "end_exclusive": "0xfffffe0009b9635c",
+      "instruction_words": 268,
+      "original_derivative_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "77e6629e4e9960da90fd6fe75f317ef3a5057c812bde641ef0c922d8559fa68d"
+    }
+  ],
+  "unique_instruction_words": 1226,
+  "dispatch": {
+    "selector": 0,
+    "table_address": "0xfffffe0008286178",
+    "target": "0xfffffe0009b94368",
+    "pointer_format": 8,
+    "chain_membership_verified": true,
+    "cache_level": 0
+  },
+  "qualified_boundary": {
+    "request_command": "0x2f",
+    "mode_byte_offset": "0x22",
+    "checked_request_path_copies_whole_buffer": true,
+    "host_SIP2_transform_qualified": false,
+    "SEP_registry_service": "sep-endpoint,pnon",
+    "endpoint_factory": "AppleSEPDeviceService::getEndpoint",
+    "request_field_semantics": "UNKNOWN_IN_SEP_APPLICATION",
+    "actual_Recovery_receiver_identity_verified": false,
+    "actual_SEP_application_identity_verified": false,
+    "supported_enable_only_writer_qualified": false,
+    "command_0x2f_classified_read_only": false
+  },
+  "vm": {
+    "exit": 0,
+    "interfaces": [
+      "lo"
+    ],
+    "network": false,
+    "physical_usb": false,
+    "disks_attached": false,
+    "prior_job_restored_exact": true,
+    "quiet_released": true
+  },
+  "operations": {
+    "live_policy_queries": 0,
+    "installed_selected_or_private_state_reads": 0,
+    "library_API_invocations": 0,
+    "SEP_endpoint_invocations": 0,
+    "host_boot_policy_security_or_mount_changes": 0
+  },
+  "native_ready": false,
+  "Apple_only_blocker_established": false,
+  "baseline_strategy": {
+    "supported_manual_observed": true,
+    "permissive_n_recreates_policy": true,
+    "disable_ctrr_is_separate_c_option": true,
+    "enable_only_qualified": false,
+    "policy_preservation_promised": false,
+    "fresh_lab_baseline_effect": "HYPOTHESIS_REQUIRES_REVIEW_AND_EXPLICIT_OWNER_APPROVAL",
+    "executed": false
+  }
+}
