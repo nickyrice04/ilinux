@@ -5,7 +5,52 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — 31AW integrated; review a supported baseline experiment, 2026-11-15
+## Current direction — reuse the matched J716c stack; AX safety layer tested, 2026-11-15
+
+The owner's direction is to build directly on working community enablement.
+The [new adoption audit](research/attempt31ax-reuse-first-2026-11-15.md) identifies
+an exact-board 18-core/GPU/N1 baseline and the missing enrollment, firmware and
+runtime safety pieces. Use that as our foundation. The ready J714s Pro image is
+not a drop-in installer for this J716c Max, but its packaging and boot mechanisms
+are reusable with explicit board admission. Do not rewrite working drivers or
+keep patching an obsolete minimal stack by default.
+
+1. **M1 reviews the completed AX safety component offline.** The new
+   [reset/rescue controller](tools/boot-object31ax-native/README.md) passes 76 normal
+   and 76 sanitizer methods; pure typed-policy checks pass 18 per mode. Independent
+   and root-focused tests verify missing-baseline rescue, anchor authentication,
+   repeated-invocation freezing and honest functional-only scope. Follow the
+   [handoff](tools/m1n1-client/attempt31ax-instructions.md). No restart/server/stage.
+2. **Freeze and reproduce one coherent exact-board stack.** Use the pinned
+   J716c full 16K kernel config, Image/modules/DT, Aura graphics handoff and Mesa
+   combination. Bring in existing Omarchy Mac packages with a real J716c update
+   guard. Keep alternative branch/firmware pins separate; newest recipe code is
+   not automatically hardware-tested release code. Existing source/config
+   validators are useful; actual matching full builds remain to be completed.
+3. **Settle firmware, Stage1 and guardian deployment concretely.** Current
+   recorded 26.6.2 inputs differ from the working 27.2.1 reference. An update alone
+   does not automatically refresh the Lab's stub. Plan the matching transition
+   and backup/compatibility implications for owner approval; do not silently
+   update Original or re-run a Pro partitioner. Package update guards are distinct
+   from the reference's separately deployed physical watchdog guardian.
+4. **Choose one informative native window after those comparisons and reviews.**
+   AX offers a new supported Lab-baseline reset/readback with conditional exact
+   candidate/enabled-CTRR admission and independent functional boot021 rescue.
+   It remains optional for the chosen public boot route, not a reason to delay
+   adopting that route. No candidate boot after refusal; all host/firmware/boot
+   changes need a concrete separately authorized kit and return plan.
+5. **Measure the accelerated Omarchy environment.** Check all physical core
+   types, GPU-rendered app/input latency, N1/control access and thermal behavior;
+   then compare CPU/RAM/network/storage throughput and energy with macOS. Keep
+   bounded reference clocks/guardian behavior until real telemetry validates
+   changes. Working all-core boot or device-up reports are not parity evidence.
+
+[AX plan and evidence](native/boot/attempt31ax-plan.md). All old inputs and consumed
+state remain unchanged. No actual reset, boot, OS/firmware/volume/security/default
+change ran. Native Linux/SMP/GPU/performance NOT RUN in this work. Macintosh HD
+remains protected at Full Security; no restart is ready now.
+
+## Historical direction — 31AW integrated; review a supported baseline experiment, 2026-11-15
 
 M1's 31AV review is accepted with its explicit coverage accounting. The new
 [AW controller](tools/boot-object31aw-native/README.md) integrates the corrected

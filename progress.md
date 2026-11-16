@@ -1,5 +1,37 @@
 # Progress Log
 
+### M5 — 31AX reset/rescue built offline; reuse-first stack gate, November 15
+
+Accepted M1 d679622: AW 52 normal/52 sanitized methods PASS with exact bindings.
+New isolated AX implements one bound Lab reconstruction, never-rebased Original
+and typed authority anchors, strict durable fresh Lab candidate baseline, and
+independent functional rescue before that baseline exists. Rescue freezes its
+own authenticated current observation, including across repeated invocations;
+no partial-anchor/no-op bypass, candidate promotion or spent-writer replay.
+Final rescue claims exact boot021/disabled CTRR only, not old Lab metadata.
+
+Producer 76 normal and 76 ASan/UBSan controller methods PASS, zero skips.
+Pure policy 18 methods per mode PASS, 16 cases/529 C assertions; no writer linked.
+Independent nine v4 methods PASS; v5 production-source difference is help only.
+Root five final sanitized methods PASS.21 safety bodies and legacy writer/
+authentication preserved; 190 AU/14 AW/10 AV pins exact. New typed fields close
+prior identity gaps; documented global LPnH issuance is not a protected-field
+change. No live policy/private/object query, reset, rescue, stage or boot ran.
+
+REA qualifies forced-create intent and same-group authentication scope: 1127
+instruction words plus 104 distinct dispatch-data bytes, root verifier PASS.
+Actual reset/SEP/Recovery effects remain untested. M1 reviews offline through
+tools/m1n1-client/attempt31ax-instructions.md; no restart cue or kit is prepared.
+
+Owner steering: adopt community exact-J716c kernel/config/modules/Aura/Mesa and
+Omarchy packages as the foundation. Betizzel's ready image is J714s-only; its
+newest recipe is not the hardware-tested release. Freeze a matched Max stack,
+qualify Stage1/firmware/guardian and package guards before a native proposal.
+Do not repeat old-stack tests or rewrite working drivers by default. Any update
+needs separate owner approval. Original remains protected at Full; prior return
+confirmations retained without repeat. Evidence: attempt31ax-offline-2026-11-15.json,
+attempt31ax-plan.md and research/attempt31ax-reuse-first-2026-11-15.md.
+
 ### M1 — 31AW integrated controller review PASS; native hold, November 15
 
 Reviewed cc1a005: 14 new pins, 10 AV pins, 190 AU inputs and 336 prior evidence/

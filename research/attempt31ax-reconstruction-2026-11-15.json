@@ -1,0 +1,172 @@
+{
+  "schema": "ilinux31ax-reconstruction-client-analysis-v1",
+  "date": "2026-11-15",
+  "generic_bputil": {
+    "universal_bytes": 196320,
+    "universal_sha256": "dcd2d73fbeb18d6ce3092605c151790d4a01ac9caeeb99fa23a4098e9559f545",
+    "arm64e_bytes": 147168,
+    "arm64e_sha256": "80c9ae8b7536d0ee923a034198d201fe8773d71eea7b9f4bcb3244a2a2a630c2",
+    "thin_equal_original_fat_slice": true,
+    "executed": false,
+    "actual_Recovery_identity_verified": false
+  },
+  "generic_Bootability": {
+    "generic_image": "/System/Library/PrivateFrameworks/Bootability.framework/Versions/A/Bootability",
+    "base": "0x1d619d000",
+    "transformed_bytes": 72770,
+    "transformed_sha256": "8ce589ebb40fa577eea27ac17877bc42ca9606b3ca64bcadbe1ae1bb205c4938",
+    "original_text_bytes": 35936,
+    "original_text_sha256": "854b2dcf180a7ced5783168c8c0464de2329e9b3b96cc9ef226fb6e864e97b99",
+    "symbols": 343,
+    "exports": 43,
+    "function_starts": 102,
+    "analysis_only": true,
+    "executed": false,
+    "layout_rewritten": true,
+    "cache_pointers_rebased": false
+  },
+  "provider": {
+    "REA": "6.4.0",
+    "Ghidra": "12.1.4"
+  },
+  "fresh_queries": [
+    {
+      "label": "make-group-bootable",
+      "entry": "0x1d619e044",
+      "exit": 0,
+      "dossier_sha256": "c196b50f5dbe901cd00bcf985cc02c5044276544319eba2335aebb5072942e23",
+      "body_bytes": 576,
+      "accepted_body_end_exclusive": "0x1d619e284",
+      "high_pcode_operations": 223,
+      "high_pcode_dead": 223,
+      "high_pcode_outside_body": 0,
+      "high_pcode_truncated": false,
+      "whole_function_pseudocode_admitted": false
+    },
+    {
+      "label": "context-for-volume",
+      "entry": "0x1d619f218",
+      "exit": 0,
+      "dossier_sha256": "e150d593804270515c7ffe10d264ef28fa2c868b90e541b86f7d111b6d2b8f0f",
+      "body_bytes": 748,
+      "accepted_body_end_exclusive": "0x1d619f504",
+      "high_pcode_operations": 405,
+      "high_pcode_dead": 405,
+      "high_pcode_outside_body": 0,
+      "high_pcode_truncated": false,
+      "whole_function_pseudocode_admitted": false
+    }
+  ],
+  "reused_entry_reference": {
+    "dossier_sha256": "751fe50ac2fba74f89d0c4e8f29aefbcffc73c13b25122423a7ef5eff689aef9",
+    "exact_current_input_pin": true,
+    "high_pcode_operations": 3000,
+    "high_pcode_dead": 3000,
+    "high_pcode_truncated": true,
+    "whole_function_pseudocode_admitted": false,
+    "gate": "REFERENCE_ONLY_TRUNCATED_AND_DEAD_HIGH_PCODE"
+  },
+  "independent_checks": [
+    {
+      "label": "bputil-entry",
+      "binary": "bputil",
+      "start": "0x100005374",
+      "end_exclusive": "0x100005fc0",
+      "instruction_words": 787,
+      "source_derivative_byte_mismatches": 0,
+      "LLVM_source_word_mismatches": 0,
+      "range_sha256": "d1bfbf7e8aaa241a16f893475b84fde24575aeea103aceeba27366e23d440f3a"
+    },
+    {
+      "label": "make-group-bootable",
+      "binary": "Bootability",
+      "start": "0x1d619e044",
+      "end_exclusive": "0x1d619e2a8",
+      "instruction_words": 153,
+      "source_derivative_byte_mismatches": 0,
+      "LLVM_source_word_mismatches": 0,
+      "range_sha256": "44fce7ebba538258352a6ffd09d1ee90b00c6817f8101a50c4b47ac6f1460535"
+    },
+    {
+      "label": "context-for-volume",
+      "binary": "Bootability",
+      "start": "0x1d619f218",
+      "end_exclusive": "0x1d619f504",
+      "instruction_words": 187,
+      "source_derivative_byte_mismatches": 0,
+      "LLVM_source_word_mismatches": 0,
+      "range_sha256": "efd2b535085789f11bd3fee9e08e396806450787741b6ecb692023df0ddc11c7"
+    }
+  ],
+  "unique_instruction_words": 1127,
+  "jump_table": {
+    "address": "0x100005fc0",
+    "bytes": 104,
+    "sha256": "af04bf37af8e0a17c9eb6f7c8c2d5f66ff7dddf5bcc50db94facf5df4188409c",
+    "dispatch": {
+      "n": "0x100005650",
+      "c": "0x10000563c",
+      "v": "0x1000055c4"
+    },
+    "included_in_instruction_count": false
+  },
+  "qualified_request": {
+    "mode_option": "-n",
+    "numeric_mode_literal": 2,
+    "mode_key": "BYBootOptionSecurityMode",
+    "force_key": "BYBootOptionForceCreateLocalPolicy",
+    "force_value": "kCFBooleanTrue",
+    "group_explicitly_forwarded": true,
+    "same_group_passed_to_authentication_context_constructor": true,
+    "server_field_mutations_proven": false,
+    "old_boot_reference_preservation_proven": false,
+    "old_LAB_metadata_preservation_proven": false
+  },
+  "official_manual": {
+    "bytes": 14064,
+    "sha256": "dacc771e3c49f0ec86feb582ba64e23b0e71c4ee49b1da647ec7f0f77d0a5a1b",
+    "permissive_recreates_policy": true,
+    "disable_kernel_ctrr_is_separate_option": true,
+    "candidate_destination_field_effects_qualified": false
+  },
+  "vm": {
+    "exit": 0,
+    "interfaces": [
+      "lo"
+    ],
+    "network": false,
+    "physical_usb": false,
+    "disks_attached": false,
+    "prior_job_restored_exact": true,
+    "quiet_released": true
+  },
+  "operations": {
+    "live_policy_or_private_reads": 0,
+    "selected_object_reads": 0,
+    "framework_or_policy_API_invocations": 0,
+    "host_settings_security_boot_or_firmware_changes": 0
+  },
+  "native_ready": false,
+  "contract": {
+    "scope": "PROPOSED_CONTROLLER_ADMISSION_NOT_PROVEN_SERVER_OUTPUT",
+    "Original_protected_anchor_preserved": true,
+    "global_lpnh_envelope_renewal_distinguished": true,
+    "LAB_fields_requiring_stability_for_candidate": [
+      "rpnh",
+      "ronh",
+      "spih",
+      "stng",
+      "love",
+      "nsih"
+    ],
+    "LAB_additional_typed_delta": "RESCUE_ONLY_UNQUALIFIED_TRANSITION_NEVER_CANDIDATE_BASELINE",
+    "explicit_LAB_phase_fields": [
+      "coih",
+      "sip2"
+    ],
+    "blanket_LAB_metadata_reissuance_qualified": false,
+    "rescue_anchor_before_reconstruction_required": true,
+    "native_policy_execution_authorized_by_research": false
+  },
+  "public_source": "https://support.apple.com/en-gb/guide/security/secc745a0845/web"
+}

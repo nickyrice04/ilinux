@@ -1,0 +1,194 @@
+{
+  "schema": "ilinux31ax-reuse-first-audit-v1",
+  "date": "2026-11-15",
+  "scope": "READ_ONLY_PRIMARY_SOURCE_REUSE_PLAN",
+  "target": {
+    "model": "Mac17,6",
+    "board": "J716c",
+    "soc": "T6050",
+    "gpu": "G17C",
+    "recorded_current_firmware_baseline": "26.6.2/25G83",
+    "current_state_queried": false
+  },
+  "decision": "ADOPT_A_PINNED_MATCHED_EXACT_BOARD_STACK_BEFORE_REIMPLEMENTING_WORKING_DRIVERS",
+  "sources": [
+    {
+      "repository": "betizzel/omarchy-m5",
+      "commit": "7df16b1b51469edcf7d2f2a593d9e7437a0af71d",
+      "path": "README.md",
+      "blob_sha": "7d843314ad40a9da8031afb3989cda32ac3f2ee1",
+      "url": "https://github.com/betizzel/omarchy-m5/blob/7df16b1b51469edcf7d2f2a593d9e7437a0af71d/README.md",
+      "read": true
+    },
+    {
+      "repository": "betizzel/omarchy-m5",
+      "commit": "7df16b1b51469edcf7d2f2a593d9e7437a0af71d",
+      "path": "installer/README.md",
+      "blob_sha": "0984df996c67643c1d5834d0cb2e5b01ac1534de",
+      "url": "https://github.com/betizzel/omarchy-m5/blob/7df16b1b51469edcf7d2f2a593d9e7437a0af71d/installer/README.md",
+      "read": true
+    },
+    {
+      "repository": "betizzel/omarchy-m5",
+      "commit": "7df16b1b51469edcf7d2f2a593d9e7437a0af71d",
+      "path": "installer/recipes/linux-aurora-j714s/PKGBUILD",
+      "blob_sha": "18ea099a1c93aff08ed4f87140c92dddf8395505",
+      "read": true
+    },
+    {
+      "repository": "betizzel/omarchy-m5",
+      "commit": "7df16b1b51469edcf7d2f2a593d9e7437a0af71d",
+      "path": "installer/recipes/m1n1-aurora-j714s/PKGBUILD",
+      "blob_sha": "18f8b8025ca10c50359b50519cdae2a769049b49",
+      "read": true
+    },
+    {
+      "repository": "betizzel/omarchy-m5",
+      "commit": "7df16b1b51469edcf7d2f2a593d9e7437a0af71d",
+      "path": "installer/recipes/uboot-aurora/PKGBUILD",
+      "blob_sha": "ec0487260223f799a306202db372afeee260f6a4",
+      "read": true
+    },
+    {
+      "repository": "betizzel/omarchy-m5",
+      "commit": "7df16b1b51469edcf7d2f2a593d9e7437a0af71d",
+      "path": "installer/recipes/hyprland-m5/PKGBUILD",
+      "blob_sha": "4aacc786814cd2abdd1549b2185836cfa32c9beb",
+      "read": true
+    },
+    {
+      "repository": "betizzel/omarchy-m5",
+      "commit": "7df16b1b51469edcf7d2f2a593d9e7437a0af71d",
+      "path": "installer/recipes/omarchy-aurora-firmware/m5-boot-guard",
+      "blob_sha": "28243b61db289b944e8936cc7f72e4d4eeae8b6e",
+      "read": true
+    },
+    {
+      "repository": "cameroncooper/linux",
+      "commit": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+      "path": "Documentation/arch/arm64/apple-j716c-bringup/README.rst",
+      "blob_sha": "04645c30a140a8fe05a29cd06295e0d0073ea921",
+      "read": true
+    },
+    {
+      "repository": "cameroncooper/linux",
+      "commit": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+      "path": "Documentation/arch/arm64/apple-j716c-bringup/pins.json",
+      "blob_sha": "91f28b4c037c3e81110f025e4488b291b29c27f1",
+      "read": true
+    },
+    {
+      "repository": "cameroncooper/linux",
+      "commit": "5e11068a1c6d8fccb155bc6e0159cc16107e53ec",
+      "path": "Documentation/arch/arm64/apple-j716c-bringup/kernel.config",
+      "blob_sha": "ec886dc9c8f00a437a8dbfd3f0182fb563496f94",
+      "read": true
+    },
+    {
+      "repository": "aurora-silicon/mesa",
+      "commit": "10161a78e60e4057257e116d404a92bd9b78bb3c",
+      "url": "https://github.com/aurora-silicon/mesa/commit/10161a78e60e4057257e116d404a92bd9b78bb3c",
+      "merge_scope": "native Gallium GL on G17S/G17C",
+      "read": true
+    },
+    {
+      "repository": "aurora-silicon/aura",
+      "commit": "52af355ca2c3b814f7610003bcefda16f6bfb943",
+      "path": "docs/macho-boot-object.md",
+      "blob_sha": "61d667415cfda47aa4c5e4949782e51335e8305c",
+      "read": true
+    },
+    {
+      "repository": "omacom/omarchy-mac-pkgs",
+      "commit": "76d8b7222e5c10d7b7a89803771f363c3c181b2c",
+      "path": "README.md",
+      "blob_sha": "99fa2e17735fc43230bf6e8611eff65da5e9e5e6",
+      "read": true
+    },
+    {
+      "repository": "betizzel/omarchy-m5",
+      "issue": 12,
+      "url": "https://github.com/betizzel/omarchy-m5/issues/12#issuecomment-6904255259",
+      "evidence": "OWNER_IDENTIFIES_WORKING_J716C_DAILY_BRANCH",
+      "read": true
+    }
+  ],
+  "exact_board_baseline": {
+    "evidence": "PUBLISHER_REPORTED_BOUNDED_NATIVE_RESULT_NOT_REPRODUCED_HERE",
+    "firmware": "27.2.1/26B131",
+    "mboot": "20457.41.3",
+    "kernel_commit": "a59e709c737777495c84541c6afb6c862bb79227",
+    "kernel_base": "dc8f6f77934b471a13c91e7780e2d91ebc904b3d",
+    "kernel_config_sha256": "3c11e751cb6d6e0358429230d28121c7f383aa5437a2e0b7d181b85f6dd7dbe8",
+    "kernel_targets": [
+      "Image.gz",
+      "modules",
+      "apple/t6050-j716c.dtb"
+    ],
+    "LLVM_lld": "22.1.8",
+    "Rust": "1.96.1",
+    "bindgen": "0.73.2",
+    "aura_graphics_stage2": "9da61857f9d9262bd64c023fbc1b18315b12d0af",
+    "mesa_commit": "10161a78e60e4057257e116d404a92bd9b78bb3c",
+    "Hyprland": "0.57.2",
+    "reported": [
+      "all18CPUs",
+      "N1WiFiSSH",
+      "nativeVulkan",
+      "internalPanel",
+      "GLESreadback"
+    ],
+    "limits": [
+      "RAMengineeringroot_notpersistentOmarchy",
+      "approx2GHzCPUceiling",
+      "Stage1_recipe_notpublished",
+      "guardian_deployment_notpublished",
+      "deepidle_suspend_unqualified",
+      "USBdevicechannel_unqualified"
+    ],
+    "parity_claimed": false
+  },
+  "alternate_exact_board_source": {
+    "repository": "aurora-silicon/linux",
+    "branch": "ewb/j716c-daily",
+    "observed_commit": "4e1f8e6a13191c42b3ce1bb1519e48440c06d79a",
+    "ANE_firmware_pin_scope": "J716c27.0/26A428_board_specific",
+    "complete_deployment_recipe_verified": false,
+    "per_unit_DROM_not_to_copy": true
+  },
+  "betizzel_integration": {
+    "image_board": "J714s_14inch_M5Pro",
+    "J716c_drop_in_supported": false,
+    "hardware_reported_release8_kernel": "v272-12",
+    "current_recipe_kernel": "v272-15",
+    "current_recipe_kernel_base": "6612865ee100cd266aedb55de13aaec2131ac8aa",
+    "current_recipe_loader_base": "22b71758dfd048f6a874073db55fbe6bd1d17f44",
+    "current_recipe_uboot": "70e990818a895454780797beedc6a7bdac9e2fd6",
+    "boot_mode": "27.2_padded_MachO_kcbz0_compressed_128MiBwindow",
+    "stage2_path": "m1n1/boot-ctxr.bin",
+    "guard_J716c_profile_required": true,
+    "guard_is_physical_watchdog": false,
+    "old_raw_bringup_guide_is_current_image_recipe": false,
+    "recipe_head_equals_hardware_tested_release": false
+  },
+  "next_sequence": [
+    "pin_exact_board_matched_inputs",
+    "isolated_fullkernel_modules_DTbuild",
+    "assemble_Omarchy_with_existing_Macpackages_acceleratedMesa_and_J716c_updateguard",
+    "retain_AX_transaction_and_boot021rescue",
+    "review_actual_Stage1_firmware_Labtransition_for_ownerapproval",
+    "one_bounded_RAM_acceptance_campaign",
+    "separate_persistence_and_storage_plan"
+  ],
+  "operations": {
+    "third_party_code_executed": false,
+    "large_clone_or_binary_download": false,
+    "firmware_or_per_unit_payload_copied": false,
+    "host_installs_or_settings_changes": false,
+    "policy_or_boot_operations": false,
+    "native_acceptance_tests": "NOT_RUN"
+  },
+  "native_ready": false,
+  "owner_update_authorization_implied": false,
+  "Apple_only_blocker_established": false
+}
