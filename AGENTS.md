@@ -1,5 +1,26 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### M1 — 31AX offline reset/rescue review PASS; deployment gates remain, November 15
+
+Reviewed a3bbd5e: 22 AX/14 AW/10 AV/190 AU pins and 386 prior evidence/closed
+receipts unchanged. New controller 76 normal/76 ASan/UBSan methods PASS, zero
+skips. Pure policy 18 per mode PASS:16 cases/529 C assertions; no writer linked.
+Both pure codec capability commands PASS. All 15 compiled hashes match M5;
+21 safety bodies, legacy authentication/writer and six typed reversals preserved.
+
+No actionable source finding. Failed reset/readback/baseline blocks candidate;
+candidate-free rescue before baseline, authenticated current rescue freeze,
+partial-anchor/no-op refusals and explicit functional-only scope PASS. Actual
+reset/SEP effect and Recovery runtime/memory remain unqualified. Prior AW/AV
+coverage reused, not rerun. No old keys/state/consumed receipts reset or replayed.
+
+Reuse-first source audit accepted with deployment gates detailed in the report.
+Next freeze the matched exact-board stack and qualify the concrete kit, manual
+rescue, guardian and J716c package guard before an owner proposal.
+No server/stage/restart/live policy/reset/security action. Native Linux/live
+version/SMP/GPU/performance NOT RUN. Evidence:
+native/boot/attempt31ax-m1-offline-2026-11-15.md and JSON.
+
 ### M5 — 31AX reset/rescue built offline; reuse-first stack gate, November 15
 
 Accepted M1 d679622: AW 52 normal/52 sanitized methods PASS with exact bindings.
