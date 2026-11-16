@@ -5,7 +5,45 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — 31AU controller integrated and reviewed, 2026-11-15
+## Current direction — 31AU safely closed; qualify 31AV offline, 2026-11-15
+
+The [closed M1 report](native/boot/attempt31au-recovery-2026-11-15-result.md)
+records installation refusal, human-confirmed exact boot021 restoration and
+Macintosh HD desktop/default return. No Linux boot occurred. Changed selection
+and a readable IMG4/LZFSE file narrow the identity failure to the decoder path;
+disabled lab CTRR remains a separate failed requirement.
+
+1. **Review the implemented verifier repair before integrating it.** The new
+   [31AV component](tools/codec31av/README.md) reproduces a valid-input streaming
+   rejection and supplies a bounded buffer proposal retaining complete framing,
+   declarations and exact known size/SHA. Twelve normal and twelve sanitizer
+   methods pass, with independent matrix and focused checks. This proves a
+   software compatibility defect on controlled inputs, not the historical
+   carrier's exact cause. Its up-to-160-MiB+1 allocation needs Recovery qualification.
+2. **Resolve the independent policy/runtime question without replaying AU.**
+   [New REA/LLVM findings](research/attempt31av-ctrr-2026-11-15.md) reach the
+   BootPolicy service, not a proven SIP2-clear implementation. Qualify the
+   bounded kernel receiver and actual Recovery tool/library capability next.
+   A decoder repair alone cannot satisfy enabled-CTRR admission. No new policy
+   writer or weaker guard follows from an unresolved service response.
+3. **M1 reviews offline, with no restart or page server.** Follow the
+   [new handoff](tools/m1n1-client/attempt31av-instructions.md). Keep all 190 old
+   source pins, previous kits and consumed state unchanged. A new installation
+   proposal needs a qualified integration and CTRR strategy, separate owner
+   authorization, boot021 rollback and Original return. No restart is ready now.
+4. **After entry, reproduce the matched exact-board accelerated stack.** The
+   previously identified J716c reference reports all physical cores, graphics
+   and networking on newer matching inputs. Retain its thermal/runtime limits;
+   compare CPU/core-type work, memory, rendering/input latency, network/storage
+   and energy per task with macOS before claiming parity. An OS/firmware update
+   is a separate deliberate decision, not an automatic fix for a decoder error.
+
+[Plan and attributed validation](native/boot/attempt31av-plan.md). Original
+Macintosh HD remains protected at Full Security. This offline work changes no
+boot, security, firmware or volume settings. Native Linux/SMP/GPU/performance
+remain NOT RUN in the closed attempt.
+
+## Historical direction — 31AU controller integrated and reviewed, 2026-11-15
 
 M1's `5807592` component review is accepted with its recorded input limits.
 The new [31AU transaction](tools/boot-object31au-native/README.md) integrates

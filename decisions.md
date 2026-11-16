@@ -1,5 +1,33 @@
 # Decisions Log
 
+### M5 — 31AU closed; 31AV decoder repair tested offline, November 15
+
+Reviewed M1 9a6411c: selection changed and selected-file read passed, but original
+IMG4/LZFSE recognition failed at DECODE_REJECTED; lab CTRR stayed disabled.
+No candidate boot occurred. Exact boot021 restoration and Original desktop/default
+return are human-confirmed with the report's raw-transcript limits. No repeated
+policy query, retry or private-state read was performed.
+
+New isolated tools/codec31av reproduces a valid Apple-encoded input rejection in
+the original 64 KiB stream path. Bounded buffer proposal retains strict framing,
+declarations, limits, keybag refusal and exact known size/SHA. Producer 12 normal
+and 12 ASan/UBSan methods PASS, zero skips; each includes 77 controls/474 stream
+trials and two genuine own-candidate round trips. Independent review reproduced
+the matrix; root's four focused methods PASS. The historical Recovery cause is
+unproven. Output allocation can reach 160 MiB+1; no controller integration or
+replacement kit. All 190 frozen AU source pins remain exact; consumed state intact.
+
+REA extends option 0x80 through generic libbootpolicy to the BootPolicy service;
+712 instruction words match cache/repack/LLVM, independently rerun by root. The
+service's SIP2 effect and actual Recovery runtime remain Unknown. The decoder
+repair alone cannot meet the separate enabled-CTRR contract; no guard relaxation,
+new writer, firmware operation or Apple-only blocker conclusion is justified.
+
+M1 next: tools/m1n1-client/attempt31av-instructions.md, offline review only. No
+restart, page/proxy, staging or live experiment. Keep Macintosh HD at Full Security.
+Native Linux/SMP/GPU/performance remain NOT RUN. Plan and attributed receipt:
+native/boot/attempt31av-plan.md and attempt31av-offline-2026-11-15.json.
+
 ### M1 — 31AU refused; boot021 restore and Macintosh HD return confirmed, November 15
 
 Checkpoint 2c33914 preserves actual install REFUSED after writer 0. New diagnostic:

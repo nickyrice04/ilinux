@@ -1,0 +1,130 @@
+{
+  "schema": "ilinux31av-offline-review-v1",
+  "date": "2026-11-15",
+  "scope": "OFFLINE_CODE_AND_GENERIC_STATIC_ANALYSIS_ONLY",
+  "m1_result_commit": "9a6411c",
+  "actual31AU": {
+    "install": "REFUSED",
+    "stage": "POSTCONDITION",
+    "writer_exit": 0,
+    "selected_reference_changed": true,
+    "selected_file_read_succeeded": true,
+    "object_container": "IMG4",
+    "object_codec": "LZFSE",
+    "object_stage": "DECODE_REJECTED",
+    "recognizer_completed": false,
+    "candidate_exact": false,
+    "lab_ctrr": "DISABLED",
+    "preservation_contract": true,
+    "candidate_boot": "NOT_RUN",
+    "restoration": "HUMAN_CONFIRMED",
+    "restoration_confirmed_fields": [
+      "RESTORE_COMPLETE",
+      "rollback_verified=true",
+      "cleanup_verified=true",
+      "helper_exit=0"
+    ],
+    "raw_restore_transcript_received": false,
+    "separate_Apple_restore_writer_exit_received": false,
+    "original_desktop_and_default": "HUMAN_CONFIRMED",
+    "fresh_policy_or_current_object_check": false
+  },
+  "codec": {
+    "proposal_implemented": true,
+    "controller_integrated": false,
+    "candidate_guard_relaxed": false,
+    "strict_framing_and_declaration_required": true,
+    "exact_known_size_and_sha256_required": true,
+    "output_allocation_limit_bytes": 167772161,
+    "library_scratch_additional": true,
+    "deterministic_valid_input_counterexample_reproduced": true,
+    "actual_historical_Recovery_cause_proven": false,
+    "producer_normal_methods": 12,
+    "producer_sanitized_methods": 12,
+    "producer_skips": 0,
+    "per_mode_matrix_cases": 77,
+    "per_mode_matrix_stream_trials": 474,
+    "per_mode_expected_valid_stream_failures": 12,
+    "per_mode_candidate_encodings": 2,
+    "per_mode_candidate_stream_trials": 22,
+    "per_mode_expected_candidate_stream_failures": 2,
+    "proposal_assertions": "PASS",
+    "independent_review": {
+      "source_review": "PASS_NO_ACTIONABLE_FINDINGS",
+      "fresh_matrix_rerun": "PASS",
+      "matrix_cases": 77,
+      "matrix_stream_trials": 474
+    },
+    "root_focused_rerun": {
+      "methods": 4,
+      "status": "PASS",
+      "skips": 0,
+      "elapsed_seconds": 7.789,
+      "method_names": [
+        "test_exact_owned_candidate_both_encoders",
+        "test_wrong_declaration_and_output_counts",
+        "test_truncated_trailing_and_malformed_frame",
+        "test_bad_cli_and_path_aliases_are_refused"
+      ],
+      "binary_sha256": "b71b856b216c9e46e902c2d890c682b0cb252380f750d4433103f3e848451ecc"
+    },
+    "detailed_producer_record": "tools/codec31av/validation.json"
+  },
+  "ctrr": {
+    "REA_queries": 1,
+    "instruction_words_matched": 712,
+    "independent_ranges": 5,
+    "root_verifier_rerun": "PASS",
+    "whole_function_pseudocode_admitted": false,
+    "request_reaches_BootPolicy_service": true,
+    "service_option_semantics_qualified": false,
+    "historical_Recovery_runtime_identity_qualified": false,
+    "new_writer_qualified": false,
+    "detailed_record": "research/attempt31av-ctrr-2026-11-15.json"
+  },
+  "review": {
+    "new_plan_and_M1_handoff_independently_reviewed": true,
+    "actionable_document_findings": 0
+  },
+  "preservation": {
+    "frozen_AU_source_entries": 190,
+    "all_frozen_source_pins_match": true,
+    "consumed_state_reset": false,
+    "old_kit_replaced": false,
+    "private_state_or_selected_object_read": false,
+    "manual_policy_check_repeated": false,
+    "Original_Full_requirement_retained": true,
+    "boot_or_security_or_firmware_or_volume_changes": 0,
+    "REA_VM_stopped": true,
+    "REA_prior_job_restored_exact": true,
+    "REA_quiet_released": true
+  },
+  "source_sha256": {
+    "tools/codec31av/README.md": "edd3d32c82c577e1410b7fb325229ae1858b25cb9417e62b0b5db9ee969ca3c2",
+    "tools/codec31av/buffer_proposal.c": "a64b78a2dccfa3ee986d8a9d421d799d7c8aec48c727a965090b4bd145ec312a",
+    "tools/codec31av/build.py": "0843cc1ea477bfe2f4a9e4ddf4c681abb4945f2312f3a445745c9230b622f4cc",
+    "tools/codec31av/probe.c": "d724f0f911909c1ea18ba3037f1f43d4f917793f256e751929db28d10dcd9c69",
+    "tools/codec31av/test_codec.py": "5dded31396ea9038c30570337fe92e98957a3fa11e105a466823af9039ad52db",
+    "tools/codec31av/validation.json": "c9aafe85e69067e3da5fe6a681640e00e56bde4ab32c8bae2740476febec0113",
+    "research/attempt31av-ctrr-2026-11-15.md": "7a57dd5df4fcbc878a37c7cc3bfa337ddeb7f1e9b757ff2f3aebf46986731d76",
+    "research/attempt31av-ctrr-2026-11-15.json": "144f3e202950e27cc29fc922b5699e7c01e4226bcdf5fbfff91cf213cfc1d18f",
+    "native/boot/attempt31av-plan.md": "15da8ca91c7dd47e7d6c89eced5d099745084e64ba68bf949c23fcd7b24e11e5",
+    "tools/m1n1-client/attempt31av-instructions.md": "fb3f245d523de0917f8b746beec44300df4a63d67dcc7f1186c9b841294de6d8"
+  },
+  "next": {
+    "M1": "OFFLINE_REVIEW_ONLY",
+    "native_boot_prepared": false,
+    "restart_ready": false,
+    "policy_workaround_authorized": false,
+    "kernel_receiver_static_trace": "BOUNDED_FOLLOWUP",
+    "decoder_integration": "AFTER_OFFLINE_REVIEW_AND_RUNTIME_QUALIFICATION",
+    "new_install_requires_separate_authorization": true,
+    "Apple_only_blocker_established": false
+  },
+  "native": {
+    "Linux": "NOT_RUN",
+    "physical_SMP": "NOT_RUN",
+    "GPU": "NOT_RUN",
+    "performance_parity": "NOT_RUN"
+  }
+}

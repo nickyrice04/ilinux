@@ -1,0 +1,111 @@
+{
+  "schema": "ilinux31av-own-codec-validation-v1",
+  "date": "2026-11-15",
+  "scope": "OWN_WORKSPACE_FIXTURES_ONLY",
+  "source_sha256": {
+    "README.md": "edd3d32c82c577e1410b7fb325229ae1858b25cb9417e62b0b5db9ee969ca3c2",
+    "buffer_proposal.c": "a64b78a2dccfa3ee986d8a9d421d799d7c8aec48c727a965090b4bd145ec312a",
+    "build.py": "0843cc1ea477bfe2f4a9e4ddf4c681abb4945f2312f3a445745c9230b622f4cc",
+    "probe.c": "d724f0f911909c1ea18ba3037f1f43d4f917793f256e751929db28d10dcd9c69",
+    "test_codec.py": "5dded31396ea9038c30570337fe92e98957a3fa11e105a466823af9039ad52db"
+  },
+  "environment": {
+    "os": "macOS",
+    "product_version": "26.6.2",
+    "build_version": "25G83",
+    "architecture": "arm64",
+    "compiler": "Apple clang 21.0.0 (clang-2100.4.1.1)",
+    "active_sdk": "27.2",
+    "optimization": "-O2",
+    "minimum_macos": "13.0",
+    "decoder": "installed libcompression",
+    "decoder_implementation_separately_qualified": false
+  },
+  "producer_runs": [
+    {
+      "sanitized": false,
+      "unittest_methods": 12,
+      "skips": 0,
+      "unittest_status": "PASS",
+      "elapsed_seconds": 8.259,
+      "binary_sha256": "b71b856b216c9e46e902c2d890c682b0cb252380f750d4433103f3e848451ecc",
+      "compiled_source_sha256": {
+        "core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+        "reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+        "probe.c": "d724f0f911909c1ea18ba3037f1f43d4f917793f256e751929db28d10dcd9c69",
+        "buffer_proposal.c": "a64b78a2dccfa3ee986d8a9d421d799d7c8aec48c727a965090b4bd145ec312a"
+      },
+      "matrix_summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 77,
+        "stream_trials": 474,
+        "failures": 0,
+        "valid_stream_failures": 12,
+        "invalid_buffer_exact": 1,
+        "host_queries": false,
+        "native_ready": false,
+        "controller_integrated": false
+      },
+      "candidate_summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 2,
+        "stream_trials": 22,
+        "failures": 0,
+        "valid_stream_failures": 2,
+        "invalid_buffer_exact": 0,
+        "host_queries": false,
+        "native_ready": false,
+        "controller_integrated": false
+      }
+    },
+    {
+      "sanitized": true,
+      "unittest_methods": 12,
+      "skips": 0,
+      "unittest_status": "PASS",
+      "elapsed_seconds": 8.762,
+      "binary_sha256": "d4e2e64cad0b548e37a81815041f8baabac5fd577a8c72172276f447ccb763d8",
+      "compiled_source_sha256": {
+        "core.c": "2e9882eae113e24ba2023fa2843fe8447f3da4ec7e022591d5ca46d987bfcdd8",
+        "reader.h": "bfa3bfe2af667e4b54db1913c80a35d9da4e343cddbc182464d08be674fcbf99",
+        "probe.c": "d724f0f911909c1ea18ba3037f1f43d4f917793f256e751929db28d10dcd9c69",
+        "buffer_proposal.c": "a64b78a2dccfa3ee986d8a9d421d799d7c8aec48c727a965090b4bd145ec312a"
+      },
+      "matrix_summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 77,
+        "stream_trials": 474,
+        "failures": 0,
+        "valid_stream_failures": 12,
+        "invalid_buffer_exact": 1,
+        "host_queries": false,
+        "native_ready": false,
+        "controller_integrated": false
+      },
+      "candidate_summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 2,
+        "stream_trials": 22,
+        "failures": 0,
+        "valid_stream_failures": 2,
+        "invalid_buffer_exact": 0,
+        "host_queries": false,
+        "native_ready": false,
+        "controller_integrated": false
+      }
+    }
+  ],
+  "frozen_source_unchanged": true,
+  "candidate_exactness_required": true,
+  "actual_recovery_carrier_examined": false,
+  "actual_recovery_cause_proven": false,
+  "native_ready": false,
+  "controller_integrated": false,
+  "host_settings_changed": false,
+  "boot_package_prepared": false,
+  "policy_or_selected_target_read": false
+}

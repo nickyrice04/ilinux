@@ -1,0 +1,140 @@
+{
+  "schema": "ilinux31av-ctrr-analysis-v1",
+  "input": {
+    "generic_image": "/usr/lib/libbootpolicy.dylib",
+    "base": "0x1affab000",
+    "transformed_bytes": 310091,
+    "transformed_sha256": "71e45ee3913b3ab0da69ea6c38f6fb0429065f649fadb1095f15b2ea143e2a81",
+    "original_text_bytes": 234184,
+    "original_text_sha256": "6a81bceb45e079d5dd57b27b7f3d4e9713da32a5dcb923f67d787bfe7efe73db",
+    "symbols": 1030,
+    "exports": 105,
+    "function_starts": 807,
+    "analysis_only": true,
+    "executed": false,
+    "layout_rewritten": true,
+    "cache_pointers_rebased": false
+  },
+  "actual_Recovery_library_identity_verified": false,
+  "provider": {
+    "id": "ghidra",
+    "name": "Ghidra",
+    "version": "12.1.4",
+    "REA": "6.4.0"
+  },
+  "query": {
+    "entry": "0x1affc1644",
+    "exit": 0,
+    "dossier_sha256": "e419234682984b1d0b28f41bc4453f2e7b1f4adb1e92c649fe438bbd6b056bb0",
+    "body_bytes": 1080,
+    "high_pcode_operations": 584,
+    "high_pcode_dead": 584,
+    "high_pcode_outside_body": 0,
+    "high_pcode_truncated": false,
+    "whole_function_pseudocode_admitted": false
+  },
+  "independent_checks": [
+    {
+      "label": "custom-os-ex",
+      "start": "0x1affc1644",
+      "end_exclusive": "0x1affc1a7c",
+      "instruction_words": 270,
+      "cache_repack_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "8d9b1073f87b1d89de45eb8e42abd6b283d113802852fc43c372dd37c7171d44"
+    },
+    {
+      "label": "sep-command",
+      "start": "0x1affad3f8",
+      "end_exclusive": "0x1affad780",
+      "instruction_words": 226,
+      "cache_repack_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "1970c2869322883c5563333326d373729df728cd10e1b37781e456e4c6e6ffe5"
+    },
+    {
+      "label": "sep-send",
+      "start": "0x1afface2c",
+      "end_exclusive": "0x1affaced4",
+      "instruction_words": 42,
+      "cache_repack_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "db9aaae12f4cd817fd365a8aa1e1a5ee20c38621c7c4995f155cc00949c9f773"
+    },
+    {
+      "label": "service-open",
+      "start": "0x1affaced4",
+      "end_exclusive": "0x1affacf54",
+      "instruction_words": 32,
+      "cache_repack_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "ee5c25766628fa30c9ffa07bb11343dc0a9f357ea935f83b3aa6b4d8b6b732d0"
+    },
+    {
+      "label": "legacy-api",
+      "start": "0x1affc140c",
+      "end_exclusive": "0x1affc1644",
+      "instruction_words": 142,
+      "cache_repack_byte_mismatches": 0,
+      "LLVM_original_word_mismatches": 0,
+      "range_sha256": "91560898384aa2641df62d2fab0f4000c09e4fd3af08e2e956e5f875893cbe2d"
+    }
+  ],
+  "unique_instruction_words": 712,
+  "vm": {
+    "exit": 0,
+    "interfaces": [
+      "lo"
+    ],
+    "network": false,
+    "physical_usb": false,
+    "disks_attached": false,
+    "prior_job_restored_exact": true,
+    "quiet_released": true
+  },
+  "policy_queries": 0,
+  "library_api_invocations": 0,
+  "boot_or_security_changes": 0,
+  "private_transaction_or_installed_object_reads": 0,
+  "server_option_semantics_qualified": false,
+  "new_writer_qualified": false,
+  "native_ready": false,
+  "date": "2026-11-15",
+  "observed31AU": {
+    "reference_changed": true,
+    "read_succeeded": true,
+    "container": "IMG4",
+    "codec": "LZFSE",
+    "object_stage": "DECODE_REJECTED",
+    "lab_ctrr": "DISABLED",
+    "preservation_contract": true,
+    "restoration": "HUMAN_CONFIRMED",
+    "original_default_and_desktop": "HUMAN_CONFIRMED"
+  },
+  "qualified_request": {
+    "export_entry": "0x1affc1644",
+    "options_argument": "x3",
+    "option_comparison_kind": "EXACT_EQUALITY",
+    "special_value": "0x80",
+    "comparison_address": "0x1affc17e8",
+    "request_mode_byte_offset": "0x22",
+    "mode_byte_set_address": "0x1affc17f4",
+    "command": "0x2f",
+    "command_call_address": "0x1affc180c",
+    "backend": "BootPolicy IOKit service",
+    "backend_method": "IOConnectCallStructMethod",
+    "backend_selector": 0,
+    "backend_call_address": "0x1afface84",
+    "legacy_options_argument": 0,
+    "local_SIP2_clear_qualified": false,
+    "server_interpretation": "UNKNOWN"
+  },
+  "next": {
+    "Recovery_runtime_identity": "UNQUALIFIED",
+    "kernel_receiver": "BOUNDED_STATIC_FOLLOWUP_NOT_RUN",
+    "no_retry_or_new_boot": true,
+    "no_guard_relaxation": true,
+    "no_Apple_only_blocker_conclusion": true,
+    "newer_matched_stack": "REQUIRES_SEPARATELY_AUTHORIZED_UPDATE_PLAN"
+  }
+}
