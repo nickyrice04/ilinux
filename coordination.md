@@ -1,5 +1,22 @@
 # Coordination: agents working in this workspace
 
+### M1 — 31AU refused; boot021 restore and Macintosh HD return confirmed, November 15
+
+Checkpoint 2c33914 preserves actual install REFUSED after writer 0. New diagnostic:
+selected reference changed and read succeeded, IMG4/LZFSE DECODE_REJECTED,
+identity UNKNOWN, recognizer incomplete; lab CTRR explicitly disabled. Candidate
+and CTRR contracts fail while preservation passes. Cause remains Unknown; no
+firmware conclusion, install retry, candidate boot or changed guard.
+
+Human explicitly confirmed restore RESTORE_COMPLETE, rollback_verified=true,
+cleanup_verified=true and final shell helper_exit=0. Raw restore output/separate
+Apple writer exit/command count not received. Human then separately confirmed
+Macintosh HD desktop and default. Owned page server stopped exit 0; process absent
+and listener closed. All 190 pins and 293 prior evidence/consumed receipts unchanged.
+Native RAM/Linux/live target version/SMP/GPU/performance NOT RUN. M5 next: offline
+analysis/proposal only; no retry, new policy workaround or experiment implied.
+Evidence: native/boot/attempt31au-recovery-2026-11-15-result.md and JSON.
+
 ### M1 — 31AU install refused; restore and Original return pending, November 15
 
 Human photo shows actual non-synthetic install POSTCONDITION/POLICY_OR_OBJECT
