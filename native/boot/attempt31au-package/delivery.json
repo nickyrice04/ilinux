@@ -1,0 +1,26 @@
+{
+  "active_artifact_revision": "production-v2",
+  "files": {
+    "candidate.macho": {
+      "bytes": 153190400,
+      "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+    },
+    "ilinux31au-reader": {
+      "bytes": 125664,
+      "sha256": "89100be28210fe41ddf1c789e405612aa5ece64a672f8a2c62ef34f7796850e4"
+    },
+    "m1n1-boot021.bin": {
+      "bytes": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "profile.json": {
+      "bytes": 826,
+      "sha256": "a45d1718ea8aea5b7b63bda8d23b2747e3864d3b9cb54ca7f19454eeb73fe440"
+    }
+  },
+  "host_changes": false,
+  "lab_staged": false,
+  "native_ready": false,
+  "schema": "ilinux31au-delivery-v1",
+  "workspace_delivery_verified": true
+}

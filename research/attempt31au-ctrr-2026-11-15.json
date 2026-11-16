@@ -1,0 +1,279 @@
+{
+  "schema": "ilinux31au-ctrr-analysis-v1",
+  "date": "2026-11-15",
+  "input": {
+    "kind": "GENERIC_KMUTIL_ARM64E_NOT_RECOVERY_IDENTITY",
+    "slice_bytes": 2167872,
+    "slice_sha256": "13827d7242e4550f3d45994f9849ce3a84dbb14d3bb6de21601c4488287582fb",
+    "root_observed_current_generic_universal_bytes": 4265024,
+    "root_observed_current_generic_universal_sha256": "2f435e8f872e75e7edcf0ec108f3360e18b1e4123451032062b7c28aa4106b43",
+    "root_observed_current_macOS": "26.6.2/25G83",
+    "root_observed_current_slice_exactly_matches": true,
+    "actual_Recovery_executable_identity_verified": false
+  },
+  "provider": {
+    "REA": "6.4.0",
+    "Ghidra": "12.1.4"
+  },
+  "queries": [
+    {
+      "label": "late-configure-forwarder",
+      "requested_entry": "0x1001452a8",
+      "exit": 0,
+      "dossier_sha256": "c120207d45626e83b6c7b1b92074dce57bc8ece1c4e0d1af523890fac084f4fa",
+      "provider_body_bytes": 4,
+      "provider_assembly_instructions": 1,
+      "high_pcode_operations": 8,
+      "high_pcode_outside_body": 8,
+      "high_pcode_truncated": false,
+      "high_pcode_dead_operations": 8,
+      "whole_function_semantics_admitted": false,
+      "gate": "REJECTED_CROSS_BOUNDARY"
+    },
+    {
+      "label": "late-configure-helper",
+      "requested_entry": "0x100144f18",
+      "exit": 0,
+      "dossier_sha256": "9b2638df75db8fc2924bff6bcac2c0e4248c45400e6fbfc87b2aca34701a8cd6",
+      "provider_body_bytes": 912,
+      "provider_assembly_instructions": 228,
+      "high_pcode_operations": 557,
+      "high_pcode_outside_body": 0,
+      "high_pcode_truncated": false,
+      "high_pcode_dead_operations": 557,
+      "whole_function_semantics_admitted": false,
+      "gate": "BOUNDED_INSTRUCTIONS_ONLY_DEAD_HIGH_PCODE"
+    },
+    {
+      "label": "real-BootPolicyClient-receiver",
+      "requested_entry": "0x1000711b8",
+      "exit": 0,
+      "dossier_sha256": "0baaf56df42bda564bc82e0ba4c03e3573fe082d7f151c4102e3c3101ea0a017",
+      "provider_body_bytes": 536,
+      "provider_assembly_instructions": 134,
+      "high_pcode_operations": 190,
+      "high_pcode_outside_body": 0,
+      "high_pcode_truncated": false,
+      "high_pcode_dead_operations": 190,
+      "whole_function_semantics_admitted": false,
+      "gate": "BOUNDED_INSTRUCTIONS_ONLY_DEAD_HIGH_PCODE"
+    },
+    {
+      "label": "real-AuthenticatedBootPolicyClient-implementation",
+      "requested_entry": "0x100136e40",
+      "exit": 0,
+      "dossier_sha256": "9229bc34ae485431d165276528cc8e0f4b1c4203a7c67d0c2880ea974411548d",
+      "provider_body_bytes": 1204,
+      "provider_assembly_instructions": 301,
+      "high_pcode_operations": 745,
+      "high_pcode_outside_body": 0,
+      "high_pcode_truncated": false,
+      "high_pcode_dead_operations": 745,
+      "whole_function_semantics_admitted": false,
+      "gate": "BOUNDED_INSTRUCTIONS_ONLY_DEAD_HIGH_PCODE"
+    }
+  ],
+  "independent_bounded_checks": [
+    {
+      "label": "forwarding-wrapper",
+      "ranges": [
+        {
+          "start": "0x1001452a8",
+          "end_exclusive": "0x1001452c4"
+        }
+      ],
+      "instruction_words": 7,
+      "concatenated_range_sha256": "ccaa8bc253c24a44ed3c488bd7d376fabfc2b3cc3c7e5bea426a020d42f0c98a",
+      "LLVM_word_mismatches": 0,
+      "primary_REA_or_caller_range": true
+    },
+    {
+      "label": "configure-helper",
+      "ranges": [
+        {
+          "start": "0x100144f18",
+          "end_exclusive": "0x1001452a8"
+        }
+      ],
+      "instruction_words": 228,
+      "concatenated_range_sha256": "4c9cf4ebe52080f05f8285f5d3dff92c79ab66ed34787d352598394c26d209e0",
+      "LLVM_word_mismatches": 0,
+      "primary_REA_or_caller_range": true
+    },
+    {
+      "label": "real-BootPolicyClient-receiver",
+      "ranges": [
+        {
+          "start": "0x1000711b8",
+          "end_exclusive": "0x1000713d0"
+        }
+      ],
+      "instruction_words": 134,
+      "concatenated_range_sha256": "adfdbf36758c26dbef4dc8e428f67f96fda8b6f06508d2e151f57eb41819357b",
+      "LLVM_word_mismatches": 0,
+      "primary_REA_or_caller_range": true
+    },
+    {
+      "label": "real-AuthenticatedBootPolicyClient-implementation",
+      "ranges": [
+        {
+          "start": "0x100136e40",
+          "end_exclusive": "0x1001372f4"
+        }
+      ],
+      "instruction_words": 301,
+      "concatenated_range_sha256": "240368bface2ced959a6752d6d8de5a16b3de53156af4759081071dbf6981cc5",
+      "LLVM_word_mismatches": 0,
+      "primary_REA_or_caller_range": true
+    },
+    {
+      "label": "real-BootPolicyClient-thunk",
+      "ranges": [
+        {
+          "start": "0x10013ce54",
+          "end_exclusive": "0x10013ce6c"
+        }
+      ],
+      "instruction_words": 6,
+      "concatenated_range_sha256": "84071af549de51c29cfd3672ae425b77536923a7e26eddb278f92ae98f4499f6",
+      "LLVM_word_mismatches": 0,
+      "primary_REA_or_caller_range": false
+    },
+    {
+      "label": "authenticated-callback",
+      "ranges": [
+        {
+          "start": "0x100071ef0",
+          "end_exclusive": "0x100071f24"
+        }
+      ],
+      "instruction_words": 13,
+      "concatenated_range_sha256": "a791e8c851efb67d1b4cbd28e2915949567f7218238c842bba0042ea8a648d57",
+      "LLVM_word_mismatches": 0,
+      "primary_REA_or_caller_range": false
+    },
+    {
+      "label": "authenticated-forwarding-worker",
+      "ranges": [
+        {
+          "start": "0x1000713d0",
+          "end_exclusive": "0x1000715f4"
+        }
+      ],
+      "instruction_words": 137,
+      "concatenated_range_sha256": "c6704ffd8e827ffaece1df02f9007abf585f87150861626696ab8274169b9bcf",
+      "LLVM_word_mismatches": 0,
+      "primary_REA_or_caller_range": false
+    },
+    {
+      "label": "real-authenticated-thunk",
+      "ranges": [
+        {
+          "start": "0x10013a594",
+          "end_exclusive": "0x10013a5b8"
+        }
+      ],
+      "instruction_words": 9,
+      "concatenated_range_sha256": "dfe23627d0b05ab67489ec025f274158bde06c8a00f8de323c17cb5053ad084c",
+      "LLVM_word_mismatches": 0,
+      "primary_REA_or_caller_range": false
+    }
+  ],
+  "independent_checked_words": 835,
+  "first_forwarding_call": {
+    "callsite": "0x1001452b8",
+    "target": "0x100144f18",
+    "independently_checked": true
+  },
+  "runtime": {
+    "guest_network_interfaces_each": [
+      "lo"
+    ],
+    "attached_disks": 0,
+    "physical_USB": false,
+    "prior_job_restored_byte_exact": true,
+    "quiet_lock_released": true
+  },
+  "live_policy_or_state_read": false,
+  "settings_or_firmware_changed": false,
+  "guard_relaxed": false,
+  "new_CTRR_writer_qualified": false,
+  "native_or_firmware_acceptance_proven": false,
+  "method_table_dispatch": {
+    "callsite": "0x100145204",
+    "actual_LocalPolicy_SIP2_clear_proven": false,
+    "table_slot_bytes": 72,
+    "argument_x2_fixed_value": 2,
+    "argument_x2_semantics_qualified": false,
+    "argument_x3_source_qualified": true,
+    "argument_x3_policy_effect_qualified": false,
+    "actual_Recovery_runtime_implementation_verified": false
+  },
+  "primary_REA_or_caller_checked_words": 670,
+  "additional_static_flag_flow_words": 165,
+  "raw_option_dataflow": {
+    "source_type": "ConfigureBootOptions",
+    "type_descriptor": "0x1001a12fc",
+    "metadata_accessor": "0x100142550",
+    "metadata_saved_at": "0x100144f48",
+    "metadata_frame_offset": -248,
+    "field_descriptor": "0x1001aa46c",
+    "field_count": 6,
+    "field_offset_vector_words": 2,
+    "field_index": 3,
+    "field_name": "_raw",
+    "metadata_field_offset_read_bytes": 28,
+    "flag_getter_call": "0x1001451b8",
+    "flag_byte_load": "0x1001451c8",
+    "negation_instruction": "0x1001451dc",
+    "argument_x3_is_not_raw": true,
+    "MachO_argument_x3": 1,
+    "raw_argument_x3": 0,
+    "Swift_ABI_source": "https://github.com/swiftlang/swift/blob/swift-6.0-RELEASE/include/swift/ABI/Metadata.h"
+  },
+  "protocol_metadata": {
+    "BootPolicyClient": {
+      "descriptor": "0x10019dc2c",
+      "requirements": 20,
+      "real_conformance": "0x10017c8d0",
+      "real_witness_pattern": "0x1001d7098",
+      "slot_bytes": 72,
+      "real_slot_thunk": "0x10013ce54",
+      "real_receiver": "0x1000711b8"
+    },
+    "AuthenticatedBootPolicyClient": {
+      "descriptor": "0x10019dbe4",
+      "requirements": 6,
+      "real_conformance": "0x10017c8c0",
+      "real_witness_pattern": "0x1001d7060",
+      "slot_bytes": 24,
+      "real_slot_thunk": "0x10013a594",
+      "real_implementation": "0x100136e40"
+    },
+    "actual_Recovery_runtime_client_identity_verified": false
+  },
+  "flag_forwarding": {
+    "receiver_capture_byte_offset": 64,
+    "callback": "0x100071ef0",
+    "callback_load": "0x100071f14",
+    "worker": "0x1000713d0",
+    "worker_argument_w5_frame_offset": -84,
+    "worker_reload": "0x100071590",
+    "worker_auth_dispatch": "0x1000715b8",
+    "raw_mode_flag_preserved_through_authenticated_dispatch": true
+  },
+  "named_policy_API_boundary": {
+    "API": "bootpolicy_update_local_policy_for_custom_os_ex",
+    "library": "/usr/lib/libbootpolicy.dylib",
+    "stub": "0x10016475c",
+    "callsite": "0x100137218",
+    "MachO_option_selection": "0x100137158",
+    "MachO_option_mask": 128,
+    "raw_uses_alternate_option_construction": true,
+    "option_0x80_effect_on_existing_SIP2_qualified": false,
+    "unconditional_SIP2_clear_proven": false,
+    "enable_only_writer_qualified": false,
+    "official_SDK_header_found": false,
+    "official_SDK_tbd_export_found": true
+  }
+}

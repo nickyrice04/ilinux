@@ -1,0 +1,86 @@
+{
+  "schema": "ilinux31au-final-offline-review-v1",
+  "date": "2026-11-15",
+  "accepted_M1_component_review": "5807592",
+  "active_revision": "production-v2",
+  "package_source_count": 190,
+  "retained_31AS_sources": 167,
+  "source_mismatches": 0,
+  "source_inventory_sha256": "975364a78be8ae44247ceddb7ea63b72b04ea240baf541006f94a2cba92f3865",
+  "helper": {
+    "bytes": 125664,
+    "name": "ilinux31au-reader",
+    "sha256": "89100be28210fe41ddf1c789e405612aa5ece64a672f8a2c62ef34f7796850e4"
+  },
+  "profile_bytes": 826,
+  "profile_sha256": "a45d1718ea8aea5b7b63bda8d23b2747e3864d3b9cb54ca7f19454eeb73fe440",
+  "producer": {
+    "controller_normal_methods": 39,
+    "controller_sanitized_methods": 39,
+    "controller_skips": 0,
+    "package_and_bootstrap_methods": 26,
+    "renderer_methods": 7,
+    "package_skips": 0,
+    "both_shell_controller_calls": "INTERCEPTED_SYNTHETIC_SYSTEM_BACKEND"
+  },
+  "independent": {
+    "final_controller_focused_methods": 5,
+    "final_controller_focused_skips": 0,
+    "final_package_methods": 13,
+    "final_package_skips": 0,
+    "final_renderer_methods": 7,
+    "final_renderer_skips": 0,
+    "original_reported_counterexamples_retested": 2,
+    "valid_counterexample_control": "PASS",
+    "fixed_operation_function_bodies_byte_identical": 9,
+    "independent_prior_revision_full_controller_methods": 36,
+    "independent_prior_revision_full_package_methods": 26,
+    "full_final_producer_normal39_and_ASan39": "ATTRIBUTED_NOT_REDUNDANTLY_RERUN",
+    "full_final_producer_package26": "ATTRIBUTED_WITH_ROOT13_FOCUSED",
+    "final_exact_page_checks": 3
+  },
+  "source_audit_findings_fixed": [
+    "KNOWN_MATCHED_WITH_BLOCKED_CODEC_OR_UNCLASSIFIED_CONTAINER",
+    "RESTORE_REFUSAL_WITH_CANDIDATE_PHASE"
+  ],
+  "original_recognizer_unchanged": true,
+  "same_buffer_diagnostics": true,
+  "selected_reference_comparison": "OWN_HMAC_IN_RAM_ONLY_BOOLEAN_OUTPUT",
+  "initial_contract": {
+    "payload": "BOOT021",
+    "lab_ctrr": "disabled"
+  },
+  "candidate_contract": {
+    "payload": "EXACT_CANDIDATE",
+    "lab_ctrr": "enabled"
+  },
+  "new_policy_writer_added": false,
+  "old_state_reset": false,
+  "v1_artifacts_retained": true,
+  "CTRR_cause_resolved": false,
+  "qualified_enable_only_workaround": false,
+  "meaningful_next_hardware_test": "GUARDED_ENROLLMENT_READBACK_WITH_PRECISE_OBJECT_AND_SELECTION_DIAGNOSTICS_THEN_INDEPENDENT_BOOT021_RESTORE",
+  "current_scope": "OFFLINE_BUILD_REVIEW_AND_AUTHORIZED_LAB_DATA_STAGING_ONLY",
+  "Lab_Data_staging": "OWNER_AUTHENTICATION_PENDING",
+  "controller_or_writer_live_run": false,
+  "Preboot_mount_run": false,
+  "Startup_Disk_changed": false,
+  "security_changed": false,
+  "firmware_changed": false,
+  "native_Linux_SMP_GPU": "NOT_RUN",
+  "macOS_performance_parity": "NOT_MEASURED",
+  "restart_ready": false,
+  "REA": {
+    "queries": 4,
+    "independently_checked_instruction_words": 835,
+    "raw_MachO_option_flow": "QUALIFIED_TO_CUSTOM_OS_LOCALPOLICY_API",
+    "MachO_request_option_hex": "0x80",
+    "existing_SIP2_mutation": "UNQUALIFIED",
+    "historical_Recovery_tool_identity": "UNQUALIFIED",
+    "whole_function_pseudocode_used_as_verified_source": false,
+    "all_VMs_stopped": true,
+    "quiet_locks_released": true,
+    "prior_job_restored": true
+  },
+  "independent_auditor_V2_findings_disposition": "PASS_BOTH_ORIGINAL_COUNTEREXAMPLES_RETESTED"
+}

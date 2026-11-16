@@ -1,0 +1,93 @@
+{
+  "CTRR_hardware_behavior_resolved": false,
+  "Preboot_mount_run": false,
+  "Startup_Disk_changed": false,
+  "active_artifact_revision": "production-v2",
+  "actual_page_preparation": "PASS",
+  "binary_delivery_verified": true,
+  "boot_object_installed": false,
+  "controller_run": false,
+  "date": "2026-11-15",
+  "exact_check_only_pages": 3,
+  "executed_shell_methods": 13,
+  "firmware_changed": false,
+  "genuine_own_helper_candidate_boot021_bytes_used": true,
+  "helper_bytes": 125664,
+  "helper_sha256": "89100be28210fe41ddf1c789e405612aa5ece64a672f8a2c62ef34f7796850e4",
+  "independent_checks": {
+    "final_controller_focused_methods": 5,
+    "final_controller_focused_skips": 0,
+    "final_exact_page_checks": 3,
+    "final_package_methods": 13,
+    "final_package_skips": 0,
+    "final_renderer_methods": 7,
+    "final_renderer_skips": 0,
+    "fixed_operation_function_bodies_byte_identical": 9,
+    "full_final_producer_normal39_and_ASan39": "ATTRIBUTED_NOT_REDUNDANTLY_RERUN",
+    "full_final_producer_package26": "ATTRIBUTED_WITH_ROOT13_FOCUSED",
+    "independent_prior_revision_full_controller_methods": 36,
+    "independent_prior_revision_full_package_methods": 26,
+    "original_reported_counterexamples_retested": 2,
+    "valid_counterexample_control": "PASS"
+  },
+  "independent_review": "PASS_AFTER_V2_COUNTEREXAMPLE_REPAIR",
+  "kit_ancestor_symlink_and_dot_escape_before_enumeration": "PASS",
+  "lab_staged": false,
+  "live_target_metadata_queried": false,
+  "native_Linux_SMP_GPU": "NOT_RUN",
+  "native_ready": false,
+  "old_state_reset": false,
+  "old_state_sentinel_preserved_in_copy_fixture": true,
+  "output": {
+    "install-paste.txt": {
+      "bytes": 6603,
+      "sha256": "f853c3cee276692d2efbc9ea2ccaca7871cc9c71301326fc87ba5bde454bcd11"
+    },
+    "install.html": {
+      "bytes": 9813,
+      "sha256": "175098df863f77036d34bf285a6744871f34b5a3b5b41ba912305dfcaa7296de"
+    },
+    "profile.json": {
+      "bytes": 826,
+      "sha256": "a45d1718ea8aea5b7b63bda8d23b2747e3864d3b9cb54ca7f19454eeb73fe440"
+    },
+    "recovery.html": {
+      "bytes": 18133,
+      "sha256": "2361cfc8be8e1664da1cfe24117f760e45756ed5430766f7cdf8293fb8acc3c4"
+    },
+    "restore-paste.txt": {
+      "bytes": 6189,
+      "sha256": "b1b2befc46cc6aa15c83336b676559d0f8e8027c734c607a15eaa7c243cfa5fc"
+    },
+    "restore.html": {
+      "bytes": 9346,
+      "sha256": "cde07299a712d37f431eef1168db04e6ebf08abfc23b27c4ced25604f070fb7d"
+    }
+  },
+  "package_methods": 13,
+  "previous_v1_workspace_artifacts_preserved": true,
+  "producer_tests": {
+    "package_and_bootstrap": {
+      "passed": 26,
+      "seconds": 77.427,
+      "skipped": 0
+    },
+    "render": {
+      "passed": 7,
+      "skipped": 0
+    }
+  },
+  "profile_bytes": 826,
+  "profile_sha256": "a45d1718ea8aea5b7b63bda8d23b2747e3864d3b9cb54ca7f19454eeb73fe440",
+  "restart_ready": false,
+  "retained_31AS_sources_checked": 167,
+  "retained_source_mismatches": 0,
+  "schema": "ilinux31au-package-offline-validation-v1",
+  "security_changed": false,
+  "server_started": false,
+  "shell_controller_calls": "BOTH_INTERCEPTED_BY_EXPLICIT_SYNTHETIC_FIXTURE",
+  "source_inventory_sha256": "975364a78be8ae44247ceddb7ea63b72b04ea240baf541006f94a2cba92f3865",
+  "verified_source_count": 190,
+  "workspace_copy_fixture": "PASS_WITH_GENUINE_NEW_KIT",
+  "workspace_kit_assembled_and_verified": true
+}

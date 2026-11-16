@@ -5,7 +5,51 @@ then feasibility, impact, evidence, safe testability, reuse and
 maintainability. Status: ✅ done · 🔄 in progress · ⏳ blocked or awaiting
 approval · ⬜ not started.
 
-## Current direction — saved 31AS failure classified, 2026-11-15
+## Current direction — 31AU controller integrated and reviewed, 2026-11-15
+
+M1's `5807592` component review is accepted with its recorded input limits.
+The new [31AU transaction](tools/boot-object31au-native/README.md) integrates
+same-read object diagnostics, an in-memory selected-reference comparison and
+candidate-independent boot021 rollback. It starts from the confirmed restored
+boot021/disabled-CTRR baseline in a fresh namespace. No old state is reset and
+the Linux candidate is unchanged.
+
+1. **Finish the authorized lab Data staging and M1 handoff.** The V2 helper,
+   four-file kit and complete one-paste install/restore pages are built. Producer
+   checks passed 39 controller methods normally and under sanitizers, seven
+   renderer and 26 package/bootstrap methods. Independent review reproduced and
+   verified fixes for two result-display contradictions. Final source closure
+   has 190 entries, preserving all 167 old inputs. Root's final focused controls
+   and exact source/artifact/page checks pass. Local owner authentication is
+   needed for the lab Data copy; no boot/security setting is changed by staging.
+   M1 follows [the new handoff](tools/m1n1-client/attempt31au-instructions.md).
+2. **Use the next authorized Recovery visit for decisive readback evidence.**
+   Record selected-reference changed/unchanged, read and framing/codec failure
+   stage, exact decoded match, CTRR class, preservation and cleanup. Never boot
+   an unverified candidate. Only a complete install pass can permit the separate
+   90-second RAM observation; otherwise use independent exact boot021 restore.
+   This is a new diagnostic transaction, not a replay of 31AR or a claim that
+   disabled CTRR has been fixed. [Plan and limits](native/boot/attempt31au-plan.md).
+3. **Continue the precise policy/version investigation without an invented fix.**
+   [REA and LLVM](research/attempt31au-ctrr-2026-11-15.md) trace the raw/Mach-O
+   distinction to a named custom-OS LocalPolicy API. The actual effect on existing
+   SIP2 and the historical Recovery tool remain unqualified. Retain exact
+   candidate plus enabled-CTRR admission and the existing rollback. No new policy
+   writer, Original update or firmware change is justified by those facts alone.
+4. **Reproduce the exact-board accelerated stack after entry is established.**
+   Keep the previously identified J716c kernel, graphics Stage2, compatible
+   Stage1, toolchain/modules/Mesa/firmware/runtime gates together. The separate
+   full-config admission is implemented; the accelerated kernel remains unbuilt
+   here. Native all-core work, GPU/fabric behavior, networking, storage, input
+   latency, thermal behavior and energy per task must be measured against a
+   comparable macOS baseline before moving daily development into Linux.
+
+There is no restart cue from the offline review or a running server alone. M1
+can manage its exact new page directly; no repeated server-readiness or clipboard
+calibration loop is needed. Macintosh HD remains protected, and no settings,
+boot objects or firmware have been changed by this offline work.
+
+## Historical direction — saved 31AS failure classified, 2026-11-15
 
 The [owner-authenticated saved-state result](native/boot/attempt31at-postcondition-2026-11-15.json)
 identifies two failed candidate requirements: the selected payload was

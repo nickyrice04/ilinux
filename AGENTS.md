@@ -1,5 +1,31 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### M5 — 31AU V2 reviewed; staging needs owner authentication, November 15
+
+Accepted M1 review 5807592 with its recorded input limits. The new AU transaction
+starts from exact BOOT021 with disabled lab CTRR, in its own namespace. It adds
+same-read object diagnostics, a RAM-only selected-reference comparison and durable
+finite reports. Exact candidate identity, enabled candidate CTRR, Original Full,
+all preservation checks and candidate-independent boot021 rollback remain required.
+
+Producer checks passed 39 controller methods normally and 39 under ASan/UBSan,
+plus 7 renderer and 26 package/bootstrap methods, with zero skips. Independent
+review found two result-display contradictions; V2 fixes and exact counterexample
+retests pass. Root's final focused checks passed 5 controller, 13 package and
+7 renderer methods. Earlier complete 36/26 runs are attributed to V1. Nine fixed
+writer/terminal/mount/target/state/work-binding function bodies remain unchanged.
+
+The genuine V2 kit and exact pages are prepared under build/. The 190-source
+closure preserves all 167 old inputs. CTRR tracing reaches a mode-dependent
+custom-OS LocalPolicy request; its SIP2 effect remains unqualified. No new policy
+writer or firmware fix is claimed. Lab Data staging needs local owner Terminal
+authentication; sudo-n made no changes. No boot, default, security, firmware,
+Preboot or live controller operation ran. Native Linux/SMP/GPU/performance remain
+NOT RUN. M1 follows tools/m1n1-client/attempt31au-instructions.md and manages its
+server directly; no repeated server-readiness or clipboard calibration loop.
+No restart yet. Evidence: native/boot/attempt31au-validation-2026-11-15.json,
+native/boot/attempt31au-package/offline-verification.json and attempt31au-plan.md.
+
 ### M1 — 31AT offline review PASS with missing-input limits; native hold, November 15
 
 Pulled/reviewed 2a78a39: all 24 new source pins and 167 retained 31AS pins match;
