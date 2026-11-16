@@ -1,5 +1,28 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### M5 — 31AU M1 review accepted; boot authorization pending, November 15
+
+Accepted M1 9faac49 with no actionable source finding. All 190 inputs, six exact
+source-page outputs and production/staged file pins match. M1's 37 normal and
+37 sanitized controller methods, 12 package passes/one copy skip and 7 renderer
+passes remain distinct from two omitted codec methods per mode and 13 bootstrap
+methods NOT RUN. M5's full genuine-artifact coverage is correctly attributed.
+No substituted M1 helper, repeat staging or new test/security query is needed.
+
+The engineering prerequisites support a guarded diagnostic Recovery window.
+Unresolved CTRR semantics do not block diagnostics; exact candidate identity,
+enabled CTRR, preservation and cleanup must still pass before any native boot.
+Independent boot021 rollback and Original default/desktop return remain required.
+M1 can directly serve its exact /31au page; no separate server approval loop.
+
+A concrete owner approval has been requested for temporary lab Startup Disk,
+one lab install, conditional maximum90s RAM test, boot021 rollback and Original
+default return. No boot/default/security/firmware change or restart cue has run
+while approval is pending. Macintosh HD stays protected at required Full Security.
+Handoff: tools/m1n1-client/attempt31au-reviewed-handoff.md. Evidence:
+native/boot/attempt31au-review-accepted-2026-11-15.json. All frozen code/profile/
+kit/source inputs and prior consumed state remain unchanged.
+
 ### M1 — 31AU V2 offline review PASS with input limits; exact page prepared, November 15
 
 Reviewed 63bc304: all 190 source pins including 167 retained 31AS inputs PASS;

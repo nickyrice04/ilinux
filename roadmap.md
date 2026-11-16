@@ -14,7 +14,7 @@ candidate-independent boot021 rollback. It starts from the confirmed restored
 boot021/disabled-CTRR baseline in a fresh namespace. No old state is reset and
 the Linux candidate is unchanged.
 
-1. **Lab Data staging is complete; finish the M1 handoff.** The V2 helper,
+1. **Lab Data staging and M1 review are complete.** The V2 helper,
    four-file kit and complete one-paste install/restore pages are built. Producer
    checks passed 39 controller methods normally and under sanitizers, seven
    renderer and 26 package/bootstrap methods. Independent review reproduced and
@@ -24,7 +24,11 @@ the Linux candidate is unchanged.
    result matches all four pinned files; no repeat copy is needed. No boot or
    security setting changed. The [staging receipt](native/boot/attempt31au-staging-2026-11-15.json)
    records the owner report separately from the frozen offline delivery records.
-   M1 follows [the new handoff](tools/m1n1-client/attempt31au-instructions.md).
+   M1 review `9faac49` is accepted with its explicit missing-input limits; its
+   six prepared outputs match V2. The [reviewed handoff](tools/m1n1-client/attempt31au-reviewed-handoff.md)
+   prepares direct M1 serving and the conditional test/rollback sequence.
+   The concrete owner boot-change authorization is pending; no default setting
+   or restart has occurred.
 2. **Use the next authorized Recovery visit for decisive readback evidence.**
    Record selected-reference changed/unchanged, read and framing/codec failure
    stage, exact decoded match, CTRR class, preservation and cleanup. Never boot
