@@ -1,5 +1,22 @@
 # Progress Log
 
+### M1 — 31AU reviewed page live; authorized Recovery handoff ready, November 15
+
+At the human's server-start cue, retained review 9faac49 was reused without a
+rebuild or repeated suite. All 190 source pins and exact 18133-byte page
+2361cfc8…8acc3c4 rechecked PASS. Bounded 1800-second /31au service is live;
+direct HTTP 200 body and both complete install/independent restore boxes match.
+234 prior frozen files unchanged; fresh session preserves 293 files, including
+closed/consumed receipts. No reset or re-arm. Private URL/process data stay ignored.
+
+New handoff f6371db confirms owner authorization and temporary lab default.
+M1 accepts that scope; no repeated approval, staging or manual policy query.
+M1 binary delivery remains unverified; the fixture helper is not substituted.
+Recovery controller/install/restore and native/Linux/SMP/GPU/performance NOT RUN.
+Keep recording off during Recovery/authentication. Refusal prohibits lab boot;
+independent boot021 restore and Macintosh HD default/desktop return remain due.
+Evidence: native/boot/attempt31au-m1-page-ready-2026-11-15.json.
+
 ### M5 — 31AU authorized; temporary lab default selected, stop before restart, November 15
 
 Owner explicitly authorized temporary lab Startup Disk, one lab install,
