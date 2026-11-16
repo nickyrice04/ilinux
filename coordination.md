@@ -1,5 +1,29 @@
 # Coordination: agents working in this workspace
 
+### M1 — 31AU V2 offline review PASS with input limits; exact page prepared, November 15
+
+Reviewed 63bc304: all 190 source pins including 167 retained 31AS inputs PASS;
+234 prior evidence/artifact/closed-session files and consumed receipts unchanged.
+New AU controller 37 normal and 37 ASan/UBSan methods PASS; two genuine codec
+methods per mode NOT RUN because carriers absent. Package 12 PASS/1 copy skip;
+full 13 bootstrap methods NOT RUN without genuine production kit. Renderer 7 PASS.
+M5 producer 39/39/26 and prior independent V1 counts remain attributed separately.
+
+Fresh local fixture builds match M5 source/generated-state/guard bindings; nine
+fixed function bodies equal 31AR. Local 125600-byte clang17/SDK26 helper is not the
+published 125664-byte helper and is not staged/substituted. Same-read diagnostics,
+RAM-only reference comparison, strict V2 result relations, exact candidate/
+enabled-CTRR and all Original/preservation/rollback guards retained. No actionable
+source finding. CTRR 835-word summary reviewed, not reproduced; SIP2 effect Unknown.
+
+Six source-only outputs equal M5 V2: combined 18133/2361cfc8…8acc3c4; all three
+check-only and actual install/restore bash-n PASS. Page prepared for /31au;
+server NOT STARTED, HTTP NOT RUN, M1 binary delivery unverified. Owner exact-stage
+receipt accepted without repeat. No restart/staging/proxy/live controller/policy/
+settings/security/firmware action or source/test change. Native/Linux/SMP/GPU/
+performance NOT RUN. Await explicit hardware cue; no separate server-approval loop.
+Evidence: native/boot/attempt31au-m1-offline-2026-11-15.md and JSON.
+
 ### M5 — 31AU lab Data staging confirmed; M1 review pending, November 15
 
 Owner-pasted authenticated staging JSON reports staged=true. All four file names,

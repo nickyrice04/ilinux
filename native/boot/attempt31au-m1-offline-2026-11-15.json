@@ -1,0 +1,204 @@
+{
+  "M1_Lab_Data_staging": "NOT RUN",
+  "M1_binary_delivery_verified": false,
+  "M1_restart": "NOT RUN",
+  "M5_restart": "NOT RUN",
+  "Preboot_mount": "NOT RUN",
+  "Recovery_controller_or_writer": "NOT RUN",
+  "USB_proxy": "NOT RUN",
+  "actionable_findings": [],
+  "active_revision": "production-v2",
+  "attributed_M5_evidence": {
+    "CTRR_research": "Finite835-word/mode-dependent LocalPolicy request summary reviewed, not raw REA/LLVM/VM reproduction. Option effect on existing SIP2 and actual historical Recovery binary identity remain unqualified; no enable-only workaround or firmware fix admitted.",
+    "independent_final_V2": "Five focused controller,13 package and7 renderer plus counterexample repair; earlier full36/26 explicitly V1",
+    "producer_final_controller": "39 normal and39 ASan/UBSan, zero skips, includes genuine compressed carriers; M1 runs37 per mode with two missing-input omissions",
+    "producer_final_package": "26 including13 complete shell fixtures; M1 ordinary package12 PASS/1 skip, full13 shell NOT RUN",
+    "producer_renderer": "7 PASS, reproduced locally"
+  },
+  "boot_settings_changes": "NOT RUN",
+  "build_binding": {
+    "five_state_edits_reverse_exactly": true,
+    "fixed_operation_bodies_equal_31AR": {
+      "acquire_mount": true,
+      "interactive_child": true,
+      "mount_binding_ar": true,
+      "mount_command": true,
+      "release_mount": true,
+      "run_writer": true,
+      "state_binding": true,
+      "target_metadata": true,
+      "work_binding": true
+    },
+    "generated_state_sha256": "4faadd045f58332a60a207c9005c4812a816f2656d88e258e12fc86d03168e20",
+    "retained_143_source_pins_equal": true,
+    "source_inputs_equal_published_M5": true,
+    "three_profile_parser_edits_reverse_exactly": true
+  },
+  "camera": "NOT RUN",
+  "closed_31AS_31AT_evidence_and_consumed_receipts": "PRESERVED; no state reset or receipt rearm",
+  "controller_methods_NOT_RUN_per_mode": [
+    "test_owned_compressed_candidate_uses_same_recognizer",
+    "test_damaged_own_compressed_carrier_refuses_with_finite_frame_reason"
+  ],
+  "controller_missing_prerequisite": "Two retained genuine compressed-carrier fixtures absent at required paths; deliberately omitted both methods, with no replacement or production-input synthesis",
+  "current_policy_or_selected_object_query": "NOT RUN",
+  "date": "2026-11-15",
+  "firmware_changes": "NOT RUN",
+  "focused_results": {
+    "controller-normal": {
+      "passed_methods": 37,
+      "process_seconds": 23.811,
+      "returncode": 0,
+      "selected_methods": 37,
+      "skips": 0,
+      "suite_seconds": 23.552
+    },
+    "controller-sanitized": {
+      "passed_methods": 37,
+      "process_seconds": 29.09,
+      "returncode": 0,
+      "selected_methods": 37,
+      "skips": 0,
+      "suite_seconds": 28.866
+    },
+    "package": {
+      "passed_methods": 12,
+      "process_seconds": 2.683,
+      "returncode": 0,
+      "selected_methods": 13,
+      "skips": 1,
+      "suite_seconds": 2.268
+    },
+    "render": {
+      "passed_methods": 7,
+      "process_seconds": 0.302,
+      "returncode": 0,
+      "selected_methods": 7,
+      "skips": 0,
+      "suite_seconds": 0.059
+    }
+  },
+  "full_bootstrap_shell_methods_NOT_RUN": 13,
+  "historical_standalone_controller_page_native_PTY_suites": "NOT RERUN; current AU suite exercises the new controller with original retained cases and new controls",
+  "local_build_purpose": "New original AU fixture controller only; not the published production helper and never substituted into its kit/profile/staging",
+  "local_builds": {
+    "normal": {
+      "SDK": "26.0",
+      "binary_bytes": 125600,
+      "binary_sha256": "da4a1dd0c58ff3ac1c1922cfc6d8b26c91896a92f98fc196425346a1b548ecbb",
+      "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+      "sanitized": false,
+      "source_bindings_equal_M5": true
+    },
+    "sanitized": {
+      "SDK": "26.0",
+      "binary_bytes": 414560,
+      "binary_sha256": "f4d0badde4be944b2019a9fb4cfeac600d92328f1c08455e8da5dcb946f2beb2",
+      "compiler": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+      "sanitized": true,
+      "source_bindings_equal_M5": true
+    }
+  },
+  "local_toolchain": {
+    "Python": "3.9.6",
+    "SDK": "26.0",
+    "clang": "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+    "host_installs": false
+  },
+  "native_GPU": "NOT RUN",
+  "native_Linux": "NOT RUN",
+  "native_SMP": "NOT RUN",
+  "native_entry": "NOT RUN",
+  "native_ready": false,
+  "next": "M5 accepts the review with its exact input limits and supplies a concrete explicit hardware cue if proceeding. M1 can manage later exact31AU serving directly; no separate server-readiness approval loop, restart, staging repeat or clipboard calibration. Offline pass/source-page preparation alone is not a Recovery transaction or restart cue.",
+  "old_state_reset": false,
+  "package_real_kit_copy_integration": "SKIPPED one method; genuine new M5 production kit unavailable here",
+  "performance": "NOT RUN",
+  "prepared_page": {
+    "actual_install_restore_bash_n": "PASS; neither block executed",
+    "binary_delivery_verified": false,
+    "exact_check_only_pages": 3,
+    "live_HTTP_verification": "NOT RUN",
+    "mode": "SOURCE_PROFILE_ONLY",
+    "outputs": {
+      "install-paste.txt": {
+        "bytes": 6603,
+        "sha256": "f853c3cee276692d2efbc9ea2ccaca7871cc9c71301326fc87ba5bde454bcd11"
+      },
+      "install.html": {
+        "bytes": 9813,
+        "sha256": "175098df863f77036d34bf285a6744871f34b5a3b5b41ba912305dfcaa7296de"
+      },
+      "profile.json": {
+        "bytes": 826,
+        "sha256": "a45d1718ea8aea5b7b63bda8d23b2747e3864d3b9cb54ca7f19454eeb73fe440"
+      },
+      "recovery.html": {
+        "bytes": 18133,
+        "sha256": "2361cfc8be8e1664da1cfe24117f760e45756ed5430766f7cdf8293fb8acc3c4"
+      },
+      "restore-paste.txt": {
+        "bytes": 6189,
+        "sha256": "b1b2befc46cc6aa15c83336b676559d0f8e8027c734c607a15eaa7c243cfa5fc"
+      },
+      "restore.html": {
+        "bytes": 9346,
+        "sha256": "cde07299a712d37f431eef1168db04e6ebf08abfc23b27c4ced25604f070fb7d"
+      }
+    },
+    "route": "/31au",
+    "server_started": false,
+    "whole_operation_boxes_exact": true
+  },
+  "prior_evidence_files_verified_unchanged": 234,
+  "prior_restore_and_original_return": "Confirmed historical boot021 restore and Macintosh HD desktop/default retained; no redundant fresh policy query",
+  "public_profile": {
+    "bytes": 826,
+    "final_payload": "BOOT021",
+    "initial_payload": "BOOT021",
+    "native_deadline_ms": 90000,
+    "sha256": "a45d1718ea8aea5b7b63bda8d23b2747e3864d3b9cb54ca7f19454eeb73fe440"
+  },
+  "published_delivery_pins": {
+    "candidate.macho": {
+      "bytes": 153190400,
+      "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+    },
+    "ilinux31au-reader": {
+      "bytes": 125664,
+      "sha256": "89100be28210fe41ddf1c789e405612aa5ece64a672f8a2c62ef34f7796850e4"
+    },
+    "m1n1-boot021.bin": {
+      "bytes": 3932160,
+      "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+    },
+    "profile.json": {
+      "bytes": 826,
+      "sha256": "a45d1718ea8aea5b7b63bda8d23b2747e3864d3b9cb54ca7f19454eeb73fe440"
+    }
+  },
+  "restart_ready": false,
+  "reviewed_main": "63bc304",
+  "schema": "ilinux31au-m1-offline-review-v1",
+  "security_changes": "NOT RUN",
+  "server": "NOT STARTED",
+  "source_or_test_changes": false,
+  "source_review": {
+    "acceptance": "Original Full/CTRR, typed roles/paired1TR, key/profile/target bindings and semantic/private-metadata preservation remain required; exact candidate and enabled candidate CTRR guards unchanged",
+    "durability": "Writer marker remains spent; finite diagnostic persisted with postwrite snapshot/status before success; diagnostic durability failure refuses",
+    "namespace_and_start": "Fresh AU profile/helper/scratch/state, exact BOOT021 and disabled lab CTRR initial contract; obsolete31AF and existing AU state refused; old31AR state not adopted/reset",
+    "object_diagnostics": "Same already-bound selected-read buffer, unchanged original recognizer as sole authority, finite read/framing/codec/exactness output; no second read, alternative parser, scan or decryption",
+    "restoration": "Independent candidate-free boot021 restore, guarded exact read-only no-op or unchanged conditional lab CTRR/raw writer; strict cleanup and restored validation",
+    "result_V2": "Category/completion/exactness relations and operation/phase binding enforced, including refused results. Both originally reported counterexamples and valid controls pass locally.",
+    "selected_reference_comparison": "Own fresh key/profile/LAB/domain HMAC in RAM only; available/changed Booleans; no reference or commitment serialized; does not change acceptance"
+  },
+  "source_verification": {
+    "all_sources_match": true,
+    "retained_31AS_sources": 167,
+    "retained_inventory_sha256": "3bd089cc7b2a009d5bc503b7f973baac4d8c179192a31188bf4997bf24216350",
+    "source_entries": 190,
+    "source_inventory_sha256": "975364a78be8ae44247ceddb7ea63b72b04ea240baf541006f94a2cba92f3865"
+  },
+  "staging": "M5 owner-reported authenticated exact four-file staging receipt matches public delivery. Accepted as attributed evidence; no M1 transfer, restaging or target query.",
+  "status": "OFFLINE_PASS_WITH_INPUT_LIMITS_SOURCE_PAGE_PREPARED_NATIVE_HOLD"
+}
