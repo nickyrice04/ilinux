@@ -1,5 +1,23 @@
 # Decisions Log
 
+### M1 — 31AU install refused; restore and Original return pending, November 15
+
+Human photo shows actual non-synthetic install POSTCONDITION/POLICY_OR_OBJECT
+REFUSED after Apple installation/done, writer 0. Mutation attempted, cleanup and
+state preservation true; candidate/rollback verified false. No install success.
+Selected reference changed=true, read succeeded, IMG4/LZFSE DECODE_REJECTED,
+identity UNKNOWN and recognizer incomplete. Lab CTRR remains explicitly disabled;
+object and CTRR requirements both fail while preservation_contract passes.
+Decoder/input cause and CTRR cause remain Unknown; no firmware diagnosis.
+
+No lab boot or install retry. Complete independent boot021 restore instructed
+once; its actual result and Macintosh HD default/desktop return remain PENDING.
+Page retained for restore. All 190 pins and 293 prior evidence/closed receipts
+unchanged; no reset/re-arm, guard relaxation or extra target query. Native RAM/
+Linux/live target version/SMP/GPU/performance NOT RUN. M5 offline analysis follows
+safe closure. Evidence: native/boot/attempt31au-install-2026-11-15-checkpoint.md
+and companion JSON; photo/raw private data excluded from Git.
+
 ### M1 — 31AU reviewed page live; authorized Recovery handoff ready, November 15
 
 At the human's server-start cue, retained review 9faac49 was reused without a
