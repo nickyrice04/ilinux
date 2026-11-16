@@ -27,8 +27,12 @@ the Linux candidate is unchanged.
    M1 review `9faac49` is accepted with its explicit missing-input limits; its
    six prepared outputs match V2. The [reviewed handoff](tools/m1n1-client/attempt31au-reviewed-handoff.md)
    prepares direct M1 serving and the conditional test/rollback sequence.
-   The concrete owner boot-change authorization is pending; no default setting
-   or restart has occurred.
+   The owner has now authorized the scoped window. Temporary Startup Disk LAB
+   is selected and independently classified read-only; current system remains
+   ORIGINAL. No restart occurred. M1 follows the
+   [authorized handoff](tools/m1n1-client/attempt31au-authorized-instructions.md)
+   and manages the exact page directly. Original default return is required
+   after the attempt.
 2. **Use the next authorized Recovery visit for decisive readback evidence.**
    Record selected-reference changed/unchanged, read and framing/codec failure
    stage, exact decoded match, CTRR class, preservation and cleanup. Never boot

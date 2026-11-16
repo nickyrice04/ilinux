@@ -1,5 +1,29 @@
 # Progress Log
 
+### M5 — 31AU authorized; temporary lab default selected, stop before restart, November 15
+
+Owner explicitly authorized temporary lab Startup Disk, one lab install,
+conditional maximum 90-second RAM observation, boot021 rollback and Original
+default/desktop return. Original Full stays required; no volume/firmware/new
+policy operation beyond existing conditional lab CTRR rollback preparation.
+
+Selected iLinux Boot Lab in System Settings without Restart. A fresh read-only
+bless/device/group comparison reports current ORIGINAL, default LAB, distinct
+groups and selector exit 0; no identifiers or policy values returned. Only the
+default changed. All 190 frozen inputs and the owner-staged V2 kit remain exact.
+M1 review 9faac49 is accepted with its stated input limits. No repeat stage/tests,
+manual security check or separate server-readiness approval is needed.
+
+M1 follows tools/m1n1-client/attempt31au-authorized-instructions.md: directly serve
+its exact /31au page and give the private URL to the owner. Once serving, owner
+can use the prepared shutdown/Options/paired-Recovery sequence. Do not boot a
+refused candidate; only complete exact install/CTRR/preservation/cleanup success
+permits the single timed RAM window. Independent boot021 rollback and separate
+Macintosh HD default/desktop return are required afterward; default return is
+now outstanding. No Restart command, controller, Preboot, install/restore writer,
+security, firmware or volume change occurred. Native/Linux/SMP/GPU/performance
+remain NOT RUN. Evidence: native/boot/attempt31au-authorized-handoff-2026-11-15.json.
+
 ### M5 — 31AU M1 review accepted; boot authorization pending, November 15
 
 Accepted M1 9faac49 with no actionable source finding. All 190 inputs, six exact

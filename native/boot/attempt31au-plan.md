@@ -80,10 +80,15 @@ M5 has accepted M1 review `9faac49` with its exact stated input limits. Source,
 prepared-page and staging bindings match. See the
 [accepted review](attempt31au-review-accepted-2026-11-15.json) and the
 [reviewed handoff](../../tools/m1n1-client/attempt31au-reviewed-handoff.md).
-The engineering preparation supports the guarded diagnostic window; owner
-authorization for actual boot changes is separately pending. The unresolved
-CTRR cause does not bar diagnostic collection, but still bars native entry
-when the required candidate postcondition fails.
+The engineering preparation supports the guarded diagnostic window. The owner
+subsequently approved the concrete scope; M5 selected the temporary lab default
+and stopped before restart. See the
+[authorization and selector evidence](attempt31au-authorized-handoff-2026-11-15.json)
+and [authorized instructions](../../tools/m1n1-client/attempt31au-authorized-instructions.md).
+The earlier acceptance record retains its original pending-authorization scope.
+The unresolved CTRR cause does not bar diagnostic collection, but still bars
+native entry when the required candidate postcondition fails. Original default
+return is required after the attempt.
 
 A later explicitly authorized Recovery window can answer multiple questions:
 
