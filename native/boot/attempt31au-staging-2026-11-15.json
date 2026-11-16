@@ -1,0 +1,52 @@
+{
+  "schema": "ilinux31au-owner-staging-review-v1",
+  "date": "2026-11-15",
+  "source_commit": "7fea707",
+  "evidence_source": "OWNER_PASTED_AUTHENTICATED_STAGING_JSON",
+  "reported_result": {
+    "boot_object_installed": false,
+    "boot_settings_changed": false,
+    "controller_run": false,
+    "default_changed": false,
+    "files": {
+      "candidate.macho": {
+        "bytes": 153190400,
+        "sha256": "1ea24f0de4aa7d3e82c70a1b35f815791a48342db1a060100226b84dca7d7d01"
+      },
+      "ilinux31au-reader": {
+        "bytes": 125664,
+        "sha256": "89100be28210fe41ddf1c789e405612aa5ece64a672f8a2c62ef34f7796850e4"
+      },
+      "m1n1-boot021.bin": {
+        "bytes": 3932160,
+        "sha256": "ff75f4a919d8469530834787d4e53f378892d4f4e80aed4f9affbf5172072664"
+      },
+      "profile.json": {
+        "bytes": 826,
+        "sha256": "a45d1718ea8aea5b7b63bda8d23b2747e3864d3b9cb54ca7f19454eeb73fe440"
+      }
+    },
+    "native_ready": false,
+    "old_transaction_reset": false,
+    "policy_read": false,
+    "preboot_mount_run": false,
+    "schema": "ilinux31au-lab-data-staging-v1",
+    "scope": "MACOS_LAB_DATA_STAGE",
+    "staged": true,
+    "volume_created": false
+  },
+  "four_file_pins_match": true,
+  "independent_receipt_review": "PASS_NO_MISMATCH",
+  "source_inputs_rechecked": 190,
+  "source_mismatches": 0,
+  "fresh_target_or_security_query_by_root": false,
+  "staging_repeated_by_root": false,
+  "current_policy_freshly_verified": false,
+  "boot021_restoration_freshly_verified": false,
+  "previous_boot021_restoration": "HUMAN_CONFIRMED_WITH_MATCHING_SAVED_CAPTURE",
+  "M1_31AU_review": "NOT_YET_VISIBLE_ON_FETCHED_MAIN",
+  "latest_remote_checked": "7fea707",
+  "restart_ready": false,
+  "native_Linux_SMP_GPU": "NOT_RUN",
+  "next": "M1 reviews current31AU V2 and prepares exact31AU page; wait for explicitM5cue before any Recovery transaction/restart."
+}

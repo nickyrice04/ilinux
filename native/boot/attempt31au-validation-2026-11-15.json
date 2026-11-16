@@ -61,7 +61,7 @@
   "qualified_enable_only_workaround": false,
   "meaningful_next_hardware_test": "GUARDED_ENROLLMENT_READBACK_WITH_PRECISE_OBJECT_AND_SELECTION_DIAGNOSTICS_THEN_INDEPENDENT_BOOT021_RESTORE",
   "current_scope": "OFFLINE_BUILD_REVIEW_AND_AUTHORIZED_LAB_DATA_STAGING_ONLY",
-  "Lab_Data_staging": "OWNER_AUTHENTICATION_PENDING",
+  "Lab_Data_staging": "OWNER_REPORTED_STAGED_EXACT_PINS_MATCH",
   "controller_or_writer_live_run": false,
   "Preboot_mount_run": false,
   "Startup_Disk_changed": false,
@@ -82,5 +82,6 @@
     "quiet_locks_released": true,
     "prior_job_restored": true
   },
-  "independent_auditor_V2_findings_disposition": "PASS_BOTH_ORIGINAL_COUNTEREXAMPLES_RETESTED"
+  "independent_auditor_V2_findings_disposition": "PASS_BOTH_ORIGINAL_COUNTEREXAMPLES_RETESTED",
+  "Lab_Data_staging_evidence": "native/boot/attempt31au-staging-2026-11-15.json"
 }

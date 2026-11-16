@@ -14,14 +14,16 @@ candidate-independent boot021 rollback. It starts from the confirmed restored
 boot021/disabled-CTRR baseline in a fresh namespace. No old state is reset and
 the Linux candidate is unchanged.
 
-1. **Finish the authorized lab Data staging and M1 handoff.** The V2 helper,
+1. **Lab Data staging is complete; finish the M1 handoff.** The V2 helper,
    four-file kit and complete one-paste install/restore pages are built. Producer
    checks passed 39 controller methods normally and under sanitizers, seven
    renderer and 26 package/bootstrap methods. Independent review reproduced and
    verified fixes for two result-display contradictions. Final source closure
    has 190 entries, preserving all 167 old inputs. Root's final focused controls
-   and exact source/artifact/page checks pass. Local owner authentication is
-   needed for the lab Data copy; no boot/security setting is changed by staging.
+   and exact source/artifact/page checks pass. The owner's authenticated staging
+   result matches all four pinned files; no repeat copy is needed. No boot or
+   security setting changed. The [staging receipt](native/boot/attempt31au-staging-2026-11-15.json)
+   records the owner report separately from the frozen offline delivery records.
    M1 follows [the new handoff](tools/m1n1-client/attempt31au-instructions.md).
 2. **Use the next authorized Recovery visit for decisive readback evidence.**
    Record selected-reference changed/unchanged, read and framing/codec failure

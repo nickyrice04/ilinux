@@ -64,6 +64,12 @@ not install a boot object, mount Preboot, change Startup Disk/security, create a
 volume or restart. The staged kit is distinct from every old kit and transaction.
 Local administrator authentication is entered only by the owner in Terminal.
 
+The owner has now supplied a successful staging result, matching all four file
+pins. See the [separate staging receipt](attempt31au-staging-2026-11-15.json).
+No repeat staging or fresh security query is needed. The frozen package delivery
+and offline test records retain their original workspace-only scope; this new
+receipt records the later lab Data copy, without claiming installation or entry.
+
 M1 follows `tools/m1n1-client/attempt31au-instructions.md`, checks the final
 source/profile/helper bindings and reports actual coverage limits. The server
 can be managed directly by M1: use the exact new `/31au` page, with no clipboard

@@ -1,5 +1,27 @@
 # Decisions Log
 
+### M5 — 31AU lab Data staging confirmed; M1 review pending, November 15
+
+Owner-pasted authenticated staging JSON reports staged=true. All four file names,
+byte counts and SHA256 values exactly match the reviewed V2 delivery: helper
+125664/89100be2…6850e4, profile826/a45d1718…3fe440, unchanged candidate and boot021.
+Independent receipt review passes. All 190 source inputs remain exact. No repeat
+staging or fresh target/private/security query was performed by M5.
+
+The result reports no boot-object installation, controller or Preboot operation,
+policy read, default/boot-setting change, volume creation or old-state reset.
+Only the authorized new lab Data kit copy is confirmed. Original Full remains
+required; previous boot021 restoration/default/desktop confirmations stand and
+were not freshly queried. Native readiness is false; Linux/SMP/GPU remain NOT RUN.
+
+Fetched main still shows 7fea707; a new M1 31AU review is not yet visible. M1
+follows tools/m1n1-client/attempt31au-instructions.md, reviews the new transaction
+and prepares the exact /31au page directly. No M1 restart, repeated staging,
+clipboard calibration or separate M5 server-readiness loop is needed. No M5
+restart or Recovery transaction until the explicit cue. Evidence:
+native/boot/attempt31au-staging-2026-11-15.json. Frozen profile/delivery/source
+inputs and all old kits/state/keys/consumed receipts are unchanged.
+
 ### M5 — 31AU V2 reviewed; staging needs owner authentication, November 15
 
 Accepted M1 review 5807592 with its recorded input limits. The new AU transaction
