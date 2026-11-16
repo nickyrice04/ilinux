@@ -1,5 +1,27 @@
 # AGENTS.md — Operating Instructions for Agents in This Workspace
 
+### M1 — 31AV offline component review PASS; native hold, November 15
+
+Reviewed 21b4cee: 10 new pins, 190 frozen AU inputs and 303 prior evidence/closed
+receipts unchanged. Fresh normal and ASan/UBSan runs each pass 11 unchanged
+published methods plus one equivalent genuine retained-candidate method. The
+published candidate method's absent-kit path is NOT RUN, not silently counted;
+no kit/transfer/source edit. Both four-file build bindings equal M5.
+
+Each mode reproduces 77 controls/474 stream trials and two genuine candidate
+encodings/22 trials. Valid 1 MiB Apple encodings fail original FINALIZE decoding;
+buffer proposal passes exact comparison. Strict refusals pass, including trailing
+bytes accepted by raw buffer API. 31 generated fixture files deleted per mode.
+Memory tradeoff remains 160 MiB+1 output plus library scratch; Recovery unqualified.
+
+No actionable source finding. M5 712-word/five-range request trace reviewed as
+attributed evidence, not locally reproduced; server-side SIP2 effect/Recovery
+identity remain Unknown. Recommend isolated reviewed integration and finite
+runtime/subreason controls plus offline CTRR receiver work before a new proposal.
+No restart/server/stage/proxy/controller/policy/boot/security action. Native Linux/
+live version/SMP/GPU/performance NOT RUN. Closed AU state remains untouched.
+Evidence: native/boot/attempt31av-m1-offline-2026-11-15.md and JSON.
+
 ### M5 — 31AU closed; 31AV decoder repair tested offline, November 15
 
 Reviewed M1 9a6411c: selection changed and selected-file read passed, but original
